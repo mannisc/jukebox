@@ -25,11 +25,63 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <link rel="stylesheet" type="text/css" href="css/libs/jquery.mobile-1.4.2.css" />
-        <title>Hello World</title>
+        <title>JukeBox</title>
     </head>
     <body>
-        <h1>JukeBox</h1>
+        <div data-role="page" id="page">
 
+            <div data-role="panel" id="leftpanel" data-display="overlay">
+                <a href="#page" data-rel="close">Close</a>
+                <br>
+                Place left Panel content here...
+
+            </div><!-- /panel -->
+
+            <div data-role="panel" id="rightpanel" data-display="overlay" data-position="right">
+                <a href="#page" data-rel="close">Close</a>
+                <br>
+                Place right Panel content here...
+            </div><!-- /panel -->
+
+
+            <div data-role="header" id="header" data-position="fixed" >
+                <h1>JukeBox</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">
+                <br>
+                <a href="#leftpanel" data-rel="open">Left Panel</a>
+                <br>
+                <a href="#rightpanel" data-rel="open">Right Panel</a>
+                <br>
+                <br>
+
+                Place Content here...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div><!-- /content -->
+
+            <div data-role="footer" id="footer" data-position="fixed">
+                <h4>Footer content</h4>
+            </div><!-- /footer -->
+
+        </div><!-- /page -->
 
 
         <script type="text/javascript" src="cordova.js"></script>
