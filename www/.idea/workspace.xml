@@ -4,7 +4,7 @@
     <list default="true" id="3ae9adea-8b86-4c60-b380-3c0747792bad" name="Default" comment="" />
     <ignored path="www.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/index.html" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393628778996" ignored="false" />
+    <file path="/index.html" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393664564747" ignored="false" />
     <file path="/index.css" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393628511327" ignored="false" />
     <file path="/index.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393628746514" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,7 +29,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="29" selection-start="2010" selection-end="2010" vertical-scroll-proportion="0.8071313">
+            <state line="33" column="30" selection-start="1648" selection-end="1648" vertical-scroll-proportion="0.17341977">
               <folding />
             </state>
           </provider>
@@ -38,19 +38,10 @@
       <file leaf-file-name="index.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="32" selection-start="1437" selection-end="1437" vertical-scroll-proportion="0.0">
+            <state line="36" column="72" selection-start="1476" selection-end="1476" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/css/index.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="26" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.0">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -239,14 +230,14 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/css/index.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="26" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.0">
+        <state line="26" column="26" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.5594512">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="32" selection-start="1437" selection-end="1437" vertical-scroll-proportion="0.0">
+        <state line="36" column="72" selection-start="1476" selection-end="1476" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -255,7 +246,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="29" selection-start="2010" selection-end="2010" vertical-scroll-proportion="0.8071313">
+        <state line="33" column="30" selection-start="1648" selection-end="1648" vertical-scroll-proportion="0.17341977">
           <folding />
         </state>
       </provider>
