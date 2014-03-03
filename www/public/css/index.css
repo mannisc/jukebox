@@ -1,0 +1,562 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+body {
+    -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color: #fff;
+    background-attachment: fixed;
+    font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+
+}
+
+/*Content*/
+
+/*Big Screen*/
+@media (min-width:850px) {
+
+    #controlbar .ui-input-search {
+        float: left;
+    }
+
+    #searchlist {
+        margin-top: 10px;
+    }
+
+    #controlselectvertical {
+        display: none;
+    }
+
+    #controlbar {
+        margin-top: -5px;
+    }
+
+}
+
+/*Smaller Screen*/
+@media (min-width:1115px) {
+
+    #playlist {
+        top: 0px;
+    }
+
+    #openSidePanelBarIcon, #openSidePanelBarIconBar {
+        display: none;
+    }
+}
+
+/*Small Screen*/
+@media (min-width:850px) and  (max-width:1114px) {
+    #playlist {
+        top: 60px !important;
+    }
+}
+
+/*Small Screen*/
+@media (max-width:849px) {
+
+    #controlbar {
+        text-align: left;
+    }
+
+    #controlbar .ui-input-search {
+        display: inline-block;
+    }
+
+    #controlselecthorizontal {
+        display: none;
+    }
+
+    #controlbar .ui-select {
+        width: 340px !important;
+    }
+
+    #videoplayer {
+        visibility: hidden;
+    }
+
+    #controlbar .ui-input-btn {
+        margin-bottom: 0px !important;
+    }
+
+    #content {
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+
+    }
+
+    #searchlist {
+        margin-top: 35px;
+    }
+
+    #controlbar .ui-input-search {
+        margin-bottom: 0px !important;
+    }
+
+}
+
+/*Bigger as Smallest Screen*/
+@media (min-width:670px) {
+
+    #playlist {
+        top: 0px;
+        width: 25%;
+        right: 10px;
+    }
+
+    #openSidePanelBarIcon, #openSidePanelBarIconBar {
+        display: none;
+    }
+
+    #searchlist {
+        width: 52%;
+    }
+
+}
+
+/*Smallest Screen*/
+@media (max-width:669px) {
+
+    #playlist {
+        margin-top: -5px;
+        left: 10px;
+
+    }
+
+    #playlistselectvertical .chosen-container {
+        min-width: 235px !important;
+        max-width: 235px !important;
+
+    }
+}
+
+/*Small Screen*/
+@media (max-height:350px) {
+
+    #videoplayer {
+        visibility: hidden;
+    }
+}
+
+#backgroundImage {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+}
+
+#content {
+    position: absolute;
+    z-index: 1;
+
+}
+
+#controlbar .ui-input-search {
+    width: 300px !important;
+    margin-right: 10px;;
+
+}
+
+#controlbar .ui-input-btn {
+    float: left;
+    margin-right: 10px;;
+}
+
+#controlbar .ui-btn {
+    padding: .5em 1em;
+
+}
+
+.draggedlistelement {
+    z-index: 2000 !important;
+    width: 200px !important;
+    padding: 0;
+    list-style: none;
+    background: #4617B4 !important;
+    border: none !important;
+    margin: 0px !important;
+}
+
+.draggedlistelement li a {
+    padding: 0;
+    border: none !important;
+    color: #fff !important;
+    min-height: 1.25em;
+
+    margin: 0;
+    display: block;
+    position: relative;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    padding-left: 3.5em !important;
+    padding-top: 0.8em !important;
+    padding-bottom: 0.8em !important;
+
+    padding-right: 2.5em !important;
+
+}
+
+.draggedlistelement li a img {
+    position: absolute !important;
+    left: .625em !important;
+    top: .9em !important;
+
+    text-align: left;
+    white-space: nowrap;
+    line-height: 1.3;
+}
+
+.draggedlistelement li  a:after {
+    display: none;
+}
+
+#searchlist {
+    position: absolute;
+    z-index: 1;
+    top: 65px;
+    left: 10px;
+    height: 100%;
+    background: none;
+    overflow: hidden;
+}
+
+#searchlist ul {
+    margin-left: 8px !important;
+    width: 100%;
+}
+
+#searchlistview {
+    position: absolute;
+    z-index: 1;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    width: 500%;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
+
+}
+
+#searchlist a {
+    background: none !important;
+    border: none !important;
+}
+
+#searchlist a:after {
+    display: none;
+}
+
+#searchlist a:hover {
+    background: #4617B4 !important;
+    border: none !important;
+}
+
+#playlist {
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    background: none;
+    overflow: hidden;
+    min-width: 250px;
+
+}
+
+#playlistInner {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 1;
+    height: 100%;
+    background: none;
+    overflow: hidden;
+}
+
+#playlistInner ul {
+    margin-left: 8px !important;
+}
+
+#playlistview {
+    position: absolute;
+    z-index: 1;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    width: 500%;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
+
+}
+
+#playlistInner a {
+    background: none !important;
+    border: none !important;
+}
+
+#playlistInner a:after {
+    display: none;
+}
+
+#playlistInner a:hover {
+    background: #4617B4 !important;
+    border: none !important;
+}
+
+#playlistselectvertical {
+    margin-top: -5px;
+    float: left;
+    margin-left: 5px;
+
+}
+
+#sortplaylisttext {
+    margin-top: 0px;
+    float: left;
+    margin-left: 15px;
+
+}
+
+.chosen-container .chosen-drop {
+    color: #000 !important;
+}
+
+#sortplaylistbutton {
+    float: left;
+
+    margin-top: -14px;
+}
+
+#sortplaylistbutton .ui-btn {
+    padding: .5em 0.7em !important;
+}
+
+#rightpanel {
+    width: 300px !important;
+    max-width: 100% !important;
+}
+
+#videoplayer {
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+    pointer-events: none;
+    z-index: 2;
+
+}
+
+#videoplayerInner {
+    display: inline-block;
+    pointer-events: auto;
+    z-index: 2 !important;
+
+}
+
+#videoplayerInner .mejs-mediaelement {
+    text-align: center;
+}
+
+#videoplayerInner video {
+    -webkit-transition: width 1.5s ease;
+    -moz-transition: width 1.5s ease;
+    -o-transition: width 1.5s ease;
+    transition: width 1.5s ease;
+
+}
+
+#videoccontrols  .mejs-time-rail {
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+#videocontrols {
+    z-index: 1;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 230px;
+    left: 0px;
+
+    pointer-events: none;
+
+    background-color: #1d1d1d /*{b-bar-background-color}*/;
+    border-color: #1b1b1b /*{b-bar-border}*/;
+    color: #fff /*{b-bar-color}*/;
+    text-shadow: 0 /*{b-bar-shadow-x}*/ 1px /*{b-bar-shadow-y}*/ 0 /*{b-bar-shadow-radius}*/ #111 /*{b-bar-shadow-color}*/;
+    font-weight: bold;
+
+    white-space: nowrap
+}
+
+.mejs-container-fullscreen, .mejs-overlay {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.mejs-controls {
+    pointer-events: auto;
+
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+
+    -webkit-transform-origin: 0% 100%;
+    transform-origin: 0% 100%;
+}
+
+.mejs-controls .mejs-button button:focus {
+    outline: none !important;
+}
+
+.mejs-controls .mejs-volume-button .mejs-volume-slider {
+    background: rgba(50, 50, 50, 0.9) !important;
+}
+
+/*Fades*/
+
+.fadeincomplete {
+    opacity: 0; /* make things invisible upon start */
+    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: fadeincomplete ease-in 1;
+    animation: fadeincomplete ease-in 1;
+
+    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode: forwards; /*FF 5+*/
+    -o-animation-fill-mode: forwards; /*Not implemented yet*/
+    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards; /*when the spec is finished*/
+
+    -webkit-animation-duration: 0.5s;
+    -moz-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+}
+
+.fadeincompleteslow {
+    opacity: 0; /* make things invisible upon start */
+    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: fadeincomplete ease-in 1;
+    animation: fadeincomplete ease-in 1;
+
+    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode: forwards; /*FF 5+*/
+    -o-animation-fill-mode: forwards; /*Not implemented yet*/
+    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards; /*when the spec is finished*/
+
+    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    animation-duration: 1s;
+}
+
+.fadeincompletefast {
+    opacity: 0; /* make things invisible upon start */
+    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: fadeincomplete ease-in 1;
+    animation: fadeincomplete ease-in 1;
+
+    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode: forwards; /*FF 5+*/
+    -o-animation-fill-mode: forwards; /*Not implemented yet*/
+    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards; /*when the spec is finished*/
+
+    -webkit-animation-duration: 200ms;
+    -moz-animation-duration: 200ms;
+    animation-duration: 200ms;
+}
+
+/* make keyframes that tell the start state and the end state of our object */
+@-webkit-keyframes fadeincomplete {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* make keyframes that tell the start state and the end state of our object */
+@-webkit-keyframes fadeinhalf {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.5;
+    }
+}
+
+@-moz-keyframes fadeincomplete {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeincomplete {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
