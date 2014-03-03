@@ -218,7 +218,7 @@ uiController.init = function () {
         opacity: 0.9,
         connectToSortable: '#playlistview',
         helper: function (event, ui) {
-            console.dir(this)
+           // console.dir(this)
 
             var $helper = $('<ul></ul>').addClass('draggedlistelement');
             var ele = $helper.append($(this).clone())
@@ -250,7 +250,7 @@ uiController.init = function () {
                 uiController.toggleSortablePlaylist();
 
         },
-        start: function () {
+        start: function (event) {
             uiController.dragSongX = event.clientX;
             uiController.dragSongY = event.clientY;
             uiController.dragSongCheckHorizontal = true;
