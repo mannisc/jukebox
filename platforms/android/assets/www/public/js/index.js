@@ -42,6 +42,10 @@ var app = {
 
 };
 
+var preferences = {
+    serverURL : "http://localhost/"
+}
+
 
 $(document).ready(function () {
     alert("!!!!dddd!")
