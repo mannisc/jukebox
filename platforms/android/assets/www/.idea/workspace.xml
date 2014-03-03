@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/public/css/index.css" line="464" />
+    <bookmark url="file://$PROJECT_DIR$/public/css/index.css" line="463" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ae9adea-8b86-4c60-b380-3c0747792bad" name="Default" comment="" />
     <ignored path="www.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/index.html" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393843443519" ignored="false" />
+    <file path="/index.html" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393850325615" ignored="false" />
     <file path="/index.css" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393847807881" ignored="false" />
-    <file path="/index.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393691598143" ignored="false" />
+    <file path="/index.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393855909590" ignored="false" />
     <file path="/theme.css.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393666521942" ignored="false" />
     <file path="/theme.css" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393807026692" ignored="false" />
-    <file path="/uiController.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393846992706" ignored="false" />
+    <file path="/uiController.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393850262655" ignored="false" />
     <file path="/mediaelement-and-player.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393787198296" ignored="false" />
     <file path="/iscroll-zoom.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393758753565" ignored="false" />
     <file path="$USER_HOME$/Dropbox/munichDev/Projekte/QR/Repository/kundenApp/kundenApp/platforms/android/assets/www/index.html" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393788937970" ignored="false" />
     <file path="$USER_HOME$/Dropbox/munichDev/Projekte/QR/Repository/kundenApp/kundenApp/platforms/wp7/www/js/index.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393789220455" ignored="false" />
-    <file path="$USER_HOME$/Dropbox/munichDev/Projekte/QR/Repository/kundenApp/kundenApp/platforms/wp7/www/index.html" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393789220455" ignored="false" />
+    <file path="$USER_HOME$/Dropbox/munichDev/Projekte/QR/Repository/kundenApp/kundenApp/platforms/wp7/www/index.html" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393856397288" ignored="false" />
     <file path="$USER_HOME$/Dropbox/munichDev/Projekte/QR/Repository/kundenApp/kundenApp/platforms/wp7/www/js/service.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393789220455" ignored="false" />
     <file path="$USER_HOME$/Dropbox/munichDev/Projekte/QR/Repository/kundenApp/kundenApp/platforms/wp7/www/js/serviceHandler.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393789220455" ignored="false" />
     <file path="$USER_HOME$/Dropbox/munichDev/Projekte/QR/Repository/kundenApp/kundenApp/platforms/wp7/www/js/uiHandler.js" changelist="3ae9adea-8b86-4c60-b380-3c0747792bad" time="1393789220455" ignored="false" />
@@ -43,10 +43,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="101" column="135" selection-start="4765" selection-end="4765" vertical-scroll-proportion="4.605263">
+            <state line="67" column="25" selection-start="2767" selection-end="2767" vertical-scroll-proportion="0.3520871">
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -61,7 +61,7 @@
       <file leaf-file-name="index.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="2" selection-start="1617" selection-end="1617" vertical-scroll-proportion="-12.96">
+            <state line="50" column="0" selection-start="1639" selection-end="1639" vertical-scroll-proportion="-12.96">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -80,10 +80,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="uiController.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="uiController.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/uiController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="399" column="17" selection-start="12658" selection-end="12699" vertical-scroll-proportion="0.58536583">
+            <state line="209" column="28" selection-start="6727" selection-end="6727" vertical-scroll-proportion="-6.92">
               <folding />
             </state>
           </provider>
@@ -92,7 +92,7 @@
       <file leaf-file-name="index.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/css/index.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="28" selection-start="2194" selection-end="2194" vertical-scroll-proportion="-18.48">
+            <state line="128" column="17" selection-start="2869" selection-end="2869" vertical-scroll-proportion="-14.28">
               <folding />
             </state>
           </provider>
@@ -134,18 +134,34 @@
         <option value="$PROJECT_DIR$/public/mediaelement/mediaelementplayer.js" />
         <option value="$PROJECT_DIR$/public/js/libs/iscroll-zoom.js" />
         <option value="$PROJECT_DIR$/public/mediaelement/mediaelement-and-player.js" />
-        <option value="$PROJECT_DIR$/public/js/index.js" />
         <option value="$PROJECT_DIR$/public/chosen/chosen.jquery.js" />
         <option value="$PROJECT_DIR$/public/css/theme.css" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/public/css/index.css" />
         <option value="$PROJECT_DIR$/public/js/uiController.js" />
+        <option value="$PROJECT_DIR$/public/js/index.js" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="width" value="1536" />
     <option name="height" value="826" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>CoffeeScript</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -305,7 +321,11 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="fileTemplates" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
@@ -460,15 +480,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="2" selection-start="1617" selection-end="1617" vertical-scroll-proportion="-12.96">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/chosen/chosen.jquery.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="718" column="43" selection-start="25270" selection-end="25270" vertical-scroll-proportion="-2.04">
@@ -485,9 +496,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="128" column="17" selection-start="2869" selection-end="2869" vertical-scroll-proportion="-14.28">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/uiController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="209" column="28" selection-start="6727" selection-end="6727" vertical-scroll-proportion="-6.92">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="0" selection-start="1639" selection-end="1639" vertical-scroll-proportion="-12.96">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="135" selection-start="4765" selection-end="4765" vertical-scroll-proportion="4.605263">
+        <state line="67" column="25" selection-start="2767" selection-end="2767" vertical-scroll-proportion="0.3520871">
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -495,20 +529,6 @@
             <element signature="n#style#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="28" selection-start="2194" selection-end="2194" vertical-scroll-proportion="-18.48">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/uiController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="399" column="17" selection-start="12658" selection-end="12699" vertical-scroll-proportion="0.58536583">
-          <folding />
         </state>
       </provider>
     </entry>

@@ -206,6 +206,12 @@ uiController.init = function () {
         dropOnEmpty: true,
         distance: 0.5,
         connectWith: "#playlistview",
+        sort: function() {
+            console.dir(this)
+            if ($(this).hasClass("cancel")) {
+                return false;
+            }
+        },
         start: function (event, ui) {
             if (!uiController.sortPlaylist)
                 uiController.toggleSortablePlaylist();
@@ -333,7 +339,6 @@ uiController.updateUI = function () {
         }, 100)
 
 
-
         if (uiController.sidePanelOpen) {
 
             $("#searchlist").css("width", $(window).width() - $("#rightpanel").width() - 10);
@@ -356,7 +361,6 @@ uiController.updateUI = function () {
         }
 
 
-
         $("#playlist").css("width", $("#rightpanel").width() - 20);
 
         $("#playlistselectvertical .chosen-container").css("width", "");
@@ -366,11 +370,10 @@ uiController.updateUI = function () {
         $("#playlistselectvertical input").css("max-width", $("#rightpanel").width() - 80);
 
 
-
     }
     else { //Bigger then Smallest size
 
-        if ($("#playlist").parents("#rightpanel").length != 0){
+        if ($("#playlist").parents("#rightpanel").length != 0) {
             $("#playlist").hide().appendTo("#content");
             setTimeout(function () {
                 $("#playlist").fadeIn()
@@ -386,7 +389,7 @@ uiController.updateUI = function () {
                 topDifference = 30;
 
             //Smaller Size
-            if ($(window).width() < uiController.responsiveWidthSmaller&&$(window).width()> uiController.responsiveWidthSmall) {
+            if ($(window).width() < uiController.responsiveWidthSmaller && $(window).width() > uiController.responsiveWidthSmall) {
                 $("#playlist").css("max-height", $(window).height() - 44 - 110);
                 $("#playlistInner").css("max-height", $(window).height() - 44 - 110 - 100 - topDifference);
 
@@ -397,22 +400,23 @@ uiController.updateUI = function () {
             }
         }, 100)
 
-        $("#playlist").css("width", "");
-
 
         $("#searchlist").css("max-height", $(window).height() - 44 - 120);
 
-        $("#searchlist").css("width", "");
+        var setSelectSize = function(){
+            $("#searchlist").css("width", "");
+            $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50);
+            $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50);
+            $("#playlistselectvertical input").css("width", $("#playlist").width() - 60);
+            $("#playlistselectvertical input").css("max-width", $("#playlist").width() - 60);
+        }
+        setSelectSize();
+        $("#playlist").css("width", $(window).width() / 4);
+        setSelectSize();
 
-        $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50);
-        $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50);
-        $("#playlistselectvertical input").css("width", $("#playlist").width() - 60);
-        $("#playlistselectvertical input").css("max-width", $("#playlist").width() - 60);
 
 
     }
-
-
 
 
     //Small Size
@@ -434,7 +438,6 @@ uiController.updateUI = function () {
         $("#content").css({"width": $(window).width() - 16, "height": $(window).height() - 44 - 4 - 8});
 
 
-
     }
     //Big Size
     else {
@@ -448,7 +451,6 @@ uiController.updateUI = function () {
         $("#videoplayer .mejs-time-rail").css("width", $(window).width() / 1.5 - 160 + 10);
         $("#videocontrols .mejs-time-total").css("width", ($(window).width() / 1.5 - 160) / 1.3);
         $("#videocontrols .mejs-time-rail").css("width", ($(window).width() / 1.5 - 160) / 1.3 + 10);
-
 
 
         $("#content").css({"width": $(window).width() - 32, "height": $(window).height() - 44 - 4 - 32});
