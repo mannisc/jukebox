@@ -1,11 +1,11 @@
 /**
- * uiController.
+ * uiController.js
  *
  * >>Description<<
  *
  * @author Manfred
  * @date 01.03.14 - 11:08
- * @copyright munichDev UG
+ * @copyright jezz
  */
 
 
