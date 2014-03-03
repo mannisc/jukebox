@@ -21,7 +21,10 @@ mediaController.playStream =function(playString){
         success:function(streamURL){
 
             if(streamURL){
+
+                uiController.mediaElementPlayer.pause();
                 uiController.mediaElementPlayer.setSrc(streamURL);
+                uiController.mediaElementPlayer.load();
                 uiController.mediaElementPlayer.play();
 
             }
