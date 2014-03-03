@@ -43,7 +43,7 @@ var app = {
 };
 
 var preferences = {
-    serverURL : "http://localhost/"
+    serverURL : "http://localhost:3001/"
 }
 
 
