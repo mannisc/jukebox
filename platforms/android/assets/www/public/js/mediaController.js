@@ -13,11 +13,21 @@ var mediaController = function () {
 
 
 
-mediaController.playStream =function(searchString){
-    var streamURL = "";
+mediaController.playStream =function(playString){
 
-    //TODO 
 
-    uiController.mediaElementPlayer.setSrc(streamURL);
-    uiController.mediaElementPlayer.play();
+    $.ajax({
+        url:preferences.serverURL+"?play="+playString,
+        success:function(streamURL){
+
+            if(streamURL){
+                uiController.mediaElementPlayer.setSrc(streamURL);
+                uiController.mediaElementPlayer.play();
+
+            }
+
+        }
+    })
+    //TODO
+
 }
