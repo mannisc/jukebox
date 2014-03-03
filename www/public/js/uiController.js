@@ -29,7 +29,7 @@ uiController.init = function () {
 
 
     // Use Fastclicks
-    FastClick.attach(document.body);
+    //FastClick.attach(document.body);
 
     //On Window Resize
     $(window).resize(function () {
