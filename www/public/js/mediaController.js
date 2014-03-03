@@ -22,9 +22,9 @@ mediaController.playStream =function(playString){
 
             if(streamURL){
 
-                uiController.mediaElementPlayer.pause();
+               // uiController.mediaElementPlayer.pause();
                 uiController.mediaElementPlayer.setSrc(streamURL);
-                uiController.mediaElementPlayer.load();
+              //  uiController.mediaElementPlayer.load();
                 uiController.mediaElementPlayer.play();
 
             }
