@@ -65,7 +65,7 @@
                 var args = "ref=" + window.location.hash + "&line=" + linenumber + "&url=" + url + "&message=" + msg;
 
                 $.ajax({
-                    url: OutgoingMessageHandler.qringServerAddress + "/client_error",
+                    url:  "/client_error",
                     type: "POST",
                     data: args,
                     dataType: "json",
