@@ -44,8 +44,23 @@ searchController.searchSongs=function(searchString,title,artist,callbackSuccess)
         success:function(data){
 
           if(data.results&&data.results.trackmatches){
-              if(data.results.trackmatches=="↵"){
-                    //TODO localhost anfragen
+              if(data.results.trackmatches=="\n"){
+
+                  console.dir("Load "+preferences.serverURL+"?searchjson="+searchString);
+                  $.ajax({
+                      url:preferences.serverURL+"?searchjson="+searchString,
+
+                      success:function(data){
+                          console.dir(data);
+                          if(data.results&&data.results){
+                             console.dir(data.results);
+                             if(callbackSuccess)
+                                  callbackSuccess(data.results);
+
+                           }
+                      }
+
+                  })
               }
               else
               {
