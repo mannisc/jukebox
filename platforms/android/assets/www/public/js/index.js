@@ -48,7 +48,6 @@ var preferences = {
 
 
 $(document).ready(function () {
-    alert("!!!!dddd!")
 
     app.isCordova = (window.location.hash == "#cordova" );
 
