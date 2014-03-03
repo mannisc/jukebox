@@ -48,6 +48,7 @@ var preferences = {
 
 
 $(document).ready(function () {
+    alert("!!!!dddd!")
 
     app.isCordova = (window.location.hash == "#cordova" );
 
@@ -58,7 +59,6 @@ $(document).ready(function () {
 
     //Show loaded page
     $("#page").css("opacity", "1");
-
 
 
     //http://localhost:3001/?play=alesso%20under%20control

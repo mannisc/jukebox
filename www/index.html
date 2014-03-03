@@ -37,6 +37,50 @@
     <link rel="stylesheet" type="text/css" href="public/css/libs/jquery.mobile-1.4.2.css"/>
     <link rel="stylesheet" href="public/mediaelement/mediaelementplayer.css"/>
 
+    <script type="text/javascript">
+        //PROVIDE DEBUG INFORMATION
+        if (typeof window.console == "undefined") {
+            window.console = {log: function (str) {
+                window.external.Notify(str);
+            }};
+        }
+
+
+        function  prompt(){
+
+        }
+
+
+        window.onerror = function (msg, url, linenumber) {
+
+            console.log("ERROR! : " + url + "(" + linenumber + ") : " + JSON.stringify(msg));
+
+            // Send Error to server
+            if (true || Math.random() > .1) {
+                // Only log 10% of errors
+                return false;
+            }
+            else {
+
+                var args = "ref=" + window.location.hash + "&line=" + linenumber + "&url=" + url + "&message=" + msg;
+
+                $.ajax({
+                    url:  "/client_error",
+                    type: "POST",
+                    data: args,
+                    dataType: "json",
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    },
+                    success: function (data) {
+                    }
+                });
+
+            }
+        }
+
+        console.log("Installed console ! ");
+    </script>
+
     <title>Jezz JukeBox</title>
 </head>
 <body>
@@ -149,7 +193,7 @@
                 <input id="filterBasic-input" data-type="search" data-theme="a">
             </form-->
             <div id="playlistInner">
-                <ul data-role="listview" id="playlistview" class="sortable connectedSortable">
+                <ul data-role="listview" id="playlistview" class="sortable connectedSortable cancel">
                     <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Acura</a></li>
                     <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Audi</a></li>
                     <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">BMW</a></li>
