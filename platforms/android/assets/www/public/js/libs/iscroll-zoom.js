@@ -523,7 +523,9 @@ IScroll.prototype = {
 	},
 
 	_end: function (e) {
-		if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
+
+
+        if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
 			return;
 		}
 
@@ -1856,7 +1858,8 @@ Indicator.prototype = {
 			case 'touchcancel':
 			case 'MSPointerCancel':
 			case 'mousecancel':
-				this._end(e);
+
+                this._end(e);
 				break;
 		}
 	},
@@ -1942,6 +1945,10 @@ Indicator.prototype = {
 		if ( !this.initiated ) {
 			return;
 		}
+
+
+
+
 
 		this.initiated = false;
 
