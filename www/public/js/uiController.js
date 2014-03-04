@@ -369,6 +369,14 @@ uiController.init = function () {
 
             $(ui.item).css("opacity", "1");
 
+            $("#playlistview").find("li").each(function (index) {
+
+
+
+            })
+
+
+
 
         },
         helper: function (event, $item) {
@@ -388,10 +396,7 @@ uiController.init = function () {
 
     $("#sortplaylisttext").hide();
 
-    $("#sortplaylistbutton").click(function () {
 
-        uiController.toggleSortablePlaylist();
-    })
 
 
     uiController.updateUI();
@@ -485,12 +490,30 @@ uiController.toggleSearchButton = function (button) {
 
 
 
-uiController.toggleSortablePlaylist = function () {
-    uiController.sortPlaylist = !uiController.sortPlaylist
-    if (uiController.sortPlaylist) {
+uiController.toggleSavePlaylist = function () {
+    uiController.savePlaylist = !uiController.savePlaylist;
+    if (uiController.savePlaylist) {
+       // $("#saveplaylistbtn").addClass("redbackground");
+        $("#sortplaylistbtn").hide();
+        $("#playlistselectvertical").hide();
+        $("#saveplaylistinput").show();
+        $("#saveokayplaylistbutton").show();
 
+
+        $("#saveplaylistbtn img").attr("src","public/img/crosswhite.png");
+
+
+        $("#saveplaylistinpt").focus();
 
     }else{
+      //  $("#saveplaylistbtn").removeClass("redbackground");
+        $("#saveplaylistinput").hide();
+        $("#saveokayplaylistbutton").hide();
+
+        $("#sortplaylistbtn").show();
+
+        $("#playlistselectvertical").show();
+        $("#saveplaylistbtn img").attr("src","public/img/save.png");
 
     }
 }
@@ -530,9 +553,8 @@ uiController.toggleSortablePlaylist = function () {
 
     } else {
 
-        $("#playlistview").css("background-color", "");
-
         $("#sortplaylistbtn").removeClass("redbackground");
+        $("#playlistview").css("background-color", "");
 
         $("#playlistInner .iScrollVerticalScrollbar").show();
         $("#playlistselectvertical").show();
@@ -639,6 +661,12 @@ uiController.updateUI = function () {
         $("#sortplaylisttext").css("width", "");
         $("#sortplaylisttext").css("max-width", "");
 
+        $("#saveplaylistinput").css("width", "");
+        $("#saveplaylistinput").css("max-width", "");
+
+
+
+
         $("#playlistselectvertical input").css("width", 110);
         // $("#playlistselectvertical input").css("max-width", 50);
 
@@ -684,8 +712,8 @@ uiController.updateUI = function () {
             $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50-40);
             $("#sortplaylisttext").css("width", $("#playlist").width() - 50-40-10);
             $("#sortplaylisttext").css("max-width", $("#playlist").width() - 50-40-10);
-
-
+            $("#saveplaylistinput").css("width", $("#playlist").width() - 50-40);
+            $("#saveplaylistinput").css("max-width", $("#playlist").width() - 50-40);
 
             $("#playlistselectvertical input").css("width", 110);
             // $("#playlistselectvertical input").css("max-width", 50);

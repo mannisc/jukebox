@@ -224,6 +224,10 @@ input[type=button]{
   background-color:#500!important;
 }
 
+.greenbackground{
+
+    background-color:#050!important;
+}
 
 
 #backgroundImage {
@@ -378,6 +382,15 @@ input[type=button]{
     border: none !important;
 }
 
+.removesong{
+    max-height: 2em!important;
+    max-width: 2em!important;
+    margin-top: -0.5em!important;
+    position: absolute;
+    right: .625em;
+    top: .9em;
+}
+
 #playlist {
     position: absolute;
     z-index: 1;
@@ -456,126 +469,153 @@ input[type=button]{
 
 }
 
-#sortplaylisttext {
-    margin-top: 0px;
+#saveplaylistinput{
+    margin-top: -15px;
     float: left;
-    margin-left: 15px;
-
 }
 
-.chosen-container .chosen-drop {
-    color: #000 !important;
-}
+#saveplaylistinput input{
+    line-height: 1.2em!important;
+     min-height: 2em!important;
+ }
 
-#sortplaylistbutton {
-    float: left;
-    margin-top: -14px;
-}
 
-#sortplaylistbutton .ui-btn {
-    padding: 0.4em 0.5em 0.3em 0.4em !important;
-}
 
-#saveplaylistbutton {
+ #sortplaylisttext {
+     margin-top: 0px;
+     float: left;
+     margin-left: 15px;
+     overflow: hidden;
+     max-height: 20px;
+ }
+
+ .chosen-container .chosen-drop {
+     color: #000 !important;
+ }
+
+ #sortplaylistbutton {
+     float: left;
+     margin-top: -14px;
+
+ }
+
+ #sortplaylistbutton .ui-btn {
+     padding: 0.4em 0.5em 0.3em 0.4em !important;
+ }
+
+#saveokayplaylistbutton {
     float: left;
     margin-top: -14px;
     margin-left: 5px;
+
 }
 
-#saveplaylistbutton .ui-btn {
+#saveokayplaylistbutton .ui-btn {
     padding: 0.4em 0.5em 0.3em 0.4em !important;
 }
 
 
-#rightpanel {
-    width: 300px !important;
-    max-width: 100% !important;
-}
 
-#videoplayer {
-    position: absolute;
-    bottom: 60px;
-    text-align: center;
-    pointer-events: none;
-    z-index: 10000;
+ #saveplaylistbutton {
+     float: left;
+     margin-top: -14px;
+     margin-left: 5px;
+ }
 
-}
-
-#videoplayerInner {
-    display: inline-block;
-    pointer-events: auto;
-    z-index: 2 !important;
-
-}
-
-#videoplayerInner .mejs-mediaelement {
-    text-align: center;
-}
+ #saveplaylistbutton .ui-btn {
+     padding: 0.4em 0.5em 0.3em 0.4em !important;
+ }
 
 
-#videoplayer.scaleVideo1{
+ #rightpanel {
+     width: 300px !important;
+     max-width: 100% !important;
+ }
 
--webkit-transform: scale(1);
-transform: scale(1);
--webkit-transform-origin: 50% 100%;
-transform-origin: 50% 100%;
+ #videoplayer {
+     position: absolute;
+     bottom: 60px;
+     text-align: center;
+     pointer-events: none;
+     z-index: 10000;
 
-}
+ }
 
-#videoplayer.scaleVideo2{
+ #videoplayerInner {
+     display: inline-block;
+     pointer-events: auto;
+     z-index: 2 !important;
 
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
+ }
 
-}
-
-
-
-#videoplayer.animate {
-    -webkit-transition: all 1.5s ease;
-    -moz-transition: all 1.5s ease;
-    -o-transition: all 1.5s ease;
-    transition: all 1.5s ease;
-}
-
-#videoplayerInner{
-    border: 1px solid #000;
-    background:#000!important;
-}
+ #videoplayerInner .mejs-mediaelement {
+     text-align: center;
+ }
 
 
-#videoplayerInner video {
-    -webkit-transition: width 1.5s ease;
-    -moz-transition: width 1.5s ease;
-    -o-transition: width 1.5s ease;
-    transition: width 1.5s ease;
+ #videoplayer.scaleVideo1{
 
-}
+ -webkit-transform: scale(1);
+ transform: scale(1);
+ -webkit-transform-origin: 50% 100%;
+ transform-origin: 50% 100%;
 
-#videoccontrols  .mejs-time-rail {
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    transition: all 1s ease;
-}
+ }
+
+ #videoplayer.scaleVideo2{
+
+     -webkit-transform: scale(1);
+     transform: scale(1);
+     -webkit-transform-origin: 50% 100%;
+     transform-origin: 50% 100%;
+
+ }
 
 
 
+ #videoplayer.animate {
+     -webkit-transition: all 1.5s ease;
+     -moz-transition: all 1.5s ease;
+     -o-transition: all 1.5s ease;
+     transition: all 1.5s ease;
+ }
 
-#videocontrols {
-    z-index:  10001;
-    overflow: hidden;
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    height: 230px;
-    left: 0px;
+ #videoplayerInner{
+     border: 1px solid #000;
+     background:#000!important;
+ }
 
-    pointer-events: none;
 
-    background-color: #1d1d1d /*{b-bar-background-color}*/;
+ #videoplayerInner video {
+     -webkit-transition: width 1.5s ease;
+     -moz-transition: width 1.5s ease;
+     -o-transition: width 1.5s ease;
+     transition: width 1.5s ease;
+
+ }
+
+ #videoccontrols  .mejs-time-rail {
+     -webkit-transition: all 1s ease;
+     -moz-transition: all 1s ease;
+     -o-transition: all 1s ease;
+     transition: all 1s ease;
+ }
+
+
+
+
+ #videocontrols {
+     z-index:  10001;
+     overflow: hidden;
+     position: absolute;
+     bottom: 0px;
+     width: 100%;
+     height: 230px;
+     left: 0px;
+
+     pointer-events: none;
+
+     background-color: #1d1d1d /*{b-bar-background-color}*/;
     border-color: #1b1b1b /*{b-bar-border}*/;
     color: #fff /*{b-bar-color}*/;
     text-shadow: 0 /*{b-bar-shadow-x}*/ 1px /*{b-bar-shadow-y}*/ 0 /*{b-bar-shadow-radius}*/ #111 /*{b-bar-shadow-color}*/;
@@ -680,6 +720,58 @@ transform-origin: 50% 100%;
 }
 
 
+.fadeslideincompletefastconst {
+    opacity: 0; /* make things invisible upon start */
+    -webkit-animation: fadeslideincompleteconst ease 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: fadeslideincompleteconst ease 1;
+    animation: fadeslideincompleteie ease 1;
+
+    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode: forwards; /*FF 5+*/
+    -o-animation-fill-mode: forwards; /*Not implemented yet*/
+    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards; /*when the spec is finished*/
+
+    -webkit-animation-duration: 300ms;
+    -moz-animation-duration: 1000ms;
+    animation-duration: 300ms;
+}
+
+
+/* make keyframes that tell the start state and the end state of our object */
+@-webkit-keyframes fadeslideincompleteconst {
+    from {
+        opacity: 0;
+        margin-top: -5px;
+        padding-bottom: 5px;
+
+
+    }
+    to {
+        opacity: 1;
+        margin-top: 0px;
+        padding-bottom: 0px;
+
+    }
+}
+
+
+/* make keyframes that tell the start state and the end state of our object */
+@-moz-keyframes fadeslideincompleteconst {
+    from {
+        opacity: 0;
+        margin-top: -5px;
+        padding-bottom: 5px;
+
+
+    }
+    to {
+        opacity: 1;
+        margin-top: 0px;
+        padding-bottom: 0px;
+
+    }
+}
 
 
 
