@@ -22,6 +22,7 @@ mediaController.playStream = function (playString) {
     var func = function (searchString,streamURL,streamID) {
         if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
             $.ajax({
+                timeout:30000,
                 url: preferences.serverURL + "?play=" + searchString,
                 success: function (data) {
                     if(streamID == mediaController.playCounter){
