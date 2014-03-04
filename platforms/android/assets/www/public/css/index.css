@@ -96,9 +96,7 @@ body {
         width: 340px !important;
     }
 
-    #videoplayer {
-        visibility: hidden;
-    }
+
 
     #controlbar .ui-input-btn {
         margin-bottom: 0px !important;
@@ -113,7 +111,7 @@ body {
     }
 
     #searchlist {
-        margin-top: 35px;
+        margin-top: 55px;
     }
 
     #controlbar .ui-input-search {
@@ -159,10 +157,67 @@ body {
 /*Small Screen*/
 @media (max-height:350px) {
 
-    #videoplayer {
-        visibility: hidden;
-    }
+
 }
+
+
+/*
+input[type=button]{
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aebcbf), color-stop(50%,#6e7774), color-stop(51%,#0a0e0a), color-stop(100%,#0a0809))!important;
+    color: white!important;
+    border: none;
+}
+*/
+
+
+/* button hover style if required */
+.ui-input-btn:hover {
+
+}
+/* generated element for shine effect.
+ * normal state is semi-transparent
+ * white but with zero width. Set no
+ * transition here for no mouse-leave
+ * animations. Otherwise the effect
+ * will play in reverse when your mouse
+ * leaves the element
+ */
+.ui-input-btn:after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 0%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.05);
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+
+}
+/* on hover we animate the width to
+ * 100% and opacity to 0 so the element
+ * grows and fades out
+ */
+.ui-input-btn:hover:after {
+    width: 120%;
+    background-color: rgba(255,255,255,0);
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+
+.redbackground{
+
+  background-color:#500!important;
+}
+
+
 
 #backgroundImage {
     width: 100%;
@@ -190,16 +245,17 @@ body {
 #controlbar .ui-input-btn {
     float: left;
     margin-right: 10px;;
+    padding: .5em 1em;
+
 }
 
-#controlbar .ui-btn {
-    padding: .5em 1em;
+#controlbar input.ui-btn {
 
 }
 
 .draggedlistelement {
     z-index: 2000 !important;
-    width: 200px !important;
+    width: 300px !important;
     padding: 0;
     list-style: none;
     background: #4617B4 !important;
@@ -212,7 +268,7 @@ body {
     border: none !important;
     color: #fff !important;
     min-height: 1.25em;
-
+    width: 240px !important;
     margin: 0;
     display: block;
     position: relative;
@@ -247,12 +303,20 @@ body {
 #searchlist {
     position: absolute;
     z-index: 1;
-    top: 65px;
+    top: 55px;
     left: 10px;
     height: 100%;
     background: none;
     overflow: hidden;
 }
+
+#searchlist {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
 
 #searchlist ul {
     margin-left: 8px !important;
@@ -306,6 +370,14 @@ body {
 
 }
 
+
+#playlistInner{
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
 #playlistInner {
     position: absolute;
     bottom: 0px;
@@ -341,6 +413,7 @@ body {
     -ms-text-size-adjust: none;
     -o-text-size-adjust: none;
     text-size-adjust: none;
+    min-height:95%;
 
 }
 
@@ -383,7 +456,7 @@ body {
 }
 
 #sortplaylistbutton .ui-btn {
-    padding: .5em 0.7em !important;
+    padding: 0.4em 0.5em 0.3em 0.4em !important;
 }
 
 #rightpanel {
@@ -393,10 +466,10 @@ body {
 
 #videoplayer {
     position: absolute;
-    bottom: 10px;
+    bottom: 60px;
     text-align: center;
     pointer-events: none;
-    z-index: 2;
+    z-index: 10000;
 
 }
 
@@ -410,6 +483,40 @@ body {
 #videoplayerInner .mejs-mediaelement {
     text-align: center;
 }
+
+
+#videoplayer.scaleVideo1{
+
+-webkit-transform: scale(1);
+transform: scale(1);
+-webkit-transform-origin: 50% 100%;
+transform-origin: 50% 100%;
+
+}
+
+#videoplayer.scaleVideo2{
+
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+
+}
+
+
+
+#videoplayer.animate {
+    -webkit-transition: all 1.5s ease;
+    -moz-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
+    transition: all 1.5s ease;
+}
+
+#videoplayerInner{
+    border: 1px solid #000;
+    background:#000!important;
+}
+
 
 #videoplayerInner video {
     -webkit-transition: width 1.5s ease;
@@ -426,8 +533,11 @@ body {
     transition: all 1s ease;
 }
 
+
+
+
 #videocontrols {
-    z-index: 1;
+    z-index:  10001;
     overflow: hidden;
     position: absolute;
     bottom: 0px;
@@ -517,9 +627,9 @@ body {
     -ms-animation-fill-mode: forwards; /*IE 10+*/
     animation-fill-mode: forwards; /*when the spec is finished*/
 
-    -webkit-animation-duration: 200ms;
-    -moz-animation-duration: 200ms;
-    animation-duration: 200ms;
+    -webkit-animation-duration: 100ms;
+    -moz-animation-duration: 100ms;
+    animation-duration: 100ms;
 }
 
 /* make keyframes that tell the start state and the end state of our object */

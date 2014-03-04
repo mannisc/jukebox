@@ -17,7 +17,7 @@
     specific language governing permissions and limitations
     under the License.
 -->
-<html>
+<html ng-app>
 <head>
     <!--meta charset="utf-8"/>
     <meta name="format-detection" content="telephone=no"/>
@@ -30,12 +30,12 @@
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 
-    <link rel="stylesheet" type="text/css" href="public/chosen/chosen.min.css"/>
+    <link rel="stylesheet" type="text/css" href="public/js/libs/chosen/chosen.min.css"/>
 
     <link rel="stylesheet" type="text/css" href="public/css/index.css"/>
     <link rel="stylesheet" type="text/css" href="public/css/theme.css"/>
     <link rel="stylesheet" type="text/css" href="public/css/libs/jquery.mobile-1.4.2.css"/>
-    <link rel="stylesheet" href="public/mediaelement/mediaelementplayer.css"/>
+    <link rel="stylesheet" href="public/js/libs/mediaelement/mediaelementplayer.css"/>
 
     <script type="text/javascript">
         //PROVIDE DEBUG INFORMATION
@@ -81,28 +81,22 @@
         console.log("Installed console ! ");
     </script>
 
-    <title>Jezz JukeBox</title>
+    <title>SoundJezz</title>
 </head>
-<body>
-<div data-role="page" id="page" style="opacity:0" data-theme="b">
-    <div data-role="panel" id="leftpanel" data-display="overlay" data-theme="a">
-        <a href="#page" data-rel="close">close</a>
-        <br>
-        Place left Panel content here...
+<body  ng-controller="MainController">
 
-    </div>
-    <!-- /panel -->
+
+<div data-role="page" id="page" style="opacity:0" data-theme="b">
+
 
     <div data-role="panel" id="rightpanel" data-display="overlay" data-position="right" data-theme="b">
-
     </div>
     <!-- /panel -->
-
 
     <div data-role="header" id="header" data-position="fixed">
         <img src="public/img/icon.png" style="position:absolute;left: 8px;top: 8px" width="30px" height="30px">
 
-        <h1>JukeBox</h1>
+        <h1>JezzPlay {{test}}</h1>
         <img src="public/img/bars-white.png" id="openSidePanelBarIcon" onclick="uiController.toggleSidePanel()" style="position:absolute;right: 6px;top: 13px" width="17px" height="20px"/>
 
     </div>
@@ -127,10 +121,10 @@
 
             </div>
             <div id="controlselecthorizontal">
-                <input id="searchbutton1" data-type="button" data-theme="b" onclick="uiController.toggleSearchButton(1);searchController.initSearch()" type="button" value="Songs">
-                <input id="searchbutton2" data-type="button" data-theme="a" onclick="uiController.toggleSearchButton(2)" type="button" value="Favorites">
-                <input id="searchbutton3" data-type="button" data-theme="a" onclick="uiController.toggleSearchButton(3)" type="button" value="Suggestions">
-                <input id="searchbutton4" data-type="button" data-theme="a" onclick="uiController.toggleSearchButton(4)" type="button" value="Playlists">
+                <input id="searchbutton1" data-type="button" data-theme="a" onclick="uiController.toggleSearchButton(1);searchController.initSearch()" type="button" value="Songs">
+                <input id="searchbutton2" data-type="button" data-theme="b" onclick="uiController.toggleSearchButton(2)" type="button" value="Favorites">
+                <input id="searchbutton3" data-type="button" data-theme="b" onclick="uiController.toggleSearchButton(3)" type="button" value="Suggestions">
+                <input id="searchbutton4" data-type="button" data-theme="b" onclick="uiController.toggleSearchButton(4)" type="button" value="Playlists">
             </div>
         </div>
 
@@ -143,34 +137,20 @@
             </form-->
 
             <ul data-role="listview" id="searchlistview" class="connectedSortable">
-                <li  onclick="mediaController.playStream('Pharrell Williams - Happy')"><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Pharrell Williams - Happy</a></li>
-                <li onclick="mediaController.playStream('Pitbull - Timber')"><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Pitbull - Timber</a></li>
-                <li  onclick="mediaController.playStream('Avicii - Hey Brother')"><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Avicii - Hey Brother</a></li>
-                <li class ="draggableSong" ><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">BMW</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Cadillac</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Ferrari</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Acura</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Audi</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">BMW</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Cadillac</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Ferrari</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Acura</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Audi</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">BMW</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Cadillac</a></li>
-                <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Ferrari</a></li>
+                <li  ng-repeat="song in searchResults"   class ="draggableSong fadeincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img src="public/img/playlist.png" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
+
             </ul>
         </div>
 
 
         <div id="playlist" style="opacity:0">
 
-            <h3>Playlist:</h3>
+            <h3>Playlist</h3>
 
             <div id="sortplaylistbutton">
 
-                <button data-mini="true" data-type="button" value="" data-theme="b">
-                    <img src="public/img/sort.png" width="17px" height="17px" alt="Sort"/>
+                <button  id="sortplaylistbtn" data-mini="true" data-type="button" value="" data-theme="b">
+                    <img src="public/img/edit.png" width="22px" height="22px" alt="Sort"/>
                 </button>
 
             </div>
@@ -195,21 +175,8 @@
             </form-->
             <div id="playlistInner">
                 <ul data-role="listview" id="playlistview" class="sortable connectedSortable">
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Acura</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Audi</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">BMW</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Cadillac</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Ferrari</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Acura</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Audi</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">BMW</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Cadillac</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Ferrari</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Acura</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Audi</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">BMW</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Cadillac</a></li>
-                    <li><a href="#"><img src="public/img/playlist.png" alt="France" class="ui-li-icon ui-corner-none">Ferrari</a></li>
+                    <li ng-repeat="song in playlistsResults"  class ="fadeincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img src="public/img/playlist.png" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
+
                 </ul>
             </div>
         </div>
@@ -251,7 +218,7 @@
 
 <!-- Libraries -->
 <!-- AngularJS -->
-<!--script type="text/javascript" src="public/js/libs/angular.js"></script-->
+<script type="text/javascript" src="public/js/libs/angular.js"></script>
 
 <!-- jQuery -->
 <script type="text/javascript" src="public/js/libs/jquery-1.11.0.js"></script>
@@ -269,10 +236,13 @@
 <script type="text/javascript" src="public/js/libs/fastclick.js"></script>
 
 <!-- mediaplayerjs -->
-<script type="text/javascript" src="public/mediaelement/mediaelement-and-player.js"></script>
+<script type="text/javascript" src="public/js/libs/mediaelement/mediaelement-and-player.js"></script>
 
 <!-- mediaplayerjs -->
-<script type="text/javascript" src="public/chosen/chosen.jquery.js"></script>
+<script type="text/javascript" src="public/js/libs/chosen/chosen.jquery.js"></script>
+
+<!-- hammerjs -->
+<script type="text/javascript" src="public/js/libs/hammer.js"></script>
 
 
 <!-- business logic -->
@@ -281,6 +251,12 @@
 <script type="text/javascript" src="public/js/searchController.js"></script>
 
 <script type="text/javascript" src="public/js/mediaController.js"></script>
+
+
+<!-- ng Controlle -->
+<script type="text/javascript" src="public/js/mainModule.js"></script>
+
+<script type="text/javascript" src="public/js/mainController.js"></script>
 
 <!-- Include Business Logic and Start App -->
 <script type="text/javascript" src="public/js/index.js"></script>
