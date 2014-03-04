@@ -121,9 +121,9 @@
 
             </div>
             <div id="controlselecthorizontal">
-                <input id="searchbutton1" data-type="button" data-theme="a" onclick="uiController.toggleSearchButton(1);searchController.initSearch()" type="button" value="Songs">
-                <input id="searchbutton2" data-type="button" data-theme="b" onclick="uiController.toggleSearchButton(2)" type="button" value="Favorites">
-                <input id="searchbutton3" data-type="button" data-theme="b" onclick="uiController.toggleSearchButton(3)" type="button" value="Suggestions">
+                <input id="searchbutton1" data-type="button" data-theme="a" onclick="uiController.toggleSearchButton(1);searchController.startSearch()" type="button" value="Songs">
+                <input id="searchbutton2" data-type="button" data-theme="b" onclick="uiController.toggleSearchButton(2);searchController.showFavorites()" type="button" value="Favorites">
+                <input id="searchbutton3" data-type="button" data-theme="b" onclick="uiController.toggleSearchButton(3);searchController.showSuggestions()" type="button" value="Suggestions">
                 <input id="searchbutton4" data-type="button" data-theme="b" onclick="uiController.toggleSearchButton(4)" type="button" value="Playlists">
             </div>
         </div>
@@ -138,7 +138,7 @@
 
             <ul data-role="listview" id="searchlistview" class="connectedSortable fast3d">
 
-                <li  ng-repeat="song in searchController.searchResults"  class ="draggableSong fadeslideincompletefast fast3d" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
+                <li  ng-repeat="song in searchController.searchResults"  class ="draggableSong fadeslideincompletefast" ng-click="mediaController.playStream(mediaController.getSongArtist(song)+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}</a></li>
 
             </ul>
         </div>
@@ -195,7 +195,7 @@
 
         <div id="videoplayer">
             <div id="videoplayerInner">
-                <video id="player1" controls="controls" preload="none">
+                <video id="player1" controls="controls" autoplay="true">
                     <source src="http://mediaelementjs.com//media/echo-hereweare.mp4" type="video/mp4"/>
                     <source src="http://mediaelementjs.com//media/echo-hereweare.webm" type="video/webm"/>
                     <source src="http://mediaelementjs.com//media/echo-hereweare.ogv" type="video/ogg"/>
