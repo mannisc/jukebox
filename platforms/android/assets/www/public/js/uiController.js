@@ -93,7 +93,6 @@ uiController.init = function () {
         alwaysShowControls: true,
         autosizeProgress: false,
         success: function (mediaElement, domObject) {
-            console.dir(mediaElement)
 
             mediaElement.addEventListener('playing', function (e) {
                 uiController.playedFirst = true;
@@ -117,7 +116,6 @@ uiController.init = function () {
 
         if (uiController.sizeVideo < 4) {
             uiController.sizeVideo = uiController.sizeVideo * 1.5;
-            console.log(uiController.sizeVideo)
             uiController.styleVideo();
 
         }
@@ -128,7 +126,6 @@ uiController.init = function () {
 
         if (uiController.sizeVideo > 0.5) {
             uiController.sizeVideo = uiController.sizeVideo / 1.5;
-            console.log(uiController.sizeVideo)
             uiController.styleVideo();
 
         }
@@ -254,6 +251,10 @@ uiController.init = function () {
         uiController.sidePanelOpen = false;
         uiController.updateUI();
 
+
+        uiController.searchListScroll.enable();
+        uiController.searchListScroll.refresh();
+
         var transform = "translate3d(0px,0px,0px)";
         $("#openSidePanelBarIcon").css({"transition": "0.15s linear", "-transform": transform, "-ms-transform": transform, "-webkit-transform": transform});
         setTimeout(function () {
@@ -264,6 +265,8 @@ uiController.init = function () {
 
     $("#rightpanel").on("panelbeforeopen", function (event, ui) {
         uiController.sidePanelOpen = true;
+        uiController.searchListScroll.disable();
+
         var transform = "translate3d(10px,0px,0px)";
         $("#openSidePanelBarIcon").css({"transition": "0.15s linear", "-transform": transform, "-ms-transform": transform, "-webkit-transform": transform});
         setTimeout(function () {
@@ -301,34 +304,29 @@ uiController.init = function () {
     });
 
     var oldMouseStart = $.ui.draggable.prototype._mouseStart;
-    var oldMouseStartEventArray;
+    var oldMouseStartEventArray,oldMouseStartEventObject;
     $.ui.draggable.prototype._mouseStart = function (event, overrideHandle, noActivation) {
-
-        console.log("START")
 
         uiController.dragSongX = event.clientX;
         uiController.dragSongY = event.clientY;
         uiController.dragSongCheckScrolling = true;
         uiController.dragSongChecked = false;
         uiController.checkSwipeTimer = Date.now();
+
         oldMouseStartEventArray = [event, overrideHandle, noActivation];
-        // oldMouseStart.apply(this, [event, overrideHandle, noActivation]);
+        oldMouseStartEventObject = this;
     };
 
     var oldMouseMove = $.ui.draggable.prototype._mouseMove;
     $.ui.draggable.prototype._mouseMove = function (event, overrideHandle, noActivation) {
 
 
-        console.log(uiController.dragSongCheckScrolling)
-
         if (uiController.dragSongCheckScrolling) {
             uiController.dragSongCheckScrolling = false;
-            console.log(Math.abs(event.clientY - uiController.dragSongY));
 
-
-            if ($("#searchlistview").height() <= $("#searchlist").height() || Math.abs(event.clientY - uiController.dragSongY) < Math.abs(event.clientX - uiController.dragSongX)) {
+            if (uiController.sidePanelOpen||  $("#searchlistview").height() <= $("#searchlist").height() || Math.abs(event.clientY - uiController.dragSongY) < Math.abs(event.clientX - uiController.dragSongX)) {
                 this._trigger("beforeStart", oldMouseStartEventArray[0], this._uiHash());
-                oldMouseStart.apply(this, oldMouseStartEventArray);
+                oldMouseStart.apply(oldMouseStartEventObject, oldMouseStartEventArray);
                 uiController.dragSongChecked = true;
             }
         }
@@ -339,17 +337,15 @@ uiController.init = function () {
             }
 
         }
-
-
-        oldMouseMove.apply(this, [event, overrideHandle, noActivation]);
-
+         oldMouseMove.apply(this, [event, overrideHandle, noActivation]);
     };
 
 
     var oldMouseUp = $.ui.draggable.prototype._mouseUp;
     $.ui.draggable.prototype._mouseUp = function (event, overrideHandle, noActivation) {
-        uiController.stopScrollingOnClick(event);
         oldMouseUp.apply(this, [event, overrideHandle, noActivation]);
+        uiController.stopScrollingOnClick(event);
+
     };
 
 
@@ -420,7 +416,6 @@ uiController.makeSearchListDraggable = function () {
         opacity: 0.9,
         connectToSortable: '#playlistview',
         helper: function (event, ui) {
-            console.dir(this)
 
 
             var $helper = $('<ul></ul>').addClass('draggedlistelement');
@@ -444,7 +439,6 @@ uiController.makeSearchListDraggable = function () {
 
         },
         start: function (event) {
-            console.dir(event)
             uiController.dragSongX = event.clientX;
             uiController.dragSongY = event.clientY;
             uiController.dragSongCheckHorizontal = true;
@@ -668,8 +662,8 @@ uiController.updateUI = function () {
 
         var setSelectSize = function () {
             $("#searchlist").css("width", "");
-            $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50);
-            $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50);
+            $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50-36);
+            $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50-36);
             $("#playlistselectvertical input").css("width", 110);
             // $("#playlistselectvertical input").css("max-width", 50);
         }

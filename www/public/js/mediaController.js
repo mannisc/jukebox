@@ -40,3 +40,18 @@ mediaController.playStream = function (playString) {
     //TODO
 
 }
+
+
+mediaController.getSongCover= function(song){
+
+    var url;
+
+    if(song.image)
+      url =  song.image[0]['#text'];
+
+    if(!url|| $.trim(url) == "")
+        url ="public/img/playlist.png";
+
+    return url;
+}
+

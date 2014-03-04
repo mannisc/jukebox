@@ -96,7 +96,7 @@
     <div data-role="header" id="header" data-position="fixed">
         <img src="public/img/icon.png" style="position:absolute;left: 8px;top: 8px" width="30px" height="30px">
 
-        <h1>JezzPlay {{test}}</h1>
+        <h1>JezzPlay </h1>
         <img src="public/img/bars-white.png" id="openSidePanelBarIcon" onclick="uiController.toggleSidePanel()" style="position:absolute;right: 6px;top: 13px" width="17px" height="20px"/>
 
     </div>
@@ -137,7 +137,7 @@
             </form-->
 
             <ul data-role="listview" id="searchlistview" class="connectedSortable">
-                <li  ng-repeat="song in searchResults"   class ="draggableSong fadeincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img src="public/img/playlist.png" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
+                <li  ng-repeat="song in searchResults"  class ="draggableSong fadeslideincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
 
             </ul>
         </div>
@@ -154,6 +154,7 @@
                 </button>
 
             </div>
+
             <div id="sortplaylisttext">
                 Drag and Drop Songs
             </div>
@@ -169,13 +170,19 @@
 
                 </form>
             </div>
+            <div id="saveplaylistbutton">
 
+                <button  id="saveplaylistbtn" data-mini="true" data-type="button" value="" data-theme="b">
+                    <img src="public/img/edit.png" width="22px" height="22px" alt="Sort"/>
+                </button>
+
+            </div>
             <!--form class="ui-filterable" >
                 <input id="filterBasic-input" data-type="search" data-theme="a">
             </form-->
             <div id="playlistInner">
                 <ul data-role="listview" id="playlistview" class="sortable connectedSortable">
-                    <li ng-repeat="song in playlistsResults"  class ="fadeincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img src="public/img/playlist.png" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
+                    <li ng-repeat="song in playlistsResults"  class ="fadeslideincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
 
                 </ul>
             </div>

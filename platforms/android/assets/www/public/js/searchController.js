@@ -17,10 +17,12 @@ searchController.startSearch = function (searchString) {
     var complete = function (list) {
 
         console.log(JSON.stringify(list))
-        console.dir(list)
+        console.dir(list.track)
 
         //$("#searchlistview").hide();
-        $scope.searchResults = list.track
+        $scope.searchResults = list.track;
+
+
         $scope.safeApply();
         $("#searchlistview").listview('refresh');
 
