@@ -715,8 +715,8 @@
     };
 
     Chosen.prototype.results_build = function() {
-        console.dir( this.form_field)
-        console.log(this.form_field.options)
+       // console.dir( this.form_field)
+       // console.log(this.form_field.options)
 
         if(!this.form_field.options)
             this.form_field.options =[];

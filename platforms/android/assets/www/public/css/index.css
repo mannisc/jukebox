@@ -32,6 +32,9 @@ body {
     margin: 0px;
     padding: 0px;
     width: 100%;
+    position:fixed;
+    top: 0px;
+    left:0px;
 
 }
 
@@ -382,14 +385,18 @@ input[type=button]{
     border: none !important;
 }
 
-.removesong{
-    max-height: 2em!important;
-    max-width: 2em!important;
-    margin-top: -0.5em!important;
+.ui-li-has-icon img.removesong{
+    max-height: 1.8em!important;
+    max-width: 1.6em!important;
+    margin-top: -0.3em!important;
     position: absolute;
-    right: .625em;
+    right: 0.6em;
     top: .9em;
 }
+.ui-li-has-icon img.removesong:hover{
+   content:url(../img/trashopen.png)
+}
+
 
 #playlist {
     position: absolute;
@@ -402,7 +409,7 @@ input[type=button]{
 }
 
 
-#playlistInner{
+#playlistInner.animate{
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -418,6 +425,9 @@ input[type=button]{
     height: 100%;
     background: none;
     overflow: hidden;
+    margin-left: -8px;
+    background-color : rgba(255,255,255,0.1);
+
 }
 
 #playlistInner ul {
@@ -446,6 +456,7 @@ input[type=button]{
     text-size-adjust: none;
     min-height:99%;
 
+
 }
 
 #playlistInner a {
@@ -465,7 +476,6 @@ input[type=button]{
 #playlistselectvertical {
     margin-top: -5px;
     float: left;
-    margin-left: 5px;
 
 }
 
@@ -484,19 +494,21 @@ input[type=button]{
  #sortplaylisttext {
      margin-top: 0px;
      float: left;
-     margin-left: 15px;
+     margin-left: 10px;
      overflow: hidden;
      max-height: 20px;
  }
 
- .chosen-container .chosen-drop {
+
+
+.chosen-container .chosen-drop {
      color: #000 !important;
  }
 
  #sortplaylistbutton {
      float: left;
      margin-top: -14px;
-
+     margin-left: 5px;
  }
 
  #sortplaylistbutton .ui-btn {
