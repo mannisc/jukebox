@@ -138,7 +138,7 @@
 
             <ul data-role="listview" id="searchlistview" class="connectedSortable fast3d">
 
-                <li  ng-repeat="song in searchResults"  class ="draggableSong fadeslideincompletefast fast3d" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
+                <li  ng-repeat="song in searchController.searchResults"  class ="draggableSong fadeslideincompletefast fast3d" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
 
             </ul>
         </div>
@@ -187,7 +187,7 @@
             </form-->
             <div id="playlistInner">
                 <ul data-role="listview" id="playlistview" class="sortable connectedSortable">
-                    <li ng-repeat="song in playlistsResults"  class ="fadeslideincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
+                    <li ng-repeat="song in playlistController.loadedPlaylistSongs"  class ="fadeslideincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
 
                 </ul>
             </div>
@@ -263,6 +263,8 @@
 <script type="text/javascript" src="public/js/searchController.js"></script>
 
 <script type="text/javascript" src="public/js/mediaController.js"></script>
+
+<script type="text/javascript" src="public/js/playlistController.js"></script>
 
 
 <!-- ng Controlle -->

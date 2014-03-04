@@ -11,6 +11,11 @@ var searchController = function () {
 
 };
 
+
+searchController.searchResults = [];
+
+
+
 searchController.startSearch = function (searchString) {
 
 
@@ -20,7 +25,7 @@ searchController.startSearch = function (searchString) {
         console.dir(list.track)
 
         //$("#searchlistview").hide();
-        $scope.searchResults = list.track;
+        searchController.searchResults = list.track;
 
 
         $scope.safeApply();
