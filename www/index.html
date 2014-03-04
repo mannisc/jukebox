@@ -136,9 +136,9 @@
                 <input id="filterBasic-input" data-type="search" data-theme="a">
             </form-->
 
-            <ul data-role="listview" id="searchlistview" class="connectedSortable">
+            <ul data-role="listview" id="searchlistview" class="connectedSortable fast3d">
 
-                <li  ng-repeat="song in searchResults"  class ="draggableSong fadeslideincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
+                <li  ng-repeat="song in searchResults"  class ="draggableSong fadeslideincompletefast fast3d" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
 
             </ul>
         </div>

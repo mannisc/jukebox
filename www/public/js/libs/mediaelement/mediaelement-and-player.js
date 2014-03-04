@@ -3234,7 +3234,7 @@ if (typeof jQuery != 'undefined') {
 					// mouse position relative to the object
 					var x = e.pageX,
 						offset = total.offset(),
-						width = total.outerWidth(true)*MediaElementPlayer.prototype.extoptions.scale/1.023,
+						width = total.outerWidth(true)*MediaElementPlayer.prototype.extoptions.scale/1.023, //CHANGED!!!!!
 						percentage = 0,
 						newTime = 0,
 						pos = 0;
@@ -3257,7 +3257,7 @@ if (typeof jQuery != 'undefined') {
 						}
 
 						// position floating time box
-						if (MediaElementPlayer.prototype.extoptions.displayBox&&!mejs.MediaFeatures.hasTouch) {
+						if (MediaElementPlayer.prototype.extoptions.displayBox&&!mejs.MediaFeatures.hasTouch) {//CHANGED!!!!!
 								timefloat.css('left', pos);
 								timefloatcurrent.html( mejs.Utility.secondsToTimeCode(newTime) );
 								timefloat.show();
@@ -3291,7 +3291,7 @@ if (typeof jQuery != 'undefined') {
 					t.globalBind('mousemove.dur', function(e) {
 						handleMouseMove(e);
 					});
-					if (MediaElementPlayer.prototype.extoptions.displayBox&&!mejs.MediaFeatures.hasTouch) {
+					if (MediaElementPlayer.prototype.extoptions.displayBox&&!mejs.MediaFeatures.hasTouch) { //CHANGED!!!!!
 						timefloat.show();
 					}
 				})
@@ -3578,7 +3578,7 @@ if (typeof jQuery != 'undefined') {
 				if (mode == 'vertical') {
 				
 					var
-						railHeight = volumeTotal.height()*MediaElementPlayer.prototype.extoptions.scale/1.023,
+						railHeight = volumeTotal.height()*MediaElementPlayer.prototype.extoptions.scale/1.023,//CHANGED!!!!!
 						totalTop = parseInt(volumeTotal.css('top').replace(/px/,''),10),
 						newY = e.pageY - totalOffset.top;
 						
