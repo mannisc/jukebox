@@ -11,8 +11,56 @@ var searchController = function () {
 
 };
 
+searchController.startSearch = function (searchString) {
 
-searchController.initSearch=function(){
+
+    var complete = function (list) {
+
+        console.log(JSON.stringify(list))
+        console.dir(list)
+
+        //$("#searchlistview").hide();
+        $scope.searchResults = list.track
+        $scope.safeApply();
+        $("#searchlistview").listview('refresh');
+
+        //  $("#searchlistview").show();
+        uiController.searchListScroll.refresh();
+        uiController.makeSearchListDraggable();
+        setTimeout(function () {
+            $("#searchlistview li").removeClass("fadeincompletefast");
+        }, 100)
+
+    }
+
+    searchController.search(searchString, complete);
+}
+
+searchController.init = function () {
+
+    $("#searchinput").on("input", function () {
+        searchController.lastSearchTerm = $("#searchinput").val();
+        setTimeout(function () {
+            if (searchController.lastSearchedTerm != searchController.lastSearchTerm) {
+                if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > 300) {
+                    searchController.autoSearchTimer = Date.now();
+                    searchController.lastSearchedTerm = searchController.lastSearchTerm;
+                    searchController.startSearch(searchController.lastSearchTerm)
+                }
+            }
+        }, 300);
+
+        if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > 300) {
+            searchController.autoSearchTimer = Date.now();
+            searchController.lastSearchedTerm = searchController.lastSearchTerm;
+            searchController.startSearch(searchController.lastSearchTerm)
+        }
+
+    })
+
+}
+
+searchController.initSearch = function () {
 
 
     searchController.search($("#searchinput").val());
@@ -21,49 +69,59 @@ searchController.initSearch=function(){
 }
 
 
+searchController.search = function (searchString, callback) {
 
-
-searchController.search=function(searchString,callback){
-   // searchController.topTracks();
-   // searchController.suggestions("Diamonds","Rihanna");
-    searchController.searchSongs(searchString,"","",callback);
+    searchController.searchSongs(searchString, "", "", callback);
 }
 
 
-searchController.searchSongs=function(searchString,title,artist,callbackSuccess){
+searchController.searchSongs = function (searchString, title, artist, callbackSuccess) {
+
+    var list = [];
+
+    //list.push({a:"b"})
+
+
+    list.unshift();
+
+
     $.ajax({
-        url:"http://ws.audioscrobbler.com/2.0/?method=track.search&track="+searchString+"&page=1&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
-        success:function(data){
+        url: "http://ws.audioscrobbler.com/2.0/?method=track.search&track=" + searchString + "&page=1&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
+        success: function (data) {
 
-          if(data.results&&data.results.trackmatches){
-              if(data.results.trackmatches=="\n"){
+            if (data.results && data.results.trackmatches) {
+                if (data.results.trackmatches == "\n") {
 
-                  console.dir("Load "+preferences.serverURL+"?searchjson="+searchString);
-                  $.ajax({
-                      url:preferences.serverURL+"?searchjson="+searchString,
+                    console.dir("Load " + preferences.serverURL + "?searchjson=" + searchString);
+                    $.ajax({
+                        url: preferences.serverURL + "?searchjson=" + searchString,
 
-                      success:function(data){
-                          console.dir(data);
-                          if(data.results&&data.results){
-                             console.dir(data.results);
-                             if(callbackSuccess)
-                                  callbackSuccess(data.results);
+                        success: function (data) {
+                            console.dir(data);
+                            if (data.results && data.results) {
+                                console.dir(data.results);
+                                if (callbackSuccess)
+                                    callbackSuccess(data.results);
 
-                           }
-                      }
+                            }
+                        }
 
-                  })
-              }
-              else
-              {
-                 console.dir(data.results.trackmatches);
-                 if(callbackSuccess)
-                   callbackSuccess(data.results.trackmatches);
+                    })
+                }
+                else {
+                    console.dir(data.results);
+                    if (callbackSuccess)
+                        callbackSuccess(data.results.trackmatches);
 
-              }
-          }
+                }
+
+
+            }
+
         }
     })
+
+
 }
 
 searchController.topTracks=function(callbackSuccess){
@@ -99,6 +157,8 @@ searchController.suggestions=function(title,artist,callbackSuccess){
         }
     })
 }
+
+
 /*
  var func = function(){
  alert(1000);

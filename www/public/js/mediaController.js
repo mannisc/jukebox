@@ -12,29 +12,31 @@ var mediaController = function () {
 };
 
 
+mediaController.playStream = function (playString) {
 
-mediaController.playStream =function(playString){
 
-    console.dir(preferences.serverURL+"?play="+playString);
-    $.ajax({
+    if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
+        $.ajax({
+            url: preferences.serverURL + "?play=" + playString,
+            success: function (streamURL) {
 
-        url:preferences.serverURL+"?play="+playString,
-        success:function(streamURL){
-            if(streamURL){
+                if (streamURL) {
 
-               // uiController.mediaElementPlayer.pause();
-                console.dir(streamURL);
-                uiController.mediaElementPlayer.setSrc(streamURL);
-              //  uiController.mediaElementPlayer.load();
-                uiController.mediaElementPlayer.play();
+                    // uiController.mediaElementPlayer.pause();
+                    uiController.mediaElementPlayer.setSrc(streamURL);
+                    //  uiController.mediaElementPlayer.load();
+                    uiController.mediaElementPlayer.play();
+
+
+
+                }
 
             }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert("Server is not responding!");
+        })
 
-        }
-    })
+    }
+
+
     //TODO
 
 }
