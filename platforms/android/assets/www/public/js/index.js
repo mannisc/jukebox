@@ -54,7 +54,7 @@ $(document).ready(function () {
 
 
     uiController.init();
-
+    searchController.init();
 
     //Show loaded page
     $("#page").css("opacity", "1");
