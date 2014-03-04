@@ -20,6 +20,12 @@ searchController.completeSearch =  function (list) {
 
     searchController.searchResults = list.track;
 
+    for(var i=0;i<searchController.searchResults.length;i++){
+        searchController.searchResults[i].id = i;
+    }
+
+
+
     $scope.safeApply();
     $("#searchlistview").listview('refresh');
 
