@@ -121,6 +121,8 @@
 
             </div>
             <div id="controlselecthorizontal">
+
+
                 <input id="searchbutton1" data-type="button" data-theme="a" onclick="uiController.toggleSearchButton(1);searchController.startSearch()" type="button" value="Songs">
                 <input id="searchbutton2" data-type="button" data-theme="b" onclick="uiController.toggleSearchButton(2);searchController.showFavorites()" type="button" value="Favorites">
                 <input id="searchbutton3" data-type="button" data-theme="b" onclick="uiController.toggleSearchButton(3);searchController.showSuggestions()" type="button" value="Suggestions">
@@ -150,7 +152,7 @@
 
             <div id="sortplaylistbutton">
 
-                <button  id="sortplaylistbtn" data-mini="true" data-type="button" value="" data-theme="b">
+                <button  id="sortplaylistbtn" onclick = "uiController.toggleSortablePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
                     <img src="public/img/edit.png" width="22px" height="22px" alt="Sort"/>
                 </button>
 
@@ -171,23 +173,31 @@
 
                 </form>
             </div>
-            <!--div id="saveplaylistinput" >
+            <div id="saveplaylistinput" style="display:none">
                     <input id="saveplaylistinpt" class ="ui-input ui-body-a ui-corner-all ui-shadow-inset" data-theme="a" placeholder="Enter Name">
-            </div-->
+            </div>
 
-            <div id="saveplaylistbutton">
+            <div id="saveokayplaylistbutton"  style="display:none">
 
-                <button  id="saveplaylistbtn" data-mini="true" data-type="button" value="" data-theme="b">
-                    <img src="public/img/save.png" width="22px" height="22px" alt="Sort"/>
+                <button  id="saveokayplaylistbtn"  onclick = "uiController.toggleSavePlaylist();"  class="greenbackground" data-mini="true" data-type="button" value="" data-theme="b">
+                    <img src="public/img/check.png" width="22px" height="22px" alt="Sort" />
                 </button>
 
             </div>
+
+
+            <div id="saveplaylistbutton">
+                <button  id="saveplaylistbtn"  onclick = "uiController.toggleSavePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
+                    <img src="public/img/save.png" width="22px" height="22px" alt="Sort"/>
+                </button>
+            </div>
+
             <!--form class="ui-filterable" >
                 <input id="filterBasic-input" data-type="search" data-theme="a">
             </form-->
             <div id="playlistInner">
                 <ul data-role="listview" id="playlistview" class="sortable connectedSortable">
-                    <li ng-repeat="song in playlistController.loadedPlaylistSongs"  class ="fadeslideincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
+                    <li ng-repeat="song in playlistController.loadedPlaylistSongs"  class ="fadeslideincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" >{{song.artist}} - {{song.name}}</a><img class="removesong" src="public/img/cross.png"></li>
 
                 </ul>
             </div>
