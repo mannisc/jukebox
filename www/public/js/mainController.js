@@ -19,9 +19,8 @@
  * @param $timeout
  * @constructor
  */
-function MainController($scope,$compile) {
+function MainController($scope) {
     window.$scope = $scope;
-    window.$compile = $compile;
     //Safe NG Apply, applies changed to the $scope model to the html dom
     $scope.safeApply = function () {
         var phase = this.$root.$$phase;
@@ -29,8 +28,6 @@ function MainController($scope,$compile) {
             this.$apply();
         }
     };
-
-
 
     //Bind Controllers
     $scope.mediaController = mediaController;

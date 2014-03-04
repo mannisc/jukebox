@@ -495,7 +495,6 @@ mejs.HtmlMediaElement = {
 
        $(this).load(); //CHANGED
 
-
         // $(newVideo).play();
 
 
