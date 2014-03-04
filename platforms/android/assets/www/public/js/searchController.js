@@ -17,8 +17,7 @@ searchController.searchResults =[];
 searchController.SearchCounter = 0;
 
 searchController.completeSearch =  function (list) {
-    console.log(JSON.stringify(list))
-    console.dir(list.track)
+
     searchController.searchResults = list.track;
 
     $scope.safeApply();
@@ -44,8 +43,39 @@ searchController.showFavorites = function () {
 
 }
 
+searchController.emptySearchList = function () {
+    searchController.searchResults =[];
+    searchController.SearchCounter = 0;
+    $scope.safeApply();
+    $("#searchlistview").listview('refresh');
+
+    uiController.searchListScroll.refresh();
+    uiController.makeSearchListDraggable();
+    setTimeout(function () {
+        $("#searchlistview li").removeClass("fadeincompletefast");
+    }, 100)
+
+}
+
 searchController.showSuggestions = function () {
-    searchController.suggestions("diamonds","rihanna",searchController.completeSearch);
+    var index;
+    var song;
+    if(playlistController.loadedPlaylistSongs.length > 0 ){
+        index = Math.round(Math.random()*(playlistController.loadedPlaylistSongs.length-1));
+
+        song = playlistController.loadedPlaylistSongs[index];
+    }
+    else if(searchController.searchResults.length > 0 ){
+        index = Math.round(Math.random()*(searchController.searchResults.length-1));
+        song = searchController.searchResults[index];
+    }
+    if(song){
+        searchController.suggestions(song.name,mediaController.getSongArtist(song),searchController.completeSearch);
+    }
+    else
+    {
+        searchController.topTracks(searchController.completeSearch);
+    }
 
 
 }
@@ -54,21 +84,23 @@ searchController.showSuggestions = function () {
 searchController.init = function () {
 
     $("#searchinput").on("input", function () {
-        searchController.lastSearchTerm = $("#searchinput").val();
-        setTimeout(function () {
-            if (searchController.lastSearchedTerm != searchController.lastSearchTerm) {
-                if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > 300) {
-                    searchController.autoSearchTimer = Date.now();
-                    searchController.lastSearchedTerm = searchController.lastSearchTerm;
-                    searchController.startSearch(searchController.lastSearchTerm)
+        if( $("#searchinput").val() && $("#searchinput").val() != ""){
+            searchController.lastSearchTerm = $("#searchinput").val();
+            setTimeout(function () {
+                if (searchController.lastSearchedTerm != searchController.lastSearchTerm) {
+                    if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > 300) {
+                        searchController.autoSearchTimer = Date.now();
+                        searchController.lastSearchedTerm = searchController.lastSearchTerm;
+                        searchController.startSearch(searchController.lastSearchTerm)
+                    }
                 }
-            }
-        }, 300);
+            }, 300);
 
-        if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > 300) {
-            searchController.autoSearchTimer = Date.now();
-            searchController.lastSearchedTerm = searchController.lastSearchTerm;
-            searchController.startSearch(searchController.lastSearchTerm)
+            if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > 300) {
+                searchController.autoSearchTimer = Date.now();
+                searchController.lastSearchedTerm = searchController.lastSearchTerm;
+                searchController.startSearch(searchController.lastSearchTerm)
+            }
         }
 
     })
