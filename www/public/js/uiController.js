@@ -483,6 +483,22 @@ uiController.toggleSearchButton = function (button) {
 }
 
 
+
+
+uiController.toggleSortablePlaylist = function () {
+    uiController.sortPlaylist = !uiController.sortPlaylist
+    if (uiController.sortPlaylist) {
+
+
+    }else{
+
+    }
+}
+
+
+
+
+
 uiController.toggleSortablePlaylist = function () {
     uiController.sortPlaylist = !uiController.sortPlaylist
     if (uiController.sortPlaylist) {
@@ -666,8 +682,8 @@ uiController.updateUI = function () {
             $("#searchlist").css("width", "");
             $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50-40);
             $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50-40);
-            $("#sortplaylisttext").css("width", $("#playlist").width() - 50-40);
-            $("#sortplaylisttext").css("max-width", $("#playlist").width() - 50-40);
+            $("#sortplaylisttext").css("width", $("#playlist").width() - 50-40-10);
+            $("#sortplaylisttext").css("max-width", $("#playlist").width() - 50-40-10);
 
 
 
