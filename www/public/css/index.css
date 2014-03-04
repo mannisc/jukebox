@@ -150,8 +150,15 @@ body {
     #playlistselectvertical .chosen-container {
         min-width: 199px !important;
         max-width: 199px !important;
+    }
+
+    #sortplaylisttext {
+        width: 199px !important;
+        max-width: 199px !important;
 
     }
+
+
 }
 
 /*Small Screen*/
@@ -354,8 +361,8 @@ input[type=button]{
 
 
 #searchlist li:hover a img {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
 
@@ -659,7 +666,7 @@ transform-origin: 50% 100%;
     opacity: 0; /* make things invisible upon start */
     -webkit-animation: fadeslideincomplete ease 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
     -moz-animation: fadeslideincomplete ease 1;
-    animation: fadeslideincomplete ease 1;
+    animation: fadeslideincompleteie ease 1;
 
     -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
     -moz-animation-fill-mode: forwards; /*FF 5+*/
@@ -705,15 +712,13 @@ transform-origin: 50% 100%;
 
 
 /* make keyframes that tell the start state and the end state of our object */
-@keyframes fadeslideincomplete {
+@keyframes fadeslideincompleteie {
     from {
         opacity: 0;
-        margin-top: -5px;
 
     }
     to {
         opacity: 1;
-        margin-top: 0px;
     }
 }
 
@@ -754,4 +759,11 @@ transform-origin: 50% 100%;
     to {
         opacity: 1;
     }
+}
+
+
+.fast3d{
+    transform: translate3d(0px,0px,0px); -ms-transform:translate3d(0px,0px,0px);-webkit-transform:translate3d(0px,0px,0px);
+
+
 }
