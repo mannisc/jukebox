@@ -483,6 +483,22 @@ uiController.toggleSearchButton = function (button) {
 }
 
 
+
+
+uiController.toggleSortablePlaylist = function () {
+    uiController.sortPlaylist = !uiController.sortPlaylist
+    if (uiController.sortPlaylist) {
+
+
+    }else{
+
+    }
+}
+
+
+
+
+
 uiController.toggleSortablePlaylist = function () {
     uiController.sortPlaylist = !uiController.sortPlaylist
     if (uiController.sortPlaylist) {
@@ -620,6 +636,8 @@ uiController.updateUI = function () {
 
         $("#playlistselectvertical .chosen-container").css("width", "");
         $("#playlistselectvertical .chosen-container").css("max-width", "");
+        $("#sortplaylisttext").css("width", "");
+        $("#sortplaylisttext").css("max-width", "");
 
         $("#playlistselectvertical input").css("width", 110);
         // $("#playlistselectvertical input").css("max-width", 50);
@@ -662,8 +680,13 @@ uiController.updateUI = function () {
 
         var setSelectSize = function () {
             $("#searchlist").css("width", "");
-            $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50-36);
-            $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50-36);
+            $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50-40);
+            $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50-40);
+            $("#sortplaylisttext").css("width", $("#playlist").width() - 50-40-10);
+            $("#sortplaylisttext").css("max-width", $("#playlist").width() - 50-40-10);
+
+
+
             $("#playlistselectvertical input").css("width", 110);
             // $("#playlistselectvertical input").css("max-width", 50);
         }
