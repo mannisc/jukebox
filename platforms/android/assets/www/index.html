@@ -136,9 +136,9 @@
                 <input id="filterBasic-input" data-type="search" data-theme="a">
             </form-->
 
-            <ul data-role="listview" id="searchlistview" class="connectedSortable">
+            <ul data-role="listview" id="searchlistview" class="connectedSortable fast3d">
 
-                <li  ng-repeat="song in searchResults"  class ="draggableSong fadeslideincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
+                <li  ng-repeat="song in searchResults"  class ="draggableSong fadeslideincompletefast fast3d" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
 
             </ul>
         </div>
@@ -171,10 +171,14 @@
 
                 </form>
             </div>
+            <!--div id="saveplaylistinput" >
+                    <input id="saveplaylistinpt" class ="ui-input ui-body-a ui-corner-all ui-shadow-inset" data-theme="a" placeholder="Enter Name">
+            </div-->
+
             <div id="saveplaylistbutton">
 
                 <button  id="saveplaylistbtn" data-mini="true" data-type="button" value="" data-theme="b">
-                    <img src="public/img/edit.png" width="22px" height="22px" alt="Sort"/>
+                    <img src="public/img/save.png" width="22px" height="22px" alt="Sort"/>
                 </button>
 
             </div>
