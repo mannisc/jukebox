@@ -662,8 +662,8 @@ uiController.updateUI = function () {
 
         var setSelectSize = function () {
             $("#searchlist").css("width", "");
-            $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50-36);
-            $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50-36);
+            $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50-40);
+            $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50-40);
             $("#playlistselectvertical input").css("width", 110);
             // $("#playlistselectvertical input").css("max-width", 50);
         }
