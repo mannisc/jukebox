@@ -54,6 +54,7 @@ uiController.init = function () {
         $("#videoplayer").css("transform", "scale(1)");
         $("#videoplayer").css("-webkit-transform-origin", "50% 50%");
         $("#videoplayer").css("transform-origin", "50% 50%");
+        $("#videoplayer").css("opacity", "1");
 
         this.enterFullScreen_org();
         $("#videoplayer").css("text-align", "left");
@@ -65,14 +66,15 @@ uiController.init = function () {
 
         //uiController.translateVideo=0;
         $("#videoplayer").removeClass("animate")
-        $("#videoplayer").css("opacity", "0.8");
+
+        uiController.updateUI();
+
         var oSizeVideo = uiController.sizeVideo;
         uiController.sizeVideo = uiController.sizeVideo*1.5;
         uiController.styleVideo();
         setTimeout(function () {
             uiController.sizeVideo = oSizeVideo
             $("#videoplayer").addClass("animate")
-            $("#videoplayer").css("opacity", "1");
             uiController.styleVideo();
 
         }, 100)
@@ -96,13 +98,11 @@ uiController.init = function () {
 
             mediaElement.addEventListener('playing', function (e) {
                 uiController.playedFirst = true;
-                $("#videoplayer").css("opacity", "1");
                 uiController.updateUI();
 
             });
             mediaElement.addEventListener('ended', function (e) {
                 uiController.playedFirst = false;
-                $("#videoplayer").css("opacity", "0");
                 uiController.updateUI();
 
             });
