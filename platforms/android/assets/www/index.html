@@ -137,6 +137,7 @@
             </form-->
 
             <ul data-role="listview" id="searchlistview" class="connectedSortable">
+
                 <li  ng-repeat="song in searchResults"  class ="draggableSong fadeslideincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{song.artist}} - {{song.name}}</a></li>
 
             </ul>
