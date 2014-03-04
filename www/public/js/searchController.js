@@ -126,6 +126,40 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
 
 }
 
+searchController.topTracks=function(callbackSuccess){
+    $.ajax({
+        url:"http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
+        success:function(data){
+            console.dir(data);
+            if(data.tracks){
+                if(data.tracks!="\n"){
+                    console.dir(data);
+                    if(callbackSuccess)
+                        callbackSuccess(data.tracks);
+
+                }
+            }
+        }
+    })
+}
+
+searchController.suggestions=function(title,artist,callbackSuccess){
+    $.ajax({
+
+        url:"http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist="+artist+"&track="+title+"&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json"        ,
+        success:function(data){
+            if(data.similartracks){
+                if(data.similartracks!="\n"){
+                    console.dir(data.similartracks);
+                    if(callbackSuccess)
+                        callbackSuccess(data.similartracks);
+
+                }
+            }
+        }
+    })
+}
+
 
 /*
  var func = function(){
