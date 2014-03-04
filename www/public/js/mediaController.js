@@ -11,32 +11,35 @@ var mediaController = function () {
 
 };
 
+mediaController.playCounter = 0;
+
 
 mediaController.playStream = function (playString) {
+    mediaController.playCounter++;
+    var streamID = mediaController.playCounter;
+    var streamURL = "";
+    var searchString = playString;
+    var func = function (searchString,streamURL,streamID) {
+        if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
+            $.ajax({
+                url: preferences.serverURL + "?play=" + searchString,
+                success: function (data) {
+                    if(streamID == mediaController.playCounter){
+                        streamURL = data;
+                        if (streamURL) {
+                            uiController.mediaElementPlayer.setSrc(streamURL);
+                            uiController.mediaElementPlayer.load();
+                            uiController.mediaElementPlayer.play();
 
-
-    if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
-        $.ajax({
-            url: preferences.serverURL + "?play=" + playString,
-            success: function (streamURL) {
-
-                if (streamURL) {
-
-                    // uiController.mediaElementPlayer.pause();
-                    uiController.mediaElementPlayer.setSrc(streamURL);
-                    //  uiController.mediaElementPlayer.load();
-                    uiController.mediaElementPlayer.play();
-
-
+                        }
+                    }
 
                 }
+            })
 
-            }
-        })
-
+        }
     }
-
-
+    func(searchString,streamURL,streamID);
     //TODO
 
 }
@@ -55,3 +58,13 @@ mediaController.getSongCover= function(song){
     return url;
 }
 
+mediaController.getSongArtist= function(song){
+
+    var artist = "";
+
+    if(song.artist.name)
+        artist =  song.artist.name;
+    else if(song.artist)
+        artist = song.artist;
+    return artist;
+}
