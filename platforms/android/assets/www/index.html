@@ -140,7 +140,7 @@
 
             <ul data-role="listview" id="searchlistview" class="connectedSortable fast3d">
 
-                <li  ng-repeat="song in searchController.searchResults"  class ="draggableSong fadeslideincompletefast" ng-click="mediaController.playStream(mediaController.getSongArtist(song)+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}</a></li>
+                <li  ng-repeat="song in searchController.searchResults" data-songid="searchsong{{song.id}}"  class ="draggableSong fadeslideincompletefast" ng-click="mediaController.playStream(mediaController.getSongArtist(song)+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}</a></li>
 
             </ul>
         </div>
@@ -150,18 +150,12 @@
 
             <h3>Playlist</h3>
 
-            <div id="sortplaylistbutton">
 
-                <button  id="sortplaylistbtn" onclick = "uiController.toggleSortablePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
-                    <img src="public/img/edit.png" width="22px" height="22px" alt="Sort"/>
-                </button>
 
-            </div>
-
-            <div id="sortplaylisttext">
+            <div id="sortplaylisttext" class="fadeincompletefast">
                 Drag and Drop Songs
             </div>
-            <div id="playlistselectvertical" >
+            <div id="playlistselectvertical" class="fadeincompletefast">
                 <form>
                     <select id="playlistselectverticalform" data-role="none" data-placeholder="Select playlists" multiple class="chosen-select">
                         <option value="1">Electro'14</option>
@@ -172,6 +166,13 @@
                     </select>
 
                 </form>
+            </div>
+            <div id="sortplaylistbutton">
+
+                <button  id="sortplaylistbtn" onclick = "uiController.toggleSortablePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
+                    <img src="public/img/edit.png" width="22px" height="22px" alt="Sort"/>
+                </button>
+
             </div>
             <div id="saveplaylistinput" style="display:none">
                     <input id="saveplaylistinpt" class ="ui-input ui-body-a ui-corner-all ui-shadow-inset" data-theme="a" placeholder="Enter Name">
@@ -195,9 +196,9 @@
             <!--form class="ui-filterable" >
                 <input id="filterBasic-input" data-type="search" data-theme="a">
             </form-->
-            <div id="playlistInner">
+            <div id="playlistInner" class="animate">
                 <ul data-role="listview" id="playlistview" class="sortable connectedSortable">
-                    <li ng-repeat="song in playlistController.loadedPlaylistSongs"  class ="fadeslideincompletefast" ng-click="mediaController.playStream(song.artist+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" >{{song.artist}} - {{song.name}}</a><img class="removesong" src="public/img/cross.png"></li>
+                    <li  ng-repeat="song in playlistController.loadedPlaylistSongs" data-songid="playlistsong{{song.id}}"   class ="fadeslideincompletefast playlistsong" ng-click="mediaController.playStream(mediaController.getSongArtist(song)+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}<img class="removesong" style="display:none" src="public/img/trash.png"></a></li>
 
                 </ul>
             </div>

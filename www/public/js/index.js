@@ -36,33 +36,44 @@ var app = {
     onDeviceReady: function () {
         // Nicht verwenden für Webseite, wird nur in phonegap gefeuert
 
-        alert("Device Ready");
+
 
     }
 
 };
 
 var preferences = {
-    serverURL : "http://localhost:3001/"
+    serverURL: "http://localhost:3001/"
 }
 
 
 $(document).ready(function () {
 
-    app.isCordova = (window.location.hash == "#cordova" );
+    var initPage = function () {
+        if ($scope.loaded) {
 
+            app.isCordova = (window.location.hash == "#cordova" );
 
+            uiController.init();
+            searchController.init();
 
-    uiController.init();
-    searchController.init();
+            //Show loaded page
+            $("#page").css("opacity", "1");
 
-    //Show loaded page
-    $("#page").css("opacity", "1");
-
+        } else
+            setTimeout(initPage, 50);
+    }
+    initPage();
 
     //http://localhost:3001/?play=alesso%20under%20control
 });
 
 
+//JQ Erweiterungen
 
 
+jQuery.fn.outerHTML = function (s) {
+    return s
+        ? this.before(s).remove()
+        : jQuery("<p>").append(this.eq(0).clone()).html();
+};

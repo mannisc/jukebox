@@ -5968,7 +5968,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 		this.originalPageX = event.pageX;
 		this.originalPageY = event.pageY;
 
-		//Adjust the mouse offset relative to the helper if "cursorAt" is supplied
+            //Adjust the mouse offset relative to the helper if "cursorAt" is supplied
 		(o.cursorAt && this._adjustOffsetFromHelper(o.cursorAt));
 
 		//Set a containment if given in the options
@@ -6254,6 +6254,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 
 	_convertPositionTo: function(d, pos) {
 
+
 		if(!pos) {
 			pos = this.position;
 		}
@@ -6284,6 +6285,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 	},
 
 	_generatePosition: function(event) {
+
 
 		var containment, co, top, left,
 			o = this.options,
@@ -12174,7 +12176,6 @@ $.widget("ui.sortable", $.ui.mouse, {
 	},
 
 	_mouseStart: function(event, overrideHandle, noActivation) {
-
 		var i, body,
 			o = this.options;
 
@@ -12215,6 +12216,8 @@ $.widget("ui.sortable", $.ui.mouse, {
 			parent: this._getParentOffset(),
 			relative: this._getRelativeOffset() //This is a relative to absolute position minus the actual position calculation - only used for relative positioned helper
 		});
+
+
 
 		// Only after we got the offset, we can change the helper's position to absolute
 		// TODO: Still need to figure out a way to make relative sorting possible
