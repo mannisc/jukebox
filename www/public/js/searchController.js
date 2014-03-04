@@ -145,12 +145,9 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                                 success: function (data) {
                                     if (searchID == searchController.SearchCounter) {
                                         console.dir(data);
-                                        if (data.results && data.results) {
-                                            console.dir(data.results);
-                                            if (callbackSuccess)
-                                                callbackSuccess(data.results);
+                                        if (callbackSuccess)
+                                             callbackSuccess(data);
 
-                                        }
                                     }
                                 }
 
