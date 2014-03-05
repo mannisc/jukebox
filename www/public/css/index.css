@@ -895,3 +895,11 @@ input[type=button]{
 
 
 }
+
+.ui-alt-icon.ui-icon-search.loading:after, .ui-alt-icon .ui-icon-search.loading:after, .ui-input-search.loading:after {
+    background-image:url(../img/loading.gif)!important;
+    background: rgb(255, 255, 255);
+    background-size:14px 14px;
+    background-position:0px 0px;
+    background-repeat:no-repeat;
+}

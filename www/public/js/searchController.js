@@ -124,10 +124,22 @@ searchController.search = function (searchString, callback) {
 }
 
 
+
+searchController.showLoading = function(show){
+
+  if(show)
+    $(".ui-alt-icon.ui-icon-search, .ui-alt-icon .ui-icon-search, .ui-input-search").addClass("loading");
+  else
+      $(".ui-alt-icon.ui-icon-search, .ui-alt-icon .ui-icon-search, .ui-input-search").removeClass("loading");
+
+}
+
+
+
 searchController.searchSongs = function (searchString, title, artist, callbackSuccess) {
+    searchController.showLoading(true);
     searchController.SearchCounter++;
     var searchID = searchController.SearchCounter;
-
     var func = function (searchID) {
         $.ajax({
             url: "http://ws.audioscrobbler.com/2.0/?method=track.search&track=" + searchString + "&page=1&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
@@ -135,7 +147,6 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                 if (searchID == searchController.SearchCounter) {
                     if (data.results && data.results.trackmatches) {
                         if (data.results.trackmatches == "\n") {
-                            $("#loadingimg").show();
                             console.dir("Load " + preferences.serverURL + "?searchjson=" + searchString);
                             $.ajax({
                                 url: preferences.serverURL + "?searchjson=" + searchString,
@@ -149,13 +160,14 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                                     }
                                 },
                                 complete: function(){
-                                    $("#loadingimg").hide();
+                                    searchController.showLoading(false);
                                 }
 
                             })
                         }
                         else {
                             console.dir(data.results);
+                            searchController.showLoading(false);
                             if (callbackSuccess)
                                 callbackSuccess(data.results.trackmatches);
 
@@ -165,6 +177,9 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                     }
                 }
 
+            },
+            error: function () {
+                searchController.showLoading(false);
             }
         })
     }
