@@ -15,7 +15,14 @@ mediaController.playCounter = 0;
 
 
 mediaController.playStream = function (playString) {
-    mediaController.playCounter++;
+
+
+
+
+
+   $(".mejs-controls").find('.mejs-time-buffering').fadeIn();
+
+        mediaController.playCounter++;
     var streamID = mediaController.playCounter;
     var streamURL = "";
     var searchString = playString;
@@ -31,9 +38,13 @@ mediaController.playStream = function (playString) {
                             uiController.mediaElementPlayer.setSrc(streamURL);
                             uiController.mediaElementPlayer.load();
                             uiController.mediaElementPlayer.play();
-
                         }
                     }
+
+                },
+                complete: function(){
+                    setTimeout(function(){$(".mejs-controls").find('.mejs-time-buffering').hide()},500);
+
 
                 }
             })
