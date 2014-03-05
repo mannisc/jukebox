@@ -269,7 +269,6 @@ input[type=button]{
 
 .draggedlistelement {
     z-index: 2000 !important;
-    width: 300px !important;
     padding: 0;
     list-style: none;
     background: #4617B4 !important;
@@ -277,12 +276,16 @@ input[type=button]{
     margin: 0px !important;
 }
 
+.draggedlistelement .removesong{
+      display:none!important;
+}
+
 .draggedlistelement li a {
+
     padding: 0;
     border: none !important;
     color: #fff !important;
     min-height: 1.25em;
-    width: 240px !important;
     margin: 0;
     display: block;
     position: relative;
@@ -416,6 +419,18 @@ input[type=button]{
     transition: all 0.3s ease;
 }
 
+
+#playlistInner li.animatetoslow{
+    -webkit-transition: all 10000s ease;
+    -moz-transition: all 10000s ease;
+    -o-transition: all 10000s ease;
+    transition: all 10000s ease;
+}
+
+
+
+
+
 #playlistInner {
     position: absolute;
     bottom: 0px;
@@ -432,7 +447,13 @@ input[type=button]{
 
 #playlistInner ul {
     margin-left: 8px !important;
+    width:100%;
 }
+
+#playlistInner li {
+   min-width: 250px;
+}
+
 
 #playlistview {
     position: absolute;
