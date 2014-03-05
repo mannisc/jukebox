@@ -21,7 +21,7 @@ searchController.completeSearch =  function (list) {
     searchController.searchResults = list.track;
 
     for(var i=0;i<searchController.searchResults.length;i++){
-        searchController.searchResults[i].id = "slsid"+helperFunctions.padZeros(i,(""+searchController.searchResults.length).length);
+        searchController.searchResults[i].id = "slsid"+Date.now()+""+helperFunctions.padZeros(i,(""+searchController.searchResults.length).length);
     }
 
 

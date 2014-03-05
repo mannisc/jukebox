@@ -62,7 +62,7 @@ body {
 }
 
 /*Smaller Screen*/
-@media (min-width:1115px) {
+@media (min-width:1250px) {
 
     #playlist {
         top: 0px;
@@ -74,7 +74,7 @@ body {
 }
 
 /*Small Screen*/
-@media (min-width:850px) and  (max-width:1114px) {
+@media (min-width:850px) and  (max-width:1249px) {
     #playlist {
         top: 60px !important;
     }
@@ -373,7 +373,7 @@ input[type=button]{
 
 
 
-#searchlist li:hover a img {
+.songlist li:hover a img {
     -webkit-transform: scale(1.05);
     transform: scale(1.05);
     -webkit-transform-origin: 50% 50%;
@@ -432,6 +432,17 @@ input[type=button]{
 
 
 
+.songlist li.loadedsong {
+    background-color:rgba(255,255,255,0.3) !important;
+}
+
+.songlist li.loadedsong.playing img.ui-li-icon {
+    content:url(../img/play.png)!important;
+}
+
+.songlist li.loadedsong.pausing img.ui-li-icon {
+    content:url(../img/pause.png)!important;
+}
 
 
 #playlistInner {

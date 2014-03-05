@@ -18,9 +18,15 @@ mediaController.playStream = function (playString) {
 
 
 
+    $(".mejs-playpause-button button").removeClass("looped");
+
+    $("#videoplayer").css("opacity", "0");
 
 
    $(".mejs-controls").find('.mejs-time-buffering').fadeIn();
+   $(".mejs-controls").find('.mejs-time-loaded').hide();
+
+
 
         mediaController.playCounter++;
     var streamID = mediaController.playCounter;
@@ -28,22 +34,48 @@ mediaController.playStream = function (playString) {
     var searchString = playString;
     var func = function (searchString,streamURL,streamID) {
         if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
+            var loadError = false;
             $.ajax({
                 timeout:30000,
                 url: preferences.serverURL + "?play=" + searchString,
                 success: function (data) {
+                    console.log("SUCCESS")
+
                     if(streamID == mediaController.playCounter){
                         streamURL = data;
                         if (streamURL) {
+
+                            playlistController.playlingTitle = playlistController.playlingTitleLoading ;
+                            playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
+                            playlistController.setNewTitle(playlistController.playlingTitle,playlistController.playlingTitleCover,true);
+
+
                             uiController.mediaElementPlayer.setSrc(streamURL);
                             uiController.mediaElementPlayer.load();
                             uiController.mediaElementPlayer.play();
+
+                        }else
+                            loadError = true;
+                    }else
+                     loadError = true;
+
+                },
+                error:function(){
+                    loadError = true;
+                },
+                complete: function(){
+                    console.log("COMPLETE")
+                    if(loadError) {
+                        if(streamID == mediaController.playCounter){
+                            playlistController.playlingTitleLoading  = playlistController.playlingTitle ;
+                            playlistController.playlingTitleCoverLoading = playlistController.playlingTitleCover;;
+                            playlistController.setNewTitle(playlistController.playlingTitle,playlistController.playlingTitleCover);
+
                         }
                     }
 
-                },
-                complete: function(){
-                    setTimeout(function(){$(".mejs-controls").find('.mejs-time-buffering').hide()},500);
+
+                    setTimeout(function(){$(".mejs-controls").find('.mejs-time-buffering').fadeOut()},500);
 
 
                 }
