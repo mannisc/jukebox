@@ -87,6 +87,9 @@ body {
         text-align: left;
     }
 
+
+
+
     #controlbar .ui-input-search {
         display: inline-block;
     }
@@ -441,7 +444,6 @@ input[type=button]{
     background: none;
     overflow: hidden;
     margin-left: -8px;
-    background-color : rgba(255,255,255,0.1);
 
 }
 
@@ -453,6 +455,12 @@ input[type=button]{
 #playlistInner li {
    min-width: 250px;
 }
+
+#playlistInner .ui-sortable-placeholder{
+   background:      rgba(255,255,255,0.1);
+    visibility: visible!important;
+}
+
 
 
 #playlistview {

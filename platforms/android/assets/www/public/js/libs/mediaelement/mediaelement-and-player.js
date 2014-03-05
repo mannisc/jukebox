@@ -2814,6 +2814,11 @@ if (typeof jQuery != 'undefined') {
             var t = this;
 			if (!player.isVideo)
 				return;
+            console.log("--------------------------------------------")
+
+            console.log(controls)
+            console.log("-----------")
+            console.dir(controls)
 
 			var
 			loading =
@@ -2857,6 +2862,8 @@ if (typeof jQuery != 'undefined') {
 				controls.find('.mejs-time-buffering').hide();
 				error.hide();
 			}, false);
+
+
 
 			media.addEventListener('playing', function() {
 				bigPlay.hide();
