@@ -21,7 +21,7 @@ searchController.completeSearch =  function (list) {
     searchController.searchResults = list.track;
 
     for(var i=0;i<searchController.searchResults.length;i++){
-        searchController.searchResults[i].id = "slsid"+i;
+        searchController.searchResults[i].id = "slsid"+helperFunctions.padZeros(i,(""+searchController.searchResults.length).length);
     }
 
 
@@ -91,17 +91,24 @@ searchController.init = function () {
     $("#searchinput").on("input", function () {
         if( $("#searchinput").val() && $("#searchinput").val() != ""){
             searchController.lastSearchTerm = $("#searchinput").val();
+
+
+            if(app.isCordova)
+             var time = 1000;
+            else
+             time = 300;
+
             setTimeout(function () {
                 if (searchController.lastSearchedTerm != searchController.lastSearchTerm) {
-                    if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > 300) {
+                    if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
                         searchController.autoSearchTimer = Date.now();
                         searchController.lastSearchedTerm = searchController.lastSearchTerm;
                         searchController.startSearch(searchController.lastSearchTerm)
                     }
                 }
-            }, 300);
+            }, time);
 
-            if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > 300) {
+            if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
                 searchController.autoSearchTimer = Date.now();
                 searchController.lastSearchedTerm = searchController.lastSearchTerm;
                 searchController.startSearch(searchController.lastSearchTerm)
