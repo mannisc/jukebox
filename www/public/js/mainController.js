@@ -29,6 +29,16 @@ function MainController($scope) {
         }
     };
 
+
+    $scope.debugObj = function(obj){
+
+        console.log("''''''''''''''''''''''''''''''''''''''''")
+        console.dir(obj)
+        console.log("''''''''''''''''''''''''''''''''''''''''")
+
+        return obj;
+    }
+
     //Bind Controllers
     $scope.mediaController = mediaController;
     $scope.uiController = uiController;

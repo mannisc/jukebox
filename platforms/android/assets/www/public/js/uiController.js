@@ -96,10 +96,28 @@ uiController.init = function () {
 
         success: function (mediaElement, domObject) {
 
-             mediaElement.addEventListener('playing', function (e) {
+            mediaElement.addEventListener('playing', function (e) {
+                var translateVideo = uiController.translateVideo;
+                $("#videoplayer").removeClass("animate");
+                $("#videoplayer").css("opacity", "0");
+
+                uiController.translateVideo = uiController.translateVideo - 80;
+                uiController.styleVideo();
+                setTimeout(function () {
+                    uiController.translateVideo = translateVideo
+                    $("#videoplayer").addClass("animate");
+                    setTimeout(function () {
+                        setTimeout(function () {
+                             $("#videoplayer").css("opacity", "1");
+                        }, 100)
+                        uiController.styleVideo();
+                    }, 100)
+                }, 100)
+
+
                 uiController.playedFirst = true;
-                uiController.updateUI();
-                 console.log("!!!")
+                uiController.updateUI(true);
+                console.log("!!!")
 
             });
             mediaElement.addEventListener('ended', function (e) {
@@ -109,14 +127,22 @@ uiController.init = function () {
             });
 
             mediaElement.addEventListener('loadeddata', function (e) {
-                console.log("W: "+$(mediaElement).width() )
-                console.log("H: "+$(mediaElement).height() )
-                uiController.sizeVideoRelative =  400/$(mediaElement).height();
-                console.log(uiController.sizeVideoRelative)
-                uiController.styleVideo();
+
+
+                var setHeight = function () {
+                    var height = $(".mejs-mediaelement").outerHeight();
+                    console.log("Height: " + height);
+                    if (height > 0) {
+                        uiController.sizeVideoRelative = 400 / height;
+                        uiController.styleVideo();
+
+                    } else
+                        setTimeout(setHeight, 50);
+                }
+                setHeight();
+
 
             });
-
 
 
         }});
@@ -380,6 +406,8 @@ uiController.init = function () {
     var oldMouseUp = $.ui.draggable.prototype._mouseUp;
     $.ui.draggable.prototype._mouseUp = function (event, overrideHandle, noActivation) {
         console.log("STOPED")
+        uiController.stopScrollingOnClick(event);
+
         if (!uiController.stopDrag && !uiController.dragSongCheckScrolling) {
             console.log("??????????????")
 
@@ -530,8 +558,8 @@ uiController.init = function () {
 
      */
     uiController.makePlayListSortable();
-
-    $(".sortable").sortable("disable");
+    if (!app.isCordova)
+        $(".sortable").sortable("disable");
 
     $("#sortplaylisttext").hide();
 
@@ -550,12 +578,12 @@ uiController.init = function () {
 
 
 uiController.makePlayListSortable = function () {
-
+    if (app.isCordova)
+        return;
     $("#playlistInner li").on("mousedown",function (event) {
 
         if (!uiController.playlistMouseDown) {
             uiController.playlistMouseDown = true;
-            console.log("DOWN")
 
             var that = this;
             if (!uiController.sortPlaylist) {
@@ -589,7 +617,7 @@ uiController.makePlayListSortable = function () {
 
 
             uiController.playlistMouseDown = false;
-            console.log("UP")
+
             clearTimeout($(this).data("checkdown"));
             $(this).data("checkdown", null);
 
@@ -616,15 +644,14 @@ uiController.makePlayListSortable = function () {
         start: function (event, ui) {
             uiController.draggingSortableSong = true;
             $("#playlistInner").removeClass("animate");
-             ;
+            ;
             $("#playlistInner li").removeClass("fadeslideincompletefast");
 
             setTimeout(function () {
-                  //debugger;
+                //debugger;
             }, 3000)
         },
         stop: function (event, ui) {
-            $("#playlistInner li").removeClass("fadeslideincompletefast");
 
             if (uiController.startedSortPlaylist) {
                 uiController.toggleSortablePlaylist();
@@ -632,34 +659,47 @@ uiController.makePlayListSortable = function () {
             }
 
             uiController.draggingSortableSong = false;
-            do {
-                var marquee = $("#playlistInner li marquee").get(0);
-                $(marquee).replaceWith($(marquee).contents());
-            } while (marquee)
+            /*do {
+             var marquee = $("#playlistInner li marquee").get(0);
+             $(marquee).replaceWith($(marquee).contents());
+             } while (marquee)*/
 
             $(ui.item).css("opacity", "1");
             var newLoadedPlaylistSongs = [];
 
             $("#playlistview").find("li").each(function (index) {
+                $(this).removeClass("fadeslideincompletefast");
+
                 if (!$(this).hasClass("playlistsong")) {
                     var id = this.dataset.songid.substring(10);
-                    var actSong = searchController.searchResults[id.substring(5)];
-                   //  alert(index)
-                }else{
+                    var actSong = searchController.searchResults[parseInt(id.substring(5))];
+                    //  alert(index)
+                    $(this).remove();
+
+                } else {
                     id = this.dataset.songid.substring(12);
-                    actSong = playlistController.loadedPlaylistSongs[id.substring(5)];
+                    actSong = playlistController.loadedPlaylistSongs[parseInt(id.substring(5))];
                 }
                 console.log(id)
-                $(this).remove();
 
-                actSong.id = "plsid"+index;
+                actSong.id = "plsid" + helperFunctions.padZeros(index, ("" + playlistController.loadedPlaylistSongs.length).length);
 
                 newLoadedPlaylistSongs.push(actSong);
             })
+
             playlistController.loadedPlaylistSongs = newLoadedPlaylistSongs;
+
+            console.log("------------------------------")
+            console.log($("#playlistview").get(0))
+            console.log("------------------------------")
             $scope.safeApply();
+            console.dir($("#playlistview").get(0))
+            console.log("------------------------------")
             $("#playlistview").listview('refresh');
+
             uiController.makePlayListSortable();
+
+
         },
         helper: function (event, $item) {
             var $helper = $('<ul></ul>').addClass('draggedlistelement');
@@ -668,8 +708,8 @@ uiController.makePlayListSortable = function () {
             var ele = $helper.append($item.clone())
 
 
-            var marquee = $(ele).find("marquee").get(0);
-            $(marquee).replaceWith($(marquee).contents());
+            //var marquee = $(ele).find("marquee").get(0);
+            //$(marquee).replaceWith($(marquee).contents());
 
             return ele;
         },
@@ -680,7 +720,8 @@ uiController.makePlayListSortable = function () {
 }
 
 uiController.makeSearchListDraggable = function () {
-
+    if (app.isCordova)
+        return;
     $('#searchlistview .draggableSong').draggable({
         tolerance: "pointer",
         dropOnEmpty: true,
@@ -696,8 +737,8 @@ uiController.makeSearchListDraggable = function () {
             var ele = $helper.append($(this).clone())
             $(this).css("opacity", "0.5")
 
-            var marquee = $(ele).find("marquee").get(0);
-            $(marquee).replaceWith($(marquee).contents());
+            //var marquee = $(ele).find("marquee").get(0);
+            // $(marquee).replaceWith($(marquee).contents());
 
             return ele;
         }, drag: function (event, ui) {
@@ -728,7 +769,6 @@ uiController.makeSearchListDraggable = function () {
             }
 
 
-
         },
         appendTo: 'body',
         zIndex: "1000000" //or greater than any other relative/absolute/fixed elements and droppables
@@ -740,8 +780,8 @@ uiController.makeSearchListDraggable = function () {
 
 uiController.styleVideo = function () {
 
-    $("#videoplayer").css("-webkit-transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * uiController.sizeVideo*uiController.sizeVideoRelative + ")");
-    $("#videoplayer").css("transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * uiController.sizeVideo*uiController.sizeVideoRelative + ")");
+    $("#videoplayer").css("-webkit-transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * uiController.sizeVideo * uiController.sizeVideoRelative + ")");
+    $("#videoplayer").css("transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * uiController.sizeVideo * uiController.sizeVideoRelative + ")");
     $("#videoplayer").css("-webkit-transform-origin", "50% 100%");
     $("#videoplayer").css("transform-origin", "50% 100%");
 }
@@ -787,7 +827,8 @@ uiController.toggleSavePlaylist = function () {
         $("#sortplaylistbtn").show();
 
         $("#playlistselectvertical").show();
-        $("#saveplaylistbtn img").attr("src", "public/img/save.png");    7
+        $("#saveplaylistbtn img").attr("src", "public/img/save.png");
+        7
 
 
     }
@@ -796,18 +837,27 @@ uiController.toggleSavePlaylist = function () {
 }
 
 
-uiController.toggleSortablePlaylist = function (dontShowTrash,manuell) {
-    if(manuell){
+uiController.toggleSortablePlaylist = function (dontShowTrash, manuell) {
+    if (manuell) {
         uiController.startedSortPlaylist = false;
     }
 
     uiController.sortPlaylist = !uiController.sortPlaylist
     if (uiController.sortPlaylist) {
-        if(!dontShowTrash) {
+        if (!dontShowTrash) {
             $("#sortplaylistbtn img").attr("src", "public/img/check.png");
 
         }
-            $("#sortplaylistbtn").addClass("greenbackground");
+        $("#sortplaylistbtn").addClass("greenbackground");
+
+        $("#playlistInner").css("background-color", "rgba(255,255,255,0.1)");
+
+
+        $('#playlistInner').css({backgroundColor: 'rgba(255,255,255,0)'})
+
+        $('#playlistInner').animate({
+            backgroundColor: 'rgba(255,255,255,0.1)'
+        }, 100);
 
 
         if (!dontShowTrash)
@@ -816,8 +866,6 @@ uiController.toggleSortablePlaylist = function (dontShowTrash,manuell) {
         $("#playlistInner  .ui-btn-icon-right").css("margin-right", "0px");
 
         $("#playlistInner  .ui-btn-icon-right").css("padding-right", "40px");
-
-
 
 
         uiController.playListScroll.disable();
@@ -833,27 +881,33 @@ uiController.toggleSortablePlaylist = function (dontShowTrash,manuell) {
         $("#playlistInner .iScrollVerticalScrollbar").hide();
         $("#playlistselectvertical").hide();
         $("#sortplaylisttext").show();
-
-        $(".sortable").sortable("enable");
+        if (!app.isCordova)
+            $(".sortable").sortable("enable");
 
 
     } else {
 
+        // $("#playlistInner").css("background-color", "");
+        setTimeout(function () {
+            $('#playlistInner').animate({
+                backgroundColor: 'rgba(255,255,255,0)'
+            }, 200);
+        }, 1000)
 
 
         $("#playlistInner  .removesong").hide();
         $("#playlistInner  .ui-btn-icon-right").css("padding-right", "");
         $("#playlistInner  .ui-btn-icon-right").css("margin-right", "");
-        if(!dontShowTrash)
-        $("#sortplaylistbtn img").attr("src", "public/img/edit.png");
+        if (!dontShowTrash)
+            $("#sortplaylistbtn img").attr("src", "public/img/edit.png");
 
         $("#sortplaylistbtn").removeClass("greenbackground");
 
         $("#playlistInner .iScrollVerticalScrollbar").show();
         $("#playlistselectvertical").show();
         $("#sortplaylisttext").hide();
-
-        $(".sortable").sortable("disable");
+        if (!app.isCordova)
+            $(".sortable").sortable("disable");
         // $(".sortable").enableSelection();
 
         uiController.playListScroll.enable();
@@ -895,21 +949,23 @@ uiController.stopPlaylistScrollingOnClick = function (event) {
 /**
  * Update UI
  */
-uiController.updateUI = function () {
+uiController.updateUI = function (dontChangeVideOpacity) {
+    console.log("UPDATEUI-----------------------")
 
-    if ($(window).width() < uiController.responsiveWidthSmall || $(window).height() < 350) {
+    if (!dontChangeVideOpacity) {
+        if ($(window).width() < uiController.responsiveWidthSmall || $(window).height() < 350) {
 
-        if ($("#videoplayer").css("opacity") != 0) {
-            $("#videoplayer").css("opacity", "0");
+            if ($("#videoplayer").css("opacity") != 0) {
+                $("#videoplayer").css("opacity", "0");
+            }
+        } else {
+
+            if ($("#videoplayer").css("opacity") != 1 && uiController.playedFirst) {
+                $("#videoplayer").css("opacity", "1");
+            }
+
         }
-    } else {
-
-        if ($("#videoplayer").css("opacity") != 1 && uiController.playedFirst) {
-            $("#videoplayer").css("opacity", "1");
-        }
-
     }
-
 
     $(".ui-panel").css("height", $(window).height() - 44 - 3);
     $("#page").css("height", $(window).height() - 44 - 3);
@@ -942,7 +998,7 @@ uiController.updateUI = function () {
             $("#searchlist").css("width", $(window).width() - $("#rightpanel").width() - 10);
 
             if ($(window).width() - $("#rightpanel").width() - 10 < 100) {
-                $("#searchlist li a").wrap('<marquee behavior="alternate"></marquee>');
+                //$("#searchlist li a").wrap('<marquee behavior="alternate"></marquee>');
                 $("#searchlist li").css("max-height", "44px");
 
             }
@@ -952,10 +1008,10 @@ uiController.updateUI = function () {
         else {
             $("#searchlist").css("width", $(window).width() - 20);
 
-            do {
-                var marquee = $("#searchlist li marquee").get(0);
-                $(marquee).replaceWith($(marquee).contents());
-            } while (marquee)
+            /*do {
+             var marquee = $("#searchlist li marquee").get(0);
+             $(marquee).replaceWith($(marquee).contents());
+             } while (marquee)*/
         }
 
 
@@ -1057,10 +1113,10 @@ uiController.updateUI = function () {
     //Big Size
     else {
 
-        do {
-            var marquee = $("#searchlist li marquee").get(0);
-            $(marquee).replaceWith($(marquee).contents());
-        } while (marquee)
+        /*do {
+         var marquee = $("#searchlist li marquee").get(0);
+         $(marquee).replaceWith($(marquee).contents());
+         } while (marquee)*/
 
         $("#videoplayer .mejs-time-total").css("width", $(window).width() / 1.5 - 160);
         $("#videoplayer .mejs-time-rail").css("width", $(window).width() / 1.5 - 160 + 10);
