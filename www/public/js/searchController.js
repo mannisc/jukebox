@@ -127,13 +127,11 @@ searchController.init = function () {
 
 
 searchController.search = function (searchString, callback) {
-
     searchController.searchSongs(searchString, "", "", callback);
 }
 
 
 searchController.searchSongs = function (searchString, title, artist, callbackSuccess) {
-
     searchController.SearchCounter++;
     var searchID = searchController.SearchCounter;
 
@@ -144,7 +142,7 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                 if (searchID == searchController.SearchCounter) {
                     if (data.results && data.results.trackmatches) {
                         if (data.results.trackmatches == "\n") {
-
+                            $("#loadingimg").show();
                             console.dir("Load " + preferences.serverURL + "?searchjson=" + searchString);
                             $.ajax({
                                 url: preferences.serverURL + "?searchjson=" + searchString,
@@ -156,6 +154,9 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                                              callbackSuccess(data);
 
                                     }
+                                },
+                                complete: function(){
+                                    $("#loadingimg").hide();
                                 }
 
                             })
@@ -195,7 +196,6 @@ searchController.topTracks = function (callbackSuccess) {
 }
 
 searchController.suggestions = function (title, artist, callbackSuccess) {
-    console.dir("Search Suggestions...");
     $.ajax({
 
         url: "http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=" + artist + "&track=" + title + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
