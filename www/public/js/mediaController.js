@@ -11,48 +11,81 @@ var mediaController = function () {
 
 };
 
+
+
 mediaController.playCounter = 0;
 
-
-mediaController.playStream = function (playString) {
-
-
-
-
-
-   $(".mejs-controls").find('.mejs-time-buffering').fadeIn();
-
+mediaController.playStream = function (artist,title) {
+    if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
+        $(".mejs-controls").find('.mejs-time-buffering').fadeIn();
         mediaController.playCounter++;
-    var streamID = mediaController.playCounter;
-    var streamURL = "";
-    var searchString = playString;
-    var func = function (searchString,streamURL,streamID) {
-        if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
+        var streamID = mediaController.playCounter;
+        var artistString = artist;
+        var titleString = title;
+
+        artistString = artistString.replace("?","");
+        titleString  = titleString.replace("?","");
+
+        var searchString = ""
+        if (artist != "")
+            searchString = artist + " - " + title;
+        else
+            searchString = title;
+
+        var streamURL = "";
+
+        var play = function (streamID, searchString, artistString, titleString, streamURL) {
+
+
             $.ajax({
-                timeout:30000,
-                url: preferences.serverURL + "?play=" + searchString,
+                url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + artistString + "&track=" + titleString + "&format=json",
                 success: function (data) {
-                    if(streamID == mediaController.playCounter){
-                        streamURL = data;
-                        if (streamURL) {
-                            uiController.mediaElementPlayer.setSrc(streamURL);
-                            uiController.mediaElementPlayer.load();
-                            uiController.mediaElementPlayer.play();
+                    if (streamID == mediaController.playCounter) {
+                        $(".mejs-controls").find('.mejs-time-buffering').show();
+                        var duration = 200000;
+                        console.dir("http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + artistString + "&track=" + titleString + "&format=json");
+                        console.dir(data);
+                        if (data.track) {
+                            if (data.track.duration) {
+                                duration = data.track.duration;
+                            }
                         }
+                        $.ajax({
+                            timeout:30000,
+                            url: preferences.serverURL + "?play=" + searchString+"&force1="+artistString+"&force2="+titleString+"&duration="+duration,
+                            success: function (data) {
+                                console.dir( preferences.serverURL + "?play=" + searchString+"&force1="+artistString+"&force2="+titleString+"&duration="+duration);
+
+                                if(streamID == mediaController.playCounter){
+                                    streamURL = data;
+                                    if (streamURL) {
+                                        uiController.mediaElementPlayer.setSrc(streamURL);
+                                        uiController.mediaElementPlayer.load();
+                                        uiController.mediaElementPlayer.play();
+                                    }
+                                }
+                            },
+                            complete: function(){
+                                setTimeout(function(){$(".mejs-controls").find('.mejs-time-buffering').hide()},500);
+                            }
+                        })
+
+
+
                     }
 
                 },
-                complete: function(){
-                    setTimeout(function(){$(".mejs-controls").find('.mejs-time-buffering').hide()},500);
-
-
+                error: function () {
+                   $(".mejs-controls").find('.mejs-time-buffering').hide();
                 }
-            })
 
+            })
         }
+
+
+        play(streamID, searchString, artistString, titleString, streamURL);
     }
-    func(searchString,streamURL,streamID);
-    //TODO
+
 
 }
 
