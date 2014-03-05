@@ -16,8 +16,8 @@ searchController.searchResults =[];
 
 searchController.SearchCounter = 0;
 
-searchController.completeSearch =  function (list) {
 
+searchController.completeSearch =  function (list) {
     searchController.searchResults = list.track;
 
     for(var i=0;i<searchController.searchResults.length;i++){
@@ -38,8 +38,7 @@ searchController.completeSearch =  function (list) {
 
 
 searchController.startSearch = function (searchString) {
-    var complete = searchController.completeSearch;
-    searchController.search(searchString, complete);
+    searchController.search(searchString, searchController.completeSearch);
 }
 
 
@@ -147,12 +146,13 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                 if (searchID == searchController.SearchCounter) {
                     if (data.results && data.results.trackmatches) {
                         if (data.results.trackmatches == "\n") {
-                            console.dir("Load " + preferences.serverURL + "?searchjson=" + searchString);
+                            console.dir("Load: " + preferences.serverURL + "?searchjson=" + searchString);
                             $.ajax({
                                 url: preferences.serverURL + "?searchjson=" + searchString,
 
                                 success: function (data) {
                                     if (searchID == searchController.SearchCounter) {
+                                        console.dir("Server Search Results:");
                                         console.dir(data);
                                         if (callbackSuccess)
                                              callbackSuccess(data);
