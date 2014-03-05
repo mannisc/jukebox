@@ -9,9 +9,9 @@
  */
 
 /*make sure the viewport is 100% height*/
-html, body {
+html, body ,#page,#content{
     height : 100%;
-    overflow:hidden;
+    overflow:hidden!important;
 }
 #page, .ui-panel{
     min-height:0px!important;

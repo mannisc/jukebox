@@ -96,7 +96,7 @@
     <div data-role="header" id="header" data-position="fixed">
         <img src="public/img/icon.png" style="position:absolute;left: 8px;top: 8px" width="30px" height="30px">
 
-        <h1>JezzPlay </h1>
+        <h1>Conplay </h1>
         <img src="public/img/bars-white.png" id="openSidePanelBarIcon" onclick="uiController.toggleSidePanel()" style="position:absolute;right: 6px;top: 13px" width="17px" height="20px"/>
 
     </div>
@@ -140,7 +140,7 @@
 
             <ul data-role="listview" id="searchlistview" class="connectedSortable fast3d">
 
-                <li  ng-repeat="song in searchController.searchResults" data-songid="searchsong{{song.id}}"  class ="draggableSong fadeslideincompletefast" ng-click="mediaController.playStream(mediaController.getSongArtist(song)+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}</a></li>
+                <li  ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}"  class ="draggableSong fadeslideincompletefast" ng-click="mediaController.playStream(mediaController.getSongArtist(song)+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}</a></li>
 
             </ul>
         </div>
@@ -155,7 +155,7 @@
             <div id="sortplaylisttext" class="fadeincompletefast">
                 Drag and Drop Songs
             </div>
-            <div id="playlistselectvertical" class="fadeincompletefast">
+            <div id="playlistselectvertical" >
                 <form>
                     <select id="playlistselectverticalform" data-role="none" data-placeholder="Select playlists" multiple class="chosen-select">
                         <option value="1">Electro'14</option>
@@ -169,7 +169,7 @@
             </div>
             <div id="sortplaylistbutton">
 
-                <button  id="sortplaylistbtn" onclick = "uiController.toggleSortablePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
+                <button  id="sortplaylistbtn" onclick = "uiController.toggleSortablePlaylist(false,true);" data-mini="true" data-type="button" value="" data-theme="b">
                     <img src="public/img/edit.png" width="22px" height="22px" alt="Sort"/>
                 </button>
 
@@ -198,7 +198,7 @@
             </form-->
             <div id="playlistInner" class="animate">
                 <ul data-role="listview" id="playlistview" class="sortable connectedSortable">
-                    <li  ng-repeat="song in playlistController.loadedPlaylistSongs" data-songid="playlistsong{{song.id}}"   class ="fadeslideincompletefast playlistsong" ng-click="mediaController.playStream(mediaController.getSongArtist(song)+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}<img class="removesong" style="display:none" src="public/img/trash.png"></a></li>
+                    <li  ng-repeat="song in playlistController.loadedPlaylistSongs track by song.id" data-songid="playlistsong{{song.id}}"   class ="fadeslideincompletefast playlistsong" ng-click="mediaController.playStream(mediaController.getSongArtist(song)+' - '+song.name)"><a href="#"><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}<img class="removesong" style="display:none" src="public/img/trash.png"></a></li>
 
                 </ul>
             </div>
@@ -241,7 +241,7 @@
 <script type="text/javascript" src="public/js/libs/jqm/jquery.mobile-1.4.2.js"></script>
 
 <script type="text/javascript" src="public/js/libs/jquery.ui.touch-punch.js"></script>
-
+<script  type="text/javascript" src="public/js/libs/jquery.simulate.js"></script>
 
 <!-- iScroll -->
 <script type="text/javascript" src="public/js/libs/iscroll-zoom.js"></script>
