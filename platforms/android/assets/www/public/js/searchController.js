@@ -19,6 +19,11 @@ searchController.SearchCounter = 0;
 
 searchController.completeSearch =  function (list) {
 
+
+
+    uiController.searchListScroll.scrollTo(0, 0, 1000)
+
+
     var changed = false;
     if(searchController.searchResults.length==0){
         changed = true;
