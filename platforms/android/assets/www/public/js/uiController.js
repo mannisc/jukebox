@@ -624,7 +624,7 @@ uiController.makeSearchListDraggable = function () {
         }).on("mousemove", function (event) {
             if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 8)
                 uiController.dragDraggableSongY = -10;
-            if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 30) {
+            if (uiController.dragDraggableSongY>0&&Math.abs(event.clientY - uiController.dragDraggableSongY) > 30) {
                 uiController.swipeTimer = Date.now();
             } else if (uiController.dragDraggableSongTimer && Date.now() - uiController.dragDraggableSongTimer < 500) {
 

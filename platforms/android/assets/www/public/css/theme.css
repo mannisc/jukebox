@@ -37,6 +37,11 @@ html, body, #page, #content {
     margin: 0px !important;
 }
 
+
+.ui-header-fixed .ui-btn{
+    margin-top: 2px!important;
+
+}
 /*Player*/
 
 .mejs-overlay-loading {
@@ -114,6 +119,9 @@ html, body, #page, #content {
 .ui-popup-container {
     z-index: 1000000;
 }
+
+
+
 
 
 /*Panel*/
