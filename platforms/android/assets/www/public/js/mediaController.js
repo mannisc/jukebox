@@ -24,8 +24,8 @@ mediaController.getVersions = function () {
         mediaController.versionList = [];
         $scope.safeApply();
         $("#searchviewVersions").listview('refresh');
-        $('#popupVideoSettings').popup('open', {positionTo: 'window'});
-        $('#loadversionimg').fadeIn();
+        $('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
+        $('#loadversionimg').css("opacity" ,"1");
         var getsongversions = function (counter) {
             if(counter < 120){
                 var song = currentsong;
@@ -56,10 +56,10 @@ mediaController.getVersions = function () {
                                 mediaController.versionList = data.track;
 
                                 $scope.safeApply();
-                                $('#loadversionimg').hide();
+                                $('#loadversionimg').css("opacity" ,"0");
                                 $("#searchviewVersions").listview('refresh');
-                                $('#popupVideoSettings').popup("reposition", {positionTo: 'window'} );
-                                $('#popupVideoSettings').popup('open', {positionTo: 'window'});
+                              //  $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'} );
+                                $('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
                             }
                         }
                         else
@@ -83,7 +83,7 @@ mediaController.getVersions = function () {
 }
 
 mediaController.playVersion = function (songversion){
-    $('#loadversionimg').fadeIn();
+    $('#loadversionimg').css("opacity" ,"1");
     $(".mejs-time-buffering").fadeIn();
     if($(".mejs-time-loaded").width()>$(".mejs-time-total").width()*0.7)
         $(".mejs-time-loaded").hide();
@@ -104,6 +104,7 @@ mediaController.playVersion = function (songversion){
                     if (streamURL) {
                         $("#videoplayer").removeClass("animate").addClass("animatefast");
                         $("#videoplayer").css("opacity", "0");
+
                         setTimeout(function () {
                          $("#videoplayer").removeClass("animatefast").addClass("animate");
                             uiController.mediaElementPlayer.setSrc(streamURL);
@@ -121,7 +122,7 @@ mediaController.playVersion = function (songversion){
             },
             complete: function () {
                 //TODO
-                $('#loadversionimg').hide();
+                $('#loadversionimg').css("opacity" ,"0");
                 setTimeout(function(){$(".mejs-controls").find('.mejs-time-buffering').hide()},500);
             }
         })
@@ -202,7 +203,6 @@ mediaController.playStream = function (artist,title) {
                                     if (streamURL) {
 
                                         $("#videoplayer").removeClass("animate").addClass("animatefast");
-
                                         $("#videoplayer").css("opacity", "0");
 
                                         setTimeout(function(){
@@ -214,6 +214,7 @@ mediaController.playStream = function (artist,title) {
                                             playlistController.loadingOldSong =  playlistController.loadingSong;
 
                                             playlistController.setNewTitle(playlistController.loadingSong.name, playlistController.loadingSong.coverURL, true);
+                                            $(".mejs-button-choose-version").css("opacity", "1");
 
                                             uiController.mediaElementPlayer.setSrc(streamURL);
                                             uiController.mediaElementPlayer.load();

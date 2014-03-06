@@ -225,7 +225,7 @@
         </div>
         <div id="videocontrols" class="mejs-container">
 
-            <div class="mejs-button mejs-button-choose-version mejs-custom-button">
+            <div class="mejs-button mejs-button-choose-version mejs-custom-button" style="opacity:0.5">
                 <button type="button" id="chooseversionbutton"  data-role = "none" onclick ="mediaController.getVersions();" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
             </div>
 
@@ -238,16 +238,16 @@
 
     <!-- Popups ---------------------------------------->
 
-    <div data-role="popup" id="popupVideoSettings"  data-arrow="false" data-theme="a" class="ui-corner-all">
+    <div data-role="popup" id="popupVideoSettings"  data-arrow="true" data-theme="a" class="ui-corner-all">
         <form>
             <div >
                 <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose Version</h3>
-                <ul data-role="listview" id="searchviewVersions">
-                    <li  ng-repeat="songversion in mediaController.versionList track by songversion.id"  class ="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion)" ><a href="#" id="" title="{{songversion.url}}">{{songversion.title}}   -    {{songversion.duration}}  sec </a> </li>
+                <ul data-role="listview" id="searchviewVersions" data-theme="b">
+                    <li  ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" class ="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion)" ><a href="#" style="padding-left: 15px!important;" id="" title="{{songversion.url}}">{{songversion.title}}<span style="opacity:0"> ..{{songversion.duration}}  sec</span> <span style="font-style:italic;position:absolute;right: 40px;top:10px;opacity:0.8"> {{songversion.duration}}  sec</span> </a> </li>
 
                 </ul>
-                <div id="loadversionimg" align="middle" style="display:none">
-                    <img src="public/img/loading.GIF" align="middle" />
+                <div id="loadversionimg"  style="opacity:0">
+                    <img src="public/img/loading.GIF" />
                 </div>
             </div>
         </form>
