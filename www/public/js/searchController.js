@@ -24,7 +24,6 @@ searchController.completeSearch =  function (list) {
         changed = true;
     }
     else{
-        console.dir("SEARCH!");
         for(var i=0;i<searchController.searchResults.length;i++){
            if(mediaController.getSongArtist(searchController.searchResults[i].artist)!=mediaController.getSongArtist(list.track[i].artist)){
                changed = true;
