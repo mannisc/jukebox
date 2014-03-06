@@ -369,6 +369,10 @@ playlistController.playSong = function (song, onlyStyle) {
     playlistController.loadingSong.coverURL = listElement.find(".ui-li-icon").attr("src");
 
 
+
+
+
+
     playlistController.disableControls(!isPlaylistSong)
 
 
@@ -407,6 +411,7 @@ playlistController.playSong = function (song, onlyStyle) {
         else
             playlistController.setNewTitle(playlistController.loadingSong.name, playlistController.loadingSong.coverURL);
     }
+    $scope.safeApply();
 
 }
 
