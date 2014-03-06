@@ -15,11 +15,21 @@ var mediaController = function () {
 
 mediaController.playCounter = 0;
 
+
+mediaController.getVersions = function () {
+    var play = function () {
+        $.ajax({
+            url: preferences.serverURL + "?getVersions=5&artist="+artistString+"&title="+titleString,
+            success: function (data) {
+
+            }
+        })
+    }
+}
+
+
 mediaController.playStream = function (artist,title) {
-
-
         $(".mejs-time-buffering").fadeIn();
-
 
         if($(".mejs-time-loaded").width()>$(".mejs-time-total").width()*0.7)
           $(".mejs-time-loaded").hide();
@@ -53,8 +63,7 @@ mediaController.playStream = function (artist,title) {
                     if (streamID == mediaController.playCounter) {
                         $(".mejs-time-buffering").show();
                         var duration = 200000;
-                        console.dir("http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + artistString + "&track=" + titleString + "&format=json");
-                        console.dir(data);
+                       console.dir(data);
                         if (data.track) {
                             if (data.track.duration) {
                                 duration = data.track.duration;
