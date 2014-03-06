@@ -97,10 +97,12 @@ playlistController.disableControls = function (disable) {
 
 
 playlistController.playSong = function (Id, globalId, isPlaylistSong, playArtist,playTitle) {
-
-    if(!(!uiController.swipeTimer|| Date.now() -  uiController.swipeTimer >500))
+    if(  playlistController.playSongTimer&& Date.now()-playlistController.playSongTimer<100)
      return;
+    if(!(!uiController.swipeTimer|| Date.now() -  uiController.swipeTimer >500))
+        return;
 
+    playlistController.playSongTimer = Date.now();
 
     playlistController.playlingTitleLoading = playArtist+" - "+playTitle;
     playlistController.disableControls(!isPlaylistSong)
@@ -125,7 +127,6 @@ playlistController.playSong = function (Id, globalId, isPlaylistSong, playArtist
         mediaController.playStream( playArtist,playTitle);
         playlistController.playlingSongId = newId;
         listElement.addClass("playing");
-        alert("OOOOO"+listElement.outerHTML())
     }
 
     listElement.addClass("loadedsong")
@@ -135,11 +136,6 @@ playlistController.playSong = function (Id, globalId, isPlaylistSong, playArtist
         $(".mejs-playpause-button").click();
     else
         playlistController.setNewTitle(playlistController.playlingTitleLoading,playlistController.playlingTitleCoverLoading);
-
-
-    var  listElement = $("#searchlist li[data-songid='searchsong" + Id + "'] ");
-    alert("fffffff"+listElement.outerHTML())
-
 
 
 }
