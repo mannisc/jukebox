@@ -126,11 +126,10 @@ uiController.init = function () {
 
             $(".mejs-prevtrack-button").click(function () {
                 if ($(this).css("opacity") == 1)
-                    playlistController.playNextSong();
+                    playlistController.playPrevSong();
             })
 
             $(".mejs-shuffle-button").click(function () {
-                if ($(this).css("opacity") == 1)
                     playlistController.toggleShuffleSongs();
             })
 
@@ -200,6 +199,10 @@ uiController.init = function () {
                 $(".mejs-playpause-button button").addClass("looped");
                 uiController.playedFirst = false;
                 uiController.updateUI();
+
+                if(playlistController.loadingSong.gid)
+                    playlistController.playNextSong();
+
 
             });
 
@@ -516,6 +519,7 @@ uiController.makePlayListSortable = function () {
         })
 
 
+
     $("#playlistview").sortable({
         tolerance: "pointer",
         dropOnEmpty: true,
@@ -534,6 +538,24 @@ uiController.makePlayListSortable = function () {
             setTimeout(function () {
                 //debugger;
             }, 3000)
+
+            $(".draggedsortablelistelement").on('mousemove',function(event){
+                if( uiController.draggingSortableSong){
+
+                    //console.log('X:' + (event.clientX-110) + ' Y: '+(event.clientY-30) );
+
+                    if(Math.abs($("#playlistInner").offset().top - $(".draggedsortablelistelement").offset().top)<30&&Math.abs($("#playlistInner").offset().left - $(".draggedsortablelistelement").offset().left)<30){
+                        console.log("!!!!!!!!!!!!!!!!!!")
+                        uiController.playListScroll.enable();
+                        uiController.playListScroll.refresh();
+                       // uiController.playListScroll.scrollTo(0, -44, 1000, true)
+
+
+                }
+
+                    console.dir(event)
+                }
+            });
         },
         stop: function (event, ui) {
 
@@ -585,7 +607,7 @@ uiController.makePlayListSortable = function () {
 
         },
         helper: function (event, $item) {
-            var $helper = $('<ul></ul>').addClass('draggedlistelement');
+            var $helper = $('<ul></ul>').addClass('draggedlistelement').addClass('draggedsortablelistelement');
 
             var item = $item.clone();
             var ele = $helper.append($item.clone())
