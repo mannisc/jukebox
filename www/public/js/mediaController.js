@@ -137,10 +137,11 @@ mediaController.getSongCover= function(song){
 mediaController.getSongArtist= function(song){
 
     var artist = "";
-
-    if(song.artist.name)
-        artist =  song.artist.name;
-    else if(song.artist)
-        artist = song.artist;
+    if(song.artist){
+        if(song.artist.name)
+            artist =  song.artist.name;
+        else if(song.artist)
+            artist = song.artist;
+    }
     return artist;
 }
