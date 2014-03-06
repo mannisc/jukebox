@@ -19,7 +19,7 @@ uiController.responsiveWidthSmallest = 670;
 uiController.responsiveWidthSmall = 850;
 
 
-uiController.responsiveWidthSmaller = 1115;
+uiController.responsiveWidthSmaller = 1250;
 
 /**
  * Init Controller
@@ -89,38 +89,111 @@ uiController.init = function () {
 
 
     uiController.mediaElementPlayer = new MediaElementPlayer('video,audio', {
-        features: ['playpause', 'current', 'progress', 'duration', 'volume', 'fullscreen'],
+        features: [ 'prevtrack', 'playpause', 'stop', 'nexttrack', 'shuffle', 'current', 'progress', 'duration', 'volume', 'fullscreen'],
+
+
         //poster: 'http://mediaelementjs.com/media/echo-hereweare-540x304.jpg',
         alwaysShowControls: true,
         autosizeProgress: false,
 
         success: function (mediaElement, domObject) {
-
-            mediaElement.addEventListener('playing', function (e) {
-                var translateVideo = uiController.translateVideo;
-                $("#videoplayer").removeClass("animate");
-                $("#videoplayer").css("opacity", "0");
-
-                uiController.translateVideo = uiController.translateVideo - 80;
-                uiController.styleVideo();
-                setTimeout(function () {
-                    uiController.translateVideo = translateVideo
-                    $("#videoplayer").addClass("animate");
-                    setTimeout(function () {
-                        setTimeout(function () {
-                             $("#videoplayer").css("opacity", "1");
-                        }, 100)
-                        uiController.styleVideo();
-                    }, 100)
-                }, 100)
+            playlistController.disablePlayStopControls(true);
+            playlistController.disableControls(true);
 
 
-                uiController.playedFirst = true;
-                uiController.updateUI(true);
-                console.log("!!!")
+            $(".mejs-controls").click(function () {
+                if (playlistController.isPlaying && playlistController.isLoading) {
+                    $(".mejs-controls").find('.mejs-time-loaded').show();
+                    if ($(".mejs-controls").find('.mejs-time-buffering').css("opacity") > 0)
+                        $(".mejs-controls").find('.mejs-time-buffering').fadeOut();
+                    mediaController.playCounter = mediaController.playCounter + 1;
+                    $("#videoplayer").css("opacity", "1");
+                }
+            });
+
+            $(".mejs-nexttrack-button").click(function () {
+                if ($(this).css("opacity") == 1)
+                    playlistController.playNextSong();
+
+            })
+
+            $(".mejs-prevtrack-button").click(function () {
+                if ($(this).css("opacity") == 1)
+                    playlistController.playNextSong();
+            })
+
+            $(".mejs-shuffle-button").click(function () {
+                if ($(this).css("opacity") == 1)
+                    playlistController.toggleShuffleSongs();
+            })
+
+
+            $(".mejs-stop-button").click(function () {
+                $(".songlist li.loadedsong").removeClass("pausing").addClass("playing");
+                if ($(this).css("opacity") == 1) {
+                    $("#videoplayer").css("opacity", "0");
+                    $(".mejs-playpause-button button").removeClass("looped");
+
+                    $(".mejs-time-loaded").hide();
+                }
+            })
+
+            mediaElement.addEventListener('pause', function (e) {
+                if (playlistController.isPlaying&&!playlistController.isLoading)
+                    $(".songlist li.loadedsong").addClass("pausing").removeClass("playing");
 
             });
+
+            mediaElement.addEventListener('playing', function (e) {
+
+
+                $(".songlist li.loadedsong").removeClass("pausing").addClass("playing");
+
+                playlistController.isLoading = false;
+                playlistController.isPlaying = true;
+                playlistController.disablePlayStopControls(false);
+
+                $(".mejs-overlay-play").click(function () {
+                    $(".mejs-playpause-button").click();
+                })
+
+                $(".mejs-time-loaded").show();
+
+                $(".mejs-playpause-button button").removeClass("looped");
+
+                if ($("#videoplayer").css("opacity") < 1) {
+                    var translateVideo = uiController.translateVideo;
+                    $("#videoplayer").removeClass("animate");
+                    // $("#videoplayer").css("opacity", "0");
+
+                    uiController.translateVideo = uiController.translateVideo - 30;
+                    uiController.styleVideo();
+                    setTimeout(function () {
+                        uiController.translateVideo = translateVideo
+                        $("#videoplayer").addClass("animate");
+                        setTimeout(function () {
+                            setTimeout(function () {
+                                $("#videoplayer").css("opacity", "1");
+                            }, 100)
+                            uiController.styleVideo();
+                        }, 100)
+                    }, 100)
+
+
+                    uiController.playedFirst = true;
+                    uiController.updateUI(true);
+                    console.log("!!!")
+                }
+            });
             mediaElement.addEventListener('ended', function (e) {
+                document.title = $scope.appTitle;
+
+                playlistController.isPlaying = false;
+                playlistController.disableStopControl(true);
+                $("#videoplayer").css("opacity", "0");
+                $(".mejs-time-loaded").hide();
+
+                $(".mejs-playpause-button button").addClass("looped");
                 uiController.playedFirst = false;
                 uiController.updateUI();
 
@@ -164,6 +237,9 @@ uiController.init = function () {
         if (uiController.sizeVideo > 0.5) {
             uiController.sizeVideo = uiController.sizeVideo / 1.5;
             uiController.styleVideo();
+
+        } else {
+            $("#videoplayer").css("opacity", "0");
 
         }
     });
@@ -343,6 +419,7 @@ uiController.init = function () {
     });
 
 
+    /*
     var oldMouseStart = $.ui.draggable.prototype._mouseStart;
     var oldMouseStartEventArray, oldMouseStartEventObject;
     $.ui.draggable.prototype._mouseStart = function (event, overrideHandle, noActivation) {
@@ -369,7 +446,8 @@ uiController.init = function () {
                 else {
                     uiController.stopDrag = true;
                     //oldMouseStart.apply(this, oldMouseStartEventArray);
-                    // this._mouseUp({});
+                    //this._mouseUp({});
+
                     //ACHTUNG VIEL INTERNER CODE, nötige mouseup funcs der draggable impl werdden ausgeführt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     if ($.ui.ddmanager) {
                         $.ui.ddmanager.dragStop(this, event);
@@ -406,7 +484,7 @@ uiController.init = function () {
     var oldMouseUp = $.ui.draggable.prototype._mouseUp;
     $.ui.draggable.prototype._mouseUp = function (event, overrideHandle, noActivation) {
         console.log("STOPED")
-        uiController.stopScrollingOnClick(event);
+      //  uiController.stopScrollingOnClick(event);
 
         if (!uiController.stopDrag && !uiController.dragSongCheckScrolling) {
             console.log("??????????????")
@@ -415,6 +493,7 @@ uiController.init = function () {
         }
     };
 
+   */
 
     ///------------------------------------------------------------
 
@@ -558,8 +637,12 @@ uiController.init = function () {
 
      */
     uiController.makePlayListSortable();
-    if (!app.isCordova)
+    if (!app.isCordova){
         $(".sortable").sortable("disable");
+    }
+
+
+
 
     $("#sortplaylisttext").hide();
 
@@ -720,8 +803,38 @@ uiController.makePlayListSortable = function () {
 }
 
 uiController.makeSearchListDraggable = function () {
+
+    $("#searchlist li").on("mousedown",function (event) {
+        console.log("DOWN")
+
+        uiController.dragDraggableSongY = event.clientY;
+    }).on("mouseout",function (event) {
+            uiController.dragDraggableSongY = -10;
+
+        }).on("mouseup ",function (event) {
+            console.log("UPPPPPP")
+            if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 8) {
+                console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+                uiController.swipeTimer = Date.now();
+            }else{
+                $(this).click();
+            }
+
+        }).on("mousemove", function (event) {
+            if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 8)
+                uiController.dragDraggableSongY = -10;
+
+
+
+
+
+        })
+
+
     if (app.isCordova)
         return;
+
+
     $('#searchlistview .draggableSong').draggable({
         tolerance: "pointer",
         dropOnEmpty: true,
@@ -772,8 +885,9 @@ uiController.makeSearchListDraggable = function () {
         },
         appendTo: 'body',
         zIndex: "1000000" //or greater than any other relative/absolute/fixed elements and droppables
-    }).disableSelection();
+    });
 
+    $("#searchlistview .draggableSong").draggable("disable").removeClass("ui-disabled ui-state-disabled");
 
 }
 
@@ -869,6 +983,7 @@ uiController.toggleSortablePlaylist = function (dontShowTrash, manuell) {
 
 
         uiController.playListScroll.disable();
+        $("#playlistsortstyle").remove();
         var style = $('<style id="playlistsortstyle">' +
             '#playlistInner ul li {' +
             'opacity:0.9!important;' +
@@ -1081,27 +1196,28 @@ uiController.updateUI = function (dontChangeVideOpacity) {
             // $("#playlistselectvertical input").css("max-width", 50);
         }
         setSelectSize();
-        $("#playlist").css("width", $(window).width() / 4);
-        $("#playlistInner li").css("width", $(window).width() / 4);
+        $("#playlist").css("width", $(window).width() / 3);
+        $("#playlistInner li").css("width", $(window).width() / 3);
 
         setSelectSize();
 
 
     }
 
+    $("#videoplayer .mejs-time-total").css("width", $(window).width() / 1.5 - 160 - 105);
+    $("#videoplayer .mejs-time-rail").css("width", $(window).width() / 1.5 - 160 + 10 - 105);
 
     //Small Size
     if ($(window).width() < uiController.responsiveWidthSmall) {
 
-        $("#videoplayer .mejs-time-total").css("width", $(window).width() / 1.5 - 160);
-        $("#videoplayer .mejs-time-rail").css("width", $(window).width() / 1.5 - 160 + 10);
+        $
         $("#videocontrols .mejs-time-total").css("width", ($(window).width() / 1.5 - 160));
 
-
-        if (($(window).width() / 1.5 - 160) + 10 < 323)
-            $("#videocontrols .mejs-time-rail").css("width", ($(window).width() / 1.5 - 160) + 10);
+        console.log("sdsdsd!!!!!!")
+        if (($(window).width()) / 1.5 - 160 - 105 + 10 < 323 - 105)
+            $("#videocontrols .mejs-time-rail").css("width", (($(window).width()) / 1.5 - 160 - 105) + 10);
         else
-            $("#videocontrols .mejs-time-rail").css("width", 323);
+            $("#videocontrols .mejs-time-rail").css("width", 323 - 105);
 
 
         $("#searchlist").css("max-height", $(window).height() - 44 - 130 - 40);
@@ -1118,10 +1234,9 @@ uiController.updateUI = function (dontChangeVideOpacity) {
          $(marquee).replaceWith($(marquee).contents());
          } while (marquee)*/
 
-        $("#videoplayer .mejs-time-total").css("width", $(window).width() / 1.5 - 160);
-        $("#videoplayer .mejs-time-rail").css("width", $(window).width() / 1.5 - 160 + 10);
-        $("#videocontrols .mejs-time-total").css("width", ($(window).width() / 1.5 - 160) / 1.3);
-        $("#videocontrols .mejs-time-rail").css("width", ($(window).width() / 1.5 - 160) / 1.3 + 10);
+
+        $("#videocontrols .mejs-time-total").css("width", ($(window).width() / 1.5 - 160) / 1.3 - 105);
+        $("#videocontrols .mejs-time-rail").css("width", ($(window).width() / 1.5 - 160) / 1.3 + 10 - 105);
 
 
         $("#content").css({"width": $(window).width() - 32, "height": $(window).height() - 44 - 4 - 32 - 6});

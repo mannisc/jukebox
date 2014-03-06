@@ -18,6 +18,7 @@ searchController.SearchCounter = 0;
 
 
 searchController.completeSearch =  function (list) {
+<<<<<<< HEAD
     var changed = false;
     if(searchController.searchResults.length==0){
         changed = true;
@@ -34,6 +35,12 @@ searchController.completeSearch =  function (list) {
                 break;
             }
         }
+=======
+    searchController.searchResults = list.track;
+
+    for(var i=0;i<searchController.searchResults.length;i++){
+        searchController.searchResults[i].id = "slsid"+Date.now()+""+helperFunctions.padZeros(i,(""+searchController.searchResults.length).length);
+>>>>>>> origin/master
     }
     if(changed){
         searchController.searchResults = [];
