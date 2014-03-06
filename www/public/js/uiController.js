@@ -26,6 +26,8 @@ uiController.responsiveWidthSmaller = 1250;
  */
 uiController.init = function () {
 
+
+
     uiController.playedFirst = false;
     $("#videoplayer").css("opacity", "0");
 
@@ -100,14 +102,12 @@ uiController.init = function () {
             playlistController.disablePlayStopControls(true);
             playlistController.disableControls(true);
 
-
+            $(".mejs-overlay-play").click(function () {
+                $(".mejs-playpause-button").click();
+            })
             $(".mejs-controls").click(function () {
                 if (playlistController.isPlaying && playlistController.isLoading) {
-                    $(".mejs-controls").find('.mejs-time-loaded').show();
-                    if ($(".mejs-controls").find('.mejs-time-buffering').css("opacity") > 0)
-                        $(".mejs-controls").find('.mejs-time-buffering').fadeOut();
-                    mediaController.playCounter = mediaController.playCounter + 1;
-                    $("#videoplayer").css("opacity", "1");
+                    playlistController.resetPlayingSong()
                 }
             });
 
@@ -153,9 +153,7 @@ uiController.init = function () {
                 playlistController.isPlaying = true;
                 playlistController.disablePlayStopControls(false);
 
-                $(".mejs-overlay-play").click(function () {
-                    $(".mejs-playpause-button").click();
-                })
+
 
                 $(".mejs-time-loaded").show();
 
@@ -173,8 +171,9 @@ uiController.init = function () {
                         $("#videoplayer").addClass("animate");
                         setTimeout(function () {
                             setTimeout(function () {
-                                $("#videoplayer").css("opacity", "1");
-                            }, 100)
+                                if(playlistController.isPlaying)
+                                 $("#videoplayer").css("opacity", "1");
+                            }, 200)
                             uiController.styleVideo();
                         }, 100)
                     }, 100)
@@ -656,6 +655,8 @@ uiController.init = function () {
         $("#playlist").fadeIn();
     }, 0);
 
+
+    document.tite = $scope.appTitle;
 
 };
 

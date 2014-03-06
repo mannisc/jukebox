@@ -632,6 +632,15 @@ input[type=button]{
      transition: all 1.5s ease;
  }
 
+#videoplayer.animatefast {
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all  0.2s ease;
+    transition: all  0.2s ease;
+}
+
+
+
  #videoplayerInner{
      border: 1px solid #000;
      background:#000!important;
@@ -700,6 +709,31 @@ input[type=button]{
 }
 
 /*Fades*/
+
+
+.fadeoutcomplete{
+    opacity:1;  /* make things invisible upon start */
+    -webkit-animation:fadeoutcomplete ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation:fadeoutcomplete ease-in 1;
+    animation:fadeoutcomplete ease-in 1;
+
+    -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+    -moz-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+
+    -webkit-animation-duration:400ms;;
+    -moz-animation-duration:400ms;
+    animation-duration:400ms;
+}
+
+
+/* make keyframes that tell the start state and the end state of our object */
+@-webkit-keyframes fadeoutcomplete { from { opacity:1; } to { opacity:0; } }
+@-moz-keyframes fadeoutcomplete { from { opacity:1; } to { opacity:0; } }
+@keyframes fadeoutcomplete { from { opacity:1; } to { opacity:0; } }
+
+
+
 
 .fadeincomplete {
     opacity: 0; /* make things invisible upon start */
