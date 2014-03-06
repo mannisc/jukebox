@@ -109,7 +109,7 @@ uiController.init = function () {
             playlistController.disableControls(true);
 
             $(".mejs-overlay-play").click(function () {
-                if (!playlistController.playButtonTimer && (Date.now() - playlistController.playButtonTimer > 100))  {
+                if (!playlistController.playButtonTimer && (Date.now() - playlistController.playButtonTimer > 100)) {
                     $(".mejs-playpause-button").click();
                     playlistController.playButtonTimer = Date.now()
                 }
@@ -126,12 +126,11 @@ uiController.init = function () {
 
             $(".mejs-prevtrack-button").click(function () {
                 if ($(this).css("opacity") == 1)
-                    playlistController.playNextSong();
+                    playlistController.playPrevSong();
             })
 
             $(".mejs-shuffle-button").click(function () {
-                if ($(this).css("opacity") == 1)
-                    playlistController.toggleShuffleSongs();
+                playlistController.toggleShuffleSongs();
             })
 
 
@@ -200,6 +199,10 @@ uiController.init = function () {
                 $(".mejs-playpause-button button").addClass("looped");
                 uiController.playedFirst = false;
                 uiController.updateUI();
+
+                if (playlistController.loadingSong.gid)
+                    playlistController.playNextSong();
+
 
             });
 
@@ -496,8 +499,20 @@ uiController.makePlayListSortable = function () {
             clearTimeout($(this).data("checkdown"));
             $(this).data("checkdown", null);
 
-        }).on("mouseup mouseout",function () {
+        }).on("mouseup",function () {
 
+            if (uiController.dragSortableSongY > 0 && Math.abs(event.clientY - uiController.dragSortableSongY) > 30)
+                uiController.swipeTimer = Date.now();
+
+            uiController.playlistMouseDown = false;
+
+            clearTimeout($(this).data("checkdown"));
+            $(this).data("checkdown", null);
+
+        }).on("mouseout",function () {
+
+            if (uiController.dragSortableSongY > 0 && Math.abs(event.clientY - uiController.dragSortableSongY) > 30)
+                uiController.swipeTimer = Date.now();
 
             uiController.playlistMouseDown = false;
 
@@ -534,6 +549,34 @@ uiController.makePlayListSortable = function () {
             setTimeout(function () {
                 //debugger;
             }, 3000)
+
+            $(".draggedsortablelistelement").on('mousemove', function (event) {
+                if (uiController.draggingSortableSong) {
+
+                    //console.log('X:' + (event.clientX-110) + ' Y: '+(event.clientY-30) );
+
+                    if (Math.abs($("#playlistInner").offset().top - $(".draggedsortablelistelement").offset().top) <70 && Math.abs($("#playlistInner").offset().left - $(".draggedsortablelistelement").offset().left) < 50) {
+                        if (!uiController.playListScrollTimer || Date.now() - uiController.playListScrollTimer > 500) {
+                            console.log(uiController.playListScroll.scrollY)
+                            uiController.playListScrollTimer = Date.now()
+                            uiController.playListScroll.enable();
+                            uiController.playListScroll.refresh();
+                            uiController.playListScroll.scrollBy(0, 100, 1000)
+                        }
+
+                    }else if (Math.abs($("#playlistInner").offset().top+$("#playlistInner").height() - $(".draggedsortablelistelement").offset().top-$(".draggedsortablelistelement").height()) < 70 && Math.abs($("#playlistInner").offset().left - $(".draggedsortablelistelement").offset().left) < 50) {
+                        if (!uiController.playListScrollTimer || Date.now() - uiController.playListScrollTimer > 500) {
+                            console.log(uiController.playListScroll.scrollY)
+                            uiController.playListScrollTimer = Date.now()
+                            uiController.playListScroll.enable();
+                            uiController.playListScroll.refresh();
+                            uiController.playListScroll.scrollBy(0, -100, 1000)
+                        }
+
+                    }
+
+                }
+            });
         },
         stop: function (event, ui) {
 
@@ -550,6 +593,10 @@ uiController.makePlayListSortable = function () {
 
             $(ui.item).css("opacity", "1");
             var newLoadedPlaylistSongs = [];
+
+
+
+
 
             $("#playlistview").find("li").each(function (index) {
                 $(this).removeClass("fadeslideincompletefast");
@@ -576,7 +623,7 @@ uiController.makePlayListSortable = function () {
             console.log($("#playlistview").get(0))
             console.log("------------------------------")
             $scope.safeApply();
-            console.dir($("#playlistview").get(0))
+            console.log($("#playlistview").get(0))
             console.log("------------------------------")
             $("#playlistview").listview('refresh');
 
@@ -585,7 +632,7 @@ uiController.makePlayListSortable = function () {
 
         },
         helper: function (event, $item) {
-            var $helper = $('<ul></ul>').addClass('draggedlistelement');
+            var $helper = $('<ul></ul>').addClass('draggedlistelement').addClass('draggedsortablelistelement');
 
             var item = $item.clone();
             var ele = $helper.append($item.clone())
@@ -624,12 +671,12 @@ uiController.makeSearchListDraggable = function () {
         }).on("mousemove", function (event) {
             if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 8)
                 uiController.dragDraggableSongY = -10;
-            if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 30) {
+            if (uiController.dragDraggableSongY > 0 && Math.abs(event.clientY - uiController.dragDraggableSongY) > 30) {
                 uiController.swipeTimer = Date.now();
             } else if (uiController.dragDraggableSongTimer && Date.now() - uiController.dragDraggableSongTimer < 500) {
 
                 if (event.clientX - uiController.dragDraggableSongX > 20 && Math.abs(event.clientY - uiController.dragDraggableSongY) < Math.abs(event.clientX - uiController.dragDraggableSongX) * 0.6) {
-                    console.log("DRAGNDROP    "+(event.clientX - uiController.dragDraggableSongX))
+                    console.log("DRAGNDROP    " + (event.clientX - uiController.dragDraggableSongX))
 
                     $("#searchlistview .draggableSong").draggable("enable");
 

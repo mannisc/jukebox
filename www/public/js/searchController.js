@@ -83,6 +83,7 @@ searchController.emptySearchList = function () {
 }
 
 searchController.showSearchList = function () {
+
     searchController.searchMusic();
 }
 
@@ -283,6 +284,29 @@ searchController.suggestions = function (title, artist, callbackSuccess) {
         }
     })
 }
+
+
+
+searchController.getArtistInfo = function(){
+
+    $.ajax({
+
+        url: "&search="  ,
+        success: function (data) {
+
+            if (data) {
+
+
+
+
+
+            }
+        }
+    })
+
+
+}
+
 
 
 /*
