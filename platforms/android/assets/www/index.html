@@ -96,9 +96,14 @@
 
     <div data-role="header" id="header" data-position="fixed">
         <img src="public/img/icon.png" style="position:absolute;left: 8px;top: 8px" width="30px" height="30px">
-        <img id="playingSongCover" ng-show = "playlistController.loadingSong"  class="fadeincomplete"  src="public/img/playlist.png" style="display:none;position:absolute;left: 148px;top: 8px" width="30px" height="30px">
-        <h1 id="playingSongTitleLoading"ng-show = "playlistController.loadingSong" class="fadeincomplete" style="z-index:0;display:none;position:absolute;left: 138px;top: 0px;right: 30px" > {{playlistController.getPlayingTitle()}} {{playlistController.getIsLoadingText()}}</h1>
-        <h1 id="playingSongTitle"ng-show = "playlistController.loadingSong"  style="z-index:1;display:none;position:absolute;left: 138px;top: 0px;right: 30px" > {{playlistController.getPlayingTitle()}}</h1>
+
+        <a  ng-show = "playlistController.loadingSong"  data-rel="popup" data-position-to="window"  class="playingSongInfo fadeincomplete ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-custom ui-btn-icon-left ui-btn-a" data-transition="pop">
+           <span style="opacity:0">{{playlistController.getPlayingTitle()}}</span>
+           <span id="playingSongTitleLoading" class="fadeincomplete" style="text-align:left;z-index:0;display:none;position:absolute;left: 35px;top: 9px;right: 0px"  >{{playlistController.getPlayingTitle()}}</span>
+           <span id="playingSongTitle" class="fadeincomplete" style="text-align:left;z-index:0;display:none;position:absolute;left: 35px;top: 9px;right: 0px"   >{{playlistController.getPlayingTitle()}} </span>
+        </a>
+
+
 
         <h1>{{appTitle}}{{playlistController.getPlayingSepSign()}}</h1>
 
@@ -369,6 +374,7 @@
      <img src="public/img/pause.png">
     <img src="public/img/crosswhite.png">
     <img src="public/img/save.png">
+    <img src="public/img/loader.gif">
 
 
 
