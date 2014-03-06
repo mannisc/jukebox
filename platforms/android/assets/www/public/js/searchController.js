@@ -63,6 +63,7 @@ searchController.startSearch = function (searchString) {
 
 
 searchController.showFavorites = function () {
+    uiController.toggleSearchButton(2);
     searchController.topTracks(searchController.completeSearch);
 
 
@@ -83,11 +84,12 @@ searchController.emptySearchList = function () {
 }
 
 searchController.showSearchList = function () {
-
+    uiController.toggleSearchButton(1);
     searchController.searchMusic();
 }
 
 searchController.showSuggestions = function () {
+    uiController.toggleSearchButton(3);
     var index;
     var song;
     if(playlistController.loadedPlaylistSongs.length > 0 ){
