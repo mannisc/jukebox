@@ -24,7 +24,6 @@ mediaController.playStream = function (artist,title) {
         $(".mejs-controls").find('.mejs-time-loaded').hide();
 
         $(".mejs-playpause-button button").removeClass("looped");
-        $("#videoplayer").css("opacity", "0");
 
         mediaController.playCounter++;
         var streamID = mediaController.playCounter;
@@ -70,15 +69,22 @@ mediaController.playStream = function (artist,title) {
                                     streamURL = data;
                                     if (streamURL) {
 
+                                        $("#videoplayer").removeClass("animate").addClass("animatefast");
 
-                                        playlistController.playlingTitle = playlistController.playlingTitleLoading ;
-                                        playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
-                                        playlistController.setNewTitle(playlistController.playlingTitle,playlistController.playlingTitleCover,true);
+                                        $("#videoplayer").css("opacity", "0");
 
+                                        setTimeout(function(){
+                                            $("#videoplayer").removeClass("animatefast").addClass("animate");
+                                            playlistController.playlingTitle = playlistController.playlingTitleLoading ;
+                                            playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
+                                            playlistController.setNewTitle(playlistController.playlingTitle,playlistController.playlingTitleCover,true);
 
-                                        uiController.mediaElementPlayer.setSrc(streamURL);
-                                        uiController.mediaElementPlayer.load();
-                                        uiController.mediaElementPlayer.play();
+                                            uiController.mediaElementPlayer.setSrc(streamURL);
+                                            uiController.mediaElementPlayer.load();
+                                            uiController.mediaElementPlayer.play();
+
+                                        },200)
+
                                     }else
                                         loadError = true;
                                 }else
@@ -91,9 +97,8 @@ mediaController.playStream = function (artist,title) {
                             complete: function(){
                                 if(loadError) {
                                     if(streamID == mediaController.playCounter){
-                                        playlistController.playlingTitleLoading  = playlistController.playlingTitle ;
-                                        playlistController.playlingTitleCoverLoading = playlistController.playlingTitleCover;;
-                                        playlistController.setNewTitle(playlistController.playlingTitle,playlistController.playlingTitleCover);
+
+                                        playlistController.resetPlayingSong();
 
                                     }
                                 }
