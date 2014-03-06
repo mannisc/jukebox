@@ -1006,6 +1006,25 @@ input[type=button]{
   */
 
 
+
+#popupArtistExternList li{
+    background-color: rgba(42,42,42,0.9);
+    text-shadow: none!important;
+    line-height: 1.2!important;
+    font-size: 14px!important;
+    min-height: 0em!important;
+
+}
+
+#popupArtistExternList li:hover{
+    background-color: rgba(42,42,42,0.8);
+}
+
+#popupArtistExternList li a{
+   text-shadow:none!important;
+   color:#fff!important;
+}
+
 .playingSongInfo{
     left: 400px!important;
     transition : all .5s linear;
@@ -1015,6 +1034,7 @@ input[type=button]{
 .playingSongBuy{
     top: -41px;
     left: 135px!important;
+    transition : all .5s linear;
 
     color:#000!important;
 
@@ -1032,6 +1052,7 @@ input[type=button]{
 .playingSongVisit{
     top: -41px;
     left: 133px!important;
+    transition : all .5s linear;
 
 }
 
@@ -1054,6 +1075,29 @@ input[type=button]{
 
 
 /*POPUPS*/
+
+.ui-popup-container{
+    background:rgba(255,255,255,0.6)!important;
+
+}
+
+
+.ui-popup{
+    padding: 5px;
+
+    background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0.4))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.4) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.4) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.4) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0.4) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#66ffffff',GradientType=0 ); /* IE6-9 */
+
+    background-clip: content-box!important;
+
+}
+
+
 #popupAccount-popup, #popupArtist-popup,#popupLogin-popup{
     top: 51px!important;
 }
@@ -1062,7 +1106,6 @@ input[type=button]{
 
 #popupArtist-popup::before {
     content: "";
-
 
     background-position: center center;
     opacity: 0.99;
@@ -1076,16 +1119,7 @@ input[type=button]{
 
 #popupArtist{
 
-    background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0.4))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.4) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.4) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.4) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0.4) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#66ffffff',GradientType=0 ); /* IE6-9 */
 
-    background-clip: content-box!important;
-    padding: 5px;
 }
 
 #popupArtist .ng-pristine{
