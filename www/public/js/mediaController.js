@@ -17,6 +17,22 @@ mediaController.playCounter = 0;
 
 mediaController.versionList = [];
 
+mediaController.showDuration = function (songversion) {
+    var duration = parseInt(songversion.duration) ;
+    myDate = new Date();
+    myDate.setMinutes(0,duration,0);
+    var minutes =  myDate.getMinutes().toString();
+    if(minutes.length<2)
+    {
+        minutes = "0"+minutes;
+    }
+    var seconds =  myDate.getSeconds().toString();
+    if(seconds.length<2)
+    {
+        seconds = "0"+seconds;
+    }
+    return minutes+ ":" + seconds;
+}
 
 mediaController.getVersions = function () {
     var currentsong = playlistController.getPlayingSong();
