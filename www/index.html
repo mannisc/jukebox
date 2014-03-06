@@ -97,8 +97,8 @@
     <div data-role="header" id="header" data-position="fixed">
         <img src="public/img/icon.png" style="position:absolute;left: 8px;top: 8px" width="30px" height="30px">
         <img id="playingSongCover" ng-show = "playlistController.loadingSong"  class="fadeincomplete"  src="public/img/playlist.png" style="display:none;position:absolute;left: 148px;top: 8px" width="30px" height="30px">
-        <h1 id="playingSongTitleLoading"ng-show = "playlistController.loadingSong" class="fadeincomplete" style="z-index:0;display:none;position:absolute;left: 138px;top: 0px;right: 30px" > {{playlistController.getPlaylingTitle()}} {{playlistController.getIsLoadingText()}}</h1>
-        <h1 id="playingSongTitle"ng-show = "playlistController.loadingSong"  style="z-index:1;display:none;position:absolute;left: 138px;top: 0px;right: 30px" > {{playlistController.getPlaylingTitle()}}</h1>
+        <h1 id="playingSongTitleLoading"ng-show = "playlistController.loadingSong" class="fadeincomplete" style="z-index:0;display:none;position:absolute;left: 138px;top: 0px;right: 30px" > {{playlistController.getPlayingTitle()}} {{playlistController.getIsLoadingText()}}</h1>
+        <h1 id="playingSongTitle"ng-show = "playlistController.loadingSong"  style="z-index:1;display:none;position:absolute;left: 138px;top: 0px;right: 30px" > {{playlistController.getPlayingTitle()}}</h1>
 
         <h1>{{appTitle}}{{playlistController.getPlayingSepSign()}}</h1>
 
