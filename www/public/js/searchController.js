@@ -147,6 +147,7 @@ searchController.searchMusic = function () {
 searchController.init = function () {
 
     $("#searchinput").on("input", function () {
+        uiController.toggleSearchButton(1);
         searchController.searchMusic();
     })
 
