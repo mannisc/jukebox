@@ -16,6 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+
+
+
 var app = {
     // Application Constructor
     initialize: function () {
@@ -81,18 +85,5 @@ jQuery.fn.outerHTML = function (s) {
 };
 
 
-//Reload Page if params
-function getURLParameters( name ){
-    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-    var regexS = "[\\?&]"+name+"=([^&#]*)";
-    var regex = new RegExp( regexS );
-    var results = regex.exec( window.location.href );
-    if( results == null )    return false;
-    else    return results[1];}
 
 
-if(getURLParameters("ui-state"))  {
-    console.log("RELOAD")
-    location.href = 'http://' + window.location.hostname + window.location.pathname;    //TODO !!!!!!!!!!!!!!!
-
-}

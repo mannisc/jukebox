@@ -58,8 +58,8 @@ mediaController.getVersions = function () {
                                 $scope.safeApply();
                                 $('#loadversionimg').css("opacity" ,"0");
                                 $("#searchviewVersions").listview('refresh');
-                              //  $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'} );
-                                $('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
+                               $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'} );
+                                ///$('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
                             }
                         }
                         else
