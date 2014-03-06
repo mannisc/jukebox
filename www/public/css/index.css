@@ -1026,7 +1026,7 @@ input[type=button]{
 }
 
 .playingSongInfo{
-    left: 336px!important;
+    left: 400px!important;
     transition : all .5s linear;
 
 }

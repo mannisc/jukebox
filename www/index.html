@@ -266,7 +266,7 @@
             <div >
                 <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose Version</h3>
                 <ul data-role="listview" id="searchviewVersions" data-theme="b">
-                    <li  ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" class ="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion)" ><a href="#" style="padding-left: 15px!important;" id="" title="{{songversion.url}}">{{songversion.title}}<span style="opacity:0"> ..{{songversion.duration}}  sec</span> <span style="font-style:italic;position:absolute;right: 40px;top:10px;opacity:0.8"> {{songversion.duration}}  sec</span> </a> </li>
+                    <li  ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" class ="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion)" ><a href="#" style="padding-left: 15px!important;" id="" title="{{songversion.url}}">{{songversion.title}}<span style="opacity:0"> ..{{mediaController.showDuration(songversion)}}</span> <span style="position:absolute;right: 42px;top:10px;opacity:0.8"> {{ mediaController.showDuration(songversion) }}</span> </a> </li>
 
                 </ul>
                 <div id="loadversionimg"  style="opacity:0">
