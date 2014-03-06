@@ -96,13 +96,13 @@ playlistController.disableControls = function (disable) {
 }
 
 
-playlistController.playSong = function (Id, globalId, isPlaylistSong, searchString) {
+playlistController.playSong = function (Id, globalId, isPlaylistSong, playArtist,playTitle) {
 
     if(!(!uiController.swipeTimer|| Date.now() -  uiController.swipeTimer >500))
      return;
 
 
-    playlistController.playlingTitleLoading = searchString;
+    playlistController.playlingTitleLoading = playArtist+" - "+playTitle;
     playlistController.disableControls(!isPlaylistSong)
 
     $(".songlist li").removeClass("loadedsong playing plausing");
@@ -122,7 +122,7 @@ playlistController.playSong = function (Id, globalId, isPlaylistSong, searchStri
     if (playlistController.playlingSongId != newId) {
         playlistController.isLoading = true;
         loadedSong = true;
-       // mediaController.playStream(searchString);
+        mediaController.playStream( playArtist,playTitle);
         playlistController.playlingSongId = newId;
         listElement.addClass("playing");
         alert("OOOOO"+listElement.outerHTML())
