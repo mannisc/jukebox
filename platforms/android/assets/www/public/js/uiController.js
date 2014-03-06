@@ -21,11 +21,11 @@ uiController.responsiveWidthSmall = 850;
 
 uiController.responsiveWidthSmaller = 1250;
 
+
 /**
  * Init Controller
  */
 uiController.init = function () {
-
 
 
     uiController.playedFirst = false;
@@ -99,15 +99,25 @@ uiController.init = function () {
         autosizeProgress: false,
 
         success: function (mediaElement, domObject) {
+
+
+            $(".mejs-custom-button").appendTo(".mejs-controls");
+            uiController.countCustomButtons = $(".mejs-custom-button").length;
+
+
             playlistController.disablePlayStopControls(true);
             playlistController.disableControls(true);
 
             $(".mejs-overlay-play").click(function () {
-                $(".mejs-playpause-button").click();
+                if (!playlistController.playButtonTimer && (Date.now() - playlistController.playButtonTimer > 100))  {
+                    $(".mejs-playpause-button").click();
+                    playlistController.playButtonTimer = Date.now()
+                }
             })
-            $(".mejs-controls").click(function () {
-
+            $(".mejs-playpause-button").click(function () {
+                playlistController.playButtonTimer = Date.now();
             });
+
 
             $(".mejs-nexttrack-button").click(function () {
                 if ($(this).css("opacity") == 1)
@@ -136,7 +146,7 @@ uiController.init = function () {
             })
 
             mediaElement.addEventListener('pause', function (e) {
-                if (playlistController.isPlaying&&!playlistController.isLoading)
+                if (playlistController.isPlaying && !playlistController.isLoading)
                     $(".songlist li.loadedsong").addClass("pausing").removeClass("playing");
 
             });
@@ -149,7 +159,6 @@ uiController.init = function () {
                 playlistController.isLoading = false;
                 playlistController.isPlaying = true;
                 playlistController.disablePlayStopControls(false);
-
 
 
                 $(".mejs-time-loaded").show();
@@ -168,8 +177,8 @@ uiController.init = function () {
                         $("#videoplayer").addClass("animate");
                         setTimeout(function () {
                             setTimeout(function () {
-                                if(playlistController.isPlaying)
-                                 $("#videoplayer").css("opacity", "1");
+                                if (playlistController.isPlaying)
+                                    $("#videoplayer").css("opacity", "1");
                             }, 200)
                             uiController.styleVideo();
                         }, 100)
@@ -339,6 +348,9 @@ uiController.init = function () {
         noHorizontalZoom: true
     });
 
+    // uiController.searchListScroll.on("scrollStart",function(){
+    //})
+
 
     uiController.playListScroll = new IScroll('#playlistInner', {
         zoom: true,
@@ -415,229 +427,10 @@ uiController.init = function () {
     });
 
 
-    /*
-    var oldMouseStart = $.ui.draggable.prototype._mouseStart;
-    var oldMouseStartEventArray, oldMouseStartEventObject;
-    $.ui.draggable.prototype._mouseStart = function (event, overrideHandle, noActivation) {
-        console.log("STARTD")
-        uiController.dragSongX = event.clientX;
-        uiController.dragSongY = event.clientY;
-        uiController.dragSongCheckScrolling = true;
-        uiController.checkSwipeTimer = Date.now();
-        uiController.stopDrag = false;
-        oldMouseStartEventArray = [event, overrideHandle, noActivation]
-    };
-    var oldMouseDrag = $.ui.draggable.prototype._mouseDrag;
-    $.ui.draggable.prototype._mouseDrag = function (event, overrideHandle, noActivation) {
-        if (Math.abs(event.clientX - uiController.dragSongX) > 10 || Math.abs(event.clientX - uiController.dragSongX) > 10) {
-            if (uiController.dragSongCheckScrolling) {
-                uiController.dragSongCheckScrolling = false;
-                console.log(Math.abs(event.clientX - uiController.dragSongX) + "   " + Math.abs(event.clientY - uiController.dragSongY))
-
-                if (uiController.sidePanelOpen || $("#searchlistview").height() <= $("#searchlist").height() || Math.abs(event.clientY - uiController.dragSongY) < Math.abs(event.clientX - uiController.dragSongX) / 2) {
-                    this._trigger("beforeStart", event, this._uiHash());
-                    oldMouseStart.apply(this, oldMouseStartEventArray);
-                    console.log("!!!!!!!!!!!!!!")
-                }
-                else {
-                    uiController.stopDrag = true;
-                    //oldMouseStart.apply(this, oldMouseStartEventArray);
-                    //this._mouseUp({});
-
-                    //ACHTUNG VIEL INTERNER CODE, nötige mouseup funcs der draggable impl werdden ausgeführt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    if ($.ui.ddmanager) {
-                        $.ui.ddmanager.dragStop(this, event);
-                    }
-                    $(document)
-                        .unbind("mousemove." + this.widgetName, this._mouseMoveDelegate)
-                        .unbind("mouseup." + this.widgetName, this._mouseUpDelegate);
-
-                    if (this._mouseStarted) {
-                        this._mouseStarted = false;
-
-                        if (event.target === this._mouseDownEvent.target) {
-                            $.data(event.target, this.widgetName + ".preventClickEvent", true);
-                        }
-                        //this._mouseStop(event);
-                        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-                    }
-                }
-            }
-
-            if (!uiController.stopDrag) {
-                oldMouseDrag.apply(this, [event, overrideHandle, noActivation]);
-            }
-
-            if (uiController.checkSwipeTimer) {
-                if (Math.abs(event.clientY - uiController.dragSongY) > 30) {
-                    uiController.swipeTimer = Date.now();
-                }
-
-            }
-        }
-    }
-    var oldMouseUp = $.ui.draggable.prototype._mouseUp;
-    $.ui.draggable.prototype._mouseUp = function (event, overrideHandle, noActivation) {
-        console.log("STOPED")
-      //  uiController.stopScrollingOnClick(event);
-
-        if (!uiController.stopDrag && !uiController.dragSongCheckScrolling) {
-            console.log("??????????????")
-
-            oldMouseUp.apply(this, [event, overrideHandle, noActivation]);
-        }
-    };
-
-   */
-
-    ///------------------------------------------------------------
-
-
-    /*
-     var oldSortableMouseStart = $.ui.sortable.prototype._mouseStart;
-     var oldSortableMouseStartEventArray, oldSortableMouseStartEventObject;
-     $.ui.sortable.prototype._mouseStart = function (event, overrideHandle, noActivation) {
-     console.log("STARTD")
-     console.dir(event)
-
-     oldSortableMouseStartEventArray = [event, overrideHandle, noActivation]
-
-     if (uiController.draggingSong) {
-     oldSortableMouseStart.apply(this, oldSortableMouseStartEventArray);
-     uiController.sortingStarted = true;
-     } else {
-     uiController.sortingStarted = false;
-
-     uiController.dragSongX = event.clientX;
-     uiController.dragSongY = event.clientY;
-     uiController.checkSwipeTimer = Date.now();
-     uiController.delayDragTimer = Date.now();
-     uiController.dragSortableSongCheckScrolling = true;
-     uiController.stopDrag = false;
-     uiController.draggingTarget = event.target;
-
-     }
-
-     };
-
-     var oldSortableMouseDrag = $.ui.sortable.prototype._mouseDrag;
-     $.ui.sortable.prototype._mouseDrag = function (event, overrideHandle, noActivation) {
-     console.log("DRAG "+uiController.sortingStarted+"  " +uiController.dragSortableSongCheckScrolling)
-
-     if (!uiController.sortingStarted) {
-     if (uiController.dragSortableSongCheckScrolling) {
-
-     if (Date.now()-uiController.delayDragTimer>1000 &&Math.abs(event.clientY - uiController.dragSongY)<15 && Math.abs(event.clientX - uiController.dragSongX) <15) {
-     console.log("!!!!!!!!!!!!!!")
-     uiController.sortingStarted = true;
-
-     oldSortableMouseStart.apply(this, oldSortableMouseStartEventArray);
-     if (!uiController.sortPlaylist) {
-     uiController.toggleSortablePlaylist(true);
-     uiController.startedSortPlaylist = true;
-     }
-     uiController.dragSortableSongCheckScrolling = false;
-
-     }
-     else if (Date.now()-uiController.delayDragTimer>1000||(Math.abs(event.clientY - uiController.dragSongY)>15 && Math.abs(event.clientX - uiController.dragSongX) >15)) {
-     uiController.stopDrag = true;
-     uiController.dragSortableSongCheckScrolling = false;
-
-     }
-     }
-     } else{
-
-     if (!uiController.stopDrag) {
-     oldSortableMouseDrag.apply(this, [event, overrideHandle, noActivation]);
-     }
-     }
-
-     if (uiController.checkSwipeTimer) {
-     if (Math.abs(event.clientY - uiController.dragSongY) > 30) {
-     uiController.swipeTimer = Date.now();
-     }
-
-     }
-
-     }
-     var oldSortableMouseUp = $.ui.sortable.prototype._mouseStop;
-     $.ui.sortable.prototype._mouseStop = function (event, overrideHandle, noActivation) {
-     console.log("STOPED")
-     if (!uiController.stopDrag && uiController.sortingStarted) {
-     console.log("??????????????")
-
-     oldSortableMouseUp.apply(this, [event, overrideHandle, noActivation]);
-     }
-
-
-     };
-
-
-     */
-
-    /*
-     var oldSMouseStart = $.ui.sortable.prototype._mouseStart;
-     var oldSMouseStartEventArray, oldSMouseStartEventObject;
-     $.ui.sortable.prototype._mouseStart = function (event, overrideHandle, noActivation) {
-     console.log("START")
-     oldSMouseStartEventObject = this;
-     oldSMouseStartEventArray = [event, overrideHandle, noActivation];
-     console.dir(event)
-     if (uiController.draggingSong) {
-     oldSMouseStart.apply(oldSMouseStartEventObject, oldSMouseStartEventArray);
-     console.log("___________________________")
-     } else {
-     uiController.dragSongX = event.clientX;
-     uiController.dragSongY = event.clientY;
-     uiController.dragSongCheckSortableScrolling = true;
-     uiController.checkSwipeTimer = Date.now();
-     }
-     };
-
-
-     var oldSMouseMove = $.ui.sortable.prototype._mouseMove;
-     $.ui.sortable.prototype._mouseMove = function (event, overrideHandle, noActivation) {
-     console.log("MOVE")
-     console.dir(event)
-
-     if (uiController.dragSongCheckSortableScrolling) {
-     uiController.dragSongCheckSortableScrolling = false;
-     if (uiController.sidePanelOpen) {
-     oldSMouseStartEventObject._trigger("beforeStart", oldSMouseStartEventArray[0], oldSMouseStartEventObject._uiHash());
-     console.log("___________________________")
-     oldSMouseStart.apply(oldSMouseStartEventObject, oldSMouseStartEventArray);
-     } else {
-
-     $.ui.sortable.prototype._mouseStarted = false;
-     }
-     }
-
-     if (uiController.checkSwipeTimer) {
-     if (Math.abs(event.clientY - uiController.dragSongY) > 30) {
-     uiController.swipeTimer = Date.now();
-     }
-
-     }
-     oldSMouseMove.apply(this, [event, overrideHandle, noActivation]);
-     };
-
-
-     var oldSMouseUp = $.ui.sortable.prototype._mouseUp;
-     $.ui.sortable.prototype._mouseUp = function (event, overrideHandle, noActivation) {
-     console.log("STOP");
-     oldSMouseUp.apply(this, [event, overrideHandle, noActivation]);
-     uiController.stopScrollingOnClick(event);
-
-     };
-
-     */
     uiController.makePlayListSortable();
-    if (!app.isCordova){
+    if (!app.isCordova) {
         $(".sortable").sortable("disable");
     }
-
-
 
 
     $("#sortplaylisttext").hide();
@@ -694,11 +487,18 @@ uiController.makePlayListSortable = function () {
                 }, 450));
             }
         }
-    }).on("mouseup mouseout",function () {
+    }).on("mouseup",function () {
             if (Math.abs(event.clientY - uiController.dragSortableSongY) > 30) {
                 uiController.swipeTimer = Date.now();
-
             }
+
+            uiController.playlistMouseDown = false;
+
+            clearTimeout($(this).data("checkdown"));
+            $(this).data("checkdown", null);
+
+        }).on("mouseup mouseout",function () {
+
 
             uiController.playlistMouseDown = false;
 
@@ -712,7 +512,6 @@ uiController.makePlayListSortable = function () {
                     clearTimeout($(this).data("checkdown"));
                 }
             }
-
 
 
         })
@@ -809,26 +608,56 @@ uiController.makeSearchListDraggable = function () {
 
     $("#searchlist li").on("mousedown",function (event) {
         console.log("DOWN")
-
+        uiController.dragDraggableSongX = event.clientX;
         uiController.dragDraggableSongY = event.clientY;
+        uiController.dragDraggableSongTimer = Date.now();
+        uiController.dragDraggableSongStartEvent = event;
     }).on("mouseout",function (event) {
             uiController.dragDraggableSongY = -10;
-
         }).on("mouseup ",function (event) {
-            console.log("UPPPPPP")
+            console.log("FDFDFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDdd")
             if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 8) {
-                if (Math.abs(event.clientY - uiController.dragSortableSongY) > 30) {
+                if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 30) {
                     uiController.swipeTimer = Date.now();
-
+                    console.log("FDFDFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDdd")
                 }
-                console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-            }else{
+            } else {
                 $(this).click();
             }
 
         }).on("mousemove", function (event) {
             if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 8)
                 uiController.dragDraggableSongY = -10;
+            if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 30) {
+                uiController.swipeTimer = Date.now();
+            }
+            if (uiController.dragDraggableSongTimer && Date.now() - uiController.dragDraggableSongTimer < 500) {
+
+                if (event.clientX - uiController.dragDraggableSongX > 20 && Math.abs(event.clientY - uiController.dragDraggableSongY) < Math.abs(event.clientX - uiController.dragDraggableSongX) * 0.6) {
+                    console.log("DRAGNDROP")
+                    $("#searchlistview .draggableSong").draggable("enable");
+
+
+                    if (!uiController.sidePanelOpen && $(window).width() < uiController.responsiveWidthSmallest)
+                        uiController.toggleSidePanel();
+                    var that = this;
+                    setTimeout(function () {
+                        if (!uiController.sortPlaylist) {
+                            uiController.toggleSortablePlaylist(true);
+                            uiController.startedSortPlaylist = true;
+                        }
+                        var coords = {
+                            clientX: uiController.dragDraggableSongStartEvent.clientX,
+                            clientY: uiController.dragDraggableSongStartEvent.clientY
+                        };
+                        $(that).simulate("mousedown", coords);
+
+                    }, 0)
+
+
+                }
+
+            }
 
         })
 
@@ -859,13 +688,6 @@ uiController.makeSearchListDraggable = function () {
         }, drag: function (event, ui) {
             return !uiController.stopDrag;
         },
-        beforeStart: function () {
-            if (!uiController.sortPlaylist) {
-                uiController.toggleSortablePlaylist(true);
-                uiController.startedSortPlaylist = true;
-            }
-
-        },
         start: function (event) {
 
             uiController.draggingSong = true;
@@ -876,6 +698,7 @@ uiController.makeSearchListDraggable = function () {
 
         },
         stop: function (event, ui) {
+            $("#searchlistview .draggableSong").draggable("disable").removeClass("ui-disabled ui-state-disabled");
             uiController.draggingSong = false;
             $(this).css("opacity", "1")
             if (uiController.startedSortPlaylist) {
@@ -924,7 +747,7 @@ uiController.toast = function (msg, time, touchFunc) {
             "text-align": "center",
             width: $("#toastTest").width() + 10,
             left: ($(window).width() - $("#toastTest").width() - 10) / 2,
-            top: $(window).height()/2 - $("#toastTest").height()/2})
+            top: $(window).height() / 2 - $("#toastTest").height() / 2})
         .click(function () {
             $("#toastId").hide();
             touchFunc();
@@ -941,7 +764,6 @@ uiController.toast = function (msg, time, touchFunc) {
 }
 
 
-
 uiController.toggleSearchButton = function (button) {
     $('#searchbutton' + button).buttonMarkup({theme: 'a'});
     $('#searchbutton' + button).parent().buttonMarkup({theme: 'a'});
@@ -955,9 +777,6 @@ uiController.toggleSearchButton = function (button) {
 }
 
 
-
-
-
 uiController.toggleSavePlaylist = function () {
     uiController.savePlaylist = !uiController.savePlaylist;
     if (uiController.savePlaylist) {
@@ -966,27 +785,24 @@ uiController.toggleSavePlaylist = function () {
             uiController.toggleSortablePlaylist();
         }
         // $("#saveplaylistbtn").addClass("redbackground");
+        $("#saveplaylistbtn img").attr("src", "public/img/crosswhite.png");
+
         $("#sortplaylistbtn").hide();
         $("#playlistselectvertical").hide();
         $("#saveplaylistinput").show();
         $("#saveokayplaylistbutton").show();
 
 
-        $("#saveplaylistbtn img").attr("src", "public/img/crosswhite.png");
-
-
         $("#saveplaylistinpt").focus();
 
     } else {
         //  $("#saveplaylistbtn").removeClass("redbackground");
+        $("#saveplaylistbtn img").attr("src", "public/img/save.png");
+
         $("#saveplaylistinput").hide();
         $("#saveokayplaylistbutton").hide();
-
         $("#sortplaylistbtn").show();
-
         $("#playlistselectvertical").show();
-        $("#saveplaylistbtn img").attr("src", "public/img/save.png");
-        7
 
 
     }
@@ -1254,14 +1070,13 @@ uiController.updateUI = function (dontChangeVideOpacity) {
     //Small Size
     if ($(window).width() < uiController.responsiveWidthSmall) {
 
-        $
+
         $("#videocontrols .mejs-time-total").css("width", ($(window).width() / 1.5 - 160));
 
-        console.log("sdsdsd!!!!!!")
-        if (($(window).width()) / 1.5 - 160 - 105 + 10 < 323 - 105)
-            $("#videocontrols .mejs-time-rail").css("width", (($(window).width()) / 1.5 - 160 - 105) + 10);
+        if (($(window).width()) / 1.5 - 160 - 105 + 10 < 323 - 105 - uiController.countCustomButtons * 26)
+            $("#videocontrols .mejs-time-rail").css("width", (($(window).width()) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10);
         else
-            $("#videocontrols .mejs-time-rail").css("width", 323 - 105);
+            $("#videocontrols .mejs-time-rail").css("width", 323 - 105 - uiController.countCustomButtons * 26);
 
 
         $("#searchlist").css("max-height", $(window).height() - 44 - 130 - 40);
@@ -1279,8 +1094,8 @@ uiController.updateUI = function (dontChangeVideOpacity) {
          } while (marquee)*/
 
 
-        $("#videocontrols .mejs-time-total").css("width", ($(window).width() / 1.5 - 160) / 1.3 - 105);
-        $("#videocontrols .mejs-time-rail").css("width", ($(window).width() / 1.5 - 160) / 1.3 + 10 - 105);
+        $("#videocontrols .mejs-time-total").css("width", ($(window).width() / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26);
+        $("#videocontrols .mejs-time-rail").css("width", ($(window).width() / 1.5 - 160) / 1.3 + 10 - 105 - uiController.countCustomButtons * 26);
 
 
         $("#content").css({"width": $(window).width() - 32, "height": $(window).height() - 44 - 4 - 32 - 6});

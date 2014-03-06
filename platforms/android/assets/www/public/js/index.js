@@ -68,6 +68,7 @@ $(document).ready(function () {
     //http://localhost:3001/?play=alesso%20under%20control
 });
 
+showregisterpopup = false;
 
 //JQ Erweiterungen
 

@@ -97,12 +97,14 @@
     <div data-role="header" id="header" data-position="fixed">
         <img src="public/img/icon.png" style="position:absolute;left: 8px;top: 8px" width="30px" height="30px">
         <img id="playingSongCover" ng-show = "playlistController.playlingTitleLoading"  class="fadeincomplete"  src="public/img/playlist.png" style="display:none;position:absolute;left: 148px;top: 8px" width="30px" height="30px">
-        <h1 id="playingSongTitleLoading"ng-show = "playlistController.playlingTitleLoading" class="fadeincomplete" style="z-index:0;display:none;position:absolute;left: 138px;top: 0px;right: 30px" > {{playlistController.getPlaylingTitle()}} <span style='font-style:italic;color:rgba(255,255,255,.95)'> {{playlistController.getIsLoadingText()}}</span></h1>
-        <h1 id="playingSongTitle"ng-show = "playlistController.playlingTitleLoading"  style="z-index:1;display:none;position:absolute;left: 138px;top: 0px;right: 30px" > {{playlistController.getPlaylingTitle()}} <span style='font-style:italic;color:rgba(255,255,255,.95)'>&nbsp;&nbsp; </span></h1>
+        <h1 id="playingSongTitleLoading"ng-show = "playlistController.playlingTitleLoading" class="fadeincomplete" style="z-index:0;display:none;position:absolute;left: 138px;top: 0px;right: 30px" > {{playlistController.getPlaylingTitle()}} {{playlistController.getIsLoadingText()}}</h1>
+        <h1 id="playingSongTitle"ng-show = "playlistController.playlingTitleLoading"  style="z-index:1;display:none;position:absolute;left: 138px;top: 0px;right: 30px" > {{playlistController.getPlaylingTitle()}}</h1>
 
         <h1>{{appTitle}}{{playlistController.getPlayingSepSign()}}</h1>
 
         <img src="public/img/bars-white.png" id="openSidePanelBarIcon" onclick="uiController.toggleSidePanel()" style="position:absolute;right: 6px;top: 13px" width="17px" height="20px"/>
+        <a ng-if ="!loggedIn" href="#popupLogin" onclick ="setTimeout(function(){$('#signinuser').focus();},700)" data-rel="popup" data-position-to="window" class="ui-btn ui-btn-right  ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
+        <a ng-if ="loggedIn" id="linkAccount"  href="#popupAccount" data-rel="popup"  class="ui-btn ui-btn-right  ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">{{userName}}</a>
 
     </div>
     <!-- /header -->
@@ -205,7 +207,7 @@
 
             <div id="playlistInner" class="animate">
                 <ul data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
-                    <li  ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs)" data-songid="playlistsong{{song.id}}"  data-songgid="playlistsong{{song.gid}}" class ="fadeslideincompletefast playlistsong" ng-click="playlistController.playSong(song.id,song.gid,true,mediaController.getSongArtist(song),song.name);"><a><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}<img class="removesong" style="display:none" src="public/img/trash.png"></a></li>
+                    <li  ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.id" data-songid="playlistsong{{song.id}}"  data-songgid="playlistsong{{song.gid}}" class ="fadeslideincompletefast playlistsong" ng-click="playlistController.playSong(song.id,song.gid,true,mediaController.getSongArtist(song),song.name);"><a><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}<img class="removesong" style="display:none" src="public/img/trash.png"></a></li>
 
                 </ul>
             </div>
@@ -222,12 +224,63 @@
         </div>
         <div id="videocontrols" class="mejs-container">
 
-
+            <div class="mejs-button mejs-button-choose-version mejs-custom-button">
+                <button type="button" id="chooseversionbutton"  data-role = "none" onclick ="$('#popupVideoSettings').popup('open', {positionTo: '.mejs-button-choose-version'});" aria-controls="mep_0" title="Vollbild" aria-label="Vollbild"></button>
+            </div>
         </div>
 
 
     </div>
     <!-- /content -->
+
+
+    <!-- Popups ---------------------------------------->
+
+    <div data-role="popup" id="popupVideoSettings"  data-arrow="true" data-theme="a" class="ui-corner-all">
+        <form>
+            <div >
+                <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose source</h3>
+                <ul data-role="listview" >
+                    <li><a href="#" id=""><img src="public/img/cross.png">Source1</a></li>
+                    <li><a href="#" id=""><img src="public/img/cross.png">Source2</a></li>
+                    <li><a href="#" id=""><img src="public/img/cross.png">Source3</a></li>
+                </ul>
+            </div>
+        </form>
+    </div>
+
+    <div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all">
+        <form>
+            <div style="padding:0px 20px 10px 20px">
+                <h3 id="signintitle">Please sign in</h3>
+                <label for="signinuser" class="ui-hidden-accessible">Username:</label>
+                <input type="text" name="user" id="signinuser" value="" placeholder="username" data-theme="a">
+                <label for="signinpw" class="ui-hidden-accessible">Password:</label>
+                <input type="password" name="pass" id="signinpw" value="" placeholder="password" data-theme="a">
+                <span  id="pwconfirm" style="display:none" >
+                <input type="password" name="pass" id="signinpwc" value="" placeholder="confirm password" data-theme="a">
+                </span>
+                <button type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+                <a data-role="none" id="registerlink" href=""  style ="text-decoration:none!important" onclick ="showregisterpopup = !showregisterpopup; if(showregisterpopup){$('#signintitle').html('Please register');$('#signinButton').html('Register'); $('#registerlink').html('Sign in');$('#pwconfirm').show();}else {$('#signintitle').html('Please sign in');$('#signinButton').html('Sign in'); $('#registerlink').html('Register'); $('#pwconfirm').hide();};$('#signinuser').focus();">Register</a>
+            </div>
+        </form>
+    </div>
+    <div data-role="popup" id="popupAccount"  data-arrow="true" data-theme="a" class="ui-corner-all">
+        <form>
+            <div >
+                <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Account</h3>
+                <ul data-role="listview" >
+                    <li><a href="#" data-rel="back" id="manageFacebook"><img src="public/img/fb.png">Facebook</a></li>
+                    <li><a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png">Google<!--span class="GoogleBlue">G</span><span class="GoogleRed">o</span><span class="GoogleYellow">o</span><span class="GoogleBlue">g</span><span class="GoogleGreen">l</span><span class="GoogleRed">e</span--></a></li>
+                    <li><a href="#" data-rel="back" id="manageDropbox"><img src="public/img/dropbox.png">Dropbox</a></li>
+                </ul>
+                <br>
+                <ul data-role="listview">
+                    <li><a href="#" id="logoutlink"  data-rel="back" ><img src="public/img/logout.png">Log out</a></li>
+                </ul>
+            </div>
+        </form>
+    </div>
 
     <!--div data-role="footer" id="footer" data-position="fixed">
         <h4>Footer content</h4>
@@ -298,10 +351,26 @@
     app.initialize();
 </script>
 
+
+
+<!--Google-->
+<script type="text/javascript" src="public/js/googleHandler.js"></script>
+
+
+<!-- The Google API Loader script. -->
+<script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+<script src="https://apis.google.com/js/client.js?onload="></script>
+
+
  <!-- Preload Images-->
 <div style="display:none">
      <img src="public/img/play.png">
      <img src="public/img/pause.png">
+    <img src="public/img/crosswhite.png">
+    <img src="public/img/save.png">
+
+
+
 </div>
 
 </body>

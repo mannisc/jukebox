@@ -77,9 +77,9 @@ mediaController.playStream = function (artist,title) {
 
                                         setTimeout(function(){
                                             $("#videoplayer").removeClass("animatefast").addClass("animate");
-                                            playlistController.playlingTitle = playlistController.playlingTitleLoading ;
+                                            playlistController.playingTitle = playlistController.playlingTitleLoading ;
                                             playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
-                                            playlistController.setNewTitle(playlistController.playlingTitle,playlistController.playlingTitleCover,true);
+                                            playlistController.setNewTitle(playlistController.playingTitle,playlistController.playlingTitleCover,true);
 
                                             uiController.mediaElementPlayer.setSrc(streamURL);
                                             uiController.mediaElementPlayer.load();
