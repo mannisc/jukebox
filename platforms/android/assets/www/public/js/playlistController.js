@@ -413,6 +413,17 @@ playlistController.playSong = function (song, onlyStyle) {
     }
     $scope.safeApply();
 
+
+    setTimeout(function(){
+        $("#playingSongInfoLink").css("opacity","1");
+        $("#buySongLink").css("opacity","1");
+        $("#watchSongLink").css("opacity","1");
+         $("#playingSongInfoLink").removeClass("fadeincomplete");
+        $("#buySongLink").removeClass("fadeincomplete");
+        $("#watchSongLink").removeClass("fadeincomplete");
+
+    },500)
+
 }
 
 
@@ -436,7 +447,7 @@ playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
     //  $("#playingSongCover").attr("src", coverUrl);
 
     if (!isLoaded) {
-        coverUrl = "public/img/loader.gif";
+        coverUrl = "public/img/loadertitle.gif";
 
     $("#playingSongInfoStyle").remove();
     var style = $('<style id="playingSongInfoStyle">' +
@@ -444,7 +455,7 @@ playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
         ' background-image: url(' + coverUrl + ')' +
         '}' +
         '#popupArtist-popup::before{' +
-        '  background-color:#fff!important' +
+        '  background-color:rgba(255,255,255,.5)!important' +
         '}' +
         '</style>');
     $('html > head').append(style);

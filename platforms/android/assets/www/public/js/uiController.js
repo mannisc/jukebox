@@ -28,6 +28,11 @@ uiController.responsiveWidthSmaller = 1250;
 uiController.init = function () {
 
 
+    /*
+    $('body').bind('contextmenu', function(e) {
+        return false;
+    });
+      */
     uiController.playedFirst = false;
     $("#videoplayer").css("opacity", "0");
 
