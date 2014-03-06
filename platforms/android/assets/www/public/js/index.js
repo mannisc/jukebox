@@ -78,3 +78,20 @@ jQuery.fn.outerHTML = function (s) {
         ? this.before(s).remove()
         : jQuery("<p>").append(this.eq(0).clone()).html();
 };
+
+
+//Reload Page if params
+function getURLParameters( name ){
+    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( window.location.href );
+    if( results == null )    return false;
+    else    return results[1];}
+
+
+if(getURLParameters("ui-state"))  {
+    console.log("RELOAD")
+    location.href = 'http://' + window.location.hostname + window.location.pathname;    //TODO !!!!!!!!!!!!!!!
+
+}

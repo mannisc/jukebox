@@ -962,7 +962,7 @@ input[type=button]{
 }
 
 .ui-alt-icon.ui-icon-search.loading:after, .ui-alt-icon .ui-icon-search.loading:after, .ui-input-search.loading:after {
-    background-image:url(../img/loading.gif)!important;
+    background-image:url(../img/loader.gif)!important;
     background: rgb(255, 255, 255);
     background-size:14px 14px;
     background-position:0px 0px;
@@ -978,6 +978,8 @@ input[type=button]{
 }
 
 
+
+
 /*
 #playingSongCover{
     box-shadow: 0px 0px 10px 3px rgba(255,255,255,0.1);
@@ -991,8 +993,30 @@ input[type=button]{
     text-shadow: 0px 0px 5px rgba(255,255,255,0.25);
 }
   */
+
+
+.playingSongInfo{
+    left: 135px!important;
+    transition : all .5s linear;
+
+}
+
+.playingSongInfo.ui-icon-custom:after {
+    opacity:1;
+    background-image: url(../img/loader.gif);
+    background-color:rgba(0,0,0,0)!important;
+    background-size: 100%!important;
+    -webkit-border-radius: 1px!important;
+    border-radius:1px!important;
+    transition : all .5s linear;
+    background : transparent;
+}
+
+
+
+
 /*POPUPS*/
-#popupAccount-popup{
+#popupAccount-popup, #popupArtist-popup,#popupLogin-popup{
     top: 51px!important;
 }
 

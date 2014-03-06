@@ -134,6 +134,7 @@ mediaController.playVersion = function (songversion){
 
 
 mediaController.playStream = function (artist,title) {
+
         $(".mejs-time-buffering").fadeIn();
 
         if($(".mejs-time-loaded").width()>$(".mejs-time-total").width()*0.7)
@@ -159,6 +160,18 @@ mediaController.playStream = function (artist,title) {
 
         var streamURL = "";
 
+
+        var error = function(){
+            console.log("ERROR")
+            if(streamID == mediaController.playCounter){
+                setTimeout(function(){$(".mejs-controls").find('.mejs-time-buffering').hide()},500);
+                uiController.toast("Sorry, this Song is not available as Video at the moment.",1500)
+                playlistController.resetPlayingSong();
+
+            }
+        }
+
+
         var play = function (streamID, searchString, artistString, titleString, streamURL) {
 
 
@@ -166,7 +179,10 @@ mediaController.playStream = function (artist,title) {
                 url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + artistString + "&track=" + titleString + "&format=json",
                 success: function (data) {
                     if (streamID == mediaController.playCounter) {
-                        $(".mejs-time-buffering").show();
+                        setTimeout(function(){
+                            if(streamID == mediaController.playCounter)
+                             $(".mejs-time-buffering").fadeIn();
+                        },500);
                         var duration = 200000;
                        console.dir(data);
                         if (data.track) {
@@ -180,8 +196,8 @@ mediaController.playStream = function (artist,title) {
                             url: preferences.serverURL + "?play=" + searchString+"&force1="+artistString+"&force2="+titleString+"&duration="+duration,
                             success: function (data) {
                                 console.dir( preferences.serverURL + "?play=" + searchString+"&force1="+artistString+"&force2="+titleString+"&duration="+duration);
-
                                 if(streamID == mediaController.playCounter){
+                                    mediaController.playCounter++;
                                     streamURL = data;
                                     if (streamURL) {
 
@@ -203,6 +219,8 @@ mediaController.playStream = function (artist,title) {
                                             uiController.mediaElementPlayer.load();
                                             uiController.mediaElementPlayer.play();
 
+                                            playlistController.playedSongs.push(playlistController.loadingSong)
+
                                         },200)
 
                                     }else
@@ -218,12 +236,7 @@ mediaController.playStream = function (artist,title) {
                                 playlistController.isLoading = false;
                                 if(loadError) {
                                     console.log("ERROR")
-                                    if(streamID == mediaController.playCounter){
-                                        setTimeout(function(){$(".mejs-controls").find('.mejs-time-buffering').hide()},500);
-                                        uiController.toast("Sorry, this Song is not available as Video at the moment.",1500)
-                                        playlistController.resetPlayingSong();
-
-                                    }
+                                    error();
                                 }
                             }
                         })
@@ -234,7 +247,8 @@ mediaController.playStream = function (artist,title) {
 
                 },
                 error: function () {
-                    $(".mejs-controls").find('.mejs-time-buffering').hide();
+                    console.log("ERROR")
+                    error();
                 }
 
             })
