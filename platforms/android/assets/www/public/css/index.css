@@ -978,6 +978,19 @@ input[type=button]{
 }
 
 
+/*
+#playingSongCover{
+    box-shadow: 0px 0px 10px 3px rgba(255,255,255,0.1);
+}
+
+#playingSongTitle{
+    text-shadow: 0px 0px 5px rgba(255,255,255,0.25);
+}
+
+#playingSongTitleLoading{
+    text-shadow: 0px 0px 5px rgba(255,255,255,0.25);
+}
+  */
 /*POPUPS*/
 #popupAccount-popup{
     top: 51px!important;
