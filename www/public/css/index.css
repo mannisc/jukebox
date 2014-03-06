@@ -1016,7 +1016,7 @@ input[type=button]{
 
 
 /*POPUPS*/
-#popupAccount-popup{
+#popupAccount-popup, #popupArtist-popup,#popupLogin-popup{
     top: 51px!important;
 }
 

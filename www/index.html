@@ -97,7 +97,7 @@
     <div data-role="header" id="header" data-position="fixed">
         <img src="public/img/icon.png" style="position:absolute;left: 8px;top: 8px" width="30px" height="30px">
 
-        <a  ng-show = "playlistController.loadingSong"  data-rel="popup" data-position-to="window"  class="playingSongInfo fadeincomplete ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-custom ui-btn-icon-left ui-btn-a" data-transition="pop">
+        <a  id="playingSongInfoLink" onclick="searchController.getArtistInfo()"  ng-show = "playlistController.loadingSong" href="#popupArtist" data-rel="popup" data-position-to="#playingSongInfoLink"  class="playingSongInfo fadeincomplete ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-custom ui-btn-icon-left ui-btn-a" data-transition="pop">
            <span style="opacity:0">{{playlistController.getPlayingTitle()}}</span>
            <span id="playingSongTitleLoading" class="fadeincomplete" style="text-align:left;z-index:0;display:none;position:absolute;left: 35px;top: 9px;right: 0px"  >{{playlistController.getPlayingTitle()}}</span>
            <span id="playingSongTitle" class="fadeincomplete" style="text-align:left;z-index:0;display:none;position:absolute;left: 35px;top: 9px;right: 0px"   >{{playlistController.getPlayingTitle()}} </span>
@@ -108,7 +108,7 @@
         <h1>{{appTitle}}{{playlistController.getPlayingSepSign()}}</h1>
 
         <img src="public/img/bars-white.png" id="openSidePanelBarIcon" onclick="uiController.toggleSidePanel()" style="position:absolute;right: 6px;top: 13px" width="17px" height="20px"/>
-        <a ng-if ="!loggedIn" href="#popupLogin" onclick ="setTimeout(function(){$('#signinuser').focus();},700)" data-rel="popup" data-position-to="window" class="ui-btn ui-btn-right  ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
+        <a id="signinLink" ng-if ="!loggedIn" href="#popupLogin" onclick ="setTimeout(function(){$('#signinuser').focus();},700)" data-rel="popup" data-position-to="#signinLink" class="ui-btn ui-btn-right  ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
         <a ng-if ="loggedIn" id="linkAccount"  href="#popupAccount" data-rel="popup"  class="ui-btn ui-btn-right  ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">{{userName}}</a>
 
     </div>
@@ -170,11 +170,7 @@
             <div id="playlistselectvertical" >
                 <form>
                     <select id="playlistselectverticalform" data-role="none" data-placeholder="Select playlists" multiple class="chosen-select">
-                        <option value="1">Electro'14</option>
-                        <option value="2">Charts4/13</option>
-                        <option value="3">Chillout</option>
-                        <option value="4">Vocals</option>
-                        <option value="5">Vocals</option>
+                        <option ng-repeat ="playlist in playlistController.playlists track by playlist.name" value="$index">{{playlist.name}}</option>
                     </select>
 
                 </form>
@@ -255,22 +251,36 @@
         </form>
     </div>
 
-    <div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all">
+    <div data-role="popup" id="popupLogin" data-arrow="true" data-theme="a" class="ui-corner-all">
         <form>
             <div style="padding:0px 20px 10px 20px">
                 <h3 id="signintitle">Please sign in</h3>
                 <label for="signinuser" class="ui-hidden-accessible">Username:</label>
-                <input type="text" name="user" id="signinuser" value="" placeholder="username" data-theme="a">
+                <input type="text" name="user" id="signinuser" value="" placeholder="email adress" data-theme="a">
                 <label for="signinpw" class="ui-hidden-accessible">Password:</label>
                 <input type="password" name="pass" id="signinpw" value="" placeholder="password" data-theme="a">
                 <span  id="pwconfirm" style="display:none" >
                 <input type="password" name="pass" id="signinpwc" value="" placeholder="confirm password" data-theme="a">
                 </span>
-                <button type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+                <button onclick ="$('#popupVideoSettings').popup('close');$scope.loggedIn=true;$scope.safeApply();" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
                 <a data-role="none" id="registerlink" href=""  style ="text-decoration:none!important" onclick ="showregisterpopup = !showregisterpopup; if(showregisterpopup){$('#signintitle').html('Please register');$('#signinButton').html('Register'); $('#registerlink').html('Sign in');$('#pwconfirm').show();}else {$('#signintitle').html('Please sign in');$('#signinButton').html('Sign in'); $('#registerlink').html('Register'); $('#pwconfirm').hide();};$('#signinuser').focus();">Register</a>
             </div>
         </form>
     </div>
+
+
+    <div data-role="popup" id="popupArtist"  data-arrow="true" data-theme="a" class="ui-corner-all">
+        <form>
+            <div style="text-align:center">
+                <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Arists Info</h3>
+                <a ng-if ="playlistController.loadingSong" href="http://de.wikipedia.org/w/index.php?go=Artikel&title&search={{mediaController.getSongArtist(playlistController.loadingSong)}}" onclick="$('#popupArtist').popup('close')" style="text-decoration:none" target="_blank">Wikipedia</a>
+                <br>
+                <br>
+            </div>
+        </form>
+    </div>
+
+
     <div data-role="popup" id="popupAccount"  data-arrow="true" data-theme="a" class="ui-corner-all">
         <form>
             <div >
