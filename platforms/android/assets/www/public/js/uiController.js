@@ -38,6 +38,10 @@ uiController.init = function () {
 
     //On Window Resize
     $(window).resize(function () {
+
+        $(".ui-popup:visible").popup("close")
+
+
         if ($('.ui-panel-open').length != 0) {
             $('#rightpanel').panel('close');
         }
@@ -555,7 +559,7 @@ uiController.makePlayListSortable = function () {
 
                     //console.log('X:' + (event.clientX-110) + ' Y: '+(event.clientY-30) );
 
-                    if (Math.abs($("#playlistInner").offset().top - $(".draggedsortablelistelement").offset().top) <70 && Math.abs($("#playlistInner").offset().left - $(".draggedsortablelistelement").offset().left) < 50) {
+                    if (Math.abs($("#playlistInner").offset().top - $(".draggedsortablelistelement").offset().top) < 70 && Math.abs($("#playlistInner").offset().left - $(".draggedsortablelistelement").offset().left) < 50) {
                         if (!uiController.playListScrollTimer || Date.now() - uiController.playListScrollTimer > 500) {
                             console.log(uiController.playListScroll.scrollY)
                             uiController.playListScrollTimer = Date.now()
@@ -564,7 +568,7 @@ uiController.makePlayListSortable = function () {
                             uiController.playListScroll.scrollBy(0, 100, 1000)
                         }
 
-                    }else if (Math.abs($("#playlistInner").offset().top+$("#playlistInner").height() - $(".draggedsortablelistelement").offset().top-$(".draggedsortablelistelement").height()) < 70 && Math.abs($("#playlistInner").offset().left - $(".draggedsortablelistelement").offset().left) < 50) {
+                    } else if (Math.abs($("#playlistInner").offset().top + $("#playlistInner").height() - $(".draggedsortablelistelement").offset().top - $(".draggedsortablelistelement").height()) < 70 && Math.abs($("#playlistInner").offset().left - $(".draggedsortablelistelement").offset().left) < 50) {
                         if (!uiController.playListScrollTimer || Date.now() - uiController.playListScrollTimer > 500) {
                             console.log(uiController.playListScroll.scrollY)
                             uiController.playListScrollTimer = Date.now()
@@ -593,9 +597,6 @@ uiController.makePlayListSortable = function () {
 
             $(ui.item).css("opacity", "1");
             var newLoadedPlaylistSongs = [];
-
-
-
 
 
             $("#playlistview").find("li").each(function (index) {
@@ -1115,12 +1116,19 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
         $("#videocontrols .mejs-time-total").css("width", ($(window).width() / 1.5 - 160));
 
-        if (($(window).width()) / 1.5 - 160 - 105 + 10 < 323 - 105 - uiController.countCustomButtons * 26)
-            $("#videocontrols .mejs-time-rail").css("width", (($(window).width()) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10);
+        if (($(window).width()) / 1.5 - 160 - 105 + 10 < 323 - 105 - uiController.countCustomButtons * 26) {
+            if ((($(window).width()) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10 < 0){
+                $("#videocontrols .mejs-time-rail").css("width", "0px");
+                console.log("!nnn"+((($(window).width()) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10))
+
+            }
+            else
+                $("#videocontrols .mejs-time-rail").css("width", (($(window).width()) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10);
+        }
         else
             $("#videocontrols .mejs-time-rail").css("width", 323 - 105 - uiController.countCustomButtons * 26);
 
-
+         console.log("HHHH "+$("#videocontrols .mejs-time-rail").css("width"))
         $("#searchlist").css("max-height", $(window).height() - 44 - 130 - 40);
 
         $("#content").css({"width": $(window).width() - 16, "height": $(window).height() - 44 - 4 - 8 - 6});
@@ -1138,7 +1146,6 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
         $("#videocontrols .mejs-time-total").css("width", ($(window).width() / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26);
         $("#videocontrols .mejs-time-rail").css("width", ($(window).width() / 1.5 - 160) / 1.3 + 10 - 105 - uiController.countCustomButtons * 26);
-
 
         $("#content").css({"width": $(window).width() - 32, "height": $(window).height() - 44 - 4 - 32 - 6});
 

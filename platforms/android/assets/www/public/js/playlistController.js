@@ -432,15 +432,36 @@ playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
 
     if (!isLoaded) {
         coverUrl = "public/img/loader.gif";
-    }
 
     $("#playingSongInfoStyle").remove();
     var style = $('<style id="playingSongInfoStyle">' +
         '.playingSongInfo.ui-icon-custom:after  {' +
         ' background-image: url(' + coverUrl + ')' +
         '}' +
+        '#popupArtist-popup::before{' +
+        '  background-color:#fff!important' +
+        '}' +
         '</style>');
     $('html > head').append(style);
+    }
+    else{
+        $("#playingSongInfoStyle").remove();
+        var style = $('<style id="playingSongInfoStyle">' +
+            '.playingSongInfo.ui-icon-custom:after  {' +
+            ' background-image: url(' + coverUrl + ')' +
+            '}' +
+            '#popupArtist-popup::before{' +
+            '  background: url(' + coverUrl + ');' +
+            '  background-size:cover;!important' +
+            '}' +
+            '</style>');
+        $('html > head').append(style);
+
+
+    }
+
+
+
 
 
     $scope.safeApply();
