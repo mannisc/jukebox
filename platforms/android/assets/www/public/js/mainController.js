@@ -20,10 +20,15 @@
  * @constructor
  */
 function MainController($scope) {
+    window.$scope = $scope;
 
     $scope.appTitle = "JezzPlay";
 
-    window.$scope = $scope;
+
+
+    $scope.userName ="mschmidbartl";
+    $scope.loggedIn = true;
+
     //Safe NG Apply, applies changed to the $scope model to the html dom
     $scope.safeApply = function () {
         var phase = this.$root.$$phase;

@@ -138,6 +138,8 @@ body {
         display: none;
     }
 
+
+
     #searchlist {
         width: 52%;
     }
@@ -147,6 +149,9 @@ body {
 /*Smallest Screen*/
 @media (max-width:669px) {
 
+    .ui-btn-right {
+        right: 2.4em!important;
+    }
     #playlist {
         margin-top: -5px;
         left: 10px;
@@ -391,6 +396,11 @@ input[type=button]{
     border: none !important;
 }
 
+#searchlist li.playing a:hover,#searchlist li.pausing a:hover {
+    background: rgba(70,23,180,0.7) !important;
+    border: none !important;
+}
+
 .ui-li-has-icon img.removesong{
     max-height: 1.8em!important;
     max-width: 1.6em!important;
@@ -510,6 +520,11 @@ input[type=button]{
 
 #playlistInner a:hover {
     background: #4617B4 !important;
+    border: none !important;
+}
+
+#playlistInner li.playing a:hover,#playlistInner li.pausing a:hover {
+    background: rgba(70,23,180,0.7) !important;
     border: none !important;
 }
 
@@ -952,6 +967,88 @@ input[type=button]{
     background-size:14px 14px;
     background-position:0px 0px;
     background-repeat:no-repeat;
+}
+
+
+
+.mejs-overlay-play{
+    background-image:url(../img/swipeoverlay.png);
+    background-size: 100% 100%;
+
+}
+
+
+/*POPUPS*/
+#popupAccount-popup{
+    top: 51px!important;
+}
+
+#popupAccount a{
+    text-shadow:none!important;
+    line-height: 1.2!important;
+    font-size:14px!important;
+    min-height: 0em!important;
+
+    padding-left: 2.6em!important;
+    padding-right: 5em!important;
+    background-color: #fff;
+    color: #000;
+}
+
+#popupAccount a:hover{
+    background-color: #4617B4;
+    color:#fff;
+}
+
+
+
+#popupAccount a img{
+max-height: 2em!important;
+max-width: 2em!important;
+    margin-top:0.25em!important;
+    margin-left:0.15em!important;
+
+}
+
+#popupAccount #logoutlink:hover{
+    background-color: #b4182b !important ;
+
+}
+
+
+#popupVideoSettings a{
+    text-shadow:none!important;
+    line-height: 1.2!important;
+    font-size:14px!important;
+    min-height: 0em!important;
+
+    padding-left: 2.6em!important;
+    padding-right: 5em!important;
+    background-color: #fff;
+    color: #000;
+}
+
+#popupVideoSettings a:hover{
+    background-color: #4617B4;
+    color:#fff;
+}
+
+#popupVideoSettings a img{
+    max-height: 2em!important;
+    max-width: 2em!important;
+    margin-top:0.25em!important;
+    margin-left:0.15em!important;
+
+}
+
+
+#popupVideoSettings #cancelButtonVideoSettings{
+    background-color: #b4182b !important ;
+
+}
+
+#popupVideoSettings-popup{
+   /* margin-left: 7px!important;   */
 }
 
 /* E

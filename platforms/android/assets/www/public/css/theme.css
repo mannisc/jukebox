@@ -9,149 +9,143 @@
  */
 
 /*make sure the viewport is 100% height*/
-html, body ,#page,#content{
-    height : 100%;
-    overflow:hidden!important;
+html, body, #page, #content {
+    height: 100%;
+    overflow: hidden !important;
 }
-#page, .ui-panel{
-    min-height:0px!important;
+
+#page, .ui-panel {
+    min-height: 0px !important;
 }
 
 #header .ui-title {
-    margin: 2px 50px -1px!important;
-    color: #fff!important;
-    text-align: left!important;
+    margin: 2px 50px -1px !important;
+    color: #fff !important;
+    text-align: left !important;
 }
 
-
-
 #leftpanel {
-    top: 45px!important;
+    top: 45px !important;
     /*width: 200px!important;*/
 }
 
 #rightpanel {
-    top: 45px!important;
+    top: 45px !important;
 }
 
-
-.ui-content .ui-listview{
-  margin:0px!important;
+.ui-content .ui-listview {
+    margin: 0px !important;
 }
-
 
 /*Player*/
 
-.mejs-overlay-loading{
-    background:none!important;
+.mejs-overlay-loading {
+    background: none !important;
 }
-
 
 .mejs-controls .mejs-play button.looped {
-    background-position: -64px 0px!important;
+    background-position: -64px 0px !important;
 }
 
-
-
 .mejs-controls .mejs-time-rail .mejs-time-current {
-    background: #fff!important;
-    background: rgb(255,255,255)!important;
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255,255,255)), to(rgb(200,200,200)))!important;
-    background: -webkit-linear-gradient(top, rgb(255,255,255), rgb(200,200,200))!important;
-    background: -moz-linear-gradient(top, rgb(255,255,255), rgb(200,200,200))!important;
-    background: -o-linear-gradient(top, rgb(255,255,255), rgb(200,200,200))!important;
-    background: -ms-linear-gradient(top, rgb(255,255,255), rgb(200,200,200))!important;
-    background: linear-gradient(rgb(255,255,255), rgb(200,200,200))!important;
+    background: #fff !important;
+    background: rgb(255, 255, 255) !important;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 255, 255)), to(rgb(200, 200, 200))) !important;
+    background: -webkit-linear-gradient(top, rgb(255, 255, 255), rgb(200, 200, 200)) !important;
+    background: -moz-linear-gradient(top, rgb(255, 255, 255), rgb(200, 200, 200)) !important;
+    background: -o-linear-gradient(top, rgb(255, 255, 255), rgb(200, 200, 200)) !important;
+    background: -ms-linear-gradient(top, rgb(255, 255, 255), rgb(200, 200, 200)) !important;
+    background: linear-gradient(rgb(255, 255, 255), rgb(200, 200, 200)) !important;
     width: 0;
 }
 
 .mejs-controls .mejs-shuffle-off button {
-    background-position: -32px 0px!important;
+    background-position: -32px 0px !important;
 }
-
 
 /*Header*/
 
 /* Header height to avoid icon bounce and scale */
 
-.ui-header-fixed{
-    height: 44px!important;
-    left: 0!important;
-    right: 0!important;
-    width: 100%!important;
-    position: fixed!important;
-    z-index: 1000!important;
-    top: -1px!important;
-    padding-top: 1px!important;
+.ui-header-fixed {
+    height: 44px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    position: fixed !important;
+    z-index: 1000 !important;
+    top: -1px !important;
+    padding-top: 1px !important;
 }
-
-
-
 
 /*Listview*/
-#searchlist .iScrollVerticalScrollbar{
-    left:0px!important;
-    right:auto!important;
+#searchlist .iScrollVerticalScrollbar {
+    left: 0px !important;
+    right: auto !important;
 }
 
-#playlistInner .iScrollVerticalScrollbar{
-    right:0px!important;
-    left:auto!important;
+#playlistInner .iScrollVerticalScrollbar {
+    right: 0px !important;
+    left: auto !important;
 }
 
 .ui-li-has-icon img {
-    max-height: 2em!important;
-    max-width: 2em!important;
-    margin-top: -0.5em!important;
+    max-height: 2em !important;
+    max-width: 2em !important;
+    margin-top: -0.5em !important;
 }
 
 .ui-li-has-icon a {
-    padding-left: 3.5em!important;
-    padding-top: 0.8em!important;
+    padding-left: 3.5em !important;
+    padding-top: 0.8em !important;
 
 }
 
-#searchlist .ui-btn-icon-right{
-    padding-right:0px!important;
+#searchlist .ui-btn-icon-right {
+    padding-right: 0px !important;
 }
 
-#playlistInner .ui-btn-icon-right{
-    margin-right:8px;
-    padding-right:0px;
+#playlistInner .ui-btn-icon-right {
+    margin-right: 8px;
+    padding-right: 0px;
 }
 
-
+/*Popup*/
+.ui-popup-container {
+    z-index: 1000000;
+}
 
 
 /*Panel*/
-.ui-panel-animate.ui-panel-position-right.ui-panel-display-overlay{
-    -webkit-transform: translate3d(25em,0,0)!important;
-    -moz-transform: translate3d(25em,0,0)!important;
-    transform: translate3d(25em,0,0)!important;
-}
-.ui-panel-animate.ui-panel-position-right.ui-panel-display-overlay.ui-panel-open{
-    -webkit-transform: translate3d(0,0,0)!important;
-    -moz-transform: translate3d(0,0,0)!important;
-    transform: translate3d(0,0,0)!important;
+
+.ui-panel-animate.ui-panel-position-right.ui-panel-display-overlay {
+    -webkit-transform: translate3d(25em, 0, 0) !important;
+    -moz-transform: translate3d(25em, 0, 0) !important;
+    transform: translate3d(25em, 0, 0) !important;
 }
 
-.ui-panel-dismiss{
-    display:none!important;
+.ui-panel-animate.ui-panel-position-right.ui-panel-display-overlay.ui-panel-open {
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    -moz-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
+}
+
+.ui-panel-dismiss {
+    display: none !important;
 }
 
 /*Select Drop Down*/
 .chosen-container .chosen-results li {
-    line-height: 30px!important;
+    line-height: 30px !important;
 
 }
+
 .chosen-container {
-    font-size: 16px!important;
+    font-size: 16px !important;
 }
-
-
 
 .chosen-container-multi .chosen-choices li.search-choice {
-    padding: 7px 25px 6px 5px!important;
+    padding: 7px 25px 6px 5px !important;
 }
 
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
@@ -164,23 +158,41 @@ html, body ,#page,#content{
     background: url(../img/cross.png) no-repeat;
     background-size: 18px;
     font-size: 1px;
-    opacity:0.8;
+    opacity: 0.8;
 }
 
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
-    background-position: 0px 0px!important;
-    opacity:1;
+    background-position: 0px 0px !important;
+    opacity: 1;
 }
 
-
-#playlistselectvertical .result-selected{
-    text-shadow:none!important;
+#playlistselectvertical .result-selected {
+    text-shadow: none !important;
 }
 
-.mejs-overlay-button,.mejs-overlay-loading,.mejs-overlay-error{
-    opacity:0!important;
+.mejs-overlay-button, .mejs-overlay-loading, .mejs-overlay-error {
+    opacity: 0 !important;
 }
+
+/*
 .mejs-overlay-play{
     background-color: #fff;
     opacity:0.1;
+}
+  */
+
+.mejs-controls .mejs-button.mejs-button-choose-version button {
+    cursor: pointer;
+    display: block;
+    font-size: 0;
+    line-height: 0;
+    text-decoration: none;
+    margin: 7px 5px;
+    padding: 0;
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    border: 0;
+    background: transparent url(../img/editdarker.png) no-repeat;
+    background-size: 16px;
 }

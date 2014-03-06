@@ -48,7 +48,7 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
 
 
 playlistController.playingSongId = null;
-playlistController.playlingTitle = "";
+playlistController.playingTitle = "";
 
 playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
 
@@ -112,21 +112,38 @@ playlistController.resetPlayingSong = function () {
     playlistController.loadingIsPlaylistSong = playlistController.loadingOldIsPlaylistSong;
     playlistController.loadingPlayArtist = playlistController.loadingOldPlayArtist;
     playlistController.loadingPlayTitle = playlistController.loadingOldPlayTitle;
-    playlistController.playlingTitleLoading = playlistController.playlingTitle;
+    playlistController.playlingTitleLoading = playlistController.playingTitle;
     playlistController.playlingTitleCoverLoading = playlistController.playlingTitleCover;
+    if(!playlistController.playingTitle)
+        playlistController.playingTitle ="";
+    if(!playlistController.playlingTitleCover)
+        playlistController.playlingTitleCover ="";
+    if(!playlistController.playlingTitleLoading)
+        playlistController.playlingTitleLoading ="";
+    if(!playlistController.playlingTitleCoverLoading)
+        playlistController.playlingTitleCoverLoading ="";
 
-    playlistController.playSong(playlistController.loadingId, playlistController.loadingGlobalId, playlistController.loadingIsPlaylistSong, playlistController.loadingPlayArtist, playlistController.loadingPlayTitle, true)
+    if(playlistController.loadingId)
+      playlistController.playSong(playlistController.loadingId, playlistController.loadingGlobalId, playlistController.loadingIsPlaylistSong, playlistController.loadingPlayArtist, playlistController.loadingPlayTitle, true)
+    else
+      $(".songlist li").removeClass("loadedsong playing plausing");
 
-    playlistController.setNewTitle(playlistController.playlingTitle, playlistController.playlingTitleCover, true);
+
+
+    playlistController.setNewTitle(playlistController.playingTitle, playlistController.playlingTitleCover, true);
 
 }
 
 
 playlistController.playSong = function (Id, globalId, isPlaylistSong, playArtist, playTitle, onlyStyle) {
-    console.log(". "+(playlistController.playSongTimer && Date.now() - playlistController.playSongTimer < 100)+"  "+(uiController.swipeTimer && Date.now() - uiController.swipeTimer < 200))
+    console.log(". "+(playlistController.playSongTimer && Date.now() - playlistController.playSongTimer)+"  "+( Date.now() - uiController.swipeTimer ))
+
+
+
+
     if (playlistController.playSongTimer && Date.now() - playlistController.playSongTimer < 100)
         return;
-    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 200)
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
 
     if (isPlaylistSong) {
@@ -164,15 +181,12 @@ playlistController.playSong = function (Id, globalId, isPlaylistSong, playArtist
     playlistController.playlingTitleLoading = playArtist + " - " + playTitle;
 
 
-
     playlistController.disableControls(!isPlaylistSong)
-
 
 
     $(".songlist li").removeClass("loadedsong playing plausing");
 
     var loadedSong = false;
-
 
 
     playlistController.playlingTitleCoverLoading = listElement.find(".ui-li-icon").attr("src");
@@ -184,17 +198,14 @@ playlistController.playSong = function (Id, globalId, isPlaylistSong, playArtist
             listElement.addClass("pausing");
     }
 
-    console.log("yyyyyy")
-
 
     if (!onlyStyle) {
-        console.log("xxxxxx")
         if (playlistController.playingSongId != newId) {
             playlistController.isLoading = true;
             loadedSong = true;
             mediaController.playStream(playArtist, playTitle);
             console.log("LOAD STREAM")
-            listElement.addClass("playing");
+            listElement.addClass("playing").removeClass("pausing");
         }
     }
     playlistController.playingSongId = newId;
@@ -205,13 +216,10 @@ playlistController.playSong = function (Id, globalId, isPlaylistSong, playArtist
 
     if (!onlyStyle) {
         if (!loadedSong){
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!")
             setTimeout(function(){
                 $(".mejs-playpause-button").click();
             } ,50);
-
         }
-
         else
             playlistController.setNewTitle(playlistController.playlingTitleLoading, playlistController.playlingTitleCoverLoading);
     }
@@ -220,7 +228,6 @@ playlistController.playSong = function (Id, globalId, isPlaylistSong, playArtist
 
 
 playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
-
 
     if (!isLoaded) {
         $("#playingSongCover").removeClass("fadeincomplete")
@@ -260,7 +267,7 @@ playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
 
 playlistController.getIsLoadingText = function () {
     if (playlistController.isLoading)
-        return " is loading";
+        return " ...";
     else
         return "";
 }
