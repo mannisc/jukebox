@@ -83,6 +83,7 @@ searchController.emptySearchList = function () {
 }
 
 searchController.showSearchList = function () {
+
     searchController.searchMusic();
 }
 
