@@ -47,7 +47,7 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
 }
 
 
-playlistController.playlingSongId = null;
+playlistController.playingSongId = null;
 playlistController.playlingTitle = "";
 
 playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
@@ -96,8 +96,11 @@ playlistController.disableControls = function (disable) {
 }
 
 
-playlistController.resetPlayingSong = function () {
 
+
+playlistController.resetPlayingSong = function () {
+    playlistController.isLoading = false;
+    console.log("RESET!!!!!")
     $(".mejs-controls").find('.mejs-time-loaded').show();
     if ($(".mejs-controls").find('.mejs-time-buffering').css("opacity") > 0)
         $(".mejs-controls").find('.mejs-time-buffering').fadeOut();
@@ -109,45 +112,22 @@ playlistController.resetPlayingSong = function () {
     playlistController.loadingIsPlaylistSong = playlistController.loadingOldIsPlaylistSong;
     playlistController.loadingPlayArtist = playlistController.loadingOldPlayArtist;
     playlistController.loadingPlayTitle = playlistController.loadingOldPlayTitle;
+    playlistController.playlingTitleLoading = playlistController.playlingTitle;
+    playlistController.playlingTitleCoverLoading = playlistController.playlingTitleCover;
 
     playlistController.playSong(playlistController.loadingId, playlistController.loadingGlobalId, playlistController.loadingIsPlaylistSong, playlistController.loadingPlayArtist, playlistController.loadingPlayTitle, true)
 
-    playlistController.playlingTitleLoading = playlistController.playlingTitle;
-    playlistController.playlingTitleCoverLoading = playlistController.playlingTitleCover;
-    ;
     playlistController.setNewTitle(playlistController.playlingTitle, playlistController.playlingTitleCover, true);
 
 }
 
 
 playlistController.playSong = function (Id, globalId, isPlaylistSong, playArtist, playTitle, onlyStyle) {
-
+    console.log(". "+(playlistController.playSongTimer && Date.now() - playlistController.playSongTimer < 100)+"  "+(uiController.swipeTimer && Date.now() - uiController.swipeTimer < 200))
     if (playlistController.playSongTimer && Date.now() - playlistController.playSongTimer < 100)
         return;
-    if (!(!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500))
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 200)
         return;
-    playlistController.playSongTimer = Date.now();
-
-    playlistController.loadingOldId = playlistController.loadingId;
-    playlistController.loadingOldGlobalId = playlistController.loadingGlobalId;
-    playlistController.loadingOldIsPlaylistSong = playlistController.loadingIsPlaylistSong;
-    playlistController.loadingOldPlayArtist = playlistController.loadingPlayArtist;
-    playlistController.loadingOldPlayTitle = playlistController.loadingPlayTitle;
-    playlistController.loadingId = Id;
-    playlistController.loadingGlobalId = globalId;
-    playlistController.loadingIsPlaylistSong = isPlaylistSong;
-    playlistController.loadingPlayArtist = playArtist;
-    playlistController.loadingPlayTitle = playTitle;
-
-    playlistController.playlingTitleLoading = playArtist + " - " + playTitle;
-    playlistController.disableControls(!isPlaylistSong)
-
-   if(playlistController.isLoading)
-       var isNotPlayingBecauseLoading = true;
-
-    $(".songlist li").removeClass("loadedsong playing plausing");
-
-    var loadedSong = false;
 
     if (isPlaylistSong) {
         var listElement = $("#playlistInner li[data-songid='playlistsong" + Id + "'] ");
@@ -158,33 +138,73 @@ playlistController.playSong = function (Id, globalId, isPlaylistSong, playArtist
         newId = Id
     }
 
+    console.log("doubleloading clicked?");
+    //Already Loading
+    if (playlistController.isLoading&&playlistController.playingSongId == newId)
+     return;
+
+
+    console.log("PLAYSONG "+newId+"  "+playlistController.playingSongId +"|||"+playArtist+" - "+playTitle+"  "+Id+" :  "+playlistController.loadingOldId+" -  "+playlistController.loadingId+"   "+onlyStyle)
+
+
+    playlistController.playSongTimer = Date.now();
+
+    if(!playlistController.isLoading){
+      playlistController.loadingOldId = playlistController.loadingId;
+      playlistController.loadingOldGlobalId = playlistController.loadingGlobalId;
+      playlistController.loadingOldIsPlaylistSong = playlistController.loadingIsPlaylistSong;
+      playlistController.loadingOldPlayArtist = playlistController.loadingPlayArtist;
+      playlistController.loadingOldPlayTitle = playlistController.loadingPlayTitle;
+    }
+    playlistController.loadingId = Id;
+    playlistController.loadingGlobalId = globalId;
+    playlistController.loadingIsPlaylistSong = isPlaylistSong;
+    playlistController.loadingPlayArtist = playArtist;
+    playlistController.loadingPlayTitle = playTitle;
+    playlistController.playlingTitleLoading = playArtist + " - " + playTitle;
+
+
+
+    playlistController.disableControls(!isPlaylistSong)
+
+
+
+    $(".songlist li").removeClass("loadedsong playing plausing");
+
+    var loadedSong = false;
+
+
+
     playlistController.playlingTitleCoverLoading = listElement.find(".ui-li-icon").attr("src");
 
-    if (!playlistController.isLoading&&playlistController.playlingSongId) {
+    if (!playlistController.isLoading&&playlistController.playingSongId) {
         if (playlistController.isPlaying)
             listElement.addClass("playing");
         else
             listElement.addClass("pausing");
     }
 
+    console.log("yyyyyy")
 
 
     if (!onlyStyle) {
-        if (playlistController.playlingSongId != newId) {
+        console.log("xxxxxx")
+        if (playlistController.playingSongId != newId) {
             playlistController.isLoading = true;
             loadedSong = true;
             mediaController.playStream(playArtist, playTitle);
-            playlistController.playlingSongId = newId;
+            console.log("LOAD STREAM")
             listElement.addClass("playing");
         }
     }
+    playlistController.playingSongId = newId;
 
 
 
     listElement.addClass("loadedsong")
 
     if (!onlyStyle) {
-        if (!loadedSong&&!isNotPlayingBecauseLoading){
+        if (!loadedSong){
             console.log("!!!!!!!!!!!!!!!!!!!!!!!")
             setTimeout(function(){
                 $(".mejs-playpause-button").click();

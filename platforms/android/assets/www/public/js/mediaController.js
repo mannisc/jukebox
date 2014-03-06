@@ -18,10 +18,12 @@ mediaController.playCounter = 0;
 mediaController.playStream = function (artist,title) {
 
 
+        $(".mejs-time-buffering").fadeIn();
 
-    if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
-        $(".mejs-controls").find('.mejs-time-buffering').fadeIn();
-        $(".mejs-controls").find('.mejs-time-loaded').hide();
+
+        if($(".mejs-time-loaded").width()>$(".mejs-time-total").width()*0.7)
+          $(".mejs-time-loaded").hide();
+
 
         $(".mejs-playpause-button button").removeClass("looped");
 
@@ -49,7 +51,7 @@ mediaController.playStream = function (artist,title) {
                 url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + artistString + "&track=" + titleString + "&format=json",
                 success: function (data) {
                     if (streamID == mediaController.playCounter) {
-                        $(".mejs-controls").find('.mejs-time-buffering').show();
+                        $(".mejs-time-buffering").show();
                         var duration = 200000;
                         console.dir("http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + artistString + "&track=" + titleString + "&format=json");
                         console.dir(data);
@@ -91,18 +93,20 @@ mediaController.playStream = function (artist,title) {
                                     loadError = true;
                             },
                             error:function(){
-                                $(".mejs-controls").find('.mejs-time-buffering').hide();
                                 loadError = true;
                             },
                             complete: function(){
+                                console.log("COMPLETED")
+                                playlistController.isLoading = false;
                                 if(loadError) {
+                                    console.log("ERROR")
                                     if(streamID == mediaController.playCounter){
-
+                                        setTimeout(function(){$(".mejs-controls").find('.mejs-time-buffering').hide()},500);
+                                        uiController.toast("Sorry, this Song is not available as Video at the moment.",1500)
                                         playlistController.resetPlayingSong();
 
                                     }
                                 }
-                                setTimeout(function(){$(".mejs-controls").find('.mejs-time-buffering').hide()},500);
                             }
                         })
 
@@ -118,9 +122,7 @@ mediaController.playStream = function (artist,title) {
             })
         }
 
-
         play(streamID, searchString, artistString, titleString, streamURL);
-    }
 
 
 }
@@ -142,10 +144,11 @@ mediaController.getSongCover= function(song){
 mediaController.getSongArtist= function(song){
 
     var artist = "";
-
-    if(song.artist.name)
-        artist =  song.artist.name;
-    else if(song.artist)
-        artist = song.artist;
+    if(song.artist){
+        if(song.artist.name)
+            artist =  song.artist.name;
+        else if(song.artist)
+            artist = song.artist;
+    }
     return artist;
 }
