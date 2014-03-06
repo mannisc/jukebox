@@ -93,7 +93,7 @@ uiController.init = function () {
     uiController.mediaElementPlayer = new MediaElementPlayer('video,audio', {
         features: [ 'prevtrack', 'playpause', 'stop', 'nexttrack', 'shuffle', 'current', 'progress', 'duration', 'volume', 'fullscreen'],
 
-
+        enableKeyboard: false,
         //poster: 'http://mediaelementjs.com/media/echo-hereweare-540x304.jpg',
         alwaysShowControls: true,
         autosizeProgress: false,
@@ -106,15 +106,12 @@ uiController.init = function () {
                 $(".mejs-playpause-button").click();
             })
             $(".mejs-controls").click(function () {
-                if (playlistController.isPlaying && playlistController.isLoading) {
-                    playlistController.resetPlayingSong()
-                }
+
             });
 
             $(".mejs-nexttrack-button").click(function () {
                 if ($(this).css("opacity") == 1)
                     playlistController.playNextSong();
-
             })
 
             $(".mejs-prevtrack-button").click(function () {
@@ -698,7 +695,10 @@ uiController.makePlayListSortable = function () {
             }
         }
     }).on("mouseup mouseout",function () {
+            if (Math.abs(event.clientY - uiController.dragSortableSongY) > 30) {
+                uiController.swipeTimer = Date.now();
 
+            }
 
             uiController.playlistMouseDown = false;
 
@@ -707,12 +707,14 @@ uiController.makePlayListSortable = function () {
 
         }).on("mousemove", function (event) {
             if (Math.abs(event.clientY - uiController.dragSortableSongY) > 8) {
-                uiController.swipeTimer = Date.now();
 
                 if ($(this).data("checkdown")) {
                     clearTimeout($(this).data("checkdown"));
                 }
             }
+
+
+
         })
 
 
@@ -815,8 +817,11 @@ uiController.makeSearchListDraggable = function () {
         }).on("mouseup ",function (event) {
             console.log("UPPPPPP")
             if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 8) {
+                if (Math.abs(event.clientY - uiController.dragSortableSongY) > 30) {
+                    uiController.swipeTimer = Date.now();
+
+                }
                 console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-                uiController.swipeTimer = Date.now();
             }else{
                 $(this).click();
             }
@@ -824,10 +829,6 @@ uiController.makeSearchListDraggable = function () {
         }).on("mousemove", function (event) {
             if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 8)
                 uiController.dragDraggableSongY = -10;
-
-
-
-
 
         })
 
@@ -902,6 +903,45 @@ uiController.styleVideo = function () {
 }
 
 
+/**
+ * Shows a toast
+ * @param msg
+ */
+uiController.toast = function (msg, time, touchFunc) {
+    $("#toastId").remove();
+    var toastclass = 'ui-loader ui-overlay-shadow ui-bar-e ui-corner-all';
+    $("<div id='toastTest' class= '" + toastclass + "'>" + msg + "</div>")
+        .css({visibility: "hidden",
+            "white-space": "nowrap"})
+        .appendTo($.mobile.pageContainer)
+
+    $("<div class='" + toastclass + "' id = 'toastId'>" + msg + "</div>")
+        .css({ display: "block",
+            "white-space": "nowrap",
+            opacity: 0,
+            position: "fixed",
+            padding: "7px",
+            "text-align": "center",
+            width: $("#toastTest").width() + 10,
+            left: ($(window).width() - $("#toastTest").width() - 10) / 2,
+            top: $(window).height()/2 - $("#toastTest").height()/2})
+        .click(function () {
+            $("#toastId").hide();
+            touchFunc();
+        })
+        .appendTo($.mobile.pageContainer)
+        .fadeTo(400, 0.8)
+        .delay(time)
+        .fadeOut(400, function () {
+            $(this).remove();
+        });
+    $("#toastTest").remove();
+
+
+}
+
+
+
 uiController.toggleSearchButton = function (button) {
     $('#searchbutton' + button).buttonMarkup({theme: 'a'});
     $('#searchbutton' + button).parent().buttonMarkup({theme: 'a'});
@@ -913,6 +953,9 @@ uiController.toggleSearchButton = function (button) {
     }
 
 }
+
+
+
 
 
 uiController.toggleSavePlaylist = function () {

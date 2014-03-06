@@ -953,3 +953,17 @@ input[type=button]{
     background-position:0px 0px;
     background-repeat:no-repeat;
 }
+
+/* E
+-----------------------------------------------------------------------------------------------------------*/
+.ui-bar-e {
+    border: 1px solid #f7c942 /*{e-bar-border}*/;
+    background: #fadb4e /*{e-bar-background-color}*/;
+    color: #333 /*{e-bar-color}*/;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fceda7 /*{e-bar-background-start}*/), to(#fbef7e /*{e-bar-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* FF3.6 */
+    background-image: -ms-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* IE10 */
+    background-image: -o-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* Opera 11.10+ */
+    background-image: linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/);
+}
