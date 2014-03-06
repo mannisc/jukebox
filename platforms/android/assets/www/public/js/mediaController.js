@@ -17,6 +17,41 @@ mediaController.playCounter = 0;
 
 mediaController.versionList = [];
 
+mediaController.currentStreamURL = "";
+mediaController.currentvideoURL = "";
+
+mediaController.buySong = function () {
+    var song = playlistController.getPlayingSong();
+    var keywords = mediaController.getSongArtist(song)+" - "+song.name;
+    mywindow = window.open("http://www.amazon.de/s/?_encoding=UTF8&ajr=0&camp=1638&creative=19454&field-keywords=" + keywords + "&linkCode=ur2&rh=n%3A77195031%2Ck%3A" + keywords + "&site-redirect=de&tag=iggels-21&url=search-alias%3Ddigital-music", "Amazon", "");
+    mywindow.focus();
+}
+
+mediaController.visitSongWebPage = function () {
+    if(mediaController.currentvideoURL!=""){
+        console.dir(mediaController.currentvideoURL);
+        mywindow = window.open(mediaController.currentvideoURL, "", "");
+        mywindow.focus();
+    }
+}
+
+
+mediaController.showDuration = function (songversion) {
+    var duration = parseInt(songversion.duration) ;
+    myDate = new Date();
+    myDate.setMinutes(0,duration,0);
+    var minutes =  myDate.getMinutes().toString();
+    if(minutes.length<2)
+    {
+        minutes = "0"+minutes;
+    }
+    var seconds =  myDate.getSeconds().toString();
+    if(seconds.length<2)
+    {
+        seconds = "0"+seconds;
+    }
+    return minutes+ ":" + seconds;
+}
 
 mediaController.getVersions = function () {
     var currentsong = playlistController.getPlayingSong();
@@ -94,23 +129,45 @@ mediaController.playVersion = function (songversion){
     var videoURL = songversion.url
     var play = function (streamID, videoURL) {
         var song = playlistController.getPlayingSong();
+        console.dir(videoURL);
         $.ajax({
             timeout: 30000,
             url: preferences.serverURL + "?playurl=" + videoURL+"&artist="+mediaController.getSongArtist(song)+"&title="+song.name,
             success: function (data) {
                  if (streamID == mediaController.playCounter) {
-                    streamURL = data;
-                     console.dir(data);
-                    if (streamURL) {
-                        $("#videoplayer").removeClass("animate").addClass("animatefast");
-                        $("#videoplayer").css("opacity", "0");
+                     if(data.streamURL ){
+                         streamURL    = data.streamURL;
+                         if(data.videoURL){
+                             videoURL = data.videoURL;
+                         }
+                         try {
+                             streamURL = decodeURIComponent(streamURL);
+                         }
+                         catch (e) {
+                             streamURL = unescape(streamURL);
+                         }
+                         try {
+                             videoURL = decodeURIComponent(videoURL);
+                         }
+                         catch (e) {
+                             videoURL = unescape(videoURL);
+                         }
+                         if (streamURL) {
+                            $("#videoplayer").removeClass("animate").addClass("animatefast");
+                            $("#videoplayer").css("opacity", "0");
+                            setTimeout(function () {
+                             $("#videoplayer").removeClass("animatefast").addClass("animate");
+                                console.dir(streamURL);
+                                uiController.mediaElementPlayer.setSrc(streamURL);
+                                uiController.mediaElementPlayer.load();
+                                uiController.mediaElementPlayer.play();
+                                mediaController.currentStreamURL = streamURL;
+                                mediaController.currentvideoURL = videoURL;
 
-                        setTimeout(function () {
-                         $("#videoplayer").removeClass("animatefast").addClass("animate");
-                            uiController.mediaElementPlayer.setSrc(streamURL);
-                            uiController.mediaElementPlayer.load();
-                            uiController.mediaElementPlayer.play();
-                        }, 200)
+                            }, 200)
+
+                        } else
+                            loadError = true;
 
                     } else
                         loadError = true;
@@ -174,7 +231,7 @@ mediaController.playStream = function (artist,title) {
 
 
         var play = function (streamID, searchString, artistString, titleString, streamURL) {
-
+            mediaController.currentvideoURL = "";
 
             $.ajax({
                 url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + artistString + "&track=" + titleString + "&format=json",
@@ -185,7 +242,7 @@ mediaController.playStream = function (artist,title) {
                              $(".mejs-time-buffering").fadeIn();
                         },500);
                         var duration = 200000;
-                       console.dir(data);
+
                         if (data.track) {
                             if (data.track.duration) {
                                 duration = data.track.duration;
@@ -199,30 +256,53 @@ mediaController.playStream = function (artist,title) {
                                 console.dir( preferences.serverURL + "?play=" + searchString+"&force1="+artistString+"&force2="+titleString+"&duration="+duration);
                                 if(streamID == mediaController.playCounter){
                                     mediaController.playCounter++;
-                                    streamURL = data;
-                                    if (streamURL) {
+                                    console.dir("STREAM");
+                                    console.dir(data);
+                                    if(data.streamURL ){
+                                        streamURL    = data.streamURL;
+                                        var videoURL = "";
+                                        if(data.videoURL){
+                                            videoURL = data.videoURL;
+                                        }
+                                        try {
+                                            streamURL = decodeURIComponent(streamURL);
+                                        }
+                                        catch (e) {
+                                            streamURL = unescape(streamURL);
+                                        }
+                                        try {
+                                            videoURL = decodeURIComponent(videoURL);
+                                        }
+                                        catch (e) {
+                                            videoURL = unescape(videoURL);
+                                        }
+                                        if (streamURL) {
 
-                                        $("#videoplayer").removeClass("animate").addClass("animatefast");
-                                        $("#videoplayer").css("opacity", "0");
+                                            $("#videoplayer").removeClass("animate").addClass("animatefast");
+                                            $("#videoplayer").css("opacity", "0");
 
-                                        setTimeout(function(){
-                                            $("#videoplayer").removeClass("animatefast").addClass("animate");
+                                            setTimeout(function(){
+                                                $("#videoplayer").removeClass("animatefast").addClass("animate");
 
-                                           // playlistController.playingTitle = playlistController.playlingTitleLoading ;
-                                           // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
+                                               // playlistController.playingTitle = playlistController.playlingTitleLoading ;
+                                               // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
 
-                                            playlistController.loadingOldSong =  playlistController.loadingSong;
+                                                playlistController.loadingOldSong =  playlistController.loadingSong;
 
-                                            playlistController.setNewTitle(playlistController.loadingSong.name, playlistController.loadingSong.coverURL, true);
-                                            $(".mejs-button-choose-version").css("opacity", "1");
+                                                playlistController.setNewTitle(playlistController.loadingSong.name, playlistController.loadingSong.coverURL, true);
+                                                $(".mejs-button-choose-version").css("opacity", "1");
 
-                                            uiController.mediaElementPlayer.setSrc(streamURL);
-                                            uiController.mediaElementPlayer.load();
-                                            uiController.mediaElementPlayer.play();
+                                                uiController.mediaElementPlayer.setSrc(streamURL);
+                                                uiController.mediaElementPlayer.load();
+                                                uiController.mediaElementPlayer.play();
+                                                mediaController.currentStreamURL = streamURL;
+                                                mediaController.currentvideoURL = videoURL;
+                                                console.dir(videoURL);
+                                                playlistController.playedSongs.push(playlistController.loadingSong)
 
-                                            playlistController.playedSongs.push(playlistController.loadingSong)
-
-                                        },200)
+                                            },200)
+                                        }
+                                        loadError = true;
 
                                     }else
                                         loadError = true;
