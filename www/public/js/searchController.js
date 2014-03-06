@@ -137,6 +137,10 @@ searchController.searchMusic = function () {
             searchController.startSearch(searchController.lastSearchTerm)
         }
     }
+    else
+    {
+        searchController.emptySearchList();
+    }
 }
 
 
