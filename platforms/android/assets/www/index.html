@@ -142,7 +142,8 @@
 
             <ul data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
-                <li  ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}"  class ="draggableSong fadeslideincompletefast" ng-click="playlistController.playSong(song.id,song.gid,false,mediaController.getSongArtist(song)+' - '+song.name);"><a><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}</a></li>
+                <li  ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}"  class ="draggableSong fadeslideincompletefast" ng-click="playlistController.playSong(song.id,song.gid,false,mediaController.getSongArtist(song),song.name);"><a><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}</a></li>
+
 
             </ul>
         </div>
@@ -202,7 +203,7 @@
 
             <div id="playlistInner" class="animate">
                 <ul data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
-                    <li  ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs)" data-songid="playlistsong{{song.id}}"  data-songgid="playlistsong{{song.gid}}" class ="fadeslideincompletefast playlistsong" ng-click="playlistController.playSong(song.id,song.gid,true,mediaController.getSongArtist(song)+' - '+song.name);"><a><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}<img class="removesong" style="display:none" src="public/img/trash.png"></a></li>
+                    <li  ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs)" data-songid="playlistsong{{song.id}}"  data-songgid="playlistsong{{song.gid}}" class ="fadeslideincompletefast playlistsong" ng-click="playlistController.playSong(song.id,song.gid,true,mediaController.getSongArtist(song),song.name);"><a><img ng-src="{{mediaController.getSongCover(song)}}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongArtist(song)}} - {{song.name}}<img class="removesong" style="display:none" src="public/img/trash.png"></a></li>
 
                 </ul>
             </div>
@@ -210,7 +211,7 @@
 
         <div id="videoplayer">
             <div id="videoplayerInner">
-                <video id="player1" controls="controls" autoplay="true">
+                <video id="player1" controls="controls" autoplay="true" preload="true">
                     <source src="" type="video/mp4"/>
 
 
