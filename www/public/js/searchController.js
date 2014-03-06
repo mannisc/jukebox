@@ -188,6 +188,20 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                 if (searchID == searchController.SearchCounter) {
                     console.dir("Server Search Results:");
                     console.dir(data);
+                    for(var i=0;i<data.track.length;i++){
+                        try {
+                            data.track[i].artist = decodeURIComponent(data.track[i].artist);
+                        }
+                        catch (e) {
+                            data.track[i].artist = unescape(data.track[i].artist);
+                        }
+                        try {
+                            data.track[i].name = decodeURIComponent(data.track[i].name);
+                        }
+                        catch (e) {
+                            data.track[i].name = unescape(data.track[i].name);
+                        }
+                    }
                     if (callbackSuccess)
                         callbackSuccess(data);
                 }
