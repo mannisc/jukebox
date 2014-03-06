@@ -56,9 +56,10 @@ $(document).ready(function () {
 
             uiController.init();
             searchController.init();
-
+            searchController.showFavorites();
             //Show loaded page
             $("#page").css("opacity", "1");
+
 
         } else
             setTimeout(initPage, 50);
