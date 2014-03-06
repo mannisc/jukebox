@@ -18,22 +18,43 @@ searchController.SearchCounter = 0;
 
 
 searchController.completeSearch =  function (list) {
-    searchController.searchResults = list.track;
 
-    for(var i=0;i<searchController.searchResults.length;i++){
-        searchController.searchResults[i].id = "slsid"+Date.now()+""+helperFunctions.padZeros(i,(""+searchController.searchResults.length).length);
+    var changed = false;
+    if(searchController.searchResults.length==0){
+        changed = true;
     }
+    else{
+        console.dir("SEARCH!");
+        for(var i=0;i<searchController.searchResults.length;i++){
+           if(mediaController.getSongArtist(searchController.searchResults[i].artist)!=mediaController.getSongArtist(list.track[i].artist)){
+               changed = true;
+               break;
+           }
+            if(searchController.searchResults[i].name!=list.track[i].name){
+                changed = true;
+                break;
+            }
+        }
+    }
+    if(changed){
+        searchController.searchResults = [];
+        $scope.safeApply();
+        searchController.searchResults = list.track;
+
+        for(var i=0;i<searchController.searchResults.length;i++){
+            searchController.searchResults[i].id = "slsid"+helperFunctions.padZeros(i,(""+searchController.searchResults.length).length);
+        }
 
 
+        $scope.safeApply();
+        $("#searchlistview").listview('refresh');
 
-    $scope.safeApply();
-    $("#searchlistview").listview('refresh');
-
-    uiController.searchListScroll.refresh();
-    uiController.makeSearchListDraggable();
-    setTimeout(function () {
-        $("#searchlistview li").removeClass("fadeincompletefast");
-    }, 100)
+        uiController.searchListScroll.refresh();
+        uiController.makeSearchListDraggable();
+        setTimeout(function () {
+            $("#searchlistview li").removeClass("fadeincompletefast");
+        }, 100)
+    }
 }
 
 
@@ -62,6 +83,10 @@ searchController.emptySearchList = function () {
 
 }
 
+searchController.showSearchList = function () {
+    searchController.searchMusic();
+}
+
 searchController.showSuggestions = function () {
     var index;
     var song;
@@ -86,35 +111,44 @@ searchController.showSuggestions = function () {
 }
 
 
+searchController.searchMusic = function () {
+    if( $("#searchinput").val() && $("#searchinput").val() != ""){
+        searchController.lastSearchTerm = $("#searchinput").val();
+
+
+        if(app.isCordova)
+            var time = 1000;
+        else
+            time = 300;
+
+        setTimeout(function () {
+            if (searchController.lastSearchedTerm != searchController.lastSearchTerm) {
+                if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
+                    searchController.autoSearchTimer = Date.now();
+                    searchController.lastSearchedTerm = searchController.lastSearchTerm;
+                    searchController.startSearch(searchController.lastSearchTerm)
+                }
+            }
+        }, time);
+
+        if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
+            searchController.autoSearchTimer = Date.now();
+            searchController.lastSearchedTerm = searchController.lastSearchTerm;
+            searchController.startSearch(searchController.lastSearchTerm)
+        }
+    }
+    else
+    {
+        searchController.emptySearchList();
+    }
+}
+
+
 searchController.init = function () {
 
     $("#searchinput").on("input", function () {
-        if( $("#searchinput").val() && $("#searchinput").val() != ""){
-            searchController.lastSearchTerm = $("#searchinput").val();
-
-
-            if(app.isCordova)
-             var time = 1000;
-            else
-             time = 300;
-
-            setTimeout(function () {
-                if (searchController.lastSearchedTerm != searchController.lastSearchTerm) {
-                    if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
-                        searchController.autoSearchTimer = Date.now();
-                        searchController.lastSearchedTerm = searchController.lastSearchTerm;
-                        searchController.startSearch(searchController.lastSearchTerm)
-                    }
-                }
-            }, time);
-
-            if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
-                searchController.autoSearchTimer = Date.now();
-                searchController.lastSearchedTerm = searchController.lastSearchTerm;
-                searchController.startSearch(searchController.lastSearchTerm)
-            }
-        }
-
+        uiController.toggleSearchButton(1);
+        searchController.searchMusic();
     })
 
 }
@@ -146,6 +180,27 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
     searchController.showLoading(true);
     searchController.SearchCounter++;
     var searchID = searchController.SearchCounter;
+
+    var searchserver = function (searchID) {
+        $.ajax({
+            url: preferences.serverURL + "?searchjson=" + searchString,
+
+            success: function (data) {
+                if (searchID == searchController.SearchCounter) {
+                    console.dir("Server Search Results:");
+                    console.dir(data);
+                    if (callbackSuccess)
+                        callbackSuccess(data);
+                }
+            },
+            complete: function(){
+                if (searchID == searchController.SearchCounter) {
+                    setTimeout(searchController.showLoading,1000); //show=false
+                }
+            }
+
+        })
+    }
     var func = function (searchID) {
         $.ajax({
             url: "http://ws.audioscrobbler.com/2.0/?method=track.search&track=" + searchString + "&page=1&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
@@ -154,29 +209,15 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                     if (data.results && data.results.trackmatches) {
                         if (data.results.trackmatches == "\n") {
                             console.dir("Load: " + preferences.serverURL + "?searchjson=" + searchString);
-                            $.ajax({
-                                url: preferences.serverURL + "?searchjson=" + searchString,
-
-                                success: function (data) {
-                                    if (searchID == searchController.SearchCounter) {
-                                        console.dir("Server Search Results:");
-                                        console.dir(data);
-                                        if (callbackSuccess)
-                                             callbackSuccess(data);
-
-                                    }
-                                },
-                                complete: function(){
-                                    searchController.showLoading(false);
-                                }
-
-                            })
+                            searchserver(searchID);
                         }
                         else {
                             console.dir(data.results);
-                            searchController.showLoading(false);
-                            if (callbackSuccess)
-                                callbackSuccess(data.results.trackmatches);
+                            if (searchID == searchController.SearchCounter) {
+                                setTimeout(searchController.showLoading,1000);
+                                if (callbackSuccess)
+                                    callbackSuccess(data.results.trackmatches);
+                            }
 
                         }
 
@@ -186,7 +227,9 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
 
             },
             error: function () {
-                searchController.showLoading(false);
+                if (searchID == searchController.SearchCounter) {
+                    searchserver(searchID);
+                }
             }
         })
     }
