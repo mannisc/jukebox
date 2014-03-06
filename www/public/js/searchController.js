@@ -18,29 +18,23 @@ searchController.SearchCounter = 0;
 
 
 searchController.completeSearch =  function (list) {
-<<<<<<< HEAD
+
     var changed = false;
     if(searchController.searchResults.length==0){
         changed = true;
     }
     else{
+        console.dir("SEARCH!");
         for(var i=0;i<searchController.searchResults.length;i++){
-
-           if(searchController.searchResults[i].artist!=list.track[i].artist){
+           if(mediaController.getSongArtist(searchController.searchResults[i].artist)!=mediaController.getSongArtist(list.track[i].artist)){
                changed = true;
                break;
            }
-            if(searchController.searchResults[i].title!=list.track[i].title){
+            if(searchController.searchResults[i].name!=list.track[i].name){
                 changed = true;
                 break;
             }
         }
-=======
-    searchController.searchResults = list.track;
-
-    for(var i=0;i<searchController.searchResults.length;i++){
-        searchController.searchResults[i].id = "slsid"+Date.now()+""+helperFunctions.padZeros(i,(""+searchController.searchResults.length).length);
->>>>>>> origin/master
     }
     if(changed){
         searchController.searchResults = [];
