@@ -15,17 +15,122 @@ var mediaController = function () {
 
 mediaController.playCounter = 0;
 
+mediaController.versionList = [];
+
 
 mediaController.getVersions = function () {
-    var play = function () {
-        $.ajax({
-            url: preferences.serverURL + "?getVersions=5&artist="+artistString+"&title="+titleString,
-            success: function (data) {
+    var currentsong = playlistController.getPlayingSong();
+    if(currentsong.name!=""){
+        mediaController.versionList = [];
+        $scope.safeApply();
+        $("#searchviewVersions").listview('refresh');
+        $('#popupVideoSettings').popup('open', {positionTo: 'window'});
+        $('#loadversionimg').fadeIn();
+        var getsongversions = function (counter) {
+            if(counter < 120){
+                var song = currentsong;
+                console.dir("SEARCH OTHER VERSIONS! "+counter+"  - "+mediaController.getSongArtist(song)+" - "+song.name);
+                $.ajax({
+                    url: preferences.serverURL + "?getversions=8&artist="+mediaController.getSongArtist(song)+"&title="+song.name,
+                    success: function (data) {
+                        console.dir("loaded "+counter);
+                        console.dir(data);
+                        if(data.track){
+                            console.dir("SUCCESS VERSIONS! "+counter+"  - "+mediaController.getSongArtist(song)+" - "+song.name);
+                            if(playlistController.getPlayingSong()==song){
+                                console.dir(data.track);
+                                for(var i=0;i<data.track.length;i++){
+                                    try {
+                                      data.track[i].title = decodeURIComponent(data.track[i].title);
+                                    }
+                                    catch (e) {
+                                        data.track[i].title = unescape(data.track[i].title);
+                                    }
+                                    try {
+                                        data.track[i].url = decodeURIComponent(data.track[i].url);
+                                    }
+                                    catch (e) {
+                                        data.track[i].url = unescape(data.track[i].url);
+                                    }
+                                }
+                                mediaController.versionList = data.track;
 
+                                $scope.safeApply();
+                                $('#loadversionimg').hide();
+                                $("#searchviewVersions").listview('refresh');
+                                $('#popupVideoSettings').popup("reposition", {positionTo: 'window'} );
+                                $('#popupVideoSettings').popup('open', {positionTo: 'window'});
+                            }
+                        }
+                        else
+                        {
+                            if(playlistController.getPlayingSong()==song){
+                                setTimeout(function(){getsongversions(counter+1)},1500);
+                            }
+                        }
+                    },
+                    error:function(xhr, ajaxOptions, thrownError){
+                        if(playlistController.getPlayingSong()==song){
+                         setTimeout(function(){getsongversions(counter+2)},5000);
+                        }
+                    }
+
+                })
             }
-        })
+        }
+        getsongversions(0);
     }
 }
+
+mediaController.playVersion = function (songversion){
+    $('#loadversionimg').fadeIn();
+    $(".mejs-time-buffering").fadeIn();
+    if($(".mejs-time-loaded").width()>$(".mejs-time-total").width()*0.7)
+        $(".mejs-time-loaded").hide();
+
+    $(".mejs-playpause-button button").removeClass("looped");
+    mediaController.playCounter++;
+    var streamID = mediaController.playCounter;
+    var videoURL = songversion.url
+    var play = function (streamID, videoURL) {
+        console.dir(preferences.serverURL + "?playurl=" + videoURL);
+        $.ajax({
+            timeout: 30000,
+            url: preferences.serverURL + "?playurl=" + videoURL,
+            success: function (data) {
+                 if (streamID == mediaController.playCounter) {
+                    streamURL = data;
+                     console.dir(data);
+                    if (streamURL) {
+                        $("#videoplayer").removeClass("animate").addClass("animatefast");
+                        $("#videoplayer").css("opacity", "0");
+                        setTimeout(function () {
+                         $("#videoplayer").removeClass("animatefast").addClass("animate");
+                            uiController.mediaElementPlayer.setSrc(streamURL);
+                            uiController.mediaElementPlayer.load();
+                            uiController.mediaElementPlayer.play();
+                        }, 200)
+
+                    } else
+                        loadError = true;
+                } else
+                    loadError = true;
+            },
+            error: function () {
+                loadError = true;
+            },
+            complete: function () {
+                //TODO
+                $('#loadversionimg').hide();
+                setTimeout(function(){$(".mejs-controls").find('.mejs-time-buffering').hide()},500);
+            }
+        })
+
+    }
+    play(streamID,videoURL);
+
+}
+
 
 
 mediaController.playStream = function (artist,title) {
