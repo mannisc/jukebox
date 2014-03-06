@@ -83,6 +83,10 @@ searchController.emptySearchList = function () {
 
 }
 
+searchController.showSearchList = function () {
+    searchController.searchMusic();
+}
+
 searchController.showSuggestions = function () {
     var index;
     var song;
@@ -107,35 +111,39 @@ searchController.showSuggestions = function () {
 }
 
 
+searchController.searchMusic = function () {
+    if( $("#searchinput").val() && $("#searchinput").val() != ""){
+        searchController.lastSearchTerm = $("#searchinput").val();
+
+
+        if(app.isCordova)
+            var time = 1000;
+        else
+            time = 300;
+
+        setTimeout(function () {
+            if (searchController.lastSearchedTerm != searchController.lastSearchTerm) {
+                if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
+                    searchController.autoSearchTimer = Date.now();
+                    searchController.lastSearchedTerm = searchController.lastSearchTerm;
+                    searchController.startSearch(searchController.lastSearchTerm)
+                }
+            }
+        }, time);
+
+        if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
+            searchController.autoSearchTimer = Date.now();
+            searchController.lastSearchedTerm = searchController.lastSearchTerm;
+            searchController.startSearch(searchController.lastSearchTerm)
+        }
+    }
+}
+
+
 searchController.init = function () {
 
     $("#searchinput").on("input", function () {
-        if( $("#searchinput").val() && $("#searchinput").val() != ""){
-            searchController.lastSearchTerm = $("#searchinput").val();
-
-
-            if(app.isCordova)
-             var time = 1000;
-            else
-             time = 300;
-
-            setTimeout(function () {
-                if (searchController.lastSearchedTerm != searchController.lastSearchTerm) {
-                    if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
-                        searchController.autoSearchTimer = Date.now();
-                        searchController.lastSearchedTerm = searchController.lastSearchTerm;
-                        searchController.startSearch(searchController.lastSearchTerm)
-                    }
-                }
-            }, time);
-
-            if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
-                searchController.autoSearchTimer = Date.now();
-                searchController.lastSearchedTerm = searchController.lastSearchTerm;
-                searchController.startSearch(searchController.lastSearchTerm)
-            }
-        }
-
+        searchController.searchMusic();
     })
 
 }
