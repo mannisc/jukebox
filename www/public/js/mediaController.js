@@ -93,10 +93,10 @@ mediaController.playVersion = function (songversion){
     var streamID = mediaController.playCounter;
     var videoURL = songversion.url
     var play = function (streamID, videoURL) {
-        console.dir(preferences.serverURL + "?playurl=" + videoURL);
+        var song = playlistController.getPlayingSong();
         $.ajax({
             timeout: 30000,
-            url: preferences.serverURL + "?playurl=" + videoURL,
+            url: preferences.serverURL + "?playurl=" + videoURL+"&artist="+mediaController.getSongArtist(song)+"&title="+song.name,
             success: function (data) {
                  if (streamID == mediaController.playCounter) {
                     streamURL = data;
