@@ -3144,6 +3144,10 @@ if (typeof jQuery != 'undefined') {
 				'</div>')
 				.appendTo(controls)
 				.click(function(e) {
+
+                    if ($(this).css("opacity") != 1){return;}//CHANGED
+
+
 					e.preventDefault();
 				
 					if (media.paused) {

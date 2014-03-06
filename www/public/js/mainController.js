@@ -20,6 +20,9 @@
  * @constructor
  */
 function MainController($scope) {
+
+    $scope.appTitle = "JezzPlay";
+
     window.$scope = $scope;
     //Safe NG Apply, applies changed to the $scope model to the html dom
     $scope.safeApply = function () {
@@ -31,11 +34,11 @@ function MainController($scope) {
 
 
     $scope.debugObj = function(obj){
-
+        /*
         console.log("''''''''''''''''''''''''''''''''''''''''")
         console.dir(obj)
         console.log("''''''''''''''''''''''''''''''''''''''''")
-
+          */
         return obj;
     }
 

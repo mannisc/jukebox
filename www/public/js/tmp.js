@@ -16,11 +16,6 @@ var mediaController = function () {
 mediaController.playCounter = 0;
 
 mediaController.playStream = function (artist,title) {
-
-
-    alert("!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
-
     if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
         $(".mejs-controls").find('.mejs-time-buffering').fadeIn();
         $(".mejs-controls").find('.mejs-time-loaded').hide();
