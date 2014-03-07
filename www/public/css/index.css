@@ -31,12 +31,19 @@ body {
     height: 100%;
     margin: 0px;
     padding: 0px;
-    width: 100%;
+    width: 100%!important;
     position:fixed;
     top: 0px;
     left:0px;
 
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+
+    user-select: none;
+
 }
+
 
 /*Content*/
 
@@ -152,6 +159,7 @@ body {
     .ui-btn-right {
         right: 2.4em!important;
     }
+
     #playlist {
         margin-top: -5px;
         left: 10px;
@@ -286,6 +294,9 @@ input[type=button]{
 
 }
 
+
+
+
 .draggedlistelement {
     z-index: 2000 !important;
     padding: 0;
@@ -297,6 +308,9 @@ input[type=button]{
 
 .draggedlistelement .removesong{
       display:none!important;
+}
+
+.draggedlistelement li {
 }
 
 .draggedlistelement li a {
@@ -326,15 +340,19 @@ input[type=button]{
     position: absolute !important;
     left: .625em !important;
     top: .9em !important;
-
+    background-size:100%;
     text-align: left;
     white-space: nowrap;
     line-height: 1.3;
+    height: 2em !important;
+    width: 2em !important;
 }
 
 .draggedlistelement li  a:after {
     display: none;
 }
+
+
 
 #searchlist {
     position: absolute;
@@ -387,7 +405,10 @@ input[type=button]{
     border: none !important;
 }
 
-
+#searchlist a img{
+  height: 2em;
+  width: 2em;
+}
 
 .songlist li:hover a img {
     -webkit-transform: scale(1.05);
@@ -419,9 +440,15 @@ input[type=button]{
     position: absolute;
     right: 0.6em;
     top: .9em;
+    background-size:100%;
+    background-repeat:no-repeat;
+
 }
 .ui-li-has-icon img.removesong:hover{
-   content:url(../img/trashopen.png)
+   background-image:url(../img/trashopen.png)!important ;
+   background-size:100%;
+    background-repeat:no-repeat;
+
 }
 
 
@@ -458,11 +485,15 @@ input[type=button]{
 }
 
 .songlist li.loadedsong.playing img.ui-li-icon {
-    content:url(../img/play.png)!important;
+    background-image:url(../img/play.png)!important;
+    background-size:99%;
+
 }
 
 .songlist li.loadedsong.pausing img.ui-li-icon {
-    content:url(../img/pause.png)!important;
+    background-image:url(../img/pause.png)!important;
+    background-size:99%;
+
 }
 
 
@@ -490,7 +521,8 @@ input[type=button]{
 
 #playlistInner .ui-sortable-placeholder{
    background:      rgba(255,255,255,0.1);
-    visibility: visible!important;
+   visibility: visible!important;
+   height:45px!important;
 }
 
 
@@ -525,6 +557,12 @@ input[type=button]{
     border: none !important;
 }
 
+#playlistInner a img{
+    height: 2em;
+    width: 2em;
+}
+
+
 #playlistInner a:after {
     display: none;
 }
@@ -538,6 +576,41 @@ input[type=button]{
     background: rgba(70,23,180,0.7) !important;
     border: none !important;
 }
+
+
+
+
+
+.bounce {
+    -moz-animation:bounce .40s linear;
+    -webkit-animation:bounce .6s linear ;
+    -webkit-animation-fill-mode: forwards;
+}
+
+@-moz-keyframes bounce {
+    0%{ -moz-transform:scale(0); opacity:0;}
+    50%{ -moz-transform:scale(1.9); opacity:0.4; }
+    75%{ -moz-transform:scale(0.9); opacity:0.7;}
+    100%{ -moz-transform:scale(1); opacity:1;}
+}
+
+@-webkit-keyframes bounce {
+    0%{ -webkit-transform:scale(0); opacity:0;}
+    50%{ -webkit-transform:scale(1.6); opacity:0.4;}
+    75%{ -webkit-transform:scale(0.9); opacity:0.7;}
+    100%{ -webkit-transform:scale(1); opacity:1;}
+}
+
+
+
+
+
+
+
+
+
+
+
 
 #playlistselectvertical {
     margin-top: -5px;
@@ -564,6 +637,8 @@ input[type=button]{
      overflow: hidden;
      max-height: 20px;
  }
+
+
 
 
 
@@ -1024,16 +1099,16 @@ input[type=button]{
 
 
 .playingSongInfo{
-    left: 250px!important;
-    transition : all .5s linear;
+    left: auto!important;
+    transition : opacity .5s linear;
 
 }
 
 .playingSongBuy{
-    top: -41px;
-    left: 135px!important;
-    transition : all .5s linear;
+    z-index: 1000;
+    transition : opacity .5s linear;
 
+    left: auto!important;
     color:#000!important;
 
     background: rgb(255,214,94); /* Old browsers */
@@ -1044,9 +1119,23 @@ input[type=button]{
     background: -ms-linear-gradient(top, rgba(255,214,94,1) 0%,rgba(254,191,4,1) 100%); /* IE10+ */
     background: linear-gradient(to bottom, rgba(255,214,94,1) 0%,rgba(254,191,4,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#febf04',GradientType=0 ); /* IE6-9 */
+}
 
+
+#header .ui-btn.animated{
+    transition : all .5s linear!important;
 
 }
+
+#header .ui-btn-right {
+    margin-top: 1px!important;
+}
+
+
+#signinLink, #linkAccount{
+   top: 0px;
+}
+
 
 
 
@@ -1063,6 +1152,28 @@ input[type=button]{
 
 
 
+#clearChoosenPlaylists{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin: -14px .3125em 0;
+    border: 0;
+    background-color: transparent;
+}
+
+.chosen-choices.ui-input  {
+    padding-right:30px;
+}
+
+
+.mejs-button button{
+    cursor: default !important;
+}
+
+a, button, input[type=button],.mejs-time-total,.mejs-time-rail,.mejs-time-total span,.mejs-time, h1, h2, h3{
+    cursor: default !important;
+
+}
 
 /*POPUPS*/
 
@@ -1134,7 +1245,7 @@ text-shadow: none!important;
     font-size:14px!important;
     min-height: 0em!important;
 
-    padding-left: 2.6em!important;
+    padding-left: 3.4em!important;
     padding-right: 5em!important;
     background-color: rgba(255,255,255,0.8);
     color: #000;
@@ -1151,7 +1262,7 @@ text-shadow: none!important;
 max-height: 2em!important;
 max-width: 2em!important;
     margin-top:0.25em!important;
-    margin-left:0.15em!important;
+    margin-left:0.95em!important;
 
 }
 
@@ -1221,10 +1332,25 @@ max-width: 2em!important;
 
 #loadversionimg{
     position:absolute;
-    top: 23px;
+    top: 27px;
     left: 15px;
 
 }
+
+
+
+.rotateIt{
+    -moz-transform: rotate(1deg);
+    -ms-transform: rotate(1deg);
+    -o-transform: rotate(1deg);
+    -webkit-transform: rotate(1080deg);
+    -webkit-transition: all 8s ease-out;
+    -moz-transition: all 3s ease;
+    -ms-transition: all 3s ease;
+    -o-transition: all 3s ease;
+    transition: all 3s ease;
+}
+
 
 
 /* E
