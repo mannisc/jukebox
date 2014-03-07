@@ -12,7 +12,7 @@
 var accountController = function () {
 
 };
-accountController.loggedIn=true;
+accountController.loggedIn=false;
 accountController.signIn = function(){
     var btn = $('#header .ui-btn.animated').removeClass("animated");
 
