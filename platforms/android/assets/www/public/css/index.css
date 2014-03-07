@@ -809,6 +809,21 @@ input[type=button]{
     background: rgba(50, 50, 50, 0.9) !important;
 }
 
+
+.iScrollVerticalScrollbar{
+    width:9px!important;
+}
+
+
+.mejs-playpause-button{
+    -webkit-transform: scale(1.7);
+    transform: scale(1.7);
+    -webkit-transform-origin: 50% 55%;
+    transform-origin: 50% 55%;
+}
+
+
+
 /*Fades*/
 
 

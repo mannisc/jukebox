@@ -20,14 +20,17 @@ searchController.SearchCounter = 0;
 searchController.completeSearch =  function (list) {
 
 
-    if(playlistController.playlists.length==0&& playlistController.loadedPlaylistSongs.length  ==0 ) {
+    if(!playlistController.showedHelper&&playlistController.playlists.length==0&& playlistController.loadedPlaylistSongs.length  ==0 ) {
+        playlistController.showedHelper=true;
         setTimeout(function(){
         $("#helperImage").show();
 
         setTimeout(function(){
             $("#helperImage").removeClass("fadeincomplete");
             $("#helperImage").addClass("fadeoutcomplete");
-
+            setTimeout(function(){
+                $("#helperImage").hide();
+            },1000)
         },10000);
         },2000);
     }
