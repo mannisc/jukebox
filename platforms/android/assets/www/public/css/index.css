@@ -1007,23 +1007,21 @@ input[type=button]{
 
 
 
-#popupArtistExternList li{
-    background-color: rgba(42,42,42,0.9);
+
+#popupArtistExternList li a{
+    background-color: rgba(42,42,42,0.9)!important;
+    text-shadow:none!important;
+   color:#fff!important;
     text-shadow: none!important;
     line-height: 1.2!important;
     font-size: 14px!important;
     min-height: 0em!important;
+}
+#popupArtistExternList li:hover a{
+    background-color: rgba(42,42,42,0.8)!important;
 
 }
 
-#popupArtistExternList li:hover{
-    background-color: rgba(42,42,42,0.8);
-}
-
-#popupArtistExternList li a{
-   text-shadow:none!important;
-   color:#fff!important;
-}
 
 .playingSongInfo{
     left: 400px!important;
@@ -1079,6 +1077,11 @@ input[type=button]{
 .ui-popup-container{
     background:rgba(255,255,255,0.6)!important;
 
+}
+
+
+.ui-popup.ui-body-a{
+    background-color:rgba(0,0,0,0)!important;
 }
 
 
