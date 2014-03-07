@@ -23,15 +23,27 @@ searchController.completeSearch =  function (list) {
     if(!playlistController.showedHelper&&playlistController.playlists.length==0&& playlistController.loadedPlaylistSongs.length  ==0 ) {
         playlistController.showedHelper=true;
         setTimeout(function(){
-        $("#helperImage").show();
+
+
+         $("#helperImage").css("top",200+$(window).height()/2*0.7)
+
+            $("#helperImage").css("left",$(window).width()/2*-20)
+
+
+            $("#helperImage").show();
+
+
 
         setTimeout(function(){
+
+
+
             $("#helperImage").removeClass("fadeincomplete");
             $("#helperImage").addClass("fadeoutcomplete");
             setTimeout(function(){
                 $("#helperImage").hide();
             },1000)
-        },10000);
+        },1000000);
         },2000);
     }
 

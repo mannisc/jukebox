@@ -60,7 +60,7 @@ $(document).ready(function () {
 
             uiController.init();
             searchController.init();
-            searchController.showSearchList();
+            searchController.showPopulars();
 
             setTimeout(function(){
                 $("#searchinput").focus();
