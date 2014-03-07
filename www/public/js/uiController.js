@@ -357,6 +357,7 @@ uiController.init = function () {
 
 
     uiController.searchListScroll = new IScroll('#searchlist', {
+        interactiveScrollbars: true,
         zoom: true,
         scrollX: false,
         scrollY: true,
@@ -374,6 +375,8 @@ uiController.init = function () {
 
 
     uiController.playListScroll = new IScroll('#playlistInner', {
+        interactiveScrollbars: true,
+
         zoom: true,
         scrollX: false,
         scrollY: true,
