@@ -10,29 +10,27 @@
 
 
 
- var googleHandler = function(){
+var googleHandler = function () {
 
 
     $.ajax({
-        url:"https://accounts.google.com/logout"
+        url: "https://accounts.google.com/logout"
     })
-
 
 
 }
 
 
-googleHandler.login=function(){
-    if(googleHandler.loaded){
-        if(!oauthToken)
-           gapi.load('auth', {'callback': onAuthApiLoad});
+googleHandler.login = function () {
+    if (googleHandler.loaded) {
+        if (!oauthToken)
+            gapi.load('auth', {'callback': onAuthApiLoad});
         gapi.load('picker', {'callback': onPickerApiLoad});
 
     }
 
 
 }
-
 
 
 // The API developer key obtained from the Google Cloud Console.
@@ -114,63 +112,63 @@ function createFolderPicker() {
 function pickerCallback(data) {
     var url = 'nothing';
     if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
-        var doc = data[google.picker.Response.DOCUMENTS][0];
-        url = doc[google.picker.Document.URL];
-        var fileId = doc[google.picker.Document.ID];
 
+        var googleDrivePlaylist = [];
+        var googleDrivePlaylistActGid = playlistController.loadedPlaylistSongs.length;
+        var googleDrivePlaylistActId = 0;
+        var googleDrivePlaylistLength = data[google.picker.Response.DOCUMENTS].length;
 
-        var request = gapi.client.drive.files.get({
-            'fileId': fileId
-        });
+        for (var index = 0; index < data[google.picker.Response.DOCUMENTS].length; index++) {
 
-        request.execute(function (resp) {
+            var doc = data[google.picker.Response.DOCUMENTS][index];
+            // url = doc[google.picker.Document.URL];
+            var fileId = doc[google.picker.Document.ID];
 
-
-
-
-            var downloadUrl = resp.exportLinks["text/html"];
-
-          //  DriveTemplates.parseTemplate(txt);
-            downloadFile(downloadUrl, function (txt) {
-               // document.getElementById('result').innerHTML = txt;
+            var request = gapi.client.drive.files.get({
+                'fileId': fileId
             });
 
+            request.execute(function (resp) {
+                if (resp) {
 
-            alert(resp.title+"   "+resp.description+"   "+resp.mimeType+"    "+downloadUrl)
-            console.log('Title: ' + resp.title);
-            console.log('Description: ' + resp.description);
-            console.log('MIME type: ' + resp.mimeType);
-        });
+                    var gid = "gsid" + helperFunctions.padZeros(googleDrivePlaylistActGid, ("" + googleDrivePlaylistLength).length);
+                    var id = "plsid" + helperFunctions.padZeros(googleDrivePlaylistActId, ("" + googleDrivePlaylistLength).length);
+
+                    googleDrivePlaylist.push({id:googleDrivePlaylistActId,gid:gid,name:resp.title, artist:"",streamURL:resp.webContentLink})
+                    googleDrivePlaylistActGid = googleDrivePlaylistActGid+1;
+
+                    googleDrivePlaylistActId = googleDrivePlaylistActId+1;
+
+                    if(googleDrivePlaylist.length==googleDrivePlaylistLength){
+                        playlistController.loadedPlaylistSongs =  googleDrivePlaylist;
+
+                        $scope.safeApply();
+                        $("#playlistview").listview('refresh');
+                        uiController.playListScroll.refresh();
+                        uiController.makePlayListSortable();
+                    }
+
+
+
+                    /*
+                    console.dir(resp)
+                    console.log("RESPONSE")
+                    console.dir(resp)
+                    console.log('Title: ' + resp.title);
+                    console.log('Description: ' + resp.description);
+                    console.log('MIME type: ' + resp.mimeType);
+                    */
+                }
+            });
+
+        }
+
 
     }
 
 
 }
 
-
-/**
- * Download a file's content.
- *
- * @param {File} file Drive File instance.
- * @param {Function} callback Function to call when the request is complete.
- */
-function downloadFile(downloadUrl, callback) {
-    if (downloadUrl) {
-        var accessToken = gapi.auth.getToken().access_token;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', downloadUrl);
-        xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-        xhr.onload = function () {
-            callback(xhr.responseText);
-        };
-        xhr.onerror = function () {
-            callback(null);
-        };
-        xhr.send();
-    } else {
-        callback(null);
-    }
-}
 
 /**
  * Load the Drive API client.

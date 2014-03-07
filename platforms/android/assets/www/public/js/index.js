@@ -60,10 +60,17 @@ $(document).ready(function () {
 
             uiController.init();
             searchController.init();
-            searchController.showFavorites();
+            searchController.showSearchList();
+
+            setTimeout(function(){
+                $("#searchinput").focus();
+            }, 500);
 
             //Show loaded page
             $("#page").css("opacity", "1");
+
+
+
 
 
         } else

@@ -584,13 +584,16 @@
         _this.search_results_mousewheel(evt);
       });
       this.form_field_jq.bind("chosen:updated.chosen", function(evt) {
-        _this.results_update_field(evt);
+          _this.results_update_field(evt);
       });
       this.form_field_jq.bind("chosen:activate.chosen", function(evt) {
         _this.activate_field(evt);
       });
       this.form_field_jq.bind("chosen:open.chosen", function(evt) {
         _this.container_mousedown(evt);
+      });
+      this.form_field_jq.bind("chosen:close.chosen", function(evt) {
+            _this.close_field(evt);
       });
       this.search_field.bind('blur.chosen', function(evt) {
         _this.input_blur(evt);

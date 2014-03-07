@@ -20,6 +20,18 @@ searchController.SearchCounter = 0;
 searchController.completeSearch =  function (list) {
 
 
+    if(playlistController.playlists.length==0&& playlistController.loadedPlaylistSongs.length  ==0 ) {
+        setTimeout(function(){
+        $("#helperImage").show();
+
+        setTimeout(function(){
+            $("#helperImage").removeClass("fadeincomplete");
+            $("#helperImage").addClass("fadeoutcomplete");
+
+        },10000);
+        },2000);
+    }
+
 
     uiController.searchListScroll.scrollTo(0, 0, 1000)
 
@@ -67,7 +79,7 @@ searchController.startSearch = function (searchString) {
 }
 
 
-searchController.showFavorites = function () {
+searchController.showPopulars = function () {
     uiController.toggleSearchButton(2);
     searchController.topTracks(searchController.completeSearch);
 
@@ -258,6 +270,7 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
 }
 
 searchController.topTracks = function (callbackSuccess) {
+    searchController.showLoading(true);
     $.ajax({
         url: "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
         success: function (data) {
@@ -270,11 +283,15 @@ searchController.topTracks = function (callbackSuccess) {
 
                 }
             }
+        },complete:function(){
+            setTimeout(searchController.showLoading,1000);
         }
     })
 }
 
 searchController.suggestions = function (title, artist, callbackSuccess) {
+    searchController.showLoading(true);
+
     $.ajax({
 
         url: "http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=" + artist + "&track=" + title + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
@@ -288,6 +305,8 @@ searchController.suggestions = function (title, artist, callbackSuccess) {
 
                 }
             }
+        }  ,complete:function(){
+            setTimeout(searchController.showLoading,1000);
         }
     })
 }

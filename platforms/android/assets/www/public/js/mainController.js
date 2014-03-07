@@ -27,7 +27,6 @@ function MainController($scope) {
 
 
     $scope.userName ="mschmidbartl";
-    $scope.loggedIn = false;
 
     //Safe NG Apply, applies changed to the $scope model to the html dom
     $scope.safeApply = function () {
@@ -52,7 +51,7 @@ function MainController($scope) {
     $scope.uiController = uiController;
     $scope.searchController = searchController;
     $scope.playlistController = playlistController;
-
+    $scope.accountController = accountController;
 
 
 
