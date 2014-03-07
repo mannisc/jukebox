@@ -1024,7 +1024,7 @@ input[type=button]{
 
 
 .playingSongInfo{
-    left: 400px!important;
+    left: 250px!important;
     transition : all .5s linear;
 
 }
@@ -1047,14 +1047,6 @@ input[type=button]{
 
 
 }
-.playingSongVisit{
-    top: -41px;
-    left: 133px!important;
-    transition : all .5s linear;
-
-}
-
-
 
 
 
