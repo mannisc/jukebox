@@ -1859,9 +1859,9 @@ window.MediaElement = mejs.MediaElement;
 
     if (typeof exports.de === 'undefined') {
         exports.de = {
-            "Fullscreen" : "Vollbild",
-            "Go Fullscreen" : "Vollbild an",
-            "Turn off Fullscreen" : "Vollbild aus",
+            "Fullscreen" : "Fullscreen",
+            "Go Fullscreen" : "Fullscreen on",
+            "Turn off Fullscreen" : "Fullscreen off",
             "Close" : "Schließen"
         };
     }
@@ -3145,7 +3145,7 @@ if (typeof jQuery != 'undefined') {
 				.appendTo(controls)
 				.click(function(e) {
 
-                    if ($(this).css("opacity") != 1){return;}//CHANGED
+                    if ($(this).find("button").css("opacity") != 1){return;}//CHANGED
 
 
 					e.preventDefault();
