@@ -115,7 +115,7 @@
     <div data-role="header" id="header" data-position="fixed">
         <img src="public/img/icon.png" style="position:absolute;left: 8px;top: 8px" width="30px" height="30px">
 
-        <a  id="playingSongInfoLink" style="opacity:0" onclick="searchController.getArtistInfo();"  ng-show = "playlistController.loadingSong" href="#popupArtist" data-rel="popup" data-position-to="#playingSongInfoLink"  class="playingSongInfo fadeincomplete ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-custom ui-btn-icon-left ui-btn-a" data-transition="pop">
+        <a  id="playingSongInfoLink" style="opacity:0" onclick="searchController.getArtistInfo();"  ng-show = "playlistController.loadingSong" href="#popupArtist" data-rel="popup" data-position-to="#playingSongInfoLink"  class="playingSongInfo  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-custom ui-btn-icon-left ui-btn-a" data-transition="pop">
            <span style="opacity:0">{{playlistController.getPlayingTitle()}}</span>
            <span id="playingSongTitleLoading" class="fadeincomplete" style="text-align:left;z-index:0;display:none;position:absolute;left: 35px;top: 9px;right: 0px"  >{{playlistController.getPlayingTitle()}}</span>
            <span id="playingSongTitle" class="fadeincomplete" style="text-align:left;z-index:0;display:none;position:absolute;left: 35px;top: 9px;right: 0px"   >{{playlistController.getPlayingTitle()}} </span>
@@ -128,7 +128,7 @@
         <a id="signinLink" ng-if ="!loggedIn" href="#popupLogin" onclick ="setTimeout(function(){$('#signinuser').focus();},700)" data-rel="popup" data-position-to="#signinLink" class="ui-btn ui-btn-right  ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
         <a ng-if ="loggedIn" id="linkAccount"  href="#popupAccount" data-rel="popup"  class="ui-btn ui-btn-right  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a" data-transition="pop">{{userName}}</a>
 
-        <a  id="buySongLink" style="opacity:0" onclick ="mediaController.buySong()"  ng-show = "playlistController.loadingSong" href="#" data-rel="popup" data-position-to="#buySongLink"  class="playingSongBuy fadeincomplete ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-shop ui-btn-icon-left ui-btn-a" data-transition="pop">Buy Song</a>
+        <a  id="buySongLink" style="opacity:0" onclick ="mediaController.buySong()"  ng-show = "playlistController.loadingSong" href="#" data-rel="popup" data-position-to="#buySongLink"  class="playingSongBuy  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-shop ui-btn-icon-left ui-btn-a" data-transition="pop">Buy Song</a>
 
 
     </div>
