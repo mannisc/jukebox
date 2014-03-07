@@ -35,6 +35,17 @@ mediaController.visitSongWebPage = function () {
     }
 }
 
+mediaController.postOnFacebook = function () {
+    if(mediaController.currentvideoURL!=""){
+        var song = playlistController.getPlayingSong();
+        mywindow = window.open("http://www.facebook.com/sharer.php?u="+mediaController.currentvideoURL+"&t="+mediaController.getSongArtist(song)+" - "+song.name, "", "");
+        mywindow.focus();
+    }
+    else{
+        mywindow = window.open("http://www.facebook.com/sharer.php?u=", "", ""); //TODO
+        mywindow.focus();
+    }
+}
 
 mediaController.showDuration = function (songversion) {
     var duration = parseInt(songversion.duration) ;
