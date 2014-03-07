@@ -594,7 +594,7 @@ uiController.makePlayListSortable = function () {
         start: function (event, ui) {
             uiController.draggingSortableSong = true;
             $("#playlistInner").removeClass("animate");
-            ;
+
             $("#playlistInner li").removeClass("fadeslideincompletefast");
 
             setTimeout(function () {
@@ -630,6 +630,7 @@ uiController.makePlayListSortable = function () {
             });
         },
         stop: function (event, ui) {
+            $("#playlistInner li").removeClass("fadeslideincompletefast");
 
             if (uiController.startedSortPlaylist) {
                 uiController.toggleSortablePlaylist();
@@ -679,6 +680,8 @@ uiController.makePlayListSortable = function () {
             console.log($("#playlistview").get(0))
             console.log("------------------------------")
             $("#playlistview").listview('refresh');
+
+            $("#playlistInner li").removeClass("fadeslideincompletefast");
 
             uiController.makePlayListSortable();
 

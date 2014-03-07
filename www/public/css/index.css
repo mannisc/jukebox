@@ -424,12 +424,12 @@ input[type=button]{
 }
 
 #searchlist a:hover {
-    background: #4617B4 !important;
+    background: #7700b4 !important; /* #4617B4*/
     border: none !important;
 }
 
 #searchlist li.playing a:hover,#searchlist li.pausing a:hover {
-    background: rgba(70,23,180,0.7) !important;
+    background: #7700b4 !important;
     border: none !important;
 }
 
