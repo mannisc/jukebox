@@ -415,7 +415,7 @@ mediaController.getSongCover = function (song) {
 
 mediaController.getSongDisplayName = function (song) {
     if (!song)
-        return "";
+        return mediaController.unknownData;
 
     var artist = mediaController.getSongArtist(song);
     if (artist == "") {
@@ -436,9 +436,9 @@ mediaController.getSongDisplayName = function (song) {
 
 mediaController.getSongArtist = function (song) {
     if (!song)
-        return "";
+        return mediaController.unknownData;
 
-    var artist = "";
+    var artist = mediaController.unknownData;
     if (song.artist) {
         if (song.artist.name)
             artist = song.artist.name;

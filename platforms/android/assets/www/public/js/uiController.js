@@ -36,7 +36,6 @@ uiController.init = function () {
         $("#titleHeader").addClass("fadeincomplete");
         $("#titleHeader").show();
         $("#iconHeader").addClass("bounce");
-
     }, 0);
     uiController.playedFirst = false;
     $("#videoplayer").css("opacity", "0");
@@ -598,7 +597,7 @@ uiController.makePlayListSortable = function () {
             $("#playlistInner li").removeClass("fadeslideincompletefast");
 
             setTimeout(function () {
-               // debugger;
+               //debugger;
             }, 3000)
 
             $(".draggedsortablelistelement").on('mousemove', function (event) {
@@ -688,7 +687,7 @@ uiController.makePlayListSortable = function () {
 
         },
         helper: function (event, $item) {
-            var $helper = $('<ul></ul>').addClass('draggedlistelement').addClass('draggedsortablelistelement');
+            var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement').addClass('draggedsortablelistelement');
 
             var item = $item.clone();
             var ele = $helper.append($item.clone())
@@ -731,7 +730,7 @@ uiController.makeSearchListDraggable = function () {
                 uiController.swipeTimer = Date.now();
             } else if (uiController.dragDraggableSongTimer && Date.now() - uiController.dragDraggableSongTimer < 500) {
 
-                if (event.clientX - uiController.dragDraggableSongX > 5 && Math.abs(event.clientY - uiController.dragDraggableSongY) < Math.abs(event.clientX - uiController.dragDraggableSongX) * 0.6) {
+                if (event.clientX - uiController.dragDraggableSongX > 2 && Math.abs(event.clientY - uiController.dragDraggableSongY) < Math.abs(event.clientX - uiController.dragDraggableSongX) *0.8) {
                     console.log("DRAGNDROP    " + (event.clientX - uiController.dragDraggableSongX))
 
                     $("#searchlistview .draggableSong").draggable("enable");
@@ -776,7 +775,7 @@ uiController.makeSearchListDraggable = function () {
         helper: function (event, ui) {
 
 
-            var $helper = $('<ul></ul>').addClass('draggedlistelement');
+            var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement');
             var ele = $helper.append($(this).clone())
             $(this).css("opacity", "0.5")
 
@@ -1233,10 +1232,10 @@ uiController.updateUI = function (dontChangeVideOpacity) {
     $("#draggelement").remove()
     var style = $('<style id="draggelement">' +
         '.draggedlistelement { ' +
-        '        width: ' + $("#playlistInner li").width() + 'px !important;' +
+        '        width: ' + $("#playlistInner ul").width() + 'px !important;' +
         '}' +
         '.draggedlistelement li a { ' +
-        '        width: ' + ($("#playlistInner li").width() - 70) + 'px !important;' +
+        '        width: ' + ($("#playlistInner ul").width() - 70) + 'px !important;' +
         '}' +
         '</style>');
     $('html > head').append(style);

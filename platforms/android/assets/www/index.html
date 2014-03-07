@@ -180,7 +180,8 @@
         <ul data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
             <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" class="draggableSong fadeslideincompletefast" ng-click="playlistController.playSong(song);"><a tabindex="-1"><img
-                    src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none">{{mediaController.getSongDisplayName(song)}}</a>
+                    src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none"> <h3>{{song.name}}</h3>
+                <p>{{mediaController.getSongArtist(song)}}</p></a>
             </li>
 
 
@@ -243,9 +244,9 @@
             <ul data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
                 <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.id" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
                     ng-click="playlistController.playSong(song);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
-                                                                                        class="ui-li-icon ui-corner-none">{{mediaController.getSongDisplayName(song)}}<img class="removesong"
-                                                                                                                                                                           ng-style="{'background-image':'url(public/img/trash.png)',display:'none'}"
-                                                                                                                                                                           src="public/img/empty.png"></a></li>
+                                                                                        class="ui-li-icon ui-corner-none">
+                    <h3>{{song.name}}</h3>
+                    <p>{{mediaController.getSongArtist(song)}}</p><img class="removesong" ng-style="{'background-image':'url(public/img/trash.png)',display:'none'}"  src="public/img/empty.png"></a></li>
 
             </ul>
         </div>
@@ -275,7 +276,9 @@
 <!-- /content -->
 
 <div id="helperImage" class="fadeincomplete" style="pointer-events: none; position:absolute;text-align: center;top:0px;left:0px;bottom:0px;right:0px;z-index:100000;display:none">
-    <img width="50%" style="margin-top:200px" src="public/img/arrow.png">
+    <img id="helperImg" height="30%" style="margin-top:200px" src="public/img/arrow.png"  style="position: relative">
+    <a id="helperOkay" data-role="button" data-theme= "a" data-mini ="true" style="pointer-events: default;position: absolute;top: 280px;left:42%; ">Ok</a>
+
 </div>
 
 

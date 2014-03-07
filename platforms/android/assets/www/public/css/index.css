@@ -328,13 +328,38 @@ input[type=button]{
 
     white-space: nowrap;
 
-    padding-left: 3.5em !important;
-    padding-top: 0.8em !important;
+    padding-left: 4.8em !important;
+    padding-top: 0.2em !important;
+
     padding-bottom: 0.8em !important;
 
     padding-right: 2.5em !important;
 
 }
+
+.draggedlistelement li a h3{
+font-size: 1em;
+font-weight: bold;
+display: block;
+margin: .45em 0;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+text-align: left;
+    color: #fff /*{b-bup-color}*/;
+    text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-radius}*/ #111 /*{b-bup-shadow-color}*/;
+}
+
+.draggedlistelement li a p{
+font-size: .75em;
+font-weight: normal;
+display: block;
+margin: .6em 0;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+}
+
 
 .draggedlistelement li a img {
     position: absolute !important;
@@ -344,8 +369,8 @@ input[type=button]{
     text-align: left;
     white-space: nowrap;
     line-height: 1.3;
-    height: 2em !important;
-    width: 2em !important;
+    height: 4em !important;
+    width: 4em !important;
 }
 
 .draggedlistelement li  a:after {
@@ -406,8 +431,8 @@ input[type=button]{
 }
 
 #searchlist a img{
-  height: 2em;
-  width: 2em;
+  height: 3.3em;
+  width: 3.3em;
 }
 
 .songlist li:hover a img {
@@ -522,9 +547,16 @@ input[type=button]{
 #playlistInner .ui-sortable-placeholder{
    background:      rgba(255,255,255,0.1);
    visibility: visible!important;
-   height:45px!important;
+    height:65px!important;
+
 }
 
+
+
+.songlist li a{
+    height:51px!important;
+
+}
 
 
 #playlistview {
@@ -558,8 +590,8 @@ input[type=button]{
 }
 
 #playlistInner a img{
-    height: 2em;
-    width: 2em;
+    height: 3.3em;
+    width: 3.3em;
 }
 
 
@@ -582,9 +614,12 @@ input[type=button]{
 
 
 .bounce {
-    -moz-animation:bounce .40s linear;
     -webkit-animation:bounce .6s linear ;
     -webkit-animation-fill-mode: forwards;
+    -moz-animation:bounce .6s linear ;
+    -moz-animation-fill-mode: forwards;
+    animation:bounce .6s linear ;
+    animation-fill-mode: forwards;
 }
 
 @-moz-keyframes bounce {
@@ -601,7 +636,12 @@ input[type=button]{
     100%{ -webkit-transform:scale(1); opacity:1;}
 }
 
-
+@keyframes bounce {
+    0%{ -moz-transform:scale(0); opacity:0;}
+    50%{ -moz-transform:scale(1.9); opacity:0.4; }
+    75%{ -moz-transform:scale(0.9); opacity:0.7;}
+    100%{ -moz-transform:scale(1); opacity:1;}
+}
 
 
 
