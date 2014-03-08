@@ -107,10 +107,10 @@
 <div id="lyricsiframe" class="fadeincompleteslow" style="display:none">
     <div id="lyricsifrmback">
     </div>
-    <iframe id="lyricsifrm" src="http://lyrics.wikia.com/Kasabian:Test_Transmission" seamless="">
+    <iframe id="lyricsifrm" src="about:blank" seamless="">
     </iframe>
 
-    <img id="lyricsiframeresizebar" onclick="lyricsvisible=false;$('#lyricsiframe').removeClass('fadeincompleteslow');$('#lyricsiframe').addClass('fadeoutcomplete');setTimeout(function(){$('#lyricsiframe').removeClass('fadeoutcomplete');$('#lyricsiframe').hide();},1000);" src="public/img/resizebar.png" style="position:absolute;right: 0px;top:0px">
+    <img id="lyricsiframeresizebar" onclick="mediaController.toggleLyrics();" src="public/img/resizebar.png" style="position:absolute;right: 0px;top:0px">
 </div>
 
 
@@ -284,12 +284,13 @@
             <div class="mejs-button mejs-button-choose-version mejs-custom-button">
                 <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" onclick="mediaController.getVersions();" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
             </div>
-            <div class="mejs-button mejs-button-facebook mejs-custom-button">
-                <button type="button" id="facebookpostbutton" data-role="none" style="opacity:0.5" onclick="mediaController.postOnFacebook();" aria-controls="mep_0" title="Share" aria-label="Facebook"></button>
-            </div>
             <div class="mejs-button mejs-button-lyrics mejs-custom-button">
-                <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" onclick="lyricsvisible=!lyricsvisible;if(lyricsvisible){$('#lyricsiframe').removeClass('fadeoutcomplete');$('#lyricsiframe').addClass('fadeincompleteslow');$('#lyricsiframe').show();}else{$('#lyricsiframe').removeClass('fadeincompleteslow');$('#lyricsiframe').addClass('fadeoutcomplete');setTimeout(function(){$('#lyricsiframe').removeClass('fadeoutcomplete');$('#lyricsiframe').hide();},1000);}" aria-controls="mep_0" title="Share" aria-label="Facebook"></button>
+                <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" onclick="mediaController.toggleLyrics();" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button>
             </div>
+            <div class="mejs-button mejs-button-facebook mejs-custom-button">
+                <button type="button" id="facebookpostbutton" data-role="none" style="opacity:0.5" onclick="mediaController.postOnFacebook();" aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button>
+            </div>
+
         </div>
     </div>
 

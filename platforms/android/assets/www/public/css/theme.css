@@ -253,7 +253,7 @@ margin-bottom: 5px!important;
     background-size: 16px;
 }
 
-.mejs-controls .mejs-button.mejs-button-choose-lyrics button {
+.mejs-controls .mejs-button.mejs-button-lyrics button {
     cursor: pointer;
     display: block;
     font-size: 0;
