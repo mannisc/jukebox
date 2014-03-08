@@ -380,6 +380,7 @@ searchController.suggestions = function (title, artist, callbackSuccess) {
             }
         })
     }
+    func(searchID);
 }
 
 
