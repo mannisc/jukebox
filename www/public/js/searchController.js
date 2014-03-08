@@ -14,6 +14,9 @@ var searchController = function () {
 
 };
 
+searchController.maxResults = 100;
+
+
 searchController.searchSongsString = "";
 
 searchController.searchResults = [];
@@ -149,12 +152,12 @@ searchController.completeSearch = function (list) {
     if (changed) {
         searchController.searchResults = [];
         $scope.safeApply();
-        var num = Math.min(100,list.track.length);
+        var num = Math.min(searchController.maxResults,list.track.length);
 
         for (var i = 0; i < num; i++) {
               searchController.searchResults[i] = list.track[i];
         }
-        searchController.searchResultsComplete = searchController.searchResults;
+        searchController.searchResultsComplete = list.track;
         for (var i = 0; i < searchController.searchResults.length; i++) {
             searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
         }
@@ -204,7 +207,11 @@ searchController.removeFilterSongs  = function (filterTerm){
     uiController.searchListScroll.scrollTo(0, 0, 1000)
     searchController.searchResults = [];
     $scope.safeApply();
-    searchController.searchResults = searchController.searchResultsComplete;
+    var num = Math.min(searchController.maxResults,searchController.searchResultsComplete.length);
+    for (var i = 0; i < num; i++) {
+        searchController.searchResults[i] = searchController.searchResultsComplete[i];
+    }
+
     for (var i = 0; i < searchController.searchResults.length; i++) {
         searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
     }
@@ -265,7 +272,10 @@ searchController.filterSongs  = function (filterTerm){
     if (changed) {
         searchController.searchResults = [];
         $scope.safeApply();
-         searchController.searchResults = newSearchResults;
+        var num = Math.min(searchController.maxResults,newSearchResults.length);
+        for (var i = 0; i < num; i++) {
+            searchController.searchResults[i] = newSearchResults[i];
+        }
         for (var i = 0; i < searchController.searchResults.length; i++) {
             searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
         }
