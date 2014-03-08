@@ -324,7 +324,7 @@ playlistController.resetPlayingSong = function () {
     }
     else {
         playlistController.playingSongId = null;
-        helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
+        helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
         $(".songlist li").removeClass("loadedsong playing stillloading plausing");
 
         playlistController.setNewTitle("", "", true);
@@ -390,7 +390,7 @@ playlistController.playSong = function (song, onlyStyle) {
 
     playlistController.disableControls(!isPlaylistSong)
 
-    helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
+    helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
 
     $(".songlist li").removeClass("loadedsong playing plausing stillloading");
 
@@ -429,7 +429,7 @@ playlistController.playSong = function (song, onlyStyle) {
 
     listElement.addClass("loadedsong")
 
-    helperFunctions.animateBackground(".songlist li.loadedsong.stillloading #loadingSongImg","public/img/loader/sprites.png",46,46,18,46,4);
+    helperFunctions.animateBackground(".songlist li.loadedsong.stillloading .loadingSongImg","public/img/loader/sprites.png",46,46,18,46,4);
 
 
     if (!onlyStyle) {

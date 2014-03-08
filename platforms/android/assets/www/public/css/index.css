@@ -124,6 +124,7 @@ body {
         margin-bottom: 0px !important;
     }
 
+
     #content {
         padding-top: 4px !important;
         padding-bottom: 4px !important;
@@ -272,6 +273,10 @@ input[type=button]{
 }
 
 
+
+
+
+
 .redbackground{
 
   background-color:#500!important;
@@ -282,6 +287,42 @@ input[type=button]{
     background-color:#050!important;
 }
 
+
+
+#lyricsiframe {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    width: 450px;
+    z-index: 1000;
+    height: 100%;
+    opacity: 0.945;
+    z-index:10000!important;
+    background: rgba(29,29,29,0.9);
+}
+#lyricsifrm{
+    position:absolute;
+    top:0;
+    height: 0;
+    width: 420px;
+    height:100%;
+    border:none!important;
+    z-index:10002!important;
+
+}
+
+#lyricsifrmback{
+    position:absolute;
+    top:0;
+    height: 0;
+    width: 420px;
+    height:100%;
+    background: rgba(255,255,255,1);
+    z-index:10001!important;
+
+
+}
 
 #backgroundImage {
     width: 100%;
@@ -637,7 +678,7 @@ white-space: nowrap;
     opacity:1;
 }
 
-.songlist li.loadedsong.stillloading #loadingSongImg{
+.songlist li.loadedsong.stillloading .loadingSongImg{
    /* background-image:url(../img/songload.gif)!important;
     background-size:9;*/
     max-width: 46px!important;
