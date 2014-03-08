@@ -30,7 +30,7 @@ searchController.init = function () {
         console.log($("#searchbutton" + (i + 1)).parent().length)
     }
 
-    searchController.activateButton(1,true);
+    searchController.activateButton(0,true);
     searchController.showPopulars();
 
 }
