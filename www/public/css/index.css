@@ -836,6 +836,7 @@ white-space: nowrap;
  #rightpanel {
      width: 300px !important;
      max-width: 100% !important;
+     overflow:hidden;
  }
 
  #videoplayer {
