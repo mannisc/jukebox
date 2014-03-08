@@ -29,7 +29,7 @@ uiController.init = function () {
 
 
     $('video').bind('contextmenu', function (e) {
-        return false;
+       // return false;
     });
 
     setTimeout(function () {
@@ -131,6 +131,13 @@ uiController.init = function () {
         success: function (mediaElement, domObject) {
 
 
+
+            var resizeLayer =  $(".mejs-overlay-play").clone();
+            resizeLayer.removeClass("mejs-overlay-play").addClass("mejs-overlay-resize");
+            resizeLayer.insertAfter(".mejs-overlay-play");
+            $(".mejs-overlay-play").remove();
+
+
             $(".mejs-custom-button").appendTo(".mejs-controls");
             uiController.countCustomButtons = $(".mejs-custom-button").length;
 
@@ -138,9 +145,10 @@ uiController.init = function () {
             playlistController.disablePlayStopControls(true);
             playlistController.disableControls(true);
 
-            $(".mejs-overlay-play").click(function () {
+            $(".mejs-overlay-resize").click(function () {
+                alert("!!!!")
                 if (!playlistController.playButtonTimer && (Date.now() - playlistController.playButtonTimer > 100)) {
-                    $(".mejs-playpause-button").click();
+                   // $(".mejs-playpause-button").click();
                     playlistController.playButtonTimer = Date.now()
                 }
             })

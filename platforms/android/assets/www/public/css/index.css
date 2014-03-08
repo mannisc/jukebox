@@ -165,6 +165,20 @@ body {
 /*Smallest Screen*/
 @media (max-width:669px) {
 
+
+    .mejs-stop-button{
+        display:none!important;
+    }
+
+    #playingSongInfoLink{
+     display:none!important;
+    }
+
+     #header a{
+         font-size:12px!important;
+     }
+
+
     .ui-btn-right {
         right: 2.4em!important;
     }
