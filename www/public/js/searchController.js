@@ -78,7 +78,20 @@ searchController.activateButton = function (index,noAnimation) {
 
     }, 60)
 
-    $(input).insertAfter(button).find("input").attr("placeholder", "Search " + button.find("input").val());
+    switch(index){
+        case 0:
+            $(input).insertAfter(button).find("input").attr("placeholder", "Search Songs");
+            break;
+        case 1:
+            $(input).insertAfter(button).find("input").attr("placeholder", "Filter Popular Songs");
+            break;
+        case 2:
+            $(input).insertAfter(button).find("input").attr("placeholder", "Filter Suggestions");
+            break;
+        case 3:
+            $(input).insertAfter(button).find("input").attr("placeholder", "Search Playlists");
+            break;
+    }
 
 
     button.hide();
