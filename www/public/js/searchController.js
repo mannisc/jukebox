@@ -15,6 +15,8 @@ searchController.searchSongsString = "";
 
 searchController.searchResults = [];
 
+searchController.searchResultsComplete = [];
+
 searchController.SearchCounter = 0;
 
 searchController.buttonActive = 0;
@@ -133,7 +135,7 @@ searchController.completeSearch = function (list) {
         searchController.searchResults = [];
         $scope.safeApply();
         searchController.searchResults = list.track;
-
+        searchController.searchResultsComplete = list.track;
         for (var i = 0; i < searchController.searchResults.length; i++) {
             searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
         }
@@ -150,10 +152,6 @@ searchController.completeSearch = function (list) {
     }
 }
 
-
-searchController.startSearch = function (searchString) {
-    searchController.search(searchString, searchController.completeSearch);
-}
 
 
 searchController.showPopulars = function () {
@@ -222,7 +220,7 @@ searchController.searchMusic = function () {
                 if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
                     searchController.autoSearchTimer = Date.now();
                     searchController.lastSearchedTerm = searchController.lastSearchTerm;
-                    searchController.startSearch(searchController.lastSearchTerm)
+                    searchController.searchSongs(searchController.lastSearchTerm, "", "", searchController.completeSearch);
                 }
             }
         }, time);
@@ -230,17 +228,12 @@ searchController.searchMusic = function () {
         if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
             searchController.autoSearchTimer = Date.now();
             searchController.lastSearchedTerm = searchController.lastSearchTerm;
-            searchController.startSearch(searchController.lastSearchTerm)
+            searchController.searchSongs(searchController.lastSearchTerm, "", "", searchController.completeSearch);
         }
     }
     else {
         searchController.emptySearchList();
     }
-}
-
-
-searchController.search = function (searchString, callback) {
-    searchController.searchSongs(searchString, "", "", callback);
 }
 
 
