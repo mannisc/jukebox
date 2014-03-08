@@ -215,7 +215,7 @@ mediaController.playVersion = function (songversion) {
                             videoURL = unescape(videoURL);
                         }
                         if (streamURL) {
-                            mediaController.sendRating("-2");
+                            mediaController.sendRating("-1");
                             mediaController.seekTime = uiController.mediaElementPlayer.getCurrentTime();
                             mediaController.seekTimeDuration = uiController.mediaElementPlayer.media.duration;
                             mediaController.playStreamURLSeek(streamURL,videoURL,true);
