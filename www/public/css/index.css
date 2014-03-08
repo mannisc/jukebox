@@ -214,7 +214,7 @@ body {
 /*Small TimeRail Screen*/
 @media (max-width:420px) {
 
-    .mejs-duration-container, .mejs-button-choose-version, #videocontrols .mejs-time-rail {
+    .mejs-duration-container, .mejs-button-choose-version, #videocontrols .mejs-time-rail , .mejs-button-lyrics,#lyricsiframe {
         display:none!important;
     }
 
@@ -291,12 +291,11 @@ input[type=button]{
 
 #lyricsiframe {
     position: absolute;
-    top: 0px;
+    top: 45px;
     left: 0px;
-    bottom: 0px;
+    bottom: 45px!important;
     width: 450px;
     z-index: 1000;
-    height: 100%;
     opacity: 0.945;
     z-index:10000!important;
     background: rgba(29,29,29,0.9);

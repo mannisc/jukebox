@@ -918,14 +918,12 @@ uiController.styleVideo = function (overtakeSize) {
 uiController.toast = function (msg, time, touchFunc) {
     $("#toastId").remove();
     var toastclass = 'ui-loader ui-overlay-shadow ui-bar-e ui-corner-all';
-    $("<div id='toastTest' class= '" + toastclass + "'>" + msg + "</div>")
-        .css({visibility: "hidden",
-            "white-space": "nowrap"})
+    $("<div id='toastTest' 'class= '" + toastclass + "'>" + msg + "</div>")
+        .css({ display: "inline-block",visibility: "visisble"})
         .appendTo($.mobile.pageContainer)
-
     $("<div class='" + toastclass + "' id = 'toastId'>" + msg + "</div>")
         .css({ display: "block",
-            "white-space": "nowrap",
+
             opacity: 0,
             position: "fixed",
             padding: "7px",
@@ -1128,7 +1126,7 @@ uiController.updateUI = function (dontChangeVideOpacity) {
     uiController.updateDisplay();
 
 
-   $("#lyricsiframeresizebar").css("top",$(window).height()/2-30);
+   $("#lyricsiframeresizebar").css("top",$(window).height()/2-30-44);
 
     var myIframe = document.getElementById('lyricsifrm');
     setTimeout(function(){

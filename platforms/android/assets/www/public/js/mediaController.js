@@ -459,7 +459,6 @@ mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) 
         listElement.addClass("playing").removeClass("stillloading");
 
 
-
         if(differentVersions) {
             $(".mejs-button-choose-version button").css("opacity", "1");
             $("#chooseversionbutton").removeClass("rotateIt");
@@ -477,7 +476,41 @@ mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) 
 }
 
 
-mediaController.getSongCover = function (song) {
+
+
+mediaController.toggleLyrics = function(){
+
+    var iframe =  $('#lyricsiframe');
+
+
+    if(mediaController.showLyrics===undefined)
+        uiController.toast("This Lyrics are external content.<br> Contact the external site for answers regarding its content.", 3000)
+
+    mediaController.showLyrics=!mediaController.showLyrics;
+    if(mediaController.showLyrics){
+        if(playlistController.loadingSong){
+            $("#lyricsifrm").attr("src","http://lyrics.wikia.com/"+mediaController.getSongArtist(playlistController.loadingSong)+":"+playlistController.loadingSong.name);
+            iframe.removeClass('fadeoutcomplete');
+            iframe.addClass('fadeincompleteslow');
+            iframe.show();
+        }
+    }else{
+       iframe.removeClass('fadeincompleteslow');
+       iframe.addClass('fadeoutcomplete');
+        setTimeout(function(){
+           iframe.removeClass('fadeoutcomplete');
+           iframe.hide();
+
+        },1000);}
+
+}
+
+
+
+
+
+
+    mediaController.getSongCover = function (song) {
 
 
     var url;

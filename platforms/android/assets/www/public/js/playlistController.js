@@ -328,6 +328,7 @@ playlistController.resetPlayingSong = function () {
         $(".songlist li").removeClass("loadedsong playing stillloading plausing");
 
         playlistController.setNewTitle("", "", true);
+        $(".mejs-button-lyrics button").css("opacity","0.5");
     }
 
 
@@ -368,6 +369,7 @@ playlistController.playSong = function (song, onlyStyle) {
     if (playlistController.isLoading && playlistController.playingSongId == newId)
         return;
 
+
     playlistController.playingSongInPlaylist=isPlaylistSong;
 
     playlistController.playSongTimer = Date.now();
@@ -380,7 +382,12 @@ playlistController.playSong = function (song, onlyStyle) {
 
     playlistController.loadingSong = song;
 
-       //alert(playlistController.loadingOldSong+"   "+!!playlistController.loadingOldSong)
+
+    if(mediaController.showLyrics)
+        $("#lyricsifrm").attr("src","http://lyrics.wikia.com/"+mediaController.getSongArtist(playlistController.loadingSong)+":"+playlistController.loadingSong.name);
+    $(".mejs-button-lyrics button").css("opacity","1");
+
+       // /alert(playlistController.loadingOldSong+"   "+!!playlistController.loadingOldSong)
     if(!playlistController.loadingOldSong) {
         playlistController.disableStopControl(false);
        //alert("ENABLE")
