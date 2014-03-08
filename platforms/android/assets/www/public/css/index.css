@@ -372,6 +372,7 @@ input[type=button]{
     text-overflow: ellipsis;
     overflow: hidden;
 
+    margin-left:3px!important;
     white-space: nowrap;
 
     padding-left: 4.8em !important;
@@ -409,7 +410,7 @@ white-space: nowrap;
 
 .draggedlistelement li a img {
     position: absolute !important;
-    left: .625em !important;
+    left: 5px !important;
     top: .9em !important;
     background-size:100%;
     text-align: left;
@@ -417,6 +418,10 @@ white-space: nowrap;
     line-height: 1.3;
     height: 4em !important;
     width: 4em !important;
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3)!important;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%!important;
 }
 
 .draggedlistelement li  a:after {
@@ -481,17 +486,33 @@ white-space: nowrap;
   width: 3.3em;
 }
 
+
+
 .songlist li{
-    height:65!important;
+    height:65px!important;
 }
+
+
+.songlist   li a  {
+   overflow:visible!important;
+    margin-left:5px;
+}
+
+.songlist li a img.ui-li-icon{
+    left: 5px!important;
+}
+
 
 .songlist li:hover a img {
-    -webkit-transform: scale(1.05);
-    transform: scale(1.05);
+    -webkit-transform: scale(1.21);
+    transform: scale(1.21)!important;
     -webkit-transform-origin: 50% 50%;
-    transform-origin: 50% 50%;
-
+    transform-origin: 50% 50%!important;
+    z-index:10;
+    overflow:visible;
 }
+
+
 
 
 #searchlist a:after {
@@ -595,16 +616,64 @@ white-space: nowrap;
 
 }
 
-.songlist li.loadedsong.playing img.ui-li-icon {
+.songlist li img.ui-li-icon {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+.songlist li.loadedsong.playing img.ui-li-icon{
+    transition: all 0.3s ease;
     background-image:url(../img/play.png)!important;
-    background-size:99%;
+    background-size:100%;
+    background-position: 0px 0px!important;
 
 }
 
+
+
+
+.songlist li.loadedsong.stillloading img.ui-li-icon {
+    opacity:1;
+}
+
+.songlist li.loadedsong.stillloading #loadingSongImg{
+   /* background-image:url(../img/songload.gif)!important;
+    background-size:9;*/
+    max-width: 46px!important;
+    max-height: 46px!important;
+    margin-left:3px!important;
+    margin-top:-5px!important;
+    background-size:auto!important;
+    position: absolute;
+    left: 5px!important;
+    top: .9em;
+    opacity:0.65!important;
+    -webkit-transform: scale(0.95);
+    transform: scale(0.95);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+    transition-property: transforme;
+    z-index:10;
+
+}
+
+
+
+
 .songlist li.loadedsong.pausing img.ui-li-icon {
     background-image:url(../img/pause.png)!important;
-    background-size:99%;
-
+    background-size:100%;
+    background-position: 0px 0px!important;
+    -webkit-transform: scale(1)!important;
+    transform: scale(1)!important;
 }
 
 
@@ -623,7 +692,7 @@ white-space: nowrap;
 }
 
 #playlistInner ul {
-    margin-left: 8px !important;
+    margin-left: 15px !important;
     width:100%;
 }
 
@@ -1014,7 +1083,7 @@ white-space: nowrap;
 
 .iScrollIndicator{
     background: rgb(55, 55, 55)!important;
-    border: 1px solid rgba(155, 155, 155, 0.9)!important;
+    border: 1px solid rgba(155, 155, 155, 0.6)!important;
 }
 
 
