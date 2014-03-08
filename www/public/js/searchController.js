@@ -342,6 +342,19 @@ searchController.showSuggestions = function () {
 
 }
 
+searchController.searchArtistSongs = function (artist) {
+    $("#searchinput").val(artist);
+    searchController.searchSongsString = artist;
+    searchController.activateButton(0);
+    searchController.searchSongsFromArtist(artist, searchController.completeSearch);
+
+}
+
+searchController.searchSimilarSongs = function (song) {
+    searchController.activateButton(2);
+    searchController.suggestions(song.name, mediaController.getSongArtist(song), searchController.completeSearch);
+}
+
 
 searchController.searchMusic = function () {
     if ($("#searchinput").val() && $("#searchinput").val() != "") {
@@ -450,6 +463,85 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
             error: function () {
                 if (searchID == searchController.SearchCounter) {
                     searchserver(searchID);
+                }
+            }
+        })
+    }
+    func(searchID);
+}
+
+
+
+
+searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
+    searchController.showLoading(true);
+    searchController.SearchCounter++;
+    var searchString = artist;
+    var searchID = searchController.SearchCounter;
+
+    var searchserver = function (searchID) {
+        $.ajax({
+            url: preferences.serverURL + "?searchjson=" + searchString,
+            success: function (data) {
+                if (searchID == searchController.SearchCounter) {
+                    console.dir("Server Search Results:");
+                    console.dir(data);
+                    for (var i = 0; i < data.track.length; i++) {
+                        try {
+                            data.track[i].artist = decodeURIComponent(data.track[i].artist);
+                        }
+                        catch (e) {
+                            data.track[i].artist = unescape(data.track[i].artist);
+                        }
+                        try {
+                            data.track[i].name = decodeURIComponent(data.track[i].name);
+                        }
+                        catch (e) {
+                            data.track[i].name = unescape(data.track[i].name);
+                        }
+                    }
+                    if (callbackSuccess)
+                        callbackSuccess(data);
+                }
+            },
+            complete: function () {
+                if (searchID == searchController.SearchCounter) {
+                    setTimeout(searchController.showLoading, 1000); //show=false
+                }
+            }
+
+        })
+    }
+    var func = function (searchID) {
+        $.ajax({
+
+            url: "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + searchString + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
+            success: function (data) {
+                console.dir( "OK");
+                console.dir( data);
+                if (searchID == searchController.SearchCounter) {
+                    if (data.toptracks ) {
+                        if (data.toptracks == "\n") {
+                            searchserver(searchID);
+                        }
+                        else {
+                            console.dir(data.toptracks);
+                            if (searchID == searchController.SearchCounter) {
+                                setTimeout(searchController.showLoading, 1000);
+                                if (callbackSuccess)
+                                    callbackSuccess(data.toptracks);
+                            }
+
+                        }
+
+
+                    }
+                }
+
+            },
+            error: function () {
+                if (searchID == searchController.SearchCounter) {
+                      searchserver(searchID);
                 }
             }
         })
