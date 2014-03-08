@@ -11,6 +11,7 @@ var searchController = function () {
 
 };
 
+searchController.searchSongsString = "";
 
 searchController.searchResults = [];
 
@@ -37,6 +38,9 @@ searchController.init = function () {
 
 
 searchController.activateButton = function (index,noAnimation) {
+    if(searchController.buttonActive ==0){
+        searchController.searchSongsString = $("#searchinput").val();
+    }
     searchController.buttonActive= index;
     searchController.emptySearchList(true);
 
@@ -80,15 +84,19 @@ searchController.activateButton = function (index,noAnimation) {
 
     switch(index){
         case 0:
+             $("#searchinput").val(searchController.searchSongsString);
             $(input).insertAfter(button).find("input").attr("placeholder", "Search Songs");
             break;
         case 1:
+            $("#searchinput").val("");
             $(input).insertAfter(button).find("input").attr("placeholder", "Filter Popular Songs");
             break;
         case 2:
+            $("#searchinput").val("");
             $(input).insertAfter(button).find("input").attr("placeholder", "Filter Suggestions");
             break;
         case 3:
+            $("#searchinput").val("");
             $(input).insertAfter(button).find("input").attr("placeholder", "Search Playlists");
             break;
     }
@@ -158,7 +166,6 @@ searchController.showPopulars = function () {
 
 searchController.emptySearchList = function (dontInitFully) {
     searchController.searchResults = [];
-    searchController.SearchCounter = 0;
     $scope.safeApply();
     $("#searchlistview").listview('refresh');
     uiController.searchListScroll.refresh();
@@ -322,45 +329,57 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
 }
 
 searchController.topTracks = function (callbackSuccess) {
-    searchController.showLoading(true);
-    $.ajax({
-        url: "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
-        success: function (data) {
-            console.dir(data);
-            if (data.tracks) {
-                if (data.tracks != "\n") {
-                    console.dir(data);
-                    if (callbackSuccess)
-                        callbackSuccess(data.tracks);
+    searchController.SearchCounter++;
+    var searchID = searchController.SearchCounter;
+    var func = function (searchID) {
+        searchController.showLoading(true);
+        $.ajax({
+            url: "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
+            success: function (data) {
+                console.dir(data);
+                if (data.tracks) {
+                    if (data.tracks != "\n") {
+                        if (searchID == searchController.SearchCounter) {
+                            console.dir(data);
+                            if (callbackSuccess)
+                                callbackSuccess(data.tracks);
+                        }
 
+                    }
                 }
+            }, complete: function () {
+                setTimeout(searchController.showLoading, 1000);
             }
-        }, complete: function () {
-            setTimeout(searchController.showLoading, 1000);
-        }
-    })
+        })
+    }
+    func(searchID);
 }
 
 searchController.suggestions = function (title, artist, callbackSuccess) {
     searchController.showLoading(true);
+    searchController.SearchCounter++;
+    var searchID = searchController.SearchCounter;
+    var func = function (searchID) {
+        $.ajax({
 
-    $.ajax({
+            url: "http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=" + artist + "&track=" + title + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
+            success: function (data) {
+                console.dir(data);
+                if (data.similartracks) {
+                    if (data.similartracks != "\n") {
+                        if (searchID == searchController.SearchCounter) {
+                            console.dir(data.similartracks);
+                            if (callbackSuccess)
+                                callbackSuccess(data.similartracks);
+                        }
 
-        url: "http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=" + artist + "&track=" + title + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
-        success: function (data) {
-            console.dir(data);
-            if (data.similartracks) {
-                if (data.similartracks != "\n") {
-                    console.dir(data.similartracks);
-                    if (callbackSuccess)
-                        callbackSuccess(data.similartracks);
-
+                    }
                 }
+            }, complete: function () {
+                setTimeout(searchController.showLoading, 1000);
             }
-        }, complete: function () {
-            setTimeout(searchController.showLoading, 1000);
-        }
-    })
+        })
+    }
 }
 
 
