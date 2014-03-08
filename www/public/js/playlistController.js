@@ -231,8 +231,11 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
     playlistController.loadedPlaylistSongs[i].gid = "gsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
 
 }
+//playlistController.loadedPlaylistSongs = [];
 
-playlistController.loadedPlaylistSongs = [];
+
+playlistController.globalId = playlistController.loadedPlaylistSongs.length;
+
 
 playlistController.playingSongId = null;
 playlistController.playingTitle = "";
@@ -242,7 +245,7 @@ playlistController.shuffleMode = false;
 playlistController.playedSongs = [];
 
 
-playlistController.playlists = []//[{name:"Electro '14"},{name:"Charts4/13"},{name:"Chillout"},{name:"Vocals"},{name:"Trance"}];
+playlistController.playlists = [{name:"Electro '14"},{name:"Charts4/13"},{name:"Chillout"},{name:"Vocals"},{name:"Trance"}];
 
 
 playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
@@ -256,6 +259,8 @@ playlistController.disableStopControl = function (disable) {
     } else {
         $(".mejs-stop-button button").css("opacity", "1");
     }
+
+   // alert( $(".mejs-stop-button button").length)
 
 }
 
@@ -361,12 +366,20 @@ playlistController.playSong = function (song, onlyStyle) {
 
     playlistController.playSongTimer = Date.now();
 
+   // alert("!LOADING* "+playlistController.loadingSong+"   "+playlistController.isLoading)
 
     if (!playlistController.isLoading) {
         playlistController.loadingOldSong = playlistController.loadingSong;
     }
 
     playlistController.loadingSong = song;
+
+       //alert(playlistController.loadingOldSong+"   "+!!playlistController.loadingOldSong)
+    if(!playlistController.loadingOldSong) {
+        playlistController.disableStopControl(false);
+       //alert("ENABLE")
+
+    }
 
 
     playlistController.disableControls(!isPlaylistSong)

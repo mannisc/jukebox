@@ -55,7 +55,7 @@ body {
     }
 
     #searchlist {
-        margin-top: 10px;
+        margin-top: 5px !important;
     }
 
     #controlselectvertical {
@@ -63,13 +63,17 @@ body {
     }
 
     #controlbar {
-        margin-top: -5px;
+        margin-top: -10px;
+    }
+
+    #controlbar .ui-input-search {
+        width: 280px;
     }
 
 }
 
 /*Smaller Screen*/
-@media (min-width:1250px) {
+@media (min-width:1080px) {
 
     #playlist {
         top: 0px;
@@ -81,10 +85,12 @@ body {
 }
 
 /*Small Screen*/
-@media (min-width:850px) and  (max-width:1249px) {
+@media (min-width:850px) and  (max-width:1079px) {
     #playlist {
         top: 60px !important;
     }
+
+
 }
 
 /*Small Screen*/
@@ -101,14 +107,17 @@ body {
         display: inline-block;
     }
 
-    #controlselecthorizontal {
-        display: none;
+    #controlbar .ui-input-btn {
+        display: none!important;
     }
 
     #controlbar .ui-select {
         width: 340px !important;
     }
 
+    #controlbar .ui-input-search {
+        width: 300px;
+    }
 
 
     #controlbar .ui-input-btn {
@@ -124,7 +133,7 @@ body {
     }
 
     #searchlist {
-        margin-top: 55px;
+        margin-top: 50px;
     }
 
     #controlbar .ui-input-search {
@@ -277,10 +286,21 @@ input[type=button]{
 
 }
 
+#controlbar .ui-input-search.animated, #controlbar .ui-input-btn.animated{
+    -webkit-transition: all 0.28s ease-out;
+    -moz-transition: all 0.28s ease-out;
+    -o-transition: all 0.28s ease-out;
+    transition: all 0.28s ease-out;
+}
+
+
+
 #controlbar .ui-input-search {
-    width: 300px !important;
     margin-right: 10px;;
 
+}
+#controlbar .ui-input-btn{
+    cursor:hand!important ;
 }
 
 #controlbar .ui-input-btn {
@@ -301,7 +321,19 @@ input[type=button]{
     z-index: 2000 !important;
     padding: 0;
     list-style: none;
-    background: #4617B4 !important;
+  /*  background: #4617B4 !important;*/
+
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(70,23,180,1), endColorstr=rgba(70,23,180,1))!important;
+    background-image:-moz-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(70,23,180,1)), color-stop(44%,rgba(70,23,180,1)),color-stop(100%,rgba(70,23,180,0)))!important;
+
+
+
     border: none !important;
     margin: 0px !important;
 }
@@ -377,8 +409,6 @@ white-space: nowrap;
     display: none;
 }
 
-
-
 #searchlist {
     position: absolute;
     z-index: 1;
@@ -387,6 +417,7 @@ white-space: nowrap;
     height: 100%;
     background: none;
     overflow: hidden;
+    padding-top: 5px;
 }
 
 #searchlist {
@@ -395,6 +426,7 @@ white-space: nowrap;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
+
 
 
 #searchlist ul {
@@ -449,12 +481,33 @@ white-space: nowrap;
 }
 
 #searchlist a:hover {
-    background: #7700b4 !important; /* #4617B4*/
+    /*background: #7700b4 !important; /* #4617B4*/
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(119,0,180,1), endColorstr=rgba(119,0,180,1))!important;
+    background-image:-moz-linear-gradient(left, rgba(119,0,180,1) 0%, rgba(119,0,180,1) 44%,rgba(119,0,180,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(119,0,180,1) 0%, rgba(119,0,180,1) 44%,rgba(119,0,180,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(119,0,180,1) 0%, rgba(119,0,180,1) 44%,rgba(119,0,180,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(119,0,180,1) 0%, rgba(119,0,180,1) 44%,rgba(119,0,180,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(119,0,180,1) 0%, rgba(119,0,180,1) 44%,rgba(119,0,180,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(119,0,180,1)), color-stop(44%,rgba(119,0,180,1)),color-stop(100%,rgba(119,0,180,0)))!important;
+
     border: none !important;
 }
 
 #searchlist li.playing a:hover,#searchlist li.pausing a:hover {
-    background: #7700b4 !important;
+   /* background: #7700b4 !important;   */
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(124, 0, 172,1), endColorstr=rgba(124, 0, 172,1))!important;
+    background-image:-moz-linear-gradient(left, rgba(124, 0, 172,1) 0%, rgba(124, 0, 172,1) 44%,rgba(124, 0, 172,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(124, 0, 172,1) 0%, rgba(124, 0, 172,1) 44%,rgba(124, 0, 172,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(124, 0, 172,1) 0%, rgba(124, 0, 172,1) 44%,rgba(124, 0, 172,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(124, 0, 172,1) 0%, rgba(124, 0, 172,1) 44%,rgba(124, 0, 172,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(124, 0, 172,1) 0%, rgba(124, 0, 172,1) 44%,rgba(124, 0, 172,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(124, 0, 172,1)), color-stop(44%,rgba(124, 0, 172,1)),color-stop(100%,rgba(124, 0, 172,0)))!important;
+
+
+
+
     border: none !important;
 }
 
@@ -484,7 +537,10 @@ white-space: nowrap;
     background: none;
     overflow: hidden;
     min-width: 250px;
+    padding-bottom:1px;
+    max-height:0px;
 
+    background-color:rgba(255,255,255,0.1);
 }
 
 
@@ -506,7 +562,19 @@ white-space: nowrap;
 
 
 .songlist li.loadedsong {
-    background-color:rgba(255,255,255,0.3) !important;
+  /*  background-color:rgba(255,255,255,0.3) !important;*/
+
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.3), endColorstr=rgba(255,255,255,0))!important;
+    background-image:-moz-linear-gradient(left, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(255,255,255,0.3)), color-stop(44%,rgba(255,255,255,0.3)),color-stop(100%,rgba(255,255,255,0)))!important;
+
+
+
 }
 
 .songlist li.loadedsong.playing img.ui-li-icon {
@@ -532,7 +600,8 @@ white-space: nowrap;
     background: none;
     overflow: hidden;
     margin-left: -8px;
-
+    margin-top:-9px;
+    padding-top:5px;
 }
 
 #playlistInner ul {
@@ -600,12 +669,31 @@ white-space: nowrap;
 }
 
 #playlistInner a:hover {
-    background: #4617B4 !important;
+  /*  background: #4617B4 !important;*/
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(70,23,180,1), endColorstr=rgba(70,23,180,1))!important;
+    background-image:-moz-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(70,23,180,1)), color-stop(44%,rgba(70,23,180,1)),color-stop(100%,rgba(70,23,180,0)))!important;
+
     border: none !important;
 }
 
 #playlistInner li.playing a:hover,#playlistInner li.pausing a:hover {
-    background: rgba(70,23,180,0.7) !important;
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(68, 25, 158,1), endColorstr=rgba(68, 25, 158,1))!important;
+    background-image:-moz-linear-gradient(left, rgba(68, 25, 158,1) 0%, rgba(68, 25, 158,1) 44%,rgba(68, 25, 158,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(68, 25, 158,1) 0%, rgba(68, 25, 158,1) 44%,rgba(68, 25, 158,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(68, 25, 158,1) 0%, rgba(68, 25, 158,1) 44%,rgba(68, 25, 158,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(68, 25, 158,1) 0%, rgba(68, 25, 158,1) 44%,rgba(68, 25, 158,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(68, 25, 158,1) 0%, rgba(68, 25, 158,1) 44%,rgba(68, 25, 158,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(68, 25, 158,1)), color-stop(44%,rgba(68, 25, 158,1)),color-stop(100%,rgba(68, 25, 158,0)))!important;
+
+
+
     border: none !important;
 }
 
@@ -645,11 +733,35 @@ white-space: nowrap;
 
 
 
+#playlisthelp{
+    z-index:2;
+    position:absolute;
+    left:0px;
+    width:100%;
+    text-align:center;
+    opacity:0.6;
+    font-size:22px;
+    font-weight:bold;
+}
+
+
+#playlisthelp:hover{
+    opacity:1!important;
+}
+#playlisthelp {
+    -webkit-transition: all 1.5s ease;
+    -moz-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
+    transition: all 1.5s ease;
+}
 
 
 
 
+#controlbarplaylist{
 
+    margin-top: 22px;
+}
 
 
 #playlistselectvertical {
@@ -657,6 +769,7 @@ white-space: nowrap;
     float: left;
 
 }
+
 
 #saveplaylistinput{
     margin-top: -15px;
@@ -688,7 +801,7 @@ white-space: nowrap;
 
  #sortplaylistbutton {
      float: left;
-     margin-top: -14px;
+     margin-top: -13px;
      margin-left: 5px;
  }
 
@@ -698,7 +811,7 @@ white-space: nowrap;
 
 #saveokayplaylistbutton {
     float: left;
-    margin-top: -14px;
+    margin-top: -13px;
     margin-left: 5px;
 
 }
@@ -711,7 +824,7 @@ white-space: nowrap;
 
  #saveplaylistbutton {
      float: left;
-     margin-top: -14px;
+     margin-top: -13px;
      margin-left: 5px;
  }
 
@@ -826,6 +939,30 @@ white-space: nowrap;
     white-space: nowrap
 }
 
+#videocontrolsInner{
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    opacity:0;
+
+}
+#videocontrolsInner .mejs-controls {
+    background: rgba(29,29,29,0.3)!important;
+    /*
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(20,20,20,0.9)), to(rgba(0,0,0,0.9)))!important;
+    background: -webkit-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
+    background: -moz-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
+    background: -o-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
+    background: -ms-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
+    background: linear-gradient(rgba(44,40,40,0.9), rgba(0,0,0,0.9))!important;
+    */
+}
+
+#videoplayer .mejs-controls{
+    padding-left:0px!important;
+    padding-right:0px!important;
+}
+
 .mejs-container-fullscreen, .mejs-overlay {
     width: 100% !important;
     height: 100% !important;
@@ -834,6 +971,7 @@ white-space: nowrap;
 .mejs-controls {
     pointer-events: auto;
 
+    width:auto!important;
     -webkit-transform: scale(1.5);
     transform: scale(1.5);
 
@@ -1219,13 +1357,27 @@ white-space: nowrap;
 .chosen-choices.ui-input  {
     padding-right:30px;
 }
+.chosen-choices.ui-input  input,  #saveplaylistinpt{
 
+    padding: 0.4em!important;
+    margin-top: 1px!important;
+    min-height: 22px!important;
+    width: 110px!important;
+
+}
+
+
+
+
+.chosen-choices.ui-input li.search-choice {
+    margin: 4px 0 3px 5px!important;
+}
 
 .mejs-button button{
     cursor: default !important;
 }
 
-a, button, input[type=button],.mejs-time-total,.mejs-time-rail,.mejs-time-total span,.mejs-time, h1, h2, h3{
+a, button,.mejs-time-total,.mejs-time-rail,.mejs-time-total span,.mejs-time, h1, h2, h3{
     cursor: default !important;
 
 }

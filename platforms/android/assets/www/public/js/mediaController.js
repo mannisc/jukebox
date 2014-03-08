@@ -314,8 +314,12 @@ mediaController.playStream = function (artist, title) {
                                     }
                                     if (streamURL) {
 
-                                        mediaController.playStramURL(streamURL,videoURL,true)
-                                        playlistController.playedSongs.push(playlistController.loadingSong)
+                                        mediaController.playStramURL(streamURL,videoURL,true);
+                                        playlistController.playedSongs.push(playlistController.loadingSong);
+
+                                        if( playlistController.playedSongs.length>100){
+                                            playlistController.playedSongs.splice( playlistController.playedSongs.length-100,100)
+                                        }
 
                                     }
                                     loadError = true;
