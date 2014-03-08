@@ -7,6 +7,9 @@
  * @copyright  */
 
 
+
+
+
 var searchController = function () {
 
 };
@@ -24,8 +27,18 @@ searchController.buttonActive = 0;
 searchController.init = function () {
 
     $("#searchinput").on("input", function () {
-        if(searchController.buttonActive==0)
-           searchController.searchMusic();
+        switch(searchController.buttonActive){
+            case 0:
+                 searchController.searchMusic();
+                 break;
+            case 1:
+                searchController.filterMusic();
+                break;
+            case 2:
+                searchController.filterMusic();
+                break;
+        }
+
     })
 
     for (var i = 0; i < 4; i++) {
@@ -111,36 +124,145 @@ searchController.activateButton = function (index,noAnimation) {
 
 searchController.completeSearch = function (list) {
 
-
     uiController.searchListScroll.scrollTo(0, 0, 1000)
-
-
     var changed = false;
     if (searchController.searchResults.length == 0) {
         changed = true;
     }
     else {
-        for (var i = 0; i < searchController.searchResults.length; i++) {
-            if (mediaController.getSongArtist(searchController.searchResults[i].artist) != mediaController.getSongArtist(list.track[i].artist)) {
-                changed = true;
-                break;
-            }
-            if (searchController.searchResults[i].name != list.track[i].name) {
-                changed = true;
-                break;
+        if(list.track.length!=searchController.searchResults.length){
+            changed = true;
+        }
+        else{
+            for (var i = 0; i < searchController.searchResults.length; i++) {
+                if (mediaController.getSongArtist(searchController.searchResults[i]) != mediaController.getSongArtist(list.track[i])) {
+                    changed = true;
+                    break;
+                }
+                if (searchController.searchResults[i].name != list.track[i].name) {
+                    changed = true;
+                    break;
+                }
             }
         }
     }
     if (changed) {
         searchController.searchResults = [];
         $scope.safeApply();
-        searchController.searchResults = list.track;
-        searchController.searchResultsComplete = list.track;
+        var num = Math.min(100,list.track.length);
+
+        for (var i = 0; i < num; i++) {
+              searchController.searchResults[i] = list.track[i];
+        }
+        searchController.searchResultsComplete = searchController.searchResults;
         for (var i = 0; i < searchController.searchResults.length; i++) {
             searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
         }
 
 
+        $scope.safeApply();
+        $("#searchlistview").listview('refresh');
+
+        uiController.searchListScroll.refresh();
+        uiController.makeSearchListDraggable();
+        setTimeout(function () {
+            $("#searchlistview li").removeClass("fadeincompletefast");
+        }, 100)
+    }
+}
+
+searchController.filterMusic = function(){
+    if ($("#searchinput").val() && $("#searchinput").val() != "") {
+        searchController.lastSearchTerm = $("#searchinput").val();
+        if (app.isCordova)
+            var time = 1000;
+        else
+            time = 300;
+
+        setTimeout(function () {
+            if (searchController.lastSearchedTerm != searchController.lastSearchTerm) {
+                if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
+                    searchController.autoSearchTimer = Date.now();
+                    searchController.lastSearchedTerm = searchController.lastSearchTerm;
+                    searchController.filterSongs(searchController.lastSearchTerm);
+                }
+            }
+        }, time);
+
+        if (!searchController.autoSearchTimer || Date.now() - searchController.autoSearchTimer > time) {
+            searchController.autoSearchTimer = Date.now();
+            searchController.lastSearchedTerm = searchController.lastSearchTerm;
+            searchController.filterSongs(searchController.lastSearchTerm);
+        }
+    }
+    else {
+        searchController.removeFilterSongs();
+    }
+}
+
+searchController.removeFilterSongs  = function (filterTerm){
+    searchController.searchResults = searchController.searchResultsComplete;
+    $scope.safeApply();
+    $("#searchlistview").listview('refresh');
+
+    uiController.searchListScroll.refresh();
+    uiController.makeSearchListDraggable();
+    setTimeout(function () {
+        $("#searchlistview li").removeClass("fadeincompletefast");
+    }, 100)
+}
+
+
+searchController.filterSongs  = function (filterTerm){
+
+    uiController.searchListScroll.scrollTo(0, 0, 1000)
+
+    filterTerm = filterTerm.toLowerCase();
+    console.dir("FILTER:");
+    console.dir(searchController.searchResultsComplete);
+    console.dir(filterTerm);
+
+    var changed = false;
+    var title = "";
+    var artist = "";
+    var oldsearchResults = searchController.searchResults;
+    searchController.searchResults = [];
+    if (searchController.searchResultsComplete == 0) {
+        changed = true;
+    }
+    else {
+        var icounter = 0;
+        for (var i = 0; i < searchController.searchResultsComplete.length; i++) {
+            artist = mediaController.getSongArtist(searchController.searchResultsComplete[i]);
+            title  = searchController.searchResultsComplete[i].name;
+            artist = artist.toLowerCase();
+            title  = title.toLowerCase();
+
+            if (title.search(filterTerm) > -1 || artist.search(filterTerm) > -1){
+                searchController.searchResults[icounter] = searchController.searchResultsComplete[i];
+                console.dir(searchController.searchResults[icounter]);
+                icounter++;
+            }
+        }
+        console.dir("LENGTH: "+searchController.searchResults.length);
+        if(searchController.searchResults.length != oldsearchResults.length){
+            changed = true;
+        }
+        else{
+            for (var i = 0; i < searchController.searchResults.length; i++) {
+                if (mediaController.getSongArtist(searchController.searchResults[i]) != mediaController.getSongArtist(oldsearchResults[i])) {
+                    changed = true;
+                    break;
+                }
+                if (searchController.searchResults[i].name != oldsearchResults[i].name) {
+                    changed = true;
+                    break;
+                }
+            }
+        }
+    }
+    if (changed) {
+        console.dir("CHANGED!");
         $scope.safeApply();
         $("#searchlistview").listview('refresh');
 
@@ -208,8 +330,6 @@ searchController.showSuggestions = function () {
 searchController.searchMusic = function () {
     if ($("#searchinput").val() && $("#searchinput").val() != "") {
         searchController.lastSearchTerm = $("#searchinput").val();
-
-
         if (app.isCordova)
             var time = 1000;
         else
