@@ -114,7 +114,7 @@ function pickerCallback(data) {
     if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
 
         var googleDrivePlaylist = [];
-        var googleDrivePlaylistActGid = playlistController.loadedPlaylistSongs.length;
+
         var googleDrivePlaylistActId = 0;
         var googleDrivePlaylistLength = data[google.picker.Response.DOCUMENTS].length;
 
@@ -131,11 +131,11 @@ function pickerCallback(data) {
             request.execute(function (resp) {
                 if (resp) {
 
-                    var gid = "gsid" + helperFunctions.padZeros(googleDrivePlaylistActGid, ("" + googleDrivePlaylistLength).length);
+                    var gid = "gsid" + helperFunctions.padZeros(playlistController.globalId, ("" + googleDrivePlaylistLength).length);
                     var id = "plsid" + helperFunctions.padZeros(googleDrivePlaylistActId, ("" + googleDrivePlaylistLength).length);
 
-                    googleDrivePlaylist.push({id:googleDrivePlaylistActId,gid:gid,name:resp.title, artist:"",streamURL:resp.webContentLink})
-                    googleDrivePlaylistActGid = googleDrivePlaylistActGid+1;
+                    googleDrivePlaylist.push({id:id,gid:gid,name:resp.title, artist:"",streamURL:resp.webContentLink})
+                    playlistController.globalId = playlistController.globalId+1;
 
                     googleDrivePlaylistActId = googleDrivePlaylistActId+1;
 

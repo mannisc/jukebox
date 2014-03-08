@@ -22,7 +22,7 @@
 function MainController($scope) {
     window.$scope = $scope;
 
-    $scope.appTitle = "JezzPlay";
+    $scope.appTitle = "SongBase";
 
 
 

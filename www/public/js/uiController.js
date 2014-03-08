@@ -19,7 +19,7 @@ uiController.responsiveWidthSmallest = 670;
 uiController.responsiveWidthSmall = 850;
 
 
-uiController.responsiveWidthSmaller = 1250;
+uiController.responsiveWidthSmaller = 1080;
 
 
 /**
@@ -40,6 +40,19 @@ uiController.init = function () {
     uiController.playedFirst = false;
     $("#videoplayer").css("opacity", "0");
 
+    setTimeout(function () {
+        $("#videocontrolsInner").css("width", $(".mejs-controls").width()*1.5 );
+
+        $("#videocontrolsInner").hide();
+        $("#videocontrolsInner").css("opacity","1");
+        $("#videocontrolsInner").addClass("fadeincomplete");
+
+        $("#videocontrolsInner").show();
+    }, 0);
+
+    setTimeout(function () {
+        $("#playlistInner").show();
+    }, 500);
 
     // / Use Fastclicks
     //FastClick.attach(document.body);
@@ -63,7 +76,10 @@ uiController.init = function () {
     MediaElementPlayer.prototype.enterFullScreen_org = MediaElementPlayer.prototype.enterFullScreen;
     MediaElementPlayer.prototype.enterFullScreen = function () {
         // Your code here
-        $("#videocontrols .mejs-controls").appendTo("#videoplayer .mejs-inner");
+
+         $("#videocontrols .mejs-controls").appendTo("#videoplayer .mejs-inner");
+     //   $("#videoplayer .mejs-controls").css("background", "none");
+
         $("#videoplayer").css("-webkit-transform", "scale(1)");
         $("#videoplayer").css("transform", "scale(1)");
         $("#videoplayer").css("-webkit-transform-origin", "50% 50%");
@@ -77,8 +93,9 @@ uiController.init = function () {
     }
     MediaElementPlayer.prototype.exitFullScreen_org = MediaElementPlayer.prototype.exitFullScreen;
     MediaElementPlayer.prototype.exitFullScreen = function () {
+      //  $("#videoplayer .mejs-controls").css("background", "");
 
-        //uiController.translateVideo=0;
+         //uiController.translateVideo=0;
         $("#videoplayer").removeClass("animate")
 
         uiController.updateUI();
@@ -95,7 +112,7 @@ uiController.init = function () {
         $("#videoplayer").css("text-align", "center")
 
 
-        $("#videoplayer .mejs-controls").appendTo("#videocontrols");
+        $("#videoplayer .mejs-controls").appendTo("#videocontrolsInner");
 
         this.exitFullScreen_org();
 
@@ -150,10 +167,15 @@ uiController.init = function () {
             $(".mejs-stop-button").click(function () {
                 $(".songlist li.loadedsong").removeClass("pausing").addClass("playing");
                 if ($(this).find("button").css("opacity") == 1) {
+                    $(".mejs-stop-button").css("opacity", "0.5");
                     $("#videoplayer").css("opacity", "0");
                     $(".mejs-playpause-button button").removeClass("looped");
-
                     $(".mejs-time-loaded").hide();
+                    if(!playlistController.loadingOldSong) {
+                        playlistController.resetPlayingSong();
+
+                    }
+
                 }
             })
 
@@ -332,11 +354,10 @@ uiController.init = function () {
      }*/
 
 
-    $("#videoplayer .mejs-controls").css("background", "none");
-    $("#videoplayer .mejs-controls").css("background", "none");
     $("#videocontrols").css("background", "none");
 
-    $("#videoplayer .mejs-controls").appendTo("#videocontrols");
+    $("#videoplayer .mejs-controls").appendTo("#videocontrolsInner");
+
 
     $("#videoplayer").css("text-align", "center")
 
@@ -474,9 +495,6 @@ uiController.init = function () {
     }
 
 
-    $("#sortplaylisttext").hide();
-
-
     uiController.updateUI();
     setTimeout(function () {
         uiController.updateUI();
@@ -540,7 +558,7 @@ uiController.makePlayListSortable = function () {
                             dragHandle.simulate("mousedown", coords);
                         }
                     }, 100)
-                }, 450));
+                }, 150));
             }
         }
     }).on("mouseup",function (event) {
@@ -666,7 +684,8 @@ uiController.makePlayListSortable = function () {
                 }
 
                 actSong.id = "plsid" + helperFunctions.padZeros(index, ("" + playlistController.loadedPlaylistSongs.length).length);
-
+                actSong.gid = "plsgid" + playlistController.globalId;
+                playlistController.globalId =  playlistController.globalId+1;
                 newLoadedPlaylistSongs.push(actSong);
             })
 
@@ -768,7 +787,7 @@ uiController.makeSearchListDraggable = function () {
         tolerance: "pointer",
         dropOnEmpty: true,
         revert: false,
-        opacity: 0.6,
+        opacity: 0.9,
         //   containment: "body",
         connectToSortable: '#playlistview',
 
@@ -954,20 +973,22 @@ uiController.toggleSortablePlaylist = function (dontShowTrash, manuell) {
         $('html > head').append(style);
 
         $("#playlistInner .iScrollVerticalScrollbar").hide();
-        $("#playlistselectvertical").hide();
-        $("#sortplaylisttext").show();
         if (!app.isCordova)
             $(".sortable").sortable("enable");
 
 
     } else {
 
+        if(manuell)
+         var delay = 0;
+        else
+            delay = 1500;
         // $("#playlistInner").css("background-color", "");
         setTimeout(function () {
             $('#playlistInner').animate({
                 backgroundColor: 'rgba(255,255,255,0)'
             }, 200);
-        }, 1000)
+        }, delay)
 
 
         $("#playlistInner  .removesong").hide();
@@ -979,8 +1000,6 @@ uiController.toggleSortablePlaylist = function (dontShowTrash, manuell) {
         $("#sortplaylistbtn").removeClass("greenbackground");
 
         $("#playlistInner .iScrollVerticalScrollbar").show();
-        $("#playlistselectvertical").show();
-        $("#sortplaylisttext").hide();
         if (!app.isCordova)
             $(".sortable").sortable("disable");
         // $(".sortable").enableSelection();
@@ -1046,6 +1065,11 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
     $("#videoplayer").css("width", $(window).width());
 
+    if($(window).height()/2-60>65)
+        $("#playlisthelp").css("top", $(window).height()/2-60)
+    else
+        $("#playlisthelp").css("top", 65)
+
 
     //Smallest Size
     if ($(window).width() < uiController.responsiveWidthSmallest) {
@@ -1058,13 +1082,13 @@ uiController.updateUI = function (dontChangeVideOpacity) {
             $("#playlist").appendTo("#rightpanel");
 
 
-        $("#playlist").css("max-height", $(window).height() - 44 - 3);
+        $("#playlist").css("max-height", $(window).height() - 44 -44- 3);
 
         setTimeout(function () {
             if ($("#playlistselectvertical .chosen-container").height() > 0)
-                $("#playlistInner").css("max-height", $(window).height() - 44 - 3 - (100 + $("#playlistselectvertical .chosen-container").height() - 30));
+                $("#playlistInner").css("max-height", $(window).height() - 3 - (100 + $("#playlistselectvertical .chosen-container").height() - 30));
             else
-                $("#playlistInner").css("max-height", $(window).height() - 44 - 3 - 5);
+                $("#playlistInner").css("max-height", $(window).height() - 3 - 5);
         }, 100)
 
         if (uiController.sidePanelOpen) {
@@ -1096,8 +1120,7 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
         $("#playlistselectvertical .chosen-container").css("width", "");
         $("#playlistselectvertical .chosen-container").css("max-width", "");
-        $("#sortplaylisttext").css("width", "");
-        $("#sortplaylisttext").css("max-width", "");
+
 
         $("#saveplaylistinput").css("width", "");
         $("#saveplaylistinput").css("max-width", "");
@@ -1129,25 +1152,23 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
             //Smaller Size
             if ($(window).width() < uiController.responsiveWidthSmaller && $(window).width() > uiController.responsiveWidthSmall) {
-                $("#playlist").css("max-height", $(window).height() - 44 - 110);
-                $("#playlistInner").css("max-height", $(window).height() - 44 - 110 - 100 - topDifference);
+                $("#playlist").css("max-height", $(window).height() - 110-44);
+                $("#playlistInner").css("max-height", $(window).height()  - 110 - 100 - topDifference);
 
             } else {
-                $("#playlist").css("max-height", $(window).height() - 44 - 50);
-                $("#playlistInner").css("max-height", $(window).height() - 44 - 50 - 100 - topDifference);
+                $("#playlist").css("max-height", $(window).height() - 50-44);
+                $("#playlistInner").css("max-height", $(window).height()  - 50 - 100 - topDifference);
 
             }
         }, 100)
 
 
-        $("#searchlist").css("max-height", $(window).height() - 44 - 120);
+        $("#searchlist").css("max-height", $(window).height() - 44 - 120+6);
 
         var setSelectSize = function () {
             $("#searchlist").css("width", "");
             $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50 - 40);
             $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50 - 40);
-            $("#sortplaylisttext").css("width", $("#playlist").width() - 50 - 40 - 10);
-            $("#sortplaylisttext").css("max-width", $("#playlist").width() - 50 - 40 - 10);
             $("#saveplaylistinput").css("width", $("#playlist").width() - 50 - 40);
             $("#saveplaylistinput").css("max-width", $("#playlist").width() - 50 - 40);
 
@@ -1184,10 +1205,9 @@ uiController.updateUI = function (dontChangeVideOpacity) {
         else
             $("#videocontrols .mejs-time-rail").css("width", 323 - 105 - uiController.countCustomButtons * 26);
 
-        console.log("HHHH " + $("#videocontrols .mejs-time-rail").css("width"))
-        $("#searchlist").css("max-height", $(window).height() - 44 - 130 - 40);
+        $("#searchlist").css("max-height", $(window).height() - 44 - 130 - 40+12);
 
-        $("#content").css({"width": $(window).width() - 16, "height": $(window).height() - 44 - 4 - 8 - 6});
+        $("#content").css({"width": $(window).width() - 16, "height": $(window).height() - 44 - 4 - 8 });
 
 
     }
@@ -1203,7 +1223,7 @@ uiController.updateUI = function (dontChangeVideOpacity) {
         $("#videocontrols .mejs-time-total").css("width", ($(window).width() / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26);
         $("#videocontrols .mejs-time-rail").css("width", ($(window).width() / 1.5 - 160) / 1.3 + 10 - 105 - uiController.countCustomButtons * 26);
 
-        $("#content").css({"width": $(window).width() - 32, "height": $(window).height() - 44 - 4 - 32 - 6});
+        $("#content").css({"width": $(window).width() - 32, "height": $(window).height() - 44 - 4 - 32 });
 
     }
 
@@ -1222,9 +1242,9 @@ uiController.updateUI = function (dontChangeVideOpacity) {
     // alert($("#playlistselectvertical .chosen-container").height() )
     setTimeout(function () {
         if ($("#playlistselectvertical .chosen-container").height() > 0)
-            $("#playlistInner").css("top", 90 + $("#playlistselectvertical .chosen-container").height() - 30);
+            $("#playlistInner").css("top", 90 + $("#playlistselectvertical .chosen-container").height() - 30-30);
         else
-            $("#playlistInner").css("top", 90 + 5);
+            $("#playlistInner").css("top", 90 + 5-30);
 
     }, 100)
 
@@ -1240,9 +1260,17 @@ uiController.updateUI = function (dontChangeVideOpacity) {
         '</style>');
     $('html > head').append(style);
 
+//    $("#videocontrolsInner").css("width", $(".mejs-controls").width()*1.5 );
+    $("#videocontrolsInner").css("width", "100%" );
+
+    setTimeout(function () {
+      // $("#videocontrolsInner").css("width", $(".mejs-controls").width()*1.5 );
+        $("#videocontrolsInner .mejs-controls").css("padding-left", ($(window).width()-$(".mejs-controls").width()*1.5)/2/1.5 ).css("padding-right", ($(window).width()-$(".mejs-controls").width()*1.5)/2/1.5 );
+    }, 0)
 
     setTimeout(function () {
         uiController.mediaElementPlayer.setControlsSize();
+
         uiController.searchListScroll.refresh();
         uiController.playListScroll.refresh();
     }, 150)
