@@ -420,7 +420,11 @@ mediaController.getSongCover = function (song) {
     var url;
 
     if (song.image){
+        if(song.image[1])
+          url = song.image[1]['#text'];
+        else
           url = song.image[0]['#text'];
+
     }
 
     if (!url || $.trim(url) == "")
