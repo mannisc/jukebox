@@ -27,6 +27,12 @@ uiController.responsiveWidthSmaller = 1080;
  */
 uiController.init = function () {
 
+    var style = $('<style id="inputclearhide">' +
+        '.ui-input-clear {' +
+        ' display:none!important;'+
+        '}' +
+        '</style>');
+    $('html > head').append(style);
 
     $('video').bind('contextmenu', function (e) {
        // return false;
@@ -47,6 +53,11 @@ uiController.init = function () {
         $("#videocontrolsInner").addClass("fadeincomplete");
 
         $("#videocontrolsInner").show();
+
+
+        $(".iScrollIndicator").addClass("fadeincomplete")
+
+
     }, 0);
 
     setTimeout(function () {
@@ -144,12 +155,20 @@ uiController.init = function () {
             playlistController.disablePlayStopControls(true);
             playlistController.disableControls(true);
 
-            $(".mejs-overlay-resize").click(function () {
-                alert("!!!!")
-                if (!playlistController.playButtonTimer && (Date.now() - playlistController.playButtonTimer > 100)) {
-                   // $(".mejs-playpause-button").click();
-                    playlistController.playButtonTimer = Date.now()
-                }
+            $(".mejs-overlay-resize").dblclick(function () {
+
+
+                if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo))
+                    uiController.sizeVideo = uiController.sizeVideo * 1.5;
+                else
+                    uiController.sizeVideo = 1/1.5;
+
+
+
+                uiController.styleVideo();
+
+
+
             })
             $(".mejs-playpause-button").click(function () {
                 playlistController.playButtonTimer = Date.now();
@@ -172,7 +191,9 @@ uiController.init = function () {
 
 
             $(".mejs-stop-button").click(function () {
+
                 $(".songlist li.loadedsong").removeClass("pausing").addClass("playing");
+
                 if ($(this).find("button").css("opacity") == 1) {
                     $(".mejs-stop-button").css("opacity", "0.5");
                     $("#videoplayer").css("opacity", "0");
@@ -194,6 +215,7 @@ uiController.init = function () {
 
             mediaElement.addEventListener('playing', function (e) {
 
+                helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
 
                 $(".songlist li.loadedsong").removeClass("pausing").addClass("playing");
 
@@ -278,7 +300,7 @@ uiController.init = function () {
     Hammer($("#videoplayerInner").get(0)).on("swipeup", function (event) {
         uiController.swipeTimer = Date.now();
 
-        if (uiController.sizeVideo < 4) {
+        if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo ) ) {
             uiController.sizeVideo = uiController.sizeVideo * 1.5;
             uiController.styleVideo();
 
@@ -512,6 +534,11 @@ uiController.init = function () {
 
     $("#playlistselectvertical .ui-input-clear").appendTo("#playlistselectvertical .ui-input");
 
+
+
+    setTimeout(function(){
+        $("#inputclearhide").remove();
+    },1000);
 
     document.tite = $scope.appTitle;
 
@@ -843,12 +870,30 @@ uiController.makeSearchListDraggable = function () {
 }
 
 
-uiController.styleVideo = function () {
 
-    $("#videoplayer").css("-webkit-transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * uiController.sizeVideo * uiController.sizeVideoRelative + ")");
-    $("#videoplayer").css("transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * uiController.sizeVideo * uiController.sizeVideoRelative + ")");
+uiController.isMaxVideoSizeFaktor = function(sizeVideo){
+    if($("#videoplayer").height()* 0.5 * sizeVideo * uiController.sizeVideoRelative +82+30 > $(window).height()) {
+        return true
+    }
+    return false;
+}
+
+
+uiController.styleVideo = function (overtakeSize) {
+
+    if(uiController.isMaxVideoSizeFaktor(uiController.sizeVideo ))
+     var  sizeVideo =   ( $(window).height() -(82+30) )/( $("#videoplayer").height()* 0.5  * uiController.sizeVideoRelative);
+    else
+        sizeVideo =  uiController.sizeVideo;
+
+    $("#videoplayer").css("-webkit-transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * sizeVideo * uiController.sizeVideoRelative + ")");
+    $("#videoplayer").css("transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * sizeVideo * uiController.sizeVideoRelative + ")");
     $("#videoplayer").css("-webkit-transform-origin", "50% 100%");
     $("#videoplayer").css("transform-origin", "50% 100%");
+
+
+    if(overtakeSize)
+        uiController.sizeVideo =  sizeVideo;
 }
 
 
@@ -966,6 +1011,9 @@ uiController.toggleSortablePlaylist = function (dontShowTrash, manuell) {
         $("#playlistInner  .ui-btn-icon-right").css("margin-right", "0px");
 
         $("#playlistInner  .ui-btn-icon-right").css("padding-right", "40px");
+
+
+
 
 
         uiController.playListScroll.disable();
@@ -1277,6 +1325,7 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
         uiController.searchListScroll.refresh();
         uiController.playListScroll.refresh();
+        uiController.styleVideo(true);
     }, 150)
 };
 

@@ -231,12 +231,13 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
     playlistController.loadedPlaylistSongs[i].gid = "gsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
 
 }
-playlistController.loadedPlaylistSongs = [];
+//playlistController.loadedPlaylistSongs = [];
 
 
 playlistController.globalId = playlistController.loadedPlaylistSongs.length;
 
 
+playlistController.playingSongInPlaylist=false;
 playlistController.playingSongId = null;
 playlistController.playingTitle = "";
 
@@ -323,7 +324,9 @@ playlistController.resetPlayingSong = function () {
     }
     else {
         playlistController.playingSongId = null;
-        $(".songlist li").removeClass("loadedsong playing plausing");
+        helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
+        $(".songlist li").removeClass("loadedsong playing stillloading plausing");
+
         playlistController.setNewTitle("", "", true);
     }
 
@@ -359,10 +362,13 @@ playlistController.playSong = function (song, onlyStyle) {
     }
 
 
+
+
     //Already Loading
     if (playlistController.isLoading && playlistController.playingSongId == newId)
         return;
 
+    playlistController.playingSongInPlaylist=isPlaylistSong;
 
     playlistController.playSongTimer = Date.now();
 
@@ -384,38 +390,46 @@ playlistController.playSong = function (song, onlyStyle) {
 
     playlistController.disableControls(!isPlaylistSong)
 
+    helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
 
-    $(".songlist li").removeClass("loadedsong playing plausing");
+    $(".songlist li").removeClass("loadedsong playing plausing stillloading");
 
     //Clicked first Time, loading song?
     var loadedSong = false;
-
+                 console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     if (!playlistController.isLoading && playlistController.playingSongId) {
-        if (playlistController.isPlaying)
-            listElement.addClass("playing");
+        if (playlistController.isPlaying)   {
+            if(playlistController.playingSongId == newId)
+                listElement.addClass("playing");
+            listElement.removeClass("stillloading");
+        }
         else
             listElement.addClass("pausing");
     }
+
+
+
 
     if (!onlyStyle) {
         if (playlistController.playingSongId != newId) {
             playlistController.isLoading = true;
             loadedSong = true;
+            listElement.addClass("stillloading").removeClass("pausing");
 
             if(playlistController.loadingSong.streamURL)
-                mediaController.playStramURL(playlistController.loadingSong.streamURL);
+                mediaController.playStreamURL(playlistController.loadingSong.streamURL);
             else
                mediaController.playStream(playArtist, playTitle);
 
-
             console.log("LOAD STREAM")
-            listElement.addClass("playing").removeClass("pausing");
         }
     }
     playlistController.playingSongId = newId;
 
 
     listElement.addClass("loadedsong")
+
+    helperFunctions.animateBackground(".songlist li.loadedsong.stillloading #loadingSongImg","public/img/loader/sprites.png",46,46,18,46,4);
 
 
     if (!onlyStyle) {
