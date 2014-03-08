@@ -201,7 +201,13 @@ searchController.filterMusic = function(){
 }
 
 searchController.removeFilterSongs  = function (filterTerm){
+    uiController.searchListScroll.scrollTo(0, 0, 1000)
+    searchController.searchResults = [];
+    $scope.safeApply();
     searchController.searchResults = searchController.searchResultsComplete;
+    for (var i = 0; i < searchController.searchResults.length; i++) {
+        searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
+    }
     $scope.safeApply();
     $("#searchlistview").listview('refresh');
 
@@ -218,15 +224,10 @@ searchController.filterSongs  = function (filterTerm){
     uiController.searchListScroll.scrollTo(0, 0, 1000)
 
     filterTerm = filterTerm.toLowerCase();
-    console.dir("FILTER:");
-    console.dir(searchController.searchResultsComplete);
-    console.dir(filterTerm);
-
     var changed = false;
     var title = "";
     var artist = "";
-    var oldsearchResults = searchController.searchResults;
-    searchController.searchResults = [];
+    var newSearchResults = [];
     if (searchController.searchResultsComplete == 0) {
         changed = true;
     }
@@ -239,22 +240,22 @@ searchController.filterSongs  = function (filterTerm){
             title  = title.toLowerCase();
 
             if (title.search(filterTerm) > -1 || artist.search(filterTerm) > -1){
-                searchController.searchResults[icounter] = searchController.searchResultsComplete[i];
+                newSearchResults[icounter] = searchController.searchResultsComplete[i];
                 console.dir(searchController.searchResults[icounter]);
                 icounter++;
             }
         }
         console.dir("LENGTH: "+searchController.searchResults.length);
-        if(searchController.searchResults.length != oldsearchResults.length){
+        if(searchController.searchResults.length != newSearchResults.length){
             changed = true;
         }
         else{
             for (var i = 0; i < searchController.searchResults.length; i++) {
-                if (mediaController.getSongArtist(searchController.searchResults[i]) != mediaController.getSongArtist(oldsearchResults[i])) {
+                if (mediaController.getSongArtist(searchController.searchResults[i]) != mediaController.getSongArtist(newSearchResults[i])) {
                     changed = true;
                     break;
                 }
-                if (searchController.searchResults[i].name != oldsearchResults[i].name) {
+                if (searchController.searchResults[i].name != newSearchResults[i].name) {
                     changed = true;
                     break;
                 }
@@ -262,7 +263,12 @@ searchController.filterSongs  = function (filterTerm){
         }
     }
     if (changed) {
-        console.dir("CHANGED!");
+        searchController.searchResults = [];
+        $scope.safeApply();
+         searchController.searchResults = newSearchResults;
+        for (var i = 0; i < searchController.searchResults.length; i++) {
+            searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
+        }
         $scope.safeApply();
         $("#searchlistview").listview('refresh');
 
