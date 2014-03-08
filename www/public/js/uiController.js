@@ -46,6 +46,18 @@ uiController.init = function () {
        // return false;
     });
 
+
+    $("#controlbar .ui-input-clear").click(function(){
+        switch(searchController.buttonActive){
+            case 1:
+                searchController.removeFilterSongs();
+                break;
+            case 2:
+                searchController.removeFilterSongs();
+                break;
+        }
+    })
+
     setTimeout(function () {
         $("#titleHeader").addClass("fadeincomplete");
         $("#titleHeader").show();
@@ -261,6 +273,7 @@ uiController.init = function () {
                 }
             });
             mediaElement.addEventListener('ended', function (e) {
+                mediaController.sendRating("2");
                 document.title = $scope.appTitle;
 
                 playlistController.isPlaying = false;
