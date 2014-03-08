@@ -311,10 +311,9 @@
                 <span id="pwconfirm" style="display:none">
                 <input type="password" name="pass" id="signinpwc" value="" placeholder="confirm password" data-theme="a">
                 </span>
-            <button onclick="if(!showregisterpopup){accountController.signIn()}" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+            <button onclick="if(!showregisterpopup){accountController.signIn()}else{accountController.register()}" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
             <a data-role="none" id="registerlink" href="" style="text-decoration:none!important"
-               onclick="showregisterpopup = !showregisterpopup; if(showregisterpopup){$('#signintitle').html('Please Register');$('#signinButton').html('Register'); $('#registerlink').html('Sign in');$('#pwconfirm').show();}else {$('#signintitle').html('Sign in');$('#signinButton').html('Sign in'); $('#registerlink').html('Register'); $('#pwconfirm').hide();};$('#signinuser').focus();">Register</a>
-
+               onclick=";showregisterpopup = !showregisterpopup; if(showregisterpopup){$('#signintitle').html('Please Register');$('#signinButton').html('Register'); $('#registerlink').html('Sign in');$('#pwconfirm').show();}else {$('#signintitle').html('Sign in');$('#signinButton').html('Sign in'); $('#registerlink').html('Register'); $('#pwconfirm').hide();};$('#signinuser').focus();">Register</a>
         </div>
     </form>
 </div>
