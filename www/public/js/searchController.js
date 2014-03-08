@@ -203,7 +203,7 @@ searchController.filterMusic = function(){
     }
 }
 
-searchController.removeFilterSongs  = function (filterTerm){
+searchController.removeFilterSongs  = function (){
     uiController.searchListScroll.scrollTo(0, 0, 1000)
     searchController.searchResults = [];
     $scope.safeApply();
