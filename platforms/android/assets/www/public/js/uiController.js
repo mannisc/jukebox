@@ -41,7 +41,6 @@ uiController.init = function () {
     $("#videoplayer").css("opacity", "0");
 
     setTimeout(function () {
-        $("#videocontrolsInner").css("width", $(".mejs-controls").width()*1.5 );
 
         $("#videocontrolsInner").hide();
         $("#videocontrolsInner").css("opacity","1");
@@ -975,7 +974,7 @@ uiController.toggleSortablePlaylist = function (dontShowTrash, manuell) {
             '#playlistInner ul li {' +
             'opacity:0.9!important;' +
             'margin-bottom:-1px;' +
-            'border-bottom: 1px solid #fff;' +
+            'border-bottom: 1px solid rgba(255,255,255,0.5);' +
             '}' +
             '</style>');
         $('html > head').append(style);
@@ -1079,8 +1078,12 @@ uiController.updateUI = function (dontChangeVideOpacity) {
         $("#playlisthelp").css("top", 65)
 
 
+
+
     //Smallest Size
     if ($(window).width() < uiController.responsiveWidthSmallest) {
+
+        $("#rightpanel").css("height", $(window).height()-88);
 
 
         $("#searchlist a").css("text-overflow", "clip");
@@ -1101,7 +1104,7 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
         if (uiController.sidePanelOpen) {
 
-            $("#searchlist").css("width", $(window).width() - $("#rightpanel").width() - 10);
+           // $("#searchlist").css("width", $(window).width() - $("#rightpanel").width() - 10);
 
             if ($(window).width() - $("#rightpanel").width() - 10 < 100) {
                 //$("#searchlist li a").wrap('<marquee behavior="alternate"></marquee>');
@@ -1109,19 +1112,11 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
             }
 
-
         }
-        else {
-            $("#searchlist").css("width", $(window).width() - 20);
-
-            /*do {
-             var marquee = $("#searchlist li marquee").get(0);
-             $(marquee).replaceWith($(marquee).contents());
-             } while (marquee)*/
-        }
+        $("#searchlist").css("width", $(window).width() - 20);
 
 
-        $("#playlist").css("width", $("#rightpanel").width() - 20);
+        $("#playlist").css("width", $("#rightpanel").width() - 20-10);
 
         $("#playlistInner li").css("width", $("#rightpanel").width() - 20);
 
@@ -1268,13 +1263,14 @@ uiController.updateUI = function (dontChangeVideOpacity) {
         '</style>');
     $('html > head').append(style);
 
-//    $("#videocontrolsInner").css("width", $(".mejs-controls").width()*1.5 );
-    $("#videocontrolsInner").css("width", "100%" );
 
     setTimeout(function () {
-      // $("#videocontrolsInner").css("width", $(".mejs-controls").width()*1.5 );
         $("#videocontrolsInner .mejs-controls").css("padding-left", ($(window).width()-$(".mejs-controls").width()*1.5)/2/1.5 ).css("padding-right", ($(window).width()-$(".mejs-controls").width()*1.5)/2/1.5 );
+       setTimeout(function () {
+            $("#videocontrolsInner .mejs-controls").css("padding-left", ($(window).width()-$(".mejs-controls").width()*1.5)/2/1.5 ).css("padding-right", ($(window).width()-$(".mejs-controls").width()*1.5)/2/1.5 );
+        }, 50)
     }, 0)
+
 
     setTimeout(function () {
         uiController.mediaElementPlayer.setControlsSize();

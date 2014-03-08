@@ -46,6 +46,12 @@ html, body, #page, #content {
     margin-top: 1px!important;
 
 }
+
+
+.ui-btn{
+    border: 1px solid rgba(155, 155, 155, 0.6)!important;
+}
+
 /*Player*/
 
 .mejs-overlay-loading {
@@ -185,6 +191,14 @@ margin-bottom: 5px!important;
     font-size: 1px;
     opacity: 0.8;
 }
+
+.chosen-container .chosen-results li.highlighted {
+    background-color: #333!important;
+    background-image:none!important;
+}
+
+
+
 
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
     background-position: 0px 0px !important;

@@ -481,6 +481,10 @@ white-space: nowrap;
   width: 3.3em;
 }
 
+.songlist li{
+    height:65!important;
+}
+
 .songlist li:hover a img {
     -webkit-transform: scale(1.05);
     transform: scale(1.05);
@@ -553,7 +557,7 @@ white-space: nowrap;
     min-width: 250px;
     padding-bottom:1px;
     max-height:0px;
-
+    padding-left: 10px;
     background-color:rgba(255,255,255,0.1);
 }
 
@@ -628,9 +632,9 @@ white-space: nowrap;
 }
 
 #playlistInner .ui-sortable-placeholder{
-   background:      rgba(255,255,255,0.1);
+  /* background:      rgba(255,255,255,0.1);*/
    visibility: visible!important;
-    height:65px!important;
+   height:65px!important;
 
 }
 
@@ -959,6 +963,7 @@ white-space: nowrap;
     position: relative;
     height: 100%;
     opacity:0;
+    width:100%;
 
 }
 #videocontrolsInner .mejs-controls {
@@ -1006,6 +1011,13 @@ white-space: nowrap;
 .iScrollVerticalScrollbar{
     width:9px!important;
 }
+
+.iScrollIndicator{
+    background: rgb(55, 55, 55)!important;
+    border: 1px solid rgba(155, 155, 155, 0.9)!important;
+}
+
+
 
 
 .mejs-playpause-button{

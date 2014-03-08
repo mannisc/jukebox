@@ -231,7 +231,7 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
     playlistController.loadedPlaylistSongs[i].gid = "gsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
 
 }
-//playlistController.loadedPlaylistSongs = [];
+playlistController.loadedPlaylistSongs = [];
 
 
 playlistController.globalId = playlistController.loadedPlaylistSongs.length;
