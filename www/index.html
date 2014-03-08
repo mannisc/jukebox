@@ -325,6 +325,10 @@
             <h3 style="margin-right: 40px;margin-left: 40px;padding-right: 20px;padding-left: 20px;text-align: center;">Artists Info</h3>
 
             <ul data-role="listview" id="popupArtistExternList" data-theme="b">
+                <li data-theme="b"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchArtistSongs(mediaController.getSongArtist(playlistController.loadingSong));"
+                                      style="text-decoration:none" target="_blank">Songs from Artist</a></li>
+                <li data-theme="b"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchSimilarSongs(playlistController.loadingSong);"
+                                      style="text-decoration:none" target="_blank">Similar Songs</a></li>
                 <li data-theme="b"><a ng-show="playlistController.loadingSong" href="http://de.wikipedia.org/w/index.php?go=Artikel&title&search={{mediaController.getSongArtist(playlistController.loadingSong)}}"
                                       onclick="$('#popupArtist').popup('close')" style="text-decoration:none" target="_blank">Wikipedia</a></li>
                 <li data-theme="b"><a ng-show="playlistController.loadingSong" href="http://www.lastfm.de/search?q={{mediaController.getSongArtist(playlistController.loadingSong)}}" onclick="$('#popupArtist').popup('close')"
@@ -333,6 +337,7 @@
                                       style="text-decoration:none" target="_blank">Myspace</a></li>
                 <li data-theme="b"><a ng-show="playlistController.loadingSong" href="https://www.google.de/search?q={{mediaController.getSongArtist(playlistController.loadingSong)}}" onclick="$('#popupArtist').popup('close')"
                                       style="text-decoration:none" target="_blank">Google</a></li>
+
             </ul>
         </div>
     </form>
