@@ -50,6 +50,12 @@ var preferences = {
     serverURL: "http://localhost:3001/"
 }
 
+$.support.cors = true;
+
+lyricscallback = function(test){
+    alert(text)
+}
+lyricsvisible=false;
 
 $(document).ready(function () {
 
@@ -67,8 +73,6 @@ $(document).ready(function () {
 
             //Show loaded page
             $("#page").css("opacity", "1");
-
-
 
 
 

@@ -104,6 +104,16 @@
 <body ng-controller="MainController">
 
 
+<div id="lyricsiframe" class="fadeincompleteslow" style="display:none">
+    <div id="lyricsifrmback">
+    </div>
+    <iframe id="lyricsifrm" src="http://lyrics.wikia.com/Kasabian:Test_Transmission" seamless="">
+    </iframe>
+
+    <img id="lyricsiframeresizebar" onclick="lyricsvisible=false;$('#lyricsiframe').removeClass('fadeincompleteslow');$('#lyricsiframe').addClass('fadeoutcomplete');setTimeout(function(){$('#lyricsiframe').removeClass('fadeoutcomplete');$('#lyricsiframe').hide();},1000);" src="public/img/resizebar.png" style="position:absolute;right: 0px;top:0px">
+</div>
+
+
 <div data-role="page" id="page" style="opacity:0" data-theme="b">
 
 
@@ -181,7 +191,11 @@
         <ul data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
             <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" class="draggableSong fadeslideincompletefast" ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img
-                    src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none"><img src="public/img/empty.png"  id="loadingSongImg" style="display:none"> <h3>{{song.name}}</h3>
+                    src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none"><img src="public/img/empty.png"
+                                                                                                                                                                                                    class="loadingSongImg" style="display:none">
+
+                <h3>{{song.name}}</h3>
+
                 <p>{{mediaController.getSongArtist(song)}}</p></a>
             </li>
 
@@ -196,48 +210,48 @@
 
         <div id="controlbarplaylist">
 
-        <div id="playlistselectvertical">
-            <a href="#" id="clearChoosenPlaylists" style="display:none" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all" title="Clear text">Clear text</a>
+            <div id="playlistselectvertical">
+                <a href="#" id="clearChoosenPlaylists" style="display:none" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all" title="Clear text">Clear text</a>
 
-            <form>
-                <select id="playlistselectverticalform" data-role="none" data-placeholder="Select playlists" multiple class="chosen-select">
-                    <option ng-repeat="playlist in playlistController.playlists track by playlist.name" value="$index">{{playlist.name}}</option>
-                </select>
+                <form>
+                    <select id="playlistselectverticalform" data-role="none" data-placeholder="Select playlists" multiple class="chosen-select">
+                        <option ng-repeat="playlist in playlistController.playlists track by playlist.name" value="$index">{{playlist.name}}</option>
+                    </select>
 
-            </form>
-
-
-        </div>
-        <div id="sortplaylistbutton">
-
-            <button id="sortplaylistbtn" onclick="uiController.toggleSortablePlaylist(false,true);" data-mini="true" data-type="button" value="" data-theme="b">
-                <img src="public/img/edit.png" width="22px" height="22px" alt="Sort"/>
-            </button>
-
-        </div>
-        <div id="saveplaylistinput" style="display:none">
-            <input id="saveplaylistinpt" class="ui-input ui-body-a ui-corner-all ui-shadow-inset" data-theme="a" placeholder="Enter Name">
-        </div>
-
-        <div id="saveokayplaylistbutton" style="display:none">
-
-            <button id="saveokayplaylistbtn" onclick="uiController.toggleSavePlaylist();" class="greenbackground" data-mini="true" data-type="button" value="" data-theme="b">
-                <img src="public/img/check.png" width="22px" height="22px" alt="Sort"/>
-            </button>
-
-        </div>
+                </form>
 
 
-        <div id="saveplaylistbutton">
-            <button id="saveplaylistbtn" onclick="uiController.toggleSavePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
-                <img src="public/img/save.png" width="22px" height="22px" alt="Sort"/>
-            </button>
-        </div>
+            </div>
+            <div id="sortplaylistbutton">
+
+                <button id="sortplaylistbtn" onclick="uiController.toggleSortablePlaylist(false,true);" data-mini="true" data-type="button" value="" data-theme="b">
+                    <img src="public/img/edit.png" width="22px" height="22px" alt="Sort"/>
+                </button>
+
+            </div>
+            <div id="saveplaylistinput" style="display:none">
+                <input id="saveplaylistinpt" class="ui-input ui-body-a ui-corner-all ui-shadow-inset" data-theme="a" placeholder="Enter Name">
+            </div>
+
+            <div id="saveokayplaylistbutton" style="display:none">
+
+                <button id="saveokayplaylistbtn" onclick="uiController.toggleSavePlaylist();" class="greenbackground" data-mini="true" data-type="button" value="" data-theme="b">
+                    <img src="public/img/check.png" width="22px" height="22px" alt="Sort"/>
+                </button>
+
+            </div>
+
+
+            <div id="saveplaylistbutton">
+                <button id="saveplaylistbtn" onclick="uiController.toggleSavePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
+                    <img src="public/img/save.png" width="22px" height="22px" alt="Sort"/>
+                </button>
+            </div>
         </div>
         <!--form class="ui-filterable" >
             <input id="filterBasic-input" data-type="search" data-theme="a">
         </form-->
-        <div id="playlisthelp" ng-if ="playlistController.loadedPlaylistSongs.length==0">
+        <div id="playlisthelp" ng-if="playlistController.loadedPlaylistSongs.length==0">
             Drag and Drop your favorite Songs<br>to create a Playlist.
         </div>
 
@@ -245,9 +259,12 @@
             <ul data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
                 <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.id" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
                     ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
-                                                                                        class="ui-li-icon ui-corner-none">
-                    <img src="public/img/empty.png"  id="loadingSongImg" style="display:none"><h3>{{song.name}}</h3>
-                    <p>{{mediaController.getSongArtist(song)}}</p><img class="removesong" ng-style="{'background-image':'url(public/img/trash.png)',display:'none'}"  src="public/img/empty.png"></a></li>
+                                                                                           class="ui-li-icon ui-corner-none">
+                    <img src="public/img/empty.png" class="loadingSongImg" style="display:none">
+
+                    <h3>{{song.name}}</h3>
+
+                    <p>{{mediaController.getSongArtist(song)}}</p><img class="removesong" ng-style="{'background-image':'url(public/img/trash.png)',display:'none'}" src="public/img/empty.png"></a></li>
 
             </ul>
         </div>
@@ -263,19 +280,21 @@
         </div>
     </div>
     <div id="videocontrols" class="mejs-container" style="text-align: center">
-        <div id="videocontrolsInner" >
-            <div class="mejs-button mejs-button-choose-version mejs-custom-button" >
-                <button type="button" id="chooseversionbutton"  data-role = "none" style="opacity:0.5" onclick ="mediaController.getVersions();" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
+        <div id="videocontrolsInner">
+            <div class="mejs-button mejs-button-choose-version mejs-custom-button">
+                <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" onclick="mediaController.getVersions();" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
             </div>
-            <div class="mejs-button mejs-button-facebook mejs-custom-button" >
-                <button type="button" id="facebookpostbutton"  data-role = "none" style="opacity:0.5" onclick ="mediaController.postOnFacebook();" aria-controls="mep_0" title="Share" aria-label="Facebook"></button>
+            <div class="mejs-button mejs-button-facebook mejs-custom-button">
+                <button type="button" id="facebookpostbutton" data-role="none" style="opacity:0.5" onclick="mediaController.postOnFacebook();" aria-controls="mep_0" title="Share" aria-label="Facebook"></button>
             </div>
+            <div class="mejs-button mejs-button-facebook mejs-custom-button">
+                <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" onclick="lyricsvisible=!lyricsvisible;if(lyricsvisible){$('#lyricsiframe').removeClass('fadeoutcomplete');$('#lyricsiframe').addClass('fadeincompleteslow');$('#lyricsiframe').show();}else{$('#lyricsiframe').removeClass('fadeincompleteslow');$('#lyricsiframe').addClass('fadeoutcomplete');setTimeout(function(){$('#lyricsiframe').removeClass('fadeoutcomplete');$('#lyricsiframe').hide();},1000);}" aria-controls="mep_0" title="Share" aria-label="Facebook"></button>
             </div>
-      </div>
+        </div>
+    </div>
 
 </div>
 <!-- /content -->
-
 
 
 <!-- Popups ---------------------------------------->
@@ -311,10 +330,9 @@
                 <span id="pwconfirm" style="display:none">
                 <input type="password" name="pass" id="signinpwc" value="" placeholder="confirm password" data-theme="a">
                 </span>
-            <button onclick="if(!showregisterpopup){accountController.signIn()}" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+            <button onclick="if(!showregisterpopup){accountController.signIn()}else{accountController.register()}" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
             <a data-role="none" id="registerlink" href="" style="text-decoration:none!important"
-               onclick="showregisterpopup = !showregisterpopup; if(showregisterpopup){$('#signintitle').html('Please Register');$('#signinButton').html('Register'); $('#registerlink').html('Sign in');$('#pwconfirm').show();}else {$('#signintitle').html('Sign in');$('#signinButton').html('Sign in'); $('#registerlink').html('Register'); $('#pwconfirm').hide();};$('#signinuser').focus();">Register</a>
-
+               onclick=";showregisterpopup = !showregisterpopup; if(showregisterpopup){$('#signintitle').html('Please Register');$('#signinButton').html('Register'); $('#registerlink').html('Sign in');$('#pwconfirm').show();}else {$('#signintitle').html('Sign in');$('#signinButton').html('Sign in'); $('#registerlink').html('Register'); $('#pwconfirm').hide();};$('#signinuser').focus();">Register</a>
         </div>
     </form>
 </div>
