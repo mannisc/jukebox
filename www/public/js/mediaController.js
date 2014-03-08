@@ -20,6 +20,8 @@ mediaController.versionList = [];
 mediaController.currentStreamURL = "";
 mediaController.currentvideoURL = "";
 
+mediaController.seekTime = 0;
+
 mediaController.buySong = function () {
     var song = playlistController.getPlayingSong();
     var keywords = mediaController.getSongArtist(song) + " - " + song.name;
@@ -195,9 +197,8 @@ mediaController.playVersion = function (songversion) {
                             videoURL = unescape(videoURL);
                         }
                         if (streamURL) {
-
-                            mediaController.playStreamURL(streamURL,videoURL,true);
-
+                            mediaController.seekTime = uiController.mediaElementPlayer.getCurrentTime();
+                            mediaController.playStramURLSeek(streamURL,videoURL,true);
 
                         } else
                             loadError = true;
@@ -359,6 +360,54 @@ mediaController.playStream = function (artist, title) {
 
 }
 
+mediaController.playStramURLSeek = function (streamURL,videoURL,differentVersions,time) {
+
+
+    $("#videoplayer").removeClass("animate").addClass("animatefast");
+    $("#videoplayer").css("opacity", "0");
+
+    setTimeout(function () {
+        $("#videoplayer").removeClass("animatefast").addClass("animate");
+
+        // playlistController.playingTitle = playlistController.playlingTitleLoading ;
+        // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
+
+        playlistController.loadingOldSong = playlistController.loadingSong;
+
+        playlistController.setNewTitle(playlistController.loadingSong.name, mediaController.getSongCover(playlistController.loadingSong), true);
+
+
+
+        uiController.mediaElementPlayer.setSrc(streamURL);
+        uiController.mediaElementPlayer.load();
+        uiController.mediaElementPlayer.play();
+
+        mediaController.currentStreamURL = streamURL;
+        mediaController.currentvideoURL = videoURL;
+        console.dir(videoURL);
+
+
+        if(differentVersions) {
+            $(".mejs-button-choose-version button").css("opacity", "1");
+            $("#chooseversionbutton").removeClass("rotateIt");
+            setTimeout(function () {
+                $("#chooseversionbutton").addClass("rotateIt");
+            }, 500)
+        } else
+            $(".mejs-button-choose-version button").css("opacity", "0.5");
+               uiController.mediaElementPlayer.media.addEventListener('loadedmetadata', mediaController.setVideoTime, false);
+
+
+    }, 200)
+
+
+}
+
+mediaController.setVideoTime = function () {
+    uiController.mediaElementPlayer.setCurrentTime(mediaController.seekTime);
+    uiController.mediaElementPlayer.media.removeEventListener('loadedmetadata', mediaController.setVideoTime, false);
+}
+
 
 mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) {
 
@@ -381,6 +430,7 @@ mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) 
         uiController.mediaElementPlayer.setSrc(streamURL);
         uiController.mediaElementPlayer.load();
         uiController.mediaElementPlayer.play();
+
         mediaController.currentStreamURL = streamURL;
         mediaController.currentvideoURL = videoURL;
         console.dir(videoURL);
