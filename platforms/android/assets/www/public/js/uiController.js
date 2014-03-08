@@ -606,7 +606,7 @@ uiController.makePlayListSortable = function () {
                             dragHandle.simulate("mousedown", coords);
                         }
                     }, 100)
-                }, 150));
+                }, 250));
             }
         }
     }).on("mouseup",function (event) {

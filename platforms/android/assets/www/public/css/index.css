@@ -540,6 +540,8 @@ white-space: nowrap;
 
 .songlist li a img.ui-li-icon{
     left: 5px!important;
+
+
 }
 
 
@@ -550,8 +552,33 @@ white-space: nowrap;
     transform-origin: 50% 50%!important;
     z-index:10;
     overflow:visible;
+    -moz-box-shadow: 5px 0p 5px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 5px 0px 5px rgba(0,0,0,0.4);
+    box-shadow: 5px 0px 5px rgba(0,0,0,0.4);
 }
 
+.songlist li.loadedsong:hover a img {
+
+-moz-box-shadow: none!important;
+-webkit-box-shadow: none!important;
+box-shadow: none!important;
+    }
+
+video{
+    -moz-box-shadow: 5px 5p 15px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 5px 15px 5px rgba(0,0,0,0.4);
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+}
+
+
+
+
+.songlist li.loadedsong.stillloading:hover a img {
+
+    -moz-box-shadow: 5px 0p 5px rgba(0,0,0,0.4)!important;
+    -webkit-box-shadow: 5px 0px 5px rgba(0,0,0,0.4)!important;
+    box-shadow: 5px 0px 5px rgba(0,0,0,0.4)!important;
+}
 
 
 
@@ -1413,18 +1440,34 @@ white-space: nowrap;
 
 
 #popupArtistExternList li a{
-    background-color: rgba(42,42,42,0.9)!important;
+    background-color: rgba(255,255,255,0.8);
     text-shadow:none!important;
-   color:#fff!important;
+   color:#000!important;
     text-shadow: none!important;
     line-height: 1.2!important;
     font-size: 14px!important;
     min-height: 0em!important;
 }
 #popupArtistExternList li:hover a{
-    background-color: rgba(42,42,42,0.8)!important;
+    background-color: #4617B4;
+    color:#fff!important;
+
 
 }
+
+#popupArtistExternList li.marked a{
+    background-color: rgba(0,0,0,.7) !important;
+    color:#fff!important;
+
+}
+
+#popupArtistExternList li.marked:hover a{
+    background-color: #4617B4!important;
+    color:#fff!important;
+
+
+}
+
 
 
 .playingSongInfo{
@@ -1440,14 +1483,29 @@ white-space: nowrap;
     left: auto!important;
     color:#000!important;
 
-    background: rgb(255,214,94); /* Old browsers */
-    background: -moz-linear-gradient(top, rgba(255,214,94,1) 0%, rgba(254,191,4,1) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,214,94,1)), color-stop(100%,rgba(254,191,4,1))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(255,214,94,1) 0%,rgba(254,191,4,1) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(255,214,94,1) 0%,rgba(254,191,4,1) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(255,214,94,1) 0%,rgba(254,191,4,1) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(255,214,94,1) 0%,rgba(254,191,4,1) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#febf04',GradientType=0 ); /* IE6-9 */
+
+    background: #f6d073;
+    background: -moz-linear-gradient(top,#fee6b0,#eeba37);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fee6b0),color-stop(100%,#eeba37));
+    background: -webkit-linear-gradient(top,#fee6b0,#eeba37);
+    background: -o-linear-gradient(top,#fee6b0,#eeba37);
+    background: -ms-linear-gradient(top,#fee6b0,#eeba37);
+    background: linear-gradient(top,#fee6b0,#eeba37);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fee6b0',endColorstr='#eeba37',GradientType=0);
+
+
+    border-radius: 3px 3px 3px 3px!important;
+    border-style: solid!important;
+    border-width: 1px!important;
+
+    border-color: #be952c #a68226 #9b7924!important;
+
+    color: #111!important;
+    font-family: Arial,sans-serif!important;
+    font-size: 13px!important;
+    text-align: center!important;
+    white-space: nowrap!important;
+    text-shadow:none!important;
 }
 
 
@@ -1581,6 +1639,18 @@ text-shadow: none!important;
     z-index:10000;
 }
 
+
+#popupAccount.ui-popup{
+
+    background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.2) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0.2))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.2) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.2) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.2) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0.2) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#66ffffff',GradientType=0 ); /* IE6-9 */
+
+}
 
 #popupAccount a{
     text-shadow:none!important;
