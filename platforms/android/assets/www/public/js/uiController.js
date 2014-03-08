@@ -512,8 +512,8 @@ uiController.init = function () {
 
 uiController.styleTopButtons = function () {
     if (!accountController.loggedIn) {
-        $("#playingSongInfoLink").css("right", 59 + $("#signinLink").width());
-        $("#buySongLink").css("right", 57 + $("#signinLink").width());
+        $("#playingSongInfoLink").css("right", "2px" );
+        $("#buySongLink").css("right", "2px" );
     } else {
 
         $("#playingSongInfoLink").css("right", "2px");
