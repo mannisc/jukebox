@@ -21,6 +21,7 @@ mediaController.currentStreamURL = "";
 mediaController.currentvideoURL = "";
 
 mediaController.seekTime = 0;
+mediaController.seekTimeDuration = 0;
 
 mediaController.buySong = function () {
     var song = playlistController.getPlayingSong();
@@ -198,7 +199,8 @@ mediaController.playVersion = function (songversion) {
                         }
                         if (streamURL) {
                             mediaController.seekTime = uiController.mediaElementPlayer.getCurrentTime();
-                            mediaController.playStramURLSeek(streamURL,videoURL,true);
+                            mediaController.seekTimeDuration = uiController.mediaElementPlayer.media.duration;
+                            mediaController.playStreamURLSeek(streamURL,videoURL,true);
 
                         } else
                             loadError = true;
@@ -260,7 +262,7 @@ mediaController.playStream = function (artist, title) {
             setTimeout(function () {
                 $(".mejs-controls").find('.mejs-time-buffering').hide()
             }, 500);
-            uiController.toast("Sorry, this Song is not available as Video at the moment.", 1500)
+            uiController.toast("Sorry, this song is not available at the moment.", 1500)
             playlistController.resetPlayingSong();
 
         }
@@ -360,7 +362,7 @@ mediaController.playStream = function (artist, title) {
 
 }
 
-mediaController.playStramURLSeek = function (streamURL,videoURL,differentVersions,time) {
+mediaController.playStreamURLSeek = function (streamURL,videoURL,differentVersions,time) {
 
 
     $("#videoplayer").removeClass("animate").addClass("animatefast");
@@ -404,7 +406,18 @@ mediaController.playStramURLSeek = function (streamURL,videoURL,differentVersion
 }
 
 mediaController.setVideoTime = function () {
-    uiController.mediaElementPlayer.setCurrentTime(mediaController.seekTime);
+    var duration = uiController.mediaElementPlayer.media.duration;
+    var relativTime = mediaController.seekTime;
+    console.dir("SEEK:");
+    console.dir("duration: "+duration);
+    console.dir("seekTimeDuration: "+mediaController.seekTimeDuration);
+    console.dir("relativTime: "+relativTime);
+    if(mediaController.seekTimeDuration > 0 && duration > 0){
+        console.dir("SEEK OK!");
+        console.dir(mediaController.seekTimeDuration+" -> "+duration+"  ("+relativTime+")");
+       relativTime = ((mediaController.seekTime*1.0)/mediaController.seekTimeDuration)*duration;
+    }
+    uiController.mediaElementPlayer.setCurrentTime(relativTime);
     uiController.mediaElementPlayer.media.removeEventListener('loadedmetadata', mediaController.setVideoTime, false);
 }
 
@@ -479,7 +492,6 @@ mediaController.getSongCover = function (song) {
 
     if (!url || $.trim(url) == "")
         url = "public/img/playlist.png";
-
     return url;
 }
 
