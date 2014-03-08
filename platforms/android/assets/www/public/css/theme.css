@@ -23,6 +23,10 @@ html, body, #page, #content {
     color: #fff !important;
     text-align: left !important;
 }
+#header{
+    background:rgba(29,29,29,0.9)!important;
+}
+
 
 #leftpanel {
     top: 45px !important;
@@ -42,6 +46,12 @@ html, body, #page, #content {
     margin-top: 1px!important;
 
 }
+
+
+.ui-btn{
+    border: 1px solid rgba(155, 155, 155, 0.6)!important;
+}
+
 /*Player*/
 
 .mejs-overlay-loading {
@@ -87,12 +97,21 @@ html, body, #page, #content {
 #searchlist .iScrollVerticalScrollbar {
     left: 0px !important;
     right: auto !important;
+
 }
 
 #playlistInner .iScrollVerticalScrollbar {
     right: 0px !important;
     left: auto !important;
 }
+
+.iScrollVerticalScrollbar {
+overflow: visible!important;
+padding-top: 5px!important;
+margin-bottom: 5px!important;
+}
+
+
 
 .ui-li-has-icon img {
     max-height: 3.3em !important;
@@ -118,6 +137,10 @@ html, body, #page, #content {
 /*Popup*/
 .ui-popup-container {
     z-index: 1000000;
+
+    -webkit-border-radius: .3125em /*{global-radii-blocks}*/!important;
+    border-radius: .3125em /*{global-radii-blocks}*/!important;
+
 }
 
 
@@ -169,6 +192,14 @@ html, body, #page, #content {
     opacity: 0.8;
 }
 
+.chosen-container .chosen-results li.highlighted {
+    background-color: #333!important;
+    background-image:none!important;
+}
+
+
+
+
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
     background-position: 0px 0px !important;
     opacity: 1;
@@ -181,6 +212,8 @@ html, body, #page, #content {
 .mejs-overlay-button, .mejs-overlay-loading, .mejs-overlay-error {
     opacity: 0 !important;
 }
+
+
 
 /*
 .mejs-overlay-play{

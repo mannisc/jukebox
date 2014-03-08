@@ -196,7 +196,7 @@ mediaController.playVersion = function (songversion) {
                         }
                         if (streamURL) {
 
-                            mediaController.playStramURL(streamURL,videoURL,true);
+                            mediaController.playStreamURL(streamURL,videoURL,true);
 
 
                         } else
@@ -314,8 +314,12 @@ mediaController.playStream = function (artist, title) {
                                     }
                                     if (streamURL) {
 
-                                        mediaController.playStramURL(streamURL,videoURL,true)
-                                        playlistController.playedSongs.push(playlistController.loadingSong)
+                                        mediaController.playStreamURL(streamURL,videoURL,true);
+                                        playlistController.playedSongs.push(playlistController.loadingSong);
+
+                                        if( playlistController.playedSongs.length>100){
+                                            playlistController.playedSongs.splice( playlistController.playedSongs.length-100,100)
+                                        }
 
                                     }
                                     loadError = true;
@@ -356,7 +360,7 @@ mediaController.playStream = function (artist, title) {
 }
 
 
-mediaController.playStramURL = function (streamURL,videoURL,differentVersions) {
+mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) {
 
 
     $("#videoplayer").removeClass("animate").addClass("animatefast");
@@ -381,6 +385,18 @@ mediaController.playStramURL = function (streamURL,videoURL,differentVersions) {
         mediaController.currentvideoURL = videoURL;
         console.dir(videoURL);
 
+
+
+        if (playlistController.playingSongInPlaylist)
+            var listElement = $("#playlistInner li[data-songgid='playlistsong" + playlistController.playingSongId + "'] ");
+        else
+            listElement = $("#searchlist li[data-songid='searchsong" + playlistController.playingSongId + "'] ");
+
+        helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
+        listElement.addClass("playing").removeClass("stillloading");
+
+
+
         if(differentVersions) {
             $(".mejs-button-choose-version button").css("opacity", "1");
             $("#chooseversionbutton").removeClass("rotateIt");
@@ -403,8 +419,9 @@ mediaController.getSongCover = function (song) {
 
     var url;
 
-    if (song.image)
-        url = song.image[0]['#text'];
+    if (song.image){
+          url = song.image[0]['#text'];
+    }
 
     if (!url || $.trim(url) == "")
         url = "public/img/playlist.png";
