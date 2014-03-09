@@ -48,6 +48,17 @@ uiController.init = function () {
 
 
 
+    $("#saveplaylistinpt").on("input",function(){
+        if( $("#saveplaylistinpt").val()){
+            $("#saveokayplaylistbtn").css("opacity","1").attr("disabled", "false");
+
+        } else{
+
+            $("#saveokayplaylistbtn").css("opacity","0.5").attr("disabled", "disabled");
+
+        }
+
+    })
 
     $("#controlbar .ui-input-clear").click(function(){
         switch(searchController.buttonActive){
@@ -168,6 +179,9 @@ uiController.init = function () {
             resizeLayer.removeClass("mejs-overlay-play").addClass("mejs-overlay-resize");
             resizeLayer.insertAfter(".mejs-overlay-play");
             $(".mejs-overlay-play").remove();
+
+            $("#siteLogo").appendTo(resizeLayer)
+
 
 
             $(".mejs-custom-button").appendTo(".mejs-controls");
@@ -981,6 +995,9 @@ uiController.toggleSavePlaylist = function (savePlaylist) {
 
     uiController.savePlaylist = !uiController.savePlaylist;
     if (uiController.savePlaylist) {
+
+        $("#saveplaylistinpt").val("");
+        $("#saveokayplaylistbtn").css("opacity","0.5").attr("disabled", "disabled");
 
         if (uiController.sortPlaylist) {
             uiController.toggleSortablePlaylist();

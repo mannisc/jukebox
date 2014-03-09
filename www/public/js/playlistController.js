@@ -257,7 +257,7 @@ playlistController.playlists = [
     {name: "Trance"}
 ];
 
-  /*
+
 var playlists = window.localStorage.playlists;
 if (playlists)
     playlistController.playlists = JSON.parse(playlists);
@@ -267,7 +267,6 @@ console.dir(playlistController.playlists)
 
 
 
-    */
 
 playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
 
@@ -800,15 +799,20 @@ playlistController.savePlaylist = function () {
 
         var playlists = window.localStorage.playlists;
         if (!playlists)
-            playlists = [];
+            playlists = playlistController.playlists;
         else
             playlists = JSON.parse(playlists);
 
-        playlists.push(playlistTitle);
+
+
+        playlists.push({name:playlistTitle});
+        playlistController.playlists = playlists;
 
         window.localStorage.playlists = JSON.stringify(playlists);
 
         window.localStorage.playlist = JSON.stringify(playlistController.loadedPlaylistSongs);
+
+
 
     }
 
