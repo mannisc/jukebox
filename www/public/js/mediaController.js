@@ -475,7 +475,7 @@ mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) 
             listElement = $("#searchlist li[data-songid='searchsong" + playlistController.playingSongId + "'] ");
 
         helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
-        listElement.addClass("playing").removeClass("stillloading");
+        $(listElement.get(0)).addClass("playing").removeClass("stillloading");
 
 
         if(differentVersions) {

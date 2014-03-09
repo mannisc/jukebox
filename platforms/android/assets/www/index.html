@@ -190,7 +190,7 @@
 
         <ul data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
-            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" class="draggableSong fadeslideincompletefast" ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img
+            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img
                     src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none"><img src="public/img/empty.png"
                                                                                                                                                                                                     class="loadingSongImg" style="display:none">
 
@@ -235,7 +235,7 @@
 
             <div id="saveokayplaylistbutton" style="display:none">
 
-                <button id="saveokayplaylistbtn" onclick="uiController.toggleSavePlaylist();" class="greenbackground" data-mini="true" data-type="button" value="" data-theme="b">
+                <button id="saveokayplaylistbtn" onclick="uiController.toggleSavePlaylist(true);" class="greenbackground" data-mini="true" data-type="button" value="" data-theme="b">
                     <img src="public/img/check.png" width="22px" height="22px" alt="Sort"/>
                 </button>
 

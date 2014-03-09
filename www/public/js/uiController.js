@@ -212,7 +212,8 @@ uiController.init = function () {
 
             $(".mejs-stop-button").click(function () {
 
-                $(".songlist li.loadedsong").removeClass("pausing").addClass("playing");
+                $(".songlist li.loadedsong").removeClass("pausing");
+                $($(".songlist li.loadedsong").get(0)).addClass("playing");
 
                 if ($(this).find("button").css("opacity") == 1) {
                     $(".mejs-stop-button").css("opacity", "0.5");
@@ -228,8 +229,11 @@ uiController.init = function () {
             })
 
             mediaElement.addEventListener('pause', function (e) {
-                if (playlistController.isPlaying && !playlistController.isLoading)
-                    $(".songlist li.loadedsong").addClass("pausing").removeClass("playing");
+                if (playlistController.isPlaying && !playlistController.isLoading)  {
+                    $($(".songlist li.loadedsong").get(0)).addClass("pausing");
+                    $(".songlist li.loadedsong").removeClass("playing");
+
+                }
 
             });
 
@@ -237,7 +241,8 @@ uiController.init = function () {
 
                 helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
 
-                $(".songlist li.loadedsong").removeClass("pausing").addClass("playing");
+                $($(".songlist li.loadedsong").get(0)).addClass("playing");
+                $(".songlist li.loadedsong").removeClass("pausing");
 
                 playlistController.isLoading = false;
                 playlistController.isPlaying = true;
@@ -973,7 +978,8 @@ uiController.toggleSearchButton = function (button) {
 }
 
 
-uiController.toggleSavePlaylist = function () {
+uiController.toggleSavePlaylist = function (savePlaylist) {
+
     uiController.savePlaylist = !uiController.savePlaylist;
     if (uiController.savePlaylist) {
 
@@ -999,6 +1005,15 @@ uiController.toggleSavePlaylist = function () {
         $("#saveokayplaylistbutton").hide();
         $("#sortplaylistbtn").show();
         $("#playlistselectvertical").show();
+
+        if(savePlaylist)   {
+
+
+
+            alert("!!!!!!")
+        }
+
+
 
 
     }
