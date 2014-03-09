@@ -474,6 +474,9 @@ mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) 
 
         mediaController.currentStreamURL = streamURL;
         mediaController.currentvideoURL = videoURL;
+
+       $("#siteLogoImage").attr('onclick',"win=window.open('"+mediaController.currentvideoURL+"', '_blank')");
+
         console.dir(videoURL);
 
 
