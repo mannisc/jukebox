@@ -230,6 +230,10 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
 }
 //playlistController.loadedPlaylistSongs = [];
 
+var loadedPlaylistSongs = window.localStorage.playlist;
+if (loadedPlaylistSongs)
+    playlistController.loadedPlaylistSongs = JSON.parse(loadedPlaylistSongs);
+
 
 playlistController.globalId = playlistController.loadedPlaylistSongs.length;
 
@@ -253,6 +257,17 @@ playlistController.playlists = [
     {name: "Trance"}
 ];
 
+  /*
+var playlists = window.localStorage.playlists;
+if (playlists)
+    playlistController.playlists = JSON.parse(playlists);
+
+console.log("--------------------------")
+console.dir(playlistController.playlists)
+
+
+
+    */
 
 playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
 
@@ -765,7 +780,7 @@ playlistController.remarkSong = function () {
 
 playlistController.toggleShuffleSongs = function () {
 
-    if (playlistController.loadingSong && playlistController.loadingSong.gid) {
+    if (playlistController.loadingSong) {
         playlistController.shuffleMode = !playlistController.shuffleMode;
         if (playlistController.shuffleMode)
             $(".mejs-shuffle-button button").css("opacity", "1");
@@ -774,11 +789,28 @@ playlistController.toggleShuffleSongs = function () {
         }
     }
 
-
 }
 
 
 playlistController.savePlaylist = function () {
+
+    var playlistTitle = $("#saveplaylistinpt").val();
+    if (playlistTitle) {
+
+
+        var playlists = window.localStorage.playlists;
+        if (!playlists)
+            playlists = [];
+        else
+            playlists = JSON.parse(playlists);
+
+        playlists.push(playlistTitle);
+
+        window.localStorage.playlists = JSON.stringify(playlists);
+
+        window.localStorage.playlist = JSON.stringify(playlistController.loadedPlaylistSongs);
+
+    }
 
 
 }

@@ -478,6 +478,9 @@ mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) 
         $(listElement.get(0)).addClass("playing").removeClass("stillloading");
 
 
+
+
+
         if(differentVersions) {
             $(".mejs-button-choose-version button").css("opacity", "1");
             $("#chooseversionbutton").removeClass("rotateIt");
@@ -503,7 +506,7 @@ mediaController.toggleLyrics = function(){
 
 
     if(mediaController.showLyrics===undefined)
-        uiController.toast("This Lyrics are external content.<br> Contact the external site for answers regarding its content.", 3000)
+        uiController.toast("These Lyrics are external content.<br> Contact the external site for answers regarding its content.", 3000)
 
     mediaController.showLyrics=!mediaController.showLyrics;
     if(mediaController.showLyrics){

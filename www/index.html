@@ -257,7 +257,7 @@
 
         <div id="playlistInner" class="animate" style="display:none">
             <ul data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
-                <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.id" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
+                <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
                     ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
                                                                                            class="ui-li-icon ui-corner-none">
                     <img src="public/img/empty.png" class="loadingSongImg" style="display:none">

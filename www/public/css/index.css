@@ -291,7 +291,7 @@ input[type=button]{
 
 #lyricsiframe {
     position: absolute;
-    top: 45px;
+    top: 0px;
     left: 0px;
     bottom: 45px!important;
     width: 450px;
@@ -367,6 +367,7 @@ input[type=button]{
 #controlbar input.ui-btn {
 
 }
+
 
 
 
@@ -489,7 +490,7 @@ white-space: nowrap;
 
 
 #searchlist ul {
-    margin-left: 8px !important;
+    margin-left: 15px !important;
     width: 100%;
 }
 
@@ -932,8 +933,8 @@ video{
 
 #saveplaylistinput input{
     line-height: 1.2em!important;
-     min-height: 2em!important;
- }
+    min-height: 34px!important;
+}
 
 
 
@@ -1556,7 +1557,7 @@ video{
     padding: 0.4em!important;
     margin-top: 1px!important;
     min-height: 22px!important;
-    width: 110px!important;
+    width: 100%!important;
 
 }
 
