@@ -191,54 +191,63 @@ mediaController.playVersion = function (songversion) {
     var videoURL = songversion.url
     var play = function (streamID, videoURL) {
         var song = playlistController.getPlayingSong();
-        console.dir(videoURL);
-        $.ajax({
-            timeout: 30000,
-            url: preferences.serverURL + "?playurl=" + videoURL + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name,
-            success: function (data) {
-                if (streamID == mediaController.playCounter) {
-                    if (data.streamURL) {
-                        var streamURL = data.streamURL;
-                        if (data.videoURL) {
-                            videoURL = data.videoURL;
-                        }
-                        try {
-                            streamURL = decodeURIComponent(streamURL);
-                        }
-                        catch (e) {
-                            streamURL = unescape(streamURL);
-                        }
-                        try {
-                            videoURL = decodeURIComponent(videoURL);
-                        }
-                        catch (e) {
-                            videoURL = unescape(videoURL);
-                        }
-                        if (streamURL) {
-                            mediaController.sendRating("-1");
-                            mediaController.seekTime = uiController.mediaElementPlayer.getCurrentTime();
-                            mediaController.seekTimeDuration = uiController.mediaElementPlayer.media.duration;
-                            mediaController.playStreamURLSeek(streamURL,videoURL,true);
+        if(videoURL!=mediaController.currentvideoURL){
+            console.dir(videoURL);
+            $.ajax({
+                timeout: 30000,
+                url: preferences.serverURL + "?playurl=" + videoURL + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name,
+                success: function (data) {
+                    if (streamID == mediaController.playCounter) {
+                        if (data.streamURL) {
+                            var streamURL = data.streamURL;
+                            if (data.videoURL) {
+                                videoURL = data.videoURL;
+                            }
+                            try {
+                                streamURL = decodeURIComponent(streamURL);
+                            }
+                            catch (e) {
+                                streamURL = unescape(streamURL);
+                            }
+                            try {
+                                videoURL = decodeURIComponent(videoURL);
+                            }
+                            catch (e) {
+                                videoURL = unescape(videoURL);
+                            }
+                            if (streamURL) {
+                                mediaController.sendRating("-1");
+                                mediaController.seekTime = uiController.mediaElementPlayer.getCurrentTime();
+                                mediaController.seekTimeDuration = uiController.mediaElementPlayer.media.duration;
+                                mediaController.playStreamURLSeek(streamURL,videoURL,true);
+
+                            } else
+                                loadError = true;
 
                         } else
                             loadError = true;
-
                     } else
                         loadError = true;
-                } else
+                },
+                error: function () {
                     loadError = true;
-            },
-            error: function () {
-                loadError = true;
-            },
-            complete: function () {
-                //TODO
-                $('#loadversionimg').css("opacity", "0");
-                setTimeout(function () {
-                    $(".mejs-controls").find('.mejs-time-buffering').hide()
-                }, 500);
-            }
-        })
+                },
+                complete: function () {
+                    //TODO
+                    $('#loadversionimg').css("opacity", "0");
+                    setTimeout(function () {
+                        $(".mejs-controls").find('.mejs-time-buffering').hide()
+                    }, 500);
+                }
+            })
+        }
+        else
+        {
+            $('#loadversionimg').css("opacity", "0");
+            setTimeout(function () {
+                $(".mejs-controls").find('.mejs-time-buffering').hide()
+            }, 500);
+        }
 
     }
     play(streamID, videoURL);
