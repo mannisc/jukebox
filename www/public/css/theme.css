@@ -47,9 +47,12 @@ html, body, #page, #content {
 
 }
 
-
-
-
+.mejs-prevtrack-button{
+    margin-right: 5px!important;
+}
+.mejs-playpause-button{
+    margin-right: 2px!important;
+}
 
 /*Player*/
 

@@ -25,10 +25,12 @@ mediaController.seekTimeDuration = 0;
 
 mediaController.buySong = function () {
     var song = playlistController.getPlayingSong();
-    var keywords = mediaController.getSongArtist(song) + " - " + song.name;
-    mywindow = window.open("http://www.amazon.de/s/?_encoding=UTF8&ajr=0&camp=1638&creative=19454&field-keywords=" + keywords + "&linkCode=ur2&rh=n%3A77195031%2Ck%3A" + keywords + "&site-redirect=de&tag=iggels-21&url=search-alias%3Ddigital-music", "Amazon", "");
-    mywindow.focus();
-    mediaController.getPrice();
+    if(song){
+        var keywords = mediaController.getSongArtist(song) + " - " + song.name;
+        mywindow = window.open("http://www.amazon.de/s/?_encoding=UTF8&ajr=0&camp=1638&creative=19454&field-keywords=" + keywords + "&linkCode=ur2&rh=n%3A77195031%2Ck%3A" + keywords + "&site-redirect=de&tag=iggels-21&url=search-alias%3Ddigital-music", "Amazon", "");
+        mywindow.focus();
+        mediaController.getPrice();
+    }
 }
 
 
@@ -68,10 +70,25 @@ mediaController.postOnFacebook = function () {
         var song = playlistController.getPlayingSong();
         mywindow = window.open("http://www.facebook.com/sharer.php?u="+mediaController.currentvideoURL+"&t="+mediaController.getSongArtist(song)+" - "+song.name, "", "");
         mywindow.focus();
+        mediaController.sendRating("1");
     }
     else{
         mywindow = window.open("http://www.facebook.com/sharer.php?u=", "", ""); //TODO
         mywindow.focus();
+    }
+}
+
+
+mediaController.sendRating = function (rating) {
+    var song = playlistController.getPlayingSong();
+    if(mediaController.currentvideoURL!="" && song){
+
+        $.ajax({
+            url: preferences.serverURL + "?ratingURL="+mediaController.currentvideoURL+"&rating="+rating+"&artist="+mediaController.getSongArtist(song)+"&title="+song.name,
+            success: function (data) {
+
+            }
+        })
     }
 }
 
@@ -198,6 +215,7 @@ mediaController.playVersion = function (songversion) {
                             videoURL = unescape(videoURL);
                         }
                         if (streamURL) {
+                            mediaController.sendRating("-1");
                             mediaController.seekTime = uiController.mediaElementPlayer.getCurrentTime();
                             mediaController.seekTimeDuration = uiController.mediaElementPlayer.media.duration;
                             mediaController.playStreamURLSeek(streamURL,videoURL,true);
@@ -386,6 +404,7 @@ mediaController.playStreamURLSeek = function (streamURL,videoURL,differentVersio
 
         mediaController.currentStreamURL = streamURL;
         mediaController.currentvideoURL = videoURL;
+        mediaController.sendRating("1");
         console.dir(videoURL);
 
 
@@ -456,7 +475,7 @@ mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) 
             listElement = $("#searchlist li[data-songid='searchsong" + playlistController.playingSongId + "'] ");
 
         helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
-        listElement.addClass("playing").removeClass("stillloading");
+        $(listElement.get(0)).addClass("playing").removeClass("stillloading");
 
 
         if(differentVersions) {

@@ -30,10 +30,10 @@ searchController.buttonActive = 0;
 searchController.init = function () {
 
     $("#searchinput").on("input", function () {
-        switch(searchController.buttonActive){
+        switch (searchController.buttonActive) {
             case 0:
-                 searchController.searchMusic();
-                 break;
+                searchController.searchMusic();
+                break;
             case 1:
                 searchController.filterMusic();
                 break;
@@ -49,20 +49,20 @@ searchController.init = function () {
         console.log($("#searchbutton" + (i + 1)).parent().length)
     }
 
-    searchController.activateButton(0,true);
+    searchController.activateButton(0, true);
     searchController.showPopulars();
 
 }
 
 
-searchController.activateButton = function (index,noAnimation) {
-    if(searchController.buttonActive ==0){
+searchController.activateButton = function (index, noAnimation) {
+    if (searchController.buttonActive == 0) {
         searchController.searchSongsString = $("#searchinput").val();
     }
-    searchController.buttonActive= index;
+    searchController.buttonActive = index;
     searchController.emptySearchList(true);
 
-    if(index==1||index==2){
+    if (index == 1 || index == 2) {
         searchController.showLoading(true);
     }
     var input = $("#searchinput").parent();
@@ -70,13 +70,13 @@ searchController.activateButton = function (index,noAnimation) {
     if (oIndex) {
         var oButton = $("#searchbutton" + oIndex).parent();
         oButton.show();
-         var width = oButton.width();
+        var width = oButton.width();
         oButton.removeClass("animated")
         oButton.css("width", input.width());
 
         setTimeout(function () {
-           oButton.addClass("animated")
-           oButton.css("width", width)
+            oButton.addClass("animated")
+            oButton.css("width", width)
 
         }, 50)
     }
@@ -85,24 +85,24 @@ searchController.activateButton = function (index,noAnimation) {
     var button = $("#searchbutton" + (index + 1)).parent();
 
     input.removeClass("animated")
-    if(!noAnimation)
+    if (!noAnimation)
         input.css("width", button.width())
     setTimeout(function () {
-        if(!noAnimation)
-          input.addClass("animated")
+        if (!noAnimation)
+            input.addClass("animated")
 
         input.css("width", "")
         setTimeout(function () {
-        input.find("input").focus();
+            input.find("input").focus();
         }, 500)
 
-        uiController.toggleSearchButton(index+1);
+        uiController.toggleSearchButton(index + 1);
 
     }, 60)
 
-    switch(index){
+    switch (index) {
         case 0:
-             $("#searchinput").val(searchController.searchSongsString);
+            $("#searchinput").val(searchController.searchSongsString);
             $(input).insertAfter(button).find("input").attr("placeholder", "Search Songs");
             break;
         case 1:
@@ -133,10 +133,10 @@ searchController.completeSearch = function (list) {
         changed = true;
     }
     else {
-        if(list.track.length!=searchController.searchResults.length){
+        if (list.track.length != searchController.searchResults.length) {
             changed = true;
         }
-        else{
+        else {
             for (var i = 0; i < searchController.searchResults.length; i++) {
                 if (mediaController.getSongArtist(searchController.searchResults[i]) != mediaController.getSongArtist(list.track[i])) {
                     changed = true;
@@ -152,10 +152,10 @@ searchController.completeSearch = function (list) {
     if (changed) {
         searchController.searchResults = [];
         $scope.safeApply();
-        var num = Math.min(searchController.maxResults,list.track.length);
+        var num = Math.min(searchController.maxResults, list.track.length);
 
         for (var i = 0; i < num; i++) {
-              searchController.searchResults[i] = list.track[i];
+            searchController.searchResults[i] = list.track[i];
         }
         searchController.searchResultsComplete = list.track;
         for (var i = 0; i < searchController.searchResults.length; i++) {
@@ -166,6 +166,9 @@ searchController.completeSearch = function (list) {
         $scope.safeApply();
         $("#searchlistview").listview('refresh');
 
+        playlistController.remarkSong();
+
+
         uiController.searchListScroll.refresh();
         uiController.makeSearchListDraggable();
         setTimeout(function () {
@@ -174,7 +177,7 @@ searchController.completeSearch = function (list) {
     }
 }
 
-searchController.filterMusic = function(){
+searchController.filterMusic = function () {
     if ($("#searchinput").val() && $("#searchinput").val() != "") {
         searchController.lastSearchTerm = $("#searchinput").val();
         if (app.isCordova)
@@ -203,11 +206,11 @@ searchController.filterMusic = function(){
     }
 }
 
-searchController.removeFilterSongs  = function (filterTerm){
+searchController.removeFilterSongs = function () {
     uiController.searchListScroll.scrollTo(0, 0, 1000)
     searchController.searchResults = [];
     $scope.safeApply();
-    var num = Math.min(searchController.maxResults,searchController.searchResultsComplete.length);
+    var num = Math.min(searchController.maxResults, searchController.searchResultsComplete.length);
     for (var i = 0; i < num; i++) {
         searchController.searchResults[i] = searchController.searchResultsComplete[i];
     }
@@ -216,6 +219,8 @@ searchController.removeFilterSongs  = function (filterTerm){
         searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
     }
     $scope.safeApply();
+    playlistController.remarkSong();
+
     $("#searchlistview").listview('refresh');
 
     uiController.searchListScroll.refresh();
@@ -226,7 +231,7 @@ searchController.removeFilterSongs  = function (filterTerm){
 }
 
 
-searchController.filterSongs  = function (filterTerm){
+searchController.filterSongs = function (filterTerm) {
 
     uiController.searchListScroll.scrollTo(0, 0, 1000)
 
@@ -242,21 +247,21 @@ searchController.filterSongs  = function (filterTerm){
         var icounter = 0;
         for (var i = 0; i < searchController.searchResultsComplete.length; i++) {
             artist = mediaController.getSongArtist(searchController.searchResultsComplete[i]);
-            title  = searchController.searchResultsComplete[i].name;
+            title = searchController.searchResultsComplete[i].name;
             artist = artist.toLowerCase();
-            title  = title.toLowerCase();
+            title = title.toLowerCase();
 
-            if (title.search(filterTerm) > -1 || artist.search(filterTerm) > -1){
+            if (title.search(filterTerm) > -1 || artist.search(filterTerm) > -1) {
                 newSearchResults[icounter] = searchController.searchResultsComplete[i];
                 console.dir(searchController.searchResults[icounter]);
                 icounter++;
             }
         }
-        console.dir("LENGTH: "+searchController.searchResults.length);
-        if(searchController.searchResults.length != newSearchResults.length){
+        console.dir("LENGTH: " + searchController.searchResults.length);
+        if (searchController.searchResults.length != newSearchResults.length) {
             changed = true;
         }
-        else{
+        else {
             for (var i = 0; i < searchController.searchResults.length; i++) {
                 if (mediaController.getSongArtist(searchController.searchResults[i]) != mediaController.getSongArtist(newSearchResults[i])) {
                     changed = true;
@@ -272,7 +277,7 @@ searchController.filterSongs  = function (filterTerm){
     if (changed) {
         searchController.searchResults = [];
         $scope.safeApply();
-        var num = Math.min(searchController.maxResults,newSearchResults.length);
+        var num = Math.min(searchController.maxResults, newSearchResults.length);
         for (var i = 0; i < num; i++) {
             searchController.searchResults[i] = newSearchResults[i];
         }
@@ -291,7 +296,6 @@ searchController.filterSongs  = function (filterTerm){
 }
 
 
-
 searchController.showPopulars = function () {
 
     setTimeout(function () {
@@ -306,7 +310,7 @@ searchController.emptySearchList = function (dontInitFully) {
     $("#searchlistview").listview('refresh');
     uiController.searchListScroll.refresh();
 
-    if(!dontInitFully){
+    if (!dontInitFully) {
         uiController.makeSearchListDraggable();
         setTimeout(function () {
             $("#searchlistview li").removeClass("fadeincompletefast");
@@ -471,8 +475,6 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
 }
 
 
-
-
 searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
     searchController.showLoading(true);
     searchController.SearchCounter++;
@@ -517,10 +519,10 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
 
             url: "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + searchString + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
             success: function (data) {
-                console.dir( "OK");
-                console.dir( data);
+                console.dir("OK");
+                console.dir(data);
                 if (searchID == searchController.SearchCounter) {
-                    if (data.toptracks ) {
+                    if (data.toptracks) {
                         if (data.toptracks == "\n") {
                             searchserver(searchID);
                         }
@@ -541,7 +543,7 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
             },
             error: function () {
                 if (searchID == searchController.SearchCounter) {
-                      searchserver(searchID);
+                    searchserver(searchID);
                 }
             }
         })

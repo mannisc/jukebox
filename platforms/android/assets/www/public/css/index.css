@@ -302,8 +302,8 @@ input[type=button]{
 }
 #lyricsifrm{
     position:absolute;
-    top:0;
-    height: 0;
+    top:30px;
+    height: 0px;
     width: 420px;
     height:100%;
     border:none!important;
