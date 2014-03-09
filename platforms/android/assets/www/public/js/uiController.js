@@ -47,6 +47,8 @@ uiController.init = function () {
     });
 
 
+
+
     $("#controlbar .ui-input-clear").click(function(){
         switch(searchController.buttonActive){
             case 1:
@@ -216,7 +218,7 @@ uiController.init = function () {
                 $($(".songlist li.loadedsong").get(0)).addClass("playing");
 
                 if ($(this).find("button").css("opacity") == 1) {
-                    $(".mejs-stop-button").css("opacity", "0.5");
+                    $(".mejs-stop-button button").css("opacity", "0.5");
                     $("#videoplayer").css("opacity", "0");
                     $(".mejs-playpause-button button").removeClass("looped");
                     $(".mejs-time-loaded").hide();
@@ -238,7 +240,6 @@ uiController.init = function () {
             });
 
             mediaElement.addEventListener('playing', function (e) {
-
                 helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
 
                 $($(".songlist li.loadedsong").get(0)).addClass("playing");
@@ -247,7 +248,6 @@ uiController.init = function () {
                 playlistController.isLoading = false;
                 playlistController.isPlaying = true;
                 playlistController.disablePlayStopControls(false);
-
 
                 $(".mejs-time-loaded").show();
 
@@ -277,7 +277,7 @@ uiController.init = function () {
                     uiController.updateUI(true);
                 }
             });
-            mediaElement.addEventListener('ended', function (e) {
+            mediaElement.addEventListener("ended", function (e) {
                 mediaController.sendRating("2");
                 document.title = $scope.appTitle;
 
@@ -290,8 +290,7 @@ uiController.init = function () {
                 uiController.playedFirst = false;
                 uiController.updateUI();
 
-                if (playlistController.loadingSong.gid)
-                    playlistController.playNextSong();
+                playlistController.playNextSong();
 
 
             });
@@ -1008,9 +1007,8 @@ uiController.toggleSavePlaylist = function (savePlaylist) {
 
         if(savePlaylist)   {
 
+            playlistController.savePlaylist();
 
-
-            alert("!!!!!!")
         }
 
 
@@ -1358,7 +1356,7 @@ uiController.updateUI = function (dontChangeVideOpacity) {
         if ($("#playlistselectvertical .chosen-container").height() > 0)
             $("#playlistInner").css("top", 90 + $("#playlistselectvertical .chosen-container").height() - 30-30);
         else
-            $("#playlistInner").css("top", 90 + 5-30);
+            $("#playlistInner").css("top", 90 + 8-30);
 
     }, 100)
 
