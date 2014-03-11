@@ -47,11 +47,11 @@ function MainController($scope) {
     }
 
     //Bind Controllers
-    $scope.mediaController = mediaController;
-    $scope.uiController = uiController;
-    $scope.searchController = searchController;
+    $scope.mediaController    = mediaController;
+    $scope.uiController       = uiController;
+    $scope.searchController   = searchController;
     $scope.playlistController = playlistController;
-    $scope.accountController = accountController;
+    $scope.accountController  = accountController;
 
 
 
