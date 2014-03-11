@@ -91,6 +91,7 @@ uiController.init = function () {
         $(".iScrollIndicator").addClass("fadeincomplete")
 
 
+
     }, 0);
 
     setTimeout(function () {
@@ -307,6 +308,13 @@ uiController.init = function () {
                 playlistController.playNextSong();
 
 
+            });
+
+
+            mediaElement.addEventListener("error", function (e) {
+                if(mediaController.currentvideoURL){
+                    mediaController.playNextVersion();
+                }
             });
 
             mediaElement.addEventListener('loadeddata', function (e) {

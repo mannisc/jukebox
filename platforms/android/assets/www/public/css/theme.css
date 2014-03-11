@@ -14,17 +14,26 @@ html, body, #page, #content {
     overflow: hidden !important;
 }
 
+
+.ui-btn, label.ui-btn {
+    font-weight:400!important;
+}
 #page, .ui-panel {
     min-height: 0px !important;
 }
 
 #header .ui-title {
-    margin: 2px 50px -1px !important;
+    margin: 2px 48px -1px !important;
     color: #fff !important;
     text-align: left !important;
 }
 #header{
     background:rgba(29,29,29,0.9)!important;
+}
+
+.ui-header .ui-title, .ui-footer .ui-title {
+font-size: 1.2em!important;
+padding: .4em 0!important;
 }
 
 
