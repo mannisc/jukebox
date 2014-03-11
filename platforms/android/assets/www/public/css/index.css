@@ -1631,6 +1631,10 @@ a, button,.mejs-time-total,.mejs-time-rail,.mejs-time-total span,.mejs-time, h1,
 }
 
 
+#popupArtist-popup{
+  width:250px;
+}
+
 #popupAccount-popup, #popupArtist-popup,#popupLogin-popup{
     top: 51px!important;
 }
