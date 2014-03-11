@@ -20,6 +20,7 @@ mediaController.versionList = [];
 mediaController.currentStreamURL = "";
 mediaController.currentvideoURL = "";
 
+
 mediaController.seekTime = 0;
 mediaController.seekTimeDuration = 0;
 
@@ -108,11 +109,8 @@ mediaController.showDuration = function (songversion) {
 }
 
 mediaController.getVersions = function () {
-
     if($(".mejs-button-choose-version button").css("opacity")<1)
       return;
-
-
     var currentsong = playlistController.getPlayingSong();
     if (currentsong.name != "") {
         mediaController.versionList = [];
@@ -179,7 +177,7 @@ mediaController.getVersions = function () {
     }
 }
 
-mediaController.playVersion = function (songversion) {
+mediaController.playVersion = function (songversion,rating) {
     $('#loadversionimg').css("opacity", "1");
     $(".mejs-time-buffering").fadeIn();
     if ($(".mejs-time-loaded").width() > $(".mejs-time-total").width() * 0.7)
@@ -216,10 +214,12 @@ mediaController.playVersion = function (songversion) {
                                 videoURL = unescape(videoURL);
                             }
                             if (streamURL) {
-                                mediaController.sendRating("-1");
+                                if(rating==1){
+                                 mediaController.sendRating("-1");
+                                }
                                 mediaController.seekTime = uiController.mediaElementPlayer.getCurrentTime();
                                 mediaController.seekTimeDuration = uiController.mediaElementPlayer.media.duration;
-                                mediaController.playStreamURLSeek(streamURL,videoURL,true);
+                                mediaController.playStreamURLSeek(streamURL,videoURL,true,rating);
 
                             } else
                                 loadError = true;
@@ -388,7 +388,7 @@ mediaController.playStream = function (artist, title) {
 
 }
 
-mediaController.playStreamURLSeek = function (streamURL,videoURL,differentVersions,time) {
+mediaController.playStreamURLSeek = function (streamURL,videoURL,differentVersions,time,rating) {
 
 
     $("#videoplayer").removeClass("animate").addClass("animatefast");
@@ -412,7 +412,9 @@ mediaController.playStreamURLSeek = function (streamURL,videoURL,differentVersio
 
         mediaController.currentStreamURL = streamURL;
         mediaController.currentvideoURL = videoURL;
-        mediaController.sendRating("1");
+        if(rating==1){
+            mediaController.sendRating("1");
+        }
         console.dir(videoURL);
 
 
@@ -448,6 +450,68 @@ mediaController.setVideoTime = function () {
     uiController.mediaElementPlayer.media.removeEventListener('loadedmetadata', mediaController.setVideoTime, false);
 }
 
+mediaController.playNextVersion = function (){
+    if($(".mejs-button-choose-version button").css("opacity")<1)
+        return;
+    var currentsong = playlistController.getPlayingSong();
+    if (currentsong.name != "") {
+        var getsongversions = function (counter) {
+            if (counter < 120) {
+                var song = currentsong;
+                 $.ajax({
+                    url: preferences.serverURL + "?getversions=8&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name,
+                    success: function (data) {
+                        if (data.track) {
+                           if (playlistController.getPlayingSong() == song) {
+                                var nextIndex = -1
+                                for (var i = 0; i < data.track.length; i++) {
+                                    try {
+                                        data.track[i].title = decodeURIComponent(data.track[i].title);
+                                    }
+                                    catch (e) {
+                                        data.track[i].title = unescape(data.track[i].title);
+                                    }
+                                    try {
+                                        data.track[i].url = decodeURIComponent(data.track[i].url);
+                                    }
+                                    catch (e) {
+                                        data.track[i].url = unescape(data.track[i].url);
+                                    }
+                                    if(data.track[i].url==mediaController.currentvideoURL){
+                                        nextIndex=i;
+                                    }
+                                }
+                                nextIndex = nextIndex+1;
+                                if(nextIndex>=data.track.length){
+                                    nextIndex = 0;
+                                }
+                                mediaController.playVersion(data.track[nextIndex],1);
+                            }
+                        }
+                        else {
+                            if (playlistController.getPlayingSong() == song) {
+                                setTimeout(function () {
+                                    getsongversions(counter + 1)
+                                }, 1500);
+                            }
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        if (playlistController.getPlayingSong() == song) {
+                            setTimeout(function () {
+                                getsongversions(counter + 2)
+                            }, 5000);
+                        }
+                    }
+
+                })
+            }
+        }
+        getsongversions(0);
+    }
+}
+
+
 
 mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) {
 
@@ -464,8 +528,6 @@ mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) 
         playlistController.loadingOldSong = playlistController.loadingSong;
 
         playlistController.setNewTitle(playlistController.loadingSong.name, mediaController.getSongCover(playlistController.loadingSong), true);
-
-
 
         uiController.mediaElementPlayer.setSrc(streamURL);
         uiController.mediaElementPlayer.load();
