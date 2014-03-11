@@ -192,21 +192,39 @@ uiController.init = function () {
             playlistController.disablePlayStopControls(true);
             playlistController.disableControls(true);
 
-            $(".mejs-overlay-resize").dblclick(function () {
+            uiController.noVideoClickTimer=0;
+            $(".mejs-overlay-resize").click(function () {
+
+                setTimeout(function(){
+                    console.log(Date.now()-uiController.noVideoClickTimer)
+                   if(Date.now()-uiController.noVideoClickTimer>600){
+                       if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo))
+                           uiController.sizeVideo = uiController.sizeVideo * 1.5;
+                       else
+                           uiController.sizeVideo = 1/1.5;
 
 
-                if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo))
-                    uiController.sizeVideo = uiController.sizeVideo * 1.5;
-                else
-                    uiController.sizeVideo = 1/1.5;
 
+                       uiController.styleVideo();
+                   }
 
+                },500)
 
-                uiController.styleVideo();
 
 
 
             })
+
+
+            $(".mejs-overlay-resize").dblclick(function () {
+                console.log("111111111111111111111111111111111111cvcv")
+                uiController.noVideoClickTimer = Date.now();
+                $(".mejs-playpause-button").click();
+
+            })
+
+
+
             $(".mejs-playpause-button").click(function () {
                 playlistController.playButtonTimer = Date.now();
             });
@@ -305,7 +323,8 @@ uiController.init = function () {
                 uiController.playedFirst = false;
                 uiController.updateUI();
 
-                playlistController.playNextSong();
+                if(!playlistController.isLoading)
+                  playlistController.playNextSong();
 
 
             });
@@ -346,6 +365,7 @@ uiController.init = function () {
 
     Hammer($("#videoplayerInner").get(0)).on("swipeup", function (event) {
         uiController.swipeTimer = Date.now();
+        uiController.noVideoClickTimer = Date.now();
 
         if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo ) ) {
             uiController.sizeVideo = uiController.sizeVideo * 1.5;
@@ -356,6 +376,7 @@ uiController.init = function () {
     Hammer($("#videoplayerInner").get(0)).on("swipedown", function (event) {
 
         uiController.swipeTimer = Date.now();
+        uiController.noVideoClickTimer = Date.now();
 
         if (uiController.sizeVideo > 0.5) {
             uiController.sizeVideo = uiController.sizeVideo / 1.5;
@@ -369,6 +390,7 @@ uiController.init = function () {
 
     Hammer($("#videoplayerInner").get(0)).on("swiperight", function (event) {
         uiController.swipeTimer = Date.now();
+        uiController.noVideoClickTimer = Date.now();
 
         if (uiController.translateVideo <= uiController.windowWidth / 2) {
             uiController.translateVideo = uiController.translateVideo + uiController.windowWidth / 8;
