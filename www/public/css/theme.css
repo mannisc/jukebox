@@ -31,6 +31,11 @@ html, body, #page, #content {
     background:rgba(29,29,29,0.9)!important;
 }
 
+.ui-header .ui-title, .ui-footer .ui-title {
+font-size: 1.2em!important;
+padding: .4em 0!important;
+}
+
 
 #leftpanel {
     top: 45px !important;
