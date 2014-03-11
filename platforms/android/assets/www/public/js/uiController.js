@@ -119,7 +119,6 @@ uiController.initMediaPlayer= function (){
             $(".mejs-overlay-resize").click(function () {
 
                 setTimeout(function(){
-                    console.log(Date.now()-uiController.noVideoClickTimer)
                    if(Date.now()-uiController.noVideoClickTimer>600){
                        if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo))
                            uiController.sizeVideo = uiController.sizeVideo * 1.5;
@@ -133,27 +132,17 @@ uiController.initMediaPlayer= function (){
 
                 },500)
 
-<<<<<<< HEAD
-
-=======
-                if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo))
-                    uiController.sizeVideo = uiController.sizeVideo * 1.5;
-                else
-                    uiController.sizeVideo = 1 / 1.5;
->>>>>>> origin/master
-
 
             })
 
 
-<<<<<<< HEAD
+
             $(".mejs-overlay-resize").dblclick(function () {
                 console.log("111111111111111111111111111111111111cvcv")
                 uiController.noVideoClickTimer = Date.now();
                 $(".mejs-playpause-button").click();
 
-=======
->>>>>>> origin/master
+
             })
 
 
@@ -337,6 +326,7 @@ uiController.initMediaPlayer= function (){
     });
     Hammer($("#videoplayerInner").get(0)).on("swipeleft", function (event) {
         uiController.swipeTimer = Date.now();
+        uiController.noVideoClickTimer = Date.now();
 
         if (uiController.translateVideo >= -uiController.windowWidth / 2) {
 
@@ -1421,9 +1411,12 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
 
     setTimeout(function () {
+
+        if(Math.abs($("#videocontrolsInner .mejs-controls").css("padding-left").replace("px","")- ( (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5))>1)
         $("#videocontrolsInner .mejs-controls").css("padding-left", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5);
         setTimeout(function () {
-            $("#videocontrolsInner .mejs-controls").css("padding-left", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5);
+            if(Math.abs($("#videocontrolsInner .mejs-controls").css("padding-left").replace("px","")- ( (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5))>1)
+                $("#videocontrolsInner .mejs-controls").css("padding-left", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5);
         }, 50)
     }, 0)
 

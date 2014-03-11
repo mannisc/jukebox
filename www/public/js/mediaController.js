@@ -345,7 +345,8 @@ mediaController.playStream = function (artist, title) {
             setTimeout(function () {
                 $(".mejs-controls").find('.mejs-time-buffering').hide()
             }, 500);
-            uiController.toast("Sorry, this song is not available at the moment.", 1500)
+            uiController.toast("Sorry, this song is not available at the moment.", 1500);
+            $("#videoplayer").css("opacity", "0");
             playlistController.resetPlayingSong();
 
         }
