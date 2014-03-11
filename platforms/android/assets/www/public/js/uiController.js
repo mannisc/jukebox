@@ -91,6 +91,7 @@ uiController.init = function () {
         $(".iScrollIndicator").addClass("fadeincomplete")
 
 
+
     }, 0);
 
     setTimeout(function () {
