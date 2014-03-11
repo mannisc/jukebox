@@ -326,6 +326,7 @@ uiController.initMediaPlayer= function (){
     });
     Hammer($("#videoplayerInner").get(0)).on("swipeleft", function (event) {
         uiController.swipeTimer = Date.now();
+        uiController.noVideoClickTimer = Date.now();
 
         if (uiController.translateVideo >= -uiController.windowWidth / 2) {
 
@@ -1410,9 +1411,12 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
 
     setTimeout(function () {
+
+        if(Math.abs($("#videocontrolsInner .mejs-controls").css("padding-left").replace("px","")- ( (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5))>1)
         $("#videocontrolsInner .mejs-controls").css("padding-left", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5);
         setTimeout(function () {
-            $("#videocontrolsInner .mejs-controls").css("padding-left", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5);
+            if(Math.abs($("#videocontrolsInner .mejs-controls").css("padding-left").replace("px","")- ( (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5))>1)
+                $("#videocontrolsInner .mejs-controls").css("padding-left", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5);
         }, 50)
     }, 0)
 
