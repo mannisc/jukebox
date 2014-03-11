@@ -460,6 +460,8 @@ playlistController.playSong = function (song, onlyStyle) {
                 mediaController.playStream(playArtist, playTitle);
 
             console.log("LOAD STREAM")
+            playlistController.playedSongs.push(playlistController.loadingSong);
+
         }
     }
     playlistController.playingSongId = newId;

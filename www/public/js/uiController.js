@@ -42,6 +42,7 @@ uiController.initMediaPlayer= function (){
         $(".iScrollIndicator").addClass("fadeincomplete")
 
 
+
     }, 0);
     MediaElementPlayer.prototype.enterFullScreen_org = MediaElementPlayer.prototype.enterFullScreen;
     MediaElementPlayer.prototype.enterFullScreen = function () {
