@@ -310,6 +310,13 @@ uiController.init = function () {
 
             });
 
+
+            mediaElement.addEventListener("error", function (e) {
+                if(mediaController.currentvideoURL){
+                    mediaController.playNextVersion();
+                }
+            });
+
             mediaElement.addEventListener('loadeddata', function (e) {
 
                 if (this.videoWidth > 0) {
