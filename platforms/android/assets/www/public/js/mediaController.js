@@ -345,7 +345,6 @@ mediaController.playStream = function (artist, title) {
                                     if (streamURL) {
 
                                         mediaController.playStreamURL(streamURL,videoURL,true);
-                                        playlistController.playedSongs.push(playlistController.loadingSong);
 
                                         if( playlistController.playedSongs.length>100){
                                             playlistController.playedSongs.splice( playlistController.playedSongs.length-100,100)
@@ -475,7 +474,7 @@ mediaController.playStreamURL = function (streamURL,videoURL,differentVersions) 
         mediaController.currentStreamURL = streamURL;
         mediaController.currentvideoURL = videoURL;
 
-       $("#siteLogoImage").attr('onclick',"win=window.open('"+mediaController.currentvideoURL+"', '_blank')");
+       //$("#siteLogoImage").attr('onclick',"win=window.open('"+mediaController.currentvideoURL+"', '_blank')");
 
         console.dir(videoURL);
 
@@ -596,4 +595,15 @@ mediaController.getSongArtist = function (song) {
             artist = song.artist;
     }
     return artist;
+}
+
+
+
+mediaController.openExternalSite = function(){
+
+    window.open(mediaController.currentvideoURL, '_blank');
+    if(playlistController.isPlaying)  {
+        //uiController.mediaElementPlayer.pause();
+        $('.mejs-mediaelement video').each(function(){this.player.pause()})
+    }
 }

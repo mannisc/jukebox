@@ -291,7 +291,7 @@ input[type=button]{
 
 #lyricsiframe {
     position: absolute;
-    top: 0px;
+    top: 44px;
     left: 0px;
     bottom: 45px!important;
     width: 450px;
@@ -302,7 +302,7 @@ input[type=button]{
 }
 #lyricsifrm{
     position:absolute;
-    top:30px;
+    top:0px;
     height: 0px;
     width: 420px;
     height:100%;
@@ -553,9 +553,9 @@ white-space: nowrap;
     transform-origin: 50% 50%!important;
     z-index:10;
     overflow:visible;
-    -moz-box-shadow: 5px 0p 5px rgba(0,0,0,0.4);
-    -webkit-box-shadow: 5px 0px 5px rgba(0,0,0,0.4);
-    box-shadow: 5px 0px 5px rgba(0,0,0,0.4);
+    -moz-box-shadow: 3px 0p 5px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
+    box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
 }
 
 .songlist li.loadedsong:hover a img {
@@ -601,8 +601,8 @@ video{
     border: none !important;
 }
 
+/*
 #searchlist li.playing a:hover,#searchlist li.pausing a:hover {
-   /* background: #7700b4 !important;   */
 
     filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(124, 0, 172,1), endColorstr=rgba(124, 0, 172,1))!important;
     background-image:-moz-linear-gradient(left, rgba(124, 0, 172,1) 0%, rgba(124, 0, 172,1) 44%,rgba(124, 0, 172,0) 100%)!important;
@@ -617,6 +617,8 @@ video{
 
     border: none !important;
 }
+*/
+
 
 .ui-li-has-icon img.removesong{
     max-height: 1.8em!important;
@@ -714,10 +716,10 @@ video{
     margin-top:-5px!important;
     background-size:auto!important;
     position: absolute;
-    left: 5px!important;
-    top: .9em;
+    left: 5.5px!important;
+    top: 14px;
     opacity:0.65!important;
-    -webkit-transform: scale(0.95);
+    -webkit-transform: scale(0.77);
     transform: scale(0.95);
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
@@ -837,6 +839,7 @@ video{
     border: none !important;
 }
 
+/*
 #playlistInner li.playing a:hover,#playlistInner li.pausing a:hover {
 
     filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(68, 25, 158,1), endColorstr=rgba(68, 25, 158,1))!important;
@@ -852,7 +855,7 @@ video{
     border: none !important;
 }
 
-
+*/
 
 
 
@@ -1534,6 +1537,8 @@ video{
     background-size: 100%!important;
     -webkit-border-radius: 1px!important;
     border-radius:1px!important;
+    -webkit-transition : all .5s linear;
+
     transition : all .5s linear;
     background : transparent;
 }

@@ -126,8 +126,6 @@
 
 
     <h1 id="titleHeader" style="display:none">{{appTitle}}{{playlistController.getPlayingSepSign()}}</h1>
-
-
     <img src="public/img/bars-white.png" id="openSidePanelBarIcon" onclick="uiController.toggleSidePanel()" style="position:absolute;right: 6px;top: 13px" width="17px" height="20px"/>
 
 
@@ -294,7 +292,9 @@
         </div>
     </div>
 
-    <div id="siteLogo" ><img id="siteLogoImage" width="65px"  src="public/img/external.png" onclick="win=window.open('http://www.youtube.de', '_blank');"> </div>
+    <div id="siteLogo" >
+        <img id="siteLogoImage" width="55px"  src="public/img/external.png" onclick="mediaController.openExternalSite()">
+    </div>
 
 </div>
 <!-- /content -->
@@ -326,12 +326,12 @@
     <form>
         <div style="padding:0px 20px 10px 20px">
             <h3 id="signintitle">Sign in</h3>
-            <label for="signinuser" class="ui-hidden-accessible">Username:</label>
-            <input type="text" name="user" id="signinuser" value="" placeholder="email adress" data-theme="a">
+            <label for="signinuser" class="ui-hidden-accessible">Email Adress:</label>
+            <input type="text" name="user" id="signinuser" value="" placeholder="Email Adress" data-theme="a">
             <label for="signinpw" class="ui-hidden-accessible">Password:</label>
-            <input type="password" name="pass" id="signinpw" value="" placeholder="password" data-theme="a">
+            <input type="password" name="pass" id="signinpw" value="" placeholder="Password" data-theme="a">
                 <span id="pwconfirm" style="display:none">
-                <input type="password" name="pass" id="signinpwc" value="" placeholder="confirm password" data-theme="a">
+                <input type="password" name="pass" id="signinpwc" value="" placeholder="Confirm Password" data-theme="a">
                 </span>
             <button onclick="if(!showregisterpopup){accountController.signIn()}else{accountController.register()}" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
             <a data-role="none" id="registerlink" href="" style="text-decoration:none!important"

@@ -14,6 +14,10 @@ html, body, #page, #content {
     overflow: hidden !important;
 }
 
+
+.ui-btn, label.ui-btn {
+    font-weight:400!important;
+}
 #page, .ui-panel {
     min-height: 0px !important;
 }
