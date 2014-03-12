@@ -1147,6 +1147,10 @@ video{
     background: rgba(50, 50, 50, 0.9) !important;
 }
 
+.mejs-volume-button{
+    opacity:1!important;
+}
+
 
 .iScrollVerticalScrollbar{
     width:9px!important;
@@ -1630,6 +1634,10 @@ a, button,.mejs-time-total,.mejs-time-rail,.mejs-time-total span,.mejs-time, h1,
 
 }
 
+
+#popupArtist-popup{
+  width:250px;
+}
 
 #popupAccount-popup, #popupArtist-popup,#popupLogin-popup{
     top: 51px!important;
