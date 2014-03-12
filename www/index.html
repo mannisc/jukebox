@@ -313,7 +313,7 @@
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose Version</h3>
             <ul data-role="listview" id="searchviewVersions" data-theme="b">
-                <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" class="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion,1)"><a href="#"
+                <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" class="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion,1,1)"><a href="#"
                                                                                                                                                                                                                       style="padding-left: 15px!important;"
                                                                                                                                                                                                                       id=""
                                                                                                                                                                                                                       title="{{songversion.url}}">{{songversion.title}}<span
@@ -419,6 +419,7 @@
 <script type="text/javascript" src="public/js/libs/fastclick.js"></script>
 
 <!-- mediaplayerjs -->
+
 <script type="text/javascript" src="public/js/libs/mediaelement/mediaelement-and-player.js"></script>
 <script type="text/javascript" src="public/js/libs/mediaelement/playlist/mep-feature-playlist.js"></script>
 
@@ -445,6 +446,7 @@
 <script type="text/javascript" src="public/js/accountController.js"></script>
 
 
+
 <!-- ng Controlle -->
 <script type="text/javascript" src="public/js/mainModule.js"></script>
 
@@ -465,6 +467,7 @@
 <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
 <script src="https://apis.google.com/js/client.js?onload=loadClient"></script>
 
+<script type="text/javascript" src="public/js/embedPlayers.js"></script>
 
 <!-- Preload Images-->
 <div style="display:none">
