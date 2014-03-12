@@ -226,14 +226,8 @@ playlistController.loadedPlaylistSongs = [
 for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
     playlistController.loadedPlaylistSongs[i].id = "plsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
     playlistController.loadedPlaylistSongs[i].gid = "gsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
-
+     console.log("::: "+ playlistController.loadedPlaylistSongs[i].gid)
 }
-//playlistController.loadedPlaylistSongs = [];
-
-var loadedPlaylistSongs = window.localStorage.playlist;
-if (loadedPlaylistSongs)
-    playlistController.loadedPlaylistSongs = JSON.parse(loadedPlaylistSongs);
-
 
 playlistController.globalId = playlistController.loadedPlaylistSongs.length;
 
@@ -250,21 +244,35 @@ playlistController.playedSongs = [];
 
 
 playlistController.playlists = [
-    {name: "Electro '14"},
-    {name: "Charts4/13"},
-    {name: "Chillout"},
-    {name: "Vocals"},
-    {name: "Trance"}
+    {gid:0,id:0,name: "Electro '14", isPlaylist:true,tracks:playlistController.loadedPlaylistSongs},
+    {gid:1,id:1,name: "Charts4/13", isPlaylist:true,tracks:[]},
+    {gid:2,id:2,name: "Chillout", isPlaylist:true,tracks:[]},
+    {gid:3,id:3,name: "Vocals", isPlaylist:true,tracks:[]},
+    {gid:4,id:4,name: "Trance", isPlaylist:true,tracks:[]}
 ];
 
+console.dir(playlistController.playlists[0].tracks)
 
+for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
+    playlistController.loadedPlaylistSongs[i].playlistgid = 0;
+}
+
+
+window.localStorage.playlists = null;
+/*
 var playlists = window.localStorage.playlists;
 if (playlists)
     playlistController.playlists = JSON.parse(playlists);
 
+*/
 console.log("--------------------------")
 console.dir(playlistController.playlists)
 
+playlistController.globalIdPlaylist = playlistController.playlists.length;
+
+
+
+playlistController.loadedPlaylistSongs =  playlistController.playlists;
 
 
 
@@ -346,7 +354,8 @@ playlistController.resetPlayingSong = function () {
         playlistController.playingSongId = null;
         helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
         $(".songlist li").removeClass("loadedsong playing stillloading plausing");
-
+        playlistController.disableControls(true);
+        $("#videoplayer").css("opacity", "0");
         playlistController.setNewTitle("", "", true);
         $(".mejs-button-lyrics button").css("opacity", "0.5");
     }
@@ -356,6 +365,14 @@ playlistController.resetPlayingSong = function () {
 
 
 playlistController.playSong = function (song, onlyStyle) {
+
+    //Is Playlist
+    if(song.isPlaylist){
+        playlistController.selectPlaylist(song)
+        return;
+    }
+
+
     console.log((Date.now() - playlistController.playSongTimer) + "   " + (Date.now() - uiController.swipeTimer))
     if (playlistController.playSongTimer && Date.now() - playlistController.playSongTimer < 100)
         return;
@@ -603,6 +620,11 @@ playlistController.getPlayingSepSign = function () {
 playlistController.playNextSong = function () {
 
     if (playlistController.playingSongInPlaylist) {
+
+
+        if( playlistController.loadedPlaylistSongs.length>0&& playlistController.loadedPlaylistSongs[0].isPlaylist)
+            return;
+
         var index = playlistController.getIndexOfSong(playlistController.loadingSong, playlistController.loadedPlaylistSongs);
         if (index >= 0) {
             if (!playlistController.shuffleMode) {
@@ -800,23 +822,68 @@ playlistController.savePlaylist = function () {
 
 
         var playlists = window.localStorage.playlists;
-        if (!playlists)
+
+        if (!playlists||playlists=="null"||playlists=="undefined"||playlists=="false")
             playlists = playlistController.playlists;
         else
             playlists = JSON.parse(playlists);
 
 
+        for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
+            playlistController.loadedPlaylistSongs[i].playlistgid = playlistController.globalIdPlaylist;
+        }
 
-        playlists.push({name:playlistTitle});
+
+        var playlist = {gid:playlistController.globalIdPlaylist,id:playlistController.globalIdPlaylist,name:playlistTitle,isPlaylist:true,tracks:playlistController.loadedPlaylistSongs}
+        playlists.push(playlist);
+        playlistController.globalIdPlaylist++;
         playlistController.playlists = playlists;
 
         window.localStorage.playlists = JSON.stringify(playlists);
 
-        window.localStorage.playlist = JSON.stringify(playlistController.loadedPlaylistSongs);
 
+        $scope.safeApply();
+        $('#playlistselectverticalform').trigger('chosen:updated');
 
-
+        return   playlist.gid;
     }
+
+
+}
+
+
+playlistController.selectPlaylist = function (playlist) {
+
+    $('#playlistselectverticalform option[value="'+playlist.gid+'"]').prop('selected', true);
+    $('#playlistselectverticalform').trigger('chosen:updated');
+
+    setTimeout(function () {
+        $('#playlistselectverticalform').trigger('chosen:close');
+        $("#clearChoosenPlaylists").show();
+        $("#playlistselectverticalform").trigger('change');
+        uiController.updateUI();
+    }, 0)
+
+
+}
+
+
+playlistController.loadPlaylist = function (playlist) {
+
+
+    if( playlistController.loadedPlaylistSongs.length>0&& playlistController.loadedPlaylistSongs[0].isPlaylist)
+        playlistController.loadedPlaylistSongs = [];
+
+
+    playlistController.loadedPlaylistSongs = playlistController.loadedPlaylistSongs.concat(playlist.tracks)
+    $("#playlistview").hide();
+    $scope.safeApply();
+    setTimeout(function(){
+        $("#playlistview").listview('refresh');
+        $("#playlistview").show();
+        uiController.makePlayListSortable();
+
+    },0)
 
 
 }
