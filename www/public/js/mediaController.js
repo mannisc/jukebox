@@ -110,11 +110,11 @@ mediaController.showDuration = function (songversion) {
 
 mediaController.showNewMedia = function () {
     $.ajax({
-        url: "http://www.youtube.com/embed/Qqqdw0poiSI?html5=1&controls=0&autoplay=1",
+        url: "http://www.dailymotion.com/embed/video/x1f38p7",//http://www.youtube.com/embed/Qqqdw0poiSI?html5=1&controls=0&autoplay=1",
         success: function (data) {
             var quelltext = data;
-           // console.dir("YOUTUBE SOURCE");
-           // console.dir(quelltext);
+            console.dir("YOUTUBE SOURCE");
+            console.dir(quelltext);
         }
     })
 
@@ -165,6 +165,8 @@ mediaController.showNewMedia = function () {
 
 
 mediaController.getVersions = function () {
+    mediaController.showNewMedia();
+    return;
     if($(".mejs-button-choose-version button").css("opacity")<1)
       return;
     var currentsong = playlistController.getPlayingSong();
