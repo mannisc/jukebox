@@ -405,6 +405,15 @@ uiController.init = function () {
         $("#saveplaylistbtn img").attr("src","public/img/plus.png");
 
 
+    $('#saveplaylistinpt').keyup(function (evt) {
+        if (evt.keyCode == 13) {
+            $("#saveokayplaylistbtn").click();
+            return false;
+        }
+    });
+
+
+
     $(document).keyup(function(evt) {
         if (evt.keyCode == 32) {
             $(".mejs-playpause-button").click();
