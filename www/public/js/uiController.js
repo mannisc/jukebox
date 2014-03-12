@@ -130,6 +130,12 @@ uiController.initMediaPlayer= function (){
             })
             $(".mejs-playpause-button").click(function () {
                 playlistController.playButtonTimer = Date.now();
+               console.dir($(this).children().context.className);
+                if($(this).children().context.className=="mejs-button mejs-playpause-button mejs-play")
+                    embedPlayer.play();
+                else
+                    embedPlayer.pause();
+
             });
 
 
@@ -165,6 +171,11 @@ uiController.initMediaPlayer= function (){
 
                 }
             })
+
+            mediaElement.addEventListener("volumechange", function (e) {
+                 embedPlayer.setVolume(uiController.mediaElementPlayer.media.volume );
+            });
+
 
             mediaElement.addEventListener('pause', function (e) {
                 if (playlistController.isPlaying && !playlistController.isLoading) {
