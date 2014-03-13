@@ -14,6 +14,7 @@ var accountController = function () {
 accountController.loginToken = "";
 accountController.loggedIn   = false;
 accountController.userName   = "";
+accountController.showregisterpopup = false;
 
 accountController.logout = function(){
     $.ajax({
@@ -57,26 +58,12 @@ accountController.signIn = function(){
                 }
                 else
                 {
-                    accountController.loggedIn=false;
-                    uiController.toast("Error: Please check your login data!", 1500);
-                    $('#popupLogin').popup('close');
-                    uiController.styleTopButtons();
-                    $scope.safeApply();
-                    uiController.styleTopButtons();
-                    setTimeout(function(){
-                        btn.addClass("animated");
-                    },500)
+                    uiController.toast("Error: Please check your login data.", 1500);
                 }
             },
             error: function () {
-                uiController.toast("Sorry, Login is not possible at the moment.", 1500);
-                $('#popupLogin').popup('close');
-                uiController.styleTopButtons();
-                $scope.safeApply();
-                uiController.styleTopButtons();
-                setTimeout(function(){
-                    btn.addClass("animated");
-                },500)
+                uiController.toast("Sorry, it is not possible to login at the moment.", 1500);
+
             }
         })
     }
@@ -87,7 +74,7 @@ accountController.signIn = function(){
     }
     else
     {
-        uiController.toast("Error: Please check your login data!", 1500);
+        uiController.toast("Error: Please check your login data.", 1500);
     }
 
 
@@ -114,30 +101,14 @@ accountController.register = function(){
                     setTimeout(function(){
                      btn.addClass("animated");
                     },500)
-
-                }
+                  }
                 else
                 {
-                    accountController.loggedIn=false;
-                    uiController.toast("Error: Please check your data!", 1500);
-                    $('#popupLogin').popup('close');
-                    uiController.styleTopButtons();
-                    $scope.safeApply();
-                    uiController.styleTopButtons();
-                    setTimeout(function(){
-                        btn.addClass("animated");
-                    },500)
+                    uiController.toast("Error: Please check your data.", 1500);
                 }
             } ,
             error: function () {
                 uiController.toast("Sorry, it is not possible to register at the moment.", 1500);
-                $('#popupLogin').popup('close');
-                uiController.styleTopButtons();
-                $scope.safeApply();
-                uiController.styleTopButtons();
-                setTimeout(function(){
-                    btn.addClass("animated");
-                },500)
             }
         })
     }
@@ -149,7 +120,7 @@ accountController.register = function(){
     }
     else
     {
-        uiController.toast("Error: Please check your data!", 1500);
+        uiController.toast("Error: Please check your data.", 1500);
     }
 
 
