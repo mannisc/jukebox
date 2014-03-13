@@ -142,7 +142,7 @@
 
         <a id="signinLink" ng-if="!accountController.loggedIn" href="#popupLogin" onclick="setTimeout(function(){$('#signinuser').focus();},700)" data-rel="popup" data-position-to="#signinLink"
            class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
-        <a id="linkAccount" ng-if="accountController.loggedIn" href="#popupAccount" data-rel="popup" class="ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a" data-transition="pop">{{userName}}</a>
+        <a id="linkAccount" ng-if="accountController.loggedIn" href="#popupAccount" data-rel="popup" class="ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a" data-transition="pop">{{accountController.userName}}</a>
 
     </div>
 
@@ -381,7 +381,7 @@
                 <li><a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png">Google
                     <!--span class="GoogleBlue">G</span><span class="GoogleRed">o</span><span class="GoogleYellow">o</span><span class="GoogleBlue">g</span><span class="GoogleGreen">l</span><span class="GoogleRed">e</span--></a></li>
                 <li style="border-bottom:1px solid #ddd;"><a href="#" data-rel="back" id="manageDropbox"><img src="public/img/dropbox.png">Dropbox</a></li>
-                <li style="border-top:15px solid rgba(255,255,255,0.8);"><a href="#" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li>
+                <li style="border-top:15px solid rgba(255,255,255,0.8);"><a href="#" onclick="accountController.logout();" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li>
             </ul>
         </div>
     </form>
@@ -433,11 +433,16 @@
 <script type="text/javascript" src="public/js/libs/hammer.js"></script>
 
 <!-- rsajs -->
+<script type="text/javascript" src="public/js/libs/rsa/prng4.js"></script>
+<script type="text/javascript" src="public/js/libs/rsa/rng.js"></script>
 <script type="text/javascript" src="public/js/libs/rsa/jsbn.js"></script>
 <script type="text/javascript" src="public/js/libs/rsa/jsbn2.js"></script>
 <script type="text/javascript" src="public/js/libs/rsa/rsa.js"></script>
 <script type="text/javascript" src="public/js/libs/rsa/rsa2.js"></script>
 <script type="text/javascript" src="public/js/rsaController.js"></script>
+
+<!-- rsajs -->
+
 
 <!-- helperFunctions -->
 <script type="text/javascript" src="public/js/helperFunctions.js"></script>
