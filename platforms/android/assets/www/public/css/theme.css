@@ -121,6 +121,13 @@ padding-top: 5px!important;
 margin-bottom: 5px!important;
 }
 
+.iScrollPlayIndicator{
+ pointer-events:none;
+    opacity:0.8!important;
+}
+.iScrollIndicator{
+}
+
 
 
 .ui-li-has-icon img {
