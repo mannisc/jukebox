@@ -108,15 +108,140 @@ function createFolderPicker() {
     }
 }
 
+
+var googleDrivePlaylist = [];
+
+var googleDrivePlaylistActId = 0;
+var googleDrivePlaylistLength = 0;
+
+
+function executeFileRequest(request) {
+
+
+    function handleResponse(resp) {
+
+        if (resp) {
+
+            if (resp.mimeType == "application/vnd.google-apps.folder") {
+
+
+                function retrieveAllFilesInFolder(folderId, callback) {
+                    var retrievePageOfChildren = function (request, result) {
+                        request.execute(function (resp) {
+                            result = result.concat(resp.items);
+                            var nextPageToken = resp.nextPageToken;
+                            if (nextPageToken) {
+                                request = gapi.client.drive.children.list({
+                                    'folderId': folderId,
+                                    'pageToken': nextPageToken
+                                });
+                                retrievePageOfChildren(request, result);
+                            } else {
+                                callback(result);
+                            }
+                        });
+                    }
+                    var initialRequest = gapi.client.drive.children.list({
+                        'folderId': folderId
+                    });
+                    retrievePageOfChildren(initialRequest, []);
+                }
+
+
+                function getFilesData(list) {
+
+                    googleDrivePlaylistLength = googleDrivePlaylistLength - 1 + list.length;
+
+                    for (var i = 0; i < list.length; i++) {
+                        var request = gapi.client.drive.files.get({
+                            'fileId': list[i].id
+                        });
+
+                        executeFileRequest(request);
+
+                    }
+
+                }
+
+                retrieveAllFilesInFolder(resp.id, getFilesData)
+
+            } else {
+
+
+                console.dir(resp);
+                //.isAudioFile
+
+
+                if (resp.mimeType != "video/mpeg") {
+                    var gid = "gsid" + helperFunctions.padZeros(playlistController.globalId, ("" + googleDrivePlaylistLength).length);
+                    var id = "plsid" + helperFunctions.padZeros(googleDrivePlaylistActId, ("" + googleDrivePlaylistLength).length);
+                    if (resp.mimeType.substring(0, 5) == "audio") {
+                        var isAudio = true;
+                    } else
+                        isAudio = false;
+                    googleDrivePlaylist.push({id: id, gid: gid, name: resp.title, artist: "", streamURL: resp.webContentLink, isGoogleDrive: true, isAudio: isAudio})
+                    playlistController.globalId = playlistController.globalId + 1;
+                    googleDrivePlaylistActId = googleDrivePlaylistActId + 1;
+                } else
+                    googleDrivePlaylistLength = googleDrivePlaylistLength - 1;
+
+
+                console.log("??? " + googleDrivePlaylist.length + "   " + googleDrivePlaylistLength)
+
+                if (googleDrivePlaylist.length == googleDrivePlaylistLength) {
+                    $.mobile.loading( "hide");
+
+                    if (playlistController.loadedPlaylistSongs.length > 0) {
+                        if (playlistController.loadedPlaylistSongs[0].isPlaylist) {
+                            $("#saveplaylistbtn img").attr("src", "public/img/save.png");
+                            playlistController.loadedPlaylistSongs = googleDrivePlaylist;
+
+                        } else
+                            playlistController.loadedPlaylistSongs = googleDrivePlaylist.concat(playlistController.loadedPlaylistSongs);
+
+                    }
+
+
+                    $("#clearChoosenPlaylists").show();
+
+                    $scope.safeApply();
+                    $("#playlistview").listview('refresh');
+                    playlistController.remarkSong();
+                    uiController.makePlayListSortable();
+
+                    setTimeout(function(){
+                        uiController.playListScroll.refresh();
+                    },150)
+                }
+
+
+                /*
+                 console.dir(resp)
+                 console.log("RESPONSE")
+                 console.dir(resp)
+                 console.log('Title: ' + resp.title);
+                 console.log('Description: ' + resp.description);
+                 console.log('MIME type: ' + resp.mimeType);
+                 */
+
+            }
+        }
+    }
+
+
+    request.execute(handleResponse);
+}
+
+
 // A simple callback implementation.
 function pickerCallback(data) {
     var url = 'nothing';
     if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
 
-        var googleDrivePlaylist = [];
+        googleDrivePlaylist = [];
 
-        var googleDrivePlaylistActId = 0;
-        var googleDrivePlaylistLength = data[google.picker.Response.DOCUMENTS].length;
+        googleDrivePlaylistActId = 0;
+        googleDrivePlaylistLength = data[google.picker.Response.DOCUMENTS].length;
 
         for (var index = 0; index < data[google.picker.Response.DOCUMENTS].length; index++) {
 
@@ -127,40 +252,11 @@ function pickerCallback(data) {
             var request = gapi.client.drive.files.get({
                 'fileId': fileId
             });
-
-            request.execute(function (resp) {
-                if (resp) {
-
-                    var gid = "gsid" + helperFunctions.padZeros(playlistController.globalId, ("" + googleDrivePlaylistLength).length);
-                    var id = "plsid" + helperFunctions.padZeros(googleDrivePlaylistActId, ("" + googleDrivePlaylistLength).length);
-
-                    googleDrivePlaylist.push({id:id,gid:gid,name:resp.title, artist:"",streamURL:resp.webContentLink})
-                    playlistController.globalId = playlistController.globalId+1;
-
-                    googleDrivePlaylistActId = googleDrivePlaylistActId+1;
-
-                    if(googleDrivePlaylist.length==googleDrivePlaylistLength){
-                        playlistController.loadedPlaylistSongs =  googleDrivePlaylist;
-
-                        $scope.safeApply();
-                        $("#playlistview").listview('refresh');
-                        uiController.playListScroll.refresh();
-                        uiController.makePlayListSortable();
-                    }
-
-
-
-                    /*
-                    console.dir(resp)
-                    console.log("RESPONSE")
-                    console.dir(resp)
-                    console.log('Title: ' + resp.title);
-                    console.log('Description: ' + resp.description);
-                    console.log('MIME type: ' + resp.mimeType);
-                    */
-                }
-            });
-
+            $.mobile.loading( "show");
+            setTimeout(function(){
+                $.mobile.loading( "hide");
+            },30000);
+            executeFileRequest(request);
         }
 
 

@@ -278,7 +278,7 @@ mediaController.playVersion = function (songversion, rating,resetVersion) {
 }
 
 
-mediaController.playStream = function (artist, title) {
+mediaController.playStream = function (artist, title,playedAutomatic) {
 
     $(".mejs-time-buffering").fadeIn();
 
@@ -313,9 +313,10 @@ mediaController.playStream = function (artist, title) {
                 $(".mejs-controls").find('.mejs-time-buffering').hide()
             }, 500);
             uiController.toast("Sorry, this song is not available at the moment.", 1500);
-            $("#videoplayer").css("opacity", "0");
-            playlistController.resetPlayingSong();
-
+            if(!playedAutomatic)
+              playlistController.resetPlayingSong();
+            else
+              playlistController.playNextSong();
         }
     }
 
@@ -416,6 +417,8 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
 
     $("#videoplayer").removeClass("animate").addClass("animatefast");
     $("#videoplayer").css("opacity", "0");
+    $("#videoplayer").css("pointer-events","none");
+
 
     setTimeout(function () {
         $("#videoplayer").removeClass("animatefast").addClass("animate");
@@ -566,6 +569,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
     $("#videoplayer").removeClass("animate").addClass("animatefast");
     $("#videoplayer").css("opacity", "0");
+    $("#videoplayer").css("pointer-events","none");
 
     setTimeout(function () {
         $("#videoplayer").removeClass("animatefast").addClass("animate");
@@ -588,6 +592,9 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
         console.dir(streamURL);
 
+
+        if(uiController.fullscreenMode==1)
+            $("#backgroundImage").css("opacity","0.08");
 
         if (playlistController.playingSongInPlaylist)
             var listElement = $("#playlistInner li[data-songgid='playlistsong" + playlistController.playingSongId + "'] ");
@@ -644,12 +651,13 @@ mediaController.toggleLyrics = function () {
 
 
 mediaController.getSongCover = function (song) {
+    var url ="";
 
     if (song.isPlaylist) {
-        url = "public/img/playlists.png";
+        url = "public/img/playlist.png";
+    } else if (song.isGoogleDrive) {
+        url = "public/img/playlistgdrive.png";
     } else {
-
-        var url;
 
         if (song.image) {
             if (song.image[1])
@@ -760,6 +768,8 @@ mediaController.showNewMedia = function () {
      $('#player1').first().show();
      $('#player1').show();
      $("#videoplayer").css("opacity", "1");
+     $("#videoplayer").css("pointer-events","auto");
+
      $("#videocontrols").css("opacity", "1");
      videobox.show();
      */

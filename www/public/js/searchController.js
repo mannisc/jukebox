@@ -30,6 +30,8 @@ searchController.buttonActive = 0;
 searchController.init = function () {
 
     $("#searchinput").on("input", function () {
+        $("#playlistInner .iScrollPlayIndicator").hide();
+        $("#searchlist .iScrollPlayIndicator").hide();
         switch (searchController.buttonActive) {
             case 0:
                 searchController.searchMusic();
@@ -61,6 +63,8 @@ searchController.activateButton = function (index, noAnimation) {
     }
     searchController.buttonActive = index;
     searchController.emptySearchList(true);
+    $("#playlistInner .iScrollPlayIndicator").hide();
+    $("#searchlist .iScrollPlayIndicator").hide();
 
     if (index == 1 || index == 2) {
         searchController.showLoading(true);
@@ -169,10 +173,11 @@ searchController.completeSearch = function (list) {
         playlistController.remarkSong();
 
 
-        uiController.searchListScroll.refresh();
         uiController.makeSearchListDraggable();
         setTimeout(function () {
             $("#searchlistview li").removeClass("fadeincompletefast");
+            uiController.searchListScroll.refresh();
+
         }, 100)
     }
 }
