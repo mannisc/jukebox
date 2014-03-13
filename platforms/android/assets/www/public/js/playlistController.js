@@ -244,11 +244,13 @@ playlistController.playedSongs = [];
 
 
 playlistController.playlists = [
-    {gid:0,id:0,name: "Electro '14", isPlaylist:true,tracks:playlistController.loadedPlaylistSongs},
+    {gid:0,id:0,name: "Rock", isPlaylist:true,tracks:playlistController.loadedPlaylistSongs},
     {gid:1,id:1,name: "Charts4/13", isPlaylist:true,tracks:[]},
     {gid:2,id:2,name: "Chillout", isPlaylist:true,tracks:[]},
     {gid:3,id:3,name: "Vocals", isPlaylist:true,tracks:[]},
-    {gid:4,id:4,name: "Trance", isPlaylist:true,tracks:[]}
+    {gid:4,id:4,name: "Trance", isPlaylist:true,tracks:[]},
+    {gid:5,id:5,name: "Electro '14", isPlaylist:true,tracks:[]}
+
 ];
 
 console.dir(playlistController.playlists[0].tracks)
