@@ -278,7 +278,7 @@ mediaController.playVersion = function (songversion, rating,resetVersion) {
 }
 
 
-mediaController.playStream = function (artist, title) {
+mediaController.playStream = function (artist, title,playedAutomatic) {
 
     $(".mejs-time-buffering").fadeIn();
 
@@ -309,13 +309,17 @@ mediaController.playStream = function (artist, title) {
     var error = function () {
         //console.log("ERROR")
         if (streamID == mediaController.playCounter) {
+
             setTimeout(function () {
                 $(".mejs-controls").find('.mejs-time-buffering').hide()
             }, 500);
             uiController.toast("Sorry, this song is not available at the moment.", 1500);
-            $("#videoplayer").css("opacity", "0");
-            playlistController.resetPlayingSong();
+            if(!playedAutomatic)
+              playlistController.resetPlayingSong();
+            else
+              playlistController.playNextSong();
 
+            mediaController.songError();
         }
     }
 
@@ -416,6 +420,8 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
 
     $("#videoplayer").removeClass("animate").addClass("animatefast");
     $("#videoplayer").css("opacity", "0");
+    $("#videoplayer").css("pointer-events","none");
+
 
     setTimeout(function () {
         $("#videoplayer").removeClass("animatefast").addClass("animate");
@@ -471,6 +477,15 @@ mediaController.setVideoTime = function () {
     }
     uiController.mediaElementPlayer.setCurrentTime(relativTime);
     uiController.mediaElementPlayer.media.removeEventListener('loadedmetadata', mediaController.setVideoTime, false);
+}
+
+mediaController.songError = function () {
+    setTimeout(function () {
+        $(".mejs-controls").find('.mejs-time-buffering').hide()
+    }, 500);
+    uiController.toast("Sorry, this song is not available at the moment.", 1500);
+    $("#videoplayer").css("opacity", "0");
+    playlistController.resetPlayingSong();
 }
 
 mediaController.playNextVersion = function () {
@@ -556,6 +571,10 @@ mediaController.playNextVersion = function () {
                 }
                 mediaController.playVersion(mediaController.versionList[nextIndex],1,0)
             }
+            else
+            {
+                mediaController.songError();
+            }
         }
     }
 }
@@ -566,6 +585,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
     $("#videoplayer").removeClass("animate").addClass("animatefast");
     $("#videoplayer").css("opacity", "0");
+    $("#videoplayer").css("pointer-events","none");
 
     setTimeout(function () {
         $("#videoplayer").removeClass("animatefast").addClass("animate");
@@ -588,6 +608,9 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
         console.dir(streamURL);
 
+
+        if(uiController.fullscreenMode==1)
+            $("#backgroundImage").css("opacity","0.08");
 
         if (playlistController.playingSongInPlaylist)
             var listElement = $("#playlistInner li[data-songgid='playlistsong" + playlistController.playingSongId + "'] ");
@@ -644,12 +667,13 @@ mediaController.toggleLyrics = function () {
 
 
 mediaController.getSongCover = function (song) {
+    var url ="";
 
     if (song.isPlaylist) {
-        url = "public/img/playlists.png";
+        url = "public/img/playlist.png";
+    } else if (song.isGoogleDrive) {
+        url = "public/img/playlistgdrive.png";
     } else {
-
-        var url;
 
         if (song.image) {
             if (song.image[1])
@@ -714,10 +738,11 @@ mediaController.openExternalSite = function () {
 
 
 mediaController.showNewMedia = function () {
+    console.dir(preferences.serverURL + "?redirectPage=http://www.dailymotion.com/embed/video/x16cc1m");
     $.ajax({
-        url: "http://www.dailymotion.com/embed/video/x1f38p7",//http://www.youtube.com/embed/Qqqdw0poiSI?html5=1&controls=0&autoplay=1",
+        url: preferences.serverURL + "?redirectPage=http://www.dailymotion.com/embed/video/x16cc1m",//http://www.youtube.com/embed/Qqqdw0poiSI?html5=1&controls=0&autoplay=1",
         success: function (data) {
-            var quelltext = data;
+            console.dir(data);
         }
     })
 
@@ -760,6 +785,8 @@ mediaController.showNewMedia = function () {
      $('#player1').first().show();
      $('#player1').show();
      $("#videoplayer").css("opacity", "1");
+     $("#videoplayer").css("pointer-events","auto");
+
      $("#videocontrols").css("opacity", "1");
      videobox.show();
      */

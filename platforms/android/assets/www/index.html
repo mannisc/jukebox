@@ -138,11 +138,11 @@
             <span id="playingSongTitle" class="fadeincomplete" style="text-align:left;z-index:0;display:none;position:absolute;left: 35px;top: 9px;right: 0px">{{playlistController.getPlayingTitle()}} </span>
         </a>
         <a id="buySongLink" style="opacity:0" onclick="mediaController.buySong()" ng-show="playlistController.loadingSong" href="#" data-rel="popup" data-position-to="#buySongLink"
-           class="playingSongBuy   ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-shop ui-btn-icon-left ui-btn-a" data-transition="pop">Buy Song</a>
+           class="playingSongBuy   ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-heart ui-btn-icon-left ui-btn-a" data-transition="pop">Buy Song</a>
 
         <a id="signinLink" ng-if="!accountController.loggedIn" href="#popupLogin" onclick="setTimeout(function(){$('#signinuser').focus();},700)" data-rel="popup" data-position-to="#signinLink"
            class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
-        <a id="linkAccount" ng-if="accountController.loggedIn" href="#popupAccount" data-rel="popup" class="ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a" data-transition="pop">{{userName}}</a>
+        <a id="linkAccount" ng-if="accountController.loggedIn" href="#popupAccount" data-rel="popup" class="ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a" data-transition="pop">{{accountController.userName}}</a>
 
     </div>
 
@@ -230,7 +230,11 @@
             <div id="saveplaylistinput" style="display:none">
                 <input id="saveplaylistinpt" class="ui-input ui-body-a ui-corner-all ui-shadow-inset" data-theme="a" placeholder="Enter Name">
             </div>
-
+            <div id="saveplaylistbutton">
+                <button id="saveplaylistbtn" onclick="uiController.toggleSavePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
+                    <img src="public/img/plus.png" width="22px" height="22px" alt="Sort"/>
+                </button>
+            </div>
             <div id="saveokayplaylistbutton" style="display:none">
 
                 <button id="saveokayplaylistbtn" onclick="uiController.toggleSavePlaylist(true);" class="greenbackground" data-mini="true" data-type="button" value="" data-theme="b">
@@ -239,17 +243,11 @@
 
             </div>
 
-            <div id="saveplaylistbutton">
-                <button id="saveplaylistbtn" onclick="uiController.toggleSavePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
-                    <img src="public/img/plus.png" width="22px" height="22px" alt="Sort"/>
-                </button>
-            </div>
-
         </div>
         <!--form class="ui-filterable" >
             <input id="filterBasic-input" data-type="search" data-theme="a">
         </form-->
-        <div id="playlisthelp" ng-if="playlistController.loadedPlaylistSongs.length==0">
+        <div id="playlisthelp" ng-show="playlistController.loadedPlaylistSongs.length==0">
             Drag and Drop your favorite Songs<br>to add them to this Playlist.
         </div>
 
@@ -299,7 +297,7 @@
     </div>
 
     <div id="siteLogo" >
-        <img id="siteLogoImage" width="55px"  src="public/img/external.png" onclick="mediaController.openExternalSite()">
+        <img id="siteLogoImage" width="70px"  src="public/img/external.png" onclick="mediaController.openExternalSite()">
     </div>
 
 </div>
@@ -381,7 +379,7 @@
                 <li><a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png">Google
                     <!--span class="GoogleBlue">G</span><span class="GoogleRed">o</span><span class="GoogleYellow">o</span><span class="GoogleBlue">g</span><span class="GoogleGreen">l</span><span class="GoogleRed">e</span--></a></li>
                 <li style="border-bottom:1px solid #ddd;"><a href="#" data-rel="back" id="manageDropbox"><img src="public/img/dropbox.png">Dropbox</a></li>
-                <li style="border-top:15px solid rgba(255,255,255,0.8);"><a href="#" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li>
+                <li style="border-top:15px solid rgba(255,255,255,0.8);"><a href="#" onclick="accountController.logout()" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li>
             </ul>
         </div>
     </form>
@@ -393,6 +391,8 @@
 
 <img src="public/img/background.jpg" id="backgroundImage">
 </div>
+
+
 <!-- /page -->
 
 
@@ -429,6 +429,17 @@
 
 <!-- hammerjs -->
 <script type="text/javascript" src="public/js/libs/hammer.js"></script>
+
+<!-- rsajs -->
+<script type="text/javascript" src="public/js/libs/rsa/prng4.js"></script>
+<script type="text/javascript" src="public/js/libs/rsa/rng.js"></script>
+<script type="text/javascript" src="public/js/libs/rsa/jsbn.js"></script>
+<script type="text/javascript" src="public/js/libs/rsa/jsbn2.js"></script>
+<script type="text/javascript" src="public/js/libs/rsa/rsa.js"></script>
+<script type="text/javascript" src="public/js/libs/rsa/rsa2.js"></script>
+<script type="text/javascript" src="public/js/rsaController.js"></script>
+
+<!-- rsajs -->
 
 
 <!-- helperFunctions -->
@@ -478,7 +489,7 @@
     <img src="public/img/plus.png">
     <img src="public/img/loader.gif">
     <img src="public/img/loadertitle.gif">
-
+    <img src="public/img/cross.png">
 
 </div>
 

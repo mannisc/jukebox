@@ -26,8 +26,6 @@ function MainController($scope) {
 
 
 
-    $scope.userName ="mschmidbartl";
-
     //Safe NG Apply, applies changed to the $scope model to the html dom
     $scope.safeApply = function () {
         var phase = this.$root.$$phase;

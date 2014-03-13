@@ -571,7 +571,13 @@ video{
     box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
 }
 
+.backgroundVideo{
+    width:100%!important;
+    height:100%!important;
+    background-color:#000!important;
+    opacity:0.5
 
+}
 
 
 .songlist li.loadedsong.stillloading:hover a img {
@@ -1001,10 +1007,12 @@ video{
      position: absolute;
      bottom: 60px;
      text-align: center;
-     pointer-events: none;
+     pointer-events: none!important;
      z-index: 10000;
 
  }
+
+
 
  #videoplayerInner {
      display: inline-block;
@@ -1012,6 +1020,10 @@ video{
      z-index: 2 !important;
 
  }
+
+
+
+
 
  #videoplayerInner .mejs-mediaelement {
      text-align: center;
@@ -1456,8 +1468,9 @@ video{
     font-size: 14px!important;
     min-height: 0em!important;
 }
+
 #popupArtistExternList li:hover a{
-    background-color: #4617B4;
+    background-color: rgba(70,23,180,1);
     color:#fff!important;
 
 
@@ -1470,7 +1483,7 @@ video{
 }
 
 #popupArtistExternList li.marked:hover a{
-    background-color: #4617B4!important;
+    background-color: rgba(70,23,180,1)!important;
     color:#fff!important;
 
 
@@ -1570,6 +1583,14 @@ video{
 
 }
 
+#saveplaylistbtn{
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
 
 
 
@@ -1591,6 +1612,9 @@ a, button,.mejs-time-total,.mejs-time-rail,.mejs-time-total span,.mejs-time, h1,
     width:100%;
     height:100%;
     pointer-events: none;
+
+    -webkit-transform-origin: 100% 100%;
+    transform-origin: 100%100%!important;
 }
 
 
@@ -1635,9 +1659,11 @@ a, button,.mejs-time-total,.mejs-time-rail,.mejs-time-total span,.mejs-time, h1,
 }
 
 
-#popupArtist-popup{
+#popupArtist-popup,#popupAccount-popup{
   width:250px;
 }
+
+
 
 #popupAccount-popup, #popupArtist-popup,#popupLogin-popup{
     top: 51px!important;
@@ -1699,7 +1725,7 @@ text-shadow: none!important;
 }
 
 #popupAccount a:hover{
-    background-color: #4617B4;
+    background-color: rgba(70,23,180,1);
     color:#fff;
 }
 
@@ -1736,7 +1762,7 @@ max-width: 2em!important;
 }
 
 #popupVideoSettings a:hover{
-    background-color: #4617B4;
+    background-color: rgba(70,23,180,1);
     color:#fff;
 }
 
