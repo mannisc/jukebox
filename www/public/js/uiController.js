@@ -119,13 +119,7 @@ uiController.initMediaPlayer = function () {
 
                 setTimeout(function () {
                     if (Date.now() - uiController.noVideoClickTimer > 600) {
-                        if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo))
-                            uiController.sizeVideo = uiController.sizeVideo * 1.5;
-                        else
-                            uiController.sizeVideo = 1 / 1.5;
-
-
-                        uiController.styleVideo();
+                        $(".mejs-playpause-button").click();
                     }
 
                 }, 500)
@@ -135,9 +129,15 @@ uiController.initMediaPlayer = function () {
 
 
             $(".mejs-overlay-resize").dblclick(function () {
-                console.log("111111111111111111111111111111111111cvcv")
                 uiController.noVideoClickTimer = Date.now();
-                $(".mejs-playpause-button").click();
+
+                if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo))
+                    uiController.sizeVideo = uiController.sizeVideo * 1.5;
+                else
+                    uiController.sizeVideo = 1 / 1.5;
+
+
+                uiController.styleVideo();
 
 
             })
@@ -643,7 +643,10 @@ uiController.init = function () {
                     playlistController.loadedPlaylistSongs = playlistController.playlists;
                     $("#saveplaylistbtn img").attr("src","public/img/plus.png");
 
-                }
+                } else
+                    $("#clearChoosenPlaylists").show();
+
+
 
 
                 $("#playlistview").hide();
