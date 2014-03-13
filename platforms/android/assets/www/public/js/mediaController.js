@@ -309,6 +309,7 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
     var error = function () {
         //console.log("ERROR")
         if (streamID == mediaController.playCounter) {
+
             setTimeout(function () {
                 $(".mejs-controls").find('.mejs-time-buffering').hide()
             }, 500);
@@ -317,6 +318,8 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
               playlistController.resetPlayingSong();
             else
               playlistController.playNextSong();
+
+            mediaController.songError();
         }
     }
 
@@ -476,6 +479,15 @@ mediaController.setVideoTime = function () {
     uiController.mediaElementPlayer.media.removeEventListener('loadedmetadata', mediaController.setVideoTime, false);
 }
 
+mediaController.songError = function () {
+    setTimeout(function () {
+        $(".mejs-controls").find('.mejs-time-buffering').hide()
+    }, 500);
+    uiController.toast("Sorry, this song is not available at the moment.", 1500);
+    $("#videoplayer").css("opacity", "0");
+    playlistController.resetPlayingSong();
+}
+
 mediaController.playNextVersion = function () {
     if ($(".mejs-button-choose-version button").css("opacity") < 1)
         return;
@@ -558,6 +570,10 @@ mediaController.playNextVersion = function () {
 
                 }
                 mediaController.playVersion(mediaController.versionList[nextIndex],1,0)
+            }
+            else
+            {
+                mediaController.songError();
             }
         }
     }
@@ -722,10 +738,11 @@ mediaController.openExternalSite = function () {
 
 
 mediaController.showNewMedia = function () {
+    console.dir(preferences.serverURL + "?redirectPage=http://www.dailymotion.com/embed/video/x16cc1m");
     $.ajax({
-        url: "http://www.dailymotion.com/embed/video/x1f38p7",//http://www.youtube.com/embed/Qqqdw0poiSI?html5=1&controls=0&autoplay=1",
+        url: preferences.serverURL + "?redirectPage=http://www.dailymotion.com/embed/video/x16cc1m",//http://www.youtube.com/embed/Qqqdw0poiSI?html5=1&controls=0&autoplay=1",
         success: function (data) {
-            var quelltext = data;
+            console.dir(data);
         }
     })
 
