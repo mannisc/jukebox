@@ -275,7 +275,7 @@ playlistController.globalIdPlaylist = playlistController.playlists.length;
 
 playlistController.loadedPlaylistSongs = playlistController.playlists;
 
-//playlistController.loadedPlaylistSongs = [];  playlistController.playlists = [];
+playlistController.loadedPlaylistSongs = [];  playlistController.playlists = [];
 
 playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
 
