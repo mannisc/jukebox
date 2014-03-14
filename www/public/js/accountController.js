@@ -139,11 +139,13 @@ accountController.savePlaylist = function(name,playlistdata){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
         var savedata = encodeURIComponent(playlistdata);
-        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var nonce    = rsaController.rsa.encrypt(Math.random());
+        nonce        = nonce.substring(0,8);
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename, savedata, savetoken) {
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?storage=" +savetoken+"&type=playlist&name="+savename+"&data="+savedata,
+                url: preferences.serverURL + "?storage=" +savetoken+"&n="+nonce+"&type=playlist&name="+savename+"&data="+savedata,
                 success: function (returndata) {
                 }
             })
@@ -155,12 +157,14 @@ accountController.savePlaylist = function(name,playlistdata){
 accountController.loadPlaylist = function(name,callbackSuccess){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
-        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var nonce    = rsaController.rsa.encrypt(Math.random());
+        nonce        = nonce.substring(0,8);
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename, savetoken) {
             name = encodeURIComponent(name);
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?getdata=" +savetoken+"&type=playlist&name="+savename,
+                url: preferences.serverURL + "?getdata=" +savetoken+"&n="+nonce+"&type=playlist&name="+savename,
                 success: function (playlistdata) {
                     if (callbackSuccess)
                         callbackSuccess(playlistdata);
@@ -176,11 +180,13 @@ accountController.loadPlaylist = function(name,callbackSuccess){
 
 accountController.loadPlaylists = function(callbackSuccess){
     if(accountController.loggedIn){
-        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var nonce    = rsaController.rsa.encrypt(Math.random());
+        nonce        = nonce.substring(0,8);
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savetoken) {
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?getdatalist=" +savetoken+"&type=playlist",
+                url: preferences.serverURL + "?getdatalist=" +savetoken+"&n="+nonce+"&type=playlist",
                 success: function (playlistdataitems) {
                     if (callbackSuccess)
                         callbackSuccess(playlistdataitems);
@@ -200,11 +206,13 @@ accountController.saveUserData = function(type,name,userdata){
         var savename = encodeURIComponent(name);
         var savetype = encodeURIComponent(type);
         var savedata = encodeURIComponent(userdata);
-        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var nonce    = rsaController.rsa.encrypt(Math.random());
+        nonce        = nonce.substring(0,8);
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename,savetype ,savedata, savetoken) {
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?storage=" +savetoken+"&type="+savetype+"&name="+savename+"&data="+savedata,
+                url: preferences.serverURL + "?storage=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename+"&data="+savedata,
                 success: function (returndata) {
                 }
             })
@@ -217,11 +225,13 @@ accountController.loadUserData = function(type,name,callbackSuccess){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
         var savetype = encodeURIComponent(type);
-        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var nonce    = rsaController.rsa.encrypt(Math.random());
+        nonce        = nonce.substring(0,8);
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename,savetype ,savedata, savetoken) {
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?getdata=" +savetoken+"&type="+savetype+"&name="+savename,
+                url: preferences.serverURL + "?getdata=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename,
                 success: function (data) {
                     if (callbackSuccess)
                         callbackSuccess(data);
@@ -239,11 +249,13 @@ accountController.loadUserDataItems = function(type,callbackSuccess){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
         var savetype = encodeURIComponent(type);
-        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var nonce    = rsaController.rsa.encrypt(Math.random());
+        nonce        = nonce.substring(0,8);
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename,savetype ,savedata, savetoken) {
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?getdatalist=" +savetoken+"&type="+savetype,
+                url: preferences.serverURL + "?getdatalist=" +savetoken+"&n="+nonce+"&type="+savetype,
                 success: function (data) {
                     if (callbackSuccess)
                         callbackSuccess(data);
