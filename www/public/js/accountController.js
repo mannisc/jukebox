@@ -17,9 +17,10 @@ accountController.userName   = "";
 accountController.showregisterpopup = false;
 
 accountController.logout = function(){
+    var token =  rsaController.rsa.encrypt(accountController.loginToken);
     $.ajax({
         timeout: 30000,
-        url: preferences.serverURL + "?logout=" + accountController.loginToken,
+        url: preferences.serverURL + "?logout=" +token,
         success: function (data) {
         }
     })
@@ -55,6 +56,12 @@ accountController.signIn = function(){
                         btn.addClass("animated");
                     },500)
 
+                    accountController.savePlaylist("Rammstein",'{"track":[{"name":"Feuer Frei","artist":"Rammstein","weburl":"http://www.dailymotion.com/video/x7wy0_rammstein-feuer-frei_music"},{"name":"Mein Land","artist":"Rammstein","weburl":"http://vimeo.com/31836365"},{"name":"Rammstein","artist":"Rammstein","weburl":"http://media.photobucket.com/user/qabbus/media/Audiosurf/Rammstein-Rammlied.mp4.html?filters%5Bterm%5D=Rammstein&filters%5Bprimary%5D=videos&filters%5Bsecondary%5D=images&sort=1&o=0"},{"name":"Rammstein, Ich Will...","artist":"Rammstein, Ich Will...","weburl":"http://www.dailymotion.com/video/x1225jr_rammstein-ich-will_music"}]}');
+                    accountController.savePlaylist("Eminem",'{"track":[{"name":"Berzerk","artist":"Eminem","weburl":"http://www.dailymotion.com/video/x14guko_eminem-berzerk_music"},{"name":"Eminem","artist":"Eminem","weburl":"http://vimeo.com/13926902"},{"name":"Eminem","artist":"Eminem","weburl":"http://vimeo.com/14328323"}]}');
+
+
+
+
                 }
                 else
                 {
@@ -78,6 +85,11 @@ accountController.signIn = function(){
     }
 
 
+}
+
+accountController.debugData = function(data){
+    console.dir("DATA:");
+    console.dir(data);
 }
 
 accountController.register = function(){
@@ -126,14 +138,62 @@ accountController.register = function(){
 
 }
 
-accountController.savePlaylist = function(name,data){
+accountController.savePlaylist = function(name,playlistdata){
     if(accountController.loggedIn){
-
+        var savename = encodeURIComponent(name);
+        var savedata = encodeURIComponent(playlistdata);
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var send = function (savename, savedata, savetoken) {
+            $.ajax({
+                timeout: 30000,
+                url: preferences.serverURL + "?storage=" +savetoken+"&type=playlist&name="+savename+"&data="+savedata,
+                success: function (returndata) {
+                }
+            })
+        }
+        send(savename, savedata, savetoken);
     }
 }
 
-accountController.loadPlaylists = function(){
+accountController.loadPlaylist = function(name,callbackSuccess){
     if(accountController.loggedIn){
-
+        var savename = encodeURIComponent(name);
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var send = function (savename, savetoken) {
+            name = encodeURIComponent(name);
+            $.ajax({
+                timeout: 30000,
+                url: preferences.serverURL + "?getdata=" +savetoken+"&type=playlist&name="+savename,
+                success: function (playlistdata) {
+                    if (callbackSuccess)
+                        callbackSuccess(playlistdata);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.dir(xhr.responseText);
+                }
+            })
+        }
+        send(savename, savetoken);
     }
 }
+
+accountController.loadPlaylists = function(callbackSuccess){
+    if(accountController.loggedIn){
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var send = function (savetoken) {
+            $.ajax({
+                timeout: 30000,
+                url: preferences.serverURL + "?getdatalist=" +savetoken+"&type=playlist",
+                success: function (playlistdataitems) {
+                    if (callbackSuccess)
+                        callbackSuccess(playlistdataitems);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.dir(xhr.responseText);
+                }
+            })
+        }
+        send(savetoken);
+    }
+}
+
