@@ -220,18 +220,8 @@ mediaController.playVersion = function (songversion, rating,resetVersion) {
                             if (data.videoURL) {
                                 videoURL = data.videoURL;
                             }
-                            try {
-                                streamURL = decodeURIComponent(streamURL);
-                            }
-                            catch (e) {
-                                streamURL = unescape(streamURL);
-                            }
-                            try {
-                                videoURL = decodeURIComponent(videoURL);
-                            }
-                            catch (e) {
-                                videoURL = unescape(videoURL);
-                            }
+                            videoURL  = unescape(videoURL);
+                            streamURL = unescape(streamURL);
                             if (streamURL) {
                                 if (rating == 1) {
                                     mediaController.sendRating("-1");
@@ -354,20 +344,10 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                                     streamURL = data.streamURL;
                                     var videoURL = "";
                                     if (data.videoURL) {
-                                        videoURL = data.videoURL;
+                                         videoURL = data.videoURL;
                                     }
-                                    try {
-                                        streamURL = decodeURIComponent(streamURL);
-                                    }
-                                    catch (e) {
-                                        streamURL = unescape(streamURL);
-                                    }
-                                    try {
-                                        videoURL = decodeURIComponent(videoURL);
-                                    }
-                                    catch (e) {
-                                        videoURL = unescape(videoURL);
-                                    }
+                                    videoURL  = unescape(videoURL);
+                                    streamURL = unescape(streamURL);
                                     if (streamURL) {
 
                                         mediaController.playStreamURL(streamURL, videoURL, true);
