@@ -193,7 +193,7 @@ accountController.loadPlaylists = function(callbackSuccess){
 }
 
 
-accountController.saveUserData = function(name,type,userdata){
+accountController.saveUserData = function(type,name,userdata){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
         var savetype = encodeURIComponent(type);
@@ -211,7 +211,7 @@ accountController.saveUserData = function(name,type,userdata){
     }
 }
 
-accountController.loadUserData = function(name,type,callbackSuccess){
+accountController.loadUserData = function(type,name,callbackSuccess){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
         var savetype = encodeURIComponent(type);
