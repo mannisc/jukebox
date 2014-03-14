@@ -11,7 +11,7 @@
 var embedPlayer = function () {
 
 };
-alert("embed!");
+
 embedPlayer.active = 1;
 
 window.dmAsyncInit = function()
