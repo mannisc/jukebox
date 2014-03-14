@@ -60,7 +60,7 @@ accountController.signIn = function(){
                     },500)
                     accountController.requestid = 1;
 
-
+                // accountController.savePlaylist(1,"TEST",0,"TESTDATEN");
 
                     var loadPlaylists = function(playlists){
                         if(playlists){
@@ -257,8 +257,10 @@ accountController.saveUserData = function(type,name,userdata){
         var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename,savetype ,savedata, savetoken) {
             $.ajax({
+                type: "POST",
+                data: {storage:savetoken,gid:gid,pos:pos,n:nonce,type:savetype,name:savename,data:savedata},
                 timeout: 30000,
-                url: preferences.serverURL + "?storage=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename+"&data="+savedata,
+                url: preferences.serverURL, // "?storage=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename+"&data="+savedata,
                 success: function (returndata) {
                 }
             })
