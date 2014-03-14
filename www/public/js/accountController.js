@@ -36,7 +36,8 @@ accountController.logout = function(){
 
 accountController.signIn = function(){
     var send = function (email, pw) {
-        pw    = rsaController.rsa.encrypt(pw);
+        var md5pw = MD5($.trim(pw));
+        pw        = rsaController.rsa.encrypt(pw);
         var username = email;
         email = rsaController.rsa.encrypt(email);
         $.ajax({
@@ -45,7 +46,7 @@ accountController.signIn = function(){
             success: function (data) {
                 if(data!=""){
                     accountController.loggedIn=true;
-                    accountController.loginToken = data;
+                    accountController.loginToken = MD5(data+md5pw);
                     accountController.userName =username;
                     var btn = $('#header .ui-btn.animated').removeClass("animated");
                     $('#popupLogin').popup('close');
@@ -87,6 +88,7 @@ accountController.debugData = function(data){
 
 accountController.register = function(){
     var send = function (email, pw) {
+        var md5pw = MD5($.trim(pw));
         pw    = rsaController.rsa.encrypt(pw);
         var username = email;
         email = rsaController.rsa.encrypt(email);
@@ -96,7 +98,7 @@ accountController.register = function(){
             success: function (data) {
                 if(data!=""){
                     accountController.loggedIn=true;
-                    accountController.loginToken = data;
+                    accountController.loginToken = MD5(data+md5pw);
                     accountController.userName =username;
                     var btn = $('#header .ui-btn.animated').removeClass("animated");
                     $('#popupLogin').popup('close');
