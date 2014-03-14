@@ -186,7 +186,7 @@ accountController.savePlaylist = function(gid,name,pos,playlistdata){
         var send = function (savename, savedata, savetoken) {
             $.ajax({
                 type: "POST",
-                data: {storage:savetoken,gid:qid,pos:pos,n:nonce,type:"playlist",name:savename,data:savedata},
+                data: {storage:savetoken,gid:gid,pos:pos,n:nonce,type:"playlist",name:savename,data:savedata},
                 timeout: 30000,
                 url: preferences.serverURL ,// + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data=savedata",
                 success: function (returndata) {
