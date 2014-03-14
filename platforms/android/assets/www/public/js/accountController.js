@@ -30,9 +30,9 @@ accountController.logout = function(){
     uiController.styleTopButtons();
     $scope.safeApply();
     uiController.styleTopButtons();
-    setTimeout(function(){
+    /*setTimeout(function(){
         btn.addClass("animated");
-    },500)
+    },500)*/
     accountController.requestid = 1;
 }
 
@@ -59,6 +59,44 @@ accountController.signIn = function(){
                         btn.addClass("animated");
                     },500)
                     accountController.requestid = 1;
+
+
+
+                    var loadPlaylists = function(playlists){
+                        if(playlists){
+                            alert(playlists)
+                            playlists = JSON.parse(playlists);
+                            if(playlists&&playlists.length>0){
+                                //Remove duplicate Playlists
+                                for (var i = 0; i <  playlistController.playlists.length; i++) {
+                                    for (var j = 0; j <  playlists.length; j++) {
+                                          if(playlists[j].gid==playlistController.playlists[i].gid){
+                                              playlistController.playlists[i].splice(i,1);
+                                              i = i -1;
+                                          } else  if(playlists[j].name==playlistController.playlists[i].name){
+                                              playlistController.playlists[i].name = playlistController.playlists[i].name+" (2)";
+                                          }
+
+                                    }
+                                }
+                                playlistController.playlists = playlistController.playlists.concat(playlists)
+                                if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
+                                    $scope.safeApply();
+                                    setTimeout(function () {
+                                        $("#playlistview").listview('refresh');
+                                        $("#playlistview").show();
+                                        uiController.makePlayListSortable();
+                                        setTimeout(function(){
+                                            uiController.playListScroll.refresh();
+                                        },150)
+                                    }, 0)
+                                }
+                            }
+                        }
+                    }
+                    accountController.loadPlaylists(loadPlaylists)
+
+
 
                 }
                 else
@@ -140,16 +178,19 @@ accountController.register = function(){
 
 accountController.savePlaylist = function(gid,name,pos,playlistdata){
     if(accountController.loggedIn){
-        var savename = encodeURIComponent(name);
-        var savedata = encodeURIComponent(playlistdata);
+        var savename = name;
+        var savedata = playlistdata;
         accountController.requestid = accountController.requestid +1;
         var nonce    = accountController.requestid;
         var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename, savedata, savetoken) {
             $.ajax({
+                type: "POST",
+                data: {storage:savetoken,gid:qid,pos:pos,n:nonce,type:"playlist",name:savename,data:savedata},
                 timeout: 30000,
-                url: preferences.serverURL + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data="+savedata,
+                url: preferences.serverURL ,// + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data=savedata",
                 success: function (returndata) {
+                    alert("ERFOLGREICH GESPEICHERT")
                 }
             })
         }
