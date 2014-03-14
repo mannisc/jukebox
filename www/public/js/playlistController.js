@@ -429,15 +429,12 @@ playlistController.playSong = function (song, onlyStyle, playedAutomatic) {
 
     var isSameSong = (playlistController.playingSongId == newId) && (playlistController.playingSongName == song.name) && (playlistController.playingSongArtist == mediaController.getSongArtist(song));
 
-    // alert("isSameSong " + isSameSong + "  play: " + playlistController.playingSongName + " - new: " + song.name)
 
 
     //Already Loading
     if (playlistController.isLoading && isSameSong)
         return;
 
-
-    // alert("!LOADING* "+playlistController.loadingSong+"   "+playlistController.isLoading)
 
     if (!playlistController.isLoading) {
         playlistController.loadingOldSong = playlistController.loadingSong;
@@ -454,16 +451,13 @@ playlistController.playSong = function (song, onlyStyle, playedAutomatic) {
         $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.loadingSong) + ":" + playlistController.loadingSong.name);
     $(".mejs-button-lyrics button").css("opacity", "1");
 
-    // /alert(playlistController.loadingOldSong+"   "+!!playlistController.loadingOldSong)
     if (!playlistController.loadingOldSong) {
         playlistController.disableStopControl(false);
-        //alert("ENABLE")
-
     }
 
     if (isPlaylistSong) {
 
-        var y = parseInt(Id.substring(5)) / (playlistController.loadedPlaylistSongs.length) * ($("#playlistInner").height() - 9);
+        var y = parseInt(Id.substring(5)) / (playlistController.loadedPlaylistSongs.length-1) * ($("#playlistInner").height() - 11);
         $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
 
         $("#playlistInner .iScrollPlayIndicator").fadeIn();
@@ -471,7 +465,7 @@ playlistController.playSong = function (song, onlyStyle, playedAutomatic) {
 
     }
     else {
-        var y = parseInt(Id.substring(5)) / (searchController.searchResults.length) * ($("#searchlist").height() - 9);
+        var y = parseInt(Id.substring(5)) / (searchController.searchResults.length-1) * ($("#searchlist").height() - 11);
         $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
         $("#searchlist .iScrollPlayIndicator").fadeIn();
         $("#playlistInner .iScrollPlayIndicator").hide();
@@ -498,9 +492,9 @@ playlistController.playSong = function (song, onlyStyle, playedAutomatic) {
             $(listElement.get(0)).addClass("pausing");
     }
 
-
     if (!onlyStyle) {
         if (!isSameSong) {
+
             playlistController.isLoading = true;
             loadedSong = true;
             $(listElement.get(0)).addClass("stillloading");
@@ -671,10 +665,10 @@ playlistController.playNextSong = function () {
                 while (index == oIndex)
             }
 
-            playlistController.playSong(playlistController.loadedPlaylistSongs[index])
+            playlistController.playSong(playlistController.loadedPlaylistSongs[index],false, true)
         } else if (playlistController.loadedPlaylistSongs.length > 0 && !playlistController.loadedPlaylistSongs[0].isPlaylist) {
 
-            playlistController.playSong(playlistController.loadedPlaylistSongs[0])
+            playlistController.playSong(playlistController.loadedPlaylistSongs[0],false, true)
 
         } else
             playlistController.disablePositionControls(true);
@@ -694,8 +688,7 @@ playlistController.playNextSong = function () {
                 }
                 while (index == oIndex)
             }
-
-            playlistController.playSong(searchController.searchResults[index], true)
+            playlistController.playSong(searchController.searchResults[index],false, true)
         } else
             playlistController.disablePositionControls(true);
 
@@ -821,7 +814,7 @@ playlistController.remarkSong = function () {
 
     if (playlistController.loadingSong) {
         if (playlistController.playingSongInPlaylist) {
-            y = parseInt(playlistController.loadingSong.id.substring(5)) / (playlistController.loadedPlaylistSongs.length) * ($("#playlistInner").height() - 9);
+            y = parseInt(playlistController.loadingSong.id.substring(5)) / (playlistController.loadedPlaylistSongs.length-1) * ($("#playlistInner").height() - 11);
             $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
 
 
@@ -843,7 +836,7 @@ playlistController.remarkSong = function () {
             }
 
         } else {
-            y = parseInt(playlistController.loadingSong.id.substring(5)) / (searchController.searchResults.length) * ($("#searchlist").height() - 9);
+            y = parseInt(playlistController.loadingSong.id.substring(5)) / (searchController.searchResults.length-1) * ($("#searchlist").height() - 11);
             $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
             $("#searchlist .iScrollPlayIndicator").fadeIn();
             $("#playlistInner .iScrollPlayIndicator").hide();

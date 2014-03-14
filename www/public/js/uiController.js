@@ -72,6 +72,19 @@ uiController.initMediaPlayer = function () {
     MediaElementPlayer.prototype.exitFullScreen = function () {
         //  $("#videoplayer .mejs-controls").css("background", "");
 
+        var setHeight = function () {
+            var height = $(".mejs-mediaelement").outerHeight();
+            console.log("Height: " + height);
+            if (height > 0) {
+                uiController.sizeVideoRelative = 400 / height;
+                uiController.styleVideo();
+
+            } else
+                setTimeout(setHeight, 50);
+        }
+        setTimeout(setHeight, 50);
+
+
         $(".mejs-overlay-resize").show();
 
         //uiController.translateVideo=0;
@@ -143,6 +156,11 @@ uiController.initMediaPlayer = function () {
                     $("#videoplayer").hide();
                     if(playlistController.loadingSong)
                      $("#backgroundImage").css("opacity","0.08");
+
+
+
+
+
 
                 }else  if(uiController.fullscreenMode==2){
                     $("#backgroundImage").css("opacity","1");
