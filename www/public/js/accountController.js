@@ -58,7 +58,8 @@ accountController.signIn = function(){
                     setTimeout(function(){
                         btn.addClass("animated");
                     },500)
-                    accountController.requestid = 1
+                    accountController.requestid = 1;
+
                 }
                 else
                 {
