@@ -275,7 +275,7 @@ playlistController.globalIdPlaylist = playlistController.playlists.length;
 
 playlistController.loadedPlaylistSongs = playlistController.playlists;
 
-//playlistController.loadedPlaylistSongs = [];  playlistController.playlists = [];  //CLEAR_______________________________________________________________
+playlistController.loadedPlaylistSongs = [];  playlistController.playlists = [];  //CLEAR_______________________________________________________________
 
 playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
 
@@ -855,6 +855,34 @@ playlistController.remarkSong = function () {
         }
     }
 }
+
+
+
+playlistController.selectSong = function(song){
+
+     var Id = song.id;
+
+    if (song.gid) {
+
+        var listElement = $("#playlistInner li[data-songid='playlistsong" + Id + "'] ");
+        var newId = globalId
+    }
+    else {
+        //  listElement = $("#searchlist li[data-songid='searchsong" + Id + "'] ");
+
+        listElement = $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
+
+        newId = Id
+    }
+
+
+
+
+    listElement.toggleClass("selected");
+
+
+}
+
 
 
 playlistController.toggleShuffleSongs = function () {

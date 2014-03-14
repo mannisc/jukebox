@@ -1031,6 +1031,17 @@ uiController.makePlayListSortable = function () {
              } while (marquee)*/
 
             $(ui.item).css("opacity", "1");
+
+            if ( uiController.draggedElements) {
+                ui.item.replaceWith( uiController.draggedElements);
+                uiController.draggedElements = null;
+            }
+
+
+
+
+            console.dir("!!!!!")
+            console.dir(ui.item)
             var newLoadedPlaylistSongs = [];
 
 
@@ -1190,7 +1201,16 @@ uiController.makeSearchListDraggable = function () {
 
 
             var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement draggedsearchlistelement');
-            var ele = $helper.append($(this).clone())
+
+
+            var elements = $("#searchlist li.selected");
+            if(elements.length==0)
+               elements = $(this);
+
+            var ele = $helper.append(elements.removeClass("selected").clone())
+
+            uiController.draggedElements = elements;
+
             $(this).css("opacity", "0.5")
 
             //var marquee = $(ele).find("marquee").get(0);
@@ -1385,7 +1405,25 @@ uiController.savePlaylistVisible = function (useSelected) {
 
 uiController.toggleSavePlaylist = function (savePlaylist) {
 
+
+    if(!accountController.loggedIn){
+        if (!accountController.showRegisterPopup)
+        accountController.toggleSignInRegister();
+
+        $('#popupLogin').popup('open', {positionTo: '#signinLink', transition:"pop"});
+
+        setTimeout(function(){
+            $('#signinusername').focus();
+        },500)
+
+        return;
+    }
+
+
+
     uiController.savePlaylist = !uiController.savePlaylist;
+
+
     if (uiController.savePlaylist) {
 
         if ($('#playlistselectvertical .search-choice').length == 1) {
