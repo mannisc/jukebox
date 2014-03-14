@@ -83,8 +83,12 @@ accountController.signIn = function () {
                     accountController.requestid = 1;
 
 
-                    var loadPlaylists = function (playlists) {
-                        if (playlists) {
+
+                // accountController.savePlaylist(1,"TEST",0,"TESTDATEN");
+
+                    var loadPlaylists = function(playlists){
+                        if(playlists){
+
                             alert(playlists)
                             playlists = JSON.parse(playlists);
                             if (playlists && playlists.length > 0) {
@@ -272,8 +276,11 @@ accountController.saveUserData = function (type, name, userdata) {
         var savetoken = rsaController.rsa.encrypt(accountController.loginToken + nonce);
         var send = function (savename, savetype, savedata, savetoken) {
             $.ajax({
+                type: "POST",
+                data: {storage:savetoken,gid:gid,pos:pos,n:nonce,type:savetype,name:savename,data:savedata},
                 timeout: 30000,
-                url: preferences.serverURL + "?storage=" + savetoken + "&n=" + nonce + "&type=" + savetype + "&name=" + savename + "&data=" + savedata,
+
+                url: preferences.serverURL, // "?storage=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename+"&data="+savedata,
                 success: function (returndata) {
                 }
             })
