@@ -533,6 +533,21 @@ white-space: nowrap;
     height:65px!important;
 }
 
+#searchlist li.selected a, #playlistInner li.selected a{
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(78,183,212,1), endColorstr=rgba(78,183,212,1))!important;
+    background-image:-moz-linear-gradient(left, rgba(78,183,212,1) 0%, rgba(78,183,212,1) 44%,rgba(78,183,212,0) 100%)!important;
+    background-image: linear-gradient(left, rgba(78,183,212,1) 0%, rgba(78,183,212,1) 44%,rgba(78,183,212,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(78,183,212,1) 0%, rgba(78,183,212,1) 44%,rgba(78,183,212,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(78,183,212,1) 0%, rgba(78,183,212,1) 44%,rgba(78,183,212,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(78,183,212,1) 0%, rgba(78,183,212,1) 44%,rgba(78,183,212,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(78,183,212,1)), color-stop(44%,rgba(78,183,212,1)),color-stop(100%,rgba(78,183,212,0)))!important;
+
+    border: none !important;
+}
+
+
+
 
 .songlist   li a  {
    overflow:visible!important;

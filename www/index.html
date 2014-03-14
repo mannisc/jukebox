@@ -142,7 +142,7 @@
         <a id="buySongLink" style="opacity:0" onclick="mediaController.buySong()" ng-show="playlistController.loadingSong" href="#" data-rel="popup" data-position-to="#buySongLink"
            class="playingSongBuy   ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-heart ui-btn-icon-left ui-btn-a" data-transition="pop">Buy Song</a>
 
-        <a id="signinLink" ng-if="!accountController.loggedIn" href="#popupLogin" onclick="setTimeout(function(){$('#signinuser').focus();},700)" data-rel="popup" data-position-to="#signinLink"
+        <a id="signinLink" ng-if="!accountController.loggedIn" href="#popupLogin" onclick="setTimeout(function(){$('#signinusername').focus();},700)" data-rel="popup" data-position-to="#signinLink"
            class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
         <a id="linkAccount" ng-if="accountController.loggedIn" href="#popupAccount" data-rel="popup" class="ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a" data-transition="pop">{{accountController.userName}}</a>
 
@@ -190,7 +190,7 @@
 
         <ul data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
-            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img
+            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-click="playlistController.selectSong(song)" ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img
                     src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none"><img src="public/img/empty.png"
                                                                                                                                                                                                     class="loadingSongImg" style="display:none">
 
@@ -255,7 +255,7 @@
 
         <div id="playlistInner" class="animate" style="display:none">
             <ul data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
-                <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
+                <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"  ng-click="playlistController.selectSong(song)"
                     ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
                                                                                            class="ui-li-icon ui-corner-none">
                     <img src="public/img/empty.png" class="loadingSongImg" style="display:none">
@@ -333,16 +333,20 @@
     <form>
         <div style="padding:0px 20px 10px 20px">
             <h3 id="signintitle">Sign in</h3>
+            <label for="signinusername" class="ui-hidden-accessible">Username:</label>
+            <input type="text" name="user" id="signinusername" value="" placeholder="Username" data-theme="a" >
+            <span id="useremail" style="display:none">
             <label for="signinuser" class="ui-hidden-accessible">Email Adress:</label>
             <input type="text" name="user" id="signinuser" value="" placeholder="Email Adress" data-theme="a" >
+            </span>
             <label for="signinpw" class="ui-hidden-accessible">Password:</label>
             <input type="password" name="pass" id="signinpw" value="" placeholder="Password" data-theme="a" >
                 <span id="pwconfirm" style="display:none">
                 <input type="password" name="pass" id="signinpwc" value="" placeholder="Confirm Password" data-theme="a" >
                 </span>
-            <button onclick="if(!showregisterpopup){accountController.signIn()}else{accountController.register()}" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+            <button onclick="if(!accountController.showRegisterPopup){accountController.signIn()}else{accountController.register()}" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
             <a data-role="none" id="registerlink" href="" style="text-decoration:none!important"
-               onclick=";showregisterpopup = !showregisterpopup; if(showregisterpopup){$('#signintitle').html('Please Register');$('#signinButton').html('Register'); $('#registerlink').html('Sign in');$('#pwconfirm').show();}else {$('#signintitle').html('Sign in');$('#signinButton').html('Sign in'); $('#registerlink').html('Register'); $('#pwconfirm').hide();};$('#signinuser').focus();">Register</a>
+               onclick="accountController.toggleSignInRegister();">Register</a>
         </div>
     </form>
 </div>
