@@ -168,7 +168,7 @@ mediaController.getVersions = function () {
                                 if (playlistController.getPlayingSong() == song) {
                                     setTimeout(function () {
                                         getsongversions(counter + 1)
-                                    }, 1500);
+                                    }, 2000);
                                 }
                             }
                         },

@@ -15,6 +15,7 @@ accountController.loginToken = "";
 accountController.loggedIn   = false;
 accountController.userName   = "";
 accountController.showregisterpopup = false;
+accountController.requestid = 1;
 
 accountController.logout = function(){
     var token =  rsaController.rsa.encrypt(accountController.loginToken);
@@ -32,6 +33,7 @@ accountController.logout = function(){
     setTimeout(function(){
         btn.addClass("animated");
     },500)
+    accountController.requestid = 1;
 }
 
 accountController.signIn = function(){
@@ -56,6 +58,7 @@ accountController.signIn = function(){
                     setTimeout(function(){
                         btn.addClass("animated");
                     },500)
+                    accountController.requestid = 1;
                 }
                 else
                 {
@@ -108,6 +111,7 @@ accountController.register = function(){
                     setTimeout(function(){
                      btn.addClass("animated");
                     },500)
+                    accountController.requestid = 1;
                   }
                 else
                 {
@@ -139,8 +143,8 @@ accountController.savePlaylist = function(name,playlistdata){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
         var savedata = encodeURIComponent(playlistdata);
-        var nonce    = rsaController.rsa.encrypt(Math.random());
-        nonce        = nonce.substring(0,8);
+        accountController.requestid = accountController.requestid +1;
+        var nonce    = accountController.requestid;
         var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename, savedata, savetoken) {
             $.ajax({
@@ -157,8 +161,8 @@ accountController.savePlaylist = function(name,playlistdata){
 accountController.loadPlaylist = function(name,callbackSuccess){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
-        var nonce    = rsaController.rsa.encrypt(Math.random());
-        nonce        = nonce.substring(0,8);
+        accountController.requestid = accountController.requestid +1;
+        var nonce    = accountController.requestid;
         var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename, savetoken) {
             name = encodeURIComponent(name);
@@ -180,8 +184,8 @@ accountController.loadPlaylist = function(name,callbackSuccess){
 
 accountController.loadPlaylists = function(callbackSuccess){
     if(accountController.loggedIn){
-        var nonce    = rsaController.rsa.encrypt(Math.random());
-        nonce        = nonce.substring(0,8);
+        accountController.requestid = accountController.requestid +1;
+        var nonce    = accountController.requestid;
         var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savetoken) {
             $.ajax({
@@ -206,8 +210,8 @@ accountController.saveUserData = function(type,name,userdata){
         var savename = encodeURIComponent(name);
         var savetype = encodeURIComponent(type);
         var savedata = encodeURIComponent(userdata);
-        var nonce    = rsaController.rsa.encrypt(Math.random());
-        nonce        = nonce.substring(0,8);
+        accountController.requestid = accountController.requestid +1;
+        var nonce    = accountController.requestid;
         var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename,savetype ,savedata, savetoken) {
             $.ajax({
@@ -225,8 +229,8 @@ accountController.loadUserData = function(type,name,callbackSuccess){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
         var savetype = encodeURIComponent(type);
-        var nonce    = rsaController.rsa.encrypt(Math.random());
-        nonce        = nonce.substring(0,8);
+        accountController.requestid = accountController.requestid +1;
+        var nonce    = accountController.requestid;
         var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename,savetype ,savedata, savetoken) {
             $.ajax({
@@ -249,8 +253,8 @@ accountController.loadUserDataItems = function(type,callbackSuccess){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
         var savetype = encodeURIComponent(type);
-        var nonce    = rsaController.rsa.encrypt(Math.random());
-        nonce        = nonce.substring(0,8);
+        accountController.requestid = accountController.requestid +1;
+        var nonce    = accountController.requestid;
         var savetoken =  rsaController.rsa.encrypt(accountController.loginToken+nonce);
         var send = function (savename,savetype ,savedata, savetoken) {
             $.ajax({
