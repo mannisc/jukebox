@@ -113,7 +113,6 @@ mediaController.showDuration = function (songversion) {
 
 
 mediaController.getVersions = function () {
-
     if ($(".mejs-button-choose-version button").css("opacity") < 1)
         return;
     var currentsong = playlistController.getPlayingSong();
@@ -169,7 +168,7 @@ mediaController.getVersions = function () {
                                 if (playlistController.getPlayingSong() == song) {
                                     setTimeout(function () {
                                         getsongversions(counter + 1)
-                                    }, 1500);
+                                    }, 2000);
                                 }
                             }
                         },
@@ -213,7 +212,7 @@ mediaController.playVersion = function (songversion, rating,resetVersion) {
             //  console.dir(videoURL);
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?playurl=" + videoURL + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name,
+                url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name),
                 success: function (data) {
                     if (streamID == mediaController.playCounter) {
                         if (data.streamURL) {
@@ -221,18 +220,8 @@ mediaController.playVersion = function (songversion, rating,resetVersion) {
                             if (data.videoURL) {
                                 videoURL = data.videoURL;
                             }
-                            try {
-                                streamURL = decodeURIComponent(streamURL);
-                            }
-                            catch (e) {
-                                streamURL = unescape(streamURL);
-                            }
-                            try {
-                                videoURL = decodeURIComponent(videoURL);
-                            }
-                            catch (e) {
-                                videoURL = unescape(videoURL);
-                            }
+                            videoURL  = unescape(videoURL);
+                            streamURL = unescape(streamURL);
                             if (streamURL) {
                                 if (rating == 1) {
                                     mediaController.sendRating("-1");
@@ -327,7 +316,7 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
     var play = function (streamID, searchString, artistString, titleString, streamURL) {
         mediaController.currentvideoURL = "";
         $.ajax({
-            url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + artistString + "&track=" + titleString + "&format=json",
+            url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + encodeURIComponent(artistString) + "&track=" + encodeURIComponent(titleString) + "&format=json",
             success: function (data) {
                 if (streamID == mediaController.playCounter) {
                     setTimeout(function () {
@@ -344,7 +333,7 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                     var loadError = false;
                     $.ajax({
                         timeout: 30000,
-                        url: preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration,
+                        url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration,
                         success: function (data) {
                             // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
                             if (streamID == mediaController.playCounter) {
@@ -355,20 +344,10 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                                     streamURL = data.streamURL;
                                     var videoURL = "";
                                     if (data.videoURL) {
-                                        videoURL = data.videoURL;
+                                         videoURL = data.videoURL;
                                     }
-                                    try {
-                                        streamURL = decodeURIComponent(streamURL);
-                                    }
-                                    catch (e) {
-                                        streamURL = unescape(streamURL);
-                                    }
-                                    try {
-                                        videoURL = decodeURIComponent(videoURL);
-                                    }
-                                    catch (e) {
-                                        videoURL = unescape(videoURL);
-                                    }
+                                    videoURL  = unescape(videoURL);
+                                    streamURL = unescape(streamURL);
                                     if (streamURL) {
 
                                         mediaController.playStreamURL(streamURL, videoURL, true);
@@ -498,7 +477,7 @@ mediaController.playNextVersion = function () {
                 if (counter < 120) {
                     var song = currentsong;
                     $.ajax({
-                        url: preferences.serverURL + "?getversions=8&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name,
+                        url: preferences.serverURL + "?getversions=8&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name),
                         success: function (data) {
                             if (data.track) {
                                 if (playlistController.getPlayingSong() == song) {
