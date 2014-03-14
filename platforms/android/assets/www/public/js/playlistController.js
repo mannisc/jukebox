@@ -918,9 +918,10 @@ playlistController.savePlaylist = function (useSelected) {
 
        // window.localStorage.playlists = JSON.stringify(playlists);
 
-        for (var i = 0; i < playlists.length; i++) {
-           accountController.savePlaylist(playlists[i].name,playlists[i].tracks)
+        for (var i = 0; i <  playlistController.playlists.length; i++) {
+           accountController.savePlaylist( playlistController.playlists[i].gid, playlistController.playlists[i].name,i, playlistController.playlists[i].tracks)
         }
+
 
         $scope.safeApply();
         $('#playlistselectverticalform').trigger('chosen:updated');
