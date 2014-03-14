@@ -1203,11 +1203,11 @@ uiController.makeSearchListDraggable = function () {
             var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement draggedsearchlistelement');
 
 
-            var elements = $("#searchlist li.selected");
+            var elements = $("#searchlist li.selected").removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
             if(elements.length==0)
-               elements = $(this);
+               elements = $(this).removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
 
-            var ele = $helper.append(elements.removeClass("selected").clone())
+            var ele = $helper.append(elements)
 
             uiController.draggedElements = elements;
 
