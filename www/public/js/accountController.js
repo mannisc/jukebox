@@ -55,13 +55,6 @@ accountController.signIn = function(){
                     setTimeout(function(){
                         btn.addClass("animated");
                     },500)
-
-                    accountController.savePlaylist("Rammstein",'{"track":[{"name":"Feuer Frei","artist":"Rammstein","weburl":"http://www.dailymotion.com/video/x7wy0_rammstein-feuer-frei_music"},{"name":"Mein Land","artist":"Rammstein","weburl":"http://vimeo.com/31836365"},{"name":"Rammstein","artist":"Rammstein","weburl":"http://media.photobucket.com/user/qabbus/media/Audiosurf/Rammstein-Rammlied.mp4.html?filters%5Bterm%5D=Rammstein&filters%5Bprimary%5D=videos&filters%5Bsecondary%5D=images&sort=1&o=0"},{"name":"Rammstein, Ich Will...","artist":"Rammstein, Ich Will...","weburl":"http://www.dailymotion.com/video/x1225jr_rammstein-ich-will_music"}]}');
-                    accountController.savePlaylist("Eminem",'{"track":[{"name":"Berzerk","artist":"Eminem","weburl":"http://www.dailymotion.com/video/x14guko_eminem-berzerk_music"},{"name":"Eminem","artist":"Eminem","weburl":"http://vimeo.com/13926902"},{"name":"Eminem","artist":"Eminem","weburl":"http://vimeo.com/14328323"}]}');
-
-
-
-
                 }
                 else
                 {
