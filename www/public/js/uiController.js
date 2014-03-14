@@ -73,7 +73,7 @@ uiController.initMediaPlayer = function () {
         //  $("#videoplayer .mejs-controls").css("background", "");
 
         var setHeight = function () {
-            var height = $(".mejs-mediaelement").outerHeight();
+            var height = $("video").outerHeight();  //
             console.log("Height: " + height);
             if (height > 0) {
                 uiController.sizeVideoRelative = 400 / height;
@@ -355,7 +355,7 @@ uiController.initMediaPlayer = function () {
                 if(!playlistController.loadingSong.isAudioFile){
                     if (this.videoWidth > 0) {
                         var setHeight = function () {
-                            var height = $(".mejs-mediaelement").outerHeight();
+                            var height = $("video").outerHeight();//.mejs-mediaelement
                             console.log("Height: " + height);
                             if (height > 0) {
                                 uiController.sizeVideoRelative = 400 / height;
@@ -827,14 +827,15 @@ uiController.init = function () {
 
     var playIndicator = $('<div class="iScrollPlayIndicator" ' +
             'style="box-sizing: border-box; ' +
-            ' position: absolute; background-color: rgba(245,245,245, 0.498039);' +
+            ' position: absolute;' +
+            /*' background-color: rgba(245,245,245, 0.498039);' +
             ' border: 1px solid rgba(255, 255, 255, 0.901961);' +
             ' border-top-left-radius: 3px;' +
             ' border-top-right-radius: 3px;' +
             ' border-bottom-right-radius: 3px;' +
             ' border-bottom-left-radius: 3px;' +
             ' width: 100%;' +
-            ' display: block; height: 9px;' +
+            ' display: block; height: 9px;' +  */
             ' -webkit-transform: translate(0px, 0px)' +
             ' -moz-transform: translate(0px, 0px)' +
             ' -ms-transform: translate(0px, 0px)' +

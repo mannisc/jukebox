@@ -124,10 +124,15 @@ margin-bottom: 5px!important;
 .iScrollPlayIndicator{
  pointer-events:none;
     opacity:0.8!important;
-}
-.iScrollIndicator{
-}
 
+
+    width: 0;
+    height: 0;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+
+    border-left: 10px solid rgba(78,183,212,0.8);
+}
 
 
 .ui-li-has-icon img {
