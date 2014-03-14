@@ -60,12 +60,6 @@ accountController.signIn = function(){
                     },500)
                     accountController.requestid = 1;
 
-
-
-
-
-
-
                 }
                 else
                 {
@@ -87,8 +81,6 @@ accountController.signIn = function(){
     {
         uiController.toast("Error: Please check your login data.", 1500);
     }
-
-
 }
 
 accountController.debugData = function(data){
@@ -146,7 +138,7 @@ accountController.register = function(){
 
 
 
-accountController.savePlaylist = function(name,playlistdata){
+accountController.savePlaylist = function(gid,name,pos,playlistdata){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
         var savedata = encodeURIComponent(playlistdata);
@@ -156,7 +148,7 @@ accountController.savePlaylist = function(name,playlistdata){
         var send = function (savename, savedata, savetoken) {
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?storage=" +savetoken+"&n="+nonce+"&type=playlist&name="+savename+"&data="+savedata,
+                url: preferences.serverURL + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data="+savedata,
                 success: function (returndata) {
                 }
             })
@@ -181,7 +173,8 @@ accountController.loadPlaylist = function(name,callbackSuccess){
                         callbackSuccess(playlistdata);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.dir(xhr.responseText);
+                    if (callbackSuccess)
+                        callbackSuccess(xhr.responseText);
                 }
             })
         }
@@ -198,12 +191,13 @@ accountController.loadPlaylists = function(callbackSuccess){
             $.ajax({
                 timeout: 30000,
                 url: preferences.serverURL + "?getdatalist=" +savetoken+"&n="+nonce+"&type=playlist",
-                success: function (playlistdataitems) {
+                success: function (data) {
                     if (callbackSuccess)
-                        callbackSuccess(playlistdataitems);
+                        callbackSuccess(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.dir(xhr.responseText);
+                    if (callbackSuccess)
+                        callbackSuccess(xhr.responseText);
                 }
             })
         }
