@@ -275,7 +275,7 @@ playlistController.globalIdPlaylist = playlistController.playlists.length;
 
 playlistController.loadedPlaylistSongs = playlistController.playlists;
 
-playlistController.loadedPlaylistSongs = [];  playlistController.playlists = [];
+//playlistController.loadedPlaylistSongs = [];  playlistController.playlists = [];  //CLEAR_______________________________________________________________
 
 playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
 
@@ -457,7 +457,7 @@ playlistController.playSong = function (song, onlyStyle, playedAutomatic) {
 
     if (isPlaylistSong) {
 
-        var y = parseInt(Id.substring(5)) / (playlistController.loadedPlaylistSongs.length-1) * ($("#playlistInner").height() - 11);
+        var y = 22+parseInt(Id.substring(5)) / (playlistController.loadedPlaylistSongs.length-1) * ($("#playlistInner").height() - 11-49);
         $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
 
         $("#playlistInner .iScrollPlayIndicator").fadeIn();
@@ -465,7 +465,7 @@ playlistController.playSong = function (song, onlyStyle, playedAutomatic) {
 
     }
     else {
-        var y = parseInt(Id.substring(5)) / (searchController.searchResults.length-1) * ($("#searchlist").height() - 11);
+        var y = 22+parseInt(Id.substring(5)) / (searchController.searchResults.length-1) * ($("#searchlist").height() - 11-49);
         $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
         $("#searchlist .iScrollPlayIndicator").fadeIn();
         $("#playlistInner .iScrollPlayIndicator").hide();
@@ -814,7 +814,7 @@ playlistController.remarkSong = function () {
 
     if (playlistController.loadingSong) {
         if (playlistController.playingSongInPlaylist) {
-            y = parseInt(playlistController.loadingSong.id.substring(5)) / (playlistController.loadedPlaylistSongs.length-1) * ($("#playlistInner").height() - 11);
+            y =  22+parseInt(playlistController.loadingSong.id.substring(5)) / (playlistController.loadedPlaylistSongs.length-1) * ($("#playlistInner").height() - 11-49);
             $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
 
 
@@ -836,7 +836,7 @@ playlistController.remarkSong = function () {
             }
 
         } else {
-            y = parseInt(playlistController.loadingSong.id.substring(5)) / (searchController.searchResults.length-1) * ($("#searchlist").height() - 11);
+            y = 22+parseInt(playlistController.loadingSong.id.substring(5)) / (searchController.searchResults.length-1) * ($("#searchlist").height() - 11-49);
             $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
             $("#searchlist .iScrollPlayIndicator").fadeIn();
             $("#playlistInner .iScrollPlayIndicator").hide();
@@ -915,8 +915,12 @@ playlistController.savePlaylist = function (useSelected) {
         playlistController.globalIdPlaylist++;
         playlistController.playlists = playlists;
 
-        window.localStorage.playlists = JSON.stringify(playlists);
 
+       // window.localStorage.playlists = JSON.stringify(playlists);
+
+        for (var i = 0; i < playlists.length; i++) {
+           accountController.savePlaylist(playlists[i].name,playlists[i].tracks)
+        }
 
         $scope.safeApply();
         $('#playlistselectverticalform').trigger('chosen:updated');
