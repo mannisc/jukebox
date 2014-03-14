@@ -131,6 +131,8 @@ accountController.register = function(){
 
 }
 
+
+
 accountController.savePlaylist = function(name,playlistdata){
     if(accountController.loggedIn){
         var savename = encodeURIComponent(name);
@@ -190,3 +192,65 @@ accountController.loadPlaylists = function(callbackSuccess){
     }
 }
 
+
+accountController.saveUserData = function(name,type,userdata){
+    if(accountController.loggedIn){
+        var savename = encodeURIComponent(name);
+        var savetype = encodeURIComponent(type);
+        var savedata = encodeURIComponent(userdata);
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var send = function (savename,savetype ,savedata, savetoken) {
+            $.ajax({
+                timeout: 30000,
+                url: preferences.serverURL + "?storage=" +savetoken+"&type="+savetype+"&name="+savename+"&data="+savedata,
+                success: function (returndata) {
+                }
+            })
+        }
+        send(savename,savetype,savedata, savetoken);
+    }
+}
+
+accountController.loadUserData = function(name,type,callbackSuccess){
+    if(accountController.loggedIn){
+        var savename = encodeURIComponent(name);
+        var savetype = encodeURIComponent(type);
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var send = function (savename,savetype ,savedata, savetoken) {
+            $.ajax({
+                timeout: 30000,
+                url: preferences.serverURL + "?getdata=" +savetoken+"&type="+savetype+"&name="+savename,
+                success: function (data) {
+                    if (callbackSuccess)
+                        callbackSuccess(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.dir(xhr.responseText);
+                }
+            })
+        }
+        send(savename,savetype,savedata, savetoken);
+    }
+}
+
+accountController.loadUserDataItems = function(type,callbackSuccess){
+    if(accountController.loggedIn){
+        var savename = encodeURIComponent(name);
+        var savetype = encodeURIComponent(type);
+        var savetoken =  rsaController.rsa.encrypt(accountController.loginToken);
+        var send = function (savename,savetype ,savedata, savetoken) {
+            $.ajax({
+                timeout: 30000,
+                url: preferences.serverURL + "?getdatalist=" +savetoken+"&type="+savetype,
+                success: function (data) {
+                    if (callbackSuccess)
+                        callbackSuccess(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.dir(xhr.responseText);
+                }
+            })
+        }
+        send(savename,savetype,savedata, savetoken);
+    }
+}
