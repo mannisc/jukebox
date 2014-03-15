@@ -196,6 +196,27 @@ mediaController.getVersions = function () {
     }
 }
 
+
+mediaController.playSong= function(streamURL,videoURL){
+    if(videoURL.search("dailymotion.com") > -1 ){
+        embedPlayer.enable();
+        uiController.mediaElementPlayer.setSrc("http://0.0.0.0");
+        uiController.mediaElementPlayer.load();
+        uiController.mediaElementPlayer.play();
+        embedPlayer.loadDailymotion(videoURL);
+    }
+    else{
+        embedPlayer.disable();
+        uiController.mediaElementPlayer.setSrc(streamURL);
+        uiController.mediaElementPlayer.load();
+        uiController.mediaElementPlayer.play();
+        mediaController.currentStreamURL = streamURL;
+        mediaController.currentvideoURL = videoURL;
+    }
+}
+
+
+
 mediaController.playVersion = function (songversion, rating,resetVersion) {
     $('#loadversionimg').css("opacity", "1");
     $(".mejs-time-buffering").fadeIn();
@@ -349,7 +370,7 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                                     videoURL  = unescape(videoURL);
                                     streamURL = unescape(streamURL);
                                     console.dir(data);
-                                    alert(streamURL);
+
                                     if (streamURL) {
 
                                         mediaController.playStreamURL(streamURL, videoURL, true);
@@ -414,13 +435,8 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
 
         playlistController.setNewTitle(playlistController.loadingSong.name, mediaController.getSongCover(playlistController.loadingSong), true);
 
+        mediaController.playSong(streamURL,videoURL)
 
-        uiController.mediaElementPlayer.setSrc(streamURL);
-        uiController.mediaElementPlayer.load();
-        uiController.mediaElementPlayer.play();
-
-        mediaController.currentStreamURL = streamURL;
-        mediaController.currentvideoURL = videoURL;
         console.dir(streamURL);
         if (rating == 1) {
             mediaController.sendRating("1");
@@ -577,13 +593,8 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
         playlistController.loadingOldSong = playlistController.loadingSong;
 
         playlistController.setNewTitle(playlistController.loadingSong.name, mediaController.getSongCover(playlistController.loadingSong), true);
+        mediaController.playSong(streamURL,videoURL);
 
-        uiController.mediaElementPlayer.setSrc(streamURL);
-        uiController.mediaElementPlayer.load();
-        uiController.mediaElementPlayer.play();
-
-        mediaController.currentStreamURL = streamURL;
-        mediaController.currentvideoURL = videoURL;
 
         //$("#siteLogoImage").attr('onclick',"win=window.open('"+mediaController.currentvideoURL+"', '_blank')");
 
@@ -718,6 +729,8 @@ mediaController.openExternalSite = function () {
 }
 
 
+
+
 mediaController.showNewMedia = function () {
     console.dir(preferences.serverURL + "?redirectPage=http://www.dailymotion.com/embed/video/x16cc1m");
     $.ajax({
@@ -727,7 +740,7 @@ mediaController.showNewMedia = function () {
         }
     })
 
-    /*
+
 
 
      //    videobox.empty();
@@ -735,41 +748,38 @@ mediaController.showNewMedia = function () {
      //    videobox.show();
 
      //  videoplayer.remove();
-     var videobox = $('#videoplayerInner').first();
-     var videoplayer = $('#player1').first();
 
 
-     videobox.hide();
+
+}
+
+/*
+mediaController.restartPlayer  = function (){
+
+
+    var videobox = $('#videoplayerInner').first();
+    var videoplayer = $('#player1').first();
+     videobox.empty();
+     videoplayer.remove();
      uiController.mediaElementPlayer.media.remove();
      uiController.mediaElementPlayer.remove();
 
-
-     //videobox.append('<video id="player1" controls="controls" autoplay="true" preload="true"><source src="http://www.youtube.com/watch?v=nOEw9iiopwI" type="video/youtube" ></video>');
-     // videobox.empty(); // Clear any children.
-     console.dir("HTML5 VIDEO");
-     console.dir($('#video-stream html5-main-video').html());
-
-     console.dir(document.getElementById('myIFrame').contentWindow.document.getElementsByID("video-stream html5-main-video"));
-
-
-     videobox.append($('#video-stream html5-main-video').html());
-     $("#videocontrols").empty();
-     $("#videocontrols").append('<div id="videocontrolsInner"><div class="mejs-button mejs-button-choose-version mejs-custom-button"> <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" onclick="mediaController.getVersions();" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button> </div><div class="mejs-button mejs-button-lyrics mejs-custom-button"><button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" onclick="mediaController.toggleLyrics();" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button></div> <div class="mejs-button mejs-button-facebook mejs-custom-button"><button type="button" id="facebookpostbutton" data-role="none" style="opacity:0.5" onclick="mediaController.postOnFacebook();" aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button></div></div>');
-
-
-
-     uiController.initMediaPlayer();
-     uiController.styleVideo();
-
-     $("#videocontrolsInner").show();
-     $("#videocontrols").show();
-     $('#player1').first().show();
-     $('#player1').show();
-     $("#videoplayer").css("opacity", "1");
-     $("#videoplayer").css("pointer-events","auto");
-
-     $("#videocontrols").css("opacity", "1");
+     videobox.append('<video id="player1" controls="controls" autoplay="true" preload="true"><source src="" type="video/mp4"/><source src="" type="video/flv"/></video>');
      videobox.show();
-     */
 
-};
+   // videobox.append('<video id="player1" controls="controls" autoplay="true" preload="true"><source src="" type="video/mp4"/><source src="" type="video/flv"/></video>');
+    $("#videocontrols").remove();
+    $("#videocontrols").append('<div id="videocontrolsInner"><div class="mejs-button mejs-button-choose-version mejs-custom-button"> <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" onclick="mediaController.getVersions();" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button> </div><div class="mejs-button mejs-button-lyrics mejs-custom-button"><button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" onclick="mediaController.toggleLyrics();" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button></div> <div class="mejs-button mejs-button-facebook mejs-custom-button"><button type="button" id="facebookpostbutton" data-role="none" style="opacity:0.5" onclick="mediaController.postOnFacebook();" aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button></div></div>');
+
+    uiController.initMediaPlayer();
+    uiController.styleVideo();
+
+    $("#videocontrolsInner").show();
+    $("#videocontrols").show();
+    $('#player1').first().show();
+    $('#player1').show();
+    $("#videoplayer").css("opacity", "1");
+    $("#videocontrols").css("opacity", "1");
+    videobox.show();
+}
+*/
