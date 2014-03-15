@@ -12,95 +12,155 @@ var embedPlayer = function () {
 
 };
 
-embedPlayer.active = 1;
+embedPlayer.dmplayer    = null;
+
+embedPlayer.active      = 0;
+embedPlayer.dailymotion = 0;
+
+embedPlayer.bufferedTime = 0;
+embedPlayer.duration = 0;
+embedPlayer.currentTime = 0;
+
 
 window.dmAsyncInit = function()
 {
-    // PARAMS is a javascript object containing parameters to pass to the player if any (eg: {autoplay: 1})
 
 }
 
+function getDailyMotionId(url) {
+    var m = url.match(/^.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/);
+    if (m !== null) {
+        if(m[4] !== undefined) {
+            return m[4];
+        }
+        return m[2];
+    }
+    return null;
+}
 
 
 embedPlayer.loadDailymotion = function (url) {
-    var PARAMS = {background : 'ABE866', autoplay : 1, chromeless : 1,
-        foreground : '000000',
-        html : 1, highlight : '857580',
-        info : 1, network : 'dsl', autoplay : 1};
-    embedPlayer.dmplayer = DM.player("dmplayer", {video: id, width: "640", height: "360", params: PARAMS});
-    embedPlayer.dmplayer.setVolume(0);
-   /*
-    player.addEventListener("apiready", function (e) {
-        console.log('apiready');
-    });
+    embedPlayer.dailymotion = 1;
+    var videoid = getDailyMotionId(url);
+    $("#dmplayer").addClass("backgroundVideo").insertAfter("#backgroundImage");
+    if(videoid){
 
-    player.addEventListener("playing", function (e) {
-        console.log("playing");
-    });
+        var PARAMS = {background : 'ABE866', autoplay : 1, chromeless : 1,
+            foreground : '000000', related: 0, quality: 720,
+            html : 1, highlight : '857580',
+            info : 1, network : 'dsl', autoplay : 0};
+        embedPlayer.dmplayer = DM.player("dmplayer", {width: "100%", height: "100%", params: PARAMS});
+        embedPlayer.dmplayer.addEventListener("apiready", function(e)
+        {
+            embedPlayer.dmplayer.load(videoid);
+            $(".mejs-playpause-button").find("button").css("opacity", "1");
 
+            $(".mejs-playpause-button button").addClass("mejs-pause");
 
-    var controls = ['pause', 'play'];
-    for (var i = 0; i < controls.length; i++) {
-        $('#controls').append('<button id=\'' + controls[i] + '\'>' + controls[i] + '</button>');
-        var lc = '#' + controls[i];
-        $(lc).click(function () {
-
-            eval('player.' + this.id + '();');
+            $(".mejs-time-buffering").hide();
+            embedPlayer.dmplayer.play();
+            $(".mejs-playpause-button").click();
         });
+        embedPlayer.dmplayer.addEventListener("durationchange", function(e)
+        {
+            embedPlayer.duration = e.target.duration;
+            embedPlayer.updateDuration();
+
+        });
+        embedPlayer.dmplayer.addEventListener("timeupdate", function(e)
+        {
+            embedPlayer.currentTime = e.target.currentTime;
+            embedPlayer.updateCurrentTime();
+        });
+        embedPlayer.dmplayer.addEventListener("progress", function(e)
+        {
+            embedPlayer.bufferedTime = e.target.bufferedTime;
+            embedPlayer.updateProgress();
+        });
+
+
+
+
+
     }
-
-    //----- TOGGLE PLAY - OK to play, NOK to pause -----//
-    $('#controls').append('<button id="togglePlay">togglePlay</button>');
-    $('#togglePlay').click(function () {
-
-    });
-
-    //----- SEEK - OK -----//
-    $('#controls').append('<button id="seek">seek</button>');
-    $('#seek').click(function () {
-        player.seek(10);
-    });
-
-    //----- LOAD - OK -----//
-    $('#controls').append('<button id="load">load</button>');
-    $('#load').click(function () {
-        player.load("x174uig");
-    });
-
-    //----- SETVOLUME - OK -----//
-    $('#controls').append('<button id="setVolume">setVolume</button>');
-    $('#setVolume').click(function () {
-
-    });
-
-    //----- UNMUTE - NOK -----//
-    $('#controls').append('<button id="unmute">unmute</button>');
-    $('#unmute').click(function () {
-        player.setMuted(0);
-    });
-
-    //----- MUTE - OK -----//
-    $('#controls').append('<button id="mute">mute</button>');
-    $('#mute').click(function () {
-        player.setMuted(1);
-    });
-
-    //----- TOGGLEMUTE - OK -----//
-    $('#controls').append('<button id="toggleMute">toggleMute</button>');
-    $('#toggleMute').click(function () {
-        player.toggleMuted();
-    });
-
-    //----- FULLSCREEN - NOK -----//
-    $('#controls').append('<button id="setFullscreen">setFullscreen</button>');
-    $('#setFullscreen').click(function () {
-        player.setFullscreen(1);
-    });
-    */
 
 }
 
 embedPlayer.loadYouTube = function (id) {
+
+}
+
+
+
+
+
+embedPlayer.updateDuration = function (){
+    if(embedPlayer.active == 1){
+        if(embedPlayer.duration > 0){
+            var t  = uiController.mediaElementPlayer;
+            t.durationD.html(mejs.Utility.secondsToTimeCode(t.options.duration > 0 ? t.options.duration : embedPlayer.duration, t.options.alwaysShowHours, t.options.showTimecodeFrameCount, t.options.framesPerSecond || 25));
+        }
+    }
+}
+
+embedPlayer.updateCurrentTime = function (){
+   if(embedPlayer.active == 1){
+       if(embedPlayer.duration > 0){
+            var t  = uiController.mediaElementPlayer;
+            var newWidth = Math.round(t.total.width() * embedPlayer.currentTime / embedPlayer.duration),
+                handlePos = newWidth - Math.round(t.handle.outerWidth(true) / 2);
+            t.current.width(newWidth);
+            t.handle.css('left', handlePos);
+
+           t.currenttime.html(mejs.Utility.secondsToTimeCode(embedPlayer.currentTime, t.options.alwaysShowHours || embedPlayer.duration > 3600, t.options.showTimecodeFrameCount,  t.options.framesPerSecond || 25));
+
+       }
+   }
+}
+
+embedPlayer.updateProgress = function (){
+    if(embedPlayer.active == 1){
+        if(embedPlayer.duration > 0){
+            var t  = uiController.mediaElementPlayer;
+            var percent =  embedPlayer.bufferedTime/embedPlayer.duration;
+            percent = Math.min(1, Math.max(0, percent));
+            // update loaded bar
+            if (t.loaded && t.total) {
+                t.loaded.width(t.total.width() * percent);
+            }
+        }
+    }
+}
+
+embedPlayer.enable = function () {
+    uiController.mediaElementPlayer.pause();
+    $(".mejs-time-buffering").fadeOut();
+    $("#dmplayer").show();
+    $("#player1").hide();
+    embedPlayer.active = 1;
+    embedPlayer.bufferedTime = 0;
+    embedPlayer.duration = 0;
+    embedPlayer.currentTime = 0;
+
+}
+
+embedPlayer.disable = function () {
+    embedPlayer.stop();
+    $("#dmplayer").hide();
+    $("#player1").show();
+    embedPlayer.active = 0;
+    if(embedPlayer.dailymotion &&  embedPlayer.dmplayer){
+        embedPlayer.dmplayer.removeEventListener("apiready");
+
+        embedPlayer.dmplayer.removeEventListener("durationchange");
+
+        embedPlayer.dmplayer.removeEventListener("timeupdate");
+
+        embedPlayer.dmplayer.removeEventListener("progress");
+
+    }
+    embedPlayer.dmplayer = null;
+    embedPlayer.dailymotion = 0;
 
 }
 
@@ -109,22 +169,40 @@ embedPlayer.setLoaded = function () {
 }
 
 embedPlayer.setVolume = function (volume) {
-    embedPlayer.dmplayer.setVolume(volume);
+    if(embedPlayer.dailymotion  && embedPlayer.dmplayer){
+        embedPlayer.dmplayer.setVolume(volume);
+    }
+
 }
 
 embedPlayer.play = function () {
-    embedPlayer.dmplayer.play();
+    if(embedPlayer.dailymotion  && embedPlayer.dmplayer){
+        embedPlayer.dmplayer.play();
+    }
+    setTimeout(function () {
+        $(".mejs-time-buffering").fadeOut();
+    }, 300);
+
 }
 embedPlayer.pause = function () {
-    embedPlayer.dmplayer.pause();
+    if(embedPlayer.dailymotion  && embedPlayer.dmplayer){
+        embedPlayer.dmplayer.pause();
+    }
+
 }
 
 embedPlayer.stop = function () {
-    embedPlayer.dmplayer.stop();
+    if(embedPlayer.dailymotion  && embedPlayer.dmplayer){
+        embedPlayer.dmplayer.pause();
+        embedPlayer.dmplayer.seek(0);
+    }
 }
 
 embedPlayer.seek = function (time) {
-    embedPlayer.dmplayer.seek(time);
+    if(embedPlayer.dailymotion  && embedPlayer.dmplayer){
+        embedPlayer.dmplayer.seek(time* embedPlayer.duration);
+    }
+
 }
 
 
