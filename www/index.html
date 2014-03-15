@@ -116,7 +116,6 @@
 
 <div data-role="page" id="page" style="opacity:0" data-theme="b">
 
-
 <div data-role="panel" id="rightpanel" data-display="overlay" data-position="right" data-theme="b">
 </div>
 <!-- /panel -->
@@ -155,6 +154,7 @@
 
 <!--Open Side Panel-->
 <div onclick="uiController.toggleSidePanel();" id="openSidePanelBarIconBar" style="z-index:9000;position: fixed;top: 0;right: 0;width: 30px;height:44px;"></div>
+
 
 
 <div data-role="content" id="content">
@@ -275,9 +275,10 @@
         </div>
     </div>
 
+
     <div id="videoplayer">
         <div id="videoplayerInner">
-          <div id="dmplayer"></div>
+          <div id="dmplayer" style="position:absolute; top:0px; left:0px; z-index:0" ></div>
           <video id="player1" controls="controls" autoplay="true" preload="true">
                 <source src="" type="video/mp4"/>
               <source src="" type="video/flv"/>
@@ -397,12 +398,15 @@
     <h4>Footer content</h4>
 </div>< /footer -->
 
+
 <img src="public/img/background.jpg" id="backgroundImage">
+
 </div>
 
 
+<!-- /dailymotion -->
+<script src="http://api.dmcdn.net/all.js"></script>
 <!-- /page -->
-
 
 
 <script type="text/javascript" src="public/cordova.js"></script>
@@ -487,7 +491,6 @@
 <script src="https://apis.google.com/js/client.js?onload=loadClient"></script>
 
 <!--Embed-->
-<script src="http://api.dmcdn.net/all.js"></script>
 <script type="text/javascript" src="public/js/embedPlayers.js"></script>
 
 <!-- Preload Images-->
