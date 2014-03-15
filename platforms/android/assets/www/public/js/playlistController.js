@@ -859,22 +859,18 @@ playlistController.remarkSong = function () {
 
 
 playlistController.selectSong = function(song){
-
      var Id = song.id;
 
     if (song.gid) {
 
         var listElement = $("#playlistInner li[data-songid='playlistsong" + Id + "'] ");
-        var newId = globalId
     }
     else {
         //  listElement = $("#searchlist li[data-songid='searchsong" + Id + "'] ");
 
         listElement = $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
 
-        newId = Id
     }
-
 
 
 

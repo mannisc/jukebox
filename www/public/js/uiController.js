@@ -1051,16 +1051,18 @@ uiController.makePlayListSortable = function () {
                 if ($(this).hasClass("playlistsong")) {
                     id = this.dataset.songid.substring(12);
                     actSong = playlistController.loadedPlaylistSongs[parseInt(id.substring(5))];
+                    actSong = jQuery.extend(true, {}, actSong);
 
                 } else {
                     var id = this.dataset.songid.substring(10);
                     var actSong = searchController.searchResults[parseInt(id.substring(5))];
+                    actSong = jQuery.extend(true, {}, actSong);
+
                     //  alert(index)
                     $(this).remove();
                     actSong.gid = "plsgid" + playlistController.globalId;
                     playlistController.globalId = playlistController.globalId + 1;
                 }
-                actSong = jQuery.extend(true, {}, actSong)
                 console.log(id + "  " + id.substring(5) + "    " + this.dataset.songid)
                 actSong.id = "plsid" + helperFunctions.padZeros(index, ("" + playlistController.loadedPlaylistSongs.length).length);
 
@@ -1203,11 +1205,12 @@ uiController.makeSearchListDraggable = function () {
             var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement draggedsearchlistelement');
 
 
-            var elements = $("#searchlist li.selected");
-            if(elements.length==0)
-               elements = $(this);
+            var elements = $("#searchlist li.selected").removeClass("selected").clone(true,true).removeClass("loadedsong playing pausing stillLoading");
 
-            var ele = $helper.append(elements.removeClass("selected").clone())
+            if(elements.length==0)
+               elements = $(this).removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
+
+            var ele = $helper.append(elements)
 
             uiController.draggedElements = elements;
 
