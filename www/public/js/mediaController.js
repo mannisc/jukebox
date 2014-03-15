@@ -348,6 +348,8 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                                     }
                                     videoURL  = unescape(videoURL);
                                     streamURL = unescape(streamURL);
+                                    console.dir(data);
+                                    alert(streamURL);
                                     if (streamURL) {
 
                                         mediaController.playStreamURL(streamURL, videoURL, true);

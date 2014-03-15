@@ -17,18 +17,18 @@ embedPlayer.active = 1;
 window.dmAsyncInit = function()
 {
     // PARAMS is a javascript object containing parameters to pass to the player if any (eg: {autoplay: 1})
-    var PARAMS = {background : 'ABE866', autoplay : 1, chromeless : 1,
-        foreground : '000000',
-        html : 1, highlight : '857580',
-        info : 1, network : 'dsl', autoplay : 1};
-    embedPlayer.dmplayer = DM.player("dmplayer", {video: "x1bmqa4", width: "640", height: "360", params: PARAMS});
-    embedPlayer.dmplayer.setVolume(0);
+
 }
 
 
 
 embedPlayer.loadDailymotion = function (url) {
-
+    var PARAMS = {background : 'ABE866', autoplay : 1, chromeless : 1,
+        foreground : '000000',
+        html : 1, highlight : '857580',
+        info : 1, network : 'dsl', autoplay : 1};
+    embedPlayer.dmplayer = DM.player("dmplayer", {video: id, width: "640", height: "360", params: PARAMS});
+    embedPlayer.dmplayer.setVolume(0);
    /*
     player.addEventListener("apiready", function (e) {
         console.log('apiready');
@@ -100,7 +100,7 @@ embedPlayer.loadDailymotion = function (url) {
 
 }
 
-embedPlayer.loadYouTube = function () {
+embedPlayer.loadYouTube = function (id) {
 
 }
 
@@ -109,7 +109,7 @@ embedPlayer.setLoaded = function () {
 }
 
 embedPlayer.setVolume = function (volume) {
-    embedPlayer.dmplayer.setVolume(0);
+    embedPlayer.dmplayer.setVolume(volume);
 }
 
 embedPlayer.play = function () {
@@ -126,4 +126,6 @@ embedPlayer.stop = function () {
 embedPlayer.seek = function (time) {
     embedPlayer.dmplayer.seek(time);
 }
+
+
 
