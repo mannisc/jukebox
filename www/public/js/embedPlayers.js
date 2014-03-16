@@ -16,6 +16,7 @@ embedPlayer.dmplayer    = null;
 
 embedPlayer.active      = 0;
 embedPlayer.dailymotion = 0;
+embedPlayer.dailymotionVideoID = 0;
 
 embedPlayer.bufferedTime = 0;
 embedPlayer.duration = 0;
@@ -26,6 +27,9 @@ window.dmAsyncInit = function()
 {
 
 }
+
+
+
 
 function getDailyMotionId(url) {
     var m = url.match(/^.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/);
@@ -42,9 +46,12 @@ function getDailyMotionId(url) {
 embedPlayer.loadDailymotion = function (url) {
     embedPlayer.dailymotion = 1;
     var videoid = getDailyMotionId(url);
-    $("#dmplayer").addClass("backgroundVideo").insertAfter("#backgroundImage");
-    if(videoid){
 
+  //  $("#dmplayer").addClass("backgroundVideo").insertAfter("#backgroundImage");
+    $("#embedplayer").hide();
+    if(videoid){
+        $("#dmplayer").addClass("iframeVideo").insertAfter("#backgroundImage");
+        embedPlayer.dailymotionVideoID = videoid;
         var PARAMS = {background : 'ABE866', autoplay : 1, chromeless : 1,
             foreground : '000000', related: 0, quality: 720,
             html : 1, highlight : '857580',
@@ -57,9 +64,12 @@ embedPlayer.loadDailymotion = function (url) {
 
             $(".mejs-playpause-button button").addClass("mejs-pause");
 
+
+
             $(".mejs-time-buffering").hide();
             embedPlayer.dmplayer.play();
             $(".mejs-playpause-button").click();
+            $("#embedplayer").show();
         });
         embedPlayer.dmplayer.addEventListener("durationchange", function(e)
         {
@@ -78,9 +88,10 @@ embedPlayer.loadDailymotion = function (url) {
             embedPlayer.updateProgress();
         });
 
-
-
-
+        embedPlayer.dmplayer.addEventListener("ended", function(e)
+        {
+            embedPlayer.mediaEnded();
+        });
 
     }
 
@@ -101,6 +112,10 @@ embedPlayer.updateDuration = function (){
             t.durationD.html(mejs.Utility.secondsToTimeCode(t.options.duration > 0 ? t.options.duration : embedPlayer.duration, t.options.alwaysShowHours, t.options.showTimecodeFrameCount, t.options.framesPerSecond || 25));
         }
     }
+}
+
+embedPlayer.mediaEnded = function(){
+    mediaController.mediaEnded();
 }
 
 embedPlayer.updateCurrentTime = function (){
@@ -173,6 +188,10 @@ embedPlayer.setVolume = function (volume) {
         embedPlayer.dmplayer.setVolume(volume);
     }
 
+}
+
+embedPlayer.setFullscreen = function (fullscreen) {
+  //  embedPlayer.dmplayer.fullscreen(fullscreen);
 }
 
 embedPlayer.play = function () {

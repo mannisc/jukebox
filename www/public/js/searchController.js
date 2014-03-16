@@ -329,17 +329,21 @@ searchController.showSearchList = function () {
 
 searchController.showSuggestions = function () {
     setTimeout(function () {
-
         var index;
         var song;
-        if (playlistController.loadedPlaylistSongs.length > 0) {
-            index = Math.round(Math.random() * (playlistController.loadedPlaylistSongs.length - 1));
-
-            song = playlistController.loadedPlaylistSongs[index];
+        if (mediaController.currentvideoURL != "") {
+            song = playlistController.getPlayingSong();
         }
-        else if (searchController.searchResults.length > 0) {
-            index = Math.round(Math.random() * (searchController.searchResults.length - 1));
-            song = searchController.searchResults[index];
+        else{
+            if (playlistController.loadedPlaylistSongs.length > 0) {
+                index = Math.round(Math.random() * (playlistController.loadedPlaylistSongs.length - 1));
+
+                song = playlistController.loadedPlaylistSongs[index];
+            }
+            else if (searchController.searchResults.length > 0) {
+                index = Math.round(Math.random() * (searchController.searchResults.length - 1));
+                song = searchController.searchResults[index];
+            }
         }
         if (song) {
             searchController.suggestions(song.name, mediaController.getSongArtist(song), searchController.completeSearch);

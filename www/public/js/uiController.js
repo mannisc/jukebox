@@ -123,7 +123,7 @@ uiController.initMediaPlayer = function () {
     MediaElementPlayer.prototype.extoptions = {scale: 1.5, displayBox: false};
 
 
-    uiController.mediaElementPlayer = new MediaElementPlayer('video', {
+    uiController.mediaElementPlayer = new MediaElementPlayer('#player1', {
         features: [ 'prevtrack', 'playpause', 'stop', 'nexttrack', 'shuffle', 'current', 'progress', 'duration', 'volume', 'fullscreen'],
 
         enableKeyboard: false,
@@ -132,6 +132,9 @@ uiController.initMediaPlayer = function () {
         autosizeProgress: false,
 
         success: function (mediaElement, domObject) {
+
+
+
             var resizeLayer = $(".mejs-overlay-play").clone();
             resizeLayer.removeClass("mejs-overlay-play").addClass("mejs-overlay-resize");
             resizeLayer.insertAfter(".mejs-overlay-play");
@@ -155,11 +158,12 @@ uiController.initMediaPlayer = function () {
 
                 if(uiController.fullscreenMode==1){ //Background
                     if(embedPlayer.active == 0){
+
                          $("#videoplayer video").addClass("backgroundVideo").insertAfter("#backgroundImage");
                     }
                     else
                     {
-                        $("#dmplayer").addClass("backgroundVideo").insertAfter("#backgroundImage");
+                        $("#dmplayer").addClass("iframeVideo").insertAfter("#backgroundImage");
                     }
 
                     $("#videoplayer").hide();
@@ -174,14 +178,20 @@ uiController.initMediaPlayer = function () {
                 }else  if(uiController.fullscreenMode==2){
                     $("#backgroundImage").css("opacity","1");
                     $("#videoplayer").show();
-
-                    $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
-
+                    if(embedPlayer.active == 0){
+                         $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
+                    }
+                    else
+                    {
+                        //// $(".backgroundVideo").removeClass("backgroundVideo").appendTo("#embedplayer");
+                    }
                     $($('.mejs-fullscreen-button').get(0)).click();
+
                 } else  if(uiController.fullscreenMode==0){
                     $($('.mejs-fullscreen-button').get(0)).click();
 
                 }
+
                 if(isPlaying)
                     mediaElement.play();
 
@@ -372,30 +382,12 @@ uiController.initMediaPlayer = function () {
                 }
             });
             mediaElement.addEventListener("ended", function (e) {
-                mediaController.sendRating("2");
-                document.title = $scope.appTitle;
-
-                playlistController.isPlaying = false;
-                playlistController.disableStopControl(true);
-                $("#videoplayer").css("opacity", "0");
-                $("#videoplayer").css("pointer-events","none");
-
-                $(".mejs-time-loaded").hide();
-
-                $(".mejs-playpause-button button").addClass("looped");
-                uiController.playedFirst = false;
-                uiController.updateUI();
-
-                if (!playlistController.isLoading)
-                    playlistController.playNextSong();
-
-
+                mediaController.mediaEnded();
             });
 
 
             mediaElement.addEventListener("error", function (e) {
                 if (mediaController.currentvideoURL && embedPlayer.active == 0) {
-                    alert("next version!")
                     mediaController.playNextVersion();
                 }
             });
