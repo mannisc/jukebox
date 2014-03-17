@@ -93,6 +93,7 @@ embedPlayer.loadDailymotion = function (url) {
             embedPlayer.mediaEnded();
         });
 
+
     }
 
 }
@@ -152,6 +153,7 @@ embedPlayer.enable = function () {
     $(".mejs-time-buffering").fadeOut();
     $("#dmplayer").show();
     $("#player1").hide();
+    $("#videoplayer").hide();
     embedPlayer.active = 1;
     embedPlayer.bufferedTime = 0;
     embedPlayer.duration = 0;
@@ -163,6 +165,7 @@ embedPlayer.disable = function () {
     embedPlayer.stop();
     $("#dmplayer").hide();
     $("#player1").show();
+    $("#videoplayer").show();
     embedPlayer.active = 0;
     if(embedPlayer.dailymotion &&  embedPlayer.dmplayer){
         embedPlayer.dmplayer.removeEventListener("apiready");

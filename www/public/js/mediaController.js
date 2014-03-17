@@ -134,7 +134,7 @@ mediaController.showDuration = function (songversion) {
 
 mediaController.getVersions = function () {
     var currentsong = playlistController.getPlayingSong();
-    if (mediaController.currentStreamURL != "" && currentsong) {
+    if (mediaController.currentStreamURL != "") {
         if (mediaController.versionListVideoURL != mediaController.currentvideoURL) {
             mediaController.versionList = [];
             $scope.safeApply();
@@ -218,7 +218,6 @@ mediaController.getVersions = function () {
 
 
 mediaController.playSong= function(streamURL,videoURL){
-    mediaController.versionListVideoURL = "";
     mediaController.currentStreamURL    = streamURL;
     mediaController.currentvideoURL     = videoURL;
     if(videoURL.search("dailymotion.com") > -1 ){
@@ -234,7 +233,9 @@ mediaController.playSong= function(streamURL,videoURL){
         uiController.mediaElementPlayer.load();
         uiController.mediaElementPlayer.play();
     }
-
+    setTimeout(function () {
+        uiController.setScreenMode();
+    }, 500);
 }
 
 
@@ -311,7 +312,7 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
 
 
 mediaController.playStream = function (artist, title,playedAutomatic) {
-
+    mediaController.versionListVideoURL = "";
     $(".mejs-time-buffering").fadeIn();
 
     if ($(".mejs-time-loaded").width() > $(".mejs-time-total").width() * 0.7)
