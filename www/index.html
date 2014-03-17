@@ -275,15 +275,18 @@
         </div>
     </div>
 
-
     <div id="videoplayer">
         <div id="videoplayerInner">
-          <div id="dmplayer" style="position:absolute; top:0px; left:0px; z-index:0" ></div>
+
           <video id="player1" controls="controls" autoplay="true" preload="true">
-                <source src="" type="video/mp4"/>
-              <source src="" type="video/flv"/>
+               <source src="" type="video/mp4"/>
+           <!--   <source src="" type="video/flv"/> -->
             </video>
+            <div id="embedplayer" >
+               <div id="dmplayer" ></div>
+            </div>
         </div>
+
     </div>
     <div id="videocontrols" class="mejs-container" style="text-align: center">
         <div id="videocontrolsInner">

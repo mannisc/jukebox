@@ -27,6 +27,9 @@ searchController.SearchCounter = 0;
 
 searchController.buttonActive = 0;
 
+searchController.maxPopularSongPages = 3;
+searchController.maxArtistSongPages = 2;
+
 searchController.init = function () {
 
     $("#searchinput").on("input", function () {
@@ -153,20 +156,31 @@ searchController.completeSearch = function (list) {
             }
         }
     }
+    console.dir("list:");
+    console.dir(list);
+    console.dir("changed: "+changed);
     if (changed) {
         searchController.searchResults = [];
         $scope.safeApply();
-        var num = Math.min(searchController.maxResults, list.track.length);
-
-        for (var i = 0; i < num; i++) {
-            searchController.searchResults[i] = list.track[i];
+        var num = 1;
+        if(list.track.length){
+           num = Math.min(searchController.maxResults, list.track.length);
+            console.dir("num :" + list.track.length);
+            console.dir("results:");
+            for (var i = 0; i < num; i++) {
+                searchController.searchResults[i] = list.track[i];
+                console.dir(list.track[i]);
+            }
+            searchController.searchResultsComplete = list.track;
         }
-        searchController.searchResultsComplete = list.track;
+        else{
+            searchController.searchResults[0] = list.track;
+            searchController.searchResultsComplete[0] = list.track[0];
+        }
+
         for (var i = 0; i < searchController.searchResults.length; i++) {
             searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
         }
-
-
         $scope.safeApply();
         $("#searchlistview").listview('refresh');
 
@@ -262,7 +276,6 @@ searchController.filterSongs = function (filterTerm) {
                 icounter++;
             }
         }
-        console.dir("LENGTH: " + searchController.searchResults.length);
         if (searchController.searchResults.length != newSearchResults.length) {
             changed = true;
         }
@@ -420,8 +433,6 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
 
             success: function (data) {
                 if (searchID == searchController.SearchCounter) {
-                    console.dir("Server Search Results:");
-                    console.dir(data);
                     for (var i = 0; i < data.track.length; i++) {
                         try {
                             data.track[i].artist = decodeURIComponent(data.track[i].artist);
@@ -455,11 +466,10 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                 if (searchID == searchController.SearchCounter) {
                     if (data.results && data.results.trackmatches) {
                         if (data.results.trackmatches == "\n") {
-                            console.dir("Load: " + preferences.serverURL + "?searchjson=" + searchString);
+
                             searchserver(searchID);
                         }
                         else {
-                            console.dir(data.results);
                             if (searchID == searchController.SearchCounter) {
                                 setTimeout(searchController.showLoading, 1000);
                                 if (callbackSuccess)
@@ -495,8 +505,6 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
             url: preferences.serverURL + "?searchjson=" + searchString,
             success: function (data) {
                 if (searchID == searchController.SearchCounter) {
-                    console.dir("Server Search Results:");
-                    console.dir(data);
                     for (var i = 0; i < data.track.length; i++) {
                         try {
                             data.track[i].artist = decodeURIComponent(data.track[i].artist);
@@ -523,32 +531,42 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
 
         })
     }
-    var func = function (searchID) {
+    var func = function (searchID,page,topresults) {
         $.ajax({
 
-            url: "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + searchString + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
+            url: "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + searchString + "&page="+page+"&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
             success: function (data) {
-                console.dir("OK");
-                console.dir(data);
                 if (searchID == searchController.SearchCounter) {
+                    var dataOK = false;
                     if (data.toptracks) {
-                        if (data.toptracks == "\n") {
+                        if (data.toptracks == "\n" && page == 1) {
                             searchserver(searchID);
                         }
                         else {
-                            console.dir(data.toptracks);
-                            if (searchID == searchController.SearchCounter) {
-                                setTimeout(searchController.showLoading, 1000);
-                                if (callbackSuccess)
-                                    callbackSuccess(data.toptracks);
+                            dataOK = true;
+                            if (page == 1) {
+                                func(searchID, page + 1, data.toptracks.track);
                             }
+                            else if (page < searchController.maxArtistSongPages) {
+                                topresults =topresults.concat(data.toptracks.track);
+                                func(searchID, page + 1, topresults);
 
+                            }
+                            else if (page >= searchController.maxArtistSongPages) {
+                                topresults =topresults.concat(data.toptracks.track);
+                                topresults.track = topresults;
+                                if (callbackSuccess)
+                                    callbackSuccess(topresults);
+                                setTimeout(searchController.showLoading, 1000);
+                            }
                         }
-
-
+                    }
+                    if(dataOK==false && page > 1 && topresults){
+                        topresults.track = topresults;
+                        if (callbackSuccess)
+                            callbackSuccess(topresults);
                     }
                 }
-
             },
             error: function () {
                 if (searchID == searchController.SearchCounter) {
@@ -557,26 +575,49 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
             }
         })
     }
-    func(searchID);
+    func(searchID,1,null);
 }
 
 searchController.topTracks = function (callbackSuccess) {
     searchController.SearchCounter++;
     var searchID = searchController.SearchCounter;
-    var func = function (searchID) {
+    var func = function (searchID,page,topresults) {
         searchController.showLoading(true);
         $.ajax({
-            url: "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
+            url: "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&page="+page+"&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
             success: function (data) {
-                console.dir(data);
-                if (data.tracks) {
-                    if (data.tracks != "\n") {
-                        if (searchID == searchController.SearchCounter) {
-                            console.dir(data);
-                            if (callbackSuccess)
-                                callbackSuccess(data.tracks);
-                        }
+                if (searchID == searchController.SearchCounter) {
+                    var dataOK = false;
+                    if (data.tracks) {
+                        if (data.tracks != "\n") {
+                            dataOK = true;
+                            if (page == 1) {
 
+                                func(searchID, page + 1, data.tracks.track);
+                            }
+                            else if (page < searchController.maxPopularSongPages) {
+
+
+                                topresults = topresults.concat(data.tracks.track);
+                                console.dir("page: "+page);
+                                console.dir(topresults)
+                                func(searchID, page + 1, topresults);
+                            }
+                            else if (page >= searchController.maxPopularSongPages) {
+                                topresults = topresults.concat(data.tracks.track);
+                                topresults.track = topresults;
+                                console.dir("page: "+page);
+                                console.dir(topresults)
+                                console.dir("CALLBACK!");
+                                if (callbackSuccess)
+                                    callbackSuccess(topresults);
+                                setTimeout(searchController.showLoading, 1000);
+                            }
+                        }
+                    }
+                    if (dataOK == false && page > 1 && topresults) {
+                        if (callbackSuccess)
+                            callbackSuccess(topresults);
                     }
                 }
             }, complete: function () {
@@ -584,7 +625,7 @@ searchController.topTracks = function (callbackSuccess) {
             }
         })
     }
-    func(searchID);
+    func(searchID,1,null);
 }
 
 searchController.suggestions = function (title, artist, callbackSuccess) {
