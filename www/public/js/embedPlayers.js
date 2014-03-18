@@ -21,6 +21,7 @@ embedPlayer.dailymotionVideoID = 0;
 embedPlayer.bufferedTime = 0;
 embedPlayer.duration = 0;
 embedPlayer.currentTime = 0;
+embedPlayer.apiready = false;
 
 
 window.dmAsyncInit = function()
@@ -61,20 +62,23 @@ embedPlayer.loadDailymotion = function (url) {
         {
             embedPlayer.dmplayer.load(videoid);
             $(".mejs-playpause-button").find("button").css("opacity", "1");
-
             $(".mejs-playpause-button button").addClass("mejs-pause");
-
-
-
             $(".mejs-time-buffering").hide();
-            embedPlayer.dmplayer.play();
             $(".mejs-playpause-button").click();
             $("#embedplayer").show();
+            embedPlayer.apiready = true;
         });
+
+        embedPlayer.dmplayer.addEventListener("error", function(e)
+        {
+            embedPlayer.error();
+        });
+
         embedPlayer.dmplayer.addEventListener("durationchange", function(e)
         {
             embedPlayer.duration = e.target.duration;
             embedPlayer.updateDuration();
+
 
         });
         embedPlayer.dmplayer.addEventListener("timeupdate", function(e)
@@ -103,11 +107,30 @@ embedPlayer.loadYouTube = function (id) {
 }
 
 
+embedPlayer.error= function (){
+    //TODO FEEDBACK AN SERVER!
+    //mediaController.playNextVersion();
+}
+
+embedPlayer.isEmbedVideo= function(videoURL){
+    if(videoURL.search("dailymotion.com") > -1 ){
+        return true;
+    }
+    return false;
+}
+
+embedPlayer.setSrc = function (url) {
+   if(url.search("dailymotion.com") > -1 ){
+       embedPlayer.loadDailymotion(url);
+   }
+}
+
+
 
 
 
 embedPlayer.updateDuration = function (){
-    if(embedPlayer.active == 1){
+    if(embedPlayer.active == 1 &&  embedPlayer.apiready){
         if(embedPlayer.duration > 0){
             var t  = uiController.mediaElementPlayer;
             t.durationD.html(mejs.Utility.secondsToTimeCode(t.options.duration > 0 ? t.options.duration : embedPlayer.duration, t.options.alwaysShowHours, t.options.showTimecodeFrameCount, t.options.framesPerSecond || 25));
@@ -120,7 +143,7 @@ embedPlayer.mediaEnded = function(){
 }
 
 embedPlayer.updateCurrentTime = function (){
-   if(embedPlayer.active == 1){
+   if(embedPlayer.active == 1  &&  embedPlayer.apiready){
        if(embedPlayer.duration > 0){
             var t  = uiController.mediaElementPlayer;
             var newWidth = Math.round(t.total.width() * embedPlayer.currentTime / embedPlayer.duration),
@@ -135,7 +158,7 @@ embedPlayer.updateCurrentTime = function (){
 }
 
 embedPlayer.updateProgress = function (){
-    if(embedPlayer.active == 1){
+    if(embedPlayer.active == 1  &&  embedPlayer.apiready){
         if(embedPlayer.duration > 0){
             var t  = uiController.mediaElementPlayer;
             var percent =  embedPlayer.bufferedTime/embedPlayer.duration;
@@ -149,7 +172,6 @@ embedPlayer.updateProgress = function (){
 }
 
 embedPlayer.enable = function () {
-    uiController.mediaElementPlayer.pause();
     $(".mejs-time-buffering").fadeOut();
     $("#dmplayer").show();
     $("#player1").hide();
@@ -158,6 +180,7 @@ embedPlayer.enable = function () {
     embedPlayer.bufferedTime = 0;
     embedPlayer.duration = 0;
     embedPlayer.currentTime = 0;
+    embedPlayer.apiready = false;
 
 }
 
@@ -179,6 +202,7 @@ embedPlayer.disable = function () {
     }
     embedPlayer.dmplayer = null;
     embedPlayer.dailymotion = 0;
+    embedPlayer.apiready = false;
 
 }
 
@@ -187,7 +211,7 @@ embedPlayer.setLoaded = function () {
 }
 
 embedPlayer.setVolume = function (volume) {
-    if(embedPlayer.dailymotion  && embedPlayer.dmplayer){
+    if(embedPlayer.dailymotion  && embedPlayer.dmplayer && embedPlayer.apiready){
         embedPlayer.dmplayer.setVolume(volume);
     }
 
@@ -198,7 +222,7 @@ embedPlayer.setFullscreen = function (fullscreen) {
 }
 
 embedPlayer.play = function () {
-    if(embedPlayer.dailymotion  && embedPlayer.dmplayer){
+    if(embedPlayer.dailymotion  && embedPlayer.dmplayer && embedPlayer.apiready){
         embedPlayer.dmplayer.play();
     }
     setTimeout(function () {
@@ -207,21 +231,21 @@ embedPlayer.play = function () {
 
 }
 embedPlayer.pause = function () {
-    if(embedPlayer.dailymotion  && embedPlayer.dmplayer){
+    if(embedPlayer.dailymotion  && embedPlayer.dmplayer && embedPlayer.apiready){
         embedPlayer.dmplayer.pause();
     }
 
 }
 
 embedPlayer.stop = function () {
-    if(embedPlayer.dailymotion  && embedPlayer.dmplayer){
+    if(embedPlayer.dailymotion  && embedPlayer.dmplayer && embedPlayer.apiready){
         embedPlayer.dmplayer.pause();
         embedPlayer.dmplayer.seek(0);
     }
 }
 
 embedPlayer.seek = function (time) {
-    if(embedPlayer.dailymotion  && embedPlayer.dmplayer){
+    if(embedPlayer.dailymotion  && embedPlayer.dmplayer && embedPlayer.apiready){
         embedPlayer.dmplayer.seek(time* embedPlayer.duration);
     }
 

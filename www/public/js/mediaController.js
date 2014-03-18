@@ -18,7 +18,7 @@ mediaController.playCounter = 0;
 mediaController.versionList = [];
 
 mediaController.startVersionIndex = -1;
-mediaController.versionListVideoURL = "";
+mediaController.versionListSong = null;
 mediaController.currentStreamURL = "";
 mediaController.currentvideoURL = "";
 
@@ -104,15 +104,19 @@ mediaController.postOnFacebook = function () {
 
 
 mediaController.sendRating = function (rating) {
+    var VideoURL = mediaController.currentvideoURL;
     var song = playlistController.getPlayingSong();
-    if (mediaController.currentvideoURL != "" && song) {
-        $.ajax({
-            url: preferences.serverURL + "?ratingURL=" + mediaController.currentvideoURL + "&rating=" + rating + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name,
-            success: function (data) {
+    var rate = function (song,VideoURL) {
+        if (mediaController.currentvideoURL != "" && song) {
+            $.ajax({
+                url: preferences.serverURL + "?ratingURL=" +VideoURL+ "&rating=" + rating + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name,
+                success: function (data) {
 
-            }
-        })
+                }
+            })
+        }
     }
+    rate(song,VideoURL);
 }
 
 mediaController.showDuration = function (songversion) {
@@ -132,10 +136,32 @@ mediaController.showDuration = function (songversion) {
 
 
 
+mediaController.playSong= function(streamURL,videoURL){
+    mediaController.currentStreamURL    = streamURL;
+    mediaController.currentvideoURL     = videoURL;
+    if(embedPlayer.isEmbedVideo(videoURL) ){
+        embedPlayer.enable();
+        uiController.mediaElementPlayer.setSrc("http://0.0.0.0");
+        uiController.mediaElementPlayer.load();
+        uiController.mediaElementPlayer.play();
+        embedPlayer.loadDailymotion(videoURL);
+    }
+    else{
+        embedPlayer.disable();
+        uiController.mediaElementPlayer.setSrc(streamURL);
+        uiController.mediaElementPlayer.load();
+        uiController.mediaElementPlayer.play();
+    }
+    setTimeout(function () {
+        uiController.setScreenMode();
+    }, 500);
+}
+
+
 mediaController.getVersions = function () {
     var currentsong = playlistController.getPlayingSong();
     if (mediaController.currentStreamURL != "") {
-        if (mediaController.versionListVideoURL != mediaController.currentvideoURL) {
+        if (mediaController.versionListSong != currentsong) {
             mediaController.versionList = [];
             $scope.safeApply();
             $("#searchviewVersions").listview('refresh');
@@ -171,7 +197,7 @@ mediaController.getVersions = function () {
                                             data.track[i].url = unescape(data.track[i].url);
                                         }
                                     }
-                                    mediaController.versionListVideoURL = mediaController.currentvideoURL;
+                                    mediaController.versionListSong = song;
                                     mediaController.versionList = data.track;
                                     mediaController.startVersionIndex = -1;
                                     $scope.safeApply();
@@ -216,30 +242,6 @@ mediaController.getVersions = function () {
     }
 }
 
-
-mediaController.playSong= function(streamURL,videoURL){
-    mediaController.currentStreamURL    = streamURL;
-    mediaController.currentvideoURL     = videoURL;
-    if(videoURL.search("dailymotion.com") > -1 ){
-        embedPlayer.enable();
-        uiController.mediaElementPlayer.setSrc("http://0.0.0.0");
-        uiController.mediaElementPlayer.load();
-        uiController.mediaElementPlayer.play();
-        embedPlayer.loadDailymotion(videoURL);
-    }
-    else{
-        embedPlayer.disable();
-        uiController.mediaElementPlayer.setSrc(streamURL);
-        uiController.mediaElementPlayer.load();
-        uiController.mediaElementPlayer.play();
-    }
-    setTimeout(function () {
-        uiController.setScreenMode();
-    }, 500);
-}
-
-
-
 mediaController.playVersion = function (songversion,rating,resetVersion) {
     $('#loadversionimg').css("opacity", "1");
     $(".mejs-time-buffering").fadeIn();
@@ -253,50 +255,64 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
     var play = function (streamID, videoURL) {
         var song = playlistController.getPlayingSong();
         if (videoURL != mediaController.currentvideoURL) {
-            //  console.dir(videoURL);
-            $.ajax({
-                timeout: 30000,
-                url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name),
-                success: function (data) {
-                    if (streamID == mediaController.playCounter) {
-                        if (data.streamURL) {
-                            var streamURL = data.streamURL;
-                            if (data.videoURL) {
-                                videoURL = data.videoURL;
-                            }
-                            videoURL  = unescape(videoURL);
-                            streamURL = unescape(streamURL);
-                            if (streamURL) {
-                                if (rating == 1) {
-                                    mediaController.sendRating("-1");
+            if(embedPlayer.isEmbedVideo(videoURL)){
+
+                if (rating == 1) {
+                    mediaController.sendRating("-1");
+                }
+                mediaController.playStreamURLSeek(videoURL, videoURL, true, rating);
+                $('#loadversionimg').css("opacity", "0");
+                setTimeout(function () {
+                    $(".mejs-controls").find('.mejs-time-buffering').hide()
+                }, 500);
+            }
+            else
+            {
+                //  console.dir(videoURL);
+                $.ajax({
+                    timeout: 30000,
+                    url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name),
+                    success: function (data) {
+                        if (streamID == mediaController.playCounter) {
+                            if (data.streamURL) {
+                                var streamURL = data.streamURL;
+                                if (data.videoURL) {
+                                    videoURL = data.videoURL;
                                 }
-                                if(resetVersion == 1){
-                                    mediaController.startVersionIndex = -1;
-                                }
-                                mediaController.seekTime = uiController.mediaElementPlayer.getCurrentTime();
-                                mediaController.seekTimeDuration = uiController.mediaElementPlayer.media.duration;
-                                mediaController.versionListVideoURL = videoURL;
-                                mediaController.playStreamURLSeek(streamURL, videoURL, true, rating);
+                                videoURL  = unescape(videoURL);
+                                streamURL = unescape(streamURL);
+                                if (streamURL) {
+                                    if (rating == 1) {
+                                        mediaController.sendRating("-1");
+                                    }
+                                    if(resetVersion == 1){
+                                        mediaController.startVersionIndex = -1;
+                                    }
+                                    mediaController.seekTime = uiController.mediaElementPlayer.getCurrentTime();
+                                    mediaController.seekTimeDuration = uiController.mediaElementPlayer.media.duration;
+                                    mediaController.versionListSong = song;
+                                    mediaController.playStreamURLSeek(streamURL, videoURL, true, rating);
+
+                                } else
+                                    loadError = true;
 
                             } else
                                 loadError = true;
-
                         } else
                             loadError = true;
-                    } else
+                    },
+                    error: function () {
                         loadError = true;
-                },
-                error: function () {
-                    loadError = true;
-                },
-                complete: function () {
-                    //TODO
-                    $('#loadversionimg').css("opacity", "0");
-                    setTimeout(function () {
-                        $(".mejs-controls").find('.mejs-time-buffering').hide()
-                    }, 500);
-                }
-            })
+                    },
+                    complete: function () {
+                        //TODO
+                        $('#loadversionimg').css("opacity", "0");
+                        setTimeout(function () {
+                            $(".mejs-controls").find('.mejs-time-buffering').hide()
+                        }, 500);
+                    }
+                })
+            }
         }
         else {
             $('#loadversionimg').css("opacity", "0");
@@ -312,7 +328,6 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
 
 
 mediaController.playStream = function (artist, title,playedAutomatic) {
-    mediaController.versionListVideoURL = "";
     $(".mejs-time-buffering").fadeIn();
 
     if ($(".mejs-time-loaded").width() > $(".mejs-time-total").width() * 0.7)
@@ -384,13 +399,23 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                                 mediaController.playCounter++;
                                 // console.dir("STREAM");
                                 // console.dir(data);
-                                if (data.streamURL) {
-                                    streamURL = data.streamURL;
-                                    var videoURL = "";
-                                    if (data.videoURL) {
-                                         videoURL = data.videoURL;
+                                //
+                                var videoURL = "";
+                                if (data.videoURL) {
+                                  videoURL = data.videoURL;
+                                }
+                                videoURL  = unescape(videoURL);
+                                if(embedPlayer.isEmbedVideo(videoURL))
+                                {
+                                    streamURL = videoURL;
+                                    mediaController.playStreamURL(streamURL, videoURL, true);
+                                    if (playlistController.playedSongs.length > 100) {
+                                        playlistController.playedSongs.splice(playlistController.playedSongs.length - 100, 100)
                                     }
-                                    videoURL  = unescape(videoURL);
+
+                                }
+                                else if (data.streamURL) {
+                                    streamURL = data.streamURL;
                                     streamURL = unescape(streamURL);
                                     console.dir(data);
 
@@ -440,13 +465,10 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
 
 }
 
-mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVersions, time, rating) {
-
-
+mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVersions, rating) {
     $("#videoplayer").removeClass("animate").addClass("animatefast");
     $("#videoplayer").css("opacity", "0");
     $("#videoplayer").css("pointer-events","none");
-
 
     setTimeout(function () {
         $("#videoplayer").removeClass("animatefast").addClass("animate");
@@ -458,13 +480,12 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
 
         playlistController.setNewTitle(playlistController.loadingSong.name, mediaController.getSongCover(playlistController.loadingSong), true);
 
+
         mediaController.playSong(streamURL,videoURL)
 
-        console.dir(streamURL);
         if (rating == 1) {
             mediaController.sendRating("1");
         }
-        // console.dir(videoURL);
 
 
         if (differentVersions) {
@@ -513,7 +534,7 @@ mediaController.playNextVersion = function () {
         return;
     var currentsong = playlistController.getPlayingSong();
     if (currentsong.name != "") {
-        if(mediaController.versionListVideoURL != mediaController.currentvideoURL){
+        if(mediaController.versionListSong != currentsong){
             var getsongversions = function (counter) {
                 if (counter < 120) {
                     var song = currentsong;
@@ -601,8 +622,6 @@ mediaController.playNextVersion = function () {
 
 
 mediaController.playStreamURL = function (streamURL, videoURL, differentVersions) {
-
-
     $("#videoplayer").removeClass("animate").addClass("animatefast");
     $("#videoplayer").css("opacity", "0");
     $("#videoplayer").css("pointer-events","none");

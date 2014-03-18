@@ -396,7 +396,7 @@ playlistController.playSong = function (song, onlyStyle, playedAutomatic) {
         return;
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
-
+    mediaController.versionListSong = null;
     // Used Variables
     var Id = song.id;
     var globalId = song.gid;
