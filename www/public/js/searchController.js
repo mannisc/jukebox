@@ -27,7 +27,7 @@ searchController.SearchCounter = 0;
 
 searchController.buttonActive = 0;
 
-searchController.maxPopularSongPages = 3;
+searchController.maxPopularSongPages = 2;
 searchController.maxArtistSongPages = 2;
 
 searchController.init = function () {
@@ -156,20 +156,14 @@ searchController.completeSearch = function (list) {
             }
         }
     }
-    console.dir("list:");
-    console.dir(list);
-    console.dir("changed: "+changed);
     if (changed) {
         searchController.searchResults = [];
         $scope.safeApply();
         var num = 1;
         if(list.track.length){
            num = Math.min(searchController.maxResults, list.track.length);
-            console.dir("num :" + list.track.length);
-            console.dir("results:");
             for (var i = 0; i < num; i++) {
                 searchController.searchResults[i] = list.track[i];
-                console.dir(list.track[i]);
             }
             searchController.searchResultsComplete = list.track;
         }
@@ -272,7 +266,7 @@ searchController.filterSongs = function (filterTerm) {
 
             if (title.search(filterTerm) > -1 || artist.search(filterTerm) > -1) {
                 newSearchResults[icounter] = searchController.searchResultsComplete[i];
-                console.dir(searchController.searchResults[icounter]);
+               // console.dir(searchController.searchResults[icounter]);
                 icounter++;
             }
         }
@@ -599,16 +593,11 @@ searchController.topTracks = function (callbackSuccess) {
 
 
                                 topresults = topresults.concat(data.tracks.track);
-                                console.dir("page: "+page);
-                                console.dir(topresults)
                                 func(searchID, page + 1, topresults);
                             }
                             else if (page >= searchController.maxPopularSongPages) {
                                 topresults = topresults.concat(data.tracks.track);
                                 topresults.track = topresults;
-                                console.dir("page: "+page);
-                                console.dir(topresults)
-                                console.dir("CALLBACK!");
                                 if (callbackSuccess)
                                     callbackSuccess(topresults);
                                 setTimeout(searchController.showLoading, 1000);
@@ -637,11 +626,9 @@ searchController.suggestions = function (title, artist, callbackSuccess) {
 
             url: "http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=" + artist + "&track=" + title + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
             success: function (data) {
-                console.dir(data);
                 if (data.similartracks) {
                     if (data.similartracks != "\n") {
                         if (searchID == searchController.SearchCounter) {
-                            console.dir(data.similartracks);
                             if (callbackSuccess)
                                 callbackSuccess(data.similartracks);
                         }

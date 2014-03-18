@@ -316,8 +316,8 @@ uiController.initMediaPlayer = function () {
 
             $(".mejs-playpause-button").click(function () {
                 playlistController.playButtonTimer = Date.now();
-                console.dir($(this).children().context.className);
                 /*
+                 console.dir($(this).children().context.className);
                  if ($(this).children().context.className == "mejs-button mejs-playpause-button mejs-play")
                  embedPlayer.play();
                  else
