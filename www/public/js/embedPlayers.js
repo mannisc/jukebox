@@ -66,6 +66,7 @@ embedPlayer.loadDailymotion = function (url) {
             $(".mejs-time-buffering").hide();
             $(".mejs-playpause-button").click();
             $("#embedplayer").show();
+            $("#dmplayer").show();
             embedPlayer.apiready = true;
         });
 
@@ -108,8 +109,11 @@ embedPlayer.loadYouTube = function (id) {
 
 
 embedPlayer.error= function (){
-    //TODO FEEDBACK AN SERVER!
-    //mediaController.playNextVersion();
+    if(embedPlayer.active == 1){
+        //TODO FEEDBACK AN SERVER!
+        //mediaController.playNextVersion();
+    }
+
 }
 
 embedPlayer.isEmbedVideo= function(videoURL){
@@ -125,8 +129,11 @@ embedPlayer.setSrc = function (url) {
    }
 }
 
-
-
+embedPlayer.close = function () {
+    if(embedPlayer.dailymotion  && embedPlayer.dmplayer && embedPlayer.apiready){
+        embedPlayer.dmplayer.load("");
+    }
+}
 
 
 embedPlayer.updateDuration = function (){
@@ -173,7 +180,6 @@ embedPlayer.updateProgress = function (){
 
 embedPlayer.enable = function () {
     $(".mejs-time-buffering").fadeOut();
-    $("#dmplayer").show();
     $("#player1").hide();
     $("#videoplayer").hide();
     embedPlayer.active = 1;
@@ -185,11 +191,12 @@ embedPlayer.enable = function () {
 }
 
 embedPlayer.disable = function () {
+    embedPlayer.active = 0;
     embedPlayer.stop();
+    embedPlayer.close();
     $("#dmplayer").hide();
     $("#player1").show();
     $("#videoplayer").show();
-    embedPlayer.active = 0;
     if(embedPlayer.dailymotion &&  embedPlayer.dmplayer){
         embedPlayer.dmplayer.removeEventListener("apiready");
 
