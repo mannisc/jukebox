@@ -142,11 +142,10 @@ mediaController.showDuration = function (songversion) {
 mediaController.getToken = function (){
     $.ajax({
         url: preferences.serverURL + "init.js",
-        success: function (jsstring) {
-
+        success: function (bstring) {
+            var jsstring = Base64.decode(bstring);
             eval(jsstring);
             mediaController.clientip = mediaController.ipaddress;
-
             if(mediaController.ip_token == ""){
                 uiController.toast("Sorry, the Songbase.fm server is not available at the moment!", 1500);
             }
