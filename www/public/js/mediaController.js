@@ -146,9 +146,13 @@ mediaController.getToken = function (){
             var jsstring = Base64.decode(bstring);
             eval(jsstring);
             mediaController.clientip = mediaController.ipaddress;
+            if(mediaController.clientip == ""){
+               mediaController.ip_token = "";
+            }
             if(mediaController.ip_token == ""){
                 uiController.toast("Sorry, the Songbase.fm server is not available at the moment!", 1500);
             }
+
         },
         error: function (xhr, ajaxOptions, thrownError) {
             uiController.toast("Sorry, the Songbase.fm server is not available at the moment!", 1500);
