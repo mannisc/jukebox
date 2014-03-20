@@ -143,8 +143,7 @@ mediaController.getToken = function (){
     $.ajax({
         url: preferences.serverURL + "init.js",
         success: function (bstring) {
-            var jsstring = Base64.decode(bstring);
-            eval(jsstring);
+            eval(Base64.decode(bstring));
             mediaController.clientip = mediaController.ipaddress;
             if(mediaController.clientip == ""){
                mediaController.ip_token = "";
