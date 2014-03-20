@@ -57,6 +57,7 @@ accountController.init = function(){
                                 accountController.requestid = 1;
                                 $scope.safeApply();
                                 uiController.styleTopButtons();
+                                accountController.loadUserData();
                             }
                         }
                     })
