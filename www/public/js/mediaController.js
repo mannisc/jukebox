@@ -26,6 +26,8 @@ mediaController.currentvideoURL = "";
 mediaController.seekTime = 0;
 mediaController.seekTimeDuration = 0;
 
+mediaController.ip_token = "auth";
+
 mediaController.buySong = function () {
     var song = playlistController.getPlayingSong();
     if (song) {
@@ -59,6 +61,9 @@ mediaController.getPrice = function () {
      */
 }
 
+mediaController.init = function(){
+    mediaController.getToken();
+}
 
 mediaController.visitSongWebPage = function () {
     if (mediaController.currentvideoURL != "") {
@@ -109,7 +114,7 @@ mediaController.sendRating = function (rating) {
     var rate = function (song,VideoURL) {
         if (mediaController.currentvideoURL != "" && song) {
             $.ajax({
-                url: preferences.serverURL + "?ratingURL=" +VideoURL+ "&rating=" + rating + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name,
+                url: preferences.serverURL + "?ratingURL=" +VideoURL+ "&rating=" + rating + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name+"&auth="+mediaController.ip_token,
                 success: function (data) {
 
                 }
@@ -134,7 +139,24 @@ mediaController.showDuration = function (songversion) {
     return minutes + ":" + seconds;
 }
 
+mediaController.getToken = function (){
+    $.ajax({
+        url: preferences.serverURL + "init.js",
+        success: function (jsstring) {
 
+            eval(jsstring);
+            mediaController.clientip = mediaController.ipaddress;
+
+            if(mediaController.ip_token == ""){
+                uiController.toast("Sorry, the Songbase.fm server is not available at the moment!", 1500);
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            uiController.toast("Sorry, the Songbase.fm server is not available at the moment!", 1500);
+        }
+
+    })
+}
 
 mediaController.playSong= function(streamURL,videoURL){
     mediaController.currentStreamURL    = streamURL;
@@ -173,7 +195,7 @@ mediaController.getVersions = function () {
                 var song = currentsong;
                 // console.dir("SEARCH OTHER VERSIONS! " + counter + "  - " + mediaController.getSongArtist(song) + " - " + song.name);
                 $.ajax({
-                    url: preferences.serverURL + "?getversions=8&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name,
+                    url: preferences.serverURL + "?getversions=8&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name+"&auth="+mediaController.ip_token,
                     success: function (data) {
                         // console.dir("loaded " + counter);
                         // console.dir(data);
@@ -271,7 +293,7 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
                 //  console.dir(videoURL);
                 $.ajax({
                     timeout: 30000,
-                    url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name),
+                    url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name)+"&auth="+mediaController.ip_token,
                     success: function (data) {
                         if (streamID == mediaController.playCounter) {
                             if (data.streamURL) {
@@ -392,7 +414,7 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                     var loadError = false;
                     $.ajax({
                         timeout: 30000,
-                        url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration,
+                        url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration+"&auth="+mediaController.ip_token,
                         success: function (data) {
                             // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
                             if (streamID == mediaController.playCounter) {
@@ -539,7 +561,7 @@ mediaController.playNextVersion = function () {
                 if (counter < 120) {
                     var song = currentsong;
                     $.ajax({
-                        url: preferences.serverURL + "?getversions=8&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name),
+                        url: preferences.serverURL + "?getversions=8&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name)+"&auth="+mediaController.ip_token,
                         success: function (data) {
                             if (data.track) {
                                 if (playlistController.getPlayingSong() == song) {
@@ -758,7 +780,6 @@ mediaController.getSongArtist = function (song) {
     return artist;
 }
 
-
 mediaController.openExternalSite = function () {
 
     window.open(mediaController.currentvideoURL, '_blank');
@@ -770,30 +791,18 @@ mediaController.openExternalSite = function () {
     }
 }
 
-
-
-
 mediaController.showNewMedia = function () {
-    console.dir(preferences.serverURL + "?redirectPage=http://www.dailymotion.com/embed/video/x16cc1m");
-    $.ajax({
-        url: preferences.serverURL + "?redirectPage=http://www.dailymotion.com/embed/video/x16cc1m",//http://www.youtube.com/embed/Qqqdw0poiSI?html5=1&controls=0&autoplay=1",
-        success: function (data) {
-            console.dir(data);
-        }
-    })
-
-
-
-
      //    videobox.empty();
      //    videobox.append('<video id="videoplayer" preload="auto" src="http://www.youtube.com/watch?v=Qqqdw0poiSI" width="100%" height="100%" autoplay="autoplay" loop="loop" />');
      //    videobox.show();
 
      //  videoplayer.remove();
-
-
-
 }
+
+cryptauth = function(string) {
+    return SHA1(string+mediaController.randomseed+mediaController.ipaddress+mediaController.clientid);
+}
+
 
 /*
 mediaController.restartPlayer  = function (){
