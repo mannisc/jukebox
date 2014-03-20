@@ -65,9 +65,9 @@ $(document).ready(function () {
 
             app.isCordova = (window.location.hash == "#cordova" );
 
+            mediaController.init();
             uiController.init();
             searchController.init();
-            mediaController.init();
             accountController.init();
 
             setTimeout(function(){
