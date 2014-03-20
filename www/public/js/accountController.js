@@ -66,7 +66,7 @@ accountController.signIn = function () {
         email = rsaController.rsa.encrypt(email);
         $.ajax({
             timeout: 30000,
-            url: preferences.serverURL + "?login=" + email + "&pw=" + pw,
+            url: preferences.serverURL + "?login=" + email + "&pw=" + pw+"&auth="+mediaController.ip_token,
             success: function (data) {
                 if (data != "") {
                     accountController.loggedIn = true;
@@ -156,7 +156,7 @@ accountController.register = function () {
         email = rsaController.rsa.encrypt(email);
         $.ajax({
             timeout: 30000,
-            url: preferences.serverURL + "?register=" + email + "&pw=" + pw,
+            url: preferences.serverURL + "?register=" + email + "&pw=" + pw+"&auth="+mediaController.ip_token,
             success: function (data) {
                 if (data != "") {
                     accountController.loggedIn = true;
@@ -205,7 +205,7 @@ accountController.savePlaylist = function (gid, name, pos, playlistdata) {
         var send = function (savename, savedata, savetoken) {
             $.ajax({
                 type: "POST",
-                data: {storage: savetoken, gid: gid, pos: pos, n: nonce, type: "playlist", name: savename, data: savedata},
+                data: {auth:mediaController.ip_token,storage: savetoken, gid: gid, pos: pos, n: nonce, type: "playlist", name: savename, data: savedata},
                 timeout: 30000,
                 url: preferences.serverURL,// + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data=savedata",
                 success: function (returndata) {
@@ -227,7 +227,7 @@ accountController.loadPlaylist = function (name, callbackSuccess) {
             name = encodeURIComponent(name);
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=playlist&name=" + savename,
+                url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=playlist&name=" + savename+"&auth="+mediaController.ip_token,
                 success: function (playlistdata) {
                     if (callbackSuccess)
                         callbackSuccess(playlistdata);
@@ -250,7 +250,7 @@ accountController.loadPlaylists = function (callbackSuccess) {
         var send = function (savetoken) {
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist",
+                url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth="+mediaController.ip_token,
                 success: function (data) {
                     if (callbackSuccess)
                         callbackSuccess(data);
@@ -277,7 +277,7 @@ accountController.saveUserData = function (type, name, userdata) {
         var send = function (savename, savetype, savedata, savetoken) {
             $.ajax({
                 type: "POST",
-                data: {storage:savetoken,gid:gid,pos:pos,n:nonce,type:savetype,name:savename,data:savedata},
+                data: {auth:mediaController.ip_token,storage:savetoken,gid:gid,pos:pos,n:nonce,type:savetype,name:savename,data:savedata},
                 timeout: 30000,
 
                 url: preferences.serverURL, // "?storage=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename+"&data="+savedata,
@@ -299,7 +299,7 @@ accountController.loadUserData = function (type, name, callbackSuccess) {
         var send = function (savename, savetype, savedata, savetoken) {
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=" + savetype + "&name=" + savename,
+                url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=" + savetype + "&name=" + savename+"&auth="+mediaController.ip_token,
                 success: function (data) {
                     if (callbackSuccess)
                         callbackSuccess(data);
@@ -323,7 +323,7 @@ accountController.loadUserDataItems = function (type, callbackSuccess) {
         var send = function (savename, savetype, savedata, savetoken) {
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=" + savetype,
+                url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=" + savetype+"&auth="+mediaController.ip_token,
                 success: function (data) {
                     if (callbackSuccess)
                         callbackSuccess(data);

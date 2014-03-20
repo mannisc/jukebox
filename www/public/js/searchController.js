@@ -56,7 +56,6 @@ searchController.init = function () {
 
     searchController.activateButton(0, true);
     searchController.showPopulars();
-
 }
 
 
@@ -423,7 +422,7 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
 
     var searchserver = function (searchID) {
         $.ajax({
-            url: preferences.serverURL + "?searchjson=" + searchString,
+            url: preferences.serverURL + "?searchjson=" + searchString+"&auth="+mediaController.ip_token,
 
             success: function (data) {
                 if (searchID == searchController.SearchCounter) {
@@ -496,7 +495,7 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
 
     var searchserver = function (searchID) {
         $.ajax({
-            url: preferences.serverURL + "?searchjson=" + searchString,
+            url: preferences.serverURL + "?searchjson=" + searchString+"&auth="+mediaController.ip_token,
             success: function (data) {
                 if (searchID == searchController.SearchCounter) {
                     for (var i = 0; i < data.track.length; i++) {
