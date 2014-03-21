@@ -956,9 +956,12 @@ playlistController.savePlaylist = function (useSelected) {
 
 
        // window.localStorage.playlists = JSON.stringify(playlists);
-
+        // alert("SAVE!!");
+        console.dir("SAVE");
+        console.dir(playlistController.playlists);
+        console.dir("----");
         for (var i = 0; i <  playlistController.playlists.length; i++) {
-           accountController.savePlaylist( playlistController.playlists[i].gid, playlistController.playlists[i].name,i, playlistController.playlists[i].tracks)
+           accountController.savePlaylist( playlistController.playlists[i].gid, playlistController.playlists[i].name,i,JSON.stringify( playlistController.playlists[i].tracks))
         }
 
 
