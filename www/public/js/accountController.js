@@ -118,14 +118,17 @@ accountController.loadStoredData = function(){
     var playlistsReady = function(playlistdata){
         if(playlistdata){
             var playlists = new Array();
+            console.dir("load playlistdata: ");
+            console.dir(playlistdata);
             if(playlistdata.items && playlistdata.items.length > 0){
                 for (var j = 0; j < playlistdata.items.length; j++) {
                     playlists[j] = {
                         name: playlistdata.items[j].name,
                         gid: parseInt(playlistdata.items[j].gid),
-                        tracks: playlistdata.items[j].data
+                        tracks: playlistdata.items[j].data,
+                        isPlaylist: true,
+                        id: parseInt(playlistdata.items[j].gid)
                     }
-
                 }
                 if (playlists) {
                     //Remove duplicate Playlists
@@ -149,14 +152,17 @@ accountController.loadStoredData = function(){
 
 
                     $scope.safeApply();
-                    setTimeout(function () {
-                        $("#playlistview").listview('refresh');
-                        $("#playlistview").show();
-                        uiController.makePlayListSortable();
+                    uiController.showPlaylists();
+                    setTimeout(function(){$('#searchinput').focus();},500)
+                    if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
                         setTimeout(function () {
-                            uiController.playListScroll.refresh();
-                        }, 150)
-                    }, 0)
+
+                            uiController.makePlayListSortable();
+                            setTimeout(function () {
+                                uiController.playListScroll.refresh();
+                            }, 150)
+                        }, 0)
+                    }
                 }
             }
         }
@@ -303,10 +309,12 @@ accountController.loadPlaylist = function (name, callbackSuccess) {
                 timeout: 30000,
                 url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=playlist&name=" + savename+"&auth="+mediaController.ip_token,
                 success: function (playlistdata) {
+
                     if (callbackSuccess)
                         callbackSuccess(playlistdata);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
+
                     if (callbackSuccess)
                         callbackSuccess(xhr.responseText);
                 }
@@ -330,6 +338,8 @@ accountController.loadPlaylists = function (callbackSuccess) {
                         callbackSuccess(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
                     if (callbackSuccess)
                         callbackSuccess(xhr.responseText);
                 }
@@ -379,7 +389,7 @@ accountController.loadUserData = function (type, name, callbackSuccess) {
                         callbackSuccess(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.dir(xhr.responseText);
+                    console.dir(JSON.parse(xhr.responseText));
                 }
             })
         }
@@ -403,7 +413,7 @@ accountController.loadUserDataItems = function (type, callbackSuccess) {
                         callbackSuccess(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.dir(xhr.responseText);
+                    console.dir(JSON.parse(xhr.responseText));
                 }
             })
         }

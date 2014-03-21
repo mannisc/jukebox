@@ -31,6 +31,7 @@ uiController.totalTimeWidth = 0;
  *
  */
 
+
 uiController.initMediaPlayer = function () {
     $("#videoplayer").css("opacity", "0");
     $("#videoplayer").css("pointer-events","none");
@@ -887,36 +888,15 @@ uiController.init = function () {
 
     });
 
+
+
+
+
+
+
     $('#clearChoosenPlaylists').click(function (e) {
 
-        $('#playlistselectverticalform option').prop('selected', false);
-        $('#playlistselectverticalform').trigger('chosen:updated');
-        setTimeout(function () {
-            $('#playlistselectverticalform').trigger('chosen:close');
-        }, 0)
-        setTimeout(function () {
-
-            $("#clearChoosenPlaylists").hide();
-            uiController.updateUI();
-            playlistController.loadedPlaylistSongs = playlistController.playlists;
-            $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
-
-            $("#playlistInner .iScrollPlayIndicator").hide();
-            $("#searchlist .iScrollPlayIndicator").hide();
-
-            $("#playlistview").hide();
-            $scope.safeApply();
-            setTimeout(function () {
-                $("#playlistview").listview('refresh');
-                $("#playlistview").show();
-                uiController.makePlayListSortable();
-                setTimeout(function(){
-                    uiController.playListScroll.refresh();
-                },150)
-            }, 0)
-
-        }, 10)
-
+        uiController.showPlaylists();
 
     });
 
@@ -987,6 +967,8 @@ uiController.init = function () {
     document.tite = $scope.appTitle;
 
 };
+
+
 
 
 uiController.styleTopButtons = function () {
@@ -1995,3 +1977,35 @@ uiController.toggleSidePanel = function () {
 }
 
 
+/**
+ * Show Playlists
+ */
+uiController.showPlaylists = function(){
+    $('#playlistselectverticalform option').prop('selected', false);
+    $('#playlistselectverticalform').trigger('chosen:updated');
+    setTimeout(function () {
+        $('#playlistselectverticalform').trigger('chosen:close');
+    }, 0)
+    setTimeout(function () {
+
+        $("#clearChoosenPlaylists").hide();
+        uiController.updateUI();
+        playlistController.loadedPlaylistSongs = playlistController.playlists;
+        $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
+
+        $("#playlistInner .iScrollPlayIndicator").hide();
+        $("#searchlist .iScrollPlayIndicator").hide();
+
+        $("#playlistview").hide();
+        $scope.safeApply();
+        setTimeout(function () {
+            $("#playlistview").listview('refresh');
+            $("#playlistview").show();
+            uiController.makePlayListSortable();
+            setTimeout(function(){
+                uiController.playListScroll.refresh();
+            },150)
+        }, 0)
+
+    }, 10)
+}
