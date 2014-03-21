@@ -141,9 +141,13 @@
         <a id="buySongLink" style="opacity:0" onclick="mediaController.buySong()" ng-show="playlistController.loadingSong" href="#" data-rel="popup" data-position-to="#buySongLink"
            class="playingSongBuy   ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-heart ui-btn-icon-left ui-btn-a" data-transition="pop">Buy Song</a>
 
+        <a id="registerLink" ng-if="!accountController.loggedIn" href="#popupRegister" onclick="setTimeout(function(){$('#registerusername').focus();},700)" data-rel="popup" data-position-to="#registerLink"
+           class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-plus ui-btn-icon-left ui-btn-a" data-transition="pop">Sign up</a>
+
         <a id="signinLink" ng-if="!accountController.loggedIn" href="#popupLogin" onclick="setTimeout(function(){$('#signinusername').focus();},700)" data-rel="popup" data-position-to="#signinLink"
            class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
         <a id="linkAccount" ng-if="accountController.loggedIn" href="#popupAccount" data-rel="popup" class="ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a" data-transition="pop">{{accountController.userName}}</a>
+
 
     </div>
 
@@ -348,13 +352,30 @@
                 <span id="pwconfirm" style="display:none">
                 <input type="password" name="pass" id="signinpwc" value="" placeholder="Confirm Password" data-theme="a" >
                 </span>
-            <button onclick="if(!accountController.showRegisterPopup){accountController.signIn()}else{accountController.register()}" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
-            <a data-role="none" id="registerlink" href="" style="text-decoration:none!important"
-               onclick="accountController.toggleSignInRegister();">Register</a>
+            <button onclick="accountController.signIn();" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
         </div>
     </form>
 </div>
 
+<div data-role="popup" id="popupRegister" data-arrow="true" data-theme="a" class="ui-corner-all">
+    <form>
+        <div style="padding:0px 20px 10px 20px">
+            <h3 id="registertitle">Sign Up For Free</h3>
+            <label for="registerusername" class="ui-hidden-accessible">Username:</label>
+            <input type="text" name="user" id="registerusername" value="" placeholder="Username" data-theme="a" >
+            <span id="useremail">
+            <label for="registeruser" class="ui-hidden-accessible">Email Adress:</label>
+            <input type="text" name="user" id="registeruser" value="" placeholder="Email Adress" data-theme="a" >
+            </span>
+            <label for="registerpw" class="ui-hidden-accessible">Password:</label>
+            <input type="password" name="pass" id="registerpw" value="" placeholder="Password" data-theme="a" >
+                <span id="pwconfirm">
+                <input type="password" name="pass" id="registerpwc" value="" placeholder="Confirm Password" data-theme="a" >
+                </span>
+            <button onclick="accountController.register();" type="submit" id="registerButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Create Account</button>
+        </div>
+    </form>
+</div>
 
 <div data-role="popup" id="popupArtist" data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>

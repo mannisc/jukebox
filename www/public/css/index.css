@@ -1521,6 +1521,21 @@ video{
 
 }
 
+
+.playingSongInfo.ui-icon-custom:after {
+    opacity:1;
+    background-image: url(../img/loader.gif);
+    background-color:rgba(0,0,0,0)!important;
+    background-size: 100%!important;
+    -webkit-border-radius: 1px!important;
+    border-radius:1px!important;
+    -webkit-transition : all .5s linear;
+
+    transition : all .5s linear;
+    background : transparent;
+}
+
+
 .playingSongBuy{
     z-index: 1000;
     transition : opacity .5s linear;
@@ -1564,25 +1579,10 @@ video{
 }
 
 
-#signinLink, #linkAccount{
+#signinLink, #linkAccount, #registerLink{
    top: 0px;
 }
 
-
-
-
-.playingSongInfo.ui-icon-custom:after {
-    opacity:1;
-    background-image: url(../img/loader.gif);
-    background-color:rgba(0,0,0,0)!important;
-    background-size: 100%!important;
-    -webkit-border-radius: 1px!important;
-    border-radius:1px!important;
-    -webkit-transition : all .5s linear;
-
-    transition : all .5s linear;
-    background : transparent;
-}
 
 
 
@@ -1689,10 +1689,9 @@ a, button,.mejs-time-total,.mejs-time-rail,.mejs-time-total span,.mejs-time, h1,
 
 
 
-#popupAccount-popup, #popupArtist-popup,#popupLogin-popup{
+#popupAccount-popup, #popupArtist-popup,#popupLogin-popup, #popupRegister-popup{
     top: 51px!important;
 }
-
 
 
 #popupArtist-popup::before {
