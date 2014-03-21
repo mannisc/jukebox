@@ -103,6 +103,8 @@ accountController.logout = function () {
     })
     accountController.setCookie("loginToken",Base64.encode(""),0);
     accountController.setCookie("userName",Base64.encode(""),0);
+    playlistController.loadedPlaylistSongs = new Array();
+    playlistController.loadedPlaylistSongs = new Array();
     accountController.loggedIn = false;
     $('#popupLogin').popup('close');
     uiController.styleTopButtons();
@@ -118,9 +120,9 @@ accountController.loadStoredData = function(){
     var playlistsReady = function(playlistdata){
         if(playlistdata){
             var playlists = new Array();
-            console.dir("load playlistdata: ");
-            console.dir(playlistdata);
             if(playlistdata.items && playlistdata.items.length > 0){
+
+                //Copy received (stored) data to playlists-Array;
                 for (var j = 0; j < playlistdata.items.length; j++) {
                     playlists[j] = {
                         name: playlistdata.items[j].name,
@@ -145,7 +147,19 @@ accountController.loadStoredData = function(){
                             }
                         }
                     }
+
+                    //Find new playlistController.globalId
                     playlistController.playlists = playlistController.playlists.concat(playlists);
+                    var globalId = playlistController.playlists.length
+                    for (var j = 0; j < playlistController.playlists.length; j++) {
+                        if(playlistController.playlists[j].gid+1 > globalId){
+                            globalId = playlistController.playlists[j].gid+1;
+                        }
+                    }
+                    playlistController.globalIdPlaylist = globalId;
+                    playlistController.globalId         = globalId;
+
+
 
                     console.dir("User playlists: ");
                     console.dir(playlistController.playlists);
