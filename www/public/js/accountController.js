@@ -57,7 +57,7 @@ accountController.init = function(){
                                 accountController.requestid = 1;
                                 $scope.safeApply();
                                 uiController.styleTopButtons();
-                                accountController.loadUserData();
+                                accountController.loadStoredData();
                             }
                         }
                     })
@@ -114,27 +114,40 @@ accountController.logout = function () {
     accountController.requestid = 1;
 }
 
-accountController.loadUserData = function(){
-    var loadPlaylists = function(playlists){
-        if(playlists){
-
-            alert(playlists)
-            playlists = JSON.parse(playlists);
-            if (playlists && playlists.length > 0) {
-                //Remove duplicate Playlists
-                for (var i = 0; i < playlistController.playlists.length; i++) {
-                    for (var j = 0; j < playlists.length; j++) {
-                        if (playlists[j].gid == playlistController.playlists[i].gid) {
-                            playlistController.playlists[i].splice(i, 1);
-                            i = i - 1;
-                        } else if (playlists[j].name == playlistController.playlists[i].name) {
-                            playlistController.playlists[i].name = playlistController.playlists[i].name + " (2)";
-                        }
-
+accountController.loadStoredData = function(){
+    var playlistsReady = function(playlistdata){
+        if(playlistdata){
+            var playlists = new Array();
+            if(playlistdata.items && playlistdata.items.length > 0){
+                for (var j = 0; j < playlistdata.items.length; j++) {
+                    playlists[j] = {
+                        name: playlistdata.items[j].name,
+                        gid: parseInt(playlistdata.items[j].gid),
+                        tracks: playlistdata.items[j].data
                     }
+
                 }
-                playlistController.playlists = playlistController.playlists.concat(playlists)
-                if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
+                if (playlists) {
+                    //Remove duplicate Playlists
+                    if(playlistController.playlists.length){
+                        for (var i = 0; i < playlistController.playlists.length; i++) {
+                            for (var j = 0; j < playlists.length; j++) {
+                                if (playlists[j].gid == playlistController.playlists[i].gid) {
+                                    playlistController.playlists[i].splice(i, 1);
+                                    i = i - 1;
+                                } else if (playlists[j].name == playlistController.playlists[i].name) {
+                                    playlistController.playlists[i].name = playlistController.playlists[i].name + " (2)";
+                                }
+
+                            }
+                        }
+                    }
+                    playlistController.playlists = playlistController.playlists.concat(playlists);
+
+                    console.dir("User playlists: ");
+                    console.dir(playlistController.playlists);
+
+
                     $scope.safeApply();
                     setTimeout(function () {
                         $("#playlistview").listview('refresh');
@@ -148,7 +161,7 @@ accountController.loadUserData = function(){
             }
         }
     }
-    accountController.loadPlaylists(loadPlaylists)
+    accountController.loadPlaylists(playlistsReady)
 }
 
 
@@ -179,11 +192,7 @@ accountController.signIn = function () {
                     }, 500)
                     accountController.requestid = 1;
 
-                    accountController.loadUserData();
-
-                // accountController.savePlaylist(1,"TEST",0,"TESTDATEN");
-
-
+                    accountController.loadStoredData();
 
 
                 }
@@ -262,8 +271,8 @@ accountController.register = function () {
 
 accountController.savePlaylist = function (gid, name, pos, playlistdata) {
     if (accountController.loggedIn) {
-        var savename = name;
-        var savedata = playlistdata;
+        var savename = escape(name);
+        var savedata = escape(playlistdata);
         accountController.requestid = accountController.requestid + 1;
         var nonce = accountController.requestid;
         var savetoken = rsaController.rsa.encrypt(accountController.loginToken + nonce);
@@ -274,7 +283,7 @@ accountController.savePlaylist = function (gid, name, pos, playlistdata) {
                 timeout: 30000,
                 url: preferences.serverURL,// + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data=savedata",
                 success: function (returndata) {
-                    alert("ERFOLGREICH GESPEICHERT")
+                  //  alert("ERFOLGREICH GESPEICHERT")
                 }
             })
         }
