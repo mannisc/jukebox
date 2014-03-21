@@ -1527,11 +1527,7 @@ uiController.toggleSavePlaylist = function (savePlaylist) {
 
 
     if(!accountController.loggedIn){
-        if (!accountController.showRegisterPopup)
-            accountController.toggleSignInRegister();
-
-        $('#popupLogin').popup('open', {positionTo: '#signinLink', transition:"pop"});
-
+        $('#popupRegister').popup('open', {positionTo: '#registerLink', transition:"pop"});
         setTimeout(function(){
             $('#signinusername').focus();
         },500)
