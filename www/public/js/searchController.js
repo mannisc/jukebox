@@ -55,7 +55,9 @@ searchController.init = function () {
     }
 
     searchController.activateButton(0, true);
-    searchController.showPopulars();
+    if(!urlParams.search||urlParams.search==""){
+        searchController.showPopulars();
+    }
 }
 
 
@@ -378,6 +380,14 @@ searchController.searchSimilarSongs = function (song) {
 searchController.searchMusic = function () {
     if ($("#searchinput").val() && $("#searchinput").val() != "") {
         searchController.lastSearchTerm = $("#searchinput").val();
+        var song = playlistController.getPlayingSong();
+        if(song.name!=""&&searchinput!=""){
+            window.history.pushState("",document.title, "/?search="+searchController.lastSearchTerm+"&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+        }
+        else{
+            window.history.pushState("",document.title, "?search="+ searchController.lastSearchTerm);
+        }
+
         if (app.isCordova)
             var time = 1000;
         else

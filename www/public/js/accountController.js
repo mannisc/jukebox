@@ -153,14 +153,14 @@ accountController.loadUserData = function(){
 
 
 accountController.signIn = function () {
-    var send = function (email, pw) {
+    var send = function (name, pw) {
         var md5pw = MD5($.trim(pw));
         pw = rsaController.rsa.encrypt(pw);
-        var username = email;
-        email = rsaController.rsa.encrypt(email);
+        name  = rsaController.rsa.encrypt(name);
+        var email = "";
         $.ajax({
             timeout: 30000,
-            url: preferences.serverURL + "?login=" + email + "&pw=" + pw+"&auth="+mediaController.ip_token,
+            url: preferences.serverURL + "?login=" + name+ "&email=" + email+ "&pw=" + pw+"&auth="+mediaController.ip_token,
             success: function (data) {
                 if (data != "") {
                     accountController.loggedIn = true;
@@ -197,10 +197,10 @@ accountController.signIn = function () {
             }
         })
     }
-    var email = $("#signinusername").val();//TODO USERNAME anstatt email
+    var username = $("#signinusername").val();//TODO USERNAME anstatt email
     var pw = $("#signinpw").val();
-    if (email.length > 5 && pw.length > 3) {
-        send(email, pw);
+    if (username.length > 3 && pw.length > 3) {
+        send(username, pw);
     }
     else {
         uiController.toast("Error: Please check your login data.", 1500);
@@ -213,21 +213,21 @@ accountController.debugData = function (data) {
 }
 
 accountController.register = function () {
-    var send = function (email, pw) {
+    var send = function (name,email, pw) {
         var md5pw = MD5($.trim(pw));
-        pw = rsaController.rsa.encrypt(pw);
-        var username = email;
+        name  = rsaController.rsa.encrypt(name);
         email = rsaController.rsa.encrypt(email);
+        pw = rsaController.rsa.encrypt(pw);
         $.ajax({
             timeout: 30000,
-            url: preferences.serverURL + "?register=" + email + "&pw=" + pw+"&auth="+mediaController.ip_token,
+            url: preferences.serverURL + "?register=" + name + "&email=" + email+ "&pw=" + pw+"&auth="+mediaController.ip_token,
             success: function (data) {
                 if (data != "") {
                     accountController.loggedIn = true;
                     accountController.loginToken = MD5(data + md5pw);
                     accountController.userName = username;
                     var btn = $('#header .ui-btn.animated').removeClass("animated");
-                    $('#popupLogin').popup('close');
+                    $('#registerLogin').popup('close');
                     uiController.styleTopButtons();
                     $scope.safeApply();
                     uiController.styleTopButtons();
@@ -245,11 +245,12 @@ accountController.register = function () {
             }
         })
     }
-    var email = $("#signinuser").val();
-    var pw = $("#signinpw").val();
-    var pwc = $("#signinpwc").val();
-    if (pw == pwc && email.length > 5 && pw.length > 3) {
-        send(email, pw);
+    var username = $("#registerusername").val();
+    var email = $("#registeruser").val();
+    var pw = $("#registerpw").val();
+    var pwc = $("#registerpwc").val();
+    if (pw == pwc && email.length > 5 && pw.length > 3 && username.length > 3) {
+        send(username,email, pw);
     }
     else {
         uiController.toast("Error: Please check your data.", 1500);

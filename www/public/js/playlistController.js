@@ -558,6 +558,21 @@ playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
     else
         document.title = $scope.appTitle;
 
+    var searchinput = "";
+    if ($("#searchinput").val()) {
+        searchinput = $("#searchinput").val()
+    }
+    var song = playlistController.getPlayingSong();
+    if(song.name!=""&&searchinput!=""){
+        window.history.pushState("",document.title, "/?search="+searchinput+"&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+    }
+    else if(song.name!=""){
+        window.history.pushState("",document.title, "/?artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+    }
+    else if(searchinput!=""){
+        window.history.pushState("",document.title, "?search="+searchinput);
+    }
+
     //  $("#playingSongCover").attr("src", coverUrl);
 
     if (!isLoaded) {
