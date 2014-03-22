@@ -116,7 +116,6 @@
 
 <div data-role="page" id="page" style="opacity:0" data-theme="b">
 
-
 <div data-role="panel" id="rightpanel" data-display="overlay" data-position="right" data-theme="b">
 </div>
 <!-- /panel -->
@@ -142,9 +141,13 @@
         <a id="buySongLink" style="opacity:0" onclick="mediaController.buySong()" ng-show="playlistController.loadingSong" href="#" data-rel="popup" data-position-to="#buySongLink"
            class="playingSongBuy   ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-heart ui-btn-icon-left ui-btn-a" data-transition="pop">Buy Song</a>
 
+        <a id="registerLink" ng-if="!accountController.loggedIn" href="#popupRegister" onclick="setTimeout(function(){$('#registerusername').focus();},700)" data-rel="popup" data-position-to="#registerLink"
+           class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-plus ui-btn-icon-left ui-btn-a" data-transition="pop">Sign up</a>
+
         <a id="signinLink" ng-if="!accountController.loggedIn" href="#popupLogin" onclick="setTimeout(function(){$('#signinusername').focus();},700)" data-rel="popup" data-position-to="#signinLink"
            class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
         <a id="linkAccount" ng-if="accountController.loggedIn" href="#popupAccount" data-rel="popup" class="ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a" data-transition="pop">{{accountController.userName}}</a>
+
 
     </div>
 
@@ -155,6 +158,7 @@
 
 <!--Open Side Panel-->
 <div onclick="uiController.toggleSidePanel();" id="openSidePanelBarIconBar" style="z-index:9000;position: fixed;top: 0;right: 0;width: 30px;height:44px;"></div>
+
 
 
 <div data-role="content" id="content">
@@ -277,11 +281,16 @@
 
     <div id="videoplayer">
         <div id="videoplayerInner">
+
           <video id="player1" controls="controls" autoplay="true" preload="true">
-                <source src="" type="video/mp4"/>
-              <source src="" type="video/flv"/>
+               <source src="" type="video/mp4"/>
+           <!--   <source src="" type="video/flv"/> -->
             </video>
+            <div id="embedplayer" >
+               <div id="dmplayer" ></div>
+            </div>
         </div>
+
     </div>
     <div id="videocontrols" class="mejs-container" style="text-align: center">
         <div id="videocontrolsInner">
@@ -340,16 +349,30 @@
             </span>
             <label for="signinpw" class="ui-hidden-accessible">Password:</label>
             <input type="password" name="pass" id="signinpw" value="" placeholder="Password" data-theme="a" >
-                <span id="pwconfirm" style="display:none">
-                <input type="password" name="pass" id="signinpwc" value="" placeholder="Confirm Password" data-theme="a" >
-                </span>
-            <button onclick="if(!accountController.showRegisterPopup){accountController.signIn()}else{accountController.register()}" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
-            <a data-role="none" id="registerlink" href="" style="text-decoration:none!important"
-               onclick="accountController.toggleSignInRegister();">Register</a>
+            <button onclick="accountController.signIn();" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
         </div>
     </form>
 </div>
 
+<div data-role="popup" id="popupRegister" data-arrow="true" data-theme="a" class="ui-corner-all">
+    <form>
+        <div style="padding:0px 20px 10px 20px">
+            <h3 id="registertitle">Sign Up For Free</h3>
+            <label for="registerusername" class="ui-hidden-accessible">Username:</label>
+            <input type="text" name="user" id="registerusername" value="" placeholder="Username" data-theme="a" >
+            <span id="registeruseremail">
+            <label for="registeruser" class="ui-hidden-accessible">Email Adress:</label>
+            <input type="text" name="user" id="registeruser" value="" placeholder="Email Adress" data-theme="a" >
+            </span>
+            <label for="registerpw" class="ui-hidden-accessible">Password:</label>
+            <input type="password" name="pass" id="registerpw" value="" placeholder="Password" data-theme="a" >
+                <span id="pwconfirm">
+                <input type="password" name="pass" id="registerpwc" value="" placeholder="Confirm Password" data-theme="a" >
+                </span>
+            <button onclick="accountController.register();" type="submit" id="registerButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Create Account</button>
+        </div>
+    </form>
+</div>
 
 <div data-role="popup" id="popupArtist" data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>
@@ -396,12 +419,15 @@
     <h4>Footer content</h4>
 </div>< /footer -->
 
+
 <img src="public/img/background.jpg" id="backgroundImage">
+
 </div>
 
 
+<!-- /dailymotion -->
+<script src="http://api.dmcdn.net/all.js"></script>
 <!-- /page -->
-
 
 
 <script type="text/javascript" src="public/cordova.js"></script>
@@ -437,7 +463,7 @@
 <!-- hammerjs -->
 <script type="text/javascript" src="public/js/libs/hammer.js"></script>
 
-<!-- rsajs -->
+<!-- cipher -->
 <script type="text/javascript" src="public/js/libs/rsa/prng4.js"></script>
 <script type="text/javascript" src="public/js/libs/rsa/rng.js"></script>
 <script type="text/javascript" src="public/js/libs/rsa/jsbn.js"></script>
@@ -445,8 +471,8 @@
 <script type="text/javascript" src="public/js/libs/rsa/rsa.js"></script>
 <script type="text/javascript" src="public/js/libs/rsa/rsa2.js"></script>
 <script type="text/javascript" src="public/js/rsaController.js"></script>
-<script type="text/javascript" src="public/js/md5.js"></script>
-<!-- rsajs -->
+<script type="text/javascript" src="public/js/encoder.js"></script>
+<!-- cipher -->
 
 
 <!-- helperFunctions -->
@@ -455,15 +481,15 @@
 <!-- business logic -->
 <script type="text/javascript" src="public/js/uiController.js"></script>
 
-<script type="text/javascript" src="public/js/searchController.js"></script>
-
 <script type="text/javascript" src="public/js/mediaController.js"></script>
+
+<script type="text/javascript" src="public/js/searchController.js"></script>
 
 <script type="text/javascript" src="public/js/playlistController.js"></script>
 
 <script type="text/javascript" src="public/js/accountController.js"></script>
 
-
+<script type="text/javascript" src="public/js/authController.js"></script>
 
 <!-- ng Controlle -->
 <script type="text/javascript" src="public/js/mainModule.js"></script>
@@ -485,7 +511,9 @@
 <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
 <script src="https://apis.google.com/js/client.js?onload=loadClient"></script>
 
+<!--Embed-->
 <script type="text/javascript" src="public/js/embedPlayers.js"></script>
+
 
 <!-- Preload Images-->
 <div style="display:none">

@@ -47,8 +47,8 @@ var app = {
 };
 
 var preferences = {
-   //serverURL: "http://localhost:3001/"
-  serverURL: "http://info.jukebox.selfhost.eu:3001/"
+ //serverURL: "http://localhost:3001/"
+ serverURL: "http://info.jukebox.selfhost.eu:3001/"
 }
 
 $.support.cors = true;
@@ -58,15 +58,37 @@ lyricscallback = function(test){
 }
 lyricsvisible=false;
 
+
+var urlParams;
+var loadUrlParams = function(){
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
+
+    urlParams = {};
+    while (match = search.exec(query))
+        urlParams[decode(match[1])] = decode(match[2]);
+
+}
+
+
+
+
 $(document).ready(function () {
 
     var initPage = function () {
         if ($scope.loaded) {
 
             app.isCordova = (window.location.hash == "#cordova" );
-
+            loadUrlParams();
+            mediaController.init();
+            authController.init();
             uiController.init();
             searchController.init();
+            accountController.init();
+
 
             setTimeout(function(){
                 $("#searchinput").focus();
@@ -74,6 +96,22 @@ $(document).ready(function () {
 
             //Show loaded page
             $("#page").css("opacity", "1");
+
+            setTimeout(function () {
+                if(urlParams.search&&urlParams.search!=""){
+                    searchController.searchSongs(urlParams.search, "", "", searchController.completeSearch);
+                }
+                if(urlParams.artist&&urlParams.artist!=""){
+                    if(urlParams.title&&urlParams.title!=""){
+                        var song = {
+                            artist: urlParams.artist,
+                            name:  urlParams.title,
+                            id: "slsid" + helperFunctions.padZeros(1, 2)
+                        }
+                        playlistController.playSong(song,false,false);
+                    }
+                }
+            }, 2000);
 
 
 

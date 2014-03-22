@@ -1808,7 +1808,6 @@ if (typeof jQuery != 'undefined') {
                         percentage = 0,
                         newTime = 0;
 
-
                     if (x > offset.left && x <= width + offset.left && media.duration) {
                         percentage = ((x - offset.left) / width);
                         newTime = (percentage <= 0.02) ? 0 : percentage * media.duration;
