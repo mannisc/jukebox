@@ -604,14 +604,6 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
 }
 
 searchController.topTracks = function (callbackSuccess) {
-
-    //TODO TEEEMMMMMMPPPPPP for no Internet
-    if (callbackSuccess)
-        callbackSuccess( {track:   playlistController.NOINTERNETHACK});
-    return;
-
-
-
     searchController.SearchCounter++;
     var searchID = searchController.SearchCounter;
     var func = function (searchID,page,topresults) {
@@ -629,8 +621,6 @@ searchController.topTracks = function (callbackSuccess) {
                                 func(searchID, page + 1, data.tracks.track);
                             }
                             else if (page < searchController.maxPopularSongPages) {
-
-
                                 topresults = topresults.concat(data.tracks.track);
                                 func(searchID, page + 1, topresults);
                             }
