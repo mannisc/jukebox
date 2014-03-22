@@ -26,7 +26,7 @@ mediaController.currentvideoURL = "";
 mediaController.seekTime = 0;
 mediaController.seekTimeDuration = 0;
 
-mediaController.ip_token = "auth";
+
 
 mediaController.buySong = function () {
     var song = playlistController.getPlayingSong();
@@ -62,7 +62,7 @@ mediaController.getPrice = function () {
 }
 
 mediaController.init = function(){
-    mediaController.getToken();
+
 }
 
 mediaController.visitSongWebPage = function () {
@@ -109,16 +109,16 @@ mediaController.postOnFacebook = function () {
 
 
 mediaController.sendRating = function (rating) {
-    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
         var VideoURL = mediaController.currentvideoURL;
         var song = playlistController.getPlayingSong();
         var rate = function (song,VideoURL) {
             if (mediaController.currentvideoURL != "" && song) {
                 $.ajax({
-                    url: preferences.serverURL + "?ratingURL=" +VideoURL+ "&rating=" + rating + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name+"&auth="+mediaController.ip_token,
+                    url: preferences.serverURL + "?ratingURL=" +VideoURL+ "&rating=" + rating + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name+"&auth="+authController.ip_token,
                     success: function (data) {
                         if(data.auth && data.auth=="true"){
-                            mediaController.extractToken(data.token);
+                            authController.extractToken(data.token);
                             mediaController.sendRating(rating);
                         }
                     }
@@ -144,49 +144,6 @@ mediaController.showDuration = function (songversion) {
     return minutes + ":" + seconds;
 }
 
-mediaController.extractToken = function(token){
-    if(token=="init"){
-        mediaController.getToken();
-    }
-    else if(token!=""){
-        eval(Base64.decode(token));
-        mediaController.clientip = mediaController.ipaddress;
-        if(mediaController.clientip == ""){
-            mediaController.ip_token = "";
-        }
-        if(mediaController.ip_token == ""){
-            uiController.toast("Sorry, the Songbase.fm server is not available at the moment!", 1500);
-        }
-    }
-}
-
-
-mediaController.getToken = function (){
-    $.ajax({
-        url: preferences.serverURL + "init.js",
-        success: function (data) {
-           console.dir("token");
-           console.dir(data);
-           if(data.auth && data.auth=="true"){
-               mediaController.extractToken(data.token);
-           }
-           else{
-               uiController.toast("Sorry, the Songbase.fm server is not available at the moment!", 1500);
-               setTimeout(function () {
-                   mediaController.getToken();
-               }, 15000);
-
-           }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            uiController.toast("Sorry, the Songbase.fm server is not available at the moment!", 1500);
-            setTimeout(function () {
-                mediaController.getToken();
-            }, 30000);
-        }
-
-    })
-}
 
 mediaController.playSong= function(streamURL,videoURL){
     mediaController.currentStreamURL    = streamURL;
@@ -211,7 +168,7 @@ mediaController.playSong= function(streamURL,videoURL){
 
 
 mediaController.getVersions = function () {
-    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
         var currentsong = playlistController.getPlayingSong();
         if (mediaController.currentStreamURL != "") {
             if (mediaController.versionListSong != currentsong) {
@@ -226,12 +183,12 @@ mediaController.getVersions = function () {
                     var song = currentsong;
                     // console.dir("SEARCH OTHER VERSIONS! " + counter + "  - " + mediaController.getSongArtist(song) + " - " + song.name);
                     $.ajax({
-                        url: preferences.serverURL + "?getversions=8&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name+"&auth="+mediaController.ip_token,
+                        url: preferences.serverURL + "?getversions=8&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name+"&auth="+authController.ip_token,
                         success: function (data) {
                             // console.dir("loaded " + counter);
                             // console.dir(data);
                             if(data.auth && data.auth=="true"){
-                                mediaController.extractToken(data.token);
+                                authController.extractToken(data.token);
                                 getsongversions(counter);
                             }
                             else{
@@ -329,13 +286,13 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
             else
             {
                 //  console.dir(videoURL);
-                if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+                if (authController.ip_token != "auth" && authController.ip_token != "") {
                     $.ajax({
                         timeout: 30000,
-                        url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name)+"&auth="+mediaController.ip_token,
+                        url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name)+"&auth="+authController.ip_token,
                         success: function (data) {
                             if(data.auth && data.auth=="true"){
-                                mediaController.extractToken(data.token);
+                                authController.extractToken(data.token);
                                 play(streamID, videoURL);
                             }
                             else
@@ -458,14 +415,14 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                             duration = data.track.duration;
                         }
                     }
-                    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+                    if (authController.ip_token != "auth" && authController.ip_token != "") {
                         var loadError = false;
                         $.ajax({
                             timeout: 30000,
-                            url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration+"&auth="+mediaController.ip_token,
+                            url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration+"&auth="+authController.ip_token,
                             success: function (data) {
                                 if(data.auth && data.auth=="true"){
-                                    mediaController.extractToken(data.token);
+                                    authController.extractToken(data.token);
                                     play(streamID, searchString, artistString, titleString, streamURL);
                                 }
                                 else
@@ -613,13 +570,13 @@ mediaController.playNextVersion = function () {
         if(mediaController.versionListSong != currentsong){
             var getsongversions = function (counter) {
                 if (counter < 120) {
-                    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+                    if (authController.ip_token != "auth" && authController.ip_token != "") {
                         var song = currentsong;
                         $.ajax({
-                            url: preferences.serverURL + "?getversions=8&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name)+"&auth="+mediaController.ip_token,
+                            url: preferences.serverURL + "?getversions=8&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name)+"&auth="+authController.ip_token,
                             success: function (data) {
                                 if(data.auth && data.auth=="true"){
-                                    mediaController.extractToken(data.token);
+                                    authController.extractToken(data.token);
                                     getsongversions(counter);
                                 }
                                 else

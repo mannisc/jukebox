@@ -40,17 +40,17 @@ accountController.setCookie = function(cname,cvalue,exdays)
 
 accountController.init = function(){
     var trylogin = function () {
-        if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+        if (authController.ip_token != "auth" && authController.ip_token != "") {
             var loginTokenBase64 = accountController.getCookie("loginToken");
             var userNameBase64 = accountController.getCookie("userName");
             if (loginTokenBase64 != "" && userNameBase64 != "") {
                 var token = rsaController.rsa.encrypt(Base64.decode(loginTokenBase64));
                 $.ajax({
                     timeout: 30000,
-                    url: preferences.serverURL + "?loginToken=" + token + "&auth=" + mediaController.ip_token,
+                    url: preferences.serverURL + "?loginToken=" + token + "&auth=" + authController.ip_token,
                     success: function (data) {
                         if (data.auth && data.auth == "true") {
-                            mediaController.extractToken(data.token);
+                            authController.extractToken(data.token);
                             trylogin();
                         }
                         else {
@@ -96,14 +96,14 @@ accountController.toggleSignInRegister = function () {
 }
 
 accountController.logout = function () {
-    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
         var token = rsaController.rsa.encrypt(accountController.loginToken);
         $.ajax({
             timeout: 30000,
-            url: preferences.serverURL + "?logout=" + token+"&auth="+mediaController.ip_token,
+            url: preferences.serverURL + "?logout=" + token+"&auth="+authController.ip_token,
             success: function (data) {
                 if(data.auth && data.auth=="true"){
-                    mediaController.extractToken(data.token);
+                    authController.extractToken(data.token);
                     accountController.logout();
                 }
                 else
@@ -199,7 +199,7 @@ accountController.loadStoredData = function(){
 
 
 accountController.signIn = function () {
-    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
         var send = function (name, pw) {
             var md5pw = MD5($.trim(pw));
             pw = rsaController.rsa.encrypt(pw);
@@ -207,10 +207,10 @@ accountController.signIn = function () {
             var email = "";
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?login=" + name+ "&email=" + email+ "&pw=" + pw+"&auth="+mediaController.ip_token,
+                url: preferences.serverURL + "?login=" + name+ "&email=" + email+ "&pw=" + pw+"&auth="+authController.ip_token,
                 success: function (data) {
                     if(data.auth && data.auth=="true"){
-                        mediaController.extractToken(data.token);
+                        authController.extractToken(data.token);
                         send(name, pw);
                     }
                     else
@@ -264,7 +264,7 @@ accountController.debugData = function (data) {
 }
 
 accountController.register = function () {
-    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
         var send = function (name,email, pw) {
             var md5pw = MD5($.trim(pw));
             name  = rsaController.rsa.encrypt(name);
@@ -272,10 +272,10 @@ accountController.register = function () {
             pw = rsaController.rsa.encrypt(pw);
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?register=" + name + "&email=" + email+ "&pw=" + pw+"&auth="+mediaController.ip_token,
+                url: preferences.serverURL + "?register=" + name + "&email=" + email+ "&pw=" + pw+"&auth="+authController.ip_token,
                 success: function (data) {
                     if(data.auth && data.auth=="true"){
-                        mediaController.extractToken(data.token);
+                        authController.extractToken(data.token);
                         send(name,email, pw);
                     }
                     else
@@ -320,7 +320,7 @@ accountController.register = function () {
 
 
 accountController.savePlaylist = function (gid, name, pos, playlistdata) {
-    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
         if (accountController.loggedIn) {
             var savename = escape(name);
             var savedata = escape(playlistdata);
@@ -330,12 +330,12 @@ accountController.savePlaylist = function (gid, name, pos, playlistdata) {
             var send = function (savename, savedata, savetoken) {
                 $.ajax({
                     type: "POST",
-                    data: {auth:mediaController.ip_token,storage: savetoken, gid: gid, pos: pos, n: nonce, type: "playlist", name: savename, data: savedata},
+                    data: {auth:authController.ip_token,storage: savetoken, gid: gid, pos: pos, n: nonce, type: "playlist", name: savename, data: savedata},
                     timeout: 30000,
                     url: preferences.serverURL,// + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data=savedata",
                     success: function (data) {
                         if(data.auth && data.auth=="true"){
-                            mediaController.extractToken(data.token);
+                            authController.extractToken(data.token);
                             send(savename, savedata, savetoken);
                         }
                     }
@@ -347,7 +347,7 @@ accountController.savePlaylist = function (gid, name, pos, playlistdata) {
 }
 
 accountController.loadPlaylist = function (name, callbackSuccess) {
-    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
         if (accountController.loggedIn) {
             var savename = encodeURIComponent(name);
             accountController.requestid = accountController.requestid + 1;
@@ -357,10 +357,10 @@ accountController.loadPlaylist = function (name, callbackSuccess) {
                 name = encodeURIComponent(name);
                 $.ajax({
                     timeout: 30000,
-                    url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=playlist&name=" + savename+"&auth="+mediaController.ip_token,
+                    url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=playlist&name=" + savename+"&auth="+authController.ip_token,
                     success: function (data) {
                         if(data.auth && data.auth=="true"){
-                            mediaController.extractToken(data.token);
+                            authController.extractToken(data.token);
                             send(savename, savetoken);
                         }
                         else{
@@ -381,7 +381,7 @@ accountController.loadPlaylist = function (name, callbackSuccess) {
 }
 
 accountController.loadPlaylists = function (callbackSuccess) {
-    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
         if (accountController.loggedIn) {
             accountController.requestid = accountController.requestid + 1;
             var nonce = accountController.requestid;
@@ -389,10 +389,10 @@ accountController.loadPlaylists = function (callbackSuccess) {
             var send = function (savetoken) {
                 $.ajax({
                     timeout: 30000,
-                    url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth="+mediaController.ip_token,
+                    url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth="+authController.ip_token,
                     success: function (data) {
                         if(data.auth && data.auth=="true"){
-                            mediaController.extractToken(data.token);
+                            authController.extractToken(data.token);
                             send(savetoken);
                         }
                         else
@@ -416,7 +416,7 @@ accountController.loadPlaylists = function (callbackSuccess) {
 
 
 accountController.saveUserData = function (type, name, userdata) {
-    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
         if (accountController.loggedIn) {
             var savename = encodeURIComponent(name);
             var savetype = encodeURIComponent(type);
@@ -427,13 +427,13 @@ accountController.saveUserData = function (type, name, userdata) {
             var send = function (savename, savetype, savedata, savetoken) {
                 $.ajax({
                     type: "POST",
-                    data: {auth:mediaController.ip_token,storage:savetoken,gid:gid,pos:pos,n:nonce,type:savetype,name:savename,data:savedata},
+                    data: {auth:authController.ip_token,storage:savetoken,gid:gid,pos:pos,n:nonce,type:savetype,name:savename,data:savedata},
                     timeout: 30000,
 
                     url: preferences.serverURL, // "?storage=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename+"&data="+savedata,
                     success: function (data) {
                         if(data.auth && data.auth=="true"){
-                            mediaController.extractToken(data.token);
+                            authController.extractToken(data.token);
                             send(savename, savetype, savedata, savetoken);
                         }
                     }
@@ -445,7 +445,7 @@ accountController.saveUserData = function (type, name, userdata) {
 }
 
 accountController.loadUserData = function (type, name, callbackSuccess) {
-    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
         if (accountController.loggedIn) {
             var savename = encodeURIComponent(name);
             var savetype = encodeURIComponent(type);
@@ -455,10 +455,10 @@ accountController.loadUserData = function (type, name, callbackSuccess) {
             var send = function (savename, savetype, savedata, savetoken) {
                 $.ajax({
                     timeout: 30000,
-                    url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=" + savetype + "&name=" + savename+"&auth="+mediaController.ip_token,
+                    url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=" + savetype + "&name=" + savename+"&auth="+authController.ip_token,
                     success: function (data) {
                         if(data.auth && data.auth=="true"){
-                            mediaController.extractToken(data.token);
+                            authController.extractToken(data.token);
                             send(savename, savetype, savedata, savetoken);
                         }
                         else
@@ -478,7 +478,7 @@ accountController.loadUserData = function (type, name, callbackSuccess) {
 }
 
 accountController.loadUserDataItems = function (type, callbackSuccess) {
-    if (mediaController.ip_token != "auth" && mediaController.ip_token != "") {
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
         if (accountController.loggedIn) {
             var savename = encodeURIComponent(name);
             var savetype = encodeURIComponent(type);
@@ -488,10 +488,10 @@ accountController.loadUserDataItems = function (type, callbackSuccess) {
             var send = function (savename, savetype, savedata, savetoken) {
                 $.ajax({
                     timeout: 30000,
-                    url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=" + savetype+"&auth="+mediaController.ip_token,
+                    url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=" + savetype+"&auth="+authController.ip_token,
                     success: function (data) {
                         if(data.auth && data.auth=="true"){
-                            mediaController.extractToken(data.token);
+                            authController.extractToken(data.token);
                             send(savename, savetype, savedata, savetoken);
                         }
                         else
