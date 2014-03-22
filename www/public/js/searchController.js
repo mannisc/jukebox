@@ -125,7 +125,6 @@ searchController.activateButton = function (index, noAnimation) {
 
 
     button.hide();
-
 }
 
 
@@ -557,6 +556,14 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
 }
 
 searchController.topTracks = function (callbackSuccess) {
+
+    //TODO TEEEMMMMMMPPPPPP for no Internet
+    if (callbackSuccess)
+        callbackSuccess( {track:   playlistController.NOINTERNETHACK});
+    return;
+
+
+
     searchController.SearchCounter++;
     var searchID = searchController.SearchCounter;
     var func = function (searchID) {

@@ -2758,7 +2758,6 @@ if (typeof jQuery != 'undefined') {
 			rail.width(railWidth);
 			// dark space
 			total.width(railWidth - (total.outerWidth(true) - total.width()));
-
 			if (t.setProgressRail)
 				t.setProgressRail();
 			if (t.setCurrentRail)
@@ -2978,7 +2977,6 @@ if (typeof jQuery != 'undefined') {
 			this.setControlsSize();
 		},
 		play: function() {
-            if(uiController.swipeTimer)
             if(!uiController.swipeTimer|| Date.now() -  uiController.swipeTimer >500){    //CHANGED!!!!!!!!!!!!!!!!!!!!!!
                 this.load();
 			    this.media.play();
