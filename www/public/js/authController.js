@@ -30,15 +30,20 @@ authController.extractToken = function(token){
     }
     else if(token!=""){
         mediaController.ip_token = "auth";
-        eval(Base64.decode(token));
-        authController.clientip  = mediaController.ipaddress;
-        if(authController.clientip == ""){
-            mediaController.ip_token = "";
-        }
-        if(mediaController.ip_token == ""){
+        try {
+            eval(Base64.decode(token));
+            authController.clientip  = mediaController.ipaddress;
+            if(authController.clientip == ""){
+                mediaController.ip_token = "";
+            }
+            if(mediaController.ip_token == ""){
+                uiController.toast("Sorry, the Songbase.fm server is not available at the moment!", 1500);
+            }
+            authController.ip_token = mediaController.ip_token;
+        } catch (e) {
             uiController.toast("Sorry, the Songbase.fm server is not available at the moment!", 1500);
         }
-        authController.ip_token = mediaController.ip_token;
+
     }
 }
 
