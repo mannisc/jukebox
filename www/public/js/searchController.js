@@ -29,6 +29,8 @@ searchController.buttonActive = 0;
 
 searchController.maxPopularSongPages = 2;
 searchController.maxArtistSongPages = 2;
+searchController.serverSearch = false;
+
 
 searchController.init = function () {
 
@@ -387,11 +389,15 @@ searchController.searchMusic = function () {
         else{
             window.history.pushState("",document.title, "?search="+ searchController.lastSearchTerm);
         }
-
-        if (app.isCordova)
-            var time = 1000;
-        else
-            time = 300;
+        if(searchController.serverSearch){
+            var time = 1500;
+        }
+        else{
+            if (app.isCordova)
+                var time = 1000;
+            else
+                time = 300;
+        }
 
         setTimeout(function () {
             if (searchController.lastSearchedTerm != searchController.lastSearchTerm) {
@@ -432,11 +438,10 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
 
     var searchserver = function (searchID) {
         $.ajax({
-            url: preferences.serverURL + "?searchjson=" + searchString+"&auth="+mediaController.ip_token,
-
+            url: preferences.serverURL + "?searchjson=" + searchString+"&auth="+authController.ip_token,
             success: function (data) {
                 if(data.auth && data.auth=="true"){
-                    mediaController.extractToken(data.token);
+                    authController.extractToken(data.token);
                     searchserver(searchID);
                 }
                 else
@@ -456,12 +461,13 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                                 data.track[i].name = unescape(data.track[i].name);
                             }
                         }
+                        setTimeout(searchController.showLoading, 1000); //show=false
                         if (callbackSuccess)
                             callbackSuccess(data);
                     }
                 }
             },
-            complete: function () {
+            error: function () {
                 if (searchID == searchController.SearchCounter) {
                     setTimeout(searchController.showLoading, 1000); //show=false
                 }
@@ -476,10 +482,11 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                 if (searchID == searchController.SearchCounter) {
                     if (data.results && data.results.trackmatches) {
                         if (data.results.trackmatches == "\n") {
-
+                            searchController.serverSearch = true;
                             searchserver(searchID);
                         }
                         else {
+                            searchController.serverSearch = false;
                             if (searchID == searchController.SearchCounter) {
                                 setTimeout(searchController.showLoading, 1000);
                                 if (callbackSuccess)
@@ -495,6 +502,7 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
             },
             error: function () {
                 if (searchID == searchController.SearchCounter) {
+                    searchController.serverSearch = true;
                     searchserver(searchID);
                 }
             }
@@ -512,10 +520,10 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
 
     var searchserver = function (searchID) {
         $.ajax({
-            url: preferences.serverURL + "?searchjson=" + searchString+"&auth="+mediaController.ip_token,
+            url: preferences.serverURL + "?searchjson=" + searchString+"&auth="+authController.ip_token,
             success: function (data) {
                 if(data.auth && data.auth=="true"){
-                    mediaController.extractToken(data.token);
+                    authController.extractToken(data.token);
                     searchserver(searchID);
                 }
                 else
@@ -535,12 +543,13 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
                                 data.track[i].name = unescape(data.track[i].name);
                             }
                         }
+                        setTimeout(searchController.showLoading, 1000); //show=false
                         if (callbackSuccess)
                             callbackSuccess(data);
                     }
                 }
             },
-            complete: function () {
+            error: function () {
                 if (searchID == searchController.SearchCounter) {
                     setTimeout(searchController.showLoading, 1000); //show=false
                 }

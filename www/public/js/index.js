@@ -84,6 +84,7 @@ $(document).ready(function () {
             app.isCordova = (window.location.hash == "#cordova" );
             loadUrlParams();
             mediaController.init();
+            authController.init();
             uiController.init();
             searchController.init();
             accountController.init();
