@@ -436,15 +436,19 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
     var searchID = searchController.SearchCounter;
 
     var searchserver = function (searchID) {
+        console.dir(preferences.serverURL + "?searchjson=" + searchString+"&auth="+authController.ip_token);
         $.ajax({
             url: preferences.serverURL + "?searchjson=" + searchString+"&auth="+authController.ip_token,
             success: function (data) {
+                console.dir("searchjson!!!!!!!!!!");
+                console.dir(data);
                 if(data.auth && data.auth=="true"){
                     authController.extractToken(data.token);
                     searchserver(searchID);
                 }
                 else
                 {
+
                     if (searchID == searchController.SearchCounter) {
                         for (var i = 0; i < data.track.length; i++) {
                             try {
@@ -466,7 +470,11 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                     }
                 }
             },
-            error: function () {
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+                console.dir("ERROR!");
+                console.dir(xhr.responseText);
                 if (searchID == searchController.SearchCounter) {
                     setTimeout(searchController.showLoading, 1000); //show=false
                 }
@@ -493,8 +501,10 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                             }
 
                         }
-
-
+                    }
+                    else{
+                        searchController.serverSearch = true;
+                        searchserver(searchID);
                     }
                 }
 
