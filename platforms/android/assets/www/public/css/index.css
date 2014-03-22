@@ -191,8 +191,8 @@ body {
     }
 
     #playlistselectvertical .chosen-container {
-        min-width: 199px !important;
-        max-width: 199px !important;
+        min-width: 180px !important;
+        max-width: 180px !important;
     }
 
     #sortplaylisttext {
@@ -388,8 +388,14 @@ input[type=button]{
       display:none!important;
 }
 
-.draggedlistelement li {
+
+.draggedlistelement .margintop{
+
+    margin-top: -5px!important;
+
 }
+
+
 
 .draggedlistelement li a {
     filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(70,23,180,1), endColorstr=rgba(70,23,180,1))!important;
@@ -528,6 +534,10 @@ white-space: nowrap;
 }
 
 
+.songlist{
+
+    margin-bottom:15px!important;
+}
 
 .songlist li{
     height:65px!important;
@@ -535,13 +545,13 @@ white-space: nowrap;
 
 #searchlist li.selected a, #playlistInner li.selected a{
 
-    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(78,183,212,1), endColorstr=rgba(78,183,212,1))!important;
-    background-image:-moz-linear-gradient(left, rgba(78,183,212,1) 0%, rgba(78,183,212,1) 44%,rgba(78,183,212,0) 100%)!important;
-    background-image: linear-gradient(left, rgba(78,183,212,1) 0%, rgba(78,183,212,1) 44%,rgba(78,183,212,0) 100%)!important;
-    background-image:-webkit-linear-gradient(left, rgba(78,183,212,1) 0%, rgba(78,183,212,1) 44%,rgba(78,183,212,0) 100%)!important;
-    background-image:-o-linear-gradient(left, rgba(78,183,212,1) 0%, rgba(78,183,212,1) 44%,rgba(78,183,212,0) 100%)!important;
-    background-image:-ms-linear-gradient(left, rgba(78,183,212,1) 0%, rgba(78,183,212,1) 44%,rgba(78,183,212,0) 100%)!important;
-    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(78,183,212,1)), color-stop(44%,rgba(78,183,212,1)),color-stop(100%,rgba(78,183,212,0)))!important;
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(78,183,212,0.6), endColorstr=rgba(78,183,212,0.6))!important;
+    background-image:-moz-linear-gradient(left, rgba(78,183,212,0.6) 0%, rgba(78,183,212,0.6) 44%,rgba(78,183,212,0) 100%)!important;
+    background-image: linear-gradient(left, rgba(78,183,212,0.6) 0%, rgba(78,183,212,0.6) 44%,rgba(78,183,212,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(78,183,212,0.6) 0%, rgba(78,183,212,0.6) 44%,rgba(78,183,212,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(78,183,212,0.6) 0%, rgba(78,183,212,0.6) 44%,rgba(78,183,212,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(78,183,212,0.6) 0%, rgba(78,183,212,0.6) 44%,rgba(78,183,212,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(78,183,212,0.6)), color-stop(44%,rgba(78,183,212,0.6)),color-stop(100%,rgba(78,183,212,0)))!important;
 
     border: none !important;
 }
@@ -551,7 +561,7 @@ white-space: nowrap;
 
 .songlist   li a  {
    overflow:visible!important;
-    margin-left:5px;
+    margin-left: 5px!important;
 }
 
 .songlist li a img.ui-li-icon{
@@ -561,7 +571,7 @@ white-space: nowrap;
 }
 
 
-.songlist li:hover a img {
+.songlist li:hover a img.ui-li-icon,.songlist li:hover a img.loadingSongImg {
     -webkit-transform: scale(1.21);
     transform: scale(1.21)!important;
     -webkit-transform-origin: 50% 50%;
@@ -573,12 +583,14 @@ white-space: nowrap;
     box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
 }
 
-.songlist li.loadedsong:hover a img {
+
+
+.songlist li.loadedsong:hover a img{
 
 -moz-box-shadow: none!important;
 -webkit-box-shadow: none!important;
 box-shadow: none!important;
-    }
+ }
 
 video{
     -moz-box-shadow: 5px 5p 15px rgba(0,0,0,0.4);
@@ -650,6 +662,10 @@ video{
     top: .9em;
     background-size:100%;
     background-repeat:no-repeat;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 
 }
 .ui-li-has-icon img.removesong:hover{
@@ -891,21 +907,21 @@ video{
 
 @-moz-keyframes bounce {
     0%{ -moz-transform:scale(0); opacity:0;}
-    50%{ -moz-transform:scale(1.9); opacity:0.4; }
+    50%{ -moz-transform:scale(1.4); opacity:0.4; }
     75%{ -moz-transform:scale(0.9); opacity:0.7;}
     100%{ -moz-transform:scale(1); opacity:1;}
 }
 
 @-webkit-keyframes bounce {
     0%{ -webkit-transform:scale(0); opacity:0;}
-    50%{ -webkit-transform:scale(1.6); opacity:0.4;}
+    50%{ -webkit-transform:scale(1.4); opacity:0.4;}
     75%{ -webkit-transform:scale(0.9); opacity:0.7;}
     100%{ -webkit-transform:scale(1); opacity:1;}
 }
 
 @keyframes bounce {
     0%{ -moz-transform:scale(0); opacity:0;}
-    50%{ -moz-transform:scale(1.9); opacity:0.4; }
+    50%{ -moz-transform:scale(1.4); opacity:0.4; }
     75%{ -moz-transform:scale(0.9); opacity:0.7;}
     100%{ -moz-transform:scale(1); opacity:1;}
 }
