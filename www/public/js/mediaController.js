@@ -352,6 +352,73 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
 
 }
 
+mediaController.loadStreamURL = function (streamID, searchString, artistString, titleString, streamURL,duration){
+    $.ajax({
+        timeout: 30000,
+        url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration+"&auth="+authController.ip_token,
+        success: function (data) {
+            if(data.auth && data.auth=="true"){
+                authController.extractToken(data.token);
+                play(streamID, searchString, artistString, titleString, streamURL);
+            }
+            else
+            {
+                // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
+                if (streamID == mediaController.playCounter) {
+                    mediaController.playCounter++;
+                    // console.dir("STREAM");
+                    // console.dir(data);
+                    //
+                    var videoURL = "";
+                    if (data.videoURL) {
+                        videoURL = data.videoURL;
+                    }
+                    videoURL  = unescape(videoURL);
+                    if(embedPlayer.isEmbedVideo(videoURL))
+                    {
+                        streamURL = videoURL;
+                        mediaController.playStreamURL(streamURL, videoURL, true);
+                        if (playlistController.playedSongs.length > 100) {
+                            playlistController.playedSongs.splice(playlistController.playedSongs.length - 100, 100)
+                        }
+
+                    }
+                    else if (data.streamURL) {
+                        streamURL = data.streamURL;
+                        streamURL = unescape(streamURL);
+                        console.dir(data);
+
+                        if (streamURL) {
+
+                            mediaController.playStreamURL(streamURL, videoURL, true);
+
+                            if (playlistController.playedSongs.length > 100) {
+                                playlistController.playedSongs.splice(playlistController.playedSongs.length - 100, 100)
+                            }
+
+                        }
+                        loadError = true;
+
+                    } else
+                        loadError = true;
+                } else
+                    loadError = true;
+            }
+        },
+        error: function () {
+            loadError = true;
+        },
+        complete: function () {
+            //log("COMPLETED")
+            playlistController.isLoading = false;
+            if (loadError) {
+                //  console.log("ERROR")
+                error();
+            }
+        }
+    })
+}
+
 
 mediaController.playStream = function (artist, title,playedAutomatic) {
     $(".mejs-time-buffering").fadeIn();
@@ -418,77 +485,15 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                   //  alert(artistString+" - "+titleString);
                     if (authController.ip_token != "auth" && authController.ip_token != "") {
                         var loadError = false;
-                        $.ajax({
-                            timeout: 30000,
-                            url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration+"&auth="+authController.ip_token,
-                            success: function (data) {
-                                if(data.auth && data.auth=="true"){
-                                    authController.extractToken(data.token);
-                                    play(streamID, searchString, artistString, titleString, streamURL);
-                                }
-                                else
-                                {
-                                    // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
-                                    if (streamID == mediaController.playCounter) {
-                                        mediaController.playCounter++;
-                                        // console.dir("STREAM");
-                                        // console.dir(data);
-                                        //
-                                        var videoURL = "";
-                                        if (data.videoURL) {
-                                          videoURL = data.videoURL;
-                                        }
-                                        videoURL  = unescape(videoURL);
-                                        if(embedPlayer.isEmbedVideo(videoURL))
-                                        {
-                                            streamURL = videoURL;
-                                            mediaController.playStreamURL(streamURL, videoURL, true);
-                                            if (playlistController.playedSongs.length > 100) {
-                                                playlistController.playedSongs.splice(playlistController.playedSongs.length - 100, 100)
-                                            }
-
-                                        }
-                                        else if (data.streamURL) {
-                                            streamURL = data.streamURL;
-                                            streamURL = unescape(streamURL);
-                                            console.dir(data);
-
-                                            if (streamURL) {
-
-                                                mediaController.playStreamURL(streamURL, videoURL, true);
-
-                                                if (playlistController.playedSongs.length > 100) {
-                                                    playlistController.playedSongs.splice(playlistController.playedSongs.length - 100, 100)
-                                                }
-
-                                            }
-                                            loadError = true;
-
-                                        } else
-                                            loadError = true;
-                                    } else
-                                        loadError = true;
-                                }
-                            },
-                            error: function () {
-                                loadError = true;
-                            },
-                            complete: function () {
-                                //log("COMPLETED")
-                                playlistController.isLoading = false;
-                                if (loadError) {
-                                    //  console.log("ERROR")
-                                    error();
-                                }
-                            }
-                        })
+                        mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL,duration);
                     }
                 }
 
             },
             error: function () {
                 // console.log("ERROR")
-                error();
+                var duration = 200000;
+                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration);
             }
 
         })
