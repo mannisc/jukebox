@@ -415,6 +415,7 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                             duration = data.track.duration;
                         }
                     }
+                  //  alert(artistString+" - "+titleString);
                     if (authController.ip_token != "auth" && authController.ip_token != "") {
                         var loadError = false;
                         $.ajax({
