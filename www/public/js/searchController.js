@@ -435,23 +435,30 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
             url: preferences.serverURL + "?searchjson=" + searchString+"&auth="+mediaController.ip_token,
 
             success: function (data) {
-                if (searchID == searchController.SearchCounter) {
-                    for (var i = 0; i < data.track.length; i++) {
-                        try {
-                            data.track[i].artist = decodeURIComponent(data.track[i].artist);
+                if(data.auth && data.auth=="true"){
+                    mediaController.extractToken(data.token);
+                    searchserver(searchID);
+                }
+                else
+                {
+                    if (searchID == searchController.SearchCounter) {
+                        for (var i = 0; i < data.track.length; i++) {
+                            try {
+                                data.track[i].artist = decodeURIComponent(data.track[i].artist);
+                            }
+                            catch (e) {
+                                data.track[i].artist = unescape(data.track[i].artist);
+                            }
+                            try {
+                                data.track[i].name = decodeURIComponent(data.track[i].name);
+                            }
+                            catch (e) {
+                                data.track[i].name = unescape(data.track[i].name);
+                            }
                         }
-                        catch (e) {
-                            data.track[i].artist = unescape(data.track[i].artist);
-                        }
-                        try {
-                            data.track[i].name = decodeURIComponent(data.track[i].name);
-                        }
-                        catch (e) {
-                            data.track[i].name = unescape(data.track[i].name);
-                        }
+                        if (callbackSuccess)
+                            callbackSuccess(data);
                     }
-                    if (callbackSuccess)
-                        callbackSuccess(data);
                 }
             },
             complete: function () {
@@ -507,23 +514,30 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
         $.ajax({
             url: preferences.serverURL + "?searchjson=" + searchString+"&auth="+mediaController.ip_token,
             success: function (data) {
-                if (searchID == searchController.SearchCounter) {
-                    for (var i = 0; i < data.track.length; i++) {
-                        try {
-                            data.track[i].artist = decodeURIComponent(data.track[i].artist);
+                if(data.auth && data.auth=="true"){
+                    mediaController.extractToken(data.token);
+                    searchserver(searchID);
+                }
+                else
+                {
+                    if (searchID == searchController.SearchCounter) {
+                        for (var i = 0; i < data.track.length; i++) {
+                            try {
+                                data.track[i].artist = decodeURIComponent(data.track[i].artist);
+                            }
+                            catch (e) {
+                                data.track[i].artist = unescape(data.track[i].artist);
+                            }
+                            try {
+                                data.track[i].name = decodeURIComponent(data.track[i].name);
+                            }
+                            catch (e) {
+                                data.track[i].name = unescape(data.track[i].name);
+                            }
                         }
-                        catch (e) {
-                            data.track[i].artist = unescape(data.track[i].artist);
-                        }
-                        try {
-                            data.track[i].name = decodeURIComponent(data.track[i].name);
-                        }
-                        catch (e) {
-                            data.track[i].name = unescape(data.track[i].name);
-                        }
+                        if (callbackSuccess)
+                            callbackSuccess(data);
                     }
-                    if (callbackSuccess)
-                        callbackSuccess(data);
                 }
             },
             complete: function () {

@@ -50,14 +50,21 @@ accountController.init = function(){
                         timeout: 30000,
                         url: preferences.serverURL + "?loginToken=" + token+"&auth="+mediaController.ip_token,
                         success: function (data) {
-                            if(data=="ok"){
-                                accountController.loggedIn = true;
-                                accountController.loginToken = Base64.decode(loginTokenBase64);
-                                accountController.userName   = Base64.decode(userNameBase64);
-                                accountController.requestid = 1;
-                                $scope.safeApply();
-                                uiController.styleTopButtons();
-                                accountController.loadStoredData();
+                            if(data.auth && data.auth=="true"){
+                                mediaController.extractToken(data.token);
+                                trylogin();
+                            }
+                            else
+                            {
+                                if(data=="ok"){
+                                    accountController.loggedIn = true;
+                                    accountController.loginToken = Base64.decode(loginTokenBase64);
+                                    accountController.userName   = Base64.decode(userNameBase64);
+                                    accountController.requestid = 1;
+                                    $scope.safeApply();
+                                    uiController.styleTopButtons();
+                                    accountController.loadStoredData();
+                                }
                             }
                         }
                     })
@@ -97,8 +104,15 @@ accountController.logout = function () {
         timeout: 30000,
         url: preferences.serverURL + "?logout=" + token+"&auth="+mediaController.ip_token,
         success: function (data) {
-            if (uiController.savePlaylist)
-                uiController.toggleSavePlaylist();
+            if(data.auth && data.auth=="true"){
+                mediaController.extractToken(data.token);
+                accountController.logout();
+            }
+            else
+            {
+                if (uiController.savePlaylist)
+                    uiController.toggleSavePlaylist();
+            }
         }
     })
     accountController.setCookie("loginToken",Base64.encode(""),0);
@@ -195,29 +209,36 @@ accountController.signIn = function () {
             timeout: 30000,
             url: preferences.serverURL + "?login=" + name+ "&email=" + email+ "&pw=" + pw+"&auth="+mediaController.ip_token,
             success: function (data) {
-                if (data != "") {
-                    accountController.loggedIn = true;
-                    accountController.loginToken = MD5(data + md5pw);
-                    accountController.userName = username;
-                    accountController.setCookie("loginToken",Base64.encode(accountController.loginToken),1);
-                    accountController.setCookie("userName",Base64.encode(accountController.userName),1);
-
-                    var btn = $('#header .ui-btn.animated').removeClass("animated");
-                    $('#popupLogin').popup('close');
-                    uiController.styleTopButtons();
-                    $scope.safeApply();
-                    uiController.styleTopButtons();
-                    setTimeout(function () {
-                        btn.addClass("animated");
-                    }, 500)
-                    accountController.requestid = 1;
-
-                    accountController.loadStoredData();
-
-
+                if(data.auth && data.auth=="true"){
+                    mediaController.extractToken(data.token);
+                    send(name, pw);
                 }
-                else {
-                    uiController.toast("Error: Please check your login data.", 1500);
+                else
+                {
+                    if (data != "") {
+                        accountController.loggedIn = true;
+                        accountController.loginToken = MD5(data + md5pw);
+                        accountController.userName = username;
+                        accountController.setCookie("loginToken",Base64.encode(accountController.loginToken),1);
+                        accountController.setCookie("userName",Base64.encode(accountController.userName),1);
+
+                        var btn = $('#header .ui-btn.animated').removeClass("animated");
+                        $('#popupLogin').popup('close');
+                        uiController.styleTopButtons();
+                        $scope.safeApply();
+                        uiController.styleTopButtons();
+                        setTimeout(function () {
+                            btn.addClass("animated");
+                        }, 500)
+                        accountController.requestid = 1;
+
+                        accountController.loadStoredData();
+
+
+                    }
+                    else {
+                        uiController.toast("Error: Please check your login data.", 1500);
+                    }
                 }
             },
             error: function () {
@@ -251,22 +272,29 @@ accountController.register = function () {
             timeout: 30000,
             url: preferences.serverURL + "?register=" + name + "&email=" + email+ "&pw=" + pw+"&auth="+mediaController.ip_token,
             success: function (data) {
-                if (data != "") {
-                    accountController.loggedIn = true;
-                    accountController.loginToken = MD5(data + md5pw);
-                    accountController.userName = username;
-                    var btn = $('#header .ui-btn.animated').removeClass("animated");
-                    $('#registerLogin').popup('close');
-                    uiController.styleTopButtons();
-                    $scope.safeApply();
-                    uiController.styleTopButtons();
-                    setTimeout(function () {
-                        btn.addClass("animated");
-                    }, 500)
-                    accountController.requestid = 1;
+                if(data.auth && data.auth=="true"){
+                    mediaController.extractToken(data.token);
+                    send(name,email, pw);
                 }
-                else {
-                    uiController.toast("Error: Please check your data.", 1500);
+                else
+                {
+                    if (data != "") {
+                        accountController.loggedIn = true;
+                        accountController.loginToken = MD5(data + md5pw);
+                        accountController.userName = username;
+                        var btn = $('#header .ui-btn.animated').removeClass("animated");
+                        $('#registerLogin').popup('close');
+                        uiController.styleTopButtons();
+                        $scope.safeApply();
+                        uiController.styleTopButtons();
+                        setTimeout(function () {
+                            btn.addClass("animated");
+                        }, 500)
+                        accountController.requestid = 1;
+                    }
+                    else {
+                        uiController.toast("Error: Please check your data.", 1500);
+                    }
                 }
             },
             error: function () {
@@ -302,8 +330,11 @@ accountController.savePlaylist = function (gid, name, pos, playlistdata) {
                 data: {auth:mediaController.ip_token,storage: savetoken, gid: gid, pos: pos, n: nonce, type: "playlist", name: savename, data: savedata},
                 timeout: 30000,
                 url: preferences.serverURL,// + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data=savedata",
-                success: function (returndata) {
-                  //  alert("ERFOLGREICH GESPEICHERT")
+                success: function (data) {
+                    if(data.auth && data.auth=="true"){
+                        mediaController.extractToken(data.token);
+                        send(savename, savedata, savetoken);
+                    }
                 }
             })
         }
@@ -322,10 +353,15 @@ accountController.loadPlaylist = function (name, callbackSuccess) {
             $.ajax({
                 timeout: 30000,
                 url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=playlist&name=" + savename+"&auth="+mediaController.ip_token,
-                success: function (playlistdata) {
-
-                    if (callbackSuccess)
-                        callbackSuccess(playlistdata);
+                success: function (data) {
+                    if(data.auth && data.auth=="true"){
+                        mediaController.extractToken(data.token);
+                        send(savename, savetoken);
+                    }
+                    else{
+                        if (callbackSuccess)
+                            callbackSuccess(data);
+                    }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
 
@@ -348,8 +384,15 @@ accountController.loadPlaylists = function (callbackSuccess) {
                 timeout: 30000,
                 url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth="+mediaController.ip_token,
                 success: function (data) {
-                    if (callbackSuccess)
-                        callbackSuccess(data);
+                    if(data.auth && data.auth=="true"){
+                        mediaController.extractToken(data.token);
+                        send(savetoken);
+                    }
+                    else
+                    {
+                        if (callbackSuccess)
+                            callbackSuccess(data);
+                    }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(xhr.status);
@@ -379,7 +422,11 @@ accountController.saveUserData = function (type, name, userdata) {
                 timeout: 30000,
 
                 url: preferences.serverURL, // "?storage=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename+"&data="+savedata,
-                success: function (returndata) {
+                success: function (data) {
+                    if(data.auth && data.auth=="true"){
+                        mediaController.extractToken(data.token);
+                        send(savename, savetype, savedata, savetoken);
+                    }
                 }
             })
         }
@@ -399,8 +446,15 @@ accountController.loadUserData = function (type, name, callbackSuccess) {
                 timeout: 30000,
                 url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=" + savetype + "&name=" + savename+"&auth="+mediaController.ip_token,
                 success: function (data) {
-                    if (callbackSuccess)
-                        callbackSuccess(data);
+                    if(data.auth && data.auth=="true"){
+                        mediaController.extractToken(data.token);
+                        send(savename, savetype, savedata, savetoken);
+                    }
+                    else
+                    {
+                        if (callbackSuccess)
+                            callbackSuccess(data);
+                    }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.dir(JSON.parse(xhr.responseText));
@@ -423,8 +477,15 @@ accountController.loadUserDataItems = function (type, callbackSuccess) {
                 timeout: 30000,
                 url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=" + savetype+"&auth="+mediaController.ip_token,
                 success: function (data) {
-                    if (callbackSuccess)
-                        callbackSuccess(data);
+                    if(data.auth && data.auth=="true"){
+                        mediaController.extractToken(data.token);
+                        send(savename, savetype, savedata, savetoken);
+                    }
+                    else
+                    {
+                        if (callbackSuccess)
+                            callbackSuccess(data);
+                    }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.dir(JSON.parse(xhr.responseText));
