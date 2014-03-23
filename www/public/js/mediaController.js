@@ -359,7 +359,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
         success: function (data) {
             if(data.auth && data.auth=="true"){
                 authController.extractToken(data.token);
-                play(streamID, searchString, artistString, titleString, streamURL);
+                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL,duration);
             }
             else
             {
