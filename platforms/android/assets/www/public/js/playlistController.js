@@ -760,12 +760,7 @@ playlistController.savePlaylist = function (useSelected) {
         playlistController.playlists = playlists;
 
 
-<<<<<<< HEAD
-        // window.localStorage.playlists = JSON.stringify(playlists);
 
-        for (var i = 0; i < playlistController.playlists.length; i++) {
-            accountController.savePlaylist(playlistController.playlists[i].gid, playlistController.playlists[i].name, i, playlistController.playlists[i].tracks)
-=======
        // window.localStorage.playlists = JSON.stringify(playlists);
         // alert("SAVE!!");
         console.dir("SAVE");
@@ -773,7 +768,6 @@ playlistController.savePlaylist = function (useSelected) {
         console.dir("----");
         for (var i = 0; i <  playlistController.playlists.length; i++) {
            accountController.savePlaylist( playlistController.playlists[i].gid, playlistController.playlists[i].name,i,JSON.stringify( playlistController.playlists[i].tracks))
->>>>>>> origin/master
         }
 
 

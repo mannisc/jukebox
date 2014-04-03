@@ -606,10 +606,10 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
 searchController.topTracks = function (callbackSuccess) {
 
     //TODO TEEEMMMMMMPPPPPP for no Internet
-    if (callbackSuccess)
+   /* if (callbackSuccess)
         callbackSuccess( {track:   playlistController.NOINTERNETHACK});
     return;
-
+    */
 
 
     searchController.SearchCounter++;
