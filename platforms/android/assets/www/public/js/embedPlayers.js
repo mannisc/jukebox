@@ -53,26 +53,29 @@ embedPlayer.loadDailymotion = function (url) {
     if(videoid){
         $("#dmplayer").addClass("iframeVideo").insertAfter("#backgroundImage");
         embedPlayer.dailymotionVideoID = videoid;
-        var PARAMS = {background : 'ABE866', autoplay : 1, chromeless : 1,
+        var PARAMS = {background : 'ABE866', autoplay : 0, chromeless : 1,
             foreground : '000000', related: 0, quality: 720,
             html : 1, highlight : '857580',
             info : 1, network : 'dsl', autoplay : 0};
-        embedPlayer.dmplayer = DM.player("dmplayer", {width: "100%", height: "100%", params: PARAMS});
+        embedPlayer.dmplayer = DM.player("dmplayer", {video: videoid,width: "100%", height: "100%", params: PARAMS});
         embedPlayer.dmplayer.addEventListener("apiready", function(e)
         {
-            embedPlayer.dmplayer.load(videoid);
-            $(".mejs-playpause-button").find("button").css("opacity", "1");
-            $(".mejs-playpause-button button").addClass("mejs-pause");
             $(".mejs-time-buffering").hide();
-            $(".mejs-playpause-button").click();
             $("#embedplayer").show();
             $("#dmplayer").show();
             embedPlayer.apiready = true;
+            embedPlayer.dmplayer.play();
         });
 
         embedPlayer.dmplayer.addEventListener("error", function(e)
         {
             embedPlayer.error();
+        });
+
+        embedPlayer.dmplayer.addEventListener("canplaythrough", function(e)
+        {
+            $(".mejs-playpause-button").click();
+            //embedPlayer.dmplayer.play();
         });
 
         embedPlayer.dmplayer.addEventListener("durationchange", function(e)
