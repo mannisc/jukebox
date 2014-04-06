@@ -253,32 +253,21 @@ uiController.initMediaPlayer = function () {
 
             $('.mejs-fullscreen-button').clone().insertAfter('.mejs-fullscreen-button');
             $($('.mejs-fullscreen-button').get(0)).hide();
-<<<<<<< HEAD
+
             $($('.mejs-fullscreen-button').get(1)).off().click(function () {
                 if (playlistController.isPlaying)
-=======
 
-            $($('.mejs-fullscreen-button').get(1)).off() .click(function(){
-
-                if(playlistController.isPlaying)
->>>>>>> origin/master
                     var isPlaying = true;
                 else
                     isPlaying = false;
 
-<<<<<<< HEAD
                 uiController.fullscreenMode = uiController.fullscreenMode + 1;
                 if (uiController.fullscreenMode > 2)
-=======
-                uiController.fullscreenMode = uiController.fullscreenMode+1;
 
-                if(uiController.fullscreenMode>2)
->>>>>>> origin/master
                     uiController.fullscreenMode = 0;
                 uiController.setScreenMode();
 
 
-<<<<<<< HEAD
                 if (uiController.fullscreenMode == 1) { //Background
                     $("#videoplayer video").addClass("backgroundVideo").insertAfter("#backgroundImage");
                     $("#videoplayer").hide();
@@ -298,9 +287,6 @@ uiController.initMediaPlayer = function () {
 
                 }
                 if (isPlaying)
-=======
-                if(isPlaying)
->>>>>>> origin/master
                     mediaElement.play();
 
 
@@ -434,12 +420,9 @@ uiController.initMediaPlayer = function () {
                     $(".songlist li.loadedsong").removeClass("playing");
 
                 }
-<<<<<<< HEAD
-                playlistController.isPlaying = false;
-=======
+
                 playlistController.isPlaying=false;
                 embedPlayer.pause();
->>>>>>> origin/master
 
             });
 
@@ -464,11 +447,8 @@ uiController.initMediaPlayer = function () {
 
                 $(".mejs-playpause-button button").removeClass("looped");
 
-<<<<<<< HEAD
                 if (!playlistController.loadingSong.isAudioFile) {
-=======
-                if(!playlistController.loadingSong.isAudioFile){
->>>>>>> origin/master
+
                     if ($("#videoplayer").css("opacity") < 1) {
                         var translateVideo = uiController.translateVideo;
                         $("#videoplayer").removeClass("animate");
@@ -481,15 +461,10 @@ uiController.initMediaPlayer = function () {
                             $("#videoplayer").addClass("animate");
                             setTimeout(function () {
                                 setTimeout(function () {
-<<<<<<< HEAD
-                                    if (playlistController.isPlaying) {
-                                        $("#videoplayer").css("opacity", "1");
-                                        $("#videoplayer").css("pointer-events", "auto");
-=======
+
                                     if (playlistController.isPlaying){
                                         $("#videoplayer").css("opacity", "1");
                                         $("#videoplayer").css("pointer-events","auto");
->>>>>>> origin/master
 
                                     }
                                 }, 200)
@@ -503,7 +478,7 @@ uiController.initMediaPlayer = function () {
                 }
             });
             mediaElement.addEventListener("ended", function (e) {
-<<<<<<< HEAD
+
                 mediaController.sendRating("2");
                 document.title = $scope.appTitle;
 
@@ -521,10 +496,7 @@ uiController.initMediaPlayer = function () {
                 if (!playlistController.isLoading)
                     playlistController.playNextSong();
 
-
-=======
                 mediaController.mediaEnded();
->>>>>>> origin/master
             });
 
 
@@ -560,11 +532,8 @@ uiController.initMediaPlayer = function () {
             });
         },
         error: function () {
-<<<<<<< HEAD
             console.log("ERROR CREATING <VIDEO>........................");
-=======
 
->>>>>>> origin/master
         }
 
 
@@ -961,17 +930,13 @@ uiController.init = function () {
 
 
 
-<<<<<<< HEAD
             $("#clearChoosenPlaylists").hide();
             uiController.updateUI();
             playlistController.loadedPlaylistSongs = playlistController.playlists;
             if (playlistController.loadedPlaylistSongs.length > 0)
                 $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
-=======
->>>>>>> origin/master
 
 
-<<<<<<< HEAD
             $("#playlistview").hide();
             $scope.safeApply();
             setTimeout(function () {
@@ -982,8 +947,7 @@ uiController.init = function () {
                     uiController.playListScroll.refresh();
                 }, 150)
             }, 0)
-=======
->>>>>>> origin/master
+
 
 
     $('#clearChoosenPlaylists').click(function (e) {
@@ -1571,7 +1535,6 @@ uiController.makeSearchListDraggable = function () {
 
             var elements = $("#searchlist li.selected").removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
 
-<<<<<<< HEAD
             if (elements.length == 0) {
                 elements = $(this).removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
                 elements.removeClass("fadeslideincompletefast").css("opacity", "0.5")
@@ -1583,10 +1546,6 @@ uiController.makeSearchListDraggable = function () {
                 $(elements.get(0)).addClass("margintop")
 
             }
-=======
-            if(elements.length==0)
-                elements = $(this).removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
->>>>>>> origin/master
 
             var ele = $helper.append(elements)
 
@@ -1790,19 +1749,9 @@ uiController.savePlaylistVisible = function (useSelected) {
 uiController.toggleSavePlaylist = function (savePlaylist) {
 
 
-<<<<<<< HEAD
-    if (!accountController.loggedIn) {
-        if (!accountController.showRegisterPopup)
-            accountController.toggleSignInRegister();
-
-        $('#popupLogin').popup('open', {positionTo: '#signinLink', transition: "pop"});
-
-        setTimeout(function () {
-=======
     if(!accountController.loggedIn){
         $('#popupRegister').popup('open', {positionTo: '#registerLink', transition:"pop"});
         setTimeout(function(){
->>>>>>> origin/master
             $('#signinusername').focus();
         }, 500)
 
@@ -2150,30 +2099,24 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
 
     }
-    $("#videoplayer .mejs-time-total").css("width", uiController.windowWidth / 1.5 - 160 - 105-5);
-    $("#videoplayer .mejs-time-rail").css("width", uiController.windowWidth / 1.5 - 160 + 10 - 105-5);
 
-<<<<<<< HEAD
-=======
-    uiController.totalTimeWidth = uiController.windowWidth / 1.5 - 160 - 105;
-    $("#videoplayer .mejs-time-total").css("width", uiController.windowWidth / 1.5 - 160 - 105);
-    $("#videoplayer .mejs-time-rail").css("width", uiController.windowWidth / 1.5 - 160 + 10 - 105);
->>>>>>> origin/master
+    uiController.totalTimeWidth = uiController.windowWidth / 1.5 - 160 - 105-5;
+    $("#videoplayer .mejs-time-total").css("width", uiController.totalTimeWidth);
+    $("#videoplayer .mejs-time-rail").css("width",  uiController.totalTimeWidth+10);
 
 
     //Small Size
     if (uiController.windowWidth < uiController.responsiveWidthSmall) {
 
-<<<<<<< HEAD
-=======
+
         uiController.totalTimeWidth = (uiController.windowWidth / 1.5 - 160);
-        $("#videocontrols .mejs-time-total").css("width", (uiController.windowWidth / 1.5 - 160));
->>>>>>> origin/master
+        //$("#videocontrols .mejs-time-total").css("width", (uiController.windowWidth / 1.5 - 160));
 
         if ((uiController.windowWidth) / 1.5 - 160 - 105 + 10 < 323 - 105 - uiController.countCustomButtons * 26) {
             if (((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10 < 0) {
                 $("#videocontrols .mejs-time-total").css("width", "0px");
                 $("#videocontrols .mejs-time-rail").css("width", "0px");
+
                 // console.log("!nnn" + (((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10))
             }
             else{
@@ -2202,16 +2145,10 @@ uiController.updateUI = function (dontChangeVideOpacity) {
          $(marquee).replaceWith($(marquee).contents());
          } while (marquee)*/
 
-<<<<<<< HEAD
 
-            $("#videocontrols .mejs-time-total").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26);
-            $("#videocontrols .mejs-time-rail").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 + 10 - 105 - uiController.countCustomButtons * 26);
-
-=======
         uiController.totalTimeWidth = (uiController.windowWidth / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26 ;
         $("#videocontrols .mejs-time-total").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26);
         $("#videocontrols .mejs-time-rail").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 + 10 - 105 - uiController.countCustomButtons * 26);
->>>>>>> origin/master
 
         $("#content").css({"width": uiController.windowWidth - 32, "height": $(window).height() - 44 - 4 - 32 });
 
