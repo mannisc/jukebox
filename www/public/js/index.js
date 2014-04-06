@@ -114,7 +114,6 @@ $(document).ready(function () {
             }, 2000);
 
 
-
         } else
             setTimeout(initPage, 50);
     }
