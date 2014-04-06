@@ -616,7 +616,7 @@ video{
 }
 
 
-.songlist li.loadedsong.stillloading:hover a img {
+.songlist li.loadedsong.stillloading:hover a img.ui-li-icon {
 
     -moz-box-shadow: 5px 0p 5px rgba(0,0,0,0.4)!important;
     -webkit-box-shadow: 5px 0px 5px rgba(0,0,0,0.4)!important;

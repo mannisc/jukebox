@@ -291,3 +291,12 @@ margin-bottom: 5px!important;
     background: transparent url(../img/lyrics.png) no-repeat;
     background-size: 16px;
 }
+
+
+
+/* CHOOSEN */
+
+
+.chosen-container .chosen-drop{
+    border: none!important;
+}
