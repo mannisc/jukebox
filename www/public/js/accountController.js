@@ -133,11 +133,18 @@ accountController.loadStoredData = function(){
     var playlistsReady = function(playlistdata){
         if(playlistdata){
             var playlists = new Array();
+            playlists[0] = {
+                name: "Youtube - playlist",
+                gid: 1,
+                tracks: new Array(),
+                isPlaylist: true,
+                id: 1
+            }
             if(playlistdata.items && playlistdata.items.length > 0){
 
                 //Copy received (stored) data to playlists-Array;
                 for (var j = 0; j < playlistdata.items.length; j++) {
-                    playlists[j] = {
+                    playlists[0].tracks[j] = {
                         name: playlistdata.items[j].name,
                         gid: parseInt(playlistdata.items[j].gid),
                         tracks: playlistdata.items[j].data,
