@@ -524,7 +524,7 @@ white-space: nowrap;
 }
 
 #searchlist a {
-    background: none !important;
+    background: none ;
     border: none !important;
 }
 
@@ -716,7 +716,7 @@ video{
 
 
 
-.songlist li.loadedsong {
+.songlist li.loadedsong a{
   /*  background-color:rgba(255,255,255,0.3) !important;*/
 
 
@@ -857,7 +857,7 @@ video{
 }
 
 #playlistInner a {
-    background: none !important;
+    background: none ;
     border: none !important;
 }
 
