@@ -24,6 +24,10 @@ dailymotionPlayer.duration = 0;
 dailymotionPlayer.currentTime = 0;
 dailymotionPlayer.apiready = false;
 
+dailymotionPlayer.setVolume = function (volume) {
+      console.log(volume);
+};
+
 
 dailymotionPlayer.play = function () {
     alert("play")

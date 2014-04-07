@@ -13,7 +13,7 @@ var videoController = function () {
 };
 
 //Currently used Video Player
-videoController.videoPlayer = mediaelementPlayer;
+videoController.videoPlayer = mediaelementPlayer;//embeddedPlayer;//
 
 
 //Video is playing
@@ -23,6 +23,12 @@ videoController.isPlaying = false;
 videoController.progressTime = 0;
 //Max Time - use setter
 videoController.maxTime = 0;
+
+//Changing Volume at the moment
+videoController.changingVolume = false;
+videoController.isMuted=false;
+videoController.beforeMutedVolume=null;
+videoController.volume=0.5;
 
 //Start state of Buttons
 videoController.prevEnabled = true;
@@ -113,7 +119,7 @@ videoController.init = function () {
     });
 
     //Volume
-    videoController.controls.find(".videoControlElements-volume-button").click(function () {
+    videoController.controls.find(".videoControlElements-volume-button button").click(function () {
         if (videoController.volumeEnabled && videoController.videoPlayer)
             videoController.videoPlayer.mute();
     });
@@ -124,19 +130,55 @@ videoController.init = function () {
     });
 
     videoController.controls.find(".videoControlElements-volume-button").mouseout(function () {
-        videoController.controls.find(".videoControlElements-volume-slider").hide();
+        if (!videoController.changingVolume)
+            videoController.controls.find(".videoControlElements-volume-slider").hide();
     });
 
 
     videoController.controls.find(".videoControlElements-volume-handle").bind('mousedown', function (e) {
 
+        var volumeSlider = videoController.controls.find('.videoControlElements-volume-slider'),
+            volumeTotal = videoController.controls.find('.videoControlElements-volume-total'),
+            volumeCurrent = videoController.controls.find('.videoControlElements-volume-current'),
+            volumeHandle = videoController.controls.find('.videoControlElements-volume-handle'),
+            mute = $(".videoControlElements-volume-button");
 
-        this.bind('mousemove', function (e) {
-          console.log("!!!!!!!!")
-        })
+        var changeVolumeHandler = function (e) {
+            videoController.changingVolume = true;
+            var volume,
+                totalOffset = volumeTotal.offset();
 
-        this.bind('mouseup', function (e) {
-          this.unbind("mouseup mousemove");
+            // calculate the new volume based on the moust position
+            var
+                railHeight = volumeTotal.height() * 1.5 / 1.023,//CHANGED!!!!!
+                totalTop = parseInt(volumeTotal.css('top').replace(/px/, ''), 10),
+                newY = e.pageY - totalOffset.top;
+
+            volume = (railHeight - newY) / railHeight;
+
+            // the controls just hide themselves (usually when mouse moves too far up)
+            if (totalOffset.top == 0 || totalOffset.left == 0)
+                return;
+
+            // ensure the volume isn't outside 0-1
+            volume = Math.max(0, volume);
+            volume = Math.min(volume, 1);
+
+            // position the slider and handle
+            videoController.positionVolumeHandle(volume);
+
+            // set the media object (this will trigger the volumechanged event)
+
+            videoController.videoPlayer.setVolume(volume);
+
+        }
+
+        $(document).bind('mousemove.videoVolume', changeVolumeHandler)
+
+        $(document).bind('mouseup.videoVolume', function (e) {
+            videoController.controls.find(".videoControlElements-volume-slider").hide();
+            videoController.changingVolume = false;
+            $(document).unbind(".videoVolume");
         })
     });
 
@@ -168,6 +210,8 @@ videoController.init = function () {
             mediaController.postOnFacebook();
     });
 
+
+    videoController.positionVolumeHandle(videoController.volume);
 
     //TODO Remove
     videoController.setMaxTime(341);
@@ -311,6 +355,56 @@ videoController.setMaxTime = function (time) {
         videoController.setProgressPercentage(videoController.progressTime / videoController.maxTime)
 
 }
+
+/**
+ * Position Volume Handle and show muted/unmuted Icon
+ * @param volume
+ * @param secondTry
+ */
+videoController.positionVolumeHandle = function (volume, secondTry) {
+    var volumeSlider = videoController.controls.find('.videoControlElements-volume-slider'),
+        volumeTotal = videoController.controls.find('.videoControlElements-volume-total'),
+        volumeCurrent = videoController.controls.find('.videoControlElements-volume-current'),
+        volumeHandle = videoController.controls.find('.videoControlElements-volume-handle'),
+        mute = $(".videoControlElements-volume-button");
+    if (!volumeSlider.is(':visible') && typeof secondTry == 'undefined') {
+        volumeSlider.show();
+        videoController.positionVolumeHandle(volume, true);
+        volumeSlider.hide()
+        return;
+    }
+
+    // correct to 0-1
+    volume = Math.max(0, volume);
+    volume = Math.min(volume, 1);
+
+    // ajust mute button style
+    if (volume == 0) {
+        mute.removeClass('videoControlElements-mute').addClass('videoControlElements-unmute');
+    } else {
+        mute.removeClass('videoControlElements-unmute').addClass('videoControlElements-mute');
+    }
+
+    // position slider
+
+    // height of the full size volume slider background
+    var totalHeight = volumeTotal.height(),
+
+    // top/left of full size volume slider background
+        totalPosition = volumeTotal.position(),
+
+    // the new top position based on the current volume
+    // 70% volume on 100px height == top:30px
+        newTop = totalHeight - (totalHeight * volume);
+
+    // handle
+    volumeHandle.css('top', Math.round(totalPosition.top + newTop - (volumeHandle.height() / 2)));
+
+    // show the current visibility
+    volumeCurrent.height(totalHeight - newTop);
+    volumeCurrent.css('top', totalPosition.top + newTop);
+}
+
 
 
 /**

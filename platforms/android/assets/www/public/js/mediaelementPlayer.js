@@ -31,10 +31,8 @@ mediaelementPlayer.stop = function () {
 };
 
 
-mediaelementPlayer.mute = function () {
-    alert("mute")
-
-
+mediaelementPlayer.setVolume = function (volume) {
+    console.log(volume);
 };
 
 mediaelementPlayer.fullscreen = function () {
