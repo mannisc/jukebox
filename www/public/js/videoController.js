@@ -370,6 +370,21 @@ videoController.setMaxTime = function (time) {
 
 }
 
+
+
+/**
+ * Show Buffering strippes in time rail
+ */
+videoController.showBuffering = function(show){
+    if(show)
+        videoController.controls.find(".videoControlElements-time-buffering").fadeIn();
+    else
+        videoController.controls.find(".videoControlElements-time-buffering").hide();
+}
+
+
+
+
 /**
  * Position Volume Handle and show muted/unmuted Icon
  * @param volume

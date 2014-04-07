@@ -265,11 +265,11 @@ mediaController.getVersions = function () {
 
 mediaController.playVersion = function (songversion,rating,resetVersion) {
     $('#loadversionimg').css("opacity", "1");
-    $(".mejs-time-buffering").fadeIn();
-    if ($(".mejs-time-loaded").width() > $(".mejs-time-total").width() * 0.7)
-        $(".mejs-time-loaded").hide();
+    videoController.showBuffering(true);
+    if ($(".videoControlElements-time-loaded").width() > $(".videoControlElements-time-total").width() * 0.7)
+        $(".videoControlElements-time-loaded").hide();
 
-    $(".mejs-playpause-button button").removeClass("looped");
+    $(".videoControlElements-playpause-button button").removeClass("looped");
     mediaController.playCounter++;
     var streamID = mediaController.playCounter;
     var videoURL = songversion.url
@@ -284,7 +284,7 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
                 mediaController.playStreamURLSeek(videoURL, videoURL, true, rating);
                 $('#loadversionimg').css("opacity", "0");
                 setTimeout(function () {
-                    $(".mejs-controls").find('.mejs-time-buffering').hide()
+                    videoController.showBuffering(false);
                 }, 500);
             }
             else
@@ -337,7 +337,7 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
                             //TODO
                             $('#loadversionimg').css("opacity", "0");
                             setTimeout(function () {
-                                $(".mejs-controls").find('.mejs-time-buffering').hide()
+                                videoController.showBuffering(false);
                             }, 500);
                         }
                     })
@@ -347,7 +347,7 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
         else {
             $('#loadversionimg').css("opacity", "0");
             setTimeout(function () {
-                $(".mejs-controls").find('.mejs-time-buffering').hide()
+                videoController.showBuffering(false);
             }, 500);
         }
 
@@ -428,13 +428,13 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
 
 mediaController.playStream = function (artist, title,playedAutomatic) {
 
-    $(".mejs-time-buffering").fadeIn();
+    videoController.showBuffering(true);
 
-    if ($(".mejs-time-loaded").width() > $(".mejs-time-total").width() * 0.7)
-        $(".mejs-time-loaded").hide();
+    if ($(".videoControlElements-time-loaded").width() > $(".videoControlElements-time-total").width() * 0.7)
+        $(".videoControlElements-time-loaded").hide();
 
 
-    $(".mejs-playpause-button button").removeClass("looped");
+    $(".videoControlElements-playpause-button button").removeClass("looped");
 
     mediaController.playCounter++;
     var streamID = mediaController.playCounter;
@@ -459,7 +459,7 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
         if (streamID == mediaController.playCounter) {
 
             setTimeout(function () {
-                $(".mejs-controls").find('.mejs-time-buffering').hide()
+                videoController.showBuffering(false);
             }, 500);
 
             uiController.toast("Sorry, this song is not available at the moment.", 1500);
@@ -481,7 +481,8 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                 if (streamID == mediaController.playCounter) {
                     setTimeout(function () {
                         if (streamID == mediaController.playCounter)
-                            $(".mejs-time-buffering").fadeIn();
+                            videoController.showBuffering(true);
+
                     }, 500);
                     var duration = 200000;
 
@@ -536,13 +537,13 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
 
 
         if (differentVersions) {
-            $(".mejs-button-choose-version button").css("opacity", "1");
+            $(".videoControlElements-button-choose-version button").css("opacity", "1");
             $("#chooseversionbutton").removeClass("rotateIt");
             setTimeout(function () {
                 $("#chooseversionbutton").addClass("rotateIt");
             }, 500)
         } else
-            $(".mejs-button-choose-version button").css("opacity", "0.5");
+            $(".videoControlElements-button-choose-version button").css("opacity", "0.5");
         uiController.mediaElementPlayer.media.addEventListener('loadedmetadata', mediaController.setVideoTime, false);
 
 
@@ -570,7 +571,7 @@ mediaController.setVideoTime = function () {
 mediaController.songError = function () {
 
     setTimeout(function () {
-        $(".mejs-controls").find('.mejs-time-buffering').hide()
+        videoController.showBuffering(false);
     }, 500);
     uiController.toast("Sorry, this song is not available at the moment.", 1500);
     $("#videoplayer").css("opacity", "0");
@@ -578,7 +579,7 @@ mediaController.songError = function () {
 }
 
 mediaController.playNextVersion = function () {
-    if ($(".mejs-button-choose-version button").css("opacity") < 1)
+    if ($(".videoControlElements-button-choose-version button").css("opacity") < 1)
         return;
     var currentsong = playlistController.getPlayingSong();
     if (currentsong.name != "") {
@@ -713,13 +714,13 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
 
         if (differentVersions) {
-            $(".mejs-button-choose-version button").css("opacity", "1");
+            $(".videoControlElements-button-choose-version button").css("opacity", "1");
             $("#chooseversionbutton").removeClass("rotateIt");
             setTimeout(function () {
                 $("#chooseversionbutton").addClass("rotateIt");
             }, 500)
         } else
-            $(".mejs-button-choose-version button").css("opacity", "0.5");
+            $(".videoControlElements-button-choose-version button").css("opacity", "0.5");
 
 
     }, 200)
@@ -820,7 +821,7 @@ mediaController.openExternalSite = function () {
     window.open(mediaController.currentvideoURL, '_blank');
     if (playlistController.isPlaying) {
         //uiController.mediaElementPlayer.pause();
-        $('.mejs-mediaelement video').each(function () {
+        $('.videoControlElements-mediaelement video').each(function () {
             this.player.pause()
         })
     }
