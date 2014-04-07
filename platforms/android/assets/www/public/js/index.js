@@ -88,7 +88,7 @@ $(document).ready(function () {
             uiController.init();
             searchController.init();
             accountController.init();
-
+            videoController.init();
 
             setTimeout(function(){
                 $("#searchinput").focus();
@@ -96,7 +96,7 @@ $(document).ready(function () {
 
             //Show loaded page
             $("#page").css("opacity", "1");
-
+            console.dir(urlParams);
             setTimeout(function () {
                 if(urlParams.search&&urlParams.search!=""){
                     searchController.searchSongs(urlParams.search, "", "", searchController.completeSearch);
@@ -108,11 +108,11 @@ $(document).ready(function () {
                             name:  urlParams.title,
                             id: "slsid" + helperFunctions.padZeros(1, 2)
                         }
-                        playlistController.playSong(song,false,false);
+                        alert(song)
+                        playbackController.playSong(song,false,false);
                     }
                 }
             }, 2000);
-
 
 
         } else

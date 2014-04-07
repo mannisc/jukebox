@@ -167,7 +167,7 @@ body {
 @media (max-width:669px) {
 
 
-    .mejs-stop-button{
+    .videoControlElements-stop-button{
         display:none!important;
     }
 
@@ -214,7 +214,7 @@ body {
 /*Small TimeRail Screen*/
 @media (max-width:420px) {
 
-    .mejs-duration-container, .mejs-button-choose-version, #videocontrols .mejs-time-rail , .mejs-button-lyrics,#lyricsiframe {
+    .videoControlElements-duration-container, .videoControlElements-button-choose-version, #videocontrols .videoControlElements-time-rail , .videoControlElements-button-lyrics,#lyricsiframe {
         display:none!important;
     }
 
@@ -616,7 +616,7 @@ video{
 }
 
 
-.songlist li.loadedsong.stillloading:hover a img {
+.songlist li.loadedsong.stillloading:hover a img.ui-li-icon {
 
     -moz-box-shadow: 5px 0p 5px rgba(0,0,0,0.4)!important;
     -webkit-box-shadow: 5px 0px 5px rgba(0,0,0,0.4)!important;
@@ -1120,12 +1120,7 @@ video{
 
  }
 
- #videoccontrols  .mejs-time-rail {
-     -webkit-transition: all 1s ease;
-     -moz-transition: all 1s ease;
-     -o-transition: all 1s ease;
-     transition: all 1s ease;
- }
+
 
 
 
@@ -1158,17 +1153,7 @@ video{
     width:100%;
 
 }
-#videocontrolsInner .mejs-controls {
-    background: rgba(29,29,29,0.3)!important;
-    /*
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(20,20,20,0.9)), to(rgba(0,0,0,0.9)))!important;
-    background: -webkit-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
-    background: -moz-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
-    background: -o-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
-    background: -ms-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
-    background: linear-gradient(rgba(44,40,40,0.9), rgba(0,0,0,0.9))!important;
-    */
-}
+
 
 #videoplayer .mejs-controls{
     padding-left:0px!important;
@@ -1180,28 +1165,6 @@ video{
     height: 100% !important;
 }
 
-.mejs-controls {
-    pointer-events: auto;
-
-    width:auto!important;
-    -webkit-transform: scale(1.5);
-    transform: scale(1.5);
-
-    -webkit-transform-origin: 0% 100%;
-    transform-origin: 0% 100%;
-}
-
-.mejs-controls .mejs-button button:focus {
-    outline: none !important;
-}
-
-.mejs-controls .mejs-volume-button .mejs-volume-slider {
-    background: rgba(50, 50, 50, 0.9) !important;
-}
-
-.mejs-volume-button{
-    opacity:1!important;
-}
 
 
 .iScrollVerticalScrollbar{
@@ -1213,15 +1176,6 @@ video{
     border: 1px solid rgba(155, 155, 155, 0.6)!important;
 }
 
-
-
-
-.mejs-playpause-button{
-    -webkit-transform: scale(1.7);
-    transform: scale(1.7);
-    -webkit-transform-origin: 50% 55%;
-    transform-origin: 50% 55%;
-}
 
 
 
@@ -1638,11 +1592,9 @@ video{
     margin: 4px 0 3px 5px!important;
 }
 
-.mejs-button button{
-    cursor: default !important;
-}
 
-a, button,.mejs-time-total,.mejs-time-rail,.mejs-time-total span,.mejs-time, h1, h2, h3{
+
+a, button, h1, h2, h3{
     cursor: default !important;
 
 }

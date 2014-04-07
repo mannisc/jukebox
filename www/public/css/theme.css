@@ -56,12 +56,6 @@ padding: .4em 0!important;
 
 }
 
-.mejs-prevtrack-button{
-    margin-right: 5px!important;
-}
-.mejs-playpause-button{
-    margin-right: 2px!important;
-}
 
 /*Player*/
 
@@ -167,8 +161,6 @@ margin-bottom: 5px!important;
 
 
 
-
-
 /*Panel*/
 
 .ui-panel-animate.ui-panel-position-right.ui-panel-display-overlay {
@@ -244,50 +236,11 @@ margin-bottom: 5px!important;
 }
   */
 
-.mejs-controls .mejs-button.mejs-button-choose-version button {
-    cursor: pointer;
-    display: block;
-    font-size: 0;
-    line-height: 0;
-    text-decoration: none;
-    margin: 7px 5px;
-    padding: 0;
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    border: 0;
-    background: transparent url(../img/editdarker.png) no-repeat;
-    background-size: 16px;
-}
 
-.mejs-controls .mejs-button.mejs-button-facebook button {
-    cursor: pointer;
-    display: block;
-    font-size: 0;
-    line-height: 0;
-    text-decoration: none;
-    margin: 7px 5px;
-    padding: 0;
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    border: 0;
-    background: transparent url(../img/facebook.png) no-repeat;
-    background-size: 16px;
-}
 
-.mejs-controls .mejs-button.mejs-button-lyrics button {
-    cursor: pointer;
-    display: block;
-    font-size: 0;
-    line-height: 0;
-    text-decoration: none;
-    margin: 7px 5px;
-    padding: 0;
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    border: 0;
-    background: transparent url(../img/lyrics.png) no-repeat;
-    background-size: 16px;
+/* CHOOSEN */
+
+
+.chosen-container .chosen-drop{
+    border: none!important;
 }
