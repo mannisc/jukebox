@@ -234,6 +234,7 @@ embedPlayer.setFullscreen = function (fullscreen) {
 embedPlayer.play = function () {
     if(embedPlayer.dailymotion  && embedPlayer.dmplayer && embedPlayer.apiready){
         embedPlayer.dmplayer.play();
+        alert("PLAY DM")
     }
     setTimeout(function () {
         $(".mejs-time-buffering").fadeOut();

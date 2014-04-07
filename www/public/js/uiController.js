@@ -111,7 +111,7 @@ uiController.initMediaPlayer = function () {
         $("#videoplayer .mejs-controls").appendTo("#videocontrolsInner");
 
 
-        if (!playlistController.loadingSong) {
+        if (!playlistController.playingSong) {
             $("#videoplayer").css("opacity", "0");
             $("#videoplayer").css("pointer-events", "none");
 
@@ -178,7 +178,7 @@ uiController.initMediaPlayer = function () {
         if(uiController.fullscreenMode==1){ //Background
             if(embedPlayer.active == 0){
                 $("#videoplayer").hide();
-                if(playlistController.loadingSong)
+                if(playlistController.playingSong)
                     $("#backgroundImage").css("opacity","0.08");
                 $("#videoplayer video").addClass("backgroundVideo").insertAfter("#backgroundImage");
             }
@@ -271,7 +271,7 @@ uiController.initMediaPlayer = function () {
                 if (uiController.fullscreenMode == 1) { //Background
                     $("#videoplayer video").addClass("backgroundVideo").insertAfter("#backgroundImage");
                     $("#videoplayer").hide();
-                    if (playlistController.loadingSong)
+                    if (playlistController.playingSong)
                         $("#backgroundImage").css("opacity", "0.08");
 
 
@@ -399,7 +399,7 @@ uiController.initMediaPlayer = function () {
 
                     $(".mejs-playpause-button button").removeClass("looped");
                     $(".mejs-time-loaded").hide();
-                    if (!playlistController.loadingOldSong) {
+                    if (!playlistController.playingOldSong) {
                         playlistController.resetPlayingSong();
 
                     }
@@ -426,28 +426,34 @@ uiController.initMediaPlayer = function () {
 
             });
 
-            mediaElement.addEventListener('play', function (e) {
-                embedPlayer.play();
 
+            //mediaElement.addEventListener('playing', function (e) {
+
+
+            mediaElement.addEventListener("play", function (e) {
+
+                if(playlistController.playingSong)
+                 embedPlayer.play();
             });
+            mediaElement.addEventListener("playing", function (e) {
+                if(playlistController.playingSong) {
+                    alert("PLAY ING")
 
-
-
-            mediaElement.addEventListener('playing', function (e) {
-                helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
+                    helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
 
                 $($(".songlist li.loadedsong").get(0)).addClass("playing");
                 $(".songlist li.loadedsong").removeClass("pausing");
 
                 playlistController.isLoading = false;
                 playlistController.isPlaying = true;
+
                 playlistController.disablePlayStopControls(false);
 
                 $(".mejs-time-loaded").show();
 
                 $(".mejs-playpause-button button").removeClass("looped");
 
-                if (!playlistController.loadingSong.isAudioFile) {
+                if (!playlistController.playingSong.isAudioFile) {
 
                     if ($("#videoplayer").css("opacity") < 1) {
                         var translateVideo = uiController.translateVideo;
@@ -476,7 +482,7 @@ uiController.initMediaPlayer = function () {
                     uiController.playedFirst = true;
                     uiController.updateUI(true);
                 }
-            });
+            }});
             mediaElement.addEventListener("ended", function (e) {
 
                 mediaController.sendRating("2");
@@ -508,7 +514,7 @@ uiController.initMediaPlayer = function () {
 
             mediaElement.addEventListener('loadeddata', function (e) {
 
-                if (!playlistController.loadingSong.isAudioFile) {
+                if (!playlistController.playingSong.isAudioFile) {
                     if (this.videoWidth > 0) {
                         var setHeight = function () {
                             var height = $("video").outerHeight();//.mejs-mediaelement
@@ -1089,7 +1095,6 @@ uiController.makePlayListSortable = function () {
             $(this).data("checkdown", null);
 
         }).on("mouseout",function (event) {
-            console.log("MOUT");
 
             if (uiController.dragSortableSongY > 0 && Math.abs(event.clientY - uiController.dragSortableSongY) > 30)
                 uiController.swipeTimer = Date.now();
@@ -1102,7 +1107,6 @@ uiController.makePlayListSortable = function () {
         }).on("mousemove", function (event) {
             // console.log("MOVE " + Math.abs(event.clientY - uiController.dragSortableSongY))
             if (Math.abs(event.clientY - uiController.dragSortableSongY) > 8) {
-                console.log("MMOVE");
 
                 if ($(this).data("checkdown")) {
                     clearTimeout($(this).data("checkdown"));
@@ -1431,7 +1435,6 @@ uiController.makeSearchListDraggable = function () {
     $("#searchlist li").on("mousedown",function (event) {
         if($(this).parents("#searchlist").length==0)
             return;
-        console.log("DOWN "+(Date.now() - uiController.dragDraggableSongTimer))
         if (!uiController.dragDraggableLastSongTimer || Date.now() - uiController.dragDraggableLastSongTimer > 500) {
             uiController.dragDraggableSongX = event.clientX;
             uiController.dragDraggableSongY = event.clientY;
@@ -1442,7 +1445,6 @@ uiController.makeSearchListDraggable = function () {
     }).on("mouseup ",function (event) {
             if($(this).parents("#searchlist").length==0)
                 return;
-            console.log("UP ")
             if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 30) {
                 uiController.swipeTimer = Date.now();
                 uiController.dragDraggableSongY = -10;
@@ -1451,7 +1453,6 @@ uiController.makeSearchListDraggable = function () {
         }).on("mousemove", function (event) {
             if($(this).parents("#searchlist").length==0)
              return;
-            console.log("MOVE " + event.clientY + "      " + Math.abs(event.clientY - uiController.dragDraggableSongY) + "    " + (Date.now() - uiController.dragDraggableSongTimer) + "    " + (event.clientX - uiController.dragDraggableSongX))
             if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 8)
                 uiController.dragDraggableSongY = -10;
             if (uiController.dragDraggableSongY > 0 && Math.abs(event.clientY - uiController.dragDraggableSongY) > 30) {
@@ -1461,8 +1462,6 @@ uiController.makeSearchListDraggable = function () {
                     uiController.dragDraggableSongY = -10;
                     uiController.dragDraggableLastSongTimer = Date.now();
                     uiController.dragDraggableSongTimer = 0;
-
-                    console.log("DRAGNDROP    "+$(this).parents("#searchlist").length+ "     ...   " + (event.clientX - uiController.dragDraggableSongX))
 
                     if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
                         $("#saveplaylistinpt").val("");
@@ -1474,7 +1473,6 @@ uiController.makeSearchListDraggable = function () {
                     }
 
                     $("#searchlistview .draggableSong").draggable("enable");
-                    console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
 
                     if (!uiController.sidePanelOpen && uiController.windowWidth < uiController.responsiveWidthSmallest) {
                         uiController.startedSortPlaylistOpenedPanel = true;

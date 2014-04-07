@@ -37,10 +37,10 @@ function MainController($scope) {
 
     $scope.debugObj = function(obj){
 
+        /*console.log("''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''")
+        console.dir(obj)
         console.log("''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''")
-        //console.dir(obj)
-        console.log("''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''")
-
+        */
         return obj;
     }
 
@@ -49,6 +49,8 @@ function MainController($scope) {
     $scope.uiController       = uiController;
     $scope.searchController   = searchController;
     $scope.playlistController = playlistController;
+    $scope.playbackController = playbackController;
+
     $scope.accountController  = accountController;
 
 

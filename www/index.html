@@ -194,7 +194,7 @@
 
         <ul data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
-            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-click="playlistController.selectSong(song)" ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img
+            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-click="playlistController.selectSong(song)" ng-dblclick="playbackController.doubleClickedElement(song);"><a tabindex="-1"><img
                     src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none"><img src="public/img/empty.png"
                                                                                                                                                                                                     class="loadingSongImg" style="display:none">
 
@@ -260,7 +260,7 @@
         <div id="playlistInner" class="animate" style="display:none">
             <ul data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
                 <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"  ng-click="playlistController.selectSong(song)"
-                    ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
+                    ng-dblclick="playbackController.doubleClickedElement(song);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
                                                                                            class="ui-li-icon ui-corner-none">
                     <img src="public/img/empty.png" class="loadingSongImg" style="display:none">
                     <span ng-if="!song.isPlaylist">
@@ -282,7 +282,7 @@
     <div id="videoplayer">
         <div id="videoplayerInner">
 
-          <video id="player1" controls="controls" autoplay="true" preload="true">
+          <video id="player1" controls="controls"  preload="true">
                <source src="" type="video/mp4"/>
            <!--   <source src="" type="video/flv"/> -->
             </video>
@@ -380,9 +380,9 @@
             <h3 style="margin-right: 40px;margin-left: 40px;padding-right: 20px;padding-left: 20px;text-align: center;">Artist</h3>
 
             <ul data-role="listview" id="popupArtistExternList" data-theme="b">
-                <li data-theme="b" class="marked"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchArtistSongs(mediaController.getSongArtist(playlistController.loadingSong));"
+                <li data-theme="b" class="marked"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchArtistSongs(mediaController.getSongArtist(playlistController.playingSong));"
                                       style="text-decoration:none" target="_blank">Songs from Artist</a></li>
-                <li data-theme="b" class="marked"  style="border-bottom:1px solid #ddd;"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchSimilarSongs(playlistController.loadingSong);"
+                <li data-theme="b" class="marked"  style="border-bottom:1px solid #ddd;"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchSimilarSongs(playlistController.playingSong);"
                                       style="text-decoration:none" target="_blank">Similar Songs</a></li>
                 <li data-theme="b" style="border-top:15px solid rgba(255,255,255,0.8);"><a ng-show="playlistController.loadingSong" href="http://de.wikipedia.org/w/index.php?go=Artikel&title&search={{mediaController.getSongArtist(playlistController.loadingSong)}}"
                                       onclick="$('#popupArtist').popup('close')" style="text-decoration:none" target="_blank">Wikipedia</a></li>
@@ -478,6 +478,8 @@
 <script type="text/javascript" src="public/js/helperFunctions.js"></script>
 
 <!-- business logic -->
+<script type="text/javascript" src="public/js/playbackController.js"></script>
+
 <script type="text/javascript" src="public/js/uiController.js"></script>
 
 <script type="text/javascript" src="public/js/mediaController.js"></script>
