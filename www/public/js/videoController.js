@@ -16,7 +16,6 @@ var videoController = function () {
 videoController.videoPlayer = mediaelementPlayer;
 
 
-
 //Video is playing
 videoController.isPlaying = false;
 
@@ -42,24 +41,24 @@ videoController.sharesocialEnabled = true;
 /**
  * Init the videoController, bind events to Buttons
  */
-videoController.init = function(){
+videoController.init = function () {
 
-    videoController.controls =  $(".videoControlElements-controls");
+    videoController.controls = $(".videoControlElements-controls");
 
     //Play Previous Song
     videoController.controls.find(".videoControlElements-prevtrack-button").click(function () {
-        if(videoController.prevEnabled)
+        if (videoController.prevEnabled)
             playlistController.playPrevSong();
-    })
+    });
 
     //Play Pause Song
     videoController.controls.find(".videoControlElements-playpause-button").click(function () {
-        if(videoController.playpauseEnabled&&videoController.videoPlayer){
-            if(videoController.isPlaying){
+        if (videoController.playpauseEnabled && videoController.videoPlayer) {
+            if (videoController.isPlaying) {
                 videoController.controls.find(".videoControlElements-pause").removeClass("videoControlElements-pause").addClass("videoControlElements-play");
                 videoController.videoPlayer.pause();
             }
-            else{
+            else {
                 videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
                 videoController.videoPlayer.play();
             }
@@ -67,37 +66,37 @@ videoController.init = function(){
             videoController.isPlaying = !videoController.isPlaying;
         }
 
-    })
+    });
 
     //Stop Song
     videoController.controls.find(".videoControlElements-stop-button").click(function () {
-        if(videoController.stopEnabled&&videoController.videoPlayer)
+        if (videoController.stopEnabled && videoController.videoPlayer)
             videoController.videoPlayer.stop();
-    })
+    });
 
     //Play Next Song
     videoController.controls.find(".videoControlElements-nexttrack-button").click(function () {
-        if(videoController.nextEnabled)
+        if (videoController.nextEnabled)
             playlistController.playNextSong();
-    })
+    });
 
 
     //Shuffle Songs
     videoController.controls.find(".videoControlElements-shuffle-button").click(function () {
-        if(videoController.shuffleEnabled)
+        if (videoController.shuffleEnabled)
             playlistController.toggleShuffleSongs();
-    })
+    });
 
     //Time Rail
     videoController.controls.find(".videoControlElements-time-rail").click(function (event) {
-        if(videoController.timerailEnabled) {
-            var total =  videoController.controls.find('.videoControlElements-time-total'),
-                //loaded  = controls.find('.videoControlElements-time-loaded'),
-                //current  = controls.find('.videoControlElements-time-current'),
-                //handle  = controls.find('.videoControlElements-time-handle'),
+        if (videoController.timerailEnabled) {
+            var total = videoController.controls.find('.videoControlElements-time-total'),
+            //loaded  = controls.find('.videoControlElements-time-loaded'),
+            //current  = controls.find('.videoControlElements-time-current'),
+            //handle  = controls.find('.videoControlElements-time-handle'),
                 x = event.pageX,
                 offset = total.offset(),
-                width = total.outerWidth(true)*MediaElementPlayer.prototype.extoptions.scale/1.023,
+                width = total.outerWidth(true) * MediaElementPlayer.prototype.extoptions.scale / 1.023,
                 pos,
                 percentage;
 
@@ -111,50 +110,63 @@ videoController.init = function(){
             percentage = (pos / width);
             videoController.videoPlayer.setCurrentTime(percentage)
         }
-    })
+    });
 
     //Volume
     videoController.controls.find(".videoControlElements-volume-button").click(function () {
-        if(videoController.volumeEnabled&&videoController.videoPlayer)
+        if (videoController.volumeEnabled && videoController.videoPlayer)
             videoController.videoPlayer.mute();
-    })
+    });
 
     videoController.controls.find(".videoControlElements-volume-button").mouseover(function () {
-        if(videoController.volumeEnabled)
+        if (videoController.volumeEnabled)
             videoController.controls.find(".videoControlElements-volume-slider").show();
-    })
+    });
 
     videoController.controls.find(".videoControlElements-volume-button").mouseout(function () {
         videoController.controls.find(".videoControlElements-volume-slider").hide();
-    })
+    });
+
+
+    videoController.controls.find(".videoControlElements-volume-handle").bind('mousedown', function (e) {
+
+
+        this.bind('mousemove', function (e) {
+          console.log("!!!!!!!!")
+        })
+
+        this.bind('mouseup', function (e) {
+          this.unbind("mouseup mousemove");
+        })
+    });
 
 
     //Fullscreen
     videoController.controls.find(".videoControlElements-fullscreen-button").click(function () {
-        if(videoController.fullscreenEnabled&&videoController.videoPlayer)
+        if (videoController.fullscreenEnabled && videoController.videoPlayer)
             videoController.videoPlayer.fullscreen();
-    })
+    });
 
 
     //Choose Version
     videoController.controls.find(".videoControlElements-button-choose-version").click(function () {
-        if(videoController.versionsEnabled)
-        mediaController.getVersions();
-    })
+        if (videoController.versionsEnabled)
+            mediaController.getVersions();
+    });
 
     //Show Lyrics
     videoController.controls.find(".videoControlElements-button-lyrics").click(function () {
-        if(videoController.lyricsEnabled)
+        if (videoController.lyricsEnabled)
 
             mediaController.toggleLyrics();
-    })
+    });
 
     //Share Social
     videoController.controls.find(".videoControlElements-button-facebook").click(function () {
-        if(videoController.sharesocialEnabled)
+        if (videoController.sharesocialEnabled)
 
             mediaController.postOnFacebook();
-    })
+    });
 
 
     //TODO Remove
@@ -162,7 +174,6 @@ videoController.init = function(){
     videoController.setProgressTime(78);
     videoController.setBufferedPercentage(0.6);
 }
-
 
 
 /**
@@ -217,12 +228,12 @@ videoController.disableControls = function (disable) {
     } else {
         $(".videoControlElements-nexttrack-button button").css("opacity", "1");
         $(".videoControlElements-prevtrack-button button").css("opacity", "1");
-        if (playlistController.shuffleMode){
-           videoController.shuffleEnabled = true;
-          $(".videoControlElements-shuffle-button button").css("opacity", "1");
-        } else{
-           videoController.shuffleEnabled = false;
-           $(".videoControlElements-shuffle-button button").css("opacity", "0.5");
+        if (playlistController.shuffleMode) {
+            videoController.shuffleEnabled = true;
+            $(".videoControlElements-shuffle-button button").css("opacity", "1");
+        } else {
+            videoController.shuffleEnabled = false;
+            $(".videoControlElements-shuffle-button button").css("opacity", "0.5");
 
         }
     }
@@ -250,14 +261,14 @@ videoController.disablePositionControls = function (disable) {
 /**
  * Set Progress in percentage
  */
-videoController.setProgressPercentage = function(percentage){
+videoController.setProgressPercentage = function (percentage) {
 
-    var total =  videoController.controls.find('.videoControlElements-time-total');
-    if(percentage<0)
+    var total = videoController.controls.find('.videoControlElements-time-total');
+    if (percentage < 0)
         percentage = 0;
-    else if(percentage>1)
+    else if (percentage > 1)
         percentage = 1;
-    videoController.controls.find(".videoControlElements-time-current").css("width",total.width()*percentage)
+    videoController.controls.find(".videoControlElements-time-current").css("width", total.width() * percentage)
 
 }
 
@@ -265,40 +276,39 @@ videoController.setProgressPercentage = function(percentage){
 /**
  * Set Buffered in percentage
  */
-videoController.setBufferedPercentage = function(percentage){
+videoController.setBufferedPercentage = function (percentage) {
 
-    var total =  videoController.controls.find('.videoControlElements-time-total');
-    if(percentage<0)
+    var total = videoController.controls.find('.videoControlElements-time-total');
+    if (percentage < 0)
         percentage = 0;
-    else if(percentage>1)
+    else if (percentage > 1)
         percentage = 1;
-    videoController.controls.find(".videoControlElements-time-loaded").css("width",total.width()*percentage)
+    videoController.controls.find(".videoControlElements-time-loaded").css("width", total.width() * percentage)
 
 }
-
 
 
 /**
  * Set Progress in seconds
  */
-videoController.setProgressTime = function(time){
+videoController.setProgressTime = function (time) {
     videoController.progressTime = time;
-    videoController.controls.find(".videoControlElements-currenttime").text(videoController.secondsToTimeCode(time,false,false,false));
+    videoController.controls.find(".videoControlElements-currenttime").text(videoController.secondsToTimeCode(time, false, false, false));
 
-    if(videoController.maxTime&&videoController.maxTime>0)
-       videoController.setProgressPercentage(videoController.progressTime/videoController.maxTime)
+    if (videoController.maxTime && videoController.maxTime > 0)
+        videoController.setProgressPercentage(videoController.progressTime / videoController.maxTime)
 
 }
 
 /**
  * Set Song length in seconds
  */
-videoController.setMaxTime = function(time){
+videoController.setMaxTime = function (time) {
     videoController.maxTime = time;
-    videoController.controls.find(".videoControlElements-duration").text(videoController.secondsToTimeCode(time,false,false,false));
+    videoController.controls.find(".videoControlElements-duration").text(videoController.secondsToTimeCode(time, false, false, false));
 
-    if(videoController.maxTime&&videoController.maxTime>0)
-        videoController.setProgressPercentage(videoController.progressTime/videoController.maxTime)
+    if (videoController.maxTime && videoController.maxTime > 0)
+        videoController.setProgressPercentage(videoController.progressTime / videoController.maxTime)
 
 }
 
@@ -306,17 +316,13 @@ videoController.setMaxTime = function(time){
 /**
  * Called by Videoplayer when video ended
  */
-videoController.videoEnded = function(){
-
+videoController.videoEnded = function () {
 
 
 }
 
 
-
-
-
- //Helper Functions
+//Helper Functions
 
 /**
  * Converts seconds to 00:00 format
@@ -326,18 +332,18 @@ videoController.videoEnded = function(){
  * @param fps
  * @returns {string}
  */
-videoController.secondsToTimeCode = function(time, forceHours, showFrameCount, fps) {
+videoController.secondsToTimeCode = function (time, forceHours, showFrameCount, fps) {
     //add framecount
     if (typeof showFrameCount == 'undefined') {
-        showFrameCount=false;
-    } else if(typeof fps == 'undefined') {
+        showFrameCount = false;
+    } else if (typeof fps == 'undefined') {
         fps = 25;
     }
 
     var hours = Math.floor(time / 3600) % 24,
         minutes = Math.floor(time / 60) % 60,
         seconds = Math.floor(time % 60),
-        frames = Math.floor(((time % 1)*fps).toFixed(3)),
+        frames = Math.floor(((time % 1) * fps).toFixed(3)),
         result =
             ( (forceHours || hours > 0) ? (hours < 10 ? '0' + hours : hours) + ':' : '')
                 + (minutes < 10 ? '0' + minutes : minutes) + ':'
