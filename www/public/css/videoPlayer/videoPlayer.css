@@ -45,9 +45,7 @@
      outline: none !important;
  }
 
- .videoControlElements-controls .videoControlElements-volume-button .videoControlElements-volume-slider {
-     background: rgba(50, 50, 50, 0.9) !important;
- }
+
 
  .videoControlElements-volume-button{
      opacity:1!important;
@@ -73,7 +71,59 @@
      */
  }
 
+/*Volume slider*/
+ .videoControlElements-controls .videoControlElements-volume-button .videoControlElements-volume-slider {
+     display: none;
+     height: 115px;
+     width: 25px;
+     background: none;
+     background: rgba(50, 50, 50, 0.9);
+     -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+     border-radius: 0;
+     top: -115px;
+     z-index: 1;
+     position: absolute;
+     margin: 0;
+ }
 
+ .videoControlElements-controls .videoControlElements-volume-button .videoControlElements-volume-slider .videoControlElements-volume-total {
+     position: absolute;
+     left: 11px;
+     top: 8px;
+     width: 2px;
+     height: 100px;
+     background: #ddd;
+     background: rgba(255, 255, 255, 0.5);
+     margin: 0;
+ }
+
+ .videoControlElements-controls .videoControlElements-volume-button .videoControlElements-volume-slider .videoControlElements-volume-current {
+     position: absolute;
+     left: 11px;
+     top: 8px;
+     width: 2px;
+     height: 100px;
+     background: #ddd;
+     background: rgba(255, 255, 255, 0.9);
+     margin: 0;
+ }
+
+ .videoControlElements-controls .videoControlElements-volume-button .videoControlElements-volume-slider .videoControlElements-volume-handle {
+     position: absolute;
+     left: 4px;
+     top: -3px;
+     width: 16px;
+     height: 6px;
+     background: #ddd;
+     background: rgba(255, 255, 255, 0.9);
+     cursor: N-resize;
+     -webkit-border-radius: 1px;
+     -moz-border-radius: 1px;
+     border-radius: 1px;
+     margin: 0;
+ }
+ 
 /* Playing Time */
 
  .videoControlElements-container .videoControlElements-controls .videoControlElements-time {
@@ -279,9 +329,12 @@
 /* Prev Button */
 
  .videoControlElements-controls .videoControlElements-prevtrack button {
-     background: transparent url(controls-playlist.png) no-repeat!important;
-     background-position: 0 -16px;
+     background: transparent url(controls-playlist.png) no-repeat;
+     background-position: 0 -16px!important;
  }
+
+
+
 
 /* Play Button */
 
