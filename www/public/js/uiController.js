@@ -2106,19 +2106,19 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
         if ((uiController.windowWidth) / 1.5 - 160 - 105 + 10 < 323 - 105 - uiController.countCustomButtons * 26) {
             if (((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10 < 0) {
-                $("#videocontrols .mejs-time-total").css("width", "0px");
-                $("#videocontrols .mejs-time-rail").css("width", "0px");
+                $("#videocontrols .videoControlElements-time-total").css("width", "0px");
+                $("#videocontrols .videoControlElements-time-rail").css("width", "0px");
 
                 // console.log("!nnn" + (((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10))
             }
             else{
-                $("#videocontrols .mejs-time-total").css("width", ((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) );
-                $("#videocontrols .mejs-time-rail").css("width", ((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10);
+                $("#videocontrols .videoControlElements-time-total").css("width", ((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) );
+                $("#videocontrols .videoControlElements-time-rail").css("width", ((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10);
             }
         }
         else{
-            $("#videocontrols .mejs-time-total").css("width", 323 - 105 - uiController.countCustomButtons * 26-10);
-            $("#videocontrols .mejs-time-rail").css("width", 323 - 105 - uiController.countCustomButtons * 26);
+            $("#videocontrols .videoControlElements-time-total").css("width", 323 - 105 - uiController.countCustomButtons * 26-10);
+            $("#videocontrols .videoControlElements-time-rail").css("width", 323 - 105 - uiController.countCustomButtons * 26);
 
 
         }
@@ -2139,8 +2139,8 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
 
         uiController.totalTimeWidth = (uiController.windowWidth / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26 ;
-        $("#videocontrols .mejs-time-total").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26);
-        $("#videocontrols .mejs-time-rail").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 + 10 - 105 - uiController.countCustomButtons * 26);
+        $("#videocontrols .videoControlElements-time-total").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26);
+        $("#videocontrols .videoControlElements-time-rail").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 + 10 - 105 - uiController.countCustomButtons * 26);
 
         $("#content").css({"width": uiController.windowWidth - 32, "height": $(window).height() - 44 - 4 - 32 });
 

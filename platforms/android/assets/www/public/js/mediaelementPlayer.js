@@ -10,16 +10,10 @@
 
 
 var mediaelementPlayer = function () {
-
 };
 
 
 
-
-mediaelementPlayer.prev = function () {
-    alert("prev")
-
-};
 
 
 mediaelementPlayer.playpause = function () {
@@ -33,12 +27,6 @@ mediaelementPlayer.stop = function () {
 
 };
 
-
-mediaelementPlayer.next = function () {
-    alert("next")
-
-
-};
 
 mediaelementPlayer.mute = function () {
     alert("mute")

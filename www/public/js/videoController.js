@@ -15,51 +15,72 @@ var videoController = function () {
 
 };
 
+/* Currently used Videoplayer */
+
 videoController.videoPlayer = mediaelementPlayer;
 
+/*Enabled Buttons*/
+videoController.prevEnabled = true;
+videoController.playpauseEnabled = true;
+videoController.stopEnabled = true;
+videoController.nextEnabled = true;
+videoController.shuffleEnabled = true;
+videoController.timerailEnabled = true;
+videoController.volumeEnabled = true;
+videoController.fullscreenEnabled = true;
+videoController.versionsEnabled = true;
+videoController.lyricsEnabled = true;
+videoController.sharesocialEnabled = true;
 
+
+/**
+ * Init the videoControlls, bind events
+ */
 videoController.init = function(){
 
     $(".videoControlElements-prevtrack-button").click(function () {
-        if(videoController.videoPlayer)
-            videoController.videoPlayer.prev();
+        if(videoController.prevEnabled)
+            alert("prev")
     })
 
     $(".videoControlElements-playpause-button").click(function () {
-        if(videoController.videoPlayer)
+        if(videoController.playpauseEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.playpause();
 
     })
 
     $(".videoControlElements-stop-button").click(function () {
-        if(videoController.videoPlayer)
+        if(videoController.stopEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.stop();
     })
 
 
     $(".videoControlElements-nexttrack-button").click(function () {
-        if(videoController.videoPlayer)
-            videoController.videoPlayer.next();
+        if(videoController.nextEnabled)
+            alert("next")
+
     })
 
 
     $(".videoControlElements-shuffle-button").click(function () {
-        alert("shuffle")
+        if(videoController.shuffleEnabled)
+         alert("shuffle")
     })
 
     $(".videoControlElements-time-rail").click(function () {
-        alert("time-rail")
+        if(videoController.timerailEnabled)
+         alert("time-rail")
     })
 
 
-
     $(".videoControlElements-volume-button").click(function () {
-        if(videoController.videoPlayer)
+        if(videoController.volumeEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.mute();
     })
 
     $(".videoControlElements-volume-button").mouseover(function () {
-      $(".videoControlElements-volume-slider").show();
+        if(videoController.volumeEnabled)
+          $(".videoControlElements-volume-slider").show();
     })
 
     $(".videoControlElements-volume-button").mouseout(function () {
@@ -68,24 +89,26 @@ videoController.init = function(){
 
 
     $(".videoControlElements-fullscreen-button").click(function () {
-        if(videoController.videoPlayer)
+        if(videoController.fullscreenEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.fullscreen();
     })
 
 
     $(".videoControlElements-button-choose-version").click(function () {
-        alert("version")
+        if(videoController.versionsEnabled)
         mediaController.getVersions();
     })
 
     $(".videoControlElements-button-lyrics").click(function () {
-        alert("lyrics")
-        mediaController.toggleLyrics();
+        if(videoController.lyricsEnabled)
+
+            mediaController.toggleLyrics();
     })
 
     $(".videoControlElements-button-facebook").click(function () {
-        alert("fb")
-        mediaController.postOnFacebook();
+        if(videoController.sharesocialEnabled)
+
+            mediaController.postOnFacebook();
     })
 
 }
