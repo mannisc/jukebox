@@ -169,6 +169,9 @@ mediaController.playSong= function(streamURL,videoURL){
 
 
 mediaController.getVersions = function () {
+   // importController.importPlaylist("https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
+    //importController.importPlaylist("http://vimeo.com/channels/rihanna");//
+    importController.importPlaylist("http://www.dailymotion.com/playlist/xvguj_dailymotionuk_rihanna/1#video=x6f3n8");//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         var currentsong = playlistController.getPlayingSong();
         if (mediaController.currentStreamURL != "") {
