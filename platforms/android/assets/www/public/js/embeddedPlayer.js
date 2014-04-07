@@ -25,16 +25,14 @@ embeddedPlayer.pause = function () {
 
 };
 
-    embeddedPlayer.stop = function () {
+embeddedPlayer.stop = function () {
     alert("stop")
 
 };
 
 
-embeddedPlayer.mute = function () {
-    alert("mute")
-
-
+embeddedPlayer.setVolume = function (volume) {
+    console.log(volume);
 };
 
 embeddedPlayer.fullscreen = function () {
