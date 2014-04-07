@@ -25,7 +25,7 @@ embeddedPlayer.pause = function () {
 
 };
 
-    embeddedPlayer.stop = function () {
+embeddedPlayer.stop = function () {
     alert("stop")
 
 };
