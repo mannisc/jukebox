@@ -105,7 +105,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
     //Enable stop if there is no old song
     if (!playlistController.playingOldSong)
-        playlistController.disableStopControl(false);
+        videoController.disableStopControl(false);
 
     //Set playing Indicator position
     if (isPlaylistSong) {

@@ -73,37 +73,6 @@ playlistController.playlists = [];  //CLEAR_____________________________________
 playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
 
 
-playlistController.disableStopControl = function (disable) {
-
-    if (disable) {
-        $(".mejs-stop-button button").css("opacity", "0.5");
-
-    } else {
-        $(".mejs-stop-button button").css("opacity", "1");
-    }
-
-    // alert( $(".mejs-stop-button button").length)
-
-}
-
-playlistController.disablePlayStopControls = function (disable) {
-
-
-    if (disable) {
-        $(".mejs-playpause-button button").css("opacity", "0.5");
-        $(".mejs-stop-button button").css("opacity", "0.5");
-
-    } else {
-        $(".mejs-playpause-button button").css("opacity", "1");
-        $(".mejs-stop-button button").css("opacity", "1");
-
-    }
-
-
-}
-
-
-
 playlistController.resetPlayingSong = function () {
 
     playlistController.isLoading = false;
