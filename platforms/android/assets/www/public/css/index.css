@@ -1216,15 +1216,6 @@ video{
 
 
 
-.mejs-playpause-button{
-    -webkit-transform: scale(1.7);
-    transform: scale(1.7);
-    -webkit-transform-origin: 50% 55%;
-    transform-origin: 50% 55%;
-}
-
-
-
 /*Fades*/
 
 

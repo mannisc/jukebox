@@ -1,0 +1,79 @@
+
+ /*Container*/
+.videoControlElements-container {
+    font-family: Helvetica, Arial;
+    text-align: left;
+    text-indent: 0;
+}
+
+
+/* Button */
+.videoControlElements-container .videoControlElements-controls div {
+    list-style-type: none;
+    background-image: none;
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+    line-height: 11px;
+    font-family: Helvetica, Arial;
+    border: 0;
+}
+
+/* Inner Button */
+
+.videoControlElements-controls .videoControlElements-button button {
+     cursor: pointer;
+     display: block;
+     font-size: 0;
+     line-height: 0;
+     text-decoration: none;
+     margin: 7px 5px;
+     padding: 0;
+     position: absolute;
+     height: 16px;
+     width: 16px;
+     border: 0;
+     background: transparent url(controls.svg) no-repeat;
+}
+
+.videoControlElements-button button {
+     cursor: default !important;
+}
+
+/*Play Pause*/
+
+/*margin around bigger play button*/
+ .mejs-prevtrack-button{
+     margin-right: 5px!important;
+ }
+ .mejs-playpause-button{
+     margin-right: 2px!important;
+ }
+
+.videoControlElements-playpause-button {
+    margin-right: 2px!important;
+}
+.videoControlElements-playpause-button {
+    -webkit-transform: scale(1.7);
+    transform: scale(1.7);
+    -webkit-transform-origin: 50% 55%;
+    transform-origin: 50% 55%;
+}
+
+/* Inner Button */
+
+ .videoControlElements-controls .videoControlElements-play button {
+     background-position: 0 0;
+ }
+
+
+
+
+
+
+
+

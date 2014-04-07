@@ -175,7 +175,6 @@ playlistController.playSong = function (song, onlyStyle, playedAutomatic) {alert
 
 
 playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
-
     if (!isLoaded) {
         $("#playingSongCover").removeClass("fadeincomplete")
         $("#playingSongTitle").removeClass("fadeincomplete");
@@ -195,10 +194,11 @@ playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
     if ($("#searchinput").val()) {
         searchinput = $("#searchinput").val()
     }
-    var song = playlistController.getPlayingSong();
     //TODO COMMEnt REMOVE
     /*
-    if(song.name!=""&&searchinput!=""){
+     var song = playlistController.getPlayingSong();
+
+     if(song.name!=""&&searchinput!=""){
         window.history.pushState("",document.title, "/?search="+searchinput+"&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
     }
     else if(song.name!=""){
@@ -227,7 +227,7 @@ playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
     }
     else {
         $("#playingSongInfoStyle").remove();
-        var style = $('<style id="playingSongInfoStyle">' +
+        style = $('<style id="playingSongInfoStyle">' +
             '.playingSongInfo.ui-icon-custom:after  {' +
             ' background-image: url(' + coverUrl + ')' +
             '}' +
@@ -241,11 +241,8 @@ playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
 
     }
 
-
     $scope.safeApply();
     setTimeout(function () {
-
-
         if (isLoaded) {
             $("#playingSongTitleLoading").addClass("fadeoutcomplete")
             $("#playingSongTitleLoading").show();
