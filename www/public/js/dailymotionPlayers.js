@@ -1,10 +1,69 @@
-/** * embedPlayer.
+/**
+ * dailymotionPlayer.
  *
  * >>Description<<
  *
- * @author Norbert
- * @date 12.03.14 - 00:49
- * @copyright  */
+ * @author Manfred
+ * @date 07.04.14 - 09:25
+ * @copyright munichDev UG
+ */
+
+var dailymotionPlayer = function () {
+};
+
+
+
+dailymotionPlayer.dmplayer    = null;
+
+dailymotionPlayer.active      = 0;
+dailymotionPlayer.dailymotion = 0;
+dailymotionPlayer.dailymotionVideoID = 0;
+
+dailymotionPlayer.bufferedTime = 0;
+dailymotionPlayer.duration = 0;
+dailymotionPlayer.currentTime = 0;
+dailymotionPlayer.apiready = false;
+
+
+dailymotionPlayer.play = function () {
+    alert("play")
+
+
+};
+
+dailymotionPlayer.pause = function () {
+
+    alert("pause")
+
+};
+
+dailymotionPlayer.stop = function () {
+    alert("stop")
+
+};
+
+
+dailymotionPlayer.mute = function () {
+    alert("mute")
+
+
+};
+
+dailymotionPlayer.fullscreen = function () {
+    alert("fullscreen")
+};
+
+
+dailymotionPlayer.setCurrentTime = function(percentage){
+
+    //Set progress in videoController
+    videoController.setProgressPercentage(percentage)
+
+}
+
+
+
+
 
 
 
@@ -12,16 +71,7 @@ var embedPlayer = function () {
 
 };
 
-embedPlayer.dmplayer    = null;
 
-embedPlayer.active      = 0;
-embedPlayer.dailymotion = 0;
-embedPlayer.dailymotionVideoID = 0;
-
-embedPlayer.bufferedTime = 0;
-embedPlayer.duration = 0;
-embedPlayer.currentTime = 0;
-embedPlayer.apiready = false;
 
 
 window.dmAsyncInit = function()
@@ -48,7 +98,7 @@ embedPlayer.loadDailymotion = function (url) {
     embedPlayer.dailymotion = 1;
     var videoid = getDailyMotionId(url);
 
-  //  $("#dmplayer").addClass("backgroundVideo").insertAfter("#backgroundImage");
+    //  $("#dmplayer").addClass("backgroundVideo").insertAfter("#backgroundImage");
     $("#embedplayer").hide();
     if(videoid){
         $("#dmplayer").addClass("iframeVideo").insertAfter("#backgroundImage");
@@ -127,9 +177,9 @@ embedPlayer.isEmbedVideo= function(videoURL){
 }
 
 embedPlayer.setSrc = function (url) {
-   if(url.search("dailymotion.com") > -1 ){
-       embedPlayer.loadDailymotion(url);
-   }
+    if(url.search("dailymotion.com") > -1 ){
+        embedPlayer.loadDailymotion(url);
+    }
 }
 
 embedPlayer.close = function () {
@@ -153,18 +203,18 @@ embedPlayer.mediaEnded = function(){
 }
 
 embedPlayer.updateCurrentTime = function (){
-   if(embedPlayer.active == 1  &&  embedPlayer.apiready){
-       if(embedPlayer.duration > 0){
+    if(embedPlayer.active == 1  &&  embedPlayer.apiready){
+        if(embedPlayer.duration > 0){
             var t  = uiController.mediaElementPlayer;
             var newWidth = Math.round(t.total.width() * embedPlayer.currentTime / embedPlayer.duration),
                 handlePos = newWidth - Math.round(t.handle.outerWidth(true) / 2);
             t.current.width(newWidth);
             t.handle.css('left', handlePos);
 
-           t.currenttime.html(mejs.Utility.secondsToTimeCode(embedPlayer.currentTime, t.options.alwaysShowHours || embedPlayer.duration > 3600, t.options.showTimecodeFrameCount,  t.options.framesPerSecond || 25));
+            t.currenttime.html(mejs.Utility.secondsToTimeCode(embedPlayer.currentTime, t.options.alwaysShowHours || embedPlayer.duration > 3600, t.options.showTimecodeFrameCount,  t.options.framesPerSecond || 25));
 
-       }
-   }
+        }
+    }
 }
 
 embedPlayer.updateProgress = function (){
@@ -228,7 +278,7 @@ embedPlayer.setVolume = function (volume) {
 }
 
 embedPlayer.setFullscreen = function (fullscreen) {
-  //  embedPlayer.dmplayer.fullscreen(fullscreen);
+    //  embedPlayer.dmplayer.fullscreen(fullscreen);
 }
 
 embedPlayer.play = function () {
@@ -261,6 +311,4 @@ embedPlayer.seek = function (time) {
     }
 
 }
-
-
 
