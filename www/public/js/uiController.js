@@ -55,7 +55,7 @@ uiController.initMediaPlayer = function () {
         // Your code here
         $(".mejs-overlay-resize").hide();
 
-        $("#videocontrols .mejs-controls").appendTo("#videoplayer .mejs-inner");
+        //$("#videocontrols .mejs-controls").appendTo("#videoplayer .mejs-inner");
         //   $("#videoplayer .mejs-controls").css("background", "none");
 
         $("#videoplayer").css("-webkit-transform", "scale(1)");
@@ -108,7 +108,7 @@ uiController.initMediaPlayer = function () {
         $("#videoplayer").css("text-align", "center")
 
 
-        $("#videoplayer .mejs-controls").appendTo("#videocontrolsInner");
+       // $("#videoplayer .mejs-controls").appendTo("#videocontrolsInner");
 
 
         if (!playlistController.playingSong) {
