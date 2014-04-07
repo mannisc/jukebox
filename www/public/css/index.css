@@ -273,22 +273,6 @@ input[type=button]{
 }
 
 
-
-
-
-
-.redbackground{
-
-  background-color:#500!important;
-}
-
-.greenbackground{
-
-    background-color:#050!important;
-}
-
-
-
 #lyricsiframe {
     position: absolute;
     top: 44px;
@@ -323,16 +307,7 @@ input[type=button]{
 
 }
 
-#backgroundImage {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 0;
-}
+
 
 #content {
     position: absolute;
@@ -367,8 +342,6 @@ input[type=button]{
 #controlbar input.ui-btn {
 
 }
-
-
 
 
 
@@ -598,13 +571,6 @@ video{
     box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
 }
 
-.backgroundVideo{
-    width:100%!important;
-    height:100%!important;
-    background-color:#000!important;
-    opacity:0.5
-
-}
 
 
 .iframeVideo{
@@ -1668,6 +1634,32 @@ a, button,.mejs-time-total,.mejs-time-rail,.mejs-time-total span,.mejs-time, h1,
 }
 
 
+.backgroundVideo{
+    width:100%!important;
+    height:100%!important;
+    background-color:#000!important;
+    opacity:0.5
+
+}
+
+
+
+#backgroundImage {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+}
+
+
+.greenbackground{
+
+    background-color:#050!important;
+}
 
 
 /*POPUPS*/
