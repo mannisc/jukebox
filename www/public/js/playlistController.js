@@ -103,36 +103,6 @@ playlistController.disablePlayStopControls = function (disable) {
 }
 
 
-playlistController.disableControls = function (disable) {
-
-    if (disable) {
-        $(".mejs-nexttrack-button button").css("opacity", "0.5");
-        $(".mejs-prevtrack-button button").css("opacity", "0.5");
-        $(".mejs-shuffle-button button").css("opacity", "0.5");
-    } else {
-        $(".mejs-nexttrack-button button").css("opacity", "1");
-        $(".mejs-prevtrack-button button").css("opacity", "1");
-        if (playlistController.shuffleMode)
-            $(".mejs-shuffle-button button").css("opacity", "1");
-        else
-            $(".mejs-shuffle-button button").css("opacity", "0.5");
-    }
-
-}
-
-
-playlistController.disablePositionControls = function (disable) {
-
-    if (disable) {
-        $(".mejs-nexttrack-button button").css("opacity", "0.5");
-        $(".mejs-prevtrack-button button").css("opacity", "0.5");
-    } else {
-        $(".mejs-nexttrack-button button").css("opacity", "1");
-        $(".mejs-prevtrack-button button").css("opacity", "1");
-    }
-
-}
-
 
 playlistController.resetPlayingSong = function () {
 
@@ -158,8 +128,8 @@ playlistController.resetPlayingSong = function () {
     else {
         helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
         $(".songlist li").removeClass("loadedsong playing stillloading plausing");
-        playlistController.disableControls(true);
-        playlistController.disableStopControl(true);
+        videoController.disableControls(true);
+        videoController.disableStopControl(true);
         $("#videoplayer").css("opacity", "0");
         $("#videoplayer").css("pointer-events", "none");
         $(".iScrollPlayIndicator").hide();
@@ -319,7 +289,7 @@ playlistController.playNextSong = function () {
             playbackController.playSong(playlistController.loadedPlaylistSongs[0], false, true)
 
         } else
-            playlistController.disablePositionControls(true);
+            videoController.disablePositionControls(true);
 
     } else {
 
@@ -338,7 +308,7 @@ playlistController.playNextSong = function () {
             }
             playbackController.playSong(searchController.searchResults[index], false, true)
         } else
-            playlistController.disablePositionControls(true);
+            videoController.disablePositionControls(true);
 
     }
 

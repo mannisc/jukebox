@@ -342,6 +342,9 @@
      background-position: 0 0;
  }
 
+ .videoControlElements-controls .videoControlElements-pause button {
+     background-position: 0 -16px;
+ }
 
  /* Stop Button */
 

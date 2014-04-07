@@ -122,7 +122,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     }
 
     //Enable Controls
-    playlistController.disableControls(false);
+    videoController.disableControls(false);
 
     //Clear other cover loading circles
     helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");

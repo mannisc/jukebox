@@ -9,22 +9,23 @@
  */
 
 
-
-
 var videoController = function () {
-
 };
 
-/* Currently used Videoplayer */
-
+//Currently used Video Player
 videoController.videoPlayer = mediaelementPlayer;
+
+
+
+//Video is playing
+videoController.isPlaying = false;
 
 //Progress Time- use setter
 videoController.progressTime = 0;
 //Max Time - use setter
 videoController.maxTime = 0;
 
-/*Enabled Buttons*/
+//Start state of Buttons
 videoController.prevEnabled = true;
 videoController.playpauseEnabled = true;
 videoController.stopEnabled = true;
@@ -39,7 +40,7 @@ videoController.sharesocialEnabled = true;
 
 
 /**
- * Init the videoControlls, bind events
+ * Init the videoController, bind events to Buttons
  */
 videoController.init = function(){
 
@@ -53,8 +54,18 @@ videoController.init = function(){
 
     //Play Pause Song
     videoController.controls.find(".videoControlElements-playpause-button").click(function () {
-        if(videoController.playpauseEnabled&&videoController.videoPlayer)
-            videoController.videoPlayer.playpause();
+        if(videoController.playpauseEnabled&&videoController.videoPlayer){
+            if(videoController.isPlaying){
+                videoController.controls.find(".videoControlElements-pause").removeClass("videoControlElements-pause").addClass("videoControlElements-play");
+                videoController.videoPlayer.pause();
+            }
+            else{
+                videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
+                videoController.videoPlayer.play();
+            }
+
+            videoController.isPlaying = !videoController.isPlaying;
+        }
 
     })
 
@@ -147,9 +158,93 @@ videoController.init = function(){
     })
 
 
+    //TODO Remove
     videoController.setMaxTime(341);
     videoController.setProgressTime(78);
     videoController.setBufferedPercentage(0.6);
+}
+
+
+
+/**
+ * Disable/Enable Stop Control
+ * @param disable
+ */
+videoController.disableStopControl = function (disable) {
+    videoController.stopEnabled = !disable;
+    if (disable) {
+        $(".videoControlElements-stop-button button").css("opacity", "0.5");
+
+    } else {
+        $(".videoControlElements-stop-button button").css("opacity", "1");
+    }
+}
+
+/**
+ * Disable/Enable Stop Control
+ * @param disable
+ */
+videoController.disablePlayStopControls = function (disable) {
+    videoController.stopEnabled = !disable;
+    videoController.playpauseEnabled = !disable;
+
+    if (disable) {
+        $(".videoControlElements-playpause-button button").css("opacity", "0.5");
+        $(".videoControlElements-stop-button button").css("opacity", "0.5");
+
+    } else {
+        $(".videoControlElements-playpause-button button").css("opacity", "1");
+        $(".videoControlElements-stop-button button").css("opacity", "1");
+
+    }
+
+}
+
+/**
+ * Disable/Enable Controls
+ * @param disable
+ */
+videoController.disableControls = function (disable) {
+
+    videoController.prevEnabled = !disable;
+    videoController.nextEnabled = !disable;
+
+    if (disable) {
+        $(".videoControlElements-nexttrack-button button").css("opacity", "0.5");
+        $(".videoControlElements-prevtrack-button button").css("opacity", "0.5");
+        $(".videoControlElements-shuffle-button button").css("opacity", "0.5");
+
+        videoController.shuffleEnabled = false;
+    } else {
+        $(".videoControlElements-nexttrack-button button").css("opacity", "1");
+        $(".videoControlElements-prevtrack-button button").css("opacity", "1");
+        if (playlistController.shuffleMode){
+           videoController.shuffleEnabled = true;
+          $(".videoControlElements-shuffle-button button").css("opacity", "1");
+        } else{
+           videoController.shuffleEnabled = false;
+           $(".videoControlElements-shuffle-button button").css("opacity", "0.5");
+
+        }
+    }
+
+}
+
+/**
+ * Disable/Enable Position Control
+ * @param disable
+ */
+videoController.disablePositionControls = function (disable) {
+    videoController.prevEnabled = !disable;
+    videoController.nextEnabled = !disable;
+    if (disable) {
+        $(".videoControlElements-nexttrack-button button").css("opacity", "0.5");
+        $(".videoControlElements-prevtrack-button button").css("opacity", "0.5");
+    } else {
+        $(".videoControlElements-nexttrack-button button").css("opacity", "1");
+        $(".videoControlElements-prevtrack-button button").css("opacity", "1");
+    }
+
 }
 
 
@@ -208,6 +303,30 @@ videoController.setMaxTime = function(time){
 
 }
 
+
+/**
+ * Called by Videoplayer when video ended
+ */
+videoController.videoEnded = function(){
+
+
+
+}
+
+
+
+
+
+ //Helper Functions
+
+/**
+ * Converts seconds to 00:00 format
+ * @param time
+ * @param forceHours
+ * @param showFrameCount
+ * @param fps
+ * @returns {string}
+ */
 videoController.secondsToTimeCode = function(time, forceHours, showFrameCount, fps) {
     //add framecount
     if (typeof showFrameCount == 'undefined') {
@@ -228,3 +347,8 @@ videoController.secondsToTimeCode = function(time, forceHours, showFrameCount, f
 
     return result;
 }
+
+
+
+
+

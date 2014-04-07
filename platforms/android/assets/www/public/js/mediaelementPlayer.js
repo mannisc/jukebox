@@ -16,11 +16,14 @@ var mediaelementPlayer = function () {
 
 
 
-mediaelementPlayer.playpause = function () {
-    alert("playpause")
+mediaelementPlayer.play = function () {
+
 
 };
 
+mediaelementPlayer.pause = function () {
+
+};
 
 mediaelementPlayer.stop = function () {
     alert("stop")
