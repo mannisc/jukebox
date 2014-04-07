@@ -13,7 +13,7 @@ var videoController = function () {
 };
 
 //Currently used Video Player
-videoController.videoPlayer = mediaelementPlayer;
+videoController.videoPlayer = mediaelementPlayer;//embeddedPlayer;//
 
 
 //Video is playing
