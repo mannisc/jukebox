@@ -416,6 +416,9 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
             loadError = true;
         },
         complete: function () {
+            setTimeout(function () {
+                videoController.showBuffering(false);
+            }, 500);
             //log("COMPLETED")
             playlistController.isLoading = false;
             if (loadError) {
