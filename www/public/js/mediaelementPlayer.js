@@ -40,7 +40,11 @@ mediaelementPlayer.fullscreen = function () {
 
 
 mediaelementPlayer.setCurrentTime = function(percentage){
-       alert(percentage)
+
+    //Set progress in videoController
+    videoController.setProgressPercentage(percentage)
+
+
     /*
      newTime = (percentage <= 0.02) ? 0 : percentage * media.duration;
 
