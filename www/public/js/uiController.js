@@ -374,9 +374,9 @@ uiController.initMediaPlayer = function () {
                     playlistController.playPrevSong();
             })
 
-            $(".mejs-shuffle-button").click(function () {
+            /*$(".mejs-shuffle-button").click(function () {
                 playlistController.toggleShuffleSongs();
-            })
+            })  DONE */
 
 
             $(".mejs-stop-button").click(function () {

@@ -45,35 +45,40 @@ videoController.init = function(){
 
     videoController.controls =  $(".videoControlElements-controls");
 
+    //Play Previous Song
     videoController.controls.find(".videoControlElements-prevtrack-button").click(function () {
         if(videoController.prevEnabled)
-            alert("prev")
+            playlistController.playPrevSong();
     })
 
+    //Play Pause Song
     videoController.controls.find(".videoControlElements-playpause-button").click(function () {
         if(videoController.playpauseEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.playpause();
 
     })
 
+    //Stop Song
     videoController.controls.find(".videoControlElements-stop-button").click(function () {
         if(videoController.stopEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.stop();
     })
 
+    //Play Next Song
 
     videoController.controls.find(".videoControlElements-nexttrack-button").click(function () {
         if(videoController.nextEnabled)
-            alert("next")
-
+            playlistController.playNextSong();
     })
 
 
+    //Shuffle Songs
     videoController.controls.find(".videoControlElements-shuffle-button").click(function () {
         if(videoController.shuffleEnabled)
-         alert("shuffle")
+            playlistController.toggleShuffleSongs();
     })
 
+    //Time Rail
     videoController.controls.find(".videoControlElements-time-rail").click(function (event) {
         if(videoController.timerailEnabled) {
             var total =  videoController.controls.find('.videoControlElements-time-total'),
@@ -98,7 +103,7 @@ videoController.init = function(){
         }
     })
 
-
+    //Volume
     videoController.controls.find(".videoControlElements-volume-button").click(function () {
         if(videoController.volumeEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.mute();
@@ -114,23 +119,27 @@ videoController.init = function(){
     })
 
 
+    //Fullscreen
     videoController.controls.find(".videoControlElements-fullscreen-button").click(function () {
         if(videoController.fullscreenEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.fullscreen();
     })
 
 
+    //Choose Version
     videoController.controls.find(".videoControlElements-button-choose-version").click(function () {
         if(videoController.versionsEnabled)
         mediaController.getVersions();
     })
 
+    //Show Lyrics
     videoController.controls.find(".videoControlElements-button-lyrics").click(function () {
         if(videoController.lyricsEnabled)
 
             mediaController.toggleLyrics();
     })
 
+    //Share Social
     videoController.controls.find(".videoControlElements-button-facebook").click(function () {
         if(videoController.sharesocialEnabled)
 
