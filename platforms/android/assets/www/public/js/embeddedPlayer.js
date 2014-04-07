@@ -9,19 +9,23 @@
  */
 
 var embeddedPlayer = function () {
-
 };
 
 
 
+embeddedPlayer.play = function () {
+    alert("play")
 
-embeddedPlayer.playpause = function () {
-    alert("playpause")
 
 };
 
+embeddedPlayer.pause = function () {
 
-embeddedPlayer.stop = function () {
+    alert("pause")
+
+};
+
+    embeddedPlayer.stop = function () {
     alert("stop")
 
 };

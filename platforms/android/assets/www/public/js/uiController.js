@@ -295,7 +295,7 @@ uiController.initMediaPlayer = function () {
 
 
             playlistController.disablePlayStopControls(true);
-            playlistController.disableControls(true);
+            videoController.disableControls(true);
 
             uiController.noVideoClickTimer = 0;
 
@@ -364,6 +364,7 @@ uiController.initMediaPlayer = function () {
             })
 
 
+            /*
             $(".mejs-nexttrack-button").click(function () {
                 if ($(this).find("button").css("opacity") == 1)
                     playlistController.playNextSong();
@@ -374,7 +375,7 @@ uiController.initMediaPlayer = function () {
                     playlistController.playPrevSong();
             })
 
-            /*$(".mejs-shuffle-button").click(function () {
+            $(".mejs-shuffle-button").click(function () {
                 playlistController.toggleShuffleSongs();
             })  DONE */
 
