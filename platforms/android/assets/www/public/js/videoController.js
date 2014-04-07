@@ -76,7 +76,6 @@ videoController.init = function(){
     })
 
     //Play Next Song
-
     videoController.controls.find(".videoControlElements-nexttrack-button").click(function () {
         if(videoController.nextEnabled)
             playlistController.playNextSong();

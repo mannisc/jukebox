@@ -294,7 +294,7 @@ uiController.initMediaPlayer = function () {
             uiController.countCustomButtons = $(".videoControlElements-custom-button").length;
 
 
-            playlistController.disablePlayStopControls(true);
+            videoController.disablePlayStopControls(true);
             videoController.disableControls(true);
 
             uiController.noVideoClickTimer = 0;
@@ -443,7 +443,7 @@ uiController.initMediaPlayer = function () {
                 playlistController.isLoading = false;
                 playlistController.isPlaying = true;
 
-                playlistController.disablePlayStopControls(false);
+                videoController.disablePlayStopControls(false);
 
                 $(".mejs-time-loaded").show();
 
@@ -485,7 +485,7 @@ uiController.initMediaPlayer = function () {
                 document.title = $scope.appTitle;
 
                 playlistController.isPlaying = false;
-                playlistController.disableStopControl(true);
+                videoController.disableStopControl(true);
                 $("#videoplayer").css("opacity", "0");
                 $("#videoplayer").css("pointer-events", "none");
 

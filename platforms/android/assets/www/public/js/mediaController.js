@@ -79,7 +79,7 @@ mediaController.mediaEnded = function(){
     document.title = $scope.appTitle;
 
     playlistController.isPlaying = false;
-    playlistController.disableStopControl(true);
+    videoController.disableStopControl(true);
     $("#videoplayer").css("opacity", "0");
     $("#videoplayer").css("pointer-events","none");
 
