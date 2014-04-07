@@ -55,8 +55,7 @@ uiController.initMediaPlayer = function () {
         // Your code here
         $(".mejs-overlay-resize").hide();
 
-        //$("#videocontrols .mejs-controls").appendTo("#videoplayer .mejs-inner");
-        //   $("#videoplayer .mejs-controls").css("background", "none");
+
 
         $("#videoplayer").css("-webkit-transform", "scale(1)");
         $("#videoplayer").css("transform", "scale(1)");
@@ -73,7 +72,6 @@ uiController.initMediaPlayer = function () {
     }
     MediaElementPlayer.prototype.exitFullScreen_org = MediaElementPlayer.prototype.exitFullScreen;
     MediaElementPlayer.prototype.exitFullScreen = function () {
-        //  $("#videoplayer .mejs-controls").css("background", "");
 
         var setHeight = function () {
             var height = $("video").outerHeight();  //
@@ -107,8 +105,6 @@ uiController.initMediaPlayer = function () {
         }, 100)
         $("#videoplayer").css("text-align", "center")
 
-
-       // $("#videoplayer .mejs-controls").appendTo("#videocontrolsInner");
 
 
         if (!playlistController.playingSong) {
@@ -295,8 +291,7 @@ uiController.initMediaPlayer = function () {
             $($('.mejs-fullscreen-button').get(1)).click();
 
 
-            $(".mejs-custom-button").appendTo(".mejs-controls");
-            uiController.countCustomButtons = $(".mejs-custom-button").length;
+            uiController.countCustomButtons = $(".videoControlElements-custom-button").length;
 
 
             playlistController.disablePlayStopControls(true);
@@ -640,7 +635,6 @@ uiController.initMediaPlayer = function () {
 
     $("#videocontrols").css("background", "none");
 
-    $("#videoplayer .mejs-controls").appendTo("#videocontrolsInner");
 
 
     $("#videoplayer").css("text-align", "center")
@@ -2188,11 +2182,11 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
     setTimeout(function () {
 
-        if (Math.abs($("#videocontrolsInner .mejs-controls").css("padding-left").replace("px", "") - ( (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5)) > 1)
-            $("#videocontrolsInner .mejs-controls").css("padding-left", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5);
+        if (Math.abs($("#videocontrolsInner .videoControlElements-controls").css("padding-left").replace("px", "") - ( (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5)) > 1)
+            $("#videocontrolsInner .videoControlElements-controls").css("padding-left", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5);
         setTimeout(function () {
-            if (Math.abs($("#videocontrolsInner .mejs-controls").css("padding-left").replace("px", "") - ( (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5)) > 1)
-                $("#videocontrolsInner .mejs-controls").css("padding-left", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".mejs-controls").width() * 1.5) / 2 / 1.5);
+            if (Math.abs($("#videocontrolsInner .videoControlElements-controls").css("padding-left").replace("px", "") - ( (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5)) > 1)
+                $("#videocontrolsInner .videoControlElements-controls").css("padding-left", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5);
         }, 50)
     }, 0)
 
