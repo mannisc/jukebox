@@ -19,6 +19,11 @@ var videoController = function () {
 
 videoController.videoPlayer = mediaelementPlayer;
 
+//Progress Time- use setter
+videoController.progressTime = 0;
+//Max Time - use setter
+videoController.maxTime = 0;
+
 /*Enabled Buttons*/
 videoController.prevEnabled = true;
 videoController.playpauseEnabled = true;
@@ -132,6 +137,10 @@ videoController.init = function(){
             mediaController.postOnFacebook();
     })
 
+
+    videoController.setMaxTime(341);
+    videoController.setProgressTime(78);
+    videoController.setBufferedPercentage(0.6);
 }
 
 
@@ -141,22 +150,72 @@ videoController.init = function(){
 videoController.setProgressPercentage = function(percentage){
 
     var total =  videoController.controls.find('.videoControlElements-time-total');
-
+    if(percentage<0)
+        percentage = 0;
+    else if(percentage>1)
+        percentage = 1;
     videoController.controls.find(".videoControlElements-time-current").css("width",total.width()*percentage)
 
 }
 
+
+/**
+ * Set Buffered in percentage
+ */
+videoController.setBufferedPercentage = function(percentage){
+
+    var total =  videoController.controls.find('.videoControlElements-time-total');
+    if(percentage<0)
+        percentage = 0;
+    else if(percentage>1)
+        percentage = 1;
+    videoController.controls.find(".videoControlElements-time-loaded").css("width",total.width()*percentage)
+
+}
+
+
+
 /**
  * Set Progress in seconds
  */
-videoController.setProgressTime = function(){
+videoController.setProgressTime = function(time){
+    videoController.progressTime = time;
+    videoController.controls.find(".videoControlElements-currenttime").text(videoController.secondsToTimeCode(time,false,false,false));
 
+    if(videoController.maxTime&&videoController.maxTime>0)
+       videoController.setProgressPercentage(videoController.progressTime/videoController.maxTime)
 
 }
 
 /**
- * Set song length in seconds
+ * Set Song length in seconds
  */
-videoController.setMaxTime = function(){
+videoController.setMaxTime = function(time){
+    videoController.maxTime = time;
+    videoController.controls.find(".videoControlElements-duration").text(videoController.secondsToTimeCode(time,false,false,false));
 
+    if(videoController.maxTime&&videoController.maxTime>0)
+        videoController.setProgressPercentage(videoController.progressTime/videoController.maxTime)
+
+}
+
+videoController.secondsToTimeCode = function(time, forceHours, showFrameCount, fps) {
+    //add framecount
+    if (typeof showFrameCount == 'undefined') {
+        showFrameCount=false;
+    } else if(typeof fps == 'undefined') {
+        fps = 25;
+    }
+
+    var hours = Math.floor(time / 3600) % 24,
+        minutes = Math.floor(time / 60) % 60,
+        seconds = Math.floor(time % 60),
+        frames = Math.floor(((time % 1)*fps).toFixed(3)),
+        result =
+            ( (forceHours || hours > 0) ? (hours < 10 ? '0' + hours : hours) + ':' : '')
+                + (minutes < 10 ? '0' + minutes : minutes) + ':'
+                + (seconds < 10 ? '0' + seconds : seconds)
+                + ((showFrameCount) ? ':' + (frames < 10 ? '0' + frames : frames) : '');
+
+    return result;
 }
