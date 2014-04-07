@@ -379,7 +379,10 @@ videoController.setProgressPercentage = function (percentage) {
     else if (percentage > 1)
         percentage = 1;
     videoController.controls.find(".videoControlElements-time-current").css("width", total.width() * percentage)
-
+    if (videoController.maxTime && videoController.maxTime > 0){
+        videoController.progressTime = videoController.maxTime*percentage;
+        videoController.controls.find(".videoControlElements-currenttime").text(videoController.secondsToTimeCode(videoController.progressTime, false, false, false));
+    }
 }
 
 
@@ -394,6 +397,9 @@ videoController.setBufferedPercentage = function (percentage) {
     else if (percentage > 1)
         percentage = 1;
     videoController.controls.find(".videoControlElements-time-loaded").css("width", total.width() * percentage)
+
+
+
 
 }
 
@@ -432,6 +438,7 @@ videoController.showBuffering = function(show){
         videoController.controls.find(".videoControlElements-time-buffering").fadeIn();
     else
         videoController.controls.find(".videoControlElements-time-buffering").hide();
+
 }
 
 
