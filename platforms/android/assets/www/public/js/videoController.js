@@ -60,16 +60,11 @@ videoController.init = function () {
     //Play Pause Song
     videoController.controls.find(".videoControlElements-playpause-button").click(function () {
         if (videoController.playpauseEnabled && videoController.videoPlayer) {
-            if (videoController.isPlaying) {
-                videoController.controls.find(".videoControlElements-pause").removeClass("videoControlElements-pause").addClass("videoControlElements-play");
-                videoController.videoPlayer.pause();
-            }
-            else {
-                videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
-                videoController.videoPlayer.play();
-            }
+            if (videoController.isPlaying)
+                videoController.pauseVideo();
+            else
+                videoController.playVideo();
 
-            videoController.isPlaying = !videoController.isPlaying;
         }
 
     });
@@ -233,6 +228,32 @@ videoController.init = function () {
     videoController.setBufferedPercentage(0.6);
 }
 
+/**
+ * Pause Song
+ * @type {*}
+ */
+videoController.pauseVideo = function(){
+    if (videoController.isPlaying) {
+        videoController.controls.find(".videoControlElements-pause").removeClass("videoControlElements-pause").addClass("videoControlElements-play");
+        videoController.videoPlayer.pause();
+        videoController.isPlaying = false;
+
+    }
+}
+
+
+
+/**
+ * Play Song
+ * @type {*}
+ */
+videoController.playVideo = function(){
+    if (!videoController.isPlaying) {
+     videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
+     videoController.videoPlayer.play();
+     videoController.isPlaying = true;
+    }
+}
 
 /**
  * Disable/Enable Stop Control
@@ -298,6 +319,7 @@ videoController.disableControls = function (disable) {
 
 }
 
+
 /**
  * Disable/Enable Position Control
  * @param disable
@@ -315,6 +337,36 @@ videoController.disablePositionControls = function (disable) {
 
 }
 
+
+
+/**
+ * Disable/Enable Version Control
+ * @param disable
+ */
+videoController.disableVersionControl = function (disable) {
+    videoController.versionsEnabled = !disable;
+    if (disable) {
+        $(".videoControlElements-button-choose-version button").css("opacity", "0.5");
+
+    } else {
+        $(".videoControlElements-button-choose-version button").css("opacity", "1");
+    }
+}
+
+
+/**
+ * Set Play Button to Loop  Button
+ */
+videoController.setLoopButton = function (loop) {
+
+    if(loop){
+        $(".videoControlElements-playpause-button button").addClass("looped");
+
+    }else{
+        $(".videoControlElements-playpause-button button").removeClass("looped");
+    }
+
+}
 
 /**
  * Set Progress in percentage
@@ -335,7 +387,7 @@ videoController.setProgressPercentage = function (percentage) {
  * Set Buffered in percentage
  */
 videoController.setBufferedPercentage = function (percentage) {
-
+    videoController.buffered =  percentage;
     var total = videoController.controls.find('.videoControlElements-time-total');
     if (percentage < 0)
         percentage = 0;

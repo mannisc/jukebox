@@ -346,6 +346,11 @@
      background-position: 0 -16px;
  }
 
+
+ .videoControlElements-controls .videoControlElements-play button.looped, .videoControlElements-controls .videoControlElements-pause button.looped {
+     background-position: -64px 0px !important;
+ }
+
  /* Stop Button */
 
  .videoControlElements-controls .videoControlElements-stop button {
