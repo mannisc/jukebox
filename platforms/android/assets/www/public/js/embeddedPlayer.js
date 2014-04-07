@@ -31,10 +31,8 @@ embeddedPlayer.pause = function () {
 };
 
 
-embeddedPlayer.mute = function () {
-    alert("mute")
-
-
+embeddedPlayer.setVolume = function (volume) {
+    console.log(volume);
 };
 
 embeddedPlayer.fullscreen = function () {
