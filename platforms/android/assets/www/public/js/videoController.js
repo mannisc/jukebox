@@ -26,9 +26,9 @@ videoController.maxTime = 0;
 
 //Changing Volume at the moment
 videoController.changingVolume = false;
-videoController.isMuted=false;
-videoController.beforeMutedVolume=null;
-videoController.volume=0.5;
+videoController.isMuted = false;
+videoController.beforeMutedVolume = null;
+videoController.volume = 0.5;
 
 //Start state of Buttons
 videoController.prevEnabled = true;
@@ -120,8 +120,18 @@ videoController.init = function () {
 
     //Volume
     videoController.controls.find(".videoControlElements-volume-button button").click(function () {
-        if (videoController.volumeEnabled && videoController.videoPlayer)
-            videoController.videoPlayer.mute();
+        if (videoController.volumeEnabled && videoController.videoPlayer) {
+            videoController.isMuted = !videoController.isMuted;
+            if (videoController.isMuted) {
+                videoController.beforeMutedVolume = videoController.volume;
+                videoController.volume = 0;
+            } else {
+                videoController.volume = videoController.beforeMutedVolume;
+            }
+            videoController.videoPlayer.setVolume(videoController.volume);
+            videoController.positionVolumeHandle(videoController.volume);
+        }
+
     });
 
     videoController.controls.find(".videoControlElements-volume-button").mouseover(function () {
@@ -163,20 +173,24 @@ videoController.init = function () {
             // ensure the volume isn't outside 0-1
             volume = Math.max(0, volume);
             volume = Math.min(volume, 1);
+            videoController.volume = volume;
 
             // position the slider and handle
-            videoController.positionVolumeHandle(volume);
+            videoController.positionVolumeHandle(videoController.volume);
 
             // set the media object (this will trigger the volumechanged event)
 
-            videoController.videoPlayer.setVolume(volume);
+            videoController.videoPlayer.setVolume(videoController.volume);
 
         }
 
         $(document).bind('mousemove.videoVolume', changeVolumeHandler)
 
         $(document).bind('mouseup.videoVolume', function (e) {
-            videoController.controls.find(".videoControlElements-volume-slider").hide();
+
+            if(videoController.controls.find(".videoControlElements-volume-slider:hover").length==0)
+                videoController.controls.find(".videoControlElements-volume-slider").hide();
+
             videoController.changingVolume = false;
             $(document).unbind(".videoVolume");
         })
@@ -404,7 +418,6 @@ videoController.positionVolumeHandle = function (volume, secondTry) {
     volumeCurrent.height(totalHeight - newTop);
     volumeCurrent.css('top', totalPosition.top + newTop);
 }
-
 
 
 /**
