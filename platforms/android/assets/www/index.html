@@ -35,6 +35,8 @@
 
     <link rel="stylesheet" type="text/css" href="public/css/index.css"/>
     <link rel="stylesheet" type="text/css" href="public/css/theme.css"/>
+    <link rel="stylesheet" type="text/css" href="public/css/videoPlayer/videoPlayer.css"/>
+
     <link rel="stylesheet" type="text/css" href="public/css/libs/jquery.mobile-1.4.2.css"/>
     <link rel="stylesheet" href="public/js/libs/mediaelement/mediaelementplayer.css"/>
     <link rel="stylesheet" href="public/js/libs/mediaelement/playlist/mep-feature-playlist.css"/>
@@ -132,13 +134,13 @@
 
     <div class="ui-btn-right">
 
-        <a id="playingSongInfoLink" style="opacity:0" onclick="searchController.getArtistInfo();" ng-show="playlistController.loadingSong" href="#popupArtist" data-rel="popup" data-position-to="#playingSongInfoLink"
+        <a id="playingSongInfoLink" style="opacity:0" onclick="searchController.getArtistInfo();" ng-show="playlistController.playingSong" href="#popupArtist" data-rel="popup" data-position-to="#playingSongInfoLink"
            class="playingSongInfo  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-custom ui-btn-icon-left ui-btn-a" data-transition="pop">
             <span style="opacity:0">{{playlistController.getPlayingTitle()}}</span>
             <span id="playingSongTitleLoading" class="fadeincomplete" style="text-align:left;z-index:0;display:none;position:absolute;left: 35px;top: 9px;right: 0px">{{playlistController.getPlayingTitle()}}</span>
             <span id="playingSongTitle" class="fadeincomplete" style="text-align:left;z-index:0;display:none;position:absolute;left: 35px;top: 9px;right: 0px">{{playlistController.getPlayingTitle()}} </span>
         </a>
-        <a id="buySongLink" style="opacity:0" onclick="mediaController.buySong()" ng-show="playlistController.loadingSong" href="#" data-rel="popup" data-position-to="#buySongLink"
+        <a id="buySongLink" style="opacity:0" onclick="mediaController.buySong()" ng-show="playlistController.playingSong" href="#" data-rel="popup" data-position-to="#buySongLink"
            class="playingSongBuy   ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-heart ui-btn-icon-left ui-btn-a" data-transition="pop">Buy Song</a>
 
         <a id="registerLink" ng-if="!accountController.loggedIn" href="#popupRegister" onclick="setTimeout(function(){$('#registerusername').focus();},700)" data-rel="popup" data-position-to="#registerLink"
@@ -194,7 +196,7 @@
 
         <ul data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
-            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-click="playlistController.selectSong(song)" ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img
+            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-click="playlistController.selectSong(song)" ng-dblclick="playbackController.doubleClickedElement(song);"><a tabindex="-1"><img
                     src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none"><img src="public/img/empty.png"
                                                                                                                                                                                                     class="loadingSongImg" style="display:none">
 
@@ -260,7 +262,7 @@
         <div id="playlistInner" class="animate" style="display:none">
             <ul data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
                 <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"  ng-click="playlistController.selectSong(song)"
-                    ng-dblclick="playlistController.playSong(song);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
+                    ng-dblclick="playbackController.doubleClickedElement(song);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
                                                                                            class="ui-li-icon ui-corner-none">
                     <img src="public/img/empty.png" class="loadingSongImg" style="display:none">
                     <span ng-if="!song.isPlaylist">
@@ -282,26 +284,83 @@
     <div id="videoplayer">
         <div id="videoplayerInner">
 
-          <video id="player1" controls="controls" autoplay="true" preload="true">
+          <video id="player1" controls="controls"  preload="true">
                <source src="" type="video/mp4"/>
            <!--   <source src="" type="video/flv"/> -->
             </video>
-            <div id="embedplayer" >
+           <div id="embedplayer" >
                <div id="dmplayer" ></div>
-            </div>
+           </div>
+
         </div>
 
     </div>
-    <div id="videocontrols" class="mejs-container" style="text-align: center">
+    <div id="videocontrols" class="videoControlElements-container" style="text-align: center">
         <div id="videocontrolsInner">
-            <div class="mejs-button mejs-button-choose-version mejs-custom-button">
-                <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" onclick="mediaController.getVersions();" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
-            </div>
-            <div class="mejs-button mejs-button-lyrics mejs-custom-button">
-                <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" onclick="mediaController.toggleLyrics();" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button>
-            </div>
-            <div class="mejs-button mejs-button-facebook mejs-custom-button">
-                <button type="button" id="facebookpostbutton" data-role="none" style="opacity:0.5" onclick="mediaController.postOnFacebook();" aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button>
+
+            <div class="videoControlElements-controls">
+                <div class="videoControlElements-button videoControlElements-prevtrack-button videoControlElements-prevtrack">
+                    <button type="button" aria-controls="mep_0" title="Previous Track" ></button>
+                </div>
+                <div class="videoControlElements-button videoControlElements-playpause-button videoControlElements-play">
+                    <button type="button" aria-controls="mep_0" title="Play/Pause" aria-label="Play/Pause" ></button>
+                </div>
+                <div class="videoControlElements-button videoControlElements-stop-button videoControlElements-stop">
+                    <button type="button" aria-controls="mep_0" title="Stop" aria-label="Stop" ></button>
+                </div>
+                <div class="videoControlElements-button videoControlElements-nexttrack-button videoControlElements-nexttrack">
+                    <button type="button" aria-controls="mep_0" title="Next Track" ></button>
+                </div>
+                <div class="videoControlElements-button videoControlElements-shuffle-button videoControlElements-shuffle-off">
+                    <button type="button" aria-controls="mep_0" title="Shuffle On/Off" >
+                    </button>
+                </div>
+                <div class="videoControlElements-time videoControlElements-currenttime-container">
+                    <span class="videoControlElements-currenttime">00:00</span>
+
+                </div>
+                <div class="videoControlElements-time-rail" style="width: 491px;">
+                    <span class="videoControlElements-time-total" style="width: 481px;">
+                        <span class="videoControlElements-time-buffering" style="display: none;"></span>
+                        <span class="videoControlElements-time-loaded"></span>
+                        <span class="videoControlElements-time-current"></span>
+                        <span class="videoControlElements-time-handle"></span>
+                        <span class="videoControlElements-time-float">
+                            <span class="videoControlElements-time-float-current">00:00</span>
+                            <span class="videoControlElements-time-float-corner"></span>
+                        </span>
+                    </span>
+                </div>
+
+                <div class="videoControlElements-time videoControlElements-duration-container">
+                    <span class="videoControlElements-duration">00:00</span>
+                </div>
+
+                <div class="videoControlElements-button videoControlElements-volume-button videoControlElements-mute">
+                    <button type="button" aria-controls="mep_0" title="Mute Toggle" aria-label="Mute Toggle"></button>
+                    <div class="videoControlElements-volume-slider" style="display: none;">
+                        <div class="videoControlElements-volume-total"></div>
+                        <div class="videoControlElements-volume-current" style="height: 80px; top: 32px;"></div>
+                        <div class="videoControlElements-volume-handle" style="top: 29px;"></div>
+                    </div>
+                </div>
+
+
+                <div class="videoControlElements-button videoControlElements-fullscreen-button">
+                    <button type="button" aria-controls="mep_0" title="Fullscreen" aria-label="Fullscreen"> </button>
+               </div>
+
+                <div class="videoControlElements-button videoControlElements-button-choose-version videoControlElements-custom-button">
+                    <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
+                </div>
+                <div class="videoControlElements-button videoControlElements-button-lyrics videoControlElements-custom-button">
+                    <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button>
+                </div>
+                <div class="videoControlElements-button videoControlElements-button-facebook videoControlElements-custom-button">
+                    <button type="button" id="facebookpostbutton" data-role="none" style="opacity:0.5"  aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button>
+                </div>
+
+
             </div>
 
         </div>
@@ -380,17 +439,17 @@
             <h3 style="margin-right: 40px;margin-left: 40px;padding-right: 20px;padding-left: 20px;text-align: center;">Artist</h3>
 
             <ul data-role="listview" id="popupArtistExternList" data-theme="b">
-                <li data-theme="b" class="marked"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchArtistSongs(mediaController.getSongArtist(playlistController.loadingSong));"
+                <li data-theme="b" class="marked"><a ng-show="playlistController.playingSong" onclick="$('#popupArtist').popup('close');searchController.searchArtistSongs(mediaController.getSongArtist(playlistController.playingSong));"
                                       style="text-decoration:none" target="_blank">Songs from Artist</a></li>
-                <li data-theme="b" class="marked"  style="border-bottom:1px solid #ddd;"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchSimilarSongs(playlistController.loadingSong);"
+                <li data-theme="b" class="marked"  style="border-bottom:1px solid #ddd;"><a ng-show="playlistController.playingSong" onclick="$('#popupArtist').popup('close');searchController.searchSimilarSongs(playlistController.playingSong);"
                                       style="text-decoration:none" target="_blank">Similar Songs</a></li>
-                <li data-theme="b" style="border-top:15px solid rgba(255,255,255,0.8);"><a ng-show="playlistController.loadingSong" href="http://de.wikipedia.org/w/index.php?go=Artikel&title&search={{mediaController.getSongArtist(playlistController.loadingSong)}}"
+                <li data-theme="b" style="border-top:15px solid rgba(255,255,255,0.8);"><a ng-show="playlistController.playingSong" href="http://de.wikipedia.org/w/index.php?go=Artikel&title&search={{mediaController.getSongArtist(playlistController.playingSong)}}"
                                       onclick="$('#popupArtist').popup('close')" style="text-decoration:none" target="_blank">Wikipedia</a></li>
-                <li data-theme="b"><a ng-show="playlistController.loadingSong" href="http://www.lastfm.de/search?q={{mediaController.getSongArtist(playlistController.loadingSong)}}" onclick="$('#popupArtist').popup('close')"
+                <li data-theme="b"><a ng-show="playlistController.playingSong" href="http://www.lastfm.de/search?q={{mediaController.getSongArtist(playlistController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
                                       style="text-decoration:none" target="_blank">last.fm</a></li>
-                <li data-theme="b"><a ng-show="playlistController.loadingSong" href="https://myspace.com/search/?q={{mediaController.getSongArtist(playlistController.loadingSong)}}" onclick="$('#popupArtist').popup('close')"
+                <li data-theme="b"><a ng-show="playlistController.playingSong" href="https://myspace.com/search/?q={{mediaController.getSongArtist(playlistController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
                                       style="text-decoration:none" target="_blank">Myspace</a></li>
-                <li data-theme="b"><a ng-show="playlistController.loadingSong" href="https://www.google.de/search?q={{mediaController.getSongArtist(playlistController.loadingSong)}}" onclick="$('#popupArtist').popup('close')"
+                <li data-theme="b"><a ng-show="playlistController.playingSong" href="https://www.google.de/search?q={{mediaController.getSongArtist(playlistController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
                                       style="text-decoration:none" target="_blank">Google</a></li>
 
             </ul>
@@ -478,7 +537,16 @@
 <script type="text/javascript" src="public/js/helperFunctions.js"></script>
 
 <!-- business logic -->
+<script type="text/javascript" src="public/js/playbackController.js"></script>
+
 <script type="text/javascript" src="public/js/uiController.js"></script>
+
+<script type="text/javascript" src="public/js/mediaelementPlayer.js"></script>
+
+<script type="text/javascript" src="public/js/videoController.js"></script>
+<script type="text/javascript" src="public/js/videoPlayer.js"></script>
+<script type="text/javascript" src="public/js/embeddedPlayer.js"></script>
+
 
 <script type="text/javascript" src="public/js/mediaController.js"></script>
 
@@ -489,6 +557,8 @@
 <script type="text/javascript" src="public/js/accountController.js"></script>
 
 <script type="text/javascript" src="public/js/authController.js"></script>
+
+<script type="text/javascript" src="public/js/importController.js"></script>
 
 <!-- ng Controlle -->
 <script type="text/javascript" src="public/js/mainModule.js"></script>

@@ -85,8 +85,9 @@ helperFunctions.animateBackground = function(selector, cImageSrc,cWidth,cHeight,
 
         if(!element)
             return;
+        element.style.backgroundPosition=(-cXpos)+'px 0px';
+        element.style.webkitTransform="";
 
-        element.style.backgroundPosition=(-cXpos)+'px 0';
         helperFunctions.animateBackgroundTimeout=setTimeout(continueAnimation, SECONDS_BETWEEN_FRAMES*1000);
 
 

@@ -1,0 +1,411 @@
+
+ /*Container*/
+.videoControlElements-container {
+    font-family: Helvetica, Arial;
+    text-align: left;
+    text-indent: 0;
+}
+
+
+ .videoControlElements-controls {
+     pointer-events: auto;
+
+     width:auto!important;
+     -webkit-transform: scale(1.5);
+     transform: scale(1.5);
+
+     -webkit-transform-origin: 0% 100%;
+     transform-origin: 0% 100%;
+ }
+
+ .videoControlElements-container .videoControlElements-controls {
+     position: absolute;
+     list-style-type: none;
+     margin: 0;
+     padding: 0;
+     bottom: 0;
+     left: 0;
+     background: none;
+     background: rgba(0, 0, 0, 0.7);
+     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(50,50,50,0.7)), to(rgba(0,0,0,0.7)));
+     background: -webkit-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
+     background: -moz-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
+     background: -o-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
+     background: -ms-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
+     background: linear-gradient(rgba(50,50,50,0.7), rgba(0,0,0,0.7));
+     height: 30px;
+     width: 100%;
+ }
+
+
+
+
+
+ .videoControlElements-controls .videoControlElements-button button:focus {
+     outline: none !important;
+ }
+
+
+
+ .videoControlElements-volume-button{
+     opacity:1!important;
+ }
+
+
+ #videoccontrols  .videoControlElements-time-rail {
+     -webkit-transition: all 1s ease;
+     -moz-transition: all 1s ease;
+     -o-transition: all 1s ease;
+     transition: all 1s ease;
+ }
+
+ #videocontrolsInner .videoControlElements-controls {
+     background: rgba(29,29,29,0.3)!important;
+     /*
+     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(20,20,20,0.9)), to(rgba(0,0,0,0.9)))!important;
+     background: -webkit-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
+     background: -moz-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
+     background: -o-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
+     background: -ms-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
+     background: linear-gradient(rgba(44,40,40,0.9), rgba(0,0,0,0.9))!important;
+     */
+ }
+
+/*Volume slider*/
+ .videoControlElements-controls .videoControlElements-volume-button .videoControlElements-volume-slider {
+     display: none;
+     height: 115px;
+     width: 25px;
+     background: none;
+     background: rgba(50, 50, 50, 0.9);
+     -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+     border-radius: 0;
+     top: -115px;
+     z-index: 1;
+     position: absolute;
+     margin: 0;
+ }
+
+ .videoControlElements-controls .videoControlElements-volume-button .videoControlElements-volume-slider .videoControlElements-volume-total {
+     position: absolute;
+     left: 11px;
+     top: 8px;
+     width: 2px;
+     height: 100px;
+     background: #ddd;
+     background: rgba(255, 255, 255, 0.5);
+     margin: 0;
+ }
+
+ .videoControlElements-controls .videoControlElements-volume-button .videoControlElements-volume-slider .videoControlElements-volume-current {
+     position: absolute;
+     left: 11px;
+     top: 8px;
+     width: 2px;
+     height: 100px;
+     background: #ddd;
+     background: rgba(255, 255, 255, 0.9);
+     margin: 0;
+ }
+
+ .videoControlElements-controls .videoControlElements-volume-button .videoControlElements-volume-slider .videoControlElements-volume-handle {
+     position: absolute;
+     left: 4px;
+     top: -3px;
+     width: 16px;
+     height: 6px;
+     background: #ddd;
+     background: rgba(255, 255, 255, 0.9);
+     cursor: N-resize;
+     -webkit-border-radius: 1px;
+     -moz-border-radius: 1px;
+     border-radius: 1px;
+     margin: 0;
+ }
+ 
+/* Playing Time */
+
+ .videoControlElements-container .videoControlElements-controls .videoControlElements-time {
+     color: #fff;
+     display: block;
+     height: 17px;
+     width: auto;
+     padding: 8px 3px 0 3px;
+     overflow: hidden;
+     text-align: center;
+     -moz-box-sizing: content-box;
+     -webkit-box-sizing: content-box;
+     box-sizing: content-box;
+ }
+
+
+ .videoControlElements-container .videoControlElements-controls .videoControlElements-time span {
+     color: #fff;
+     font-size: 11px;
+     line-height: 12px;
+     display: block;
+     float: left;
+     margin: 1px 2px 0 0;
+     width: auto;
+ }
+
+
+/* Time Rail */
+
+ .videoControlElements-controls div.videoControlElements-time-rail {
+     direction: ltr;
+     width: 200px;
+     padding-top: 5px!important;
+ }
+
+ .videoControlElements-controls .videoControlElements-time-rail span {
+     display: block;
+     position: absolute;
+     width: 180px;
+     height: 10px;
+     -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+     border-radius: 2px;
+     cursor: pointer;
+ }
+
+ .videoControlElements-controls .videoControlElements-time-rail .videoControlElements-time-total {
+     margin: 5px;
+     background: #333;
+     background: rgba(50,50,50,0.8);
+     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(30,30,30,0.8)), to(rgba(60,60,60,0.8)));
+     background: -webkit-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
+     background: -moz-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
+     background: -o-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
+     background: -ms-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
+     background: linear-gradient(rgba(30,30,30,0.8), rgba(60,60,60,0.8));
+ }
+
+
+ .videoControlElements-controls .videoControlElements-time-rail .videoControlElements-time-buffering {
+     width: 100%;
+     background-image: -o-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+     background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
+     background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+     background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+     background-image: -ms-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+     background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+     -webkit-background-size: 15px 15px;
+     -moz-background-size: 15px 15px;
+     -o-background-size: 15px 15px;
+     background-size: 15px 15px;
+     -webkit-animation: buffering-stripes 2s linear infinite;
+     -moz-animation: buffering-stripes 2s linear infinite;
+     -ms-animation: buffering-stripes 2s linear infinite;
+     -o-animation: buffering-stripes 2s linear infinite;
+     animation: buffering-stripes 2s linear infinite;
+ }
+
+ .videoControlElements-controls .videoControlElements-time-rail .videoControlElements-time-loaded {
+     background: #3caac8;
+     background: rgba(60,170,200,0.8);
+     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(44,124,145,0.8)), to(rgba(78,183,212,0.8)));
+     background: -webkit-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
+     background: -moz-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
+     background: -o-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
+     background: -ms-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
+     background: linear-gradient(rgba(44,124,145,0.8), rgba(78,183,212,0.8));
+     width: 0;
+ }
+
+
+ .videoControlElements-controls .videoControlElements-time-rail .videoControlElements-time-current {
+     background: #fff;
+     background: rgba(255,255,255,0.8);
+     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,0.9)), to(rgba(200,200,200,0.8)));
+     background: -webkit-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
+     background: -moz-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
+     background: -o-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
+     background: -ms-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
+     background: linear-gradient(rgba(255,255,255,0.9), rgba(200,200,200,0.8));
+     width: 0;
+ }
+
+ .videoControlElements-controls .videoControlElements-time-rail .videoControlElements-time-handle {
+     display: none;
+     position: absolute;
+     margin: 0;
+     width: 10px;
+     background: #fff;
+     -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+     border-radius: 5px;
+     cursor: pointer;
+     border: solid 2px #333;
+     top: -2px;
+     text-align: center;
+ }
+
+ .videoControlElements-controls .videoControlElements-time-rail .videoControlElements-time-float {
+     position: absolute;
+     display: none;
+     background: #eee;
+     width: 36px;
+     height: 17px;
+     border: solid 1px #333;
+     top: -26px;
+     margin-left: -18px;
+     text-align: center;
+     color: #111;
+ }
+
+
+ /* Song Length Time */
+
+
+ /* Button */
+.videoControlElements-container .videoControlElements-controls div {
+    list-style-type: none;
+    background-image: none;
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+    line-height: 11px;
+    font-family: Helvetica, Arial;
+    border: 0;
+}
+
+ .videoControlElements-controls .videoControlElements-button button:hover {
+     background-color:transparent !important ;
+     border-color: transparent !important;
+     color: #fff !important;
+     text-shadow: none !important;
+ }
+
+ .videoControlElements-controls .videoControlElements-button button:focus {
+     -webkit-box-shadow: none!important;
+     -moz-box-shadow:  none!important;
+     box-shadow:  none!important;
+ }
+
+
+
+ /* Inner Button */
+
+.videoControlElements-controls .videoControlElements-button button {
+     cursor: pointer;
+     display: block;
+     font-size: 0;
+     line-height: 0;
+     text-decoration: none;
+     margin: 7px 5px;
+     padding: 0;
+     position: absolute;
+     height: 16px;
+     width: 16px;
+     border: 0;
+     background: transparent url(controls.svg) no-repeat;
+}
+
+.videoControlElements-button button {
+     cursor: default !important;
+}
+
+/*Bigger play button*/
+ .videoControlElements-prevtrack-button{
+     margin-right: 5px!important;
+ }
+ .videoControlElements-playpause-button {
+     margin-right: 2px!important;
+ }
+ .videoControlElements-playpause-button {
+     -webkit-transform: scale(1.7);
+     transform: scale(1.7);
+     -webkit-transform-origin: 50% 55%;
+     transform-origin: 50% 55%;
+ }
+ 
+
+/* Prev Button */
+
+ .videoControlElements-controls .videoControlElements-prevtrack button {
+     background: transparent url(controls-playlist.png) no-repeat;
+     background-position: 0 -16px!important;
+ }
+
+
+
+
+/* Play Button */
+
+ .videoControlElements-controls .videoControlElements-play button {
+     background-position: 0 0;
+ }
+
+ .videoControlElements-controls .videoControlElements-pause button {
+     background-position: 0 -16px;
+ }
+
+ /* Stop Button */
+
+ .videoControlElements-controls .videoControlElements-stop button {
+     background-position: -112px 0;
+ }
+
+ /*Next Button */
+
+ .videoControlElements-controls .videoControlElements-nexttrack button {
+     background: transparent url(controls-playlist.png) no-repeat;
+ }
+
+ /* Shuffle Button */
+
+ .videoControlElements-controls .videoControlElements-shuffle-off button {
+     background: transparent url(controls-playlist.png) no-repeat;
+     background-position: -32px -16px;
+ }
+
+ /* Mute Button */
+ .videoControlElements-controls .videoControlElements-mute button {
+     background-position: -16px -16px;
+ }
+
+ .videoControlElementsvideoControlElements-controls .videoControlElements-unmute button {
+     background-position: -16px 0;
+ }
+
+ /* Fullscreen Button */
+
+ .videoControlElements-controls .videoControlElements-fullscreen-button button {
+     background-position: -32px 0;
+ }
+
+ /* Customn Buttons */
+
+
+ /**/
+
+ .videoControlElements-controls .videoControlElements-button-choose-version button {
+
+     background: transparent url(../../img/editdarker.png) no-repeat;
+     background-size: 16px;
+ }
+
+ .videoControlElements-controls .videoControlElements-button-facebook button {
+
+     background: transparent url(../../img/facebook.png) no-repeat;
+     background-size: 16px;
+ }
+
+ .videoControlElements-controls .videoControlElements-button-lyrics button {
+
+     background: transparent url(../../img/lyrics.png) no-repeat;
+     background-size: 16px;
+ }
+
+
+
+
+
+
+
