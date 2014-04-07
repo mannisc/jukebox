@@ -37,75 +37,95 @@ videoController.sharesocialEnabled = true;
  * Init the videoControlls, bind events
  */
 videoController.init = function(){
+    var controls =  $(".videoControlElements-controls");
 
-    $(".videoControlElements-prevtrack-button").click(function () {
+    controls.find(".videoControlElements-prevtrack-button").click(function () {
         if(videoController.prevEnabled)
             alert("prev")
     })
 
-    $(".videoControlElements-playpause-button").click(function () {
+    controls.find(".videoControlElements-playpause-button").click(function () {
         if(videoController.playpauseEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.playpause();
 
     })
 
-    $(".videoControlElements-stop-button").click(function () {
+    controls.find(".videoControlElements-stop-button").click(function () {
         if(videoController.stopEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.stop();
     })
 
 
-    $(".videoControlElements-nexttrack-button").click(function () {
+    controls.find(".videoControlElements-nexttrack-button").click(function () {
         if(videoController.nextEnabled)
             alert("next")
 
     })
 
 
-    $(".videoControlElements-shuffle-button").click(function () {
+    controls.find(".videoControlElements-shuffle-button").click(function () {
         if(videoController.shuffleEnabled)
          alert("shuffle")
     })
 
-    $(".videoControlElements-time-rail").click(function () {
-        if(videoController.timerailEnabled)
-         alert("time-rail")
+    controls.find(".videoControlElements-time-rail").click(function (event) {
+        if(videoController.timerailEnabled) {
+            var total = controls.find('.videoControlElements-time-total'),
+                //loaded  = controls.find('.videoControlElements-time-loaded'),
+                //current  = controls.find('.videoControlElements-time-current'),
+                //handle  = controls.find('.videoControlElements-time-handle'),
+                x = event.pageX,
+                offset = total.offset(),
+                width = total.outerWidth(true)*MediaElementPlayer.prototype.extoptions.scale/1.023,
+                pos,
+                percentage;
+
+            if (x < offset.left) {
+                x = offset.left;
+            } else if (x > width + offset.left) {
+                x = width + offset.left;
+            }
+
+            pos = x - offset.left;
+            percentage = (pos / width);
+            videoController.videoPlayer.setCurrentTime(percentage)
+        }
     })
 
 
-    $(".videoControlElements-volume-button").click(function () {
+    controls.find(".videoControlElements-volume-button").click(function () {
         if(videoController.volumeEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.mute();
     })
 
-    $(".videoControlElements-volume-button").mouseover(function () {
+    controls.find(".videoControlElements-volume-button").mouseover(function () {
         if(videoController.volumeEnabled)
-          $(".videoControlElements-volume-slider").show();
+          controls.find(".videoControlElements-volume-slider").show();
     })
 
-    $(".videoControlElements-volume-button").mouseout(function () {
-        $(".videoControlElements-volume-slider").hide();
+    controls.find(".videoControlElements-volume-button").mouseout(function () {
+        controls.find(".videoControlElements-volume-slider").hide();
     })
 
 
-    $(".videoControlElements-fullscreen-button").click(function () {
+    controls.find(".videoControlElements-fullscreen-button").click(function () {
         if(videoController.fullscreenEnabled&&videoController.videoPlayer)
             videoController.videoPlayer.fullscreen();
     })
 
 
-    $(".videoControlElements-button-choose-version").click(function () {
+    controls.find(".videoControlElements-button-choose-version").click(function () {
         if(videoController.versionsEnabled)
         mediaController.getVersions();
     })
 
-    $(".videoControlElements-button-lyrics").click(function () {
+    controls.find(".videoControlElements-button-lyrics").click(function () {
         if(videoController.lyricsEnabled)
 
             mediaController.toggleLyrics();
     })
 
-    $(".videoControlElements-button-facebook").click(function () {
+    controls.find(".videoControlElements-button-facebook").click(function () {
         if(videoController.sharesocialEnabled)
 
             mediaController.postOnFacebook();
