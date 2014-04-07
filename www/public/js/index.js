@@ -88,7 +88,7 @@ $(document).ready(function () {
             uiController.init();
             searchController.init();
             accountController.init();
-
+            videoController.init();
 
             setTimeout(function(){
                 $("#searchinput").focus();
