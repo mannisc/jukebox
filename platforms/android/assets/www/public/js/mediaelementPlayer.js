@@ -46,21 +46,47 @@ var mediaelementPlayer = function (selector) {
                             // TODO: account for a real array with multiple values (only Firefox 4 has this so far)
 
 
-                            target.oldBufferedRange = target.buffered;
+                            var minDiff = target.duration;
+                            var minDiffPos = 0;
+                            for (var i = 0; i < target.buffered.length; i++) {
+                                var diff = target.buffered.end(i)-target.currentTime;
+                                if(diff>=0&& diff < minDiff)  {
+                                    minDiff = diff;
+                                    minDiffPos = target.buffered.end(i);
+                                }
+                            }
+                            percent = minDiffPos / target.duration;
+
+
+                            /*
                             //If first time take last range
-                            percent = target.buffered.end(target.buffered.length - 1) / target.duration;
+                            if(!target.oldBufferedRangeItem||target.oldBufferedRangeItem>target.buffered.length - 1)
+                             percent = target.buffered.end(target.buffered.length - 1) / target.duration;
+                            else
+                             percent = target.buffered.end(target.oldBufferedRangeItem) / target.duration;
+
                             //Otherwise search for changing Range
-                            if (target.oldBufferedRange) {
+                            if (target.oldBufferedRange&&target.oldBufferedRange.length>0) {
+                                console.log("------------------- "+target.oldBufferedRangeItem);
+
                                 for (var i = 0; i < target.buffered.length; i++) {
                                     if (i < target.oldBufferedRange.length) {
-                                        if (target.buffered.end(i) != target.oldBufferedRange(i)) {
+                                        console.log(target.buffered.end(i)+" = "+target.oldBufferedRange[i]+"  "+i+"  "+target.buffered.length)
+
+                                        if (target.buffered.end(i)!= target.oldBufferedRange[i]) {
                                             percent = target.buffered.end(i) / target.duration;
-                                            break;
+                                            target.oldBufferedRangeItem = i;
+                                            console.log("----");
                                         }
                                     }
                                 }
                             }
-
+                            //Save old Ranges
+                            target.oldBufferedRange = [];
+                            for (i = 0; i < target.buffered.length; i++) {
+                                target.oldBufferedRange[i] = target.buffered.end(i);
+                            }
+                            */
 
                         }
                         // Some browsers (e.g., FF3.6 and Safari 5) cannot calculate target.bufferered.end()
@@ -74,7 +100,6 @@ var mediaelementPlayer = function (selector) {
                         // finally update the progress bar
                         if (percent !== null) {
                             percent = Math.min(1, Math.max(0, percent));
-                            console.log(percent)
                             videoController.setBufferedPercentage(percent)
 
                         }
