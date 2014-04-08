@@ -1203,7 +1203,8 @@ IScroll.prototype = {
 	},
 
 	_wheel: function (e) {
-		if ( !this.enabled ) {
+
+        if ( !this.enabled ) {
 			return;
 		}
 
@@ -1224,7 +1225,6 @@ IScroll.prototype = {
 			that._execEvent('scrollEnd');
 			that.wheelTimeout = undefined;
 		}, 400);
-
 		if ( 'deltaX' in e ) {
 			wheelDeltaX = -e.deltaX;
 			wheelDeltaY = -e.deltaY;
@@ -1239,8 +1239,14 @@ IScroll.prototype = {
 			return;
 		}
 
-		wheelDeltaX *= this.options.invertWheelDirection;
+
+        wheelDeltaX *= this.options.invertWheelDirection;
 		wheelDeltaY *= this.options.invertWheelDirection;
+        //TODO CHANGED TEMPORARY FIX FOR SLOW MOUSEWHEEL SCROLLING ON FIREFOX
+        if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
+            wheelDeltaX = wheelDeltaX*15;
+            wheelDeltaY =  wheelDeltaY*15;
+        }
 
 		if ( !this.hasVerticalScroll ) {
 			wheelDeltaX = wheelDeltaY;
