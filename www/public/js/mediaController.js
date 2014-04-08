@@ -146,7 +146,6 @@ mediaController.showDuration = function (songversion) {
 
 
 mediaController.playSong= function(streamURL,videoURL){
-
     mediaController.currentStreamURL    = streamURL;
     mediaController.currentvideoURL     = videoURL;
     if(embedPlayer.isEmbedVideo(videoURL) ){
@@ -825,7 +824,7 @@ mediaController.openExternalSite = function () {
     window.open(mediaController.currentvideoURL, '_blank');
     if (playlistController.isPlaying) {
         //uiController.mediaElementPlayer.pause();
-        videoController.pauseVideo();
+        videoController.pauseSong();
 
     }
 }

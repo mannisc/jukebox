@@ -171,17 +171,19 @@ uiController.initMediaPlayer = function () {
     }
 
     uiController.setScreenMode = function(){
+
         if(uiController.fullscreenMode==1){ //Background
             if(embedPlayer.active == 0){
                 $("#videoplayer").hide();
                 if(playlistController.playingSong)
-                    $("#backgroundImage").css("opacity","0.08");
+                    $("#backgroundImage").hide();
                 $("#videoplayer video").addClass("backgroundVideo").insertAfter("#backgroundImage");
             }
             else
             {
                 // $("#dmplayer").addClass("iframeVideo").insertAfter("#backgroundImage");
-                $("#backgroundImage").css("opacity","0.08");
+                if(playlistController.playingSong)
+                 $("#backgroundImage").hide();
                 $("#dmplayer").show();
                 $("#dmplayer").css("opacity","0.8");
                 $("#videoplayer").hide();
@@ -191,11 +193,9 @@ uiController.initMediaPlayer = function () {
 
         }else  if(uiController.fullscreenMode==2){
             if(embedPlayer.active == 0){
-                $("#backgroundImage").css("opacity","1");
-                //
+                $("#backgroundImage").show();
 
-                //  $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
-                // $($('.mejs-fullscreen-button').get(0)).click();
+
             }
             else
             {
@@ -211,13 +211,12 @@ uiController.initMediaPlayer = function () {
         } else  if(uiController.fullscreenMode==0){
 
             if(embedPlayer.active == 0){
-                // $($('.mejs-fullscreen-button').get(0)).click();
                 $("#videoplayer").show();
                 $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
             }
             else
             {
-                $("#backgroundImage").css("opacity","1");
+                $("#backgroundImage").show();;
                 $("#dmplayer").hide();
                 $("#videoplayer").hide();
                 //  uiController.showFullscreen();
@@ -259,20 +258,20 @@ uiController.initMediaPlayer = function () {
 
                 uiController.fullscreenMode = uiController.fullscreenMode + 1;
                 if (uiController.fullscreenMode > 2)
-
                     uiController.fullscreenMode = 0;
                 uiController.setScreenMode();
-
 
                 if (uiController.fullscreenMode == 1) { //Background
                     $("#videoplayer video").addClass("backgroundVideo").insertAfter("#backgroundImage");
                     $("#videoplayer").hide();
                     if (playlistController.playingSong)
-                        $("#backgroundImage").css("opacity", "0.08");
+                        $("#backgroundImage").hide();
+                    else
+                        $("#backgroundImage").show();
 
 
                 } else if (uiController.fullscreenMode == 2) {
-                    $("#backgroundImage").css("opacity", "1");
+                    $("#backgroundImage").show();
                     $("#videoplayer").show();
 
                     $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
@@ -282,6 +281,8 @@ uiController.initMediaPlayer = function () {
                     $($('.mejs-fullscreen-button').get(0)).click();
 
                 }
+
+
                 if (isPlaying)
                     mediaElement.play();
 
@@ -683,11 +684,11 @@ uiController.init = function () {
 
     $(document).keyup(function (evt) {
         if (evt.keyCode == 32) {
-            $(".mejs-playpause-button").click();
+            videoController.playPauseSong();
         } else if (evt.keyCode == 38 || evt.keyCode == 37) {
-            $(".mejs-prevtrack-button").click();
+            videoController.playPrevSong();
         } else if (evt.keyCode == 40 || evt.keyCode == 39) {
-            $(".mejs-nexttrack-button").click();
+            videoController.playNextSong();
         }
     })
 
@@ -2094,16 +2095,14 @@ uiController.updateUI = function (dontChangeVideOpacity) {
     }
 
     uiController.totalTimeWidth = uiController.windowWidth / 1.5 - 160 - 105-5;
-    $("#videoplayer .mejs-time-total").css("width", uiController.totalTimeWidth);
-    $("#videoplayer .mejs-time-rail").css("width",  uiController.totalTimeWidth+10);
+
+    videoController.resizeVideo();
 
 
     //Small Size
     if (uiController.windowWidth < uiController.responsiveWidthSmall) {
 
-
         uiController.totalTimeWidth = (uiController.windowWidth / 1.5 - 160);
-        //$("#videocontrols .mejs-time-total").css("width", (uiController.windowWidth / 1.5 - 160));
 
         if ((uiController.windowWidth) / 1.5 - 160 - 105 + 10 < 323 - 105 - uiController.countCustomButtons * 26) {
             if (((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10 < 0) {

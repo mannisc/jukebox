@@ -112,7 +112,7 @@ $(document).ready(function () {
                         playbackController.playSong(song,false,false);
                     }
                 }
-            }, 2000);
+            }, 3500);
 
 
         } else

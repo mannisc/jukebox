@@ -53,18 +53,14 @@ videoController.init = function () {
 
     //Play Previous Song
     videoController.controls.find(".videoControlElements-prevtrack-button").click(function () {
-        if (videoController.prevEnabled)
-            playlistController.playPrevSong();
+        videoController.playPrevSong();
+
     });
 
     //Play Pause Song
     videoController.controls.find(".videoControlElements-playpause-button").click(function () {
         if (videoController.playpauseEnabled && videoController.videoPlayer) {
-            if (videoController.isPlaying)
-                videoController.pauseVideo();
-            else
-                videoController.playVideo();
-
+            videoController.playPauseSong();
         }
 
     });
@@ -77,8 +73,7 @@ videoController.init = function () {
 
     //Play Next Song
     videoController.controls.find(".videoControlElements-nexttrack-button").click(function () {
-        if (videoController.nextEnabled)
-            playlistController.playNextSong();
+        videoController.playNextSong();
     });
 
 
@@ -229,10 +224,34 @@ videoController.init = function () {
 }
 
 /**
+ * Play/Pause Video
+ */
+videoController.playPauseSong = function(){
+    if (videoController.isPlaying)
+        videoController.pauseSong();
+    else
+        videoController.playSong();
+}
+
+
+/**
+ * Window was resized
+ */
+videoController.resizeVideo = function(){
+    if(videoController.videoPlayer.resize)
+     videoController.videoPlayer.resize();
+    //$("#videoplayer .mejs-time-total").css("width", uiController.totalTimeWidth);
+    //$("#videoplayer .mejs-time-rail").css("width",  uiController.totalTimeWidth+10);
+
+}
+
+
+
+/**
  * Pause Song
  * @type {*}
  */
-videoController.pauseVideo = function(){
+videoController.pauseSong = function(){
     if (videoController.isPlaying) {
         videoController.controls.find(".videoControlElements-pause").removeClass("videoControlElements-pause").addClass("videoControlElements-play");
         videoController.videoPlayer.pause();
@@ -242,12 +261,31 @@ videoController.pauseVideo = function(){
 }
 
 
+/**
+ * Next Song
+ * @type {*}
+ */
+videoController.playNextSong = function(){
+    if (videoController.prevEnabled)
+        playlistController.playNextSong();
+}
+
+
+/**
+ * Previous Song
+ * @type {*}
+ */
+videoController.playPrevSong = function(){
+    if (videoController.prevEnabled)
+        playlistController.playPrevSong();
+}
+
 
 /**
  * Play Song
  * @type {*}
  */
-videoController.playVideo = function(){
+videoController.playSong = function(){
     if (!videoController.isPlaying) {
      videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
      videoController.videoPlayer.play();

@@ -550,7 +550,7 @@ mejs.PluginMediaElement.prototype = {
 	play: function () {
 		if (this.pluginApi != null) {
 			if (this.pluginType == 'youtube') {
-				this.pluginApi.playVideo();
+				this.pluginApi.playSong();
 			} else {
 				this.pluginApi.playMedia();
 			}
@@ -570,7 +570,7 @@ mejs.PluginMediaElement.prototype = {
 	pause: function () {
 		if (this.pluginApi != null) {
 			if (this.pluginType == 'youtube') {
-				this.pluginApi.pauseVideo();
+				this.pluginApi.pauseSong();
 			} else {
 				this.pluginApi.pauseMedia();
 			}			

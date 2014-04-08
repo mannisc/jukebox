@@ -43,7 +43,6 @@ helperFunctions.animateBackground = function(selector, cImageSrc,cWidth,cHeight,
     var cPreloaderTimeout=false;
     var SECONDS_BETWEEN_FRAMES=0;
 
-
     if(helperFunctions.animateBackgroundTimeout){
         clearTimeout(helperFunctions.animateBackgroundTimeout);
         helperFunctions.animateBackgroundTimeout = null;
@@ -56,11 +55,12 @@ helperFunctions.animateBackground = function(selector, cImageSrc,cWidth,cHeight,
         if(!element)
         return;
         $(element).show();
-        $(element).css("opacity","1")
-
+        element.style.opacity = 0.8;
         element.style.backgroundImage='url('+cImageSrc+')';
         element.style.width=cWidth+'px';
         element.style.height=cHeight+'px';
+        element.style.backgroundPositionX = "0px";
+        element.style.backgroundPositionY = "0px";
 
         //FPS = Math.round(100/(maxSpeed+2-speed));
         var FPS = Math.round(100/cSpeed);
@@ -85,9 +85,9 @@ helperFunctions.animateBackground = function(selector, cImageSrc,cWidth,cHeight,
 
         if(!element)
             return;
-        element.style.backgroundPosition=(-cXpos)+'px 0px';
-        element.style.webkitTransform="";
+        element.style.backgroundPositionY =(-cXpos/cFrameWidth*100)+'.0%';
 
+        console.log( element.style.backgroundSize+"   "+element.style.backgroundPositionX)
         helperFunctions.animateBackgroundTimeout=setTimeout(continueAnimation, SECONDS_BETWEEN_FRAMES*1000);
 
 
