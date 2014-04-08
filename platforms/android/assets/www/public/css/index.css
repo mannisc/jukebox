@@ -754,8 +754,7 @@ video{
     background-image:url(../img/pause.png)!important;
     background-size:100%;
     background-position: 0px 0px!important;
-    -webkit-transform: scale(1)!important;
-    transform: scale(1)!important;
+
 }
 
 

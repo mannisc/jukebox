@@ -84,7 +84,9 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
               $(songListElement.get(0)).addClass("pausing");
 
             setTimeout(function () {
-                $(".mejs-playpause-button").click();
+
+                $(".mejs-playpause-button").click();//TODO CHANGE TO VIDEOCONTROLLER
+
             }, 50);
         }
     }
@@ -101,8 +103,8 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     //Lyrics
     if (mediaController.showLyrics)
         $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.playingSong) + ":" + playlistController.playingSong.name);
-    $(".mejs-button-lyrics button").css("opacity", "1");
 
+    videoController.disableLyricsControl(false);
     //Enable stop if there is no old song
     if (!playlistController.playingOldSong)
         videoController.disableStopControl(false);

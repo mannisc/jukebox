@@ -737,13 +737,13 @@ mediaController.toggleLyrics = function () {
     var iframe = $('#lyricsiframe');
 
 
-    if (mediaController.showLyrics === undefined)
-        uiController.toast("These Lyrics are external content.<br> Contact the external site for answers regarding its content.", 3000)
+    if (!mediaController.showLyrics)
+    uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.playingSong) + ":" + playlistController.playingSong.name+"' target='_blank'>lyrics.wikia.com</a>.", 5000)
 
     mediaController.showLyrics = !mediaController.showLyrics;
     if (mediaController.showLyrics) {
         if (playlistController.playingSong) {
-            $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.playingSong) + ":" + playlistController.playingSong.name);
+            $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.playingSong) + ":" + playlistController.playingSong.name+"?useskin=wikiamobile");
             iframe.removeClass('fadeoutcomplete');
             iframe.addClass('fadeincompleteslow');
             iframe.show();
