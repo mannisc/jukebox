@@ -208,7 +208,8 @@ var mediaelementPlayer = function (selector) {
     }
 
     this.setVolume = function (volume) {
-        console.log(volume);
+        if(this.mediaElementPlayer&& this.mediaElementPlayer.media)
+          this.mediaElementPlayer.media.setVolume(volume);
     };
 
 
