@@ -57,7 +57,7 @@ searchController.init = function () {
     }
 
     searchController.activateButton(0, true);
-    if(!urlParams.search||urlParams.search==""){
+    if (!urlParams.search || urlParams.search == "") {
         searchController.showPopulars();
     }
 }
@@ -162,14 +162,14 @@ searchController.completeSearch = function (list) {
         searchController.searchResults = [];
         $scope.safeApply();
         var num = 1;
-        if(list.track.length){
-           num = Math.min(searchController.maxResults, list.track.length);
+        if (list.track.length) {
+            num = Math.min(searchController.maxResults, list.track.length);
             for (var i = 0; i < num; i++) {
                 searchController.searchResults[i] = list.track[i];
             }
             searchController.searchResultsComplete = list.track;
         }
-        else{
+        else {
             searchController.searchResults[0] = list.track;
             searchController.searchResultsComplete[0] = list.track[0];
         }
@@ -186,9 +186,12 @@ searchController.completeSearch = function (list) {
         uiController.makeSearchListDraggable();
         setTimeout(function () {
             $("#searchlistview li").removeClass("fadeincompletefast");
-            uiController.searchListScroll.refresh();
+
 
         }, 100)
+        setTimeout(function () {
+            uiController.searchListScroll.refresh();
+        }, 1000)
     }
 }
 
@@ -238,7 +241,9 @@ searchController.removeFilterSongs = function () {
 
     $("#searchlistview").listview('refresh');
 
-    uiController.searchListScroll.refresh();
+    setTimeout(function () {
+        uiController.searchListScroll.refresh();
+    }, 1000)
     uiController.makeSearchListDraggable();
     setTimeout(function () {
         $("#searchlistview li").removeClass("fadeincompletefast");
@@ -268,7 +273,7 @@ searchController.filterSongs = function (filterTerm) {
 
             if (title.search(filterTerm) > -1 || artist.search(filterTerm) > -1) {
                 newSearchResults[icounter] = searchController.searchResultsComplete[i];
-               // console.dir(searchController.searchResults[icounter]);
+                // console.dir(searchController.searchResults[icounter]);
                 icounter++;
             }
         }
@@ -301,7 +306,9 @@ searchController.filterSongs = function (filterTerm) {
         $scope.safeApply();
         $("#searchlistview").listview('refresh');
 
-        uiController.searchListScroll.refresh();
+        setTimeout(function () {
+            uiController.searchListScroll.refresh();
+        }, 1000)
         uiController.makeSearchListDraggable();
         setTimeout(function () {
             $("#searchlistview li").removeClass("fadeincompletefast");
@@ -322,7 +329,9 @@ searchController.emptySearchList = function (dontInitFully) {
     searchController.searchResults = [];
     $scope.safeApply();
     $("#searchlistview").listview('refresh');
-    uiController.searchListScroll.refresh();
+    setTimeout(function () {
+        uiController.searchListScroll.refresh();
+    }, 0)
 
     if (!dontInitFully) {
         uiController.makeSearchListDraggable();
@@ -343,7 +352,7 @@ searchController.showSuggestions = function () {
         if (mediaController.currentvideoURL != "") {
             song = playlistController.getPlayingSong();
         }
-        else{
+        else {
             if (playlistController.loadedPlaylistSongs.length > 0) {
                 index = Math.round(Math.random() * (playlistController.loadedPlaylistSongs.length - 1));
 
@@ -382,16 +391,16 @@ searchController.searchMusic = function () {
     if ($("#searchinput").val() && $("#searchinput").val() != "") {
         searchController.lastSearchTerm = $("#searchinput").val();
         var song = playlistController.getPlayingSong();
-        if(song.name!=""&&searchinput!=""){
-            window.history.pushState("",document.title, "/?search="+searchController.lastSearchTerm+"&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+        if (song.name != "" && searchinput != "") {
+            window.history.pushState("", document.title, "/?search=" + searchController.lastSearchTerm + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
         }
-        else{
-            window.history.pushState("",document.title, "?search="+ searchController.lastSearchTerm);
+        else {
+            window.history.pushState("", document.title, "?search=" + searchController.lastSearchTerm);
         }
-        if(searchController.serverSearch){
+        if (searchController.serverSearch) {
             var time = 1500;
         }
-        else{
+        else {
             if (app.isCordova)
                 var time = 1000;
             else
@@ -436,18 +445,17 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
     var searchID = searchController.SearchCounter;
 
     var searchserver = function (searchID) {
-        console.dir(preferences.serverURL + "?searchjson=" + searchString+"&auth="+authController.ip_token);
+        console.dir(preferences.serverURL + "?searchjson=" + searchString + "&auth=" + authController.ip_token);
         $.ajax({
-            url: preferences.serverURL + "?searchjson=" + searchString+"&auth="+authController.ip_token,
+            url: preferences.serverURL + "?searchjson=" + searchString + "&auth=" + authController.ip_token,
             success: function (data) {
                 console.dir("searchjson!!!!!!!!!!");
                 console.dir(data);
-                if(data.auth && data.auth=="true"){
+                if (data.auth && data.auth == "true") {
                     authController.extractToken(data.token);
                     searchserver(searchID);
                 }
-                else
-                {
+                else {
 
                     if (searchID == searchController.SearchCounter) {
                         for (var i = 0; i < data.track.length; i++) {
@@ -502,7 +510,7 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
 
                         }
                     }
-                    else{
+                    else {
                         searchController.serverSearch = true;
                         searchserver(searchID);
                     }
@@ -529,14 +537,13 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
 
     var searchserver = function (searchID) {
         $.ajax({
-            url: preferences.serverURL + "?searchjson=" + searchString+"&auth="+authController.ip_token,
+            url: preferences.serverURL + "?searchjson=" + searchString + "&auth=" + authController.ip_token,
             success: function (data) {
-                if(data.auth && data.auth=="true"){
+                if (data.auth && data.auth == "true") {
                     authController.extractToken(data.token);
                     searchserver(searchID);
                 }
-                else
-                {
+                else {
                     if (searchID == searchController.SearchCounter) {
                         for (var i = 0; i < data.track.length; i++) {
                             try {
@@ -566,10 +573,10 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
 
         })
     }
-    var func = function (searchID,page,topresults) {
+    var func = function (searchID, page, topresults) {
         $.ajax({
 
-            url: "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + searchString + "&page="+page+"&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
+            url: "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + searchString + "&page=" + page + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
             success: function (data) {
                 if (searchID == searchController.SearchCounter) {
                     var dataOK = false;
@@ -583,12 +590,12 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
                                 func(searchID, page + 1, data.toptracks.track);
                             }
                             else if (page < searchController.maxArtistSongPages) {
-                                topresults =topresults.concat(data.toptracks.track);
+                                topresults = topresults.concat(data.toptracks.track);
                                 func(searchID, page + 1, topresults);
 
                             }
                             else if (page >= searchController.maxArtistSongPages) {
-                                topresults =topresults.concat(data.toptracks.track);
+                                topresults = topresults.concat(data.toptracks.track);
                                 topresults.track = topresults;
                                 if (callbackSuccess)
                                     callbackSuccess(topresults);
@@ -596,7 +603,7 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
                             }
                         }
                     }
-                    if(dataOK==false && page > 1 && topresults){
+                    if (dataOK == false && page > 1 && topresults) {
                         topresults.track = topresults;
                         if (callbackSuccess)
                             callbackSuccess(topresults);
@@ -610,25 +617,25 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
             }
         })
     }
-    func(searchID,1,null);
+    func(searchID, 1, null);
 }
 
 searchController.topTracks = function (callbackSuccess) {
 
 
     //TODO TEEEMMMMMMPPPPPP for no Internet
-   /* if (callbackSuccess)
-        callbackSuccess( {track:   playlistController.NOINTERNETHACK});
-    return;
-    */
+    /* if (callbackSuccess)
+     callbackSuccess( {track:   playlistController.NOINTERNETHACK});
+     return;
+     */
 
 
     searchController.SearchCounter++;
     var searchID = searchController.SearchCounter;
-    var func = function (searchID,page,topresults) {
+    var func = function (searchID, page, topresults) {
         searchController.showLoading(true);
         $.ajax({
-            url: "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&page="+page+"&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
+            url: "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&page=" + page + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
             success: function (data) {
                 if (searchID == searchController.SearchCounter) {
                     var dataOK = false;
@@ -662,7 +669,7 @@ searchController.topTracks = function (callbackSuccess) {
             }
         })
     }
-    func(searchID,1,null);
+    func(searchID, 1, null);
 }
 
 searchController.suggestions = function (title, artist, callbackSuccess) {

@@ -68,7 +68,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
 
     //Check if song already playing
-    var isSameSongAsLoadedSong = playbackController.playingSong&&(playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song));
+    var isSameSongAsLoadedSong = playbackController.playingSong&&(((!playbackController.playingSong.gid&&!song.gid)||playbackController.playingSong.gid==song.gid)&& playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song));
 
     //New song is already loading/playing song
     if (isSameSongAsLoadedSong) {
@@ -138,14 +138,13 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
         if (!isSameSongAsLoadedSong) {
             playbackController.isLoading = true;
             $(songListElement.get(0)).addClass("stillloading");
-            songListElement.removeClass("pausing");
             playbackController.startedLoadingTime = Date.now();
             if (playbackController.playingSong.streamURL)
                 mediaController.playStreamURL(playbackController.playingSong.streamURL);
             else
                 mediaController.playStream(mediaController.getSongArtist(playbackController.playingSong), playbackController.playingSong.name, playedAutomatic);
 
-            playlistController.playedSongs.push(playbackController.playingSong);
+            playbackController.playedSongs.push(playbackController.playingSong);
             playlistController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
 
         }
