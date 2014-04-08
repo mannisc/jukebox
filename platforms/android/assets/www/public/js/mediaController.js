@@ -89,7 +89,7 @@ mediaController.mediaEnded = function () {
     uiController.updateUI();
 
     if (!playbackController.isLoading)
-        playlistController.playNextSong();
+        playbackController.playNextSong();
 }
 
 
@@ -463,7 +463,7 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
             if (!playedAutomatic)
                 playlistController.resetPlayingSong();
             else
-                playlistController.playNextSong();
+                playbackController.playNextSong();
 
             mediaController.songError();
         }

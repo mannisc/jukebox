@@ -367,7 +367,7 @@
 
  .videoControlElements-controls .videoControlElements-shuffle-off button {
      background: transparent url(controls-playlist.png) no-repeat;
-     background-position: -32px -16px;
+     background-position: -32px 0px;
  }
 
  /* Mute Button */

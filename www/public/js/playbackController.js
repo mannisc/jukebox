@@ -261,6 +261,61 @@ playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
 
 
 /**
+ * Play next song in songlist
+ */
+playbackController.playNextSong = function () {
+
+    if ( playbackController.playingSong.gid) {
+
+
+        var index = playbackController.getIndexOfSong(playbackController.playingSong, playlistController.loadedPlaylistSongs);
+        if (index >= 0) {
+            if (!videoController.shuffleMode) {
+                index = index + 1;
+                if (index == playlistController.loadedPlaylistSongs.length)
+                    index = 0;
+            } else if (playlistController.loadedPlaylistSongs.length > 1) {
+                var oIndex = index;
+                do {
+                    index = Math.round(Math.random() * (playlistController.loadedPlaylistSongs.length - 1))
+                }
+                while (index == oIndex)
+            }
+
+            playbackController.playSong(playlistController.loadedPlaylistSongs[index], false, true)
+        } else if (playlistController.loadedPlaylistSongs.length > 0 && !playlistController.loadedPlaylistSongs[0].isPlaylist) {
+
+            playbackController.playSong(playlistController.loadedPlaylistSongs[0], false, true)
+
+        } else
+            videoController.disablePositionControls(true);
+
+    } else {
+
+        index = playbackController.getIndexOfSong(playbackController.playingSong, searchController.searchResults);
+        if (index >= 0) {
+            if (!videoController.shuffleMode) {
+                index = index + 1;
+                if (index == searchController.searchResults.length)
+                    index = 0;
+            } else if (searchController.searchResults.length > 1) {
+                oIndex = index;
+                do {
+                    index = Math.round(Math.random() * (searchController.searchResults.length - 1))
+                }
+                while (index == oIndex)
+            }
+            playbackController.playSong(searchController.searchResults[index], false, true)
+        } else
+            videoController.disablePositionControls(true);
+
+    }
+
+
+}
+
+
+/**
  * Get Title of Playing Song
  * @returns {*}
  */
@@ -288,6 +343,30 @@ playbackController.getPlayingSong = function () {
 
 
 
+
+
+
+
+
+
+/**
+ * Get Index of Song in List
+ * @param song
+ * @param list
+ * @returns {number}
+ */
+playbackController.getIndexOfSong = function (song, list) {
+
+    for (var index = 0; index < list.length; index++) {
+        if (song.name == list[index].name && mediaController.getSongArtist(song) == mediaController.getSongArtist(list[index])) {
+            return index;
+        }
+    }
+
+    //alert("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+    return -1;
+}
 
 
 
