@@ -250,7 +250,7 @@ uiController.initMediaPlayer = function () {
             $($('.mejs-fullscreen-button').get(0)).hide();
 
             $($('.mejs-fullscreen-button').get(1)).off().click(function () {
-                if (playlistController.isPlaying)
+                if (videoController.isPlaying)
 
                     var isPlaying = true;
                 else
@@ -382,7 +382,7 @@ uiController.initMediaPlayer = function () {
 
 
             $(".mejs-stop-button").click(function () {
-                playlistController.isPlaying = false;
+                videoController.isPlaying = false;
 
                 embedPlayer.stop();
 
@@ -412,13 +412,13 @@ uiController.initMediaPlayer = function () {
 
 
             mediaElement.addEventListener('pause', function (e) {
-                if (playlistController.isPlaying && !playlistController.isLoading) {
+                if (videoController.isPlaying && !playbackController.isLoading) {
                     $($(".songlist li.loadedsong").get(0)).addClass("pausing");
                     $(".songlist li.loadedsong").removeClass("playing");
 
                 }
 
-                playlistController.isPlaying=false;
+                videoController.isPlaying=false;
                 embedPlayer.pause();
 
             });
@@ -441,8 +441,8 @@ uiController.initMediaPlayer = function () {
                     $($(".songlist li.loadedsong").get(0)).addClass("playing");
                 $(".songlist li.loadedsong").removeClass("pausing");
 
-                playlistController.isLoading = false;
-                playlistController.isPlaying = true;
+                    playbackController.isLoading = false;
+                    videoController.isPlaying = true;
 
                 videoController.disablePlayStopControls(false);
 
@@ -465,7 +465,7 @@ uiController.initMediaPlayer = function () {
                             setTimeout(function () {
                                 setTimeout(function () {
 
-                                    if (playlistController.isPlaying){
+                                    if (videoController.isPlaying){
                                         $("#videoplayer").css("opacity", "1");
                                         $("#videoplayer").css("pointer-events","auto");
 
@@ -485,7 +485,7 @@ uiController.initMediaPlayer = function () {
                 mediaController.sendRating("2");
                 document.title = $scope.appTitle;
 
-                playlistController.isPlaying = false;
+                videoController.isPlaying = false;
                 videoController.disableStopControl(true);
                 $("#videoplayer").css("opacity", "0");
                 $("#videoplayer").css("pointer-events", "none");
@@ -496,7 +496,7 @@ uiController.initMediaPlayer = function () {
                 uiController.playedFirst = false;
                 uiController.updateUI();
 
-                if (!playlistController.isLoading)
+                if (!playbackController.isLoading)
                     playlistController.playNextSong();
 
                 mediaController.mediaEnded();

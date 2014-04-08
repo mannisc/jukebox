@@ -75,7 +75,7 @@ playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.leng
 
 playlistController.resetPlayingSong = function () {
 
-    playlistController.isLoading = false;
+    playbackController.isLoading = false;
 
     $(".mejs-controls").find('.mejs-time-loaded').show();
 
@@ -201,7 +201,7 @@ playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
 }
 
 playlistController.getIsLoadingText = function (always) {
-    if (playlistController.isLoading || always)
+    if (playbackController.isLoading || always)
         return " ...";
     else
         return "";
@@ -415,7 +415,7 @@ playlistController.remarkSong = function () {
 
             listElement.addClass("loadedsong");
 
-            if (playlistController.isPlaying) {
+            if (videoController.isPlaying) {
                 $($(".songlist li.loadedsong").get(0)).addClass("playing");
                 $(".songlist li.loadedsong").removeClass("pausing");
             } else {
@@ -432,7 +432,7 @@ playlistController.remarkSong = function () {
 
             listElement = $("#searchlist li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ");
             listElement.addClass("loadedsong");
-            if (playlistController.isPlaying) {
+            if (videoController.isPlaying) {
                 $($(".songlist li.loadedsong").get(0)).addClass("playing");
                 $(".songlist li.loadedsong").removeClass("pausing");
             } else {
