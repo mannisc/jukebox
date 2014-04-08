@@ -27,6 +27,8 @@ videoController.videoPlayerList[1][0] = dailymotionPlayer;
 
 videoController.videoPlayer = videoController.videoPlayerList[0][0];////embeddedPlayer;//
 
+videoController.isEmbedded = false;
+
 
 //Video is playing
 videoController.isPlaying = false;
@@ -341,6 +343,18 @@ videoController.playPrevSong = function () {
 
 
 /**
+ * Check if video is embedded
+ * @type {*}
+ */
+
+videoController.isEmbedVideo= function(videoURL){
+    if(videoURL.search("dailymotion.com") > -1 ){
+        return videoController.videoPlayerList[1][0];
+    }
+    return null;
+}
+
+/**
  * Load Song, decide which Player to use
  * @type {*}
  */
@@ -353,17 +367,21 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
         videoController.videoPlayer.unload();
 
     //TODO Select embedded Player
-    if (embedPlayer.isEmbedVideo(videoURL)) {
+    var player = videoController.isEmbedVideo(videoURL);
+    if (player != null) {
+        videoController.isEmbedded = true;
         /* embedPlayer.enable();
          uiController.mediaElementPlayer.setSrc("http://0.0.0.0");
          uiController.mediaElementPlayer.load();
          uiController.mediaElementPlayer.play();
          embedPlayer.loadDailymotion(videoURL);
          */
-        alert("TODO play dailymotion Video in videoController.loadSongInSuitablePlayer");
+        videoController.videoPlayer = player;
+        videoController.videoPlayer.load(videoURL);
     }
     //Mediaelement
     else {
+        videoController.isEmbedded = false;
         /*embedPlayer.disable();
          uiController.mediaElementPlayer.setSrc(streamURL);
          uiController.mediaElementPlayer.load();
