@@ -318,18 +318,6 @@ videoController.resizeVideo = function () {
 }
 
 
-/**
- * Pause Song
- * @type {*}
- */
-videoController.pauseSong = function () {
-    if (videoController.isPlaying) {
-        videoController.controls.find(".videoControlElements-pause").removeClass("videoControlElements-pause").addClass("videoControlElements-play");
-        videoController.videoPlayer.pause();
-        videoController.isPlaying = false;
-
-    }
-}
 
 
 /**
@@ -398,6 +386,26 @@ videoController.playSong = function () {
         videoController.isPlaying = true;
     }
 }
+
+/**
+ * Pause Song
+ * @type {*}
+ */
+videoController.pauseSong = function () {
+    if (videoController.isPlaying) {
+        videoController.controls.find(".videoControlElements-pause").removeClass("videoControlElements-pause").addClass("videoControlElements-play");
+        videoController.videoPlayer.pause();
+        videoController.isPlaying = false;
+
+        if (videoController.isPlaying && !playbackController.isLoading) {
+            $($(".songlist li.loadedsong").get(0)).addClass("pausing");
+            $(".songlist li.loadedsong").removeClass("playing");
+
+        }
+        videoController.isPlaying = false;
+    }
+}
+
 
 
 /**

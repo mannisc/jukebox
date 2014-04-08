@@ -99,12 +99,7 @@ mediaelementPlayer.play = function () {
 mediaelementPlayer.pause = function () {
     mediaelementPlayer.mediaElementPlayer.pause();
 
-    if (videoController.isPlaying && !playbackController.isLoading) {
-        $($(".songlist li.loadedsong").get(0)).addClass("pausing");
-        $(".songlist li.loadedsong").removeClass("playing");
 
-    }
-    videoController.isPlaying = false;
 };
 
 mediaelementPlayer.stop = function () {
