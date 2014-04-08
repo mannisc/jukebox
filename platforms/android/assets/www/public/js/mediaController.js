@@ -706,6 +706,10 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
         var loadTime = Date.now() - playbackController.startedLoadingTime;
         var delayTime = loadTime % 2000;
+        if(delayTime>400)
+            delayTime = delayTime-400;
+        else
+            delayTime = 0;
         setTimeout(function () {
             $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeoutcompletefast")
             $(listElement.get(0)).find(".loadingSongImg").addClass("fadeoutcompletefast")
@@ -722,10 +726,10 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                 $(listElement.get(0)).find(".loadingSongImg").removeClass("fadeoutcompletefast")
                 $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeoutcompletefast");
                 setTimeout(function () {
-                    $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeincompleteslow")
+                    $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeincomplete")
                     setTimeout(function () {
                         $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "1")
-                        $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeincompleteslow");
+                        $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeincomplete");
                     }, 1000)
                 }, 200)
 
