@@ -91,7 +91,7 @@ playlistController.resetPlayingSong = function () {
 
     if (playbackController.playingSong) {
         playbackController.playSong(playbackController.playingSong, true);      //TODO REMOVE PLAY SONG HERE
-        playlistController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
+        playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
 
     }
     else {
@@ -105,7 +105,7 @@ playlistController.resetPlayingSong = function () {
         $("#videoplayer").css("pointer-events", "none");
         $(".iScrollPlayIndicator").hide();
 
-        playlistController.setNewTitle("", "", true);
+        playbackController.setNewTitle("", "", true);
         $(".mejs-button-lyrics button").css("opacity", "0.5");
     }
 
@@ -115,90 +115,6 @@ playlistController.resetPlayingSong = function () {
 playlistController.playSong = function (song, onlyStyle, playedAutomatic) {alert("PLAYLIST PLAYSONG")}
 
 
-playlistController.setNewTitle = function (title, coverUrl, isLoaded) {
-    if (!isLoaded) {
-        $("#playingSongCover").removeClass("fadeincomplete")
-        $("#playingSongTitle").removeClass("fadeincomplete");
-        $("#playingSongTitle").hide();
-        $("#playingSongTitleLoading").hide();
-        $("#playingSongCover").hide();
-    }
-    $("#playingSongTitleLoading").removeClass("fadeincomplete").removeClass("fadeoutcomplete");
-
-
-    if (title && title != "")
-        document.title = $scope.appTitle + " : " + title;
-    else
-        document.title = $scope.appTitle;
-
-    var searchinput = "";
-    if ($("#searchinput").val()) {
-        searchinput = $("#searchinput").val()
-    }
-    //TODO COMMEnt REMOVE
-    /*
-     var song = playlistController.getPlayingSong();
-
-     if(song.name!=""&&searchinput!=""){
-        window.history.pushState("",document.title, "/?search="+searchinput+"&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
-    }
-    else if(song.name!=""){
-        window.history.pushState("",document.title, "/?artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
-    }
-    else if(searchinput!=""){
-        window.history.pushState("",document.title, "?search="+searchinput);
-    }
-    */
-
-    //  $("#playingSongCover").attr("src", coverUrl);
-
-    if (!isLoaded) {
-        coverUrl = "public/img/loadertitle.gif";
-
-        $("#playingSongInfoStyle").remove();
-        var style = $('<style id="playingSongInfoStyle">' +
-            '.playingSongInfo.ui-icon-custom:after  {' +
-            ' background-image: url(' + coverUrl + ')' +
-            '}' +
-            '#popupArtist-popup::before{' +
-            '  background-color:rgba(255,255,255,.5)!important' +
-            '}' +
-            '</style>');
-        $('html > head').append(style);
-    }
-    else {
-        $("#playingSongInfoStyle").remove();
-        style = $('<style id="playingSongInfoStyle">' +
-            '.playingSongInfo.ui-icon-custom:after  {' +
-            ' background-image: url(' + coverUrl + ')' +
-            '}' +
-            '#popupArtist-popup::before{' +
-            '  background: url(' + coverUrl + ');' +
-            '  background-size:cover;!important' +
-            '}' +
-            '</style>');
-        $('html > head').append(style);
-
-
-    }
-
-    $scope.safeApply();
-    setTimeout(function () {
-        if (isLoaded) {
-            $("#playingSongTitleLoading").addClass("fadeoutcomplete")
-            $("#playingSongTitleLoading").show();
-        }
-        else {
-            $("#playingSongCover").addClass("fadeincomplete")
-            $("#playingSongCover").show();
-            $("#playingSongTitleLoading").addClass("fadeincomplete")
-            $("#playingSongTitleLoading").show();
-            $("#playingSongTitle").addClass("fadeincomplete")
-            $("#playingSongTitle").show();
-        }
-
-    }, 50)
-}
 
 playlistController.getIsLoadingText = function (always) {
     if (playbackController.isLoading || always)

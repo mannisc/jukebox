@@ -523,7 +523,7 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
 
         playbackController.playingOldSong = playbackController.playingSong;
 
-        playlistController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
+        playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
 
 
         mediaController.playSong(streamURL, videoURL)
@@ -686,7 +686,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
         playbackController.playingOldSong = playbackController.playingSong;
 
-        playlistController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
+        playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
         mediaController.playSong(streamURL, videoURL);
 
 

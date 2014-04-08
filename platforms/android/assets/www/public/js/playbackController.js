@@ -18,7 +18,7 @@ var playbackController = function () {
  * @param element
  * @param onlyStyle
  */
-playbackController.doubleClickedElement = function(element, onlyStyle){
+playbackController.doubleClickedElement = function (element, onlyStyle) {
     //Swiped?
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
@@ -30,9 +30,9 @@ playbackController.doubleClickedElement = function(element, onlyStyle){
     if (element.isPlaylist) {
         //Select Playlist
         playlistController.selectPlaylist(element);
-    }else {
+    } else {
         //Play Song
-        playbackController.playSong(element, onlyStyle,false);
+        playbackController.playSong(element, onlyStyle, false);
     }
 
 }
@@ -68,20 +68,20 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
 
     //Check if song already playing
-    var isSameSongAsLoadedSong = playbackController.playingSong&&(((!playbackController.playingSong.gid&&!song.gid)||playbackController.playingSong.gid==song.gid)&& playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song));
+    var isSameSongAsLoadedSong = playbackController.playingSong && (((!playbackController.playingSong.gid && !song.gid) || playbackController.playingSong.gid == song.gid) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song));
 
     //New song is already loading/playing song
     if (isSameSongAsLoadedSong) {
         //Already Loading, and not loaded yet (no pausing possible)
-        if(playbackController.isLoading)
-         return;
+        if (playbackController.isLoading)
+            return;
         //Toggle Playing/Pausing
         else if (playbackController.playingSong) {
             if (videoController.isPlaying) {
-              $(songListElement.get(0)).addClass("playing");
+                $(songListElement.get(0)).addClass("playing");
             }
             else
-              $(songListElement.get(0)).addClass("pausing");
+                $(songListElement.get(0)).addClass("pausing");
 
             setTimeout(function () {
 
@@ -145,7 +145,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
                 mediaController.playStream(mediaController.getSongArtist(playbackController.playingSong), playbackController.playingSong.name, playedAutomatic);
 
             playbackController.playedSongs.push(playbackController.playingSong);
-            playlistController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
+            playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
 
         }
 
@@ -166,3 +166,216 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     }, 500)
 
 }
+
+
+playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
+    if (!isLoaded) {
+        $("#playingSongCover").removeClass("fadeincomplete")
+        $("#playingSongTitle").removeClass("fadeincomplete");
+        $("#playingSongTitle").hide();
+        $("#playingSongTitleLoading").hide();
+
+        $("#playingSongCover").hide();
+    }
+    $("#playingSongTitleLoading").removeClass("fadeincomplete").removeClass("fadeoutcomplete");
+
+
+    if (title && title != "")
+        document.title = $scope.appTitle + " : " + title;
+    else
+        document.title = $scope.appTitle;
+
+    var searchinput = "";
+    if ($("#searchinput").val()) {
+        searchinput = $("#searchinput").val()
+    }
+    //TODO COMMEnt REMOVE
+    /*
+     var song = playlistController.getPlayingSong();
+
+     if(song.name!=""&&searchinput!=""){
+     window.history.pushState("",document.title, "/?search="+searchinput+"&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+     }
+     else if(song.name!=""){
+     window.history.pushState("",document.title, "/?artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+     }
+     else if(searchinput!=""){
+     window.history.pushState("",document.title, "?search="+searchinput);
+     }
+     */
+
+    //  $("#playingSongCover").attr("src", coverUrl);
+
+    if (!isLoaded) {
+        coverUrl = "public/img/loadertitle.gif";
+
+        $("#playingSongInfoStyle").remove();
+        var style = $('<style id="playingSongInfoStyle">' +
+            '.playingSongInfo.ui-icon-custom:after  {' +
+            ' background-image: url(' + coverUrl + ')' +
+            '}' +
+            '#popupArtist-popup::before{' +
+            '  background-color:rgba(255,255,255,.5)!important' +
+            '}' +
+            '</style>');
+        $('html > head').append(style);
+    }
+    else {
+        $("#playingSongInfoStyle").remove();
+        style = $('<style id="playingSongInfoStyle">' +
+            '.playingSongInfo.ui-icon-custom:after  {' +
+            ' background-image: url(' + coverUrl + ')' +
+            '}' +
+            '#popupArtist-popup::before{' +
+            '  background: url(' + coverUrl + ');' +
+            '  background-size:cover;!important' +
+            '}' +
+            '</style>');
+        $('html > head').append(style);
+
+
+    }
+
+    $scope.safeApply();
+    setTimeout(function () {
+        if (isLoaded) {
+            $("#playingSongTitleLoading").addClass("fadeoutcomplete")
+            $("#playingSongTitleLoading").show();
+        }
+        else {
+            $("#playingSongCover").addClass("fadeincomplete")
+            $("#playingSongCover").show();
+            $("#playingSongTitleLoading").addClass("fadeincomplete")
+            $("#playingSongTitleLoading").show();
+            $("#playingSongTitle").addClass("fadeincomplete")
+            $("#playingSongTitle").show();
+        }
+
+    }, 50)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
