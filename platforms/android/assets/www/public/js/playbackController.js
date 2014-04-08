@@ -88,6 +88,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
                 $(".mejs-playpause-button").click();//TODO CHANGE TO VIDEOCONTROLLER
 
             }, 50);
+            return;
         }
     }
 
@@ -110,18 +111,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
         videoController.disableStopControl(false);
 
     //Set playing Indicator position
-    if (isPlaylistSong) {
-        var y = 22 + parseInt(songId.substring(5)) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner").height() - 11 - 49);
-        $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
-        $("#playlistInner .iScrollPlayIndicator").fadeIn();
-        $("#searchlist .iScrollPlayIndicator").hide();
-    }
-    else {
-        y = 22 + parseInt(songId.substring(5)) / (searchController.searchResults.length - 1) * ($("#searchlist").height() - 11 - 49);
-        $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
-        $("#searchlist .iScrollPlayIndicator").fadeIn();
-        $("#playlistInner .iScrollPlayIndicator").hide();
-    }
+    playbackController.positionPlayIndicator();
 
     //Enable Controls
     videoController.disableControls(false);
@@ -209,7 +199,6 @@ playbackController.resetPlayingSong = function () {
 
 
 }
-
 
 
 /**
@@ -305,7 +294,6 @@ playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
 }
 
 
-
 /**
  * Play next song in songlist
  */
@@ -313,7 +301,7 @@ playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
 playbackController.playPrevSong = function () {
 
     var emptyList = false;
-    if ( playbackController.playingSong.gid) {
+    if (playbackController.playingSong.gid) {
         var index = playbackController.getIndexOfSong(playbackController.playingSong, playlistController.loadedPlaylistSongs);
         if (index == -1) {
             if (playbackController.playedSongs.length == 0) {
@@ -369,7 +357,7 @@ playbackController.playPrevSong = function () {
 
         if (emptyList) {
 
-            if ( playbackController.playingSong.gid) {
+            if (playbackController.playingSong.gid) {
                 if (playlistController.loadedPlaylistSongs.length == 0)
                     return;
                 else
@@ -390,7 +378,7 @@ playbackController.playPrevSong = function () {
         // alert("PLAYING " + index)
 
 
-        if ( playbackController.playingSong.gid) {
+        if (playbackController.playingSong.gid) {
             if (index <= -1)
                 index = playlistController.loadedPlaylistSongs.length - 1;
             playbackController.playbackController(playlistController.loadedPlaylistSongs[index])
@@ -411,7 +399,7 @@ playbackController.playPrevSong = function () {
  */
 playbackController.playNextSong = function () {
 
-    if ( playbackController.playingSong.gid) {
+    if (playbackController.playingSong.gid) {
 
 
         var index = playbackController.getIndexOfSong(playbackController.playingSong, playlistController.loadedPlaylistSongs);
@@ -462,41 +450,48 @@ playbackController.playNextSong = function () {
 
 
 /**
+ * Position the Play Indicator
+ */
+playbackController.positionPlayIndicator = function () {
+
+//Set playing Indicator position
+    if (playbackController.playingSong.gid) {
+        var y = 22 + parseInt(playbackController.playingSong.id.substring(5)) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner").height() - 11 - 49);
+        $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
+        $("#playlistInner .iScrollPlayIndicator").fadeIn();
+        $("#searchlist .iScrollPlayIndicator").hide();
+    }
+    else {
+        y = 22 + parseInt(playbackController.playingSong.id.substring(5)) / (searchController.searchResults.length - 1) * ($("#searchlist").height() - 11 - 49);
+        $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
+        $("#searchlist .iScrollPlayIndicator").fadeIn();
+        $("#playlistInner .iScrollPlayIndicator").hide();
+    }
+
+}
+
+/**
  * Remark song if list after list reload
  */
 playbackController.remarkSong = function () {
     var y, listElement;
 
     if (playbackController.playingSong) {
-        if ( playbackController.playingSong.gid) {
-            y = 22 + parseInt(playbackController.playingSong.id.substring(5)) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner").height() - 11 - 49);
-            $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
 
+        playbackController.positionPlayIndicator();
 
-            $("#playlistInner .iScrollPlayIndicator").fadeIn();
-            $("#searchlist .iScrollPlayIndicator").hide();
-
+        if (playbackController.playingSong.gid) {
             listElement = $("#playlistInner li[data-songgid='playlistsong" + playbackController.playingSong.gid + "'] ");
-
-
             listElement.addClass("loadedsong");
-
         } else {
-            y = 22 + parseInt(playbackController.playingSong.id.substring(5)) / (searchController.searchResults.length - 1) * ($("#searchlist").height() - 11 - 49);
-            $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
-            $("#searchlist .iScrollPlayIndicator").fadeIn();
-            $("#playlistInner .iScrollPlayIndicator").hide();
-
             listElement = $("#searchlist li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ");
             listElement.addClass("loadedsong");
-
-
         }
 
         if (videoController.isPlaying) {
             listElement.addClass("playing");
             listElement.removeClass("pausing");
-        } else if (playbackController.isLoading)  {
+        } else if (playbackController.isLoading) {
 
             listElement.addClass("stillloading");
             listElement.find(".loadingSongImg").show();
@@ -536,13 +531,6 @@ playbackController.getPlayingSong = function () {
     else
         return {name: ""};
 }
-
-
-
-
-
-
-
 
 
 /**
