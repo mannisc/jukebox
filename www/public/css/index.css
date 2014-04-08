@@ -1216,17 +1216,17 @@ video{
 
 .fadeoutcompletefast{
     opacity:1;  /* make things invisible upon start */
-    -webkit-animation:fadeoutcomplete ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation:fadeoutcomplete ease-in 1;
-    animation:fadeoutcomplete ease-in 1;
+    -webkit-animation:fadeoutcomplete ease-in 1!important;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation:fadeoutcomplete ease-in 1!important;
+    animation:fadeoutcomplete ease-in 1!important;
 
-    -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
-    -moz-animation-fill-mode:forwards;
-    animation-fill-mode:forwards;
+    -webkit-animation-fill-mode:forwards!important;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+    -moz-animation-fill-mode:forwards!important;
+    animation-fill-mode:forwards!important;
 
-    -webkit-animation-duration:150ms;;
-    -moz-animation-duration:150ms;
-    animation-duration:150ms;
+    -webkit-animation-duration:150ms!important;;
+    -moz-animation-duration:150ms!important;
+    animation-duration:150ms!important;
 }
 
 /* make keyframes that tell the start state and the end state of our object */
