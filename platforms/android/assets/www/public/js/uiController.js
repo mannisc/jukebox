@@ -397,7 +397,7 @@ uiController.initMediaPlayer = function () {
                     $(".mejs-playpause-button button").removeClass("looped");
                     $(".mejs-time-loaded").hide();
                     if (!playbackController.playingOldSong) {
-                        playlistController.resetPlayingSong();
+                        playbackController.resetPlayingSong();
 
                     }
 
@@ -1395,7 +1395,7 @@ uiController.makePlayListSortable = function () {
             uiController.makePlayListSortable();
 
             setTimeout(function () {
-                playlistController.remarkSong();
+                playbackController.remarkSong();
                 uiController.playListScroll.refresh();
                 if (uiController.sortPlaylist) {
                     $("#playlistInner  .removesong").show();

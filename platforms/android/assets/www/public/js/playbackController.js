@@ -167,6 +167,51 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
 }
 
+
+/**
+ * Reset playing song after Loading failed
+ */
+playbackController.resetPlayingSong = function () {
+
+    playbackController.isLoading = false;
+
+    $(".mejs-controls").find('.mejs-time-loaded').show();
+
+    if ($(".mejs-controls").find('.mejs-time-buffering').css("opacity") > 0)
+        $(".mejs-controls").find('.mejs-time-buffering').fadeOut();
+
+    mediaController.playCounter = mediaController.playCounter + 1;
+
+    $("#videoplayer").css("opacity", "0");
+    $("#videoplayer").css("pointer-events", "none");
+
+    playbackController.playingSong = playbackController.playingOldSong;
+
+    if (playbackController.playingSong) {
+        playbackController.playSong(playbackController.playingSong, true);      //TODO REMOVE PLAY SONG HERE
+        playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
+
+    }
+    else {
+        //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
+        $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
+
+        $(".songlist li").removeClass("loadedsong playing stillloading plausing");
+        videoController.disableControls(true);
+        videoController.disableStopControl(true);
+        $("#videoplayer").css("opacity", "0");
+        $("#videoplayer").css("pointer-events", "none");
+        $(".iScrollPlayIndicator").hide();
+
+        playbackController.setNewTitle("", "", true);
+        $(".mejs-button-lyrics button").css("opacity", "0.5");
+    }
+
+
+}
+
+
+
 /**
  * Set New Title of Playing/Loading Song
  * @param title
@@ -260,6 +305,107 @@ playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
 }
 
 
+
+/**
+ * Play next song in songlist
+ */
+
+playbackController.playPrevSong = function () {
+
+    var emptyList = false;
+    if ( playbackController.playingSong.gid) {
+        var index = playbackController.getIndexOfSong(playbackController.playingSong, playlistController.loadedPlaylistSongs);
+        if (index == -1) {
+            if (playbackController.playedSongs.length == 0) {
+                index = 1;
+            }
+            emptyList = true;
+        }
+
+    } else {
+        index = playbackController.getIndexOfSong(playbackController.playingSong, searchController.searchResults);
+        if (index == -1) {
+            if (playbackController.playedSongs.length == 0) {
+                index = 1;
+            }
+            emptyList = true;
+
+        }
+    }
+
+    //  index wo in sichtbarem bereich
+
+    // alert("actuel Index " + index + " ANZAHL:::: " + playbackController.playedSongs.length)
+
+
+    if (playbackController.playedSongs.length > 0) {
+
+        var song = playbackController.playedSongs[playbackController.playedSongs.length - 1];
+        playbackController.playedSongs.splice(playbackController.playedSongs.length - 1, 1);
+
+        //     alert("prev Song "+song)
+
+
+        var alreadyInList = (song == playbackController.playingSong);
+
+        /*if (playbackController.playingSongInPlaylist) {
+         alreadyInList = (index >= 0 && song == playlistController.loadedPlaylistSongs[index]);
+         } else {
+         alreadyInList = (index >= 0 && song == searchController.searchResults[index]);
+         } */
+
+        if (alreadyInList) {
+            if (playbackController.playedSongs.length >= 1) {
+                song = playbackController.playedSongs[playbackController.playedSongs.length - 1];
+                playbackController.playedSongs.splice(playbackController.playedSongs.length - 1, 1);
+            }
+            else
+                song = null;
+        }
+    }
+
+    // alert("alreadyInList " + alreadyInList + "   prev song " + song + "   " + playbackController.playedSongs.length)
+    if (!song) {
+
+        if (emptyList) {
+
+            if ( playbackController.playingSong.gid) {
+                if (playlistController.loadedPlaylistSongs.length == 0)
+                    return;
+                else
+                    index = 0;
+            } else {
+                if (searchController.searchResults == 0)
+                    return;
+                else
+                    index = 0;
+
+            }
+
+        }
+        else
+            index = index - 1;
+
+
+        // alert("PLAYING " + index)
+
+
+        if ( playbackController.playingSong.gid) {
+            if (index <= -1)
+                index = playlistController.loadedPlaylistSongs.length - 1;
+            playbackController.playbackController(playlistController.loadedPlaylistSongs[index])
+        } else {
+            if (index <= -1)
+                index = searchController.searchResults.length - 1;
+            playbackController.playSong(searchController.searchResults[index])
+        }
+
+    } else
+        playbackController.playSong(song)
+
+
+}
+
 /**
  * Play next song in songlist
  */
@@ -312,6 +458,56 @@ playbackController.playNextSong = function () {
     }
 
 
+}
+
+
+/**
+ * Remark song if list after list reload
+ */
+playbackController.remarkSong = function () {
+    var y, listElement;
+
+    if (playbackController.playingSong) {
+        if ( playbackController.playingSong.gid) {
+            y = 22 + parseInt(playbackController.playingSong.id.substring(5)) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner").height() - 11 - 49);
+            $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
+
+
+            $("#playlistInner .iScrollPlayIndicator").fadeIn();
+            $("#searchlist .iScrollPlayIndicator").hide();
+
+            listElement = $("#playlistInner li[data-songgid='playlistsong" + playbackController.playingSong.gid + "'] ");
+
+
+            listElement.addClass("loadedsong");
+
+        } else {
+            y = 22 + parseInt(playbackController.playingSong.id.substring(5)) / (searchController.searchResults.length - 1) * ($("#searchlist").height() - 11 - 49);
+            $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
+            $("#searchlist .iScrollPlayIndicator").fadeIn();
+            $("#playlistInner .iScrollPlayIndicator").hide();
+
+            listElement = $("#searchlist li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ");
+            listElement.addClass("loadedsong");
+
+
+        }
+
+        if (videoController.isPlaying) {
+            listElement.addClass("playing");
+            listElement.removeClass("pausing");
+        } else if (playbackController.isLoading)  {
+
+            listElement.addClass("stillloading");
+            listElement.find(".loadingSongImg").show();
+
+
+        } else {
+            listElement.addClass("pausing");
+            listElement.removeClass("playing");
+        }
+
+    }
 }
 
 
