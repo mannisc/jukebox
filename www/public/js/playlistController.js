@@ -31,7 +31,7 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
 playlistController.globalId = playlistController.loadedPlaylistSongs.length;
 
 
-playlistController.shuffleMode = false;
+
 
 playbackController.playedSongs = [];
 
@@ -126,90 +126,11 @@ playlistController.getIsLoadingText = function (always) {
 
 
 
-
-
-
-
-playlistController.getPlayingSepSign = function () {
-    if (playbackController.playingSong) {
-        return "";
-    } else
-        return "";
-
-}
-
-
-playlistController.playNextSong = function () {
-
-    if ( playbackController.playingSong.gid) {
-
-
-        var index = playlistController.getIndexOfSong(playbackController.playingSong, playlistController.loadedPlaylistSongs);
-        if (index >= 0) {
-            if (!playlistController.shuffleMode) {
-                index = index + 1;
-                if (index == playlistController.loadedPlaylistSongs.length)
-                    index = 0;
-            } else if (playlistController.loadedPlaylistSongs.length > 1) {
-                var oIndex = index;
-                do {
-                    index = Math.round(Math.random() * (playlistController.loadedPlaylistSongs.length - 1))
-                }
-                while (index == oIndex)
-            }
-
-            playbackController.playSong(playlistController.loadedPlaylistSongs[index], false, true)
-        } else if (playlistController.loadedPlaylistSongs.length > 0 && !playlistController.loadedPlaylistSongs[0].isPlaylist) {
-
-            playbackController.playSong(playlistController.loadedPlaylistSongs[0], false, true)
-
-        } else
-            videoController.disablePositionControls(true);
-
-    } else {
-
-        index = playlistController.getIndexOfSong(playbackController.playingSong, searchController.searchResults);
-        if (index >= 0) {
-            if (!playlistController.shuffleMode) {
-                index = index + 1;
-                if (index == searchController.searchResults.length)
-                    index = 0;
-            } else if (searchController.searchResults.length > 1) {
-                oIndex = index;
-                do {
-                    index = Math.round(Math.random() * (searchController.searchResults.length - 1))
-                }
-                while (index == oIndex)
-            }
-            playbackController.playSong(searchController.searchResults[index], false, true)
-        } else
-            videoController.disablePositionControls(true);
-
-    }
-
-
-}
-
-
-playlistController.getIndexOfSong = function (song, list) {
-
-    for (var index = 0; index < list.length; index++) {
-        if (song.name == list[index].name && mediaController.getSongArtist(song) == mediaController.getSongArtist(list[index])) {
-            return index;
-        }
-    }
-
-    //alert("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
-    return -1;
-}
-
-
 playlistController.playPrevSong = function () {
 
     var emptyList = false;
     if ( playbackController.playingSong.gid) {
-        var index = playlistController.getIndexOfSong(playbackController.playingSong, playlistController.loadedPlaylistSongs);
+        var index = playbackController.getIndexOfSong(playbackController.playingSong, playlistController.loadedPlaylistSongs);
         if (index == -1) {
             if (playbackController.playedSongs.length == 0) {
                 index = 1;
@@ -218,7 +139,7 @@ playlistController.playPrevSong = function () {
         }
 
     } else {
-        index = playlistController.getIndexOfSong(playbackController.playingSong, searchController.searchResults);
+        index = playbackController.getIndexOfSong(playbackController.playingSong, searchController.searchResults);
         if (index == -1) {
             if (playbackController.playedSongs.length == 0) {
                 index = 1;
@@ -383,18 +304,7 @@ playlistController.selectSong = function (song) {
 }
 
 
-playlistController.toggleShuffleSongs = function () {
 
-    if (playbackController.playingSong) {
-        playlistController.shuffleMode = !playlistController.shuffleMode;
-        if (playlistController.shuffleMode)
-            $(".mejs-shuffle-button button").css("opacity", "1");
-        else {
-            $(".mejs-shuffle-button button").css("opacity", "0.5");
-        }
-    }
-
-}
 
 
 playlistController.savePlaylist = function (useSelected) {

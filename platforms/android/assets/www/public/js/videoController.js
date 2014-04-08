@@ -34,6 +34,9 @@ videoController.isMuted = false;
 videoController.beforeMutedVolume = null;
 videoController.volume = 0.5;
 
+//Shuffle Yes/No
+videoController.shuffleMode = false;
+
 //Start state of Buttons
 videoController.prevEnabled = true;
 videoController.playpauseEnabled = true;
@@ -84,7 +87,7 @@ videoController.init = function () {
     //Shuffle Songs
     videoController.controls.find(".videoControlElements-shuffle-button").click(function () {
         if (videoController.shuffleEnabled)
-            playlistController.toggleShuffleSongs();
+            videoController.toggleShuffleSongs();
     });
 
     //Time Rail
@@ -269,8 +272,8 @@ videoController.playPauseSong = function(){
 videoController.resizeVideo = function(){
     if(videoController.videoPlayer.resize)
      videoController.videoPlayer.resize();
-    //$("#videoplayer .mejs-time-total").css("width", uiController.totalTimeWidth);
-    //$("#videoplayer .mejs-time-rail").css("width",  uiController.totalTimeWidth+10);
+    //$("#videoplayer .videoControlElements-time-total").css("width", uiController.totalTimeWidth);
+    //$("#videoplayer .videoControlElements-time-rail").css("width",  uiController.totalTimeWidth+10);
 
 }
 
@@ -296,7 +299,7 @@ videoController.pauseSong = function(){
  */
 videoController.playNextSong = function(){
     if (videoController.prevEnabled)
-        playlistController.playNextSong();
+        playbackController.playNextSong();
 }
 
 
@@ -368,20 +371,11 @@ videoController.disableControls = function (disable) {
     if (disable) {
         $(".videoControlElements-nexttrack-button button").css("opacity", "0.5");
         $(".videoControlElements-prevtrack-button button").css("opacity", "0.5");
-        $(".videoControlElements-shuffle-button button").css("opacity", "0.5");
 
-        videoController.shuffleEnabled = false;
     } else {
         $(".videoControlElements-nexttrack-button button").css("opacity", "1");
         $(".videoControlElements-prevtrack-button button").css("opacity", "1");
-        if (playlistController.shuffleMode) {
-            videoController.shuffleEnabled = true;
-            $(".videoControlElements-shuffle-button button").css("opacity", "1");
-        } else {
-            videoController.shuffleEnabled = false;
-            $(".videoControlElements-shuffle-button button").css("opacity", "0.5");
 
-        }
     }
 
 }
@@ -449,6 +443,20 @@ videoController.disableShareSocialControl = function (disable) {
     }
 }
 
+
+/**
+ * Toggle Shuffle Songs
+ */
+videoController.toggleShuffleSongs = function () {
+
+    videoController.shuffleMode = !videoController.shuffleMode;
+        if (videoController.shuffleMode)
+            $(".videoControlElements-shuffle-button button").css("opacity", "1");
+        else {
+            $(".videoControlElements-shuffle-button button").css("opacity", "0.5");
+        }
+
+}
 
 /**
  * Set Play Button to Loop  Button

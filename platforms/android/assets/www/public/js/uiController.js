@@ -497,7 +497,7 @@ uiController.initMediaPlayer = function () {
                 uiController.updateUI();
 
                 if (!playbackController.isLoading)
-                    playlistController.playNextSong();
+                    playbackController.playNextSong();
 
                 mediaController.mediaEnded();
             });
@@ -688,7 +688,7 @@ uiController.init = function () {
         } else if (evt.keyCode == 38 || evt.keyCode == 37) {
             videoController.playPrevSong();
         } else if (evt.keyCode == 40 || evt.keyCode == 39) {
-            videoController.playNextSong();
+            playbackController.playNextSong();
         }
     })
 
