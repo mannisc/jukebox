@@ -27,7 +27,6 @@ mediaController.seekTime = 0;
 mediaController.seekTimeDuration = 0;
 
 
-
 mediaController.buySong = function () {
     var song = playlistController.getPlayingSong();
     if (song) {
@@ -61,7 +60,7 @@ mediaController.getPrice = function () {
      */
 }
 
-mediaController.init = function(){
+mediaController.init = function () {
 
 }
 
@@ -74,14 +73,14 @@ mediaController.visitSongWebPage = function () {
 }
 
 
-mediaController.mediaEnded = function(){
+mediaController.mediaEnded = function () {
     mediaController.sendRating("2");
     document.title = $scope.appTitle;
 
     playlistController.isPlaying = false;
     videoController.disableStopControl(true);
     $("#videoplayer").css("opacity", "0");
-    $("#videoplayer").css("pointer-events","none");
+    $("#videoplayer").css("pointer-events", "none");
 
     videoController.setBufferedPercentage(0);
 
@@ -112,12 +111,12 @@ mediaController.sendRating = function (rating) {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         var VideoURL = mediaController.currentvideoURL;
         var song = playlistController.getPlayingSong();
-        var rate = function (song,VideoURL) {
+        var rate = function (song, VideoURL) {
             if (mediaController.currentvideoURL != "" && song) {
                 $.ajax({
-                    url: preferences.serverURL + "?ratingURL=" +VideoURL+ "&rating=" + rating + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name+"&auth="+authController.ip_token,
+                    url: preferences.serverURL + "?ratingURL=" + VideoURL + "&rating=" + rating + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name + "&auth=" + authController.ip_token,
                     success: function (data) {
-                        if(data.auth && data.auth=="true"){
+                        if (data.auth && data.auth == "true") {
                             authController.extractToken(data.token);
                             mediaController.sendRating(rating);
                         }
@@ -125,7 +124,7 @@ mediaController.sendRating = function (rating) {
                 })
             }
         }
-        rate(song,VideoURL);
+        rate(song, VideoURL);
     }
 }
 
@@ -145,17 +144,17 @@ mediaController.showDuration = function (songversion) {
 }
 
 
-mediaController.playSong= function(streamURL,videoURL){
-    mediaController.currentStreamURL    = streamURL;
-    mediaController.currentvideoURL     = videoURL;
-    if(embedPlayer.isEmbedVideo(videoURL) ){
+mediaController.playSong = function (streamURL, videoURL) {
+    mediaController.currentStreamURL = streamURL;
+    mediaController.currentvideoURL = videoURL;
+    if (embedPlayer.isEmbedVideo(videoURL)) {
         embedPlayer.enable();
         uiController.mediaElementPlayer.setSrc("http://0.0.0.0");
         uiController.mediaElementPlayer.load();
         uiController.mediaElementPlayer.play();
         embedPlayer.loadDailymotion(videoURL);
     }
-    else{
+    else {
         embedPlayer.disable();
         uiController.mediaElementPlayer.setSrc(streamURL);
         uiController.mediaElementPlayer.load();
@@ -168,7 +167,7 @@ mediaController.playSong= function(streamURL,videoURL){
 
 
 mediaController.getVersions = function () {
-   // importController.importPlaylist("https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
+    // importController.importPlaylist("https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
     //importController.importPlaylist("http://vimeo.com/channels/rihanna");//
     importController.importPlaylist("http://www.dailymotion.com/playlist/xvguj_dailymotionuk_rihanna/1#video=x6f3n8");//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
     if (authController.ip_token != "auth" && authController.ip_token != "") {
@@ -186,15 +185,15 @@ mediaController.getVersions = function () {
                     var song = currentsong;
                     // console.dir("SEARCH OTHER VERSIONS! " + counter + "  - " + mediaController.getSongArtist(song) + " - " + song.name);
                     $.ajax({
-                        url: preferences.serverURL + "?getversions=8&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name+"&auth="+authController.ip_token,
+                        url: preferences.serverURL + "?getversions=8&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name + "&auth=" + authController.ip_token,
                         success: function (data) {
                             // console.dir("loaded " + counter);
                             // console.dir(data);
-                            if(data.auth && data.auth=="true"){
+                            if (data.auth && data.auth == "true") {
                                 authController.extractToken(data.token);
                                 getsongversions(counter);
                             }
-                            else{
+                            else {
                                 var dataok = false;
                                 if (data.track) {
                                     if (data.track.length > 0) {
@@ -262,10 +261,10 @@ mediaController.getVersions = function () {
     }
 }
 
-mediaController.playVersion = function (songversion,rating,resetVersion) {
+mediaController.playVersion = function (songversion, rating, resetVersion) {
     $('#loadversionimg').css("opacity", "1");
     videoController.showBuffering(true);
-    if ( videoController.buffered >  0.7)
+    if (videoController.buffered > 0.7)
         videoController.setBufferedPercentage(0);
 
     videoController.setLoopButton(false);
@@ -276,7 +275,7 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
     var play = function (streamID, videoURL) {
         var song = playlistController.getPlayingSong();
         if (videoURL != mediaController.currentvideoURL) {
-            if(embedPlayer.isEmbedVideo(videoURL)){
+            if (embedPlayer.isEmbedVideo(videoURL)) {
 
                 if (rating == 1) {
                     mediaController.sendRating("-1");
@@ -287,33 +286,31 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
                     videoController.showBuffering(false);
                 }, 500);
             }
-            else
-            {
+            else {
                 //  console.dir(videoURL);
                 if (authController.ip_token != "auth" && authController.ip_token != "") {
                     $.ajax({
                         timeout: 30000,
-                        url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name)+"&auth="+authController.ip_token,
+                        url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name) + "&auth=" + authController.ip_token,
                         success: function (data) {
-                            if(data.auth && data.auth=="true"){
+                            if (data.auth && data.auth == "true") {
                                 authController.extractToken(data.token);
                                 play(streamID, videoURL);
                             }
-                            else
-                            {
+                            else {
                                 if (streamID == mediaController.playCounter) {
                                     if (data.streamURL) {
                                         var streamURL = data.streamURL;
                                         if (data.videoURL) {
                                             videoURL = data.videoURL;
                                         }
-                                        videoURL  = unescape(videoURL);
+                                        videoURL = unescape(videoURL);
                                         streamURL = unescape(streamURL);
                                         if (streamURL) {
                                             if (rating == 1) {
                                                 mediaController.sendRating("-1");
                                             }
-                                            if(resetVersion == 1){
+                                            if (resetVersion == 1) {
                                                 mediaController.startVersionIndex = -1;
                                             }
                                             mediaController.seekTime = uiController.mediaElementPlayer.getCurrentTime();
@@ -356,19 +353,18 @@ mediaController.playVersion = function (songversion,rating,resetVersion) {
 
 }
 
-mediaController.loadStreamURL = function (streamID, searchString, artistString, titleString, streamURL,duration){
+mediaController.loadStreamURL = function (streamID, searchString, artistString, titleString, streamURL, duration) {
 
     var loadError = false;
     $.ajax({
         timeout: 30000,
-        url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration+"&auth="+authController.ip_token,
+        url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration + "&auth=" + authController.ip_token,
         success: function (data) {
-            if(data.auth && data.auth=="true"){
+            if (data.auth && data.auth == "true") {
                 authController.extractToken(data.token);
-                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL,duration);
+                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration);
             }
-            else
-            {
+            else {
                 // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
                 if (streamID == mediaController.playCounter) {
                     mediaController.playCounter++;
@@ -379,9 +375,8 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                     if (data.videoURL) {
                         videoURL = data.videoURL;
                     }
-                    videoURL  = unescape(videoURL);
-                    if(embedPlayer.isEmbedVideo(videoURL))
-                    {
+                    videoURL = unescape(videoURL);
+                    if (embedPlayer.isEmbedVideo(videoURL)) {
                         streamURL = videoURL;
                         mediaController.playStreamURL(streamURL, videoURL, true);
                         if (playlistController.playedSongs.length > 100) {
@@ -429,11 +424,11 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
 }
 
 
-mediaController.playStream = function (artist, title,playedAutomatic) {
+mediaController.playStream = function (artist, title, playedAutomatic) {
 
     videoController.showBuffering(true);
 
-    if ( videoController.buffered >  0.7)
+    if (videoController.buffered > 0.7)
         videoController.setBufferedPercentage(0);
 
     videoController.setLoopButton(false);
@@ -465,10 +460,10 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
             }, 500);
 
             uiController.toast("Sorry, this song is not available at the moment.", 1500);
-            if(!playedAutomatic)
-              playlistController.resetPlayingSong();
+            if (!playedAutomatic)
+                playlistController.resetPlayingSong();
             else
-              playlistController.playNextSong();
+                playlistController.playNextSong();
 
             mediaController.songError();
         }
@@ -493,10 +488,10 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
                             duration = data.track.duration;
                         }
                     }
-                  //  alert(artistString+" - "+titleString);
+                    //  alert(artistString+" - "+titleString);
                     if (authController.ip_token != "auth" && authController.ip_token != "") {
                         var loadError = false;
-                        mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL,duration);
+                        mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration);
                     }
                 }
 
@@ -518,7 +513,7 @@ mediaController.playStream = function (artist, title,playedAutomatic) {
 mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVersions, rating) {
     $("#videoplayer").removeClass("animate").addClass("animatefast");
     $("#videoplayer").css("opacity", "0");
-    $("#videoplayer").css("pointer-events","none");
+    $("#videoplayer").css("pointer-events", "none");
 
     setTimeout(function () {
         $("#videoplayer").removeClass("animatefast").addClass("animate");
@@ -531,7 +526,7 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
         playlistController.setNewTitle(playlistController.playingSong.name, mediaController.getSongCover(playlistController.playingSong), true);
 
 
-        mediaController.playSong(streamURL,videoURL)
+        mediaController.playSong(streamURL, videoURL)
 
         if (rating == 1) {
             mediaController.sendRating("1");
@@ -585,23 +580,22 @@ mediaController.playNextVersion = function () {
         return;
     var currentsong = playlistController.getPlayingSong();
     if (currentsong.name != "") {
-        if(mediaController.versionListSong != currentsong){
+        if (mediaController.versionListSong != currentsong) {
             var getsongversions = function (counter) {
                 if (counter < 120) {
                     if (authController.ip_token != "auth" && authController.ip_token != "") {
                         var song = currentsong;
                         $.ajax({
-                            url: preferences.serverURL + "?getversions=8&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name)+"&auth="+authController.ip_token,
+                            url: preferences.serverURL + "?getversions=8&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name) + "&auth=" + authController.ip_token,
                             success: function (data) {
-                                if(data.auth && data.auth=="true"){
+                                if (data.auth && data.auth == "true") {
                                     authController.extractToken(data.token);
                                     getsongversions(counter);
                                 }
-                                else
-                                {
+                                else {
                                     if (data.track) {
                                         if (playlistController.getPlayingSong() == song) {
-                                            mediaController.startVersionIndex    = -1;
+                                            mediaController.startVersionIndex = -1;
                                             var nextIndex = -1
                                             for (var i = 0; i < data.track.length; i++) {
                                                 try {
@@ -624,7 +618,7 @@ mediaController.playNextVersion = function () {
                                             if (nextIndex >= data.track.length) {
                                                 nextIndex = 0;
                                             }
-                                            mediaController.playVersion(data.track[nextIndex], 1,0);
+                                            mediaController.playVersion(data.track[nextIndex], 1, 0);
                                         }
                                     }
                                     else {
@@ -650,8 +644,7 @@ mediaController.playNextVersion = function () {
             }
             getsongversions(0);
         }
-        else
-        {
+        else {
             var nextIndex = -1
             for (var i = 0; i < mediaController.versionList.length; i++) {
                 if (mediaController.versionList[i].url == mediaController.currentvideoURL) {
@@ -663,17 +656,16 @@ mediaController.playNextVersion = function () {
             if (nextIndex >= mediaController.versionList.length) {
                 nextIndex = 0;
             }
-            console.log("nextIndex: "+nextIndex);
-            console.log("startVersionIndex: "+mediaController.startVersionIndex);
-            if( mediaController.startVersionIndex!=nextIndex){
-                if( mediaController.startVersionIndex==-1){
+            console.log("nextIndex: " + nextIndex);
+            console.log("startVersionIndex: " + mediaController.startVersionIndex);
+            if (mediaController.startVersionIndex != nextIndex) {
+                if (mediaController.startVersionIndex == -1) {
                     mediaController.startVersionIndex = nextIndex;
 
                 }
-                mediaController.playVersion(mediaController.versionList[nextIndex],1,0)
+                mediaController.playVersion(mediaController.versionList[nextIndex], 1, 0)
             }
-            else
-            {
+            else {
                 mediaController.songError();
             }
         }
@@ -684,7 +676,7 @@ mediaController.playNextVersion = function () {
 mediaController.playStreamURL = function (streamURL, videoURL, differentVersions) {
     $("#videoplayer").removeClass("animate").addClass("animatefast");
     $("#videoplayer").css("opacity", "0");
-    $("#videoplayer").css("pointer-events","none");
+    $("#videoplayer").css("pointer-events", "none");
 
     setTimeout(function () {
         $("#videoplayer").removeClass("animatefast").addClass("animate");
@@ -695,7 +687,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
         playlistController.playingOldSong = playlistController.playingSong;
 
         playlistController.setNewTitle(playlistController.playingSong.name, mediaController.getSongCover(playlistController.playingSong), true);
-        mediaController.playSong(streamURL,videoURL);
+        mediaController.playSong(streamURL, videoURL);
 
 
         //$("#siteLogoImage").attr('onclick',"win=window.open('"+mediaController.currentvideoURL+"', '_blank')");
@@ -703,8 +695,8 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
         console.dir(streamURL);
 
 
-        if(uiController.fullscreenMode==1)
-            $("#backgroundImage").css("opacity","0.08");
+        if (uiController.fullscreenMode == 1)
+            $("#backgroundImage").css("opacity", "0.08");
 
         if (playlistController.playingSong.gid)
             var listElement = $("#playlistInner li[data-songgid='playlistsong" + playlistController.playingSong.gid + "'] ");
@@ -712,32 +704,33 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
             listElement = $("#searchlist li[data-songid='searchsong" + playlistController.playingSong.id + "'] ");
 
 
-        var loadTime =  Date.now()-playbackController.startedLoadingTime;
-        var delayTime = loadTime%2000;
-        $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeoutcomplete")
-        $(listElement.get(0)).find(".loadingSongImg").addClass("fadeoutcomplete")
+        var loadTime = Date.now() - playbackController.startedLoadingTime;
+        var delayTime = loadTime % 2000;
+        setTimeout(function () {
+            $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeoutcompletefast")
+            $(listElement.get(0)).find(".loadingSongImg").addClass("fadeoutcompletefast")
 
-        setTimeout(function()  {
-            if($(listElement.get(0)).hasClass("stillloading")){
+            setTimeout(function () {
+                if ($(listElement.get(0)).hasClass("stillloading")) {
                     $(listElement.get(0)).addClass("playing");
                     $(listElement.get(0)).removeClass("stillloading")
                 }
                 //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
-            $(listElement.get(0)).find(".loadingSongImg").hide();
-            $(listElement.get(0)).find(".loadingSongImg").removeClass("fadeoutcomplete")
-            $(listElement.get(0)).find("img.ui-li-icon").css("opacity","0")
-            $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeoutcomplete");
+                $(listElement.get(0)).find(".loadingSongImg").hide();
+                $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "0")
 
-                $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeincompleteslow")
-                   setTimeout(function()  {
-                       $(listElement.get(0)).find("img.ui-li-icon").css("opacity","1")
-                       $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeincompleteslow");
-                   } , 1000)
+                $(listElement.get(0)).find(".loadingSongImg").removeClass("fadeoutcompletefast")
+                $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeoutcompletefast");
+                setTimeout(function () {
+                    $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeincompleteslow")
+                    setTimeout(function () {
+                        $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "1")
+                        $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeincompleteslow");
+                    }, 1000)
+                }, 200)
 
-
-        } ,  400)
-
-
+            }, 400)
+        }, delayTime)
 
 
         if (differentVersions) {
@@ -762,12 +755,12 @@ mediaController.toggleLyrics = function () {
 
 
     if (!mediaController.showLyrics)
-    uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.playingSong) + ":" + playlistController.playingSong.name+"' target='_blank'>lyrics.wikia.com</a>.", 5000)
+        uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.playingSong) + ":" + playlistController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
 
     mediaController.showLyrics = !mediaController.showLyrics;
     if (mediaController.showLyrics) {
         if (playlistController.playingSong) {
-            $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.playingSong) + ":" + playlistController.playingSong.name+"?useskin=wikiamobile");
+            $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.playingSong) + ":" + playlistController.playingSong.name + "?useskin=wikiamobile");
             iframe.removeClass('fadeoutcomplete');
             iframe.addClass('fadeincompleteslow');
             iframe.show();
@@ -786,7 +779,7 @@ mediaController.toggleLyrics = function () {
 
 
 mediaController.getSongCover = function (song) {
-    var url ="";
+    var url = "";
 
     if (song.isPlaylist) {
         url = "public/img/playlist.png";
@@ -854,45 +847,45 @@ mediaController.openExternalSite = function () {
 }
 
 mediaController.showNewMedia = function () {
-     //    videobox.empty();
-     //    videobox.append('<video id="videoplayer" preload="auto" src="http://www.youtube.com/watch?v=Qqqdw0poiSI" width="100%" height="100%" autoplay="autoplay" loop="loop" />');
-     //    videobox.show();
+    //    videobox.empty();
+    //    videobox.append('<video id="videoplayer" preload="auto" src="http://www.youtube.com/watch?v=Qqqdw0poiSI" width="100%" height="100%" autoplay="autoplay" loop="loop" />');
+    //    videobox.show();
 
-     //  videoplayer.remove();
+    //  videoplayer.remove();
 }
 
-cryptauth = function(string) {
-    return SHA1(string+mediaController.randomseed+mediaController.ipaddress+mediaController.clientid);
+cryptauth = function (string) {
+    return SHA1(string + mediaController.randomseed + mediaController.ipaddress + mediaController.clientid);
 }
 
 
 /*
-mediaController.restartPlayer  = function (){
+ mediaController.restartPlayer  = function (){
 
 
-    var videobox = $('#videoplayerInner').first();
-    var videoplayer = $('#player1').first();
-     videobox.empty();
-     videoplayer.remove();
-     uiController.mediaElementPlayer.media.remove();
-     uiController.mediaElementPlayer.remove();
+ var videobox = $('#videoplayerInner').first();
+ var videoplayer = $('#player1').first();
+ videobox.empty();
+ videoplayer.remove();
+ uiController.mediaElementPlayer.media.remove();
+ uiController.mediaElementPlayer.remove();
 
-     videobox.append('<video id="player1" controls="controls" autoplay="true" preload="true"><source src="" type="video/mp4"/><source src="" type="video/flv"/></video>');
-     videobox.show();
+ videobox.append('<video id="player1" controls="controls" autoplay="true" preload="true"><source src="" type="video/mp4"/><source src="" type="video/flv"/></video>');
+ videobox.show();
 
-   // videobox.append('<video id="player1" controls="controls" autoplay="true" preload="true"><source src="" type="video/mp4"/><source src="" type="video/flv"/></video>');
-    $("#videocontrols").remove();
-    $("#videocontrols").append('<div id="videocontrolsInner"><div class="mejs-button mejs-button-choose-version mejs-custom-button"> <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" onclick="mediaController.getVersions();" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button> </div><div class="mejs-button mejs-button-lyrics mejs-custom-button"><button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" onclick="mediaController.toggleLyrics();" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button></div> <div class="mejs-button mejs-button-facebook mejs-custom-button"><button type="button" id="facebookpostbutton" data-role="none" style="opacity:0.5" onclick="mediaController.postOnFacebook();" aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button></div></div>');
+ // videobox.append('<video id="player1" controls="controls" autoplay="true" preload="true"><source src="" type="video/mp4"/><source src="" type="video/flv"/></video>');
+ $("#videocontrols").remove();
+ $("#videocontrols").append('<div id="videocontrolsInner"><div class="mejs-button mejs-button-choose-version mejs-custom-button"> <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" onclick="mediaController.getVersions();" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button> </div><div class="mejs-button mejs-button-lyrics mejs-custom-button"><button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" onclick="mediaController.toggleLyrics();" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button></div> <div class="mejs-button mejs-button-facebook mejs-custom-button"><button type="button" id="facebookpostbutton" data-role="none" style="opacity:0.5" onclick="mediaController.postOnFacebook();" aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button></div></div>');
 
-    uiController.initMediaPlayer();
-    uiController.styleVideo();
+ uiController.initMediaPlayer();
+ uiController.styleVideo();
 
-    $("#videocontrolsInner").show();
-    $("#videocontrols").show();
-    $('#player1').first().show();
-    $('#player1').show();
-    $("#videoplayer").css("opacity", "1");
-    $("#videocontrols").css("opacity", "1");
-    videobox.show();
-}
-*/
+ $("#videocontrolsInner").show();
+ $("#videocontrols").show();
+ $('#player1').first().show();
+ $('#player1').show();
+ $("#videoplayer").css("opacity", "1");
+ $("#videocontrols").css("opacity", "1");
+ videobox.show();
+ }
+ */
