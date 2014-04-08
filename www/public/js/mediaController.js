@@ -267,7 +267,7 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
     var play = function (streamID, videoURL) {
         var song = playbackController.getPlayingSong();
         if (videoURL != mediaController.currentvideoURL) {
-            if (embedPlayer.isEmbedVideo(videoURL)) {
+            if (videoController.isEmbedVideo(videoURL)) {
 
                 if (rating == 1) {
                     mediaController.sendRating("-1");
@@ -368,7 +368,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                         videoURL = data.videoURL;
                     }
                     videoURL = unescape(videoURL);
-                    if (embedPlayer.isEmbedVideo(videoURL)) {
+                    if (videoController.isEmbedVideo(videoURL)) {
                         streamURL = videoURL;
                         mediaController.playStreamURL(streamURL, videoURL, true);
                         if (playbackController.playedSongs.length > 100) {
