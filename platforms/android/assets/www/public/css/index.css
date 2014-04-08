@@ -583,12 +583,6 @@ video{
 }
 
 
-.songlist li.loadedsong.stillloading:hover a img.ui-li-icon {
-
-    -moz-box-shadow: 5px 0p 5px rgba(0,0,0,0.4)!important;
-    -webkit-box-shadow: 5px 0px 5px rgba(0,0,0,0.4)!important;
-    box-shadow: 5px 0px 5px rgba(0,0,0,0.4)!important;
-}
 
 
 
@@ -715,36 +709,50 @@ video{
 
 
 
+.songlist li.loadedsong.stillloading:hover a img.ui-li-icon {
+
+    -moz-box-shadow: 0x 0p 1px  rgba(0,0,0,0.4)!important;
+    -webkit-box-shadow: 0px 0px  1px rgba(0,0,0,0.4)!important;
+    box-shadow: 0px 0px 1px  rgba(0,0,0,0.4)!important;
+}
+
+.songlist li.loadedsong.stillloading {
+    -webkit-perspective: 140;
+    -webkit-perspective-origin: 32px 50%;
+    -moz-perspective: 140;
+    -moz-perspective-origin: 32px 50%;
+    -ms-perspective: 140;
+    -ms-perspective-origin: 32px 50%;
+   perspective: 140;
+    perspective-origin: 32px 50%;
+}
 
 .songlist li.loadedsong.stillloading img.ui-li-icon {
     opacity:1;
 
-
-/*-webkit-transform: rotateY(300deg) scale(1.21)!important;
-    -moz-transform: rotateY(359deg) scale(1.21)!important;
-    transform: rotateY(359deg) scale(1.21)!important;*/
+    /*-webkit-transform: rotateY(300deg) scale(1.21)!important;
+        -moz-transform: rotateY(359deg) scale(1.21)!important;
+        transform: rotateY(359deg) scale(1.21)!important;*/
     -webkit-animation:spin 1.5s ease infinite;
-    -moz-animation:spin 1.5s ease infinite;
+    -moz-animation:spin 1.5s ease infinite!important;
     animation:spin 1.5s ease infinite;
 }
 
 @-moz-keyframes spin {
-    40% { -moz-transform: rotateY(180deg) scale(1.21);}
-    70% { -moz-transform: rotateY(360deg) scale(1.21); }
+    40% {  transform:rotateY(180deg) scale(1.21);  -moz-transform: rotateY(180deg) scale(1.21);}
+    70% { transform:rotateY(360deg) scale(1.21); -moz-transform: rotateY(360deg)  perspective(1000px) scale(1.21); }
+
 }
+
 @-webkit-keyframes spin {
-    40% { -webkit-transform: rotateY(180deg)  scale(1.21);}
-    70% { -webkit-transform: rotateY(360deg)  scale(1.21); }
+    40% { transform:rotateY(180deg) scale(1.21); -webkit-transform: rotateY(180deg) scale(1.21);}
+    70% { transform:rotateY(360deg) scale(1.21);  -webkit-transform: rotateY(360deg) scale(1.21); }
 }
 
 @keyframes spin{
-    40% { -webkit-transform: rotateY(180deg) scale(1.21); transform:rotateY(180deg) scale(1.21); }
-    70% {-webkit-transform: rotateY(360deg) scale(1.21); transform:rotateY(360deg) scale(1.21); }
+    40% { transform:rotateY(180deg) scale(1.21); }
+    70% { transform:rotateY(360deg) scale(1.21); }
 }
-
-
-
-
 
 
 .songlist li.loadedsong.stillloading .loadingSongImg{
@@ -776,7 +784,7 @@ video{
     transition-property: transform;
 
     -webkit-animation:spin 1.5s ease infinite;
-    -moz-animation:spin 1.5s ease infinite;
+    -moz-animation:spin 1.5s ease infinite!important;
     animation:spin 1.5s ease infinite;
     /*-webkit-transform: rotateY(300deg) scale(1.21)!important;
         -moz-transform: rotateY(359deg) scale(1.21)!important;
