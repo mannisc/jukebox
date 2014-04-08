@@ -740,18 +740,18 @@ video{
 
 @-moz-keyframes spin {
     40% {  transform:rotateY(180deg) scale(1.21);  -moz-transform: rotateY(180deg) scale(1.21);}
-    70% { transform:rotateY(360deg) scale(1.21); -moz-transform: rotateY(360deg)  perspective(1000px) scale(1.21); }
+    70% { transform:rotateY(0deg) scale(1.21); -moz-transform: rotateY(0deg)  scale(1.21); }
 
 }
 
 @-webkit-keyframes spin {
     40% { transform:rotateY(180deg) scale(1.21); -webkit-transform: rotateY(180deg) scale(1.21);}
-    70% { transform:rotateY(360deg) scale(1.21);  -webkit-transform: rotateY(360deg) scale(1.21); }
+    70% { transform:rotateY(0deg) scale(1.21);  -webkit-transform: rotateY(0deg) scale(1.21); }
 }
 
 @keyframes spin{
     40% { transform:rotateY(180deg) scale(1.21); }
-    70% { transform:rotateY(360deg) scale(1.21); }
+    70% { transform:rotateY(0deg) scale(1.21); }
 }
 
 
