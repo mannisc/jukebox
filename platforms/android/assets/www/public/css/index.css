@@ -743,19 +743,25 @@ video{
 
 
 @-moz-keyframes spin {
+    0% {  transform:rotateY(45deg) scale(1.21);  -moz-transform: rotateY(45deg) scale(1.21);}
     40% {  transform:rotateY(45deg) scale(1.21);  -moz-transform: rotateY(45deg) scale(1.21);}
     70% { transform:rotateY(360deg) scale(1.21); -moz-transform: rotateY(360deg)  scale(1.21); }
+    100% { transform:rotateY(360deg) scale(1.21); -moz-transform: rotateY(360deg)  scale(1.21); }
 
 }
 
 @-webkit-keyframes spin {
+    0% { transform:rotateY(0deg) scale(1.21);  -webkit-transform: rotateY(0deg) scale(1.21); }
     40% { transform:rotateY(45deg) scale(1.21); -webkit-transform: rotateY(45deg) scale(1.21);}
     70% { transform:rotateY(360deg) scale(1.21);  -webkit-transform: rotateY(360deg) scale(1.21); }
+    100% { transform:rotateY(360deg) scale(1.21);  -webkit-transform: rotateY(360deg) scale(1.21); }
 }
 
 @keyframes spin{
+    0% { transform:rotateY(45deg) scale(1.21); }
     40% { transform:rotateY(45deg) scale(1.21); }
     70% { transform:rotateY(360deg) scale(1.21); }
+    100% { transform:rotateY(360deg) scale(1.21); }
 }
 
 
@@ -840,7 +846,9 @@ video{
 
 }
 
-
+.songlist {
+    padding-bottom: 15px!important;
+}
 
 .songlist li a{
     height:51px!important;

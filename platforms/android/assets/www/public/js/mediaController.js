@@ -379,8 +379,8 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                     if (embedPlayer.isEmbedVideo(videoURL)) {
                         streamURL = videoURL;
                         mediaController.playStreamURL(streamURL, videoURL, true);
-                        if (playlistController.playedSongs.length > 100) {
-                            playlistController.playedSongs.splice(playlistController.playedSongs.length - 100, 100)
+                        if (playbackController.playedSongs.length > 100) {
+                            playbackController.playedSongs.splice(playbackController.playedSongs.length - 100, 100)
                         }
 
                     }
@@ -393,8 +393,8 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
 
                             mediaController.playStreamURL(streamURL, videoURL, true);
 
-                            if (playlistController.playedSongs.length > 100) {
-                                playlistController.playedSongs.splice(playlistController.playedSongs.length - 100, 100)
+                            if (playbackController.playedSongs.length > 100) {
+                                playbackController.playedSongs.splice(playbackController.playedSongs.length - 100, 100)
                             }
 
                         }

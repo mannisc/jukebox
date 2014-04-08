@@ -450,7 +450,7 @@ uiController.initMediaPlayer = function () {
 
                 $(".mejs-playpause-button button").removeClass("looped");
 
-                if (!playlistController.playingSong.isAudioFile) {
+                if (!playbackController.playingSong.isAudioFile) {
 
                     if ($("#videoplayer").css("opacity") < 1) {
                         var translateVideo = uiController.translateVideo;
