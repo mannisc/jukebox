@@ -19,6 +19,10 @@ videoController.videoPlayer = mediaelementPlayer;////embeddedPlayer;//
 //Video is playing
 videoController.isPlaying = false;
 
+//Scale Factor (touch)
+videoController.scaleFactor = 1.5;
+
+
 //Progress Time- use setter
 videoController.progressTime = 0;
 //Max Time - use setter
@@ -92,7 +96,7 @@ videoController.init = function () {
             //handle  = controls.find('.videoControlElements-time-handle'),
                 x = event.pageX,
                 offset = total.offset(),
-                width = total.outerWidth(true) * MediaElementPlayer.prototype.extoptions.scale / 1.023,
+                width = total.outerWidth(true) * videoController.scaleFactor / 1.023,
                 pos,
                 percentage;
 
@@ -134,6 +138,29 @@ videoController.init = function () {
             videoController.controls.find(".videoControlElements-volume-slider").hide();
     });
 
+    videoController.controls.find(".videoControlElements-volume-slider").click(function (event) {
+        var total = videoController.controls.find('.videoControlElements-volume-slider'),
+            y = event.pageY-20,
+            offset = total.offset(),
+            height = total.outerHeight(true) * videoController.scaleFactor / 1.023-20,
+            pos,
+            percentage;
+
+        if (y < offset.top) {
+            y = offset.top;
+        } else if (y > height + offset.top) {
+            y = height + offset.top;
+        }
+
+        pos = y - offset.top;
+        percentage = (pos / height);
+        videoController.volume = (1-percentage);
+        // position the slider and handle
+        videoController.positionVolumeHandle(videoController.volume);
+
+    });
+
+
 
     videoController.controls.find(".videoControlElements-volume-handle").bind('mousedown', function (e) {
 
@@ -150,7 +177,7 @@ videoController.init = function () {
 
             // calculate the new volume based on the moust position
             var
-                railHeight = volumeTotal.height() * 1.5 / 1.023,//CHANGED!!!!!
+                railHeight = volumeTotal.height() * videoController.scaleFactor/ 1.023,//CHANGED!!!!!
                 totalTop = parseInt(volumeTotal.css('top').replace(/px/, ''), 10),
                 newY = e.pageY - totalOffset.top;
 
