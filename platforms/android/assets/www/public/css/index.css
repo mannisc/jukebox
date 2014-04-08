@@ -546,6 +546,7 @@ white-space: nowrap;
 
 .songlist li:hover a img.ui-li-icon,.songlist li:hover a img.loadingSongImg {
     -webkit-transform: scale(1.21);
+    -moz-transform: scale(1.21);
     transform: scale(1.21)!important;
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%!important;
@@ -717,11 +718,40 @@ video{
 
 .songlist li.loadedsong.stillloading img.ui-li-icon {
     opacity:1;
+
+
+/*-webkit-transform: rotateY(300deg) scale(1.21)!important;
+    -moz-transform: rotateY(359deg) scale(1.21)!important;
+    transform: rotateY(359deg) scale(1.21)!important;*/
+    -webkit-animation:spin 1.5s ease infinite;
+    -moz-animation:spin 1.5s ease infinite;
+    animation:spin 1.5s ease infinite;
 }
+
+@-moz-keyframes spin {
+    40% { -moz-transform: rotateY(180deg) scale(1.21);}
+    70% { -moz-transform: rotateY(360deg) scale(1.21); }
+}
+@-webkit-keyframes spin {
+    40% { -webkit-transform: rotateY(180deg)  scale(1.21);}
+    70% { -webkit-transform: rotateY(360deg)  scale(1.21); }
+}
+
+@keyframes spin{
+    40% { -webkit-transform: rotateY(180deg) scale(1.21); transform:rotateY(180deg) scale(1.21); }
+    70% {-webkit-transform: rotateY(360deg) scale(1.21); transform:rotateY(360deg) scale(1.21); }
+}
+
+
+
+
+
 
 .songlist li.loadedsong.stillloading .loadingSongImg{
    /* background-image:url(../img/songload.gif)!important;
     background-size:9;*/
+    width: 46px!important;
+    height: 46px!important;
     max-width: 46px!important;
     max-height: 46px!important;
     margin-left:3px!important;
@@ -730,10 +760,11 @@ video{
     position: absolute;
     left: 5.5px!important;
     top: 14px;
-    opacity:0.65!important;
-    -webkit-transform: scale(0.77);
-    transform: scale(0.95);
+    opacity:0.4!important;
+
+
     -webkit-transform-origin: 50% 50%;
+    -moz-origin: 50% 50%;
     transform-origin: 50% 50%;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -742,7 +773,16 @@ video{
     -webkit-transition-property: -webkit-transform;
     -moz-transition-property: -moz-transform;
     -o-transition-property: -o-transform;
-    transition-property: transforme;
+    transition-property: transform;
+
+    -webkit-animation:spin 1.5s ease infinite;
+    -moz-animation:spin 1.5s ease infinite;
+    animation:spin 1.5s ease infinite;
+    /*-webkit-transform: rotateY(300deg) scale(1.21)!important;
+        -moz-transform: rotateY(359deg) scale(1.21)!important;
+        transform: rotateY(359deg) scale(1.21)!important;*/
+
+
     z-index:10;
 
 }
