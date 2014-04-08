@@ -46,9 +46,9 @@ playbackController.doubleClickedElement = function(element, onlyStyle){
  */
 playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     //Dont play multiple songs within 100ms
-    if (playlistController.playSongTimer && Date.now() - playlistController.playSongTimer < 100)
+    if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 100)
         return;
-    playlistController.playSongTimer = Date.now();
+    playbackController.playSongTimer = Date.now();
 
     //Song for which version list is currently loaded set to null
     mediaController.versionListSong = null;
@@ -68,7 +68,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
 
     //Check if song already playing
-    var isSameSongAsLoadedSong = playlistController.playingSong&&(playlistController.playingSong.name == song.name) && (mediaController.getSongArtist(playlistController.playingSong) == mediaController.getSongArtist(song));
+    var isSameSongAsLoadedSong = playbackController.playingSong&&(playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song));
 
     //New song is already loading/playing song
     if (isSameSongAsLoadedSong) {
@@ -76,7 +76,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
         if(playlistController.isLoading)
          return;
         //Toggle Playing/Pausing
-        else if (playlistController.playingSong) {
+        else if (playbackController.playingSong) {
             if (playlistController.isPlaying) {
               $(songListElement.get(0)).addClass("playing");
             }
@@ -94,19 +94,19 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
     //If not already loading, save the old song to be able to reset if there is a loading error
     if (!playlistController.isLoading)
-        playlistController.playingOldSong = playlistController.playingSong;
+        playbackController.playingOldSong = playbackController.playingSong;
 
     //Set loading/playing Song to selected Song
-    playlistController.playingSong = song;
+    playbackController.playingSong = song;
     console.log("PLÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄY SONG")
 
     //Lyrics
     if (mediaController.showLyrics)
-        $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.playingSong) + ":" + playlistController.playingSong.name);
+        $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name);
 
     videoController.disableLyricsControl(false);
     //Enable stop if there is no old song
-    if (!playlistController.playingOldSong)
+    if (!playbackController.playingOldSong)
         videoController.disableStopControl(false);
 
     //Set playing Indicator position
@@ -140,13 +140,13 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
             $(songListElement.get(0)).addClass("stillloading");
             songListElement.removeClass("pausing");
             playbackController.startedLoadingTime = Date.now();
-            if (playlistController.playingSong.streamURL)
-                mediaController.playStreamURL(playlistController.playingSong.streamURL);
+            if (playbackController.playingSong.streamURL)
+                mediaController.playStreamURL(playbackController.playingSong.streamURL);
             else
-                mediaController.playStream(mediaController.getSongArtist(playlistController.playingSong), playlistController.playingSong.name, playedAutomatic);
+                mediaController.playStream(mediaController.getSongArtist(playbackController.playingSong), playbackController.playingSong.name, playedAutomatic);
 
-            playlistController.playedSongs.push(playlistController.playingSong);
-            playlistController.setNewTitle(playlistController.playingSong.name, mediaController.getSongCover(playlistController.playingSong));
+            playlistController.playedSongs.push(playbackController.playingSong);
+            playlistController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
 
         }
 
