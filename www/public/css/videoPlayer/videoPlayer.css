@@ -396,17 +396,26 @@
      background-size: 16px;
  }
 
+ .videoControlElements-controls .videoControlElements-button-lyrics button {
+
+     background: transparent url(../../img/lyrics.png) no-repeat;
+     background-size: 16px;
+ }
+
  .videoControlElements-controls .videoControlElements-button-facebook button {
 
      background: transparent url(../../img/facebook.png) no-repeat;
      background-size: 16px;
  }
 
- .videoControlElements-controls .videoControlElements-button-lyrics button {
 
-     background: transparent url(../../img/lyrics.png) no-repeat;
+ .videoControlElements-controls .videoControlElements-button-copyright button {
+
+     background: transparent url(../../img/copyright.png) no-repeat;
      background-size: 16px;
  }
+
+
 
 
 

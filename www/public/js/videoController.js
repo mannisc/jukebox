@@ -139,6 +139,7 @@ videoController.init = function () {
     });
 
     videoController.controls.find(".videoControlElements-volume-slider").click(function (event) {
+        if (!videoController.changingVolume){
         var total = videoController.controls.find('.videoControlElements-volume-slider'),
             y = event.pageY-20,
             offset = total.offset(),
@@ -157,7 +158,7 @@ videoController.init = function () {
         videoController.volume = (1-percentage);
         // position the slider and handle
         videoController.positionVolumeHandle(videoController.volume);
-
+      }
     });
 
 
@@ -207,8 +208,9 @@ videoController.init = function () {
 
             if(videoController.controls.find(".videoControlElements-volume-slider:hover").length==0)
                 videoController.controls.find(".videoControlElements-volume-slider").hide();
-
-            videoController.changingVolume = false;
+            setTimeout(function(){
+               videoController.changingVolume = false;
+            },50)
             $(document).unbind(".videoVolume");
         })
     });
@@ -415,6 +417,35 @@ videoController.disableVersionControl = function (disable) {
 
     } else {
         $(".videoControlElements-button-choose-version button").css("opacity", "1");
+    }
+}
+
+
+/**
+* Disable/Enable Lyrics Control
+* @param disable
+*/
+videoController.disableLyricsControl = function (disable) {
+    videoController.lyricsEnabled = !disable;
+    if (disable) {
+        $(".videoControlElements-button-lyrics button").css("opacity", "0.5");
+
+    } else {
+        $(".videoControlElements-button-lyrics button").css("opacity", "1");
+    }
+}
+
+/**
+ * Disable/Enable ShareSocial Control
+ * @param disable
+ */
+videoController.disableShareSocialControl = function (disable) {
+    videoController.sharesocialEnabled= !disable;
+    if (disable) {
+        $(".videoControlElements-button-facebook button").css("opacity", "0.5");
+
+    } else {
+        $(".videoControlElements-button-facebook button").css("opacity", "1");
     }
 }
 
