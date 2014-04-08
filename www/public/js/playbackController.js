@@ -127,7 +127,8 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     videoController.disableControls(false);
 
     //Clear other cover loading circles
-    helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
+    //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
+    $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
 
     //Clear other loading songs
     $(".songlist li").removeClass("loadedsong playing plausing stillloading");
@@ -138,7 +139,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
             playlistController.isLoading = true;
             $(songListElement.get(0)).addClass("stillloading");
             songListElement.removeClass("pausing");
-
+            playbackController.startedLoadingTime = Date.now();
             if (playlistController.playingSong.streamURL)
                 mediaController.playStreamURL(playlistController.playingSong.streamURL);
             else

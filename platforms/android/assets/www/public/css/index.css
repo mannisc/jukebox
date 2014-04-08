@@ -736,7 +736,11 @@ video{
     -webkit-animation:spin 2s ease infinite;
     -moz-animation:spin 2s ease infinite!important;
     animation:spin 2s ease infinite;
+
 }
+
+
+
 
 @-moz-keyframes spin {
     40% {  transform:rotateY(45deg) scale(1.21);  -moz-transform: rotateY(45deg) scale(1.21);}
@@ -768,7 +772,7 @@ video{
     position: absolute;
     left: 5.5px!important;
     top: 14px;
-    opacity:0.4!important;
+    opacity:0.9!important;
 
 
     -webkit-transform-origin: 50% 50%;
@@ -1197,6 +1201,21 @@ video{
 
 .fadeoutcomplete{
     opacity:1;  /* make things invisible upon start */
+    -webkit-animation:fadeoutcomplete ease-in 1!important;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation:fadeoutcomplete ease-in 1!important;
+    animation:fadeoutcomplete ease-in 1!important;
+
+    -webkit-animation-fill-mode:forwards!important;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+    -moz-animation-fill-mode:forwards!important;
+    animation-fill-mode:forwards!important;
+
+    -webkit-animation-duration:400ms!important;
+    -moz-animation-duration:400ms!important;
+    animation-duration:400ms!important;
+}
+
+.fadeoutcompletefast{
+    opacity:1;  /* make things invisible upon start */
     -webkit-animation:fadeoutcomplete ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
     -moz-animation:fadeoutcomplete ease-in 1;
     animation:fadeoutcomplete ease-in 1;
@@ -1205,11 +1224,10 @@ video{
     -moz-animation-fill-mode:forwards;
     animation-fill-mode:forwards;
 
-    -webkit-animation-duration:400ms;;
-    -moz-animation-duration:400ms;
-    animation-duration:400ms;
+    -webkit-animation-duration:150ms;;
+    -moz-animation-duration:150ms;
+    animation-duration:150ms;
 }
-
 
 /* make keyframes that tell the start state and the end state of our object */
 @-webkit-keyframes fadeoutcomplete { from { opacity:1; } to { opacity:0; } }
@@ -1252,6 +1270,24 @@ video{
     -moz-animation-duration: 1s;
     animation-duration: 1s;
 }
+
+.fadeincompleteextremeslow {
+    opacity: 0; /* make things invisible upon start */
+    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: fadeincomplete ease-in 1;
+    animation: fadeincomplete ease-in 1;
+
+    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode: forwards; /*FF 5+*/
+    -o-animation-fill-mode: forwards; /*Not implemented yet*/
+    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards; /*when the spec is finished*/
+
+    -webkit-animation-duration: 3s;
+    -moz-animation-duration: 3s;
+    animation-duration: 3s;
+}
+
 
 .fadeincompletefast {
     opacity: 0; /* make things invisible upon start */

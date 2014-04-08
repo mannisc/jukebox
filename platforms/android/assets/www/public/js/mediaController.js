@@ -711,8 +711,32 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
         else
             listElement = $("#searchlist li[data-songid='searchsong" + playlistController.playingSong.id + "'] ");
 
-        helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
-        $(listElement.get(0)).addClass("playing").removeClass("stillloading");
+
+        var loadTime =  Date.now()-playbackController.startedLoadingTime;
+        var delayTime = loadTime%2000;
+        $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeoutcomplete")
+        $(listElement.get(0)).find(".loadingSongImg").addClass("fadeoutcomplete")
+
+        setTimeout(function()  {
+            if($(listElement.get(0)).hasClass("stillloading")){
+                    $(listElement.get(0)).addClass("playing");
+                    $(listElement.get(0)).removeClass("stillloading")
+                }
+                //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
+            $(listElement.get(0)).find(".loadingSongImg").hide();
+            $(listElement.get(0)).find(".loadingSongImg").removeClass("fadeoutcomplete")
+            $(listElement.get(0)).find("img.ui-li-icon").css("opacity","0")
+            $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeoutcomplete");
+
+                $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeincompleteslow")
+                   setTimeout(function()  {
+                       $(listElement.get(0)).find("img.ui-li-icon").css("opacity","1")
+                       $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeincompleteslow");
+                   } , 1000)
+
+
+        } ,  400)
+
 
 
 

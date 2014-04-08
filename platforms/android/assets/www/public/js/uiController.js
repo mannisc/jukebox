@@ -435,9 +435,10 @@ uiController.initMediaPlayer = function () {
             mediaElement.addEventListener("playing", function (e) {
                 if(playlistController.playingSong) {
 
-                    helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
+                 //   helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
+                    $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
 
-                $($(".songlist li.loadedsong").get(0)).addClass("playing");
+                    $($(".songlist li.loadedsong").get(0)).addClass("playing");
                 $(".songlist li.loadedsong").removeClass("pausing");
 
                 playlistController.isLoading = false;
