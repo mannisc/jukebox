@@ -50,10 +50,22 @@ dailymotionPlayer.init = function () {
 
 };
 
+/**
+ * Set Progress in percentage
+ */
+dailymotionPlayer.setProgressPercentage = function(percentage){
+
+    //Set progress in videoController
+    videoController.setProgressPercentage(percentage)
+
+}
+
+
 
 /**
  * Load Player with Url before using
  */
+
 dailymotionPlayer.load = function (url) {
 
 

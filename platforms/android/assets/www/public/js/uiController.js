@@ -172,7 +172,7 @@ uiController.initMediaPlayer = function () {
     uiController.setScreenMode = function(){
 
         if(videoController.fullscreenMode==1){ //Background
-            if(embedPlayer.active == 0){
+            if(videoController.isEmbedded == 0){
                 $("#videoplayer").hide();
                 if(playbackController.playingSong)
                     $("#backgroundImage").hide();
