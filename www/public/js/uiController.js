@@ -434,7 +434,6 @@ uiController.initMediaPlayer = function () {
             });
             mediaElement.addEventListener("playing", function (e) {
                 if(playlistController.playingSong) {
-                    alert("PLAY ING")
 
                     helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
 
