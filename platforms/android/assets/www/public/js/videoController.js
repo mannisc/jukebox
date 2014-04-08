@@ -21,11 +21,13 @@ videoController.videoPlayerList = [
 videoController.videoPlayerList[0] = [];
 videoController.videoPlayerList[1] = [];
 
-videoController.videoPlayerList[0][0] = mediaelementPlayer;
+videoController.videoPlayerList[0][0] = new mediaelementPlayer("#mediaemelemtjsPlayer1");
 
 videoController.videoPlayerList[1][0] = dailymotionPlayer;
 
 videoController.videoPlayer = videoController.videoPlayerList[0][0];////embeddedPlayer;//
+
+videoController.isEmbedded = false;
 
 
 //Video is playing
@@ -117,7 +119,7 @@ videoController.init = function () {
 
     //Time Rail
     videoController.controls.find(".videoControlElements-time-rail").click(function (event) {
-        if (videoController.timerailEnabled) {
+        if (videoController.timerailEnabled&&playbackController.playingSong) {
             var total = videoController.controls.find('.videoControlElements-time-total'),
             //loaded  = controls.find('.videoControlElements-time-loaded'),
             //current  = controls.find('.videoControlElements-time-current'),
@@ -136,7 +138,7 @@ videoController.init = function () {
 
             pos = x - offset.left;
             percentage = (pos / width);
-            videoController.videoPlayer.setCurrentTime(percentage)
+            videoController.videoPlayer.setProgressPercentage(percentage);
         }
     });
 
@@ -341,23 +343,45 @@ videoController.playPrevSong = function () {
 
 
 /**
+ * Check if video is embedded
+ * @type {*}
+ */
+
+videoController.isEmbedVideo= function(videoURL){
+    if(videoURL.search("dailymotion.com") > -1 ){
+        return videoController.videoPlayerList[1][0];
+    }
+    return null;
+}
+
+/**
  * Load Song, decide which Player to use
  * @type {*}
  */
 videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
+    videoController.setMaxTime(0);
+    videoController.setProgressPercentage(0);
+    videoController.setBufferedPercentage(0);
+
+    if(videoController.videoPlayer&& videoController.videoPlayer.unload())
+        videoController.videoPlayer.unload();
 
     //TODO Select embedded Player
-    if (embedPlayer.isEmbedVideo(videoURL)) {
+    var player = videoController.isEmbedVideo(videoURL);
+    if (player != null) {
+        videoController.isEmbedded = true;
         /* embedPlayer.enable();
          uiController.mediaElementPlayer.setSrc("http://0.0.0.0");
          uiController.mediaElementPlayer.load();
          uiController.mediaElementPlayer.play();
          embedPlayer.loadDailymotion(videoURL);
          */
-        alert("TODO play dailymotion Video in videoController.loadSongInSuitablePlayer");
+        videoController.videoPlayer = player;
+        videoController.videoPlayer.load(videoURL);
     }
     //Mediaelement
     else {
+        videoController.isEmbedded = false;
         /*embedPlayer.disable();
          uiController.mediaElementPlayer.setSrc(streamURL);
          uiController.mediaElementPlayer.load();
@@ -384,6 +408,7 @@ videoController.playSong = function () {
         videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
         videoController.videoPlayer.play();
         videoController.isPlaying = true;
+
     }
 }
 
@@ -413,7 +438,8 @@ videoController.pauseSong = function () {
  * @type {*}
  */
 videoController.stopSong = function () {
-
+    if (videoController.isPlaying) {
+    videoController.pauseSong();
     videoController.videoPlayer.stop();
 
     videoController.setProgressPercentage(0);
@@ -438,7 +464,7 @@ videoController.stopSong = function () {
 
         }
     }
-
+   }
 }
 
 
@@ -610,7 +636,7 @@ videoController.setLoopButton = function (loop) {
 /**
  * Set Progress in percentage
  */
-videoController.setProgressPercentage = function (percentage) {
+videoController.setProgressPercentage = function (percentage, updateVideo) {
 
     if (percentage < 0)
         percentage = 0;
@@ -621,18 +647,21 @@ videoController.setProgressPercentage = function (percentage) {
         videoController.progressTime = videoController.maxTime * percentage;
         videoController.controls.find(".videoControlElements-currenttime").text(videoController.secondsToTimeCode(videoController.progressTime, false, false, false));
     }
+
+    if(updateVideo&&videoController.videoPlayer&&playbackController.playingSong&&!playbackController.isLoading)
+       videoController.videoPlayer.setProgressPercentage(percentage);
 }
 
 
 /**
  * Set Progress in seconds
  */
-videoController.setProgressTime = function (time) {
+videoController.setProgressTime = function (time,updateVideo) {
     videoController.progressTime = time;
     videoController.controls.find(".videoControlElements-currenttime").text(videoController.secondsToTimeCode(time, false, false, false));
 
     if (videoController.maxTime && videoController.maxTime > 0)
-        videoController.setProgressPercentage(videoController.progressTime / videoController.maxTime)
+        videoController.setProgressPercentage(videoController.progressTime / videoController.maxTime,updateVideo)
 
 }
 
@@ -656,8 +685,6 @@ videoController.setMaxTime = function (time) {
     videoController.maxTime = time;
     videoController.controls.find(".videoControlElements-duration").text(videoController.secondsToTimeCode(time, false, false, false));
 
-    if (videoController.maxTime && videoController.maxTime > 0)
-        videoController.setProgressPercentage(videoController.progressTime / videoController.maxTime)
 
 }
 
@@ -747,6 +774,11 @@ videoController.endedSong = function () {
 
     mediaController.mediaEnded();
 }
+
+
+
+
+
 
 /**
  * Callback for "Playing" Video Event
