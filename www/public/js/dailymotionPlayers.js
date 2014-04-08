@@ -162,7 +162,7 @@ dailymotionPlayer.unload = function () {
 };
 
 
-ailymotionPlayer.setVolume = function (volume) {
+dailymotionPlayer.setVolume = function (volume) {
     if(dailymotionPlayer.dmplayer && dailymotionPlayer.apiready){
         dailymotionPlayer.dmplayer.setVolume(volume);
     }
