@@ -95,7 +95,9 @@ playlistController.resetPlayingSong = function () {
 
     }
     else {
-        helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
+        //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
+        $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
+
         $(".songlist li").removeClass("loadedsong playing stillloading plausing");
         videoController.disableControls(true);
         videoController.disableStopControl(true);
