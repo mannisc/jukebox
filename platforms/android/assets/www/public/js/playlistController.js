@@ -124,22 +124,10 @@ playlistController.getIsLoadingText = function (always) {
 }
 
 
-playlistController.getPlayingTitle = function () {
-
-    if (playbackController.playingSong) {
-        return mediaController.getSongDisplayName(playbackController.playingSong);
-    }
-    else
-        return "";
-}
 
 
-playlistController.getPlayingSong = function () {
-    if (playbackController.playingSong)
-        return playbackController.playingSong;
-    else
-        return {name: ""};
-}
+
+
 
 
 playlistController.getPlayingSepSign = function () {
