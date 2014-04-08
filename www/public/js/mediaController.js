@@ -77,7 +77,7 @@ mediaController.mediaEnded = function () {
     mediaController.sendRating("2");
     document.title = $scope.appTitle;
 
-    playlistController.isPlaying = false;
+    videoController.isPlaying = false;
     videoController.disableStopControl(true);
     $("#videoplayer").css("opacity", "0");
     $("#videoplayer").css("pointer-events", "none");
@@ -88,7 +88,7 @@ mediaController.mediaEnded = function () {
     uiController.playedFirst = false;
     uiController.updateUI();
 
-    if (!playlistController.isLoading)
+    if (!playbackController.isLoading)
         playlistController.playNextSong();
 }
 
@@ -414,7 +414,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                 videoController.showBuffering(false);
             }, 500);
             //log("COMPLETED")
-            playlistController.isLoading = false;
+            playbackController.isLoading = false;
             if (loadError) {
                 //  console.log("ERROR")
                 //error();
@@ -843,7 +843,7 @@ mediaController.getSongArtist = function (song) {
 mediaController.openExternalSite = function () {
 
     window.open(mediaController.currentvideoURL, '_blank');
-    if (playlistController.isPlaying) {
+    if (videoController.isPlaying) {
         //uiController.mediaElementPlayer.pause();
         videoController.pauseSong();
 

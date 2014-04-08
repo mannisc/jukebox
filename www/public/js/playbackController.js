@@ -73,11 +73,11 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     //New song is already loading/playing song
     if (isSameSongAsLoadedSong) {
         //Already Loading, and not loaded yet (no pausing possible)
-        if(playlistController.isLoading)
+        if(playbackController.isLoading)
          return;
         //Toggle Playing/Pausing
         else if (playbackController.playingSong) {
-            if (playlistController.isPlaying) {
+            if (videoController.isPlaying) {
               $(songListElement.get(0)).addClass("playing");
             }
             else
@@ -93,7 +93,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
 
     //If not already loading, save the old song to be able to reset if there is a loading error
-    if (!playlistController.isLoading)
+    if (!playbackController.isLoading)
         playbackController.playingOldSong = playbackController.playingSong;
 
     //Set loading/playing Song to selected Song
@@ -136,7 +136,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
     if (!onlyStyle) {
         if (!isSameSongAsLoadedSong) {
-            playlistController.isLoading = true;
+            playbackController.isLoading = true;
             $(songListElement.get(0)).addClass("stillloading");
             songListElement.removeClass("pausing");
             playbackController.startedLoadingTime = Date.now();
