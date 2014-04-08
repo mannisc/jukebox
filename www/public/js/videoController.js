@@ -359,7 +359,6 @@ videoController.isEmbedVideo= function(videoURL){
  * @type {*}
  */
 videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
-
     //TODO Select embedded Player
     var player = videoController.isEmbedVideo(videoURL);
     if (player != null) {
