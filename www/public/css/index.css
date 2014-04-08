@@ -717,13 +717,13 @@ video{
 }
 
 .songlist li.loadedsong.stillloading {
-    -webkit-perspective: 140;
+    -webkit-perspective: 120;
     -webkit-perspective-origin: 32px 50%;
-    -moz-perspective: 140;
+    -moz-perspective: 120;
     -moz-perspective-origin: 32px 50%;
-    -ms-perspective: 140;
+    -ms-perspective: 120;
     -ms-perspective-origin: 32px 50%;
-   perspective: 140;
+   perspective: 120;
     perspective-origin: 32px 50%;
 }
 
@@ -739,19 +739,19 @@ video{
 }
 
 @-moz-keyframes spin {
-    40% {  transform:rotateY(180deg) scale(1.21);  -moz-transform: rotateY(180deg) scale(1.21);}
-    70% { transform:rotateY(0deg) scale(1.21); -moz-transform: rotateY(0deg)  scale(1.21); }
+    40% {  transform:rotateY(45deg) scale(1.21);  -moz-transform: rotateY(45deg) scale(1.21);}
+    70% { transform:rotateY(360deg) scale(1.21); -moz-transform: rotateY(360deg)  scale(1.21); }
 
 }
 
 @-webkit-keyframes spin {
-    40% { transform:rotateY(180deg) scale(1.21); -webkit-transform: rotateY(180deg) scale(1.21);}
-    70% { transform:rotateY(0deg) scale(1.21);  -webkit-transform: rotateY(0deg) scale(1.21); }
+    40% { transform:rotateY(45deg) scale(1.21); -webkit-transform: rotateY(45deg) scale(1.21);}
+    70% { transform:rotateY(360deg) scale(1.21);  -webkit-transform: rotateY(360deg) scale(1.21); }
 }
 
 @keyframes spin{
-    40% { transform:rotateY(180deg) scale(1.21); }
-    70% { transform:rotateY(0deg) scale(1.21); }
+    40% { transform:rotateY(45deg) scale(1.21); }
+    70% { transform:rotateY(360deg) scale(1.21); }
 }
 
 
