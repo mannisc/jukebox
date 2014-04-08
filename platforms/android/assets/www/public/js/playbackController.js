@@ -167,7 +167,12 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
 }
 
-
+/**
+ * Set New Title of Playing/Loading Song
+ * @param title
+ * @param coverUrl
+ * @param isLoaded
+ */
 playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
     if (!isLoaded) {
         $("#playingSongCover").removeClass("fadeincomplete")
@@ -255,25 +260,31 @@ playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
 }
 
 
+/**
+ * Get Title of Playing Song
+ * @returns {*}
+ */
+playbackController.getPlayingTitle = function () {
+
+    if (playbackController.playingSong) {
+        return mediaController.getSongDisplayName(playbackController.playingSong);
+    }
+    else
+        return "";
+}
 
 
+/**
+ * Get the playing Song, and emtpy String if not set
+ * @returns {*}
+ */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+playbackController.getPlayingSong = function () {
+    if (playbackController.playingSong)
+        return playbackController.playingSong;
+    else
+        return {name: ""};
+}
 
 
 

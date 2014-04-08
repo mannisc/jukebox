@@ -350,7 +350,7 @@ searchController.showSuggestions = function () {
         var index;
         var song;
         if (mediaController.currentvideoURL != "") {
-            song = playlistController.getPlayingSong();
+            song = playbackController.getPlayingSong();
         }
         else {
             if (playlistController.loadedPlaylistSongs.length > 0) {
@@ -390,8 +390,8 @@ searchController.searchSimilarSongs = function (song) {
 searchController.searchMusic = function () {
     if ($("#searchinput").val() && $("#searchinput").val() != "") {
         searchController.lastSearchTerm = $("#searchinput").val();
-        var song = playlistController.getPlayingSong();
-        if (song.name != "" && searchinput != "") {
+        var song = playbackController.getPlayingSong();
+        if (song.name != "" && $("#searchinput").val() != "") {
             window.history.pushState("", document.title, "/?search=" + searchController.lastSearchTerm + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
         }
         else {

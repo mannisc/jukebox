@@ -28,7 +28,7 @@ mediaController.seekTimeDuration = 0;
 
 
 mediaController.buySong = function () {
-    var song = playlistController.getPlayingSong();
+    var song = playbackController.getPlayingSong();
     if (song) {
         var keywords = mediaController.getSongArtist(song) + " - " + song.name;
         mywindow = window.open("http://www.amazon.de/s/?_encoding=UTF8&ajr=0&camp=1638&creative=19454&field-keywords=" + keywords + "&linkCode=ur2&rh=n%3A77195031%2Ck%3A" + keywords + "&site-redirect=de&tag=iggels-21&url=search-alias%3Ddigital-music", "Amazon", "");
@@ -39,7 +39,7 @@ mediaController.buySong = function () {
 
 
 mediaController.getPrice = function () {
-    var song = playlistController.getPlayingSong();
+    var song = playbackController.getPlayingSong();
     var keywords = mediaController.getSongArtist(song) + " - " + song.name;
 
     /*
@@ -95,7 +95,7 @@ mediaController.mediaEnded = function () {
 
 mediaController.postOnFacebook = function () {
     if (mediaController.currentvideoURL != "") {
-        var song = playlistController.getPlayingSong();
+        var song = playbackController.getPlayingSong();
         mywindow = window.open("http://www.facebook.com/sharer.php?u=" + mediaController.currentvideoURL + "&t=" + mediaController.getSongArtist(song) + " - " + song.name, "", "");
         mywindow.focus();
         mediaController.sendRating("1");
@@ -110,7 +110,7 @@ mediaController.postOnFacebook = function () {
 mediaController.sendRating = function (rating) {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         var VideoURL = mediaController.currentvideoURL;
-        var song = playlistController.getPlayingSong();
+        var song = playbackController.getPlayingSong();
         var rate = function (song, VideoURL) {
             if (mediaController.currentvideoURL != "" && song) {
                 $.ajax({
@@ -171,7 +171,7 @@ mediaController.getVersions = function () {
     //importController.importPlaylist("http://vimeo.com/channels/rihanna");//
     importController.importPlaylist("http://www.dailymotion.com/playlist/xvguj_dailymotionuk_rihanna/1#video=x6f3n8");//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
     if (authController.ip_token != "auth" && authController.ip_token != "") {
-        var currentsong = playlistController.getPlayingSong();
+        var currentsong = playbackController.getPlayingSong();
         if (mediaController.currentStreamURL != "") {
             if (mediaController.versionListSong != currentsong) {
                 mediaController.versionList = [];
@@ -198,7 +198,7 @@ mediaController.getVersions = function () {
                                 if (data.track) {
                                     if (data.track.length > 0) {
                                         //  console.dir("SUCCESS VERSIONS! " + counter + "  - " + mediaController.getSongArtist(song) + " - " + song.name);
-                                        if (playlistController.getPlayingSong() == song) {
+                                        if (playbackController.getPlayingSong() == song) {
                                             //   console.dir(data.track);
                                             for (var i = 0; i < data.track.length; i++) {
                                                 try {
@@ -228,7 +228,7 @@ mediaController.getVersions = function () {
                                 }
                                 if (dataok == false) {
                                     if (counter < 120) {
-                                        if (playlistController.getPlayingSong() == song) {
+                                        if (playbackController.getPlayingSong() == song) {
                                             setTimeout(function () {
                                                 getsongversions(counter + 1)
                                             }, 2000);
@@ -239,7 +239,7 @@ mediaController.getVersions = function () {
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
                             if (counter < 120) {
-                                if (playlistController.getPlayingSong() == song) {
+                                if (playbackController.getPlayingSong() == song) {
                                     setTimeout(function () {
                                         getsongversions(counter + 2)
                                     }, 2000);
@@ -273,7 +273,7 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
     var streamID = mediaController.playCounter;
     var videoURL = songversion.url
     var play = function (streamID, videoURL) {
-        var song = playlistController.getPlayingSong();
+        var song = playbackController.getPlayingSong();
         if (videoURL != mediaController.currentvideoURL) {
             if (embedPlayer.isEmbedVideo(videoURL)) {
 
@@ -578,7 +578,7 @@ mediaController.songError = function () {
 mediaController.playNextVersion = function () {
     if (!videoController.versionsEnabled)
         return;
-    var currentsong = playlistController.getPlayingSong();
+    var currentsong = playbackController.getPlayingSong();
     if (currentsong.name != "") {
         if (mediaController.versionListSong != currentsong) {
             var getsongversions = function (counter) {
@@ -594,7 +594,7 @@ mediaController.playNextVersion = function () {
                                 }
                                 else {
                                     if (data.track) {
-                                        if (playlistController.getPlayingSong() == song) {
+                                        if (playbackController.getPlayingSong() == song) {
                                             mediaController.startVersionIndex = -1;
                                             var nextIndex = -1
                                             for (var i = 0; i < data.track.length; i++) {
@@ -622,7 +622,7 @@ mediaController.playNextVersion = function () {
                                         }
                                     }
                                     else {
-                                        if (playlistController.getPlayingSong() == song) {
+                                        if (playbackController.getPlayingSong() == song) {
                                             setTimeout(function () {
                                                 getsongversions(counter + 1)
                                             }, 1500);
@@ -631,7 +631,7 @@ mediaController.playNextVersion = function () {
                                 }
                             },
                             error: function (xhr, ajaxOptions, thrownError) {
-                                if (playlistController.getPlayingSong() == song) {
+                                if (playbackController.getPlayingSong() == song) {
                                     setTimeout(function () {
                                         getsongversions(counter + 2)
                                     }, 5000);
