@@ -309,7 +309,7 @@ videoController.playNextSong = function(){
  */
 videoController.playPrevSong = function(){
     if (videoController.prevEnabled)
-        playlistController.playPrevSong();
+        playbackController.playPrevSong();
 }
 
 

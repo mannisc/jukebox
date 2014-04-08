@@ -461,7 +461,7 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
 
             uiController.toast("Sorry, this song is not available at the moment.", 1500);
             if (!playedAutomatic)
-                playlistController.resetPlayingSong();
+                playbackController.resetPlayingSong();
             else
                 playbackController.playNextSong();
 
@@ -572,7 +572,7 @@ mediaController.songError = function () {
     }, 500);
     uiController.toast("Sorry, this song is not available at the moment.", 1500);
     $("#videoplayer").css("opacity", "0");
-    playlistController.resetPlayingSong();
+    playbackController.resetPlayingSong();
 }
 
 mediaController.playNextVersion = function () {

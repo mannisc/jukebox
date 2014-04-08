@@ -180,7 +180,7 @@ searchController.completeSearch = function (list) {
         $scope.safeApply();
         $("#searchlistview").listview('refresh');
 
-        playlistController.remarkSong();
+        playbackController.remarkSong();
 
 
         uiController.makeSearchListDraggable();
@@ -237,7 +237,7 @@ searchController.removeFilterSongs = function () {
         searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
     }
     $scope.safeApply();
-    playlistController.remarkSong();
+    playbackController.remarkSong();
 
     $("#searchlistview").listview('refresh');
 

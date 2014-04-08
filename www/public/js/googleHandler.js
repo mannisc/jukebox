@@ -206,7 +206,7 @@ function executeFileRequest(request) {
 
                     $scope.safeApply();
                     $("#playlistview").listview('refresh');
-                    playlistController.remarkSong();
+                    playbackController.remarkSong();
                     uiController.makePlayListSortable();
 
                     setTimeout(function(){
