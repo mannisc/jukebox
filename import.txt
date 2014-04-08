@@ -1,0 +1,40 @@
+/** * importController.
+ *
+ * >>Description<<
+ *
+ * @author Norbert
+ * @date 04.04.14 - 01:13
+ * @copyright  */
+
+var importController = function () {
+};
+
+importController.loadYouTubePlaylist = function(url){
+    $.ajax({
+        url: "http://gdata.youtube.com/feeds/api/playlists/PL3C8AF2FDA2DEF6E4",
+        dataType: "xml",
+        success: function (data) {
+            console.dir(data);
+            var playlistXML = data.children[0].childNodes;
+            console.dir(playlistXML);
+            var playlists = new Array();
+            for (var j = 0; j < playlistXML.length; j++) {
+                if(playlistXML[j].nodeName == "entry"){
+                    console.dir("ENTRY: "+j);
+
+                    playlists[j] = {
+                    name: $(playlistXML[j]).find('title').text(),
+                    gid: j ,
+                    tracks: ,
+                    isPlaylist: true,
+                    id: j:
+                    }
+                    console.dir(playlists[j]);
+                }
+
+
+
+            }
+        }
+    })
+}
