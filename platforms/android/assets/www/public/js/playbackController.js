@@ -151,7 +151,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
     $(songListElement.get(0)).addClass("loadedsong")
 
-    helperFunctions.animateBackground(".songlist li.loadedsong.stillloading .loadingSongImg", "public/img/loader/sprites.png", 46, 46, 18, 46, 6);
+    helperFunctions.animateBackground(".songlist li.loadedsong.stillloading .loadingSongImg", "public/img/loader/sprites.png", 46, 46, 18, 46,4.8);
 
 
     $scope.safeApply();
