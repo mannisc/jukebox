@@ -79,6 +79,17 @@ dailymotionPlayer.stop = function () {
 
 };
 
+/**
+ * Set Progress in percentage
+ */
+dailymotionPlayer.setProgressPercentage = function(percentage){
+
+    //Set progress in videoController
+    videoController.setProgressPercentage(percentage)
+
+}
+
+
 
 dailymotionPlayer.mute = function () {
     alert("mute")
@@ -95,12 +106,7 @@ dailymotionPlayer.setFullscreenMode = function (mode) {
 };
 
 
-dailymotionPlayer.setCurrentTime = function(percentage){
 
-    //Set progress in videoController
-    videoController.setProgressPercentage(percentage)
-
-}
 
 
 
