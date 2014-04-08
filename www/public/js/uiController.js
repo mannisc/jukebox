@@ -1008,13 +1008,13 @@ uiController.init = function () {
     playIndicator.appendTo("#searchlist .iScrollVerticalScrollbar");
 
     playIndicator.click(function () {
-        uiController.searchListScroll.scrollToElement(".loadedsong");
+        uiController.searchListScroll.scrollToElement(".loadedsong",700);
     });
 
 
     playIndicatorPlalist.appendTo("#playlistInner .iScrollVerticalScrollbar");
     playIndicatorPlalist.click(function () {
-        uiController.playListScroll.scrollToElement(".loadedsong");
+        uiController.playListScroll.scrollToElement(".loadedsong",700);
     });
 
 

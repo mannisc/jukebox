@@ -469,12 +469,11 @@ videoController.setLoopButton = function (loop) {
  */
 videoController.setProgressPercentage = function (percentage) {
 
-    var total = videoController.controls.find('.videoControlElements-time-total');
     if (percentage < 0)
         percentage = 0;
     else if (percentage > 1)
         percentage = 1;
-    videoController.controls.find(".videoControlElements-time-current").css("width", total.width() * percentage)
+    videoController.controls.find(".videoControlElements-time-current").css("width", percentage*100+"%")
     if (videoController.maxTime && videoController.maxTime > 0){
         videoController.progressTime = videoController.maxTime*percentage;
         videoController.controls.find(".videoControlElements-currenttime").text(videoController.secondsToTimeCode(videoController.progressTime, false, false, false));
@@ -487,12 +486,11 @@ videoController.setProgressPercentage = function (percentage) {
  */
 videoController.setBufferedPercentage = function (percentage) {
     videoController.buffered =  percentage;
-    var total = videoController.controls.find('.videoControlElements-time-total');
     if (percentage < 0)
         percentage = 0;
     else if (percentage > 1)
         percentage = 1;
-    videoController.controls.find(".videoControlElements-time-loaded").css("width", total.width() * percentage)
+    videoController.controls.find(".videoControlElements-time-loaded").css("width",  percentage*100+"%")
 
 
 
