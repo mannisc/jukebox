@@ -162,7 +162,7 @@ dailymotionPlayer.unload = function () {
 };
 
 
-ailymotionPlayer.setVolume = function (volume) {
+dailymotionPlayer.setVolume = function (volume) {
     if(dailymotionPlayer.dmplayer && dailymotionPlayer.apiready){
         dailymotionPlayer.dmplayer.setVolume(volume);
     }
@@ -173,7 +173,7 @@ ailymotionPlayer.setVolume = function (volume) {
  * Set Fullscreen Mode
  * @param mode  0: Window ,1: Background ,2: Fullscreen
  */
-dailymotionPlayer.setFullscreen = function (fullscreen) {
+dailymotionPlayer.setFullscreenMode = function (mode) {
     //  dailymotionPlayer.dmplayer.fullscreen(fullscreen);
 }
 
