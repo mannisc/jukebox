@@ -3331,7 +3331,6 @@ if (typeof jQuery != 'undefined') {
 			t.handle = handle;
 		},
 		setProgressRail: function(e) {
-
 			var
 				t = this,
 				target = (e != undefined) ? e.target : t.media,
@@ -3362,6 +3361,7 @@ if (typeof jQuery != 'undefined') {
 					t.loaded.width(t.total.width() * percent);
 				}
 			}
+            return percent; //TODO CHANGED!!!!!!
 		},
 		setCurrentRail: function() {
 
@@ -3449,7 +3449,6 @@ if (typeof jQuery != 'undefined') {
 		
 		updateCurrent:  function() {
 			var t = this;
-
 			if (t.currenttime) {
 				t.currenttime.html(mejs.Utility.secondsToTimeCode(t.media.currentTime, t.options.alwaysShowHours || t.media.duration > 3600, t.options.showTimecodeFrameCount,  t.options.framesPerSecond || 25));
 			}
