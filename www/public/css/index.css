@@ -733,9 +733,9 @@ video{
     /*-webkit-transform: rotateY(300deg) scale(1.21)!important;
         -moz-transform: rotateY(359deg) scale(1.21)!important;
         transform: rotateY(359deg) scale(1.21)!important;*/
-    -webkit-animation:spin 1.5s ease infinite;
-    -moz-animation:spin 1.5s ease infinite!important;
-    animation:spin 1.5s ease infinite;
+    -webkit-animation:spin 2s ease infinite;
+    -moz-animation:spin 2s ease infinite!important;
+    animation:spin 2s ease infinite;
 }
 
 @-moz-keyframes spin {
@@ -783,9 +783,9 @@ video{
     -o-transition-property: -o-transform;
     transition-property: transform;
 
-    -webkit-animation:spin 1.5s ease infinite;
-    -moz-animation:spin 1.5s ease infinite!important;
-    animation:spin 1.5s ease infinite;
+    -webkit-animation:spin 2s ease infinite;
+    -moz-animation:spin 2s ease infinite!important;
+    animation:spin 2s ease infinite;
     /*-webkit-transform: rotateY(300deg) scale(1.21)!important;
         -moz-transform: rotateY(359deg) scale(1.21)!important;
         transform: rotateY(359deg) scale(1.21)!important;*/
