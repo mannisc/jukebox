@@ -143,7 +143,6 @@ dailymotionPlayer.load = function (url) {
 dailymotionPlayer.unload = function () {
     dailymotionPlayer.active = 0;
     dailymotionPlayer.stop();
-    dailymotionPlayer.close();
     $("#dmplayer").hide();
     if(dailymotionPlayer.dailymotion &&  dailymotionPlayer.dmplayer){
         dailymotionPlayer.dmplayer.removeEventListener("apiready");
