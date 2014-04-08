@@ -126,6 +126,7 @@ dailymotionPlayer.load = function (url) {
             if(dailymotionPlayer.duration>0){
               videoController.setBufferedPercentage(dailymotionPlayer.bufferedTime/dailymotionPlayer.duration);
             }
+
         });
 
         dailymotionPlayer.dmplayer.addEventListener("ended", function(e)
