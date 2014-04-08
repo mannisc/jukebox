@@ -264,7 +264,7 @@
                 <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"  ng-click="playlistController.selectSong(song)"
                     ng-dblclick="playbackController.doubleClickedElement(song);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
                                                                                            class="ui-li-icon ui-corner-none">
-                    <img src="public/img/empty.png" class="loadingSongImg" style="display:none">
+                    <img src="public/img/play.png" class="loadingSongImg" style="display:none">
                     <span ng-if="!song.isPlaylist">
                     <h3>{{song.name}}</h3>
                     <p>{{mediaController.getSongArtist(song)}}</p><img class="removesong" ng-style="{'background-image':'url(public/img/trash.png)',display:'none'}" src="public/img/empty.png">
