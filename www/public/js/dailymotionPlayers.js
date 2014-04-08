@@ -24,24 +24,57 @@ dailymotionPlayer.duration = 0;
 dailymotionPlayer.currentTime = 0;
 dailymotionPlayer.apiready = false;
 
+
+/**
+ * Init Player
+ */
+dailymotionPlayer.init = function () {
+
+
+};
+
+
+
+/**
+ * Load Player with Url before using
+ */
+dailymotionPlayer.load = function (url) {
+
+
+};
+
+/**
+ * Unload Player after using
+ */
+dailymotionPlayer.unload = function () {
+
+
+};
+
+
 dailymotionPlayer.setVolume = function (volume) {
       console.log(volume);
 };
 
 
 dailymotionPlayer.play = function () {
+    embedPlayer.play();
+
     alert("play")
 
 
 };
 
 dailymotionPlayer.pause = function () {
+    embedPlayer.pause();
 
     alert("pause")
 
 };
 
 dailymotionPlayer.stop = function () {
+    embedPlayer.stop();
+
     alert("stop")
 
 };
@@ -53,7 +86,11 @@ dailymotionPlayer.mute = function () {
 
 };
 
-dailymotionPlayer.fullscreen = function () {
+/**
+ * Set Fullscreen Mode
+ * @param mode  0: Window ,1: Background ,2: Fullscreen
+ */
+dailymotionPlayer.setFullscreenMode = function (mode) {
     alert("fullscreen")
 };
 

@@ -147,19 +147,11 @@ mediaController.showDuration = function (songversion) {
 mediaController.playSong = function (streamURL, videoURL) {
     mediaController.currentStreamURL = streamURL;
     mediaController.currentvideoURL = videoURL;
-    if (embedPlayer.isEmbedVideo(videoURL)) {
-        embedPlayer.enable();
-        uiController.mediaElementPlayer.setSrc("http://0.0.0.0");
-        uiController.mediaElementPlayer.load();
-        uiController.mediaElementPlayer.play();
-        embedPlayer.loadDailymotion(videoURL);
-    }
-    else {
-        embedPlayer.disable();
-        uiController.mediaElementPlayer.setSrc(streamURL);
-        uiController.mediaElementPlayer.load();
-        uiController.mediaElementPlayer.play();
-    }
+
+    videoController.loadSongInSuitablePlayer(streamURL, videoURL);
+
+    videoController.playSong();
+
     setTimeout(function () {
         uiController.setScreenMode();
     }, 500);
@@ -695,7 +687,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
         console.dir(streamURL);
 
 
-        if (uiController.fullscreenMode == 1)
+        if (videoController.fullscreenMode == 1)
             $("#backgroundImage").css("opacity", "0.08");
 
         if (playbackController.playingSong.gid)

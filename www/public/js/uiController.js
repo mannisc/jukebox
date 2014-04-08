@@ -21,7 +21,6 @@ uiController.responsiveWidthSmall = 850;
 
 uiController.responsiveWidthSmaller = 1080;
 
-uiController.fullscreenMode = 0;
 
 uiController.totalTimeWidth = 0;
 
@@ -172,7 +171,7 @@ uiController.initMediaPlayer = function () {
 
     uiController.setScreenMode = function(){
 
-        if(uiController.fullscreenMode==1){ //Background
+        if(videoController.fullscreenMode==1){ //Background
             if(embedPlayer.active == 0){
                 $("#videoplayer").hide();
                 if(playbackController.playingSong)
@@ -191,7 +190,7 @@ uiController.initMediaPlayer = function () {
             }
             uiController.hideFullscreen();
 
-        }else  if(uiController.fullscreenMode==2){
+        }else  if(videoController.fullscreenMode==2){
             if(embedPlayer.active == 0){
                 $("#backgroundImage").show();
 
@@ -208,7 +207,7 @@ uiController.initMediaPlayer = function () {
             uiController.showFullscreen();
 
 
-        } else  if(uiController.fullscreenMode==0){
+        } else  if(videoController.fullscreenMode==0){
 
             if(embedPlayer.active == 0){
                 $("#videoplayer").show();
@@ -236,6 +235,7 @@ uiController.initMediaPlayer = function () {
         alwaysShowControls: true,
         autosizeProgress: false,
 
+        /*
         success: function (mediaElement, domObject) {
 
             var resizeLayer = $(".mejs-overlay-play").clone();
@@ -336,7 +336,7 @@ uiController.initMediaPlayer = function () {
                  embedPlayer.play();
                  else
                  embedPlayer.pause();
-                 */
+                 *//*
 
             });
 
@@ -378,7 +378,7 @@ uiController.initMediaPlayer = function () {
 
             $(".mejs-shuffle-button").click(function () {
                 playlistController.toggleShuffleSongs();
-            })  DONE */
+            })  DONE *//*
 
 
             $(".mejs-stop-button").click(function () {
@@ -533,7 +533,7 @@ uiController.initMediaPlayer = function () {
 
 
             });
-        },
+        }, */
         error: function () {
             console.log("ERROR CREATING <VIDEO>........................");
 
@@ -657,6 +657,9 @@ uiController.initMediaPlayer = function () {
 }
 
 uiController.init = function () {
+
+    //Additional Control Buttons
+    uiController.countCustomButtons = $(".videoControlElements-custom-button").length;
 
     if (playlistController.loadedPlaylistSongs.length == 0) {
         $("#saveplaylistbtn img").attr("src", "public/img/save.png");
