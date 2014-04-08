@@ -284,10 +284,20 @@
     <div id="videoplayer">
         <div id="videoplayerInner">
 
-          <video id="player1" controls="controls" preload="true">
+           <!-- mediaemelemtjs player -->
+           <video id="mediaemelemtjsPlayer" controls="controls" preload="true">
                <source src="" type="video/mp4"/>
            <!--   <source src="" type="video/flv"/> -->
+           </video>
+
+
+           <--OLD //TODO REMOVE -->
+            <video id="player1" style="display:none" >
+
             </video>
+
+
+            <!-- embedded players -->
            <div id="embedplayer" >
                <div id="dmplayer" ></div>
            </div>
@@ -544,10 +554,10 @@
 <script type="text/javascript" src="public/js/uiController.js"></script>
 
 <script type="text/javascript" src="public/js/mediaelementPlayer.js"></script>
+<script type="text/javascript" src="public/js/dailymotionPlayers.js"></script>
 
 <script type="text/javascript" src="public/js/videoController.js"></script>
 <script type="text/javascript" src="public/js/videoPlayer.js"></script>
-<script type="text/javascript" src="public/js/dailymotionPlayers.js"></script>
 
 
 <script type="text/javascript" src="public/js/mediaController.js"></script>
