@@ -380,9 +380,9 @@
             <h3 style="margin-right: 40px;margin-left: 40px;padding-right: 20px;padding-left: 20px;text-align: center;">Artist</h3>
 
             <ul data-role="listview" id="popupArtistExternList" data-theme="b">
-                <li data-theme="b" class="marked"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchArtistSongs(mediaController.getSongArtist(playlistController.playingSong));"
+                <li data-theme="b" class="marked"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchArtistSongs(mediaController.getSongArtist(playbackController.playingSong));"
                                       style="text-decoration:none" target="_blank">Songs from Artist</a></li>
-                <li data-theme="b" class="marked"  style="border-bottom:1px solid #ddd;"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchSimilarSongs(playlistController.playingSong);"
+                <li data-theme="b" class="marked"  style="border-bottom:1px solid #ddd;"><a ng-show="playlistController.loadingSong" onclick="$('#popupArtist').popup('close');searchController.searchSimilarSongs(playbackController.playingSong);"
                                       style="text-decoration:none" target="_blank">Similar Songs</a></li>
                 <li data-theme="b" style="border-top:15px solid rgba(255,255,255,0.8);"><a ng-show="playlistController.loadingSong" href="http://de.wikipedia.org/w/index.php?go=Artikel&title&search={{mediaController.getSongArtist(playlistController.loadingSong)}}"
                                       onclick="$('#popupArtist').popup('close')" style="text-decoration:none" target="_blank">Wikipedia</a></li>

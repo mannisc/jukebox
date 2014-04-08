@@ -521,9 +521,9 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
         // playlistController.playingTitle = playlistController.playlingTitleLoading ;
         // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
 
-        playlistController.playingOldSong = playlistController.playingSong;
+        playbackController.playingOldSong = playbackController.playingSong;
 
-        playlistController.setNewTitle(playlistController.playingSong.name, mediaController.getSongCover(playlistController.playingSong), true);
+        playlistController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
 
 
         mediaController.playSong(streamURL, videoURL)
@@ -684,9 +684,9 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
         // playlistController.playingTitle = playlistController.playlingTitleLoading ;
         // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
 
-        playlistController.playingOldSong = playlistController.playingSong;
+        playbackController.playingOldSong = playbackController.playingSong;
 
-        playlistController.setNewTitle(playlistController.playingSong.name, mediaController.getSongCover(playlistController.playingSong), true);
+        playlistController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
         mediaController.playSong(streamURL, videoURL);
 
 
@@ -698,10 +698,10 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
         if (uiController.fullscreenMode == 1)
             $("#backgroundImage").css("opacity", "0.08");
 
-        if (playlistController.playingSong.gid)
-            var listElement = $("#playlistInner li[data-songgid='playlistsong" + playlistController.playingSong.gid + "'] ");
+        if (playbackController.playingSong.gid)
+            var listElement = $("#playlistInner li[data-songgid='playlistsong" + playbackController.playingSong.gid + "'] ");
         else
-            listElement = $("#searchlist li[data-songid='searchsong" + playlistController.playingSong.id + "'] ");
+            listElement = $("#searchlist li[data-songid='searchsong" + playbackController.playingSong.id + "'] ");
 
 
         var loadTime = Date.now() - playbackController.startedLoadingTime;
@@ -759,12 +759,12 @@ mediaController.toggleLyrics = function () {
 
 
     if (!mediaController.showLyrics)
-        uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.playingSong) + ":" + playlistController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
+        uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
 
     mediaController.showLyrics = !mediaController.showLyrics;
     if (mediaController.showLyrics) {
-        if (playlistController.playingSong) {
-            $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playlistController.playingSong) + ":" + playlistController.playingSong.name + "?useskin=wikiamobile");
+        if (playbackController.playingSong) {
+            $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "?useskin=wikiamobile");
             iframe.removeClass('fadeoutcomplete');
             iframe.addClass('fadeincompleteslow');
             iframe.show();
