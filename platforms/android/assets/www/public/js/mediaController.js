@@ -702,15 +702,21 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
             delayTime = delayTime-400;
         else
             delayTime = 0;
+
+        $(listElement.get(0)).addClass("firstplay");
+
         setTimeout(function () {
             $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeoutcompletefast")
             $(listElement.get(0)).find(".loadingSongImg").addClass("fadeoutcompletefast")
 
             setTimeout(function () {
+
                 if ($(listElement.get(0)).hasClass("stillloading")) {
                     $(listElement.get(0)).addClass("playing");
                     $(listElement.get(0)).removeClass("stillloading")
                 }
+                $(listElement.get(0)).removeClass("firstplay");
+
                 //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
                 $(listElement.get(0)).find(".loadingSongImg").hide();
                 $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "0")
@@ -725,7 +731,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                     }, 1000)
                 }, 200)
 
-            }, 400)
+            }, 200)
         }, delayTime)
 
 

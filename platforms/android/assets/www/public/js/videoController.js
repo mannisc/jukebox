@@ -364,7 +364,7 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
     videoController.setProgressPercentage(0);
     videoController.setBufferedPercentage(0);
 
-    if(videoController.videoPlayer&& videoController.videoPlayer.unload())
+    if(videoController.videoPlayer&& videoController.videoPlayer.unload)
         videoController.videoPlayer.unload();
 
     //TODO Select embedded Player
@@ -405,10 +405,15 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
  * @type {*}
  */
 videoController.playSong = function () {
-    if (!videoController.isPlaying) {
+    if (!videoController.isPlaying&&playbackController.playingSong&&!playbackController.isLoading) {
         videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
         videoController.videoPlayer.play();
         videoController.isPlaying = true;
+        if(!$(".songlist li.loadedsong").hasClass("firstplay")){
+            $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
+            $($(".songlist li.loadedsong").get(0)).addClass("playing");
+            $(".songlist li.loadedsong").removeClass("pausing");
+        }
 
     }
 }
@@ -790,10 +795,7 @@ videoController.playingSong = function () {
     if (playbackController.playingSong) {
 
         //   helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
-        $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
 
-        $($(".songlist li.loadedsong").get(0)).addClass("playing");
-        $(".songlist li.loadedsong").removeClass("pausing");
 
         playbackController.isLoading = false;
         videoController.isPlaying = true;
