@@ -126,6 +126,7 @@ dailymotionPlayer.load = function (url) {
             if(dailymotionPlayer.duration>0){
               videoController.setBufferedPercentage(dailymotionPlayer.bufferedTime/dailymotionPlayer.duration);
             }
+
         });
 
         dailymotionPlayer.dmplayer.addEventListener("ended", function(e)
@@ -144,7 +145,7 @@ dailymotionPlayer.unload = function () {
     dailymotionPlayer.active = 0;
     dailymotionPlayer.stop();
     $("#dmplayer").hide();
-    if(dailymotionPlayer.dailymotion &&  dailymotionPlayer.dmplayer){
+    if(dailymotionPlayer.dmplayer){
         dailymotionPlayer.dmplayer.removeEventListener("apiready");
 
         dailymotionPlayer.dmplayer.removeEventListener("durationchange");
@@ -153,7 +154,9 @@ dailymotionPlayer.unload = function () {
 
         dailymotionPlayer.dmplayer.removeEventListener("progress");
 
+        dailymotionPlayer.dmplayer.removeEventListener("error");
     }
+    dailymotionPlayer.dmplayer.load("null");
     dailymotionPlayer.dmplayer = null;
     dailymotionPlayer.dailymotion = 0;
     dailymotionPlayer.apiready = false;
