@@ -808,7 +808,8 @@ video{
 
 
 .songlist li.loadedsong.pausing img.ui-li-icon {
-    background-image:url(../img/pause.png)!important;
+    background-image:url(../img/play.png)!important;
+    opacity: 0.5 !important;
     background-size:100%;
     background-position: 0px 0px!important;
 
