@@ -46,9 +46,11 @@ playbackController.doubleClickedElement = function (element, onlyStyle) {
  */
 playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     //Dont play multiple songs within 100ms
-    if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 100)
+    if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 100){
+        playbackController.playSongTimer = Date.now();
         return;
-    playbackController.playSongTimer = Date.now();
+    }else
+      playbackController.playSongTimer = Date.now();
 
     //Song for which version list is currently loaded set to null
     mediaController.versionListSong = null;
@@ -77,16 +79,13 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
             return;
         //Toggle Playing/Pausing
         else if (playbackController.playingSong) {
-            if (videoController.isPlaying) {
-                $(songListElement.get(0)).addClass("playing");
-            }
-            else
-                $(songListElement.get(0)).addClass("pausing");
 
-            setTimeout(function () {
-                videoController.playPauseSong();
+            if (!$(songListElement.get(0)).hasClass("stillloading"))
+                setTimeout(function () {
 
-            }, 50);
+                    videoController.playPauseSong();
+
+                }, 50);
             return;
         }
     }
@@ -145,7 +144,6 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     //helperFunctions.animateBackground(".songlist li.loadedsong.stillloading .loadingSongImg", "public/img/loader/sprites.png", 46, 46, 18, 46,4.8);
 
     $(".songlist li.loadedsong.stillloading .loadingSongImg").show();
-
 
 
     $scope.safeApply();
