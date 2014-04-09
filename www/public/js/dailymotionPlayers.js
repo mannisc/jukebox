@@ -163,6 +163,7 @@ dailymotionPlayer.unload = function () {
     $("#dmplayer").hide();
     if(dailymotionPlayer.dmplayer){
         console.dir("removeEventListener! ");
+        dailymotionPlayer.dmplayer.addEventListener("progress", function(e){});
        dailymotionPlayer.dmplayer.removeEventListener("apiready");
 
         dailymotionPlayer.dmplayer.removeEventListener("canplaythrough");
@@ -180,7 +181,8 @@ dailymotionPlayer.unload = function () {
     dailymotionPlayer.apiready = false;
     delete dailymotionPlayer.dmplayer;
     dailymotionPlayer.dmplayer = null;
-    //$("#dmplayer").remove();
+    $("#dmplayer").remove();
+    $( "#embedplayer" ).append('<div id="dmplayer" ></div>' );
 };
 
 
