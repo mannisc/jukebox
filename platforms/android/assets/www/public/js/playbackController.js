@@ -24,7 +24,11 @@ playbackController.doubleClickedElement = function (element, onlyStyle) {
         return;
 
     //Remove Selection
-    $("#searchlist li.selected").removeClass("selected");
+    var selected =$(".songlist li.selected");
+    if(selected.length>0){
+       selected.removeClass("selected");
+       return;
+    }
 
     //Playlist or song?
     if (element.isPlaylist) {
