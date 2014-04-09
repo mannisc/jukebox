@@ -13,7 +13,7 @@ var dailymotionPlayer = function () {
 dailymotionPlayer.dmplayer    = null;
 dailymotionPlayer.active      = 0;
 dailymotionPlayer.dailymotion = 0;
-dailymotionPlayer.dailymotionVideoID = 0;
+dailymotionPlayer.dailymotionVideoID = "";
 dailymotionPlayer.bufferedTime = 0;
 dailymotionPlayer.duration = 0;
 dailymotionPlayer.currentTime = 0;
@@ -180,6 +180,7 @@ dailymotionPlayer.load = function (url) {
  */
 dailymotionPlayer.unload = function () {
     console.dir("UNLOAD! ");
+    dailymotionPlayer.dailymotionVideoID ="null";
     dailymotionPlayer.stop();
     dailymotionPlayer.active = 0;
     $("#dmplayer").hide();
