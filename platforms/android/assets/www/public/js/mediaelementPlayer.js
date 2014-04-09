@@ -43,8 +43,6 @@ var mediaelementPlayer = function (selector) {
 
                         var target = that.mediaElementPlayer.media;
                         if (target && target.buffered && target.buffered.length > 0 && target.buffered.end && target.duration) {
-                            // TODO: account for a real array with multiple values (only Firefox 4 has this so far)
-
 
                             var minDiff = target.duration;
                             var minDiffPos = 0;
@@ -56,37 +54,6 @@ var mediaelementPlayer = function (selector) {
                                 }
                             }
                             percent = minDiffPos / target.duration;
-
-
-                            /*
-                            //If first time take last range
-                            if(!target.oldBufferedRangeItem||target.oldBufferedRangeItem>target.buffered.length - 1)
-                             percent = target.buffered.end(target.buffered.length - 1) / target.duration;
-                            else
-                             percent = target.buffered.end(target.oldBufferedRangeItem) / target.duration;
-
-                            //Otherwise search for changing Range
-                            if (target.oldBufferedRange&&target.oldBufferedRange.length>0) {
-                                console.log("------------------- "+target.oldBufferedRangeItem);
-
-                                for (var i = 0; i < target.buffered.length; i++) {
-                                    if (i < target.oldBufferedRange.length) {
-                                        console.log(target.buffered.end(i)+" = "+target.oldBufferedRange[i]+"  "+i+"  "+target.buffered.length)
-
-                                        if (target.buffered.end(i)!= target.oldBufferedRange[i]) {
-                                            percent = target.buffered.end(i) / target.duration;
-                                            target.oldBufferedRangeItem = i;
-                                            console.log("----");
-                                        }
-                                    }
-                                }
-                            }
-                            //Save old Ranges
-                            target.oldBufferedRange = [];
-                            for (i = 0; i < target.buffered.length; i++) {
-                                target.oldBufferedRange[i] = target.buffered.end(i);
-                            }
-                            */
 
                         }
                         // Some browsers (e.g., FF3.6 and Safari 5) cannot calculate target.bufferered.end()
@@ -182,7 +149,7 @@ var mediaelementPlayer = function (selector) {
      * Load Player with Url before using
      */
     this.unload = function (url) {
-        this.mediaElementPlayer.pause();
+        this.stop();
         this.stopUpdateTime();
     }
 
@@ -241,7 +208,8 @@ var mediaelementPlayer = function (selector) {
     }
 
     this.setVolume = function (volume) {
-        console.log(volume);
+        if(this.mediaElementPlayer&& this.mediaElementPlayer.media)
+          this.mediaElementPlayer.media.setVolume(volume);
     };
 
 

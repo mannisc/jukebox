@@ -139,6 +139,7 @@ dailymotionPlayer.load = function (url) {
                   videoController.setBufferedPercentage(dailymotionPlayer.bufferedTime/dailymotionPlayer.duration);
                 }
             }
+
         });
 
         dailymotionPlayer.dmplayer.addEventListener("ended", function(e)
