@@ -102,7 +102,12 @@ var mediaelementPlayer = function (selector) {
                 })
                 //TODO END -----------------------------------------------------------------------------------
 
+                mediaElement.addEventListener("canplay", function (e) {
+                    that.mediaElementPlayer.media.setVolume(videoController.volume);
+                })
+
                 mediaElement.addEventListener("playing", function (e) {
+
                     videoController.playingSong();
 
                     that.updateTime.call(that);
@@ -116,7 +121,7 @@ var mediaelementPlayer = function (selector) {
                 });
 
                 mediaElement.addEventListener("error", function (e) { //TODO VideoController Handling nötig wenn versionen embedded fähig???
-                    if (mediaController.currentvideoURL && embedPlayer.active == 0) {
+                    if (mediaController.currentvideoURL ) {
                         mediaController.playNextVersion();
                     }
                 });
