@@ -81,18 +81,22 @@ playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.leng
 playlistController.selectSong = function (song) {
 
     if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
-        if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 800)
+
+        /*if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 800)
             return;
         setTimeout(function(){
             if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 800)
-                return;
+                return;  */
+
             var Id = song.id;
             var listElement = null;
             if (song.gid) {
-                if (uiController.sortPlaylist)
+                if (!uiController.sortPlaylist)
+                    uiController.toggleSortablePlaylist(false,true);
+
+                listElement = $("#playlistInner li[data-songgid='playlistsong" + song.gid + "'] ");
 
 
-                    listElement    = $("#playlistInner li[data-songid='playlistsong" + Id + "'] ");
             }
             else {
                 //  listElement = $("#searchlist li[data-songid='searchsong" + Id + "'] ");
@@ -104,8 +108,8 @@ playlistController.selectSong = function (song) {
             if(listElement)
                 listElement.toggleClass("selected");
 
-        },250)
-
+   /*     },250)
+          */
     }
 }
 
