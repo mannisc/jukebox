@@ -364,7 +364,7 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
     videoController.setProgressPercentage(0);
     videoController.setBufferedPercentage(0);
 
-    if(videoController.videoPlayer&& videoController.videoPlayer.unload())
+    if(videoController.videoPlayer&& videoController.videoPlayer.unload)
         videoController.videoPlayer.unload();
 
     //TODO Select embedded Player
