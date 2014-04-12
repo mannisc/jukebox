@@ -161,7 +161,7 @@ mediaController.playSong = function (streamURL, videoURL) {
 mediaController.getVersions = function () {
     // importController.importPlaylist("https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
     //importController.importPlaylist("http://vimeo.com/channels/rihanna");//
-    importController.importPlaylist("http://www.dailymotion.com/playlist/xvguj_dailymotionuk_rihanna/1#video=x6f3n8");//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
+   // importController.importPlaylist("http://www.dailymotion.com/playlist/xvguj_dailymotionuk_rihanna/1#video=x6f3n8");//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         var currentsong = playbackController.getPlayingSong();
         if (mediaController.currentStreamURL != "") {
@@ -348,10 +348,15 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
 mediaController.loadStreamURL = function (streamID, searchString, artistString, titleString, streamURL, duration) {
 
     var loadError = false;
+    //var stime=new Date();
+    //var time=stime.getTime();
     $.ajax({
         timeout: 30000,
         url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration + "&auth=" + authController.ip_token,
         success: function (data) {
+            //var etime=new Date();
+            //var diff = etime.getTime()-time;
+            //alert("RESPONSE TIME: "+diff+" ms");
             if (data.auth && data.auth == "true") {
                 authController.extractToken(data.token);
                 mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration);
