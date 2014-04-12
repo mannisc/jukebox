@@ -123,7 +123,7 @@
 <!-- /panel -->
 
 <div data-role="header" id="header" data-position="fixed">
-    <img src="public/img/logo.png" id="iconHeader" style="opacity:0;position:absolute;left: 8px;top: 8px" width="30px" height="30px">
+    <img src="public/img/logo.gif" id="iconHeader" style="opacity:0;position:absolute;left: 8px;top: 8px" width="30px" height="30px">
 
 
     <h1 id="titleHeader" style="display:none">{{appTitle}} <span style="position: absolute; top: 10px;left: 170px;color: #a00; font-weight: 100; font-size: 10px;">BETA</span></h1>
@@ -196,8 +196,8 @@
 
         <ul data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
-            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-click="playlistController.selectSong(song)" ng-dblclick="playbackController.doubleClickedElement(song);"><a tabindex="-1"><img
-                    src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none"><img src="public/img/play.png"
+            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-dblclick="playbackController.doubleClickedElement(song);"><a tabindex="-1"><img
+                    src="public/img/empty.png" ng-click="playlistController.selectSong(song)"  ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none"><img src="public/img/play.png"
                                                                                                                                                                                                     class="loadingSongImg" style="display:none">
 
                 <h3>{{song.name}}</h3>
@@ -217,7 +217,7 @@
         <div id="controlbarplaylist">
 
             <div id="playlistselectvertical">
-                <a href="#" id="clearChoosenPlaylists" style="display:none" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all" title="Clear">Clear</a>
+                <a href="#" id="clearChoosenPlaylists" style="display:none" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all" title="Clear Selection">Clear Selection</a>
 
                 <form>
                     <select id="playlistselectverticalform" data-role="none" data-placeholder="Select Playlists" multiple class="chosen-select">
@@ -231,7 +231,7 @@
             <div id="sortplaylistbutton">
 
                 <button id="sortplaylistbtn" onclick="uiController.toggleSortablePlaylist(false,true);" data-mini="true" data-type="button" value="" data-theme="b">
-                    <img src="public/img/edit.png" width="22px" height="22px" alt="Sort"/>
+                    <img src="public/img/sort.png" width="22px" height="22px" alt="Sort"/>
                 </button>
 
             </div>
@@ -261,8 +261,8 @@
 
         <div id="playlistInner" class="animate" style="display:none">
             <ul data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
-                <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"  ng-click="playlistController.selectSong(song)"
-                    ng-dblclick="playbackController.doubleClickedElement(song);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
+                <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
+                    ng-dblclick="playbackController.doubleClickedElement(song);"><a tabindex="-1"><img src="public/img/empty.png" ng-click="playlistController.selectSong(song)" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
                                                                                            class="ui-li-icon ui-corner-none">
                     <img src="public/img/play.png" class="loadingSongImg" style="display:none">
                     <span ng-if="!song.isPlaylist">
@@ -596,7 +596,7 @@
 <script type="text/javascript" src="public/js/dailymotionPlayers.js"></script>
 
 
-<!-- Preload Images-->
+<!-- Preload Images/WebGL-->
 <div style="display:none">
     <img src="public/img/play.png">
     <img src="public/img/pause.png">
@@ -608,7 +608,10 @@
     <img src="public/img/cross.png">
     <img src="public/img/loader/sprites.png">
 
+    <canvas id="webglcanvas"></canvas>
 </div>
+
+
 
 </body>
 </html>
