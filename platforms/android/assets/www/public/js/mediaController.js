@@ -671,20 +671,6 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
     $("#videoplayer").css("pointer-events", "none");
 
     setTimeout(function () {
-        $("#videoplayer").removeClass("animatefast").addClass("animate");
-
-        // playlistController.playingTitle = playlistController.playlingTitleLoading ;
-        // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
-
-        playbackController.playingOldSong = playbackController.playingSong;
-
-        playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
-        mediaController.playSong(streamURL, videoURL);
-
-
-        //$("#siteLogoImage").attr('onclick',"win=window.open('"+mediaController.currentvideoURL+"', '_blank')");
-
-        console.dir(streamURL);
 
 
         if (videoController.fullscreenMode == 1)
@@ -715,7 +701,6 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                     $(listElement.get(0)).addClass("playing");
                     $(listElement.get(0)).removeClass("stillloading")
                 }
-                $(listElement.get(0)).removeClass("firstplay");
 
                 //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
                 $(listElement.get(0)).find(".loadingSongImg").hide();
@@ -725,6 +710,8 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                 $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeoutcompletefast");
                 setTimeout(function () {
                     $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeincomplete")
+                    $(listElement.get(0)).removeClass("firstplay");
+
                     setTimeout(function () {
                         $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "1")
                         $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeincomplete");
@@ -733,6 +720,25 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
             }, 200)
         }, delayTime)
+
+
+
+
+
+        $("#videoplayer").removeClass("animatefast").addClass("animate");
+
+        // playlistController.playingTitle = playlistController.playlingTitleLoading ;
+        // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
+
+        playbackController.playingOldSong = playbackController.playingSong;
+
+        playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
+        mediaController.playSong(streamURL, videoURL);
+
+
+        //$("#siteLogoImage").attr('onclick',"win=window.open('"+mediaController.currentvideoURL+"', '_blank')");
+
+        console.dir(streamURL);
 
 
         if (differentVersions) {
@@ -757,7 +763,9 @@ mediaController.toggleLyrics = function () {
 
 
     if (!mediaController.showLyrics)
-        uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
+      setTimeout(function(){
+                 uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
+      },2500);
 
     mediaController.showLyrics = !mediaController.showLyrics;
     if (mediaController.showLyrics) {

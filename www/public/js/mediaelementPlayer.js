@@ -161,6 +161,11 @@ var mediaelementPlayer = function (selector) {
 
     this.updateTime = function () {
         var that = this;
+
+        if (that.updateTimeTimeout) {
+            clearTimeout(that.updateTimeTimeout)
+            that.updateTimeTimeout = null;
+        }
         if (that.mediaElementPlayer) {
             videoController.setProgressTime(that.mediaElementPlayer.media.currentTime);
         }

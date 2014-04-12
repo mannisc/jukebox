@@ -105,6 +105,7 @@ dailymotionPlayer.eventListener.timeupdate = function(e)
 {
     if(dailymotionPlayer.dmplayer){
         dailymotionPlayer.currentTime = e.target.currentTime;
+        //console.log("Progress DM: "+dailymotionPlayer.currentTime)
         videoController.setProgressTime(dailymotionPlayer.currentTime);
     }
 }
@@ -115,6 +116,7 @@ dailymotionPlayer.eventListener.progress = function(e)
         if(e.target.src.search(dailymotionPlayer.dailymotionVideoID)>-1){
             dailymotionPlayer.bufferedTime = e.target.bufferedTime;
             if(dailymotionPlayer.duration>0){
+
                 videoController.setBufferedPercentage(dailymotionPlayer.bufferedTime/dailymotionPlayer.duration);
             }
         }

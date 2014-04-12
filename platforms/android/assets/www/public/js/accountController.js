@@ -191,7 +191,7 @@ accountController.loadStoredData = function(){
                     if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
                         setTimeout(function () {
 
-                            uiController.makePlayListSortable();
+                            playlistController.makePlayListSortable();
                             setTimeout(function () {
                                 uiController.playListScroll.refresh();
                             }, 150)
