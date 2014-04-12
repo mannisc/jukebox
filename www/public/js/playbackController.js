@@ -453,6 +453,7 @@ playbackController.playNextSong = function () {
 }
 
 
+
 /**
  * Position the Play Indicator
  */
@@ -555,13 +556,6 @@ playbackController.getIndexOfSong = function (song, list) {
 
     return -1;
 }
-
-
-
-
-
-
-
 
 
 

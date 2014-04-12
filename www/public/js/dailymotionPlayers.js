@@ -105,7 +105,7 @@ dailymotionPlayer.eventListener.timeupdate = function(e)
 {
     if(dailymotionPlayer.dmplayer){
         dailymotionPlayer.currentTime = e.target.currentTime;
-        console.log("Progress DM: "+dailymotionPlayer.currentTime)
+        //console.log("Progress DM: "+dailymotionPlayer.currentTime)
         videoController.setProgressTime(dailymotionPlayer.currentTime);
     }
 }

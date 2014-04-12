@@ -152,8 +152,7 @@ videoController.init = function () {
             } else {
                 videoController.volume = videoController.beforeMutedVolume;
             }
-            videoController.videoPlayer.setVolume(videoController.volume);
-            videoController.positionVolumeHandle(videoController.volume);
+            videoController.setVolume(videoController.volume);
         }
 
     });
@@ -169,6 +168,7 @@ videoController.init = function () {
     });
 
     videoController.controls.find(".videoControlElements-volume-slider").click(function (event) {
+
         if (!videoController.changingVolume) {
             var total = videoController.controls.find('.videoControlElements-volume-slider'),
                 y = event.pageY - 20,
@@ -187,7 +187,7 @@ videoController.init = function () {
             percentage = (pos / height);
             videoController.volume = (1 - percentage);
             // position the slider and handle
-            videoController.positionVolumeHandle(videoController.volume);
+            videoController.setVolume(videoController.volume);
         }
     });
 
@@ -223,7 +223,7 @@ videoController.init = function () {
             videoController.volume = volume;
 
             // position the slider and handle
-            videoController.positionVolumeHandle(videoController.volume);
+            videoController.setVolume(videoController.volume);
 
             // set the media object (this will trigger the volumechanged event)
 
@@ -282,7 +282,7 @@ videoController.init = function () {
 
     //Initial Settings
 
-    videoController.positionVolumeHandle(videoController.volume);
+    videoController.setVolume(videoController.volume);
     videoController.disablePlayStopControls(true);
     videoController.disableControls(true);
 
@@ -290,9 +290,10 @@ videoController.init = function () {
 
 
     //TODO Remove
-    videoController.setMaxTime(341);
+    /*videoController.setMaxTime(341);
     videoController.setProgressTime(78);
     videoController.setBufferedPercentage(0.6);
+    */
 }
 
 /**
@@ -698,7 +699,11 @@ videoController.showBuffering = function (show) {
  * @param volume
  * @param secondTry
  */
-videoController.positionVolumeHandle = function (volume, secondTry) {
+videoController.setVolume = function (volume, secondTry) {
+
+
+
+
     var volumeSlider = videoController.controls.find('.videoControlElements-volume-slider'),
         volumeTotal = videoController.controls.find('.videoControlElements-volume-total'),
         volumeCurrent = videoController.controls.find('.videoControlElements-volume-current'),
@@ -706,7 +711,7 @@ videoController.positionVolumeHandle = function (volume, secondTry) {
         mute = $(".videoControlElements-volume-button");
     if (!volumeSlider.is(':visible') && typeof secondTry == 'undefined') {
         volumeSlider.show();
-        videoController.positionVolumeHandle(volume, true);
+        videoController.setVolume(volume, true);
         volumeSlider.hide()
         return;
     }
@@ -740,6 +745,10 @@ videoController.positionVolumeHandle = function (volume, secondTry) {
     // show the current visibility
     volumeCurrent.height(totalHeight - newTop);
     volumeCurrent.css('top', totalPosition.top + newTop);
+
+    videoController.volume =volume;
+    videoController.videoPlayer.setVolume(videoController.volume);
+
 }
 
 
