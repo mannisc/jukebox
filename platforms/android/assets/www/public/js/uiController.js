@@ -55,7 +55,6 @@ uiController.initMediaPlayer = function () {
         $(".mejs-overlay-resize").hide();
 
 
-
         $("#videoplayer").css("-webkit-transform", "scale(1)");
         $("#videoplayer").css("transform", "scale(1)");
         $("#videoplayer").css("-webkit-transform-origin", "50% 50%");
@@ -105,7 +104,6 @@ uiController.initMediaPlayer = function () {
         $("#videoplayer").css("text-align", "center")
 
 
-
         if (!playbackController.playingSong) {
             $("#videoplayer").css("opacity", "0");
             $("#videoplayer").css("pointer-events", "none");
@@ -118,7 +116,7 @@ uiController.initMediaPlayer = function () {
     }
     MediaElementPlayer.prototype.extoptions = {scale: 1.5, displayBox: false};
 
-    uiController.showFullscreen = function(){
+    uiController.showFullscreen = function () {
         $("#backgroundImage").hide();
         $("#header").hide();
         $("#controlbar").hide();
@@ -142,10 +140,9 @@ uiController.initMediaPlayer = function () {
         }
 
 
-
     }
 
-    uiController.hideFullscreen = function(){
+    uiController.hideFullscreen = function () {
 
         $("#backgroundImage").show();
         $("#header").show();
@@ -169,36 +166,34 @@ uiController.initMediaPlayer = function () {
 
     }
 
-    uiController.setScreenMode = function(){
+    uiController.setScreenMode = function () {
 
-        if(videoController.fullscreenMode==1){ //Background
-            if(videoController.isEmbedded == 0){
+        if (videoController.fullscreenMode == 1) { //Background
+            if (videoController.isEmbedded == 0) {
                 $("#videoplayer").hide();
-                if(playbackController.playingSong)
+                if (playbackController.playingSong)
                     $("#backgroundImage").hide();
                 $("#videoplayer video").addClass("backgroundVideo").insertAfter("#backgroundImage");
             }
-            else
-            {
+            else {
                 // $("#dmplayer").addClass("iframeVideo").insertAfter("#backgroundImage");
-                if(playbackController.playingSong)
-                 $("#backgroundImage").hide();
+                if (playbackController.playingSong)
+                    $("#backgroundImage").hide();
                 $("#dmplayer").show();
-                $("#dmplayer").css("opacity","0.8");
+                $("#dmplayer").css("opacity", "0.8");
                 $("#videoplayer").hide();
 
             }
             uiController.hideFullscreen();
 
-        }else  if(videoController.fullscreenMode==2){
-            if(embedPlayer.active == 0){
+        } else if (videoController.fullscreenMode == 2) {
+            if (embedPlayer.active == 0) {
                 $("#backgroundImage").show();
 
 
             }
-            else
-            {
-                $("#dmplayer").css("opacity","1");
+            else {
+                $("#dmplayer").css("opacity", "1");
                 $("#dmplayer").show();
                 $("#videoplayer").hide();
 
@@ -207,15 +202,15 @@ uiController.initMediaPlayer = function () {
             uiController.showFullscreen();
 
 
-        } else  if(videoController.fullscreenMode==0){
+        } else if (videoController.fullscreenMode == 0) {
 
-            if(embedPlayer.active == 0){
+            if (embedPlayer.active == 0) {
                 $("#videoplayer").show();
                 $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
             }
-            else
-            {
-                $("#backgroundImage").show();;
+            else {
+                $("#backgroundImage").show();
+                ;
                 $("#dmplayer").hide();
                 $("#videoplayer").hide();
                 //  uiController.showFullscreen();
@@ -236,304 +231,304 @@ uiController.initMediaPlayer = function () {
         autosizeProgress: false,
 
         /*
-        success: function (mediaElement, domObject) {
+         success: function (mediaElement, domObject) {
 
-            var resizeLayer = $(".mejs-overlay-play").clone();
-            resizeLayer.removeClass("mejs-overlay-play").addClass("mejs-overlay-resize");
-            resizeLayer.insertAfter(".mejs-overlay-play");
-            $(".mejs-overlay-play").remove();
+         var resizeLayer = $(".mejs-overlay-play").clone();
+         resizeLayer.removeClass("mejs-overlay-play").addClass("mejs-overlay-resize");
+         resizeLayer.insertAfter(".mejs-overlay-play");
+         $(".mejs-overlay-play").remove();
 
-            $("#siteLogo").appendTo(resizeLayer)
+         $("#siteLogo").appendTo(resizeLayer)
 
 
-            $('.mejs-fullscreen-button').clone().insertAfter('.mejs-fullscreen-button');
-            $($('.mejs-fullscreen-button').get(0)).hide();
+         $('.mejs-fullscreen-button').clone().insertAfter('.mejs-fullscreen-button');
+         $($('.mejs-fullscreen-button').get(0)).hide();
 
-            $($('.mejs-fullscreen-button').get(1)).off().click(function () {
-                if (videoController.isPlaying)
+         $($('.mejs-fullscreen-button').get(1)).off().click(function () {
+         if (videoController.isPlaying)
 
-                    var isPlaying = true;
-                else
-                    isPlaying = false;
+         var isPlaying = true;
+         else
+         isPlaying = false;
 
-                uiController.fullscreenMode = uiController.fullscreenMode + 1;
-                if (uiController.fullscreenMode > 2)
-                    uiController.fullscreenMode = 0;
-                uiController.setScreenMode();
+         uiController.fullscreenMode = uiController.fullscreenMode + 1;
+         if (uiController.fullscreenMode > 2)
+         uiController.fullscreenMode = 0;
+         uiController.setScreenMode();
 
-                if (uiController.fullscreenMode == 1) { //Background
-                    $("#videoplayer video").addClass("backgroundVideo").insertAfter("#backgroundImage");
-                    $("#videoplayer").hide();
-                    if (playbackController.playingSong)
-                        $("#backgroundImage").hide();
-                    else
-                        $("#backgroundImage").show();
+         if (uiController.fullscreenMode == 1) { //Background
+         $("#videoplayer video").addClass("backgroundVideo").insertAfter("#backgroundImage");
+         $("#videoplayer").hide();
+         if (playbackController.playingSong)
+         $("#backgroundImage").hide();
+         else
+         $("#backgroundImage").show();
 
 
-                } else if (uiController.fullscreenMode == 2) {
-                    $("#backgroundImage").show();
-                    $("#videoplayer").show();
+         } else if (uiController.fullscreenMode == 2) {
+         $("#backgroundImage").show();
+         $("#videoplayer").show();
 
-                    $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
+         $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
 
-                    $($('.mejs-fullscreen-button').get(0)).click();
-                } else if (uiController.fullscreenMode == 0) {
-                    $($('.mejs-fullscreen-button').get(0)).click();
+         $($('.mejs-fullscreen-button').get(0)).click();
+         } else if (uiController.fullscreenMode == 0) {
+         $($('.mejs-fullscreen-button').get(0)).click();
 
-                }
+         }
 
 
-                if (isPlaying)
-                    mediaElement.play();
+         if (isPlaying)
+         mediaElement.play();
 
 
-            });
+         });
 
-            $($('.mejs-fullscreen-button').get(1)).click();
+         $($('.mejs-fullscreen-button').get(1)).click();
 
 
-            uiController.countCustomButtons = $(".videoControlElements-custom-button").length;
+         uiController.countCustomButtons = $(".videoControlElements-custom-button").length;
 
 
-            videoController.disablePlayStopControls(true);
-            videoController.disableControls(true);
+         videoController.disablePlayStopControls(true);
+         videoController.disableControls(true);
 
-            uiController.noVideoClickTimer = 0;
+         uiController.noVideoClickTimer = 0;
 
-            $(".mejs-overlay-resize").click(function () {
+         $(".mejs-overlay-resize").click(function () {
 
-                setTimeout(function () {
-                    if (Date.now() - uiController.noVideoClickTimer > 600) {
-                        $(".mejs-playpause-button").click();
-                    }
+         setTimeout(function () {
+         if (Date.now() - uiController.noVideoClickTimer > 600) {
+         $(".mejs-playpause-button").click();
+         }
 
-                }, 500)
+         }, 500)
 
 
-            })
+         })
 
 
-            $(".mejs-overlay-resize").dblclick(function () {
-                uiController.noVideoClickTimer = Date.now();
+         $(".mejs-overlay-resize").dblclick(function () {
+         uiController.noVideoClickTimer = Date.now();
 
-                if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo))
-                    uiController.sizeVideo = uiController.sizeVideo * 1.5;
-                else
-                    uiController.sizeVideo = 1 / 1.5;
+         if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo))
+         uiController.sizeVideo = uiController.sizeVideo * 1.5;
+         else
+         uiController.sizeVideo = 1 / 1.5;
 
 
-                uiController.styleVideo();
+         uiController.styleVideo();
 
 
-            })
+         })
 
 
-            $(".mejs-playpause-button").click(function () {
-                playlistController.playButtonTimer = Date.now();
-                /*
-                 console.dir($(this).children().context.className);
-                 if ($(this).children().context.className == "mejs-button mejs-playpause-button mejs-play")
-                 embedPlayer.play();
-                 else
-                 embedPlayer.pause();
-                 *//*
+         $(".mejs-playpause-button").click(function () {
+         playlistController.playButtonTimer = Date.now();
+         /*
+         console.dir($(this).children().context.className);
+         if ($(this).children().context.className == "mejs-button mejs-playpause-button mejs-play")
+         embedPlayer.play();
+         else
+         embedPlayer.pause();
+         *//*
 
-            });
+         });
 
 
-            $(".mejs-time-total").click(function (e) {
-                if(embedPlayer.active ==1){
-                    // mouse position relative to the object
-                    var total = uiController.mediaElementPlayer.controls.find('.mejs-time-total'),
-                        x = e.pageX,
-                        offset = total.offset(),
-                        width = total.outerWidth(true) * MediaElementPlayer.prototype.extoptions.scale / 1.023,
-                        percentage = 0,
-                        newTime = 0,
-                        pos = 0;
-                    if (x < offset.left) {
-                        x = offset.left;
-                    } else if (x > width + offset.left) {
-                        x = width + offset.left;
-                    }
+         $(".mejs-time-total").click(function (e) {
+         if(embedPlayer.active ==1){
+         // mouse position relative to the object
+         var total = uiController.mediaElementPlayer.controls.find('.mejs-time-total'),
+         x = e.pageX,
+         offset = total.offset(),
+         width = total.outerWidth(true) * MediaElementPlayer.prototype.extoptions.scale / 1.023,
+         percentage = 0,
+         newTime = 0,
+         pos = 0;
+         if (x < offset.left) {
+         x = offset.left;
+         } else if (x > width + offset.left) {
+         x = width + offset.left;
+         }
 
-                    pos = x - offset.left;
-                    percentage = (pos / width);
-                    newTime = (percentage <= 0.02) ? 0 : percentage;
-                    embedPlayer.seek(newTime);
-                }
-            })
+         pos = x - offset.left;
+         percentage = (pos / width);
+         newTime = (percentage <= 0.02) ? 0 : percentage;
+         embedPlayer.seek(newTime);
+         }
+         })
 
 
-            /*
-            $(".mejs-nexttrack-button").click(function () {
-                if ($(this).find("button").css("opacity") == 1)
-                    playlistController.playNextSong();
-            })
+         /*
+         $(".mejs-nexttrack-button").click(function () {
+         if ($(this).find("button").css("opacity") == 1)
+         playlistController.playNextSong();
+         })
 
-            $(".mejs-prevtrack-button").click(function () {
-                if ($(this).find("button").css("opacity") == 1)
-                    playlistController.playPrevSong();
-            })
+         $(".mejs-prevtrack-button").click(function () {
+         if ($(this).find("button").css("opacity") == 1)
+         playlistController.playPrevSong();
+         })
 
-            $(".mejs-shuffle-button").click(function () {
-                playlistController.toggleShuffleSongs();
-            })  DONE *//*
+         $(".mejs-shuffle-button").click(function () {
+         playlistController.toggleShuffleSongs();
+         })  DONE *//*
 
 
-            $(".mejs-stop-button").click(function () {
-                videoController.isPlaying = false;
+         $(".mejs-stop-button").click(function () {
+         videoController.isPlaying = false;
 
-                embedPlayer.stop();
+         embedPlayer.stop();
 
-                $(".songlist li.loadedsong").removeClass("pausing");
-                $($(".songlist li.loadedsong").get(0)).addClass("playing");
+         $(".songlist li.loadedsong").removeClass("pausing");
+         $($(".songlist li.loadedsong").get(0)).addClass("playing");
 
-                if ($(this).find("button").css("opacity") == 1) {
-                    $(".mejs-stop-button button").css("opacity", "0.5");
-                    $("#videoplayer").css("opacity", "0");
-                    $("#videoplayer").css("pointer-events", "none");
+         if ($(this).find("button").css("opacity") == 1) {
+         $(".mejs-stop-button button").css("opacity", "0.5");
+         $("#videoplayer").css("opacity", "0");
+         $("#videoplayer").css("pointer-events", "none");
 
-                    $(".mejs-playpause-button button").removeClass("looped");
-                    $(".mejs-time-loaded").hide();
-                    if (!playbackController.playingOldSong) {
-                        playbackController.resetPlayingSong();
+         $(".mejs-playpause-button button").removeClass("looped");
+         $(".mejs-time-loaded").hide();
+         if (!playbackController.playingOldSong) {
+         playbackController.resetPlayingSong();
 
-                    }
+         }
 
-                }
-            })
+         }
+         })
 
 
 
-            mediaElement.addEventListener("volumechange", function (e) {
-                embedPlayer.setVolume(uiController.mediaElementPlayer.media.volume);
-            });
+         mediaElement.addEventListener("volumechange", function (e) {
+         embedPlayer.setVolume(uiController.mediaElementPlayer.media.volume);
+         });
 
 
-            mediaElement.addEventListener('pause', function (e) {
-                if (videoController.isPlaying && !playbackController.isLoading) {
-                    $($(".songlist li.loadedsong").get(0)).addClass("pausing");
-                    $(".songlist li.loadedsong").removeClass("playing");
+         mediaElement.addEventListener('pause', function (e) {
+         if (videoController.isPlaying && !playbackController.isLoading) {
+         $($(".songlist li.loadedsong").get(0)).addClass("pausing");
+         $(".songlist li.loadedsong").removeClass("playing");
 
-                }
+         }
 
-                videoController.isPlaying=false;
-                embedPlayer.pause();
+         videoController.isPlaying=false;
+         embedPlayer.pause();
 
-            });
+         });
 
 
-            //mediaElement.addEventListener('playing', function (e) {
+         //mediaElement.addEventListener('playing', function (e) {
 
 
-            mediaElement.addEventListener("play", function (e) {
+         mediaElement.addEventListener("play", function (e) {
 
-                if(playbackController.playingSong)
-                 embedPlayer.play();
-            });
-            mediaElement.addEventListener("playing", function (e) {
-                if(playbackController.playingSong) {
+         if(playbackController.playingSong)
+         embedPlayer.play();
+         });
+         mediaElement.addEventListener("playing", function (e) {
+         if(playbackController.playingSong) {
 
-                 //   helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
-                    $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
+         //   helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
+         $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
 
-                    $($(".songlist li.loadedsong").get(0)).addClass("playing");
-                $(".songlist li.loadedsong").removeClass("pausing");
+         $($(".songlist li.loadedsong").get(0)).addClass("playing");
+         $(".songlist li.loadedsong").removeClass("pausing");
 
-                    playbackController.isLoading = false;
-                    videoController.isPlaying = true;
+         playbackController.isLoading = false;
+         videoController.isPlaying = true;
 
-                videoController.disablePlayStopControls(false);
+         videoController.disablePlayStopControls(false);
 
-                $(".mejs-time-loaded").show();
+         $(".mejs-time-loaded").show();
 
-                $(".mejs-playpause-button button").removeClass("looped");
+         $(".mejs-playpause-button button").removeClass("looped");
 
-                if (!playbackController.playingSong.isAudioFile) {
+         if (!playbackController.playingSong.isAudioFile) {
 
-                    if ($("#videoplayer").css("opacity") < 1) {
-                        var translateVideo = uiController.translateVideo;
-                        $("#videoplayer").removeClass("animate");
-                        // $("#videoplayer").css("opacity", "0");
-                        //  $("#videoplayer").css("pointer-events","none");
-                        uiController.translateVideo = uiController.translateVideo - 30;
-                        uiController.styleVideo();
-                        setTimeout(function () {
-                            uiController.translateVideo = translateVideo;
-                            $("#videoplayer").addClass("animate");
-                            setTimeout(function () {
-                                setTimeout(function () {
+         if ($("#videoplayer").css("opacity") < 1) {
+         var translateVideo = uiController.translateVideo;
+         $("#videoplayer").removeClass("animate");
+         // $("#videoplayer").css("opacity", "0");
+         //  $("#videoplayer").css("pointer-events","none");
+         uiController.translateVideo = uiController.translateVideo - 30;
+         uiController.styleVideo();
+         setTimeout(function () {
+         uiController.translateVideo = translateVideo;
+         $("#videoplayer").addClass("animate");
+         setTimeout(function () {
+         setTimeout(function () {
 
-                                    if (videoController.isPlaying){
-                                        $("#videoplayer").css("opacity", "1");
-                                        $("#videoplayer").css("pointer-events","auto");
+         if (videoController.isPlaying){
+         $("#videoplayer").css("opacity", "1");
+         $("#videoplayer").css("pointer-events","auto");
 
-                                    }
-                                }, 200)
-                                uiController.styleVideo();
-                            }, 100)
-                        }, 100)
-                    }
+         }
+         }, 200)
+         uiController.styleVideo();
+         }, 100)
+         }, 100)
+         }
 
-                    uiController.playedFirst = true;
-                    uiController.updateUI(true);
-                }
-            }});
-            mediaElement.addEventListener("ended", function (e) {
+         uiController.playedFirst = true;
+         uiController.updateUI(true);
+         }
+         }});
+         mediaElement.addEventListener("ended", function (e) {
 
-                mediaController.sendRating("2");
-                document.title = $scope.appTitle;
+         mediaController.sendRating("2");
+         document.title = $scope.appTitle;
 
-                videoController.isPlaying = false;
-                videoController.disableStopControl(true);
-                $("#videoplayer").css("opacity", "0");
-                $("#videoplayer").css("pointer-events", "none");
+         videoController.isPlaying = false;
+         videoController.disableStopControl(true);
+         $("#videoplayer").css("opacity", "0");
+         $("#videoplayer").css("pointer-events", "none");
 
-                $(".mejs-time-loaded").hide();
+         $(".mejs-time-loaded").hide();
 
-                $(".mejs-playpause-button button").addClass("looped");
-                uiController.playedFirst = false;
-                uiController.updateUI();
+         $(".mejs-playpause-button button").addClass("looped");
+         uiController.playedFirst = false;
+         uiController.updateUI();
 
-                if (!playbackController.isLoading)
-                    playbackController.playNextSong();
+         if (!playbackController.isLoading)
+         playbackController.playNextSong();
 
-                mediaController.mediaEnded();
-            });
+         mediaController.mediaEnded();
+         });
 
 
-            mediaElement.addEventListener("error", function (e) {
-                if (mediaController.currentvideoURL && embedPlayer.active == 0) {
-                    mediaController.playNextVersion();
-                }
-            });
+         mediaElement.addEventListener("error", function (e) {
+         if (mediaController.currentvideoURL && embedPlayer.active == 0) {
+         mediaController.playNextVersion();
+         }
+         });
 
-            mediaElement.addEventListener('loadeddata', function (e) {
+         mediaElement.addEventListener('loadeddata', function (e) {
 
-                if (!playbackController.playingSong.isAudioFile) {
-                    if (this.videoWidth > 0) {
-                        var setHeight = function () {
-                            var height = $("video").outerHeight();//.mejs-mediaelement
-                            console.log("Height: " + height);
-                            if (height > 0) {
-                                uiController.sizeVideoRelative = 400 / height;
-                                uiController.styleVideo();
+         if (!playbackController.playingSong.isAudioFile) {
+         if (this.videoWidth > 0) {
+         var setHeight = function () {
+         var height = $("video").outerHeight();//.mejs-mediaelement
+         console.log("Height: " + height);
+         if (height > 0) {
+         uiController.sizeVideoRelative = 400 / height;
+         uiController.styleVideo();
 
-                            } else
-                                setTimeout(setHeight, 50);
-                        }
-                        setHeight();
-                    } else {
-                        uiController.sizeVideoRelative = 0;
-                        uiController.styleVideo();
+         } else
+         setTimeout(setHeight, 50);
+         }
+         setHeight();
+         } else {
+         uiController.sizeVideoRelative = 0;
+         uiController.styleVideo();
 
-                    }
-                }
+         }
+         }
 
 
-            });
-        }, */
+         });
+         }, */
         error: function () {
             console.log("ERROR CREATING <VIDEO>........................");
 
@@ -638,7 +633,6 @@ uiController.initMediaPlayer = function () {
     $("#videocontrols").css("background", "none");
 
 
-
     $("#videoplayer").css("text-align", "center")
 
     uiController.sizeVideoRelative = 1;
@@ -657,6 +651,7 @@ uiController.initMediaPlayer = function () {
 }
 
 uiController.init = function () {
+
 
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button").length;
@@ -916,7 +911,7 @@ uiController.init = function () {
                 setTimeout(function () {
                     $("#playlistview").listview('refresh');
                     $("#playlistview").show();
-                    uiController.makePlayListSortable();
+                    playlistController.makePlayListSortable();
                     setTimeout(function () {
                         uiController.playListScroll.refresh();
                     }, 150)
@@ -934,25 +929,23 @@ uiController.init = function () {
     });
 
 
+    $("#clearChoosenPlaylists").hide();
+    uiController.updateUI();
+    playlistController.loadedPlaylistSongs = playlistController.playlists;
+    if (playlistController.loadedPlaylistSongs.length > 0)
+        $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
 
-            $("#clearChoosenPlaylists").hide();
-            uiController.updateUI();
-            playlistController.loadedPlaylistSongs = playlistController.playlists;
-            if (playlistController.loadedPlaylistSongs.length > 0)
-                $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
 
-
-            $("#playlistview").hide();
-            $scope.safeApply();
-            setTimeout(function () {
-                $("#playlistview").listview('refresh');
-                $("#playlistview").show();
-                uiController.makePlayListSortable();
-                setTimeout(function () {
-                    uiController.playListScroll.refresh();
-                }, 150)
-            }, 0)
-
+    $("#playlistview").hide();
+    $scope.safeApply();
+    setTimeout(function () {
+        $("#playlistview").listview('refresh');
+        $("#playlistview").show();
+        playlistController.makePlayListSortable();
+        setTimeout(function () {
+            uiController.playListScroll.refresh();
+        }, 150)
+    }, 0)
 
 
     $('#clearChoosenPlaylists').click(function (e) {
@@ -966,7 +959,7 @@ uiController.init = function () {
     });
 
 
-    uiController.makePlayListSortable();
+    playlistController.makePlayListSortable();
 
     if (!app.isCordova) {
         $(".sortable").sortable("disable");
@@ -1011,13 +1004,13 @@ uiController.init = function () {
     playIndicator.appendTo("#searchlist .iScrollVerticalScrollbar");
 
     playIndicator.click(function () {
-        uiController.searchListScroll.scrollToElement(".loadedsong",700);
+        uiController.searchListScroll.scrollToElement(".loadedsong", 700);
     });
 
 
     playIndicatorPlalist.appendTo("#playlistInner .iScrollVerticalScrollbar");
     playIndicatorPlalist.click(function () {
-        uiController.playListScroll.scrollToElement(".loadedsong",700);
+        uiController.playListScroll.scrollToElement(".loadedsong", 700);
     });
 
 
@@ -1025,9 +1018,25 @@ uiController.init = function () {
         $("#inputclearhide").remove();
     }, 1000);
     document.title = $scope.appTitle;
+
+
+    //Init WebGL
+    if (window.WebGLRenderingContext) {
+        try {
+            // browser supports WebGL
+            var canvas = document.getElementById("webglcanvas");
+            if (canvas)
+                try {
+                    // Try to grab the standard context. If it fails, fallback to experimental.
+                    var webglcontext = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+                }
+                catch (e) {
+                }
+        } catch (e) { }
+    }
+
+
 };
-
-
 
 
 uiController.styleTopButtons = function () {
@@ -1039,585 +1048,6 @@ uiController.styleTopButtons = function () {
         $("#playingSongInfoLink").css("right", "2px");
         $("#buySongLink").css("right", "2px");
     }
-
-}
-
-
-uiController.makePlayListSortable = function () {
-    if (app.isCordova)
-        return;
-    $("#playlistInner li").on("mousedown",function (event) {
-        console.log("MDOWN");
-        if (!uiController.playlistMouseDown) {
-            uiController.playlistMouseDown = true;
-
-            var that = this;
-            if (!uiController.sortPlaylist) {
-
-                uiController.dragSortableSongY = event.clientY;
-                $(this).data("checkdown", setTimeout(function () {
-                    uiController.playlistMouseDown = false;
-                    // Add your code to run
-                    uiController.stopPlaylistScrollingOnClick(event);
-                    setTimeout(function () {
-                        if (!uiController.sortPlaylist) {
-                            console.log("DRAGGGGIT!")
-
-                            uiController.toggleSortablePlaylist(true);
-
-                            var dragHandle = $(that);
-
-                            var coords = {
-                                clientX: event.clientX,
-                                clientY: event.clientY
-                            };
-
-                            // this actually triggers the drag start event
-                            uiController.startedSortPlaylist = true;
-                            dragHandle.simulate("mousedown", coords);
-                        }
-                    }, 100)
-                }, 350));
-            }
-        }
-    }).on("mouseup",function (event) {
-            console.log("MUP");
-
-
-            if (Math.abs(event.clientY - uiController.dragSortableSongY) > 30) {
-                uiController.swipeTimer = Date.now();
-            }
-
-            uiController.playlistMouseDown = false;
-
-            clearTimeout($(this).data("checkdown"));
-            $(this).data("checkdown", null);
-
-        }).on("mouseout",function (event) {
-
-            if (uiController.dragSortableSongY > 0 && Math.abs(event.clientY - uiController.dragSortableSongY) > 30)
-                uiController.swipeTimer = Date.now();
-
-            uiController.playlistMouseDown = false;
-
-            clearTimeout($(this).data("checkdown"));
-            $(this).data("checkdown", null);
-
-        }).on("mousemove", function (event) {
-            // console.log("MOVE " + Math.abs(event.clientY - uiController.dragSortableSongY))
-            if (Math.abs(event.clientY - uiController.dragSortableSongY) > 8) {
-
-                if ($(this).data("checkdown")) {
-                    clearTimeout($(this).data("checkdown"));
-                }
-            }
-
-            if (uiController.dragSortableSongY > 0 && Math.abs(event.clientY - uiController.dragSortableSongY) > 30)
-                uiController.swipeTimer = Date.now();
-
-
-        })
-
-
-    $("#playlistview").sortable({
-        tolerance: "pointer",
-        dropOnEmpty: true,
-        revert: true,
-        opacity: 0.9,
-
-        helper: function (event, $item) {
-            $($item).addClass("selected");
-            /*var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement draggedsortablelistelement');
-
-             var item = $item.clone();
-
-
-             var ele = $helper.append($item.clone())
-             */
-
-            var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement draggedsortablelistelement');
-
-            var elements = $("#playlistInner li.selected").removeClass("selected").removeClass("loadedsong playing pausing stillLoading");
-
-
-            if (elements.length == 0) {
-                var oneItem = true;
-                elements = $($item).removeClass("selected").removeClass("loadedsong playing pausing stillLoading");
-                elements.removeClass("fadeslideincompletefast").css("opacity", "0.5")
-
-            } else {
-                elements.removeClass("fadeslideincompletefast").css("opacity", "0.3");
-                $(elements.get(0)).css("opacity", "0.6");
-
-                oneItem = false;
-
-
-            }
-
-            var ele = $helper.append(elements.clone());
-
-            if (!oneItem) {
-                for (var i = 0; i < elements.length; i++) {
-                    if ($item[0] != elements.get(i)) {
-                        $(elements.get(i)).hide();
-                    }
-                }
-                uiController.draggedElements = elements;
-
-            }
-
-
-            // elements.hide();
-
-            /*
-             for(var i = 0; i<elementsRemove.length;i++ ){
-             console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-
-             console.dir($item[0])
-             console.dir(elementsRemove.get(i))
-
-             if($item[0]!=elementsRemove.get(i)){
-             $(elementsRemove.get(i)).remove();
-             }
-
-             } */
-
-
-            /*
-             var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement draggedsortablelistelement');
-
-             var elementsRemove =   $("#playlistInner li.selected").removeClass("selected");
-
-             var elements =    elementsRemove.clone().removeClass("loadedsong playing pausing stillLoading");
-
-             //   var elements = $("#playlistInner li.selected").removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
-
-             if(elements.length==0)
-             elements = $(this).removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
-
-             var ele = $helper.append(elements)
-
-             uiController.draggedElements = elements;
-             setTimeout(function(){elementsRemove.remove();},0)
-             elements.css("opacity", "0.5")
-
-             */
-            //var marquee = $(ele).find("marquee").get(0);
-            //$(marquee).replaceWith($(marquee).contents());
-
-            return ele;
-        },
-        //  containment: "body",
-        receive: function (event, ui) {
-
-        },
-        start: function (event, ui) {
-            uiController.draggingSortableSong = true;
-            $("#playlistInner").removeClass("animate");
-
-            $("#playlistInner li").removeClass("fadeslideincompletefast");
-
-            setTimeout(function () {
-                //debugger;
-            }, 3000)
-
-            $(".draggedsortablelistelement").on('mousemove', function (event) {
-                if (uiController.draggingSortableSong) {
-
-                    if ($("#playlistview").height() > $("#playlistInner").height()) {
-                        //console.log('X:' + (event.clientX-110) + ' Y: '+(event.clientY-30) );
-
-                        if ($("#playlistInner").offset().top - $(".draggedsortablelistelement").offset().top > 10 && Math.abs($("#playlistInner").offset().left - $(".draggedsortablelistelement").offset().left) < 50) {
-                            if (!uiController.playListScrollTimer || Date.now() - uiController.playListScrollTimer > 500) {
-                                console.log(uiController.playListScroll.scrollY)
-                                uiController.playListScrollTimer = Date.now()
-                                uiController.playListScroll.enable();
-                                uiController.playListScroll.refresh();
-                                uiController.playListScroll.scrollBy(0, 100, 1000)
-                            }
-
-                        } else if ($("#playlistInner").offset().top + $("#playlistInner").height() - $(".draggedsortablelistelement").offset().top - $(".draggedsortablelistelement").height() < -10 && Math.abs($("#playlistInner").offset().left - $(".draggedsortablelistelement").offset().left) < 50) {
-                            if (!uiController.playListScrollTimer || Date.now() - uiController.playListScrollTimer > 500) {
-                                console.log(uiController.playListScroll.scrollY)
-                                uiController.playListScrollTimer = Date.now()
-                                uiController.playListScroll.enable();
-                                uiController.playListScroll.refresh();
-                                uiController.playListScroll.scrollBy(0, -100, 1000)
-                            }
-
-                        }
-                    }
-
-                }
-            });
-
-        }, beforeStop: function () {
-            //debugger;
-        },
-
-        stop: function (event, ui) {
-
-
-
-
-            var newLoadedPlaylistSongs = [];
-            if (uiController.draggedElements) {
-                uiController.draggedElements.css("opacity", "");
-                uiController.draggedElements.show();
-            }
-            var actPlsid = 0;
-            $("#playlistview").find("li").each(function (index) {
-                $(this).removeClass("margintop fadeslideincompletefast");
-
-                if ($(this).hasClass("playlistsong")) {
-                    id = this.dataset.songid.substring(12);
-                    var found = false;
-                    var isElement = false;
-
-                    if (uiController.draggedElements) {
-
-                        if (this.dataset.songgid && ui.item[0].dataset.songid.substring(12) == this.dataset.songid.substring(12))
-                            isElement = true;
-                        else {
-                            uiController.draggedElements.each(function (index) {
-                                var dragid = uiController.draggedElements[index].dataset.songid.substring(12);
-
-                                if (dragid == id)
-                                    found = true;
-                            })
-
-                        }
-
-                    }
-
-                    if (isElement) {
-                        uiController.draggedElements.each(function (index) {
-                            id = uiController.draggedElements[index].dataset.songid.substring(12);
-                            actSong = playlistController.loadedPlaylistSongs[parseInt(id.substring(5))];
-                            actSong = jQuery.extend(true, {}, actSong);
-                            actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
-                            newLoadedPlaylistSongs.push(actSong);
-                            actPlsid = actPlsid + 1
-
-                        });
-                    }
-                    else if (!found) {
-                        actSong = playlistController.loadedPlaylistSongs[parseInt(id.substring(5))];
-                        actSong = jQuery.extend(true, {}, actSong);
-                        actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
-
-                        newLoadedPlaylistSongs.push(actSong);
-                        actPlsid = actPlsid + 1
-
-                    }
-                } else {
-                    var id = this.dataset.songid.substring(10);
-                    found = false;
-                    isElement = false;
-                    if (uiController.draggedElements) {
-
-                        if (!this.dataset.songgid && ui.item[0].dataset.songid.substring(10) == this.dataset.songid.substring(10))
-                            isElement = true;
-
-                    }
-                    if (isElement) {
-                        uiController.draggedElements.each(function (index) {
-                            var id = uiController.draggedElements[index].dataset.songid.substring(10);
-                            var actSong = searchController.searchResults[parseInt(id.substring(5))];
-
-                            actSong = jQuery.extend(true, {}, actSong);
-
-
-                            actSong.gid = "plsgid" + playlistController.globalId;
-                            playlistController.globalId = playlistController.globalId + 1;
-
-
-                            actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
-
-
-                            newLoadedPlaylistSongs.push(actSong);
-                            actPlsid = actPlsid + 1
-
-                        })
-                    }
-                    else {
-
-                        var actSong = searchController.searchResults[parseInt(id.substring(5))];
-
-                        actSong = jQuery.extend(true, {}, actSong);
-
-                        actSong.gid = "plsgid" + playlistController.globalId;
-                        playlistController.globalId = playlistController.globalId + 1;
-
-                        actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
-
-
-                        newLoadedPlaylistSongs.push(actSong);
-                        actPlsid = actPlsid + 1
-
-                    }
-                    //  alert(index)
-                    $(this).remove();
-                }
-
-
-            })
-
-            console.log("___________________________")
-            console.dir(newLoadedPlaylistSongs)
-            playlistController.loadedPlaylistSongs = newLoadedPlaylistSongs;
-
-            if (playlistController.loadedPlaylistSongs.length > 0)
-                $("#clearChoosenPlaylists").show();
-
-
-            console.log("DROPPED------------------------------")
-            console.log($("#playlistview").get(0))
-            console.log("------------------------------")
-            console.dir(playlistController.loadedPlaylistSongs)
-            console.log("------------------------------")
-            $scope.safeApply();
-
-            $("#playlistview").listview('refresh');
-            $("#playlistview li").show().css("opacity", "");
-            uiController.updateUI();
-            if (uiController.sortPlaylist) {
-                $("#playlistInner  .removesong").show();
-
-                $("#playlistInner  .ui-btn-icon-right").css("margin-right", "0px");
-
-                $("#playlistInner  .ui-btn-icon-right").css("padding-right", "40px");
-
-            }
-
-            console.log($("#playlistview").get(0))
-            console.log("------------------------------")
-
-
-            $("#playlistInner li").removeClass("fadeslideincompletefast");
-            uiController.makePlayListSortable();
-
-            setTimeout(function () {
-                playbackController.remarkSong();
-                uiController.playListScroll.refresh();
-                if (uiController.sortPlaylist) {
-                    $("#playlistInner  .removesong").show();
-
-                    $("#playlistInner  .ui-btn-icon-right").css("margin-right", "0px");
-
-                    $("#playlistInner  .ui-btn-icon-right").css("padding-right", "40px");
-
-                }
-            }, 150)
-
-            if ($('#playlistselectvertical .search-choice').length == 1) {
-                setTimeout(function () {
-                    uiController.savePlaylistVisible(true);
-
-                }, 250)
-            }
-
-            if (uiController.startedSortPlaylist) {
-                uiController.toggleSortablePlaylist();
-                uiController.startedSortPlaylist = false;
-            }
-
-        },
-        appendTo: 'body',
-        zIndex: "1000000" //or greater than any other relative/absolute/fixed elements and droppables
-    }).disableSelection();
-
-}
-uiController.dragDraggableSongTimer = 0;
-uiController.makeSearchListDraggable = function () {
-
-    $("#searchlist li").on("mousedown",function (event) {
-        if($(this).parents("#searchlist").length==0)
-            return;
-        if (!uiController.dragDraggableLastSongTimer || Date.now() - uiController.dragDraggableLastSongTimer > 500) {
-            uiController.dragDraggableSongX = event.clientX;
-            uiController.dragDraggableSongY = event.clientY;
-            uiController.dragDraggableSongTimer = Date.now();
-            uiController.dragDraggableSongStartEvent = event;
-        }else
-            uiController.dragDraggableSongTimer = 0;
-    }).on("mouseup ",function (event) {
-            if($(this).parents("#searchlist").length==0)
-                return;
-            if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 30) {
-                uiController.swipeTimer = Date.now();
-                uiController.dragDraggableSongY = -10;
-            }
-
-        }).on("mousemove", function (event) {
-            if($(this).parents("#searchlist").length==0)
-             return;
-            if (Math.abs(event.clientY - uiController.dragDraggableSongY) > 8)
-                uiController.dragDraggableSongY = -10;
-            if (uiController.dragDraggableSongY > 0 && Math.abs(event.clientY - uiController.dragDraggableSongY) > 30) {
-                uiController.swipeTimer = Date.now();
-            } else if (uiController.dragDraggableSongTimer && Date.now() - uiController.dragDraggableSongTimer < 500) {
-                if (!uiController.draggingSong && event.clientX - uiController.dragDraggableSongX > 2 && Math.abs(event.clientY - uiController.dragDraggableSongY) < Math.abs(event.clientX - uiController.dragDraggableSongX) * 0.8) {
-                    uiController.dragDraggableSongY = -10;
-                    uiController.dragDraggableLastSongTimer = Date.now();
-                    uiController.dragDraggableSongTimer = 0;
-
-                    if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
-                        $("#saveplaylistinpt").val("");
-                        $("#saveokayplaylistbtn").attr("disabled", "disabled").css("opacity", "0.5");
-                        playlistController.loadedPlaylistSongs = [];
-                        $("#saveplaylistbtn img").attr("src", "public/img/save.png");
-                        $scope.safeApply();
-                        $("#clearChoosenPlaylists").show();
-                    }
-
-                    $("#searchlistview .draggableSong").draggable("enable");
-
-                    if (!uiController.sidePanelOpen && uiController.windowWidth < uiController.responsiveWidthSmallest) {
-                        uiController.startedSortPlaylistOpenedPanel = true;
-                        uiController.toggleSidePanel();
-                        var delay = 150;
-
-                    } else {
-                        uiController.startedSortPlaylistOpenedPanel = false;
-                        delay = 0;
-                    }
-
-                    var that = this;
-                    console.log(uiController.startedSortPlaylistOpenedPanel)
-                    var coords = {
-                        clientX: uiController.dragDraggableSongStartEvent.clientX,
-                        clientY: uiController.dragDraggableSongStartEvent.clientY
-                    };
-                    $(that).simulate("mouseup", coords);
-
-                    setTimeout(function () {
-
-                        if (!uiController.sortPlaylist) {
-                            uiController.toggleSortablePlaylist(true);
-                            uiController.startedSortPlaylist = true;
-                        } else
-                            uiController.startedSortPlaylist = false;
-
-                        $(that).simulate("mousedown", coords);
-
-                    }, delay)
-
-
-                }
-
-            }
-
-        })
-
-
-    if (app.isCordova)
-        return;
-
-
-    $('#searchlistview .draggableSong').draggable({
-        tolerance: "pointer",
-        dropOnEmpty: true,
-        revert: false,
-
-        //   containment: "body",
-        connectToSortable: '#playlistview',
-
-        helper: function (event, ui) {
-            $(this).addClass("selected");
-
-
-            var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement draggedsearchlistelement');
-
-
-            var elements = $("#searchlist li.selected").removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
-
-            if (elements.length == 0) {
-                elements = $(this).removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
-                elements.removeClass("fadeslideincompletefast").css("opacity", "0.5")
-                elements.addClass("margintop")
-
-            } else {
-                elements.removeClass("fadeslideincompletefast").css("opacity", "0.3");
-                $(elements.get(0)).css("opacity", "0.6");
-                $(elements.get(0)).addClass("margintop")
-
-            }
-
-            var ele = $helper.append(elements)
-
-            uiController.draggedElements = elements;
-
-            //var marquee = $(ele).find("marquee").get(0);
-            // $(marquee).replaceWith($(marquee).contents());
-
-            return ele;
-        }, drag: function (event, ui) {
-            return !uiController.stopDrag;
-        },
-        start: function (event) {
-            //setTimeout(function () {debugger}, 3000)
-            uiController.draggingSong = true;
-            uiController.dragSongX = event.clientX;
-            uiController.dragSongY = event.clientY;
-            uiController.dragSongCheckHorizontal = true;
-            uiController.dragSongCheckHorizontalTimer = Date.now();
-
-
-            $(".draggedsearchlistelement").on('mousemove', function (event) {
-                if (uiController.draggingSong) {
-
-                    //console.log('X:' + (event.clientX-110) + ' Y: '+(event.clientY-30) );
-
-                    if ($("#playlistInner").offset().top - $(".draggedsearchlistelement").offset().top > 10 && Math.abs($("#playlistInner").offset().left - $(".draggedsearchlistelement").offset().left) < 50) {
-                        if (!uiController.playListScrollTimer || Date.now() - uiController.playListScrollTimer > 500) {
-                            console.log(uiController.playListScroll.scrollY)
-                            uiController.playListScrollTimer = Date.now()
-                            uiController.playListScroll.enable();
-                            uiController.playListScroll.refresh();
-                            uiController.playListScroll.scrollBy(0, 100, 1000)
-
-                        }
-
-                    } else if ($("#playlistInner").offset().top + $("#playlistInner").height() - $(".draggedsearchlistelement").offset().top - $(".draggedsearchlistelement").height() < -10 && Math.abs($("#playlistInner").offset().left - $(".draggedsearchlistelement").offset().left) < 50) {
-                        if (!uiController.playListScrollTimer || Date.now() - uiController.playListScrollTimer > 500) {
-                            console.log(uiController.playListScroll.scrollY)
-                            uiController.playListScrollTimer = Date.now()
-                            uiController.playListScroll.enable();
-                            uiController.playListScroll.refresh();
-                            uiController.playListScroll.scrollBy(0, -100, 1000)
-                        }
-
-                    }
-
-                }
-            });
-
-
-        },
-        stop: function (event, ui) {
-            $("#searchlistview .draggableSong").draggable("disable").removeClass("ui-disabled ui-state-disabled");
-            uiController.draggingSong = false;
-            $(this).css("opacity", "1")
-            setTimeout(function(){
-                $("#searchlist li").simulate("mouseup");
-            },0)
-               console.log("ÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖ "+uiController.startedSortPlaylistOpenedPanel)
-            if(uiController.startedSortPlaylistOpenedPanel)
-                setTimeout(function(){uiController.toggleSidePanel();},500)
-
-            if (uiController.startedSortPlaylist) {
-                uiController.toggleSortablePlaylist();
-                uiController.startedSortPlaylist = false;
-            }
-
-
-        },
-        appendTo: 'body',
-        zIndex: "1000000" //or greater than any other relative/absolute/fixed elements and droppables
-    });
-
-    $("#searchlistview .draggableSong").draggable("disable").removeClass("ui-disabled ui-state-disabled");
 
 }
 
@@ -1746,9 +1176,9 @@ uiController.savePlaylistVisible = function (useSelected) {
 uiController.toggleSavePlaylist = function (savePlaylist) {
 
 
-    if(!accountController.loggedIn){
-        $('#popupRegister').popup('open', {positionTo: '#registerLink', transition:"pop"});
-        setTimeout(function(){
+    if (!accountController.loggedIn) {
+        $('#popupRegister').popup('open', {positionTo: '#registerLink', transition: "pop"});
+        setTimeout(function () {
             $('#signinusername').focus();
         }, 500)
 
@@ -1824,7 +1254,6 @@ uiController.toggleSortablePlaylist = function (dontShowTrash, manuell) {
         uiController.startedSortPlaylist = false;
     }
 
-
     uiController.sortPlaylist = !uiController.sortPlaylist
     if (uiController.sortPlaylist) {
         if (!dontShowTrash) {
@@ -1889,7 +1318,7 @@ uiController.toggleSortablePlaylist = function (dontShowTrash, manuell) {
         $("#playlistInner  .ui-btn-icon-right").css("padding-right", "");
         $("#playlistInner  .ui-btn-icon-right").css("margin-right", "");
         if (!dontShowTrash)
-            $("#sortplaylistbtn img").attr("src", "public/img/edit.png");
+            $("#sortplaylistbtn img").attr("src", "public/img/sort.png");
 
         $("#sortplaylistbtn").removeClass("greenbackground");
 
@@ -1951,7 +1380,8 @@ uiController.updateDisplay = function () {
 uiController.updateUI = function (dontChangeVideOpacity) {
     uiController.updateDisplay();
 
-    $("#lyricsiframeresizebar").css("top", $(window).height() / 2 - 30 - 44);
+    $("#lyricsiframeresizebar").css("top", -10);//$(window).height() / 2 - 30 - 44);
+    $("#lyricsiframeresizebar").css("right", -2);
 
     var myIframe = document.getElementById('lyricsifrm');
     setTimeout(function () {
@@ -1995,13 +1425,10 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
         $("#rightpanel").css("height", $(window).height() - 88);
 
-
         $("#searchlist a").css("text-overflow", "clip");
-
 
         if ($("#playlist").parents("#rightpanel").length == 0)
             $("#playlist").appendTo("#rightpanel");
-
 
         $("#playlist").css("max-height", $(window).height() - 44 - 44 - 3);
 
@@ -2015,7 +1442,6 @@ uiController.updateUI = function (dontChangeVideOpacity) {
         if (uiController.sidePanelOpen) {
 
             // $("#searchlist").css("width", uiController.windowWidth - $("#rightpanel").width() - 10);
-
             if (uiController.windowWidth - $("#rightpanel").width() - 10 < 100) {
                 //$("#searchlist li a").wrap('<marquee behavior="alternate"></marquee>');
                 $("#searchlist li").css("max-height", "65px");
@@ -2097,7 +1523,7 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
     }
 
-    uiController.totalTimeWidth = uiController.windowWidth / 1.5 - 160 - 105-5;
+    uiController.totalTimeWidth = uiController.windowWidth / 1.5 - 160 - 105 - 5;
 
     videoController.resizeVideo();
 
@@ -2114,13 +1540,13 @@ uiController.updateUI = function (dontChangeVideOpacity) {
 
                 // console.log("!nnn" + (((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10))
             }
-            else{
-                $("#videocontrols .videoControlElements-time-total").css("width", ((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) );
+            else {
+                $("#videocontrols .videoControlElements-time-total").css("width", ((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26));
                 $("#videocontrols .videoControlElements-time-rail").css("width", ((uiController.windowWidth) / 1.5 - 160 - 105 - uiController.countCustomButtons * 26) + 10);
             }
         }
-        else{
-            $("#videocontrols .videoControlElements-time-total").css("width", 323 - 105 - uiController.countCustomButtons * 26-10);
+        else {
+            $("#videocontrols .videoControlElements-time-total").css("width", 323 - 105 - uiController.countCustomButtons * 26 - 10);
             $("#videocontrols .videoControlElements-time-rail").css("width", 323 - 105 - uiController.countCustomButtons * 26);
 
 
@@ -2141,7 +1567,7 @@ uiController.updateUI = function (dontChangeVideOpacity) {
          } while (marquee)*/
 
 
-        uiController.totalTimeWidth = (uiController.windowWidth / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26 ;
+        uiController.totalTimeWidth = (uiController.windowWidth / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26;
         $("#videocontrols .videoControlElements-time-total").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26);
         $("#videocontrols .videoControlElements-time-rail").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 + 10 - 105 - uiController.countCustomButtons * 26);
 
@@ -2227,7 +1653,7 @@ uiController.toggleSidePanel = function () {
 /**
  * Show Playlists
  */
-uiController.showPlaylists = function(){
+uiController.showPlaylists = function () {
     $('#playlistselectverticalform option').prop('selected', false);
     $('#playlistselectverticalform').trigger('chosen:updated');
     setTimeout(function () {
@@ -2248,10 +1674,10 @@ uiController.showPlaylists = function(){
         setTimeout(function () {
             $("#playlistview").listview('refresh');
             $("#playlistview").show();
-            uiController.makePlayListSortable();
-            setTimeout(function(){
+            playlistController.makePlayListSortable();
+            setTimeout(function () {
                 uiController.playListScroll.refresh();
-            },150)
+            }, 150)
         }, 0)
 
     }, 10)

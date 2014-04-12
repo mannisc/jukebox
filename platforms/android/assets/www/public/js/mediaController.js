@@ -763,7 +763,9 @@ mediaController.toggleLyrics = function () {
 
 
     if (!mediaController.showLyrics)
-        uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
+      setTimeout(function(){
+                 uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
+      },2500);
 
     mediaController.showLyrics = !mediaController.showLyrics;
     if (mediaController.showLyrics) {
