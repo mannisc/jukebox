@@ -291,9 +291,9 @@ videoController.init = function () {
 
     //TODO Remove
     /*videoController.setMaxTime(341);
-    videoController.setProgressTime(78);
-    videoController.setBufferedPercentage(0.6);
-    */
+     videoController.setProgressTime(78);
+     videoController.setBufferedPercentage(0.6);
+     */
 }
 
 /**
@@ -470,12 +470,124 @@ videoController.stopSong = function () {
 
 
 /**
+ * Show Fullscreen
+ * @type {*}
+ */
+
+uiController.showFullscreen = function () {
+    $("#header").hide();
+    $("#controlbar").hide();
+    $("#searchlist").hide();
+    $("#playlist").hide();
+    $("#controlbarplaylist").hide();
+    $("#lyricsbutton").hide();
+    $("#facebookpostbutton").hide();
+    var i = document.body;
+    console.dir("FULLSCREEN: ");
+    console.dir(i);
+//      go full-screen
+    if (i.requestFullscreen) {
+        i.requestFullscreen();
+    } else if (i.webkitRequestFullscreen) {
+        i.webkitRequestFullscreen();
+    } else if (i.mozRequestFullScreen) {
+        i.mozRequestFullScreen();
+    } else if (i.msRequestFullscreen) {
+        i.msRequestFullscreen();
+    }
+
+
+}
+
+
+/**
+ * Hide Fullscreen
+ * @type {*}
+ */
+videoController.hideFullscreen = function () {
+
+    $("#header").show();
+    $("#controlbar").show();
+    $("#searchlist").show();
+    $("#controlbarplaylist").show();
+    $("#playlist").show();
+    $("#lyricsbutton").show();
+    $("#facebookpostbutton").show();
+
+
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+    }
+
+}
+
+/**
  * Set Fullscreen Mode
  * @type {*}
  */
 videoController.updateFullscreenMode = function () {
 
-    uiController.setScreenMode();
+
+    if (videoController.fullscreenMode == 1) { //Background
+        if (!playbackController.firstPlayedSongAlready) {
+            playbackController.firstPlayedSongAlready = true;
+            $("#backgroundImage").addClass("fadeoutcomplete2s");
+            setTimeout(function () {
+                $("#backgroundImage").hide();
+            }, 2000)
+        }
+        $("video, iframe").addClass("fadeincomplete2s").css("opacity", "1");
+
+        setTimeout(function () {
+            $("video, iframe").css("opacity", "1");
+            $("video, iframe").removeClass("fadeincomplete2s");
+        }, 2000)
+
+        videoController.hideFullscreen();
+
+    }
+    /*else if (videoController.fullscreenMode == 2) {
+     if (embedPlayer.active == 0) {
+     $("#backgroundImage").show();
+
+
+     }
+     else {
+     $("#dmplayer").css("opacity", "1");
+     $("#dmplayer").show();
+     $("#videoplayer").hide();
+
+     //  $(".iframeVideo").removeClass("backgroundVideo").appendTo("#embedplayer");
+     }
+     uiController.showFullscreen();
+
+
+     } else if (videoController.fullscreenMode == 0) {
+
+     if (embedPlayer.active == 0) {
+     $("#videoplayer").show();
+     $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
+     }
+     else {
+     $("#backgroundImage").show();
+     ;
+     $("#dmplayer").hide();
+     $("#videoplayer").hide();
+     //  uiController.showFullscreen();
+
+
+     }
+     uiController.hideFullscreen();
+
+     }
+     */
+
     videoController.videoPlayer.setFullscreenMode(videoController.fullscreenMode);
 }
 
@@ -702,8 +814,6 @@ videoController.showBuffering = function (show) {
 videoController.setVolume = function (volume, secondTry) {
 
 
-
-
     var volumeSlider = videoController.controls.find('.videoControlElements-volume-slider'),
         volumeTotal = videoController.controls.find('.videoControlElements-volume-total'),
         volumeCurrent = videoController.controls.find('.videoControlElements-volume-current'),
@@ -746,7 +856,7 @@ videoController.setVolume = function (volume, secondTry) {
     volumeCurrent.height(totalHeight - newTop);
     volumeCurrent.css('top', totalPosition.top + newTop);
 
-    videoController.volume =volume;
+    videoController.volume = volume;
     videoController.videoPlayer.setVolume(videoController.volume);
 
 }
@@ -782,6 +892,7 @@ videoController.endedSong = function () {
  * @type {*}
  */
 videoController.playingSong = function () {
+
 
     if (playbackController.playingSong) {
 

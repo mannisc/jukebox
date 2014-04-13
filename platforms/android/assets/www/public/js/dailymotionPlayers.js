@@ -223,6 +223,15 @@ dailymotionPlayer.setVolume = function (volume) {
  */
 dailymotionPlayer.setFullscreenMode = function (mode) {
     //  dailymotionPlayer.dmplayer.fullscreen(fullscreen);
+
+
+    // $("#dmplayer").addClass("iframeVideo").insertAfter("#backgroundImage");
+    if (playbackController.playingSong)
+        $("#dmplayer").show();
+    $("#dmplayer").css("opacity", "0.8");
+    $("#videoplayer").hide();
+
+
 }
 
 dailymotionPlayer.play = function () {

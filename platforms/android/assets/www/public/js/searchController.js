@@ -831,7 +831,7 @@ searchController.makeSearchListDraggable = function () {
             $(this).addClass("selected");
 
 
-            var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement draggedsearchlistelement');
+            var $helper = $('<ul></ul>').addClass('songlist draggedlistelement draggedsearchlistelement');
 
 
             var elements = $("#searchlist li.selected").removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
@@ -851,6 +851,10 @@ searchController.makeSearchListDraggable = function () {
 
             playlistController.draggedElements = elements;
 
+            playlistController.draggedElement = ele.find("li[data-songid='" + $(this).data("songid") + "'] ");
+            ele.css("opacity","0");
+
+
             //var marquee = $(ele).find("marquee").get(0);
             // $(marquee).replaceWith($(marquee).contents());
 
@@ -860,12 +864,19 @@ searchController.makeSearchListDraggable = function () {
         },
         start: function (event) {
 
+
           //  setTimeout(function () {debugger}, 3000)
             uiController.draggingSong = true;
             uiController.dragSongX = event.clientX;
             uiController.dragSongY = event.clientY;
             uiController.dragSongCheckHorizontal = true;
             uiController.dragSongCheckHorizontalTimer = Date.now();
+            var ele = $(playlistController.draggedElements.get(0)).parent();
+            setTimeout(function(){
+                ele.attr('style', ele.attr('style') + '; ' + "margin-top:"+(-(playlistController.draggedElement.offset().top-playlistController.draggedElements.offset().top))+"px"+' !important');
+                ele.css("opacity","1");
+            },0)
+
 
 
             $(".draggedsearchlistelement").on('mousemove', function (event) {
@@ -900,7 +911,11 @@ searchController.makeSearchListDraggable = function () {
 
         },
         stop: function (event, ui) {
-            $("#searchlistview .draggableSong").draggable("disable").removeClass("ui-disabled ui-state-disabled");
+            var ele = $(playlistController.draggedElements.get(0)).parent();
+            ele.attr('style', ele.attr('style') + '; ' + "margin-top:0px"+' !important');
+            ele.addClass("animatemargin");
+
+                    $("#searchlistview .draggableSong").draggable("disable").removeClass("ui-disabled ui-state-disabled");
             uiController.draggingSong = false;
             $(this).css("opacity", "1")
             setTimeout(function () {

@@ -347,7 +347,13 @@ input[type=button]{
 
 }
 
-
+.draggedlistelement.animatemargin {
+-webkit-transition: margin 0.5s ease-out;
+-moz-transition: margin 0.5s ease-out;
+-ms-transition: margin 0.5s ease-out;
+-o-transition: margin 0.5s ease-out;
+transition: margin 0.5s ease-out;
+}
 
 .draggedlistelement {
     z-index: 2000 !important;
@@ -359,6 +365,7 @@ input[type=button]{
 
     border: none !important;
     margin: 0px !important;
+
 }
 
 .draggedlistelement .removesong{
@@ -817,9 +824,6 @@ video{
     -webkit-animation:spin 2s ease infinite;
     -moz-animation:spin 2s ease infinite!important;
     animation:spin 2s ease infinite;
-    /*-webkit-transform: rotateY(300deg) scale(1.21)!important;
-        -moz-transform: rotateY(359deg) scale(1.21)!important;
-        transform: rotateY(359deg) scale(1.21)!important;*/
 
 
     z-index:10;
@@ -1259,6 +1263,26 @@ video{
     animation-duration:150ms!important;
 }
 
+
+
+.fadeoutcomplete2s {
+    opacity: 1; /* make things invisible upon start */
+    -webkit-animation: fadeoutcomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: fadeoutcomplete ease-in 1;
+    animation: fadeoutcomplete ease-in 1;
+
+    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode: forwards; /*FF 5+*/
+    -o-animation-fill-mode: forwards; /*Not implemented yet*/
+    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards; /*when the spec is finished*/
+
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    animation-duration: 2s;
+}
+
+
 /* make keyframes that tell the start state and the end state of our object */
 @-webkit-keyframes fadeoutcomplete { from { opacity:1; } to { opacity:0; } }
 @-moz-keyframes fadeoutcomplete { from { opacity:1; } to { opacity:0; } }
@@ -1317,6 +1341,25 @@ video{
     -moz-animation-duration: 3s;
     animation-duration: 3s;
 }
+
+
+.fadeincomplete2s {
+    opacity: 0; /* make things invisible upon start */
+    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: fadeincomplete ease-in 1;
+    animation: fadeincomplete ease-in 1;
+
+    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode: forwards; /*FF 5+*/
+    -o-animation-fill-mode: forwards; /*Not implemented yet*/
+    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards; /*when the spec is finished*/
+
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    animation-duration: 2s;
+}
+
 
 
 .fadeincompletefast {
@@ -1619,6 +1662,10 @@ video{
 
 
 #header .ui-btn.animated{
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
     transition : all .5s linear!important;
 
 }

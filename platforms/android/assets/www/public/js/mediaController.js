@@ -152,9 +152,7 @@ mediaController.playSong = function (streamURL, videoURL) {
 
     videoController.playSong();
 
-    setTimeout(function () {
-        uiController.setScreenMode();
-    }, 500);
+
 }
 
 
@@ -513,6 +511,7 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
         // playlistController.playingTitle = playlistController.playlingTitleLoading ;
         // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
 
+
         playbackController.playingOldSong = playbackController.playingSong;
 
         playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
@@ -673,8 +672,6 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
     setTimeout(function () {
 
 
-        if (videoController.fullscreenMode == 1)
-            $("#backgroundImage").css("opacity", "0.08");
 
         if (playbackController.playingSong.gid)
             var listElement = $("#playlistInner li[data-songgid='playlistsong" + playbackController.playingSong.gid + "'] ");
@@ -801,9 +798,9 @@ mediaController.getSongCover = function (song) {
             if (song.image[1])
                 url = song.image[1]['#text'];
             else
-                url = song.image[0]['#text'];
-
+                url = song.image[0]['#text']
         }
+
     }
     if (!url || $.trim(url) == "")
         url = "public/img/playlist.png";
