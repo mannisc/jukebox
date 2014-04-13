@@ -128,6 +128,7 @@ margin-bottom: 5px!important;
     pointer-events:auto;
     opacity:0.8!important;
 
+    /*
 
     width: 0;
     height: 0;
@@ -135,6 +136,18 @@ margin-bottom: 5px!important;
     border-bottom: 9px solid transparent;
 
     border-left: 10px solid rgba(78,183,212,0.8);
+
+    */
+
+    border-radius: 50%;
+    width: 9px;
+    height: 9px;
+
+
+    background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, yellow 0%, orange 100%, red 95%);
+    background-image: -webkit-radial-gradient(45px 45px, circle cover, yellow, orange);
+    background-image: radial-gradient(45px 45px 45deg, circle cover, yellow 0%, orange 100%, red 95%);
+
 }
 
 

@@ -107,6 +107,8 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     if (mediaController.showLyrics)
         $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name);
 
+
+
     videoController.disableLyricsControl(false);
     //Enable stop if there is no old song
     if (!playbackController.playingOldSong)

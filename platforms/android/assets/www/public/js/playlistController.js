@@ -31,8 +31,6 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
 playlistController.globalId = playlistController.loadedPlaylistSongs.length;
 
 
-
-
 playbackController.playedSongs = [];
 
 
@@ -52,7 +50,7 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
 }
 
 
-window.localStorage.playlists = null;
+//window.localStorage.playlists = null;
 /*
  var playlists = window.localStorage.playlists;
  if (playlists)
@@ -61,17 +59,15 @@ window.localStorage.playlists = null;
  */
 
 
-
 playlistController.globalIdPlaylist = playlistController.playlists.length;
 
 
 playlistController.loadedPlaylistSongs = playlistController.playlists;
 
 playlistController.loadedPlaylistSongs = [];
-playlistController.playlists = [];  //CLEAR_______________________________________________________________
+//playlistController.playlists = [];  //CLEAR_______________________________________________________________
 
 playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
-
 
 
 /**
@@ -83,33 +79,32 @@ playlistController.selectSong = function (song) {
     if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
 
         /*if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 800)
-            return;
-        setTimeout(function(){
-            if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 800)
-                return;  */
+         return;
+         setTimeout(function(){
+         if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 800)
+         return;  */
 
-            var Id = song.id;
-            var listElement = null;
-            if (song.gid) {
-                if (!uiController.sortPlaylist)
-                    uiController.toggleSortablePlaylist(false,true);
+        var Id = song.id;
+        var listElement = null;
+        if (song.gid) {
+            if (!playlistController.sortPlaylist)
+                uiController.toggleSortablePlaylist(false, true);
 
-                listElement = $("#playlistInner li[data-songgid='playlistsong" + song.gid + "'] ");
+            listElement = $("#playlistInner li[data-songgid='playlistsong" + song.gid + "'] ");
 
+        }
+        else {
+            //  listElement = $("#searchlist li[data-songid='searchsong" + Id + "'] ");
 
-            }
-            else {
-                //  listElement = $("#searchlist li[data-songid='searchsong" + Id + "'] ");
+            listElement = $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
 
-                listElement = $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
+        }
 
-            }
+        if (listElement)
+            listElement.toggleClass("selected");
 
-            if(listElement)
-                listElement.toggleClass("selected");
-
-   /*     },250)
-          */
+        /*     },250)
+         */
     }
 }
 
@@ -162,13 +157,13 @@ playlistController.savePlaylist = function (useSelected) {
         playlistController.globalIdPlaylist++;
         playlistController.playlists = playlists;
 
-       // window.localStorage.playlists = JSON.stringify(playlists);
+        // window.localStorage.playlists = JSON.stringify(playlists);
         // alert("SAVE!!");
         console.dir("SAVE");
         console.dir(playlistController.playlists);
         console.dir("----");
-        for (var i = 0; i <  playlistController.playlists.length; i++) {
-           accountController.savePlaylist( playlistController.playlists[i].gid, playlistController.playlists[i].name,i,JSON.stringify( playlistController.playlists[i].tracks))
+        for (var i = 0; i < playlistController.playlists.length; i++) {
+            accountController.savePlaylist(playlistController.playlists[i].gid, playlistController.playlists[i].name, i, JSON.stringify(playlistController.playlists[i].tracks))
         }
 
 
@@ -221,33 +216,143 @@ playlistController.loadPlaylist = function (playlist) {
 }
 
 
-
 /**
  * Make Playlist Drag and Droppable
  */
 playlistController.makePlayListSortable = function () {
+
+    var startSorting = function () {
+        playlistController.playlistMouseDown = false;
+        // Add your code to run
+        uiController.stopPlaylistScrollingOnClick(event);
+        //$(that).data("checkdown", setTimeout(function () {
+        if (!playlistController.sortPlaylist) {
+            console.log("DRAGGGGIT!")
+
+            uiController.toggleSortablePlaylist(true);
+
+            var dragHandle = $(that);
+
+            var coords = {
+                clientX: event.clientX,
+                clientY: event.clientY
+            };
+
+            // this actually triggers the drag start event
+            uiController.startedSortPlaylist = true;
+            dragHandle.simulate("mousedown", coords);
+        }
+    }
+
+
+    $("#playlistInner li").on("mousedown",function (event) {
+        console.log("MDOWN")
+
+        if ($(this).parents("#playlistInner").length == 0)
+            return;
+        if (!playlistController.dragDraggableLastSongTimer || Date.now() - playlistController.dragDraggableLastSongTimer > 500) {
+            playlistController.dragDraggableSongX = event.clientX;
+            playlistController.dragDraggableSongY = event.clientY;
+            playlistController.dragDraggableSongTimer = Date.now();
+            playlistController.dragDraggableSongStartEvent = event;
+        } else
+            playlistController.dragDraggableSongTimer = 0;
+
+    }).on("mouseup",function (event) {
+
+            console.log("MDOWN")
+
+            if ($(this).parents("#playlistInner").length == 0)
+                return;
+            if (Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30) {
+                uiController.swipeTimer = Date.now();
+                playlistController.dragDraggableSongY = -10;
+            }
+            playlistController.dragDraggableSongTimer = 0;
+
+        }).on("mousemove", function (event) {
+
+
+            if ($(this).parents("#searchlist").length == 0)
+                return;
+            if (Math.abs(event.clientY - playlistController.dragDraggableSongY) > 8)
+                playlistController.dragDraggableSongY = -10;
+            if (playlistController.dragDraggableSongY > 0 && Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30) {
+                uiController.swipeTimer = Date.now();
+            } else if (playlistController.dragDraggableSongTimer && Date.now() - playlistController.dragDraggableSongTimer < 500) {
+                if (!uiController.draggingSong && event.clientX - playlistController.dragDraggableSongX > 2 && Math.abs(event.clientY - playlistController.dragDraggableSongY) < Math.abs(event.clientX - playlistController.dragDraggableSongX) * 0.8) {
+                    playlistController.dragDraggableSongY = -10;
+                    playlistController.dragDraggableLastSongTimer = Date.now();
+                    playlistController.dragDraggableSongTimer = 0;
+
+                    if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
+                        $("#saveplaylistinpt").val("");
+                        $("#saveokayplaylistbtn").attr("disabled", "disabled").css("opacity", "0.5");
+                        playlistController.loadedPlaylistSongs = [];
+                        $("#saveplaylistbtn img").attr("src", "public/img/save.png");
+                        $scope.safeApply();
+                        $("#clearChoosenPlaylists").show();
+                    }
+
+                    $("#searchlistview .draggableSong").draggable("enable");
+
+                    if (!uiController.sidePanelOpen && uiController.windowWidth < uiController.responsiveWidthSmallest) {
+                        uiController.startedSortPlaylistOpenedPanel = true;
+                        uiController.toggleSidePanel();
+                        var delay = 150;
+
+                    } else {
+                        uiController.startedSortPlaylistOpenedPanel = false;
+                        delay = 0;
+                    }
+
+                    var that = this;
+                    console.log(uiController.startedSortPlaylistOpenedPanel)
+                    var coords = {
+                        clientX: playlistController.dragDraggableSongStartEvent.clientX,
+                        clientY: playlistController.dragDraggableSongStartEvent.clientY
+                    };
+                    $(that).simulate("mouseup", coords);
+
+                    setTimeout(function () {
+
+                        $(that).simulate("mousedown", coords);
+
+                    }, delay)
+
+
+                }
+
+            }
+
+        }
+
+    )
+
+    /*
     if (app.isCordova)
         return;
     $("#playlistInner li").on("mousedown",function (event) {
+
+        if ($(this).parents("#playlistInner").length == 0)
+            return;
+
         if (!playlistController.playlistMouseDown) {
             playlistController.playlistMouseDown = true;
 
             var that = this;
-            if (!uiController.sortPlaylist) {
+            if (!playlistController.sortPlaylist) {
 
                 playlistController.dragSortableSongY = event.clientY;
                 console.log("MDOWN");
-                if($("#playlistview").height()>$("#playlistInner").height())
-                   var delay = 350;
-                else
-                    delay = 50;
-                var that = this;
-                $(that).data("checkdown", setTimeout(function () {
-                    playlistController.playlistMouseDown = false;
-                    // Add your code to run
-                    uiController.stopPlaylistScrollingOnClick(event);
-                    //$(that).data("checkdown", setTimeout(function () {
-                        if (!uiController.sortPlaylist) {
+                if ($("#playlistview").height() > $("#playlistInner").height())
+
+                    $(that).data("checkdown", setTimeout(function () {
+                        playlistController.playlistMouseDown = false;
+                        // Add your code to run
+                        uiController.stopPlaylistScrollingOnClick(event);
+                        //$(that).data("checkdown", setTimeout(function () {
+                        if (!playlistController.sortPlaylist) {
                             console.log("DRAGGGGIT!")
 
                             uiController.toggleSortablePlaylist(true);
@@ -263,8 +368,10 @@ playlistController.makePlayListSortable = function () {
                             uiController.startedSortPlaylist = true;
                             dragHandle.simulate("mousedown", coords);
                         }
-                  //  }, 10));
-                }, delay));
+                        //  }, 10));
+                    }, 350));
+            } else {
+
 
             }
         }
@@ -293,18 +400,28 @@ playlistController.makePlayListSortable = function () {
 
         }).on("mousemove", function (event) {
             // console.log("MOVE " + Math.abs(event.clientY - playlistController.dragSortableSongY))
-            if (Math.abs(event.clientY - playlistController.dragSortableSongY) > 8) {
+            if ($("#playlistview").height() > $("#playlistInner").height()) {
 
-                if ($(this).data("checkdown")) {
-                    clearTimeout($(this).data("checkdown"));
+                if (Math.abs(event.clientY - playlistController.dragSortableSongY) > 8) {
+
+                    if ($(this).data("checkdown")) {
+                        clearTimeout($(this).data("checkdown"));
+                    }
                 }
+
+            } else {
+
+
             }
+
 
             if (playlistController.dragSortableSongY > 0 && Math.abs(event.clientY - playlistController.dragSortableSongY) > 30)
                 uiController.swipeTimer = Date.now();
 
 
         })
+
+    */
 
 
     $("#playlistview").sortable({
@@ -323,7 +440,7 @@ playlistController.makePlayListSortable = function () {
              var ele = $helper.append($item.clone())
              */
 
-            var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement draggedsortablelistelement');
+            var $helper = $('<ul></ul>').addClass('songlist draggedlistelement draggedsortablelistelement');
 
             var elements = $("#playlistInner li.selected").removeClass("selected").removeClass("loadedsong playing pausing stillLoading");
 
@@ -397,9 +514,18 @@ playlistController.makePlayListSortable = function () {
         },
         //  containment: "body",
         receive: function (event, ui) {
+            console.log(".......................")
+            console.dir(ui)
+            //  ui.position = 0;
+            // console.dir( ui.data('draggable'))
+
 
         },
         start: function (event, ui) {
+
+
+            $("#playlistInner").offset().top
+
             uiController.draggingSortableSong = true;
             $("#playlistInner").removeClass("animate");
 
@@ -509,7 +635,7 @@ playlistController.makePlayListSortable = function () {
                     if (isElement) {
                         playlistController.draggedElements.each(function (index) {
                             var id = playlistController.draggedElements[index].dataset.songid.substring(10);
-                            var actSong = searchController.searchResults[parseInt(id.substring(5))];
+                            var actSong = playlistController.searchResults[parseInt(id.substring(5))];
 
                             actSong = jQuery.extend(true, {}, actSong);
 
@@ -567,13 +693,10 @@ playlistController.makePlayListSortable = function () {
             $("#playlistview").listview('refresh');
             $("#playlistview li").show().css("opacity", "");
             uiController.updateUI();
-            if (uiController.sortPlaylist) {
+            if (playlistController.sortPlaylist) {
                 $("#playlistInner  .removesong").show();
-
                 $("#playlistInner  .ui-btn-icon-right").css("margin-right", "0px");
-
                 $("#playlistInner  .ui-btn-icon-right").css("padding-right", "40px");
-
             }
 
             console.log($("#playlistview").get(0))
@@ -586,20 +709,16 @@ playlistController.makePlayListSortable = function () {
             setTimeout(function () {
                 playbackController.remarkSong();
                 uiController.playListScroll.refresh();
-                if (uiController.sortPlaylist) {
+                if (playlistController.sortPlaylist) {
                     $("#playlistInner  .removesong").show();
-
                     $("#playlistInner  .ui-btn-icon-right").css("margin-right", "0px");
-
                     $("#playlistInner  .ui-btn-icon-right").css("padding-right", "40px");
-
                 }
             }, 150)
 
             if ($('#playlistselectvertical .search-choice').length == 1) {
                 setTimeout(function () {
                     uiController.savePlaylistVisible(true);
-
                 }, 250)
             }
 

@@ -36,6 +36,9 @@ var mediaelementPlayer = function (selector) {
             success: function (mediaElement, domObject) {
                 that.container = $(selector).parents(".mejs-container");
 
+                that.container.find("video").css("opacity","0");
+
+
                 setTimeout(function () {
                     var oldSetProgressRail = that.mediaElementPlayer.setProgressRail;
                     that.mediaElementPlayer.setProgressRail = function () {
@@ -229,6 +232,10 @@ var mediaelementPlayer = function (selector) {
      */
     this.setFullscreenMode = function (mode) {
 
+        i
+        $("#videoplayer").hide();
+        $("#videoplayer video").addClass("backgroundVideo").insertAfter("#backgroundImage");
+
         if (videoController.isPlaying)
             var isPlaying = true;
         else
@@ -242,13 +249,9 @@ var mediaelementPlayer = function (selector) {
             this.videoElement.addClass("backgroundVideo").insertAfter("#backgroundImage");
 
             $("#videoplayer").hide();
-            if (playbackController.playingSong)
-                $("#backgroundImage").hide();
-            else
-                $("#backgroundImage").show();
+
 
         } else if (mode == 2) {
-            $("#backgroundImage").show();
             $("#videoplayer").show();
 
             $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
