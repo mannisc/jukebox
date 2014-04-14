@@ -705,7 +705,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                 }
 
                 //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
-                $(listElement.get(0)).find(".loadingSongImg").hide();
+               // $(listElement.get(0)).find(".loadingSongImg").hide();
                 $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "0")
 
                 $(listElement.get(0)).find(".loadingSongImg").removeClass("fadeoutcompletefast")

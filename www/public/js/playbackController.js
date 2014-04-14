@@ -122,7 +122,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
     //Clear other cover loading circles
     //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
-    $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
+   // $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
 
     //Clear other loading songs
     $(".songlist li").removeClass("loadedsong playing plausing stillloading");
@@ -149,7 +149,7 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
     //helperFunctions.animateBackground(".songlist li.loadedsong.stillloading .loadingSongImg", "public/img/loader/sprites.png", 46, 46, 18, 46,4.8);
 
-    $(".songlist li.loadedsong.stillloading .loadingSongImg").show();
+   // $(".songlist li.loadedsong.stillloading .loadingSongImg").show();
 
 
     $scope.safeApply();

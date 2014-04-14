@@ -573,7 +573,7 @@ white-space: nowrap;
 }
 
 
-.songlist li:hover a img.ui-li-icon,.songlist li:hover a img.loadingSongImg {
+.songlist li:hover a img.ui-li-icon{
     -webkit-transform: scale(1.21);
     -moz-transform: scale(1.21);
     transform: scale(1.21)!important;
@@ -585,6 +585,15 @@ white-space: nowrap;
     -webkit-box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
     box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
 }
+
+.songlist li:hover.selected a img.ui-li-icon{
+    -webkit-transform: scale(1)!important;
+    -moz-transform: scale(1)!important;
+    transform: scale(1)!important;
+
+}
+
+
 
 
 
@@ -794,21 +803,95 @@ video{
 }
 
 
-.songlist li.loadedsong.stillloading .loadingSongImg{
-   /* background-image:url(../img/songload.gif)!important;
-    background-size:9;*/
-    width: 46px!important;
-    height: 46px!important;
-    max-width: 46px!important;
-    max-height: 46px!important;
+
+.songlist li .loadingSongImg{
+/* background-image:url(../img/songload.gif)!important;
+ background-size:9;*/
+    width: 65px!important;
+    height: 65px!important;
+    max-width: 65px!important;
+    max-height: 65px!important;
     margin-left:3px!important;
     margin-top:-5px!important;
-    background-size:auto!important;
+    left: -3px!important;
+    top: 3px;
+    z-index:10;
+    overflow:visible;
+
     position: absolute;
-    left: 5.5px!important;
-    top: 14px;
+
+    -moz-box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
 
 
+
+
+    background-image:url(../img/empty.png) !important;
+    background-size: 65px 65px!important;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all  0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+/*
+.songlist li:hover .loadingSongImg:hover{
+    background-image:url(../img/checked.png)!important;
+    display:block!important;
+    -webkit-transition: all 0.15s ease;
+    -moz-transition: all 0.15s ease;
+    -o-transition: all 0.15s ease;
+    transition: all 0.15s ease;
+}
+  */
+
+
+.songlist li:hover .loadingSongImg:hover {
+     background-image:url(../img/unchecked.png)!important;
+     display:block!important;
+
+
+ }
+
+.songlist li:hover .loadingSongImg {
+    background-image:url(../img/uncheckedempty.png)!important;
+    display:block!important;
+
+
+}
+
+
+.songlist li:hover.selected .loadingSongImg{
+    background-image:url(../img/checked.png)!important;
+    display:block!important;
+
+
+}
+
+.songlist li.selected .loadingSongImg{
+    background-image:url(../img/checked.png)!important;
+    display:block!important;
+
+
+}
+
+
+.songlist li.loadedsong.stillloading .loadingSongImg{
+    background-image:url(../img/play.png)!important;
+    display:block!important;
+    -webkit-transition: all 15s ease;
+    -moz-transition: all 0.15s ease;
+    -o-transition: all 0.15s ease;
+    transition: all 0.15s ease;
+}
+
+
+
+.songlist li.loadedsong.stillloading .loadingSongImg{
+/* background-image:url(../img/songload.gif)!important;
+background-size:9;*/
+    display:block;
     -webkit-transform-origin: 50% 50%;
     -moz-origin: 50% 50%;
     transform-origin: 50% 50%;
@@ -821,9 +904,9 @@ video{
     -o-transition-property: -o-transform;
     transition-property: transform;
 
-    -webkit-animation:spin 2s ease infinite;
-    -moz-animation:spin 2s ease infinite!important;
-    animation:spin 2s ease infinite;
+    -webkit-animation:spinplay 2s ease infinite;
+    -moz-animation:spinplay 2s ease infinite!important;
+    animation:spinplay 2s ease infinite;
 
 
     z-index:10;
@@ -831,6 +914,27 @@ video{
 }
 
 
+@-moz-keyframes spinplay {
+    0% {  transform:rotateY(45deg);  -moz-transform: rotateY(45deg);}
+    40% {  transform:rotateY(45deg);  -moz-transform: rotateY(45deg);}
+    70% { transform:rotateY(360deg); -moz-transform: rotateY(360deg) ; }
+    100% { transform:rotateY(360deg); -moz-transform: rotateY(360deg) ; }
+
+}
+
+@-webkit-keyframes spinplay {
+    0% { transform:rotateY(0deg);  -webkit-transform: rotateY(0deg); }
+    40% { transform:rotateY(45deg); -webkit-transform: rotateY(45deg);}
+    70% { transform:rotateY(360deg);  -webkit-transform: rotateY(360deg); }
+    100% { transform:rotateY(360deg);  -webkit-transform: rotateY(360deg); }
+}
+
+@keyframes spinplay{
+    0% { transform:rotateY(45deg); }
+    40% { transform:rotateY(45deg); }
+    70% { transform:rotateY(360deg); }
+    100% { transform:rotateY(360deg); }
+}
 
 
 .songlist li.loadedsong.pausing img.ui-li-icon {
@@ -1959,12 +2063,12 @@ max-width: 2em!important;
     -moz-transform: rotate(1deg);
     -ms-transform: rotate(1deg);
     -o-transform: rotate(1deg);
-    -webkit-transform: rotate(1080deg);
-    -webkit-transition: all 8s ease-out;
-    -moz-transition: all 3s ease;
-    -ms-transition: all 3s ease;
-    -o-transition: all 3s ease;
-    transition: all 3s ease;
+    -webkit-transform: rotate(720deg);
+    -webkit-transition: all 2s ease-out;
+    -moz-transition: all 2s ease;
+    -ms-transition: all 2s ease;
+    -o-transition: all 2s ease;
+    transition: all 2s ease;
 }
 
 

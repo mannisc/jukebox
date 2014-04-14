@@ -1577,3 +1577,60 @@ uiController.showPlaylists = function () {
 
     }, 10)
 }
+
+
+
+
+/*
+Check icons
+ */
+
+uiController.xhoverSongListCover = function(element) {
+    console.log("XXXXXXXXXXXXXXXXXXXXX "+$(element).find(".loadingSongImg:hover").length)
+    setTimeout(function(){
+    $(element).css("display","block");
+    element.setAttribute('src', 'public/img/checked.png');
+    },0)
+}
+uiController.unhoverSongListCover = function(element) {
+    element.setAttribute('src', 'public/img/play.png');
+}
+
+
+/*
+ Play icons
+ */
+
+uiController.xxhoverSongListElement = function(elementLi) {
+    var element =  $(elementLi).find(".loadingSongImg");
+    console.log(element.get(0).getAttribute('src'));
+    if( element.get(0).getAttribute('src')!="public/img/play.png"){
+
+     element.get(0).setAttribute('src', 'public/img/empty.png');
+     element.css("display","block");
+    console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCC ")
+
+     setTimeout(function(){
+         if($(elementLi).find(".loadingSongImg:hover").length==0){
+
+             element.get(0).setAttribute('src', 'public/img/play.png');
+             console.log("PPPPLLLLAYYY")
+
+         }
+
+     },50)
+
+
+    }
+}
+uiController.xxunhoverSongListElement = function(elementLi) {
+    console.log("UNHOVER")
+
+    var element =  $(elementLi).find(".loadingSongImg");
+    element.get(0).setAttribute('src', 'public/img/empty.png');
+
+    element.css("display","none");
+}
+
+
+
