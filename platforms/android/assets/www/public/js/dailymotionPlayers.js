@@ -220,7 +220,7 @@ dailymotionPlayer.setVolume = function (volume) {
 /**
  * Set Fullscreen Mode
  * @param mode  0: Window ,1: Background ,2: Fullscreen
- */
+
 dailymotionPlayer.setFullscreenMode = function (mode) {
     //  dailymotionPlayer.dmplayer.fullscreen(fullscreen);
 
@@ -233,6 +233,7 @@ dailymotionPlayer.setFullscreenMode = function (mode) {
 
 
 }
+ */
 
 dailymotionPlayer.play = function () {
     if(dailymotionPlayer.dmplayer && dailymotionPlayer.apiready){

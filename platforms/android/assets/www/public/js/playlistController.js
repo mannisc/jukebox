@@ -65,7 +65,7 @@ playlistController.globalIdPlaylist = playlistController.playlists.length;
 playlistController.loadedPlaylistSongs = playlistController.playlists;
 
 playlistController.loadedPlaylistSongs = [];
-//playlistController.playlists = [];  //CLEAR_______________________________________________________________
+playlistController.playlists = [];  //CLEAR_______________________________________________________________
 
 playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
 
@@ -188,6 +188,15 @@ playlistController.selectPlaylist = function (playlist) {
         uiController.updateUI();
     }, 0)
 
+
+}
+
+
+
+playlistController.deselectSongs = function () {
+//Remove Selection
+
+   $(".songlist li.selected").removeClass("selected");
 
 }
 
@@ -635,7 +644,8 @@ playlistController.makePlayListSortable = function () {
                     if (isElement) {
                         playlistController.draggedElements.each(function (index) {
                             var id = playlistController.draggedElements[index].dataset.songid.substring(10);
-                            var actSong = playlistController.searchResults[parseInt(id.substring(5))];
+
+                            var actSong = searchController.searchResults[parseInt(id.substring(5))];
 
                             actSong = jQuery.extend(true, {}, actSong);
 

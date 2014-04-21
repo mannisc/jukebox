@@ -139,7 +139,7 @@ searchController.activateButton = function (index, noAnimation) {
 }
 
 
-searchController.completeSearch = function (list) {
+searchController.completeSearch = function (list, appendListInFront) {
 
     uiController.searchListScroll.scrollTo(0, 0, 1000)
     var changed = false;
@@ -164,24 +164,53 @@ searchController.completeSearch = function (list) {
         }
     }
     if (changed) {
-        searchController.searchResults = [];
+        if(appendListInFront) {
+            for ( var j = 0; j < appendListInFront.length; j++) {
+                for ( i = 0; i < list.track.length; i++) {
+                   if(mediaController.getSongDisplayName(list.track[i]) == mediaController.getSongDisplayName(appendListInFront[j]) ){
+                       list.track.splice(i,0);
+                   }
+
+                }
+            }
+            searchController.searchResults = appendListInFront;
+            var anzSongs =  searchController.searchResults.length;
+
+        }
+        else{
+            searchController.searchResults = [];
+            anzSongs = 0;
+        }
+
         $scope.safeApply();
         var num = 1;
         if (list.track.length) {
             num = Math.min(searchController.maxResults, list.track.length);
-            for (var i = 0; i < num; i++) {
-                searchController.searchResults[i] = list.track[i];
+
+            for ( i = anzSongs; i < num+anzSongs; i++) {
+                searchController.searchResults[i] = list.track[i-anzSongs];
             }
-            searchController.searchResultsComplete = list.track;
+            if(appendListInFront)
+             searchController.searchResultsComplete = appendListInFront.concat(list.track);
+            else
+             searchController.searchResultsComplete = list.track;
+
+
         }
         else {
-            searchController.searchResults[0] = list.track;
-            searchController.searchResultsComplete[0] = list.track[0];
+            searchController.searchResults[anzSongs] = list.track;
+            searchController.searchResultsComplete = [];
+            searchController.searchResultsComplete[anzSongs] = list.track[0];
         }
 
-        for (var i = 0; i < searchController.searchResults.length; i++) {
+        for ( i = 0; i < searchController.searchResults.length; i++) {
             searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
         }
+
+        console.log("----------------------")
+        console.dir(searchController.searchResults)
+
+
         $scope.safeApply();
         $("#searchlistview").listview('refresh');
 
@@ -333,8 +362,11 @@ searchController.showPopulars = function () {
 searchController.emptySearchList = function (dontInitFully) {
     searchController.searchResults = [];
     $scope.safeApply();
+
     $("#searchlistview").listview('refresh');
     $("#searchlist .iScrollPlayIndicator").hide();
+    playbackController.positionPlayIndicatorAtTop(true);
+
 
     setTimeout(function () {
         uiController.searchListScroll.refresh();
@@ -384,13 +416,19 @@ searchController.searchArtistSongs = function (artist) {
     $("#searchinput").val(artist);
     searchController.searchSongsString = artist;
     searchController.activateButton(0);
-    searchController.searchSongsFromArtist(artist, searchController.completeSearch);
+    searchController.searchSongsFromArtist(artist, function(list){
+        searchController.completeSearch(list,[playbackController.playingSong])
+    });
 
 }
 
 searchController.searchSimilarSongs = function (song) {
+
     searchController.activateButton(2);
-    searchController.suggestions(song.name, mediaController.getSongArtist(song), searchController.completeSearch);
+
+    searchController.suggestions(song.name, mediaController.getSongArtist(song),function(list){
+        searchController.completeSearch(list,[playbackController.playingSong])
+    });
 }
 
 
@@ -830,9 +868,7 @@ searchController.makeSearchListDraggable = function () {
         helper: function (event, ui) {
             $(this).addClass("selected");
 
-
             var $helper = $('<ul></ul>').addClass('songlist draggedlistelement draggedsearchlistelement');
-
 
             var elements = $("#searchlist li.selected").removeClass("selected").clone().removeClass("loadedsong playing pausing stillLoading");
 

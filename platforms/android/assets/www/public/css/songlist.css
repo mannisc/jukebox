@@ -1,0 +1,834 @@
+
+
+
+
+
+.songlist{
+    margin-bottom:15px!important;
+    padding-bottom: 15px!important;
+
+}
+
+.songlist li{
+    height:65px!important;
+}
+
+
+
+.songlist .ui-li-has-icon img {
+    max-height: 3.3em !important;
+    max-width: 3.3em !important;
+    margin-top: -0.5em !important;
+}
+
+.songlist .ui-li-has-icon a {
+    padding-left: 4.8em !important;
+    padding-top: 0.2em !important;
+
+}
+
+
+
+
+.songlist li a {
+    height:51px!important;
+
+    -webkit-box-shadow: none!important/*{b-active-background-color}*/;
+    -moz-box-shadow: none!important/*{b-active-background-color}*/;
+    box-shadow: none!important /*{b-active-background-color}*/;
+}
+
+
+
+.songlist   li a  {
+    overflow:visible!important;
+    margin-left: 5px!important;
+}
+
+.songlist li a img.ui-li-icon{
+    left: 5px!important;
+
+
+}
+
+.songlist li a img.ui-li-icon.fadeout{
+    opacity: 0!important;
+    -webkit-transition: opacity 0.2s ease!important;
+    -moz-transition: opacity 0.2s ease;!important;
+    -o-transition: opacity 0.2s ease!important;
+
+}
+
+
+
+.songlist li:hover a img.ui-li-icon{
+    -webkit-transform: scale(1.21);
+    -moz-transform: scale(1.21);
+    transform: scale(1.21)!important;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%!important;
+    z-index:10;
+    overflow:visible;
+    -moz-box-shadow: 3px 0p 5px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
+    box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
+}
+
+.songlist li:hover.selected a img.ui-li-icon{
+    -webkit-transform: scale(1)!important;
+    -moz-transform: scale(1)!important;
+    transform: scale(1)!important;
+
+}
+
+
+
+.songlist li.loadedsong:hover a img{
+
+    -moz-box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+}
+
+
+
+.songlist li p, .songlist li h3  {
+       text-shadow: 0 /*{b-bup-shadow-x}*/ 2px /*{b-bup-shadow-y}*/ 1px /*{b-bup-shadow-radius}*/ #111 /*{b-bup-shadow-color}*/!important;
+
+}
+
+
+
+.songlist li.loadedsong a{
+    /*  background-color:rgba(255,255,255,0.3) !important;*/
+
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.3), endColorstr=rgba(255,255,255,0))!important;
+    background-image:-moz-linear-gradient(left, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(255,255,255,0.3)), color-stop(44%,rgba(255,255,255,0.3)),color-stop(100%,rgba(255,255,255,0)))!important;
+
+
+
+}
+
+.songlist li img.ui-li-icon {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+.songlist li.loadedsong.playing img.ui-li-icon{
+    transition: all 0.3s ease;
+    background-image:url(../img/play.png)!important;
+    background-size:100%;
+    background-position: 0px 0px!important;
+
+}
+
+
+
+.songlist li.loadedsong.stillloading:hover a img.ui-li-icon {
+
+    -moz-box-shadow: 0x 0p 1px  rgba(0,0,0,0.4)!important;
+    -webkit-box-shadow: 0px 0px  1px rgba(0,0,0,0.4)!important;
+    box-shadow: 0px 0px 1px  rgba(0,0,0,0.4)!important;
+}
+
+.songlist li.loadedsong.stillloading {
+    -webkit-perspective:  150;
+    -webkit-perspective-origin: 32px 50%;
+    -moz-perspective: 150;
+    -moz-perspective-origin: 32px 50%;
+    -ms-perspective: 150;
+    -ms-perspective-origin: 32px 50%;
+    perspective: 150;
+    perspective-origin: 32px 50%;
+}
+
+.songlist li.loadedsong.stillloading img.ui-li-icon {
+    opacity:1;
+
+    /*-webkit-transform: rotateY(300deg) scale(1.21)!important;
+        -moz-transform: rotateY(359deg) scale(1.21)!important;
+        transform: rotateY(359deg) scale(1.21)!important;*/
+    -webkit-animation:spin 2s ease infinite;
+    -moz-animation:spin 2s ease infinite!important;
+    animation:spin 2s ease infinite;
+
+}
+
+
+
+.songlist li .loadingSongImg{
+    /* background-image:url(../img/songload.gif)!important;
+     background-size:9;*/
+    width: 65px!important;
+    height: 65px!important;
+    max-width: 65px!important;
+    max-height: 65px!important;
+    margin-left:3px!important;
+    margin-top:-5px!important;
+    left: -4px!important;
+    top:  5px;
+    z-index:10;
+    overflow:visible;
+
+    position: absolute;
+
+    -moz-box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+
+    background-image:url(../img/empty.png) !important;
+    background-size: 65px 65px!important;
+    -webkit-transition: background 0.5s ease;
+    -moz-transition: background  0.5s ease;
+    -o-transition: background 0.5s ease;
+    transition: background 0.5s ease;
+}
+
+
+.songlist li:hover .loadingSongImg:hover {
+    background-image:url(../img/unchecked.png)!important;
+    display:block!important;
+
+
+}
+
+.songlist li:hover .loadingSongImg {
+    background-image:url(../img/emptycover.png) !important;
+    display:block!important;
+
+
+}
+
+
+.songlist li:hover.selected .loadingSongImg{
+    background-image:url(../img/checked.png)!important;
+    display:block!important;
+
+
+}
+
+.songlist li.selected .loadingSongImg{
+    background-image:url(../img/checked.png)!important;
+    display:block!important;
+
+
+}
+
+
+.songlist li.loadedsong.stillloading .loadingSongImg{
+    background-image:url(../img/playloading.png)!important;
+    display:block!important;
+    -webkit-transition: all 15s ease;
+    -moz-transition: all 0.15s ease;
+    -o-transition: all 0.15s ease;
+    transition: all 0.15s ease;
+    -webkit-transform: scale(0.8)!important;
+    -moz-transform: scale(0.8)!important;
+    transform: scale(0.8)!important;
+
+}
+
+
+.songlist li.loadedsong.stillloading .loadingSongImg.fadeout{
+    opacity: 0!important;
+    -webkit-transition: opacity 0.2s ease!important;
+    -moz-transition: opacity 0.2s ease;!important;
+    -o-transition: opacity 0.2s ease!important;
+
+
+}
+
+.songlist li .loadingSongImg {
+    background-image:none;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.songlist li.loadedsong.stillloading .loadingSongImg{
+    /* background-size:9;*/
+
+    display:block;
+    -webkit-transform-origin: 50% 50%;
+    -moz-origin: 50% 50%;
+    transform-origin: 50% 50%;
+
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+    transition-property: transform;
+
+    -webkit-animation:spinplay 2s ease infinite;
+    -moz-animation:spinplay 2s ease infinite!important;
+    animation:spinplay 2s ease infinite;
+
+    z-index:10;
+
+}
+
+
+.songlist li.loadedsong.pausing img.ui-li-icon {
+    background-image:url(../img/play.png)!important;
+    opacity: 0.5 !important;
+    background-size:100%;
+    background-position: 0px 0px!important;
+
+}
+
+
+
+
+
+
+
+/*Searchlist */
+
+
+
+
+#searchlist {
+    position: absolute;
+    z-index: 1;
+    top: 55px;
+    left: 10px;
+    height: 100%;
+    background: none;
+    overflow: hidden;
+    padding-top: 5px;
+}
+
+#searchlist {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+
+
+#searchlist ul {
+    margin-left: 15px !important;
+    width: 80%;
+}
+
+#searchlistview {
+    position: absolute;
+    z-index: 1;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    width: 500%;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
+
+}
+
+#searchlist a {
+    background: none ;
+    border: none !important;
+}
+
+#searchlist a img{
+    height: 3.3em;
+    width: 3.3em;
+}
+
+
+
+#searchlist li.selected a, #playlistInner li.selected a{
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(0, 212, 59, 0.60), endColorstr=rgba(0, 212, 59,0.6))!important;
+    background-image:-moz-linear-gradient(left, rgba(0, 212, 59,0.6) 0%, rgba(0, 212, 59,0.6) 44%,rgba(0, 212, 59,0) 100%)!important;
+    background-image: linear-gradient(left, rgba(0, 212, 59,0.6) 0%, rgba(0, 212, 59,0.6) 44%,rgba(0, 212, 59,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(0, 212, 59,0.6) 0%, rgba(0, 212, 59,0.6) 44%,rgba(0, 212, 59,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(0, 212, 59,0.6) 0%, rgba(0, 212, 59,0.6) 44%,rgba(0, 212, 59,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(0, 212, 59,0.6) 0%, rgba(0, 212, 59,0.6) 44%,rgba(0, 212, 59,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(0, 212, 59,0.6)), color-stop(44%,rgba(0, 212, 59,0.6)),color-stop(100%,rgba(0, 212, 59,0)))!important;
+
+    border: none !important;
+}
+
+
+
+#searchlist a:after {
+    display: none;
+}
+
+#searchlist a:hover {
+    /*background: #7700b4 !important; /* #4617B4*/
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(119,0,180,1), endColorstr=rgba(119,0,180,1))!important;
+    background-image:-moz-linear-gradient(left, rgba(119,0,180,1) 0%, rgba(119,0,180,1) 44%,rgba(119,0,180,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(119,0,180,1) 0%, rgba(119,0,180,1) 44%,rgba(119,0,180,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(119,0,180,1) 0%, rgba(119,0,180,1) 44%,rgba(119,0,180,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(119,0,180,1) 0%, rgba(119,0,180,1) 44%,rgba(119,0,180,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(119,0,180,1) 0%, rgba(119,0,180,1) 44%,rgba(119,0,180,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(119,0,180,1)), color-stop(44%,rgba(119,0,180,1)),color-stop(100%,rgba(119,0,180,0)))!important;
+
+    border: none !important;
+}
+
+/*
+#searchlist li.playing a:hover,#searchlist li.pausing a:hover {
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(124, 0, 172,1), endColorstr=rgba(124, 0, 172,1))!important;
+    background-image:-moz-linear-gradient(left, rgba(124, 0, 172,1) 0%, rgba(124, 0, 172,1) 44%,rgba(124, 0, 172,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(124, 0, 172,1) 0%, rgba(124, 0, 172,1) 44%,rgba(124, 0, 172,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(124, 0, 172,1) 0%, rgba(124, 0, 172,1) 44%,rgba(124, 0, 172,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(124, 0, 172,1) 0%, rgba(124, 0, 172,1) 44%,rgba(124, 0, 172,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(124, 0, 172,1) 0%, rgba(124, 0, 172,1) 44%,rgba(124, 0, 172,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(124, 0, 172,1)), color-stop(44%,rgba(124, 0, 172,1)),color-stop(100%,rgba(124, 0, 172,0)))!important;
+
+
+
+
+    border: none !important;
+}
+*/
+
+
+#searchlist .ui-btn-icon-right {
+    padding-right: 0px !important;
+}
+
+
+
+
+
+
+
+
+/*Playlist*/
+
+
+
+#playlist {
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    background: none;
+    overflow: hidden;
+    min-width: 250px;
+    padding-bottom:1px;
+    max-height:0px;
+    padding-left: 10px;
+    background-color:rgba(255,255,255,0.1);
+}
+
+
+#playlistInner.animate{
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+
+#playlistInner li.animatetoslow{
+    -webkit-transition: all 10000s ease;
+    -moz-transition: all 10000s ease;
+    -o-transition: all 10000s ease;
+    transition: all 10000s ease;
+}
+
+
+
+
+#playlistInner {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 1;
+    height: 100%;
+    background: none;
+    overflow: hidden;
+    margin-left: -8px;
+    margin-top:-9px;
+    padding-top:5px;
+}
+
+#playlistInner ul {
+    margin-left: 15px !important;
+    width:100%;
+}
+
+#playlistInner li {
+    min-width: 250px;
+}
+
+#playlistInner .ui-sortable-placeholder{
+    /* background:      rgba(255,255,255,0.1);*/
+    visibility: visible!important;
+    height:65px!important;
+
+}
+
+
+
+#playlistview {
+    position: absolute;
+    z-index: 1;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    width: 500%;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
+    min-height:80%;
+
+
+}
+
+#playlistInner a {
+    background: none ;
+    border: none !important;
+}
+
+#playlistInner a img{
+    height: 3.3em;
+    width: 3.3em;
+}
+
+
+#playlistInner a:after {
+    display: none;
+}
+
+#playlistInner a:hover {
+    /*  background: #4617B4 !important;*/
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(70,23,180,1), endColorstr=rgba(70,23,180,1))!important;
+    background-image:-moz-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(70,23,180,1)), color-stop(44%,rgba(70,23,180,1)),color-stop(100%,rgba(70,23,180,0)))!important;
+
+    border: none !important;
+}
+
+
+
+#playlistInner .ui-li-has-icon img.removesong{
+    max-height: 1.8em!important;
+    max-width: 1.6em!important;
+    margin-top: -0.3em!important;
+    position: absolute;
+    right: 0.6em;
+    top: .9em;
+    background-size:100%;
+    background-repeat:no-repeat;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
+}
+#playlistInner .ui-li-has-icon img.removesong:hover{
+    background-image:url(../img/trashopen.png)!important ;
+    background-size:100%;
+    background-repeat:no-repeat;
+
+}
+
+
+
+
+#playlisthelp{
+    z-index:2;
+    position:absolute;
+    left:0px;
+    width:100%;
+    text-align:center;
+    opacity:0.6;
+    font-size:22px;
+    font-weight:bold;
+}
+
+
+#playlisthelp:hover{
+    opacity:1!important;
+}
+#playlisthelp {
+    -webkit-transition: all 1.5s ease;
+    -moz-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
+    transition: all 1.5s ease;
+}
+
+
+
+#playlistInner .ui-btn-icon-right {
+    margin-right: 8px;
+    padding-right: 0px;
+}
+
+
+
+/* Playlist Controls*/
+
+
+
+
+#controlbarplaylist{
+
+    margin-top: 22px;
+}
+
+
+#playlistselectvertical {
+    margin-top: -5px;
+    float: left;
+
+}
+
+
+#saveplaylistinput{
+    margin-top: -15px;
+    float: left;
+}
+
+#saveplaylistinput input{
+    line-height: 1.2em!important;
+    min-height: 34px!important;
+}
+
+
+
+#sortplaylisttext {
+    margin-top: 0px;
+    float: left;
+    margin-left: 10px;
+    overflow: hidden;
+    max-height: 20px;
+}
+
+
+
+.chosen-container .chosen-drop {
+    color: #000 !important;
+}
+
+#sortplaylistbutton {
+    float: left;
+    margin-top: -13px;
+    margin-left: 5px;
+}
+
+#sortplaylistbutton .ui-btn {
+    padding: 0.4em 0.5em 0.3em 0.4em !important;
+}
+
+#saveokayplaylistbutton {
+    float: left;
+    margin-top: -13px;
+    margin-left: 5px;
+
+}
+
+#saveokayplaylistbutton .ui-btn {
+    padding: 0.4em 0.5em 0.3em 0.4em !important;
+}
+
+
+
+#saveplaylistbutton {
+    float: left;
+    margin-top: -13px;
+    margin-left: 5px;
+}
+
+#saveplaylistbutton .ui-btn {
+    padding: 0.4em 0.5em 0.3em 0.4em !important;
+}
+
+
+
+#clearChoosenPlaylists{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin: -14px .3125em 0;
+    border: 0;
+    background-color: transparent;
+}
+
+.chosen-choices.ui-input  {
+    padding-right:30px;
+}
+.chosen-choices.ui-input  input,  #saveplaylistinpt{
+
+    padding: 0.4em!important;
+    margin-top: 1px!important;
+    min-height: 22px!important;
+    width: 100%!important;
+
+}
+
+#saveplaylistbtn{
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+
+
+
+.chosen-choices.ui-input li.search-choice {
+    margin: 4px 0 3px 5px!important;
+}
+
+
+
+/*iScroll Indicator*/
+
+
+.iScrollVerticalScrollbar{
+    width:9px!important;
+}
+
+.iScrollIndicator{
+    background: rgb(55, 55, 55)!important;
+    border: 1px solid rgba(155, 155, 155, 0.6)!important;
+}
+
+
+/*Listview*/
+#searchlist .iScrollVerticalScrollbar {
+    left: 0px !important;
+    right: auto !important;
+
+}
+
+#playlistInner .iScrollVerticalScrollbar {
+    right: 0px !important;
+    left: auto !important;
+}
+
+.iScrollVerticalScrollbar {
+    overflow: visible!important;
+    padding-top: 5px!important;
+    margin-bottom: 5px!important;
+}
+
+.iScrollPlayIndicator{
+    pointer-events:auto;
+    opacity:0.9!important;
+
+    /*
+
+    width: 0;
+    height: 0;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+
+    border-left: 10px solid rgba((86, 199, 231,0.8);
+
+    */
+
+    border-radius: 4.5px;
+    width: 9px;
+    height: 10px;
+
+    border: 1px solid rgba(155, 155, 155, 0.6)!important;
+    background-image: -moz-radial-gradient(45px 45px 45deg, circle cover,  rgba(86, 199, 231,0.8) 0%,  rgba(86, 199, 231,0.8) 100%, rgba(44,124,145,0.8) 95%);
+    background-image: -webkit-radial-gradient(45px 45px, circle cover, rgba(44,124,145,0.8), rgba(86, 199, 231, 0.80));
+    background-image: radial-gradient(45px 45px 45deg, circle cover, rgba(86, 199, 231,0.8) 0%, rgba(86, 199, 231,0.8) 100%, rgba(44,124,145,0.8) 95%);
+
+
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+, );
+
+}
+
+
+
+
+/* Animation */
+
+/*Spinning CoverImage */
+@-moz-keyframes spin {
+    0% {  transform:rotateY(45deg) scale(1.21);  -moz-transform: rotateY(45deg) scale(1.21);}
+    40% {  transform:rotateY(45deg) scale(1.21);  -moz-transform: rotateY(45deg) scale(1.21);}
+    70% { transform:rotateY(360deg) scale(1.21); -moz-transform: rotateY(360deg)  scale(1.21); }
+    100% { transform:rotateY(360deg) scale(1.21); -moz-transform: rotateY(360deg)  scale(1.21); }
+
+}
+
+@-webkit-keyframes spin {
+    0% { transform:rotateY(0deg) scale(1.21);  -webkit-transform: rotateY(0deg) scale(1.21);}
+    40% { transform:rotateY(45deg) scale(1.21); -webkit-transform: rotateY(45deg) scale(1.21);}
+    70% { transform:rotateY(360deg) scale(1.21);  -webkit-transform: rotateY(360deg) scale(1.21); }
+    100% { transform:rotateY(360deg) scale(1.21);  -webkit-transform: rotateY(360deg) scale(1.21);  }
+}
+
+@keyframes spin{
+    0% { transform:rotateY(45deg) scale(1.21); }
+    40% { transform:rotateY(45deg) scale(1.21); }
+    70% { transform:rotateY(360deg) scale(1.21); }
+    100% { transform:rotateY(360deg) scale(1.21); }
+}
+
+
+/*Spinning Cover Overlay */
+
+@-moz-keyframes spinplay {
+    0% {  transform:rotateY(45deg);  -moz-transform: rotateY(45deg);}
+    40% {  transform:rotateY(45deg);  -moz-transform: rotateY(45deg);}
+    70% { transform:rotateY(360deg); -moz-transform: rotateY(360deg) ; }
+    100% { transform:rotateY(360deg); -moz-transform: rotateY(360deg) ; }
+
+}
+
+@-webkit-keyframes spinplay {
+    0% { transform:rotateY(0deg);  -webkit-transform: rotateY(0deg);}
+    40% { transform:rotateY(45deg); -webkit-transform: rotateY(45deg);}
+    70% { transform:rotateY(360deg);  -webkit-transform: rotateY(360deg);   }
+    100% { transform:rotateY(360deg);  -webkit-transform: rotateY(360deg); }
+}
+
+@keyframes spinplay{
+    0% { transform:rotateY(45deg); }
+    40% { transform:rotateY(45deg); }
+    70% { transform:rotateY(360deg); }
+    100% { transform:rotateY(360deg); }
+}
+
+

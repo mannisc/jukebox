@@ -548,8 +548,12 @@ uiController.initMediaPlayer = function () {
 uiController.init = function () {
 
 
+    // Add BETA Status to Title
+    $("#titleHeader").append('<span style="position: absolute; top: 10px;left: 170px;color: #a00; font-weight: 100; font-size: 10px;">BETA</span>');
+
+
     //Additional Control Buttons
-    uiController.countCustomButtons = $(".videoControlElements-custom-button").length;
+    uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
 
     if (playlistController.loadedPlaylistSongs.length == 0) {
         $("#saveplaylistbtn img").attr("src", "public/img/save.png");
@@ -558,7 +562,6 @@ uiController.init = function () {
 
 
     $("body").dblclick(function () {
-
         $("#searchlist li.selected").removeClass("selected");
         if (playlistController.sortPlaylist)
             uiController.toggleSortablePlaylist(true, true);
@@ -654,7 +657,38 @@ uiController.init = function () {
         }
         if (playlistController.sortPlaylist)
             uiController.toggleSortablePlaylist();
-        uiController.updateUI();
+
+
+        //Resize Songlists/ reset indicator
+        setTimeout(function () {
+            uiController.updateUI();
+            uiController.searchListScroll.refresh();
+            uiController.playListScroll.refresh();
+            setTimeout(function () {
+                uiController.searchListScroll.refresh();
+                uiController.playListScroll.refresh();
+                playbackController.remarkSong();
+                setTimeout(function () {
+                    uiController.searchListScroll.refresh();
+                    uiController.playListScroll.refresh();
+                    playbackController.remarkSong();
+                    setTimeout(function () {
+                        playbackController.remarkSong();
+                        setTimeout(function () {
+                            playbackController.remarkSong();
+                            setTimeout(function () {
+                                uiController.searchListScroll.refresh();
+                                uiController.playListScroll.refresh();
+                                playbackController.remarkSong();
+                            }, 2000)
+                        }, 100)
+                    }, 100)
+                }, 100)
+            }, 100)
+
+        }, 1000)
+
+
     });
 
 
@@ -871,7 +905,7 @@ uiController.init = function () {
 
     $("#playlistselectvertical .ui-input-clear").appendTo("#playlistselectvertical .ui-input");
 
-    var playIndicator = $('<div class="iScrollPlayIndicator" ' +
+    var playIndicator = $('<div class="iScrollPlayIndicator fadeincomplete" ' +
         'style="box-sizing: border-box; ' +
         ' position: absolute;' +
         /*' background-color: rgba(245,245,245, 0.498039);' +
@@ -924,10 +958,12 @@ uiController.init = function () {
                 try {
                     // Try to grab the standard context. If it fails, fallback to experimental.
                     var webglcontext = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+                    console.log("webgl");
                 }
                 catch (e) {
                 }
-        } catch (e) { }
+        } catch (e) {
+        }
     }
 
 
@@ -1260,7 +1296,6 @@ uiController.stopPlaylistScrollingOnClick = function (event) {
 
 uiController.updateDisplay = function () {
 
-
     uiController.windowWidth = $(window).width();
 
     $("#page").width(uiController.windowWidth);
@@ -1274,6 +1309,9 @@ uiController.updateDisplay = function () {
  */
 uiController.updateUI = function (dontChangeVideOpacity) {
     uiController.updateDisplay();
+
+    //Additional Control Buttons
+    uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
 
     $("#lyricsiframeresizebar").css("top", -10);//$(window).height() / 2 - 30 - 44);
     $("#lyricsiframeresizebar").css("right", -2);
@@ -1579,58 +1617,6 @@ uiController.showPlaylists = function () {
 }
 
 
-
-
-/*
-Check icons
- */
-
-uiController.xhoverSongListCover = function(element) {
-    console.log("XXXXXXXXXXXXXXXXXXXXX "+$(element).find(".loadingSongImg:hover").length)
-    setTimeout(function(){
-    $(element).css("display","block");
-    element.setAttribute('src', 'public/img/checked.png');
-    },0)
-}
-uiController.unhoverSongListCover = function(element) {
-    element.setAttribute('src', 'public/img/play.png');
-}
-
-
-/*
- Play icons
- */
-
-uiController.xxhoverSongListElement = function(elementLi) {
-    var element =  $(elementLi).find(".loadingSongImg");
-    console.log(element.get(0).getAttribute('src'));
-    if( element.get(0).getAttribute('src')!="public/img/play.png"){
-
-     element.get(0).setAttribute('src', 'public/img/empty.png');
-     element.css("display","block");
-    console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCC ")
-
-     setTimeout(function(){
-         if($(elementLi).find(".loadingSongImg:hover").length==0){
-
-             element.get(0).setAttribute('src', 'public/img/play.png');
-             console.log("PPPPLLLLAYYY")
-
-         }
-
-     },50)
-
-
-    }
-}
-uiController.xxunhoverSongListElement = function(elementLi) {
-    console.log("UNHOVER")
-
-    var element =  $(elementLi).find(".loadingSongImg");
-    element.get(0).setAttribute('src', 'public/img/empty.png');
-
-    element.css("display","none");
-}
 
 
 
