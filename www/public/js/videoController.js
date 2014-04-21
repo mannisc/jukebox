@@ -352,6 +352,8 @@ videoController.isEmbedVideo = function (videoURL) {
  * @type {*}
  */
 videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
+    videoController.isPlaying = false;
+    videoController.isLoading = false;
 
     videoController.setMaxTime(0);
     videoController.setProgressPercentage(0);
