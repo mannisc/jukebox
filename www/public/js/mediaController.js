@@ -147,7 +147,6 @@ mediaController.showDuration = function (songversion) {
 mediaController.playSong = function (streamURL, videoURL) {
     mediaController.currentStreamURL = streamURL;
     mediaController.currentvideoURL = videoURL;
-
     videoController.loadSongInSuitablePlayer(streamURL, videoURL);
 
     videoController.playSong();

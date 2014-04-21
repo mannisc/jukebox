@@ -225,10 +225,18 @@
 .songlist li.loadedsong.stillloading .loadingSongImg{
     background-image:url(../img/playloading.png)!important;
     display:block!important;
-    -webkit-transition: all 15s ease;
+
+    /*-webkit-transition: all 15s ease;
     -moz-transition: all 0.15s ease;
     -o-transition: all 0.15s ease;
-    transition: all 0.15s ease;
+         transition: all 0.15s ease;
+*/
+
+    -webkit-transition: opacity 0.2s ease!important;
+    -moz-transition: opacity 0.2s ease;!important;
+    -o-transition: opacity 0.2s ease!important;
+    transition: all 0.2s ease;
+
     -webkit-transform: scale(0.8)!important;
     -moz-transform: scale(0.8)!important;
     transform: scale(0.8)!important;
@@ -236,11 +244,13 @@
 }
 
 
+
 .songlist li.loadedsong.stillloading .loadingSongImg.fadeout{
     opacity: 0!important;
     -webkit-transition: opacity 0.2s ease!important;
     -moz-transition: opacity 0.2s ease;!important;
     -o-transition: opacity 0.2s ease!important;
+    transition: opacity 0.2s ease!important;
 
 
 }
@@ -820,6 +830,7 @@
 @-webkit-keyframes spinplay {
     0% { transform:rotateY(0deg);  -webkit-transform: rotateY(0deg);}
     40% { transform:rotateY(45deg); -webkit-transform: rotateY(45deg);}
+
     70% { transform:rotateY(360deg);  -webkit-transform: rotateY(360deg);   }
     100% { transform:rotateY(360deg);  -webkit-transform: rotateY(360deg); }
 }

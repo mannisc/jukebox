@@ -13,20 +13,22 @@ var playbackController = function () {
 };
 
 
+
+
+
+
 /**
  * Double clicked on Element in list
  * @param element
  * @param onlyStyle
  */
-playbackController.doubleClickedElement = function (event, element, onlyStyle) {
-    event.stopPropagation();
+playbackController.clickedElement = function (event, element, onlyStyle) {
     //Swiped?
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
 
 
     if ($(".songlist li img:hover").length > 0) {
-        playlistController.deselectSongs();
         return;
     }
 
@@ -39,6 +41,7 @@ playbackController.doubleClickedElement = function (event, element, onlyStyle) {
         //Play Song
         playbackController.playSong(element, onlyStyle, false);
     }
+    event.stopPropagation();
 
 }
 
@@ -130,7 +133,16 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     if (!onlyStyle) {
         if (!isSameSongAsLoadedSong) {
             playbackController.isLoading = true;
+
+/* fadein plaing sign
+            $(songListElement.get(0)).find(".loadingSongImg").css("opacity","0");
             $(songListElement.get(0)).addClass("stillloading");
+            setTimeout(function(){
+                $(songListElement.get(0)).find(".loadingSongImg").css("opacity","");
+            },300);
+            */
+            $(songListElement.get(0)).addClass("stillloading");
+
             playbackController.startedLoadingTime = Date.now();
             if (playbackController.playingSong.streamURL)
                 mediaController.playStreamURL(playbackController.playingSong.streamURL);
