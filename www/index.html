@@ -201,7 +201,7 @@
 
             <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-click="playbackController.clickedElement($event,song);" ><a tabindex="-1"><img
                     src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" ><img src="public/img/empty.png"
-                                                                                                                                                                                                    class="loadingSongImg"  ng-click="playlistController.selectSong($event,song)" ng-dblclick="playlistController.deselectSongs($event);" >
+                                                                                                                                                                                                    class="loadingSongImg"   ng-dblclick="playlistController.deselectSongs($event);" >
 
                 <h3>{{song.name}}</h3>
 
@@ -267,7 +267,7 @@
                 <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
                     ng-click="playbackController.clickedElement($event,song);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
                                                                                            class="ui-li-icon ui-corner-none"  >
-                    <img src="public/img/empty.png" class="loadingSongImg" ng-dblclick="playlistController.deselectSongs($event);" ng-click="playlistController.selectSong($event,song)">
+                    <img src="public/img/empty.png" class="loadingSongImg" ng-dblclick="playlistController.deselectSongs($event);">
                     <span ng-if="!song.isPlaylist">
                     <h3>{{song.name}}</h3>
                     <p>{{mediaController.getSongArtist(song)}}</p><img class="removesong" ng-style="{'background-image':'url(public/img/trash.png)',display:'none'}" src="public/img/empty.png">
