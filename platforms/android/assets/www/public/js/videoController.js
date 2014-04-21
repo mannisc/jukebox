@@ -38,7 +38,7 @@ videoController.scaleFactor = 1.5;
 
 
 //Video Position Mode 0: Window ,1: Background ,2: Fullscreen
-videoController.fullscreenMode = 1;
+videoController.fullscreenMode = 0;
 
 
 //Progress Time- use setter
@@ -249,11 +249,7 @@ videoController.init = function () {
     videoController.controls.find(".videoControlElements-fullscreen-button").click(function () {
         if (videoController.fullscreenEnabled && videoController.videoPlayer) {
 
-            //  videoController.fullscreenMode = videoController.fullscreenMode + 1;
-            //  if (uiController.fullscreenMode > 2)
-            //    uiController.fullscreenMode = 0;
-
-            videoController.updateFullscreenMode();
+            videoController.toggleFullscreenMode();
 
         }
     });
@@ -364,35 +360,30 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
     if (videoController.videoPlayer && videoController.videoPlayer.unload)
         videoController.videoPlayer.unload();
 
+
     //TODO Select embedded Player
     var player = videoController.isEmbedVideo(videoURL);
     if (player != null) {
         videoController.isEmbedded = true;
-        /* embedPlayer.enable();
-         uiController.mediaElementPlayer.setSrc("http://0.0.0.0");
-         uiController.mediaElementPlayer.load();
-         uiController.mediaElementPlayer.play();
-         embedPlayer.loadDailymotion(videoURL);
-         */
         videoController.videoPlayer = player;
         videoController.videoPlayer.load(videoURL);
     }
     //Mediaelement
     else {
         videoController.isEmbedded = false;
-        /*embedPlayer.disable();
-         uiController.mediaElementPlayer.setSrc(streamURL);
-         uiController.mediaElementPlayer.load();
-         uiController.mediaElementPlayer.play();
-         */
-
         videoController.videoPlayer = videoController.videoPlayerList[0][0];
         videoController.videoPlayer.load(streamURL);
-
     }
 
     videoController.updateFullscreenMode();
 
+    if (!playbackController.firstPlayedSongAlready) {
+        playbackController.firstPlayedSongAlready = true;
+        $("#backgroundImage").addClass("fadeoutcomplete2s");
+        setTimeout(function () {
+            $("#backgroundImage").hide();
+        }, 2000)
+    }
 
 }
 
@@ -402,7 +393,7 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
  * @type {*}
  */
 videoController.playSong = function () {
-    if (!videoController.isPlaying && playbackController.playingSong && !playbackController.isLoading) {
+    if (!videoController.isPlaying && playbackController.playingSong && (!playbackController.isLoading||$(".songlist li.loadedsong").hasClass("firstplay"))) {
         videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
         videoController.videoPlayer.play();
         videoController.isPlaying = true;
@@ -469,63 +460,19 @@ videoController.stopSong = function () {
 }
 
 
-/**
- * Show Fullscreen
- * @type {*}
- */
-
-uiController.showFullscreen = function () {
-    $("#header").hide();
-    $("#controlbar").hide();
-    $("#searchlist").hide();
-    $("#playlist").hide();
-    $("#controlbarplaylist").hide();
-    $("#lyricsbutton").hide();
-    $("#facebookpostbutton").hide();
-    var i = document.body;
-    console.dir("FULLSCREEN: ");
-    console.dir(i);
-//      go full-screen
-    if (i.requestFullscreen) {
-        i.requestFullscreen();
-    } else if (i.webkitRequestFullscreen) {
-        i.webkitRequestFullscreen();
-    } else if (i.mozRequestFullScreen) {
-        i.mozRequestFullScreen();
-    } else if (i.msRequestFullscreen) {
-        i.msRequestFullscreen();
-    }
-
-
-}
-
 
 /**
- * Hide Fullscreen
+ * Toggle Fullscreen Mode
  * @type {*}
  */
-videoController.hideFullscreen = function () {
+videoController.toggleFullscreenMode = function () {
+    videoController.fullscreenMode = videoController.fullscreenMode + 1;
+    if (videoController.fullscreenMode > 1)
+        videoController.fullscreenMode = 0;
 
-    $("#header").show();
-    $("#controlbar").show();
-    $("#searchlist").show();
-    $("#controlbarplaylist").show();
-    $("#playlist").show();
-    $("#lyricsbutton").show();
-    $("#facebookpostbutton").show();
-
-
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-    } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-    }
-
+    videoController.updateFullscreenMode();
 }
+
 
 /**
  * Set Fullscreen Mode
@@ -534,61 +481,36 @@ videoController.hideFullscreen = function () {
 videoController.updateFullscreenMode = function () {
 
 
-    if (videoController.fullscreenMode == 1) { //Background
-        if (!playbackController.firstPlayedSongAlready) {
-            playbackController.firstPlayedSongAlready = true;
-            $("#backgroundImage").addClass("fadeoutcomplete2s");
-            setTimeout(function () {
-                $("#backgroundImage").hide();
-            }, 2000)
-        }
-        $("video, iframe").addClass("fadeincomplete2s").css("opacity", "1");
+    if (videoController.fullscreenMode == 0) { //Background
+        $("#header").show();
+        $("#controlbar").show();
+        $("#searchlist").show();
+        $("#playlist").show();
+        $("#controlbarplaylist").show();
+        $("#lyricsbutton").show();
+        $("#facebookpostbutton").show();
 
+        $("video, iframe").addClass("fadeincomplete2s").css("opacity", "1");
         setTimeout(function () {
             $("video, iframe").css("opacity", "1");
             $("video, iframe").removeClass("fadeincomplete2s");
         }, 2000)
 
-        videoController.hideFullscreen();
 
     }
-    /*else if (videoController.fullscreenMode == 2) {
-     if (embedPlayer.active == 0) {
-     $("#backgroundImage").show();
 
+    else if (videoController.fullscreenMode == 1) {
 
-     }
-     else {
-     $("#dmplayer").css("opacity", "1");
-     $("#dmplayer").show();
-     $("#videoplayer").hide();
+        $("#header").hide();
+        $("#controlbar").hide();
+        $("#searchlist").hide();
+        $("#playlist").hide();
+        $("#controlbarplaylist").hide();
+        $("#lyricsbutton").hide();
+        $("#facebookpostbutton").hide();
 
-     //  $(".iframeVideo").removeClass("backgroundVideo").appendTo("#embedplayer");
-     }
-     uiController.showFullscreen();
+    }
 
-
-     } else if (videoController.fullscreenMode == 0) {
-
-     if (embedPlayer.active == 0) {
-     $("#videoplayer").show();
-     $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
-     }
-     else {
-     $("#backgroundImage").show();
-     ;
-     $("#dmplayer").hide();
-     $("#videoplayer").hide();
-     //  uiController.showFullscreen();
-
-
-     }
-     uiController.hideFullscreen();
-
-     }
-     */
-
-    videoController.videoPlayer.setFullscreenMode(videoController.fullscreenMode);
 }
 
 

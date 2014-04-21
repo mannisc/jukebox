@@ -15,7 +15,9 @@ var mediaelementPlayer = function (selector) {
      * HTML5 video Element
      * @type {*|jQuery|HTMLElement}
      */
-    this.container = null; //Container of the mediaelement, wil be created by MediaElementPlayer()
+    this.container = null; //Container of the whole mediaelement, wil be created by MediaElementPlayer()
+    this.containerVideo = null; //Container of the mediaelement video element, wil be created by MediaElementPlayer()
+
     this.videoSelector = selector;
     this.videoElement = $(selector);
 
@@ -35,8 +37,12 @@ var mediaelementPlayer = function (selector) {
 
             success: function (mediaElement, domObject) {
                 that.container = $(selector).parents(".mejs-container");
+                that.containerVideo = $(selector).parents(".mejs-mediaelement");
+
+
 
                 that.container.find("video").css("opacity","0");
+                that.videoElement.addClass("backgroundVideo").insertAfter("#backgroundImage");
 
 
                 setTimeout(function () {
@@ -232,39 +238,7 @@ var mediaelementPlayer = function (selector) {
      */
     this.setFullscreenMode = function (mode) {
 
-        i
-        $("#videoplayer").hide();
-        $("#videoplayer video").addClass("backgroundVideo").insertAfter("#backgroundImage");
-
-        if (videoController.isPlaying)
-            var isPlaying = true;
-        else
-            isPlaying = false;
-
-        if (mode == 0) {
-            this.container.find('.mejs-fullscreen-button').click();//TODO remvove with function, but not available in mediaelementjs :(
-
-        } else if (mode == 1) { //Background
-
-            this.videoElement.addClass("backgroundVideo").insertAfter("#backgroundImage");
-
-            $("#videoplayer").hide();
-
-
-        } else if (mode == 2) {
-            $("#videoplayer").show();
-
-            $(".backgroundVideo").removeClass("backgroundVideo").appendTo(".mejs-mediaelement");
-
-            this.container.find('.mejs-fullscreen-button').click();//TODO remvove with function, but not available in mediaelementjs :(
-
-        }
-
-        if (isPlaying)
-            this.play();
-
-
-    };
+    }
 
 
 }

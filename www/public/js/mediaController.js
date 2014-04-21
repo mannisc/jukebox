@@ -11,7 +11,7 @@ var mediaController = function () {
 
 };
 
-mediaController.unknownData = "<Unknown>";
+mediaController.unknownData = "Unknown";
 
 mediaController.playCounter = 0;
 
@@ -685,17 +685,21 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
 
         var loadTime = Date.now() - playbackController.startedLoadingTime;
-        var delayTime = loadTime % 2000;
+       /* var delayTime = loadTime % 2000;
         if(delayTime>400)
             delayTime = delayTime-400;
         else
             delayTime = 0;
-
+       */
         $(listElement.get(0)).addClass("firstplay");
 
-        setTimeout(function () {
-            $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeoutcompletefast")
-            $(listElement.get(0)).find(".loadingSongImg").addClass("fadeoutcompletefast")
+      //  setTimeout(function () {
+
+            var cover = $(listElement.get(0)).find("img.ui-li-icon");
+            var playing =  $(listElement.get(0)).find(".loadingSongImg");
+
+            cover.addClass("fadeout");
+            playing.addClass("fadeout");
 
             setTimeout(function () {
 
@@ -707,25 +711,25 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                 //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
                // $(listElement.get(0)).find(".loadingSongImg").hide();
                 $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "0")
+                $(listElement.get(0)).find(".loadingSongImg").css("opacity", "0")
 
-                $(listElement.get(0)).find(".loadingSongImg").removeClass("fadeoutcompletefast")
-                $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeoutcompletefast");
+                $(listElement.get(0)).find(".loadingSongImg").removeClass("fadeout")
+
+                $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeout");
                 setTimeout(function () {
                     $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeincomplete")
                     $(listElement.get(0)).removeClass("firstplay");
 
                     setTimeout(function () {
+                        $(listElement.get(0)).find(".loadingSongImg").css("opacity", "1")
                         $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "1")
                         $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeincomplete");
+
                     }, 1000)
                 }, 200)
 
             }, 200)
-        }, delayTime)
-
-
-
-
+      //  }, delayTime)
 
         $("#videoplayer").removeClass("animatefast").addClass("animate");
 

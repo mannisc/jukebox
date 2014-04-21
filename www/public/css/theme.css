@@ -16,14 +16,6 @@ html, body, #page, #content {
 
 
 
-.ui-page-theme-b .ui-btn:focus, html .ui-bar-b .ui-btn:focus, html .ui-body-b .ui-btn:focus, html body .ui-group-theme-b .ui-btn:focus, html head + body .ui-btn.ui-btn-b:focus, .ui-page-theme-b .ui-focus, html .ui-bar-b .ui-focus, html .ui-body-b .ui-focus, html body .ui-group-theme-b .ui-focus, html head + body .ui-btn-b.ui-focus, html head + body .ui-body-b.ui-focus {
-    -webkit-box-shadow: none!important/*{b-active-background-color}*/;
-    -moz-box-shadow: none!important/*{b-active-background-color}*/;
-    box-shadow: none!important /*{b-active-background-color}*/;
-}
-
-
-
 .ui-btn, label.ui-btn {
     font-weight:400!important;
 }
@@ -104,74 +96,6 @@ padding: .4em 0!important;
     z-index: 1000 !important;
     top: -1px !important;
     padding-top: 1px !important;
-}
-
-/*Listview*/
-#searchlist .iScrollVerticalScrollbar {
-    left: 0px !important;
-    right: auto !important;
-
-}
-
-#playlistInner .iScrollVerticalScrollbar {
-    right: 0px !important;
-    left: auto !important;
-}
-
-.iScrollVerticalScrollbar {
-overflow: visible!important;
-padding-top: 5px!important;
-margin-bottom: 5px!important;
-}
-
-.iScrollPlayIndicator{
-    pointer-events:auto;
-    opacity:0.9!important;
-
-    /*
-
-    width: 0;
-    height: 0;
-    border-top: 9px solid transparent;
-    border-bottom: 9px solid transparent;
-
-    border-left: 10px solid rgba((86, 199, 231,0.8);
-
-    */
-
-    border-radius: 50%;
-    width: 9px;
-    height: 10px;
-
-
-    background-image: -moz-radial-gradient(45px 45px 45deg, circle cover,  rgba(86, 199, 231,0.8) 0%,  rgba(86, 199, 231,0.8) 100%, rgba(44,124,145,0.8) 95%);
-    background-image: -webkit-radial-gradient(45px 45px, circle cover, rgba(44,124,145,0.8), rgba(86, 199, 231, 0.80));
-    background-image: radial-gradient(45px 45px 45deg, circle cover, rgba(86, 199, 231,0.8) 0%, rgba(86, 199, 231,0.8) 100%, rgba(44,124,145,0.8) 95%);
-
-, );
-
-}
-
-
-.ui-li-has-icon img {
-    max-height: 3.3em !important;
-    max-width: 3.3em !important;
-    margin-top: -0.5em !important;
-}
-
-.ui-li-has-icon a {
-    padding-left: 4.8em !important;
-    padding-top: 0.2em !important;
-
-}
-
-#searchlist .ui-btn-icon-right {
-    padding-right: 0px !important;
-}
-
-#playlistInner .ui-btn-icon-right {
-    margin-right: 8px;
-    padding-right: 0px;
 }
 
 
