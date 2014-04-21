@@ -27,8 +27,8 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
 
-
-    if ($(".songlist li img:hover").length > 0) {
+    if (!element.isPlaylist&&$(".songlist li img:hover").length > 0||event.clientX<94) {
+        playlistController.selectSong(event,element)
         return;
     }
 

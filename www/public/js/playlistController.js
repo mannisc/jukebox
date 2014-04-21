@@ -74,8 +74,9 @@ playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.leng
  * Select songs to Drag
  * @param song
  */
-playlistController.selectSong = function (song) {
-
+playlistController.selectSong = function (event,song) {
+    if(event)
+        event.stopPropagation();
     if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
 
         /*if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 800)
@@ -84,7 +85,6 @@ playlistController.selectSong = function (song) {
          if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 800)
          return;  */
 
-        var Id = song.id;
         var listElement = null;
         if (song.gid) {
             if (!playlistController.sortPlaylist)
@@ -193,10 +193,13 @@ playlistController.selectPlaylist = function (playlist) {
 
 
 
-playlistController.deselectSongs = function () {
+playlistController.deselectSongs = function (event) {
 //Remove Selection
 
-   $(".songlist li.selected").removeClass("selected");
+   if(event)
+       event.stopPropagation();
+
+    $(".songlist li.selected").removeClass("selected");
 
 }
 
