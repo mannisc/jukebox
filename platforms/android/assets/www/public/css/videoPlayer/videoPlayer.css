@@ -58,6 +58,12 @@
  }
 
 
+ .videoControlElements-controls .mejs-play button.looped {
+     background-position: -64px 0px !important;
+ }
+
+
+
 
 
 

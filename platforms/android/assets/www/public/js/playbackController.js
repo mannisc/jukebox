@@ -113,12 +113,10 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
             }
         }
     }
-    console.log("CVCVCVCVCVCVC????"+playbackController.isLoading)
 
     //If not already loading, save the old song to be able to reset if there is a loading error
     if (!playbackController.isLoading&&playbackController.playingSong)  {
         playbackController.playingOldSong = playbackController.playingSong;
-        console.log("FFFFFFFFFFFFFFFFFFFFFFF "+playbackController.playingOldSong.name)
     }
 
     //Set loading/playing Song to selected Song
