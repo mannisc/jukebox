@@ -189,13 +189,15 @@
     -moz-transition: background  0.5s ease;
     -o-transition: background 0.5s ease;
     transition: background 0.5s ease;
+    opacity:0;
+
 }
 
 
 .songlist li:hover .loadingSongImg:hover {
     background-image:url(../img/unchecked.png)!important;
     display:block!important;
-
+    opacity:1;
 
 }
 
@@ -203,21 +205,20 @@
     background-image:url(../img/emptycover.png) !important;
     display:block!important;
 
-
 }
 
 
 .songlist li:hover.selected .loadingSongImg{
     background-image:url(../img/checked.png)!important;
     display:block!important;
-
+    opacity:1;
 
 }
 
 .songlist li.selected .loadingSongImg{
     background-image:url(../img/checked.png)!important;
     display:block!important;
-
+    opacity:1;
 
 }
 
@@ -225,7 +226,7 @@
 .songlist li.loadedsong.stillloading .loadingSongImg{
     background-image:url(../img/playloading.png)!important;
     display:block!important;
-
+    opacity:0;
     /*-webkit-transition: all 15s ease;
     -moz-transition: all 0.15s ease;
     -o-transition: all 0.15s ease;
@@ -820,24 +821,28 @@
 /*Spinning Cover Overlay */
 
 @-moz-keyframes spinplay {
-    0% {  transform:rotateY(45deg);  -moz-transform: rotateY(45deg);}
+    0% {  opacity:0.75; transform:rotateY(45deg);  -moz-transform: rotateY(45deg);}
     40% {  transform:rotateY(45deg);  -moz-transform: rotateY(45deg);}
-    70% { transform:rotateY(360deg); -moz-transform: rotateY(360deg) ; }
-    100% { transform:rotateY(360deg); -moz-transform: rotateY(360deg) ; }
+    50% {  opacity:1;}
+    70% { opacity:1; transform:rotateY(360deg); -moz-transform: rotateY(360deg) ; }
+    100% {opacity:0.75;  transform:rotateY(360deg); -moz-transform: rotateY(360deg) ; }
 
 }
 
 @-webkit-keyframes spinplay {
-    0% { transform:rotateY(0deg);  -webkit-transform: rotateY(0deg);}
+    0% { opacity:0.75;transform:rotateY(0deg);  -webkit-transform: rotateY(0deg);}
     40% { transform:rotateY(45deg); -webkit-transform: rotateY(45deg);}
+    50% {  opacity:1;}
 
-    70% { transform:rotateY(360deg);  -webkit-transform: rotateY(360deg);   }
-    100% { transform:rotateY(360deg);  -webkit-transform: rotateY(360deg); }
+    70% { opacity:1; transform:rotateY(360deg);  -webkit-transform: rotateY(360deg);   }
+    100% {  opacity:0.75; transform:rotateY(360deg);  -webkit-transform: rotateY(360deg); }
 }
 
 @keyframes spinplay{
     0% { transform:rotateY(45deg); }
     40% { transform:rotateY(45deg); }
+    50% {  opacity:1;}
+
     70% { transform:rotateY(360deg); }
     100% { transform:rotateY(360deg); }
 }

@@ -74,9 +74,8 @@ playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.leng
  * Select songs to Drag
  * @param song
  */
-playlistController.selectSong = function (event,song) {
-    if(event)
-        event.stopPropagation();
+playlistController.selectSong = function (song) {
+
     if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
 
         /*if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 800)

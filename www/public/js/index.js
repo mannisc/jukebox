@@ -99,7 +99,12 @@ $(document).ready(function () {
             console.dir(urlParams);
             setTimeout(function () {
                 if(urlParams.search&&urlParams.search!=""){
-                    searchController.searchSongs(urlParams.search, "", "", searchController.completeSearch);
+
+                    function search(searchID){
+                        searchController.searchSongs(urlParams.search, "", "",function (list) {  searchController.completeSearch(list,null,searchController.searchCounter) });
+                    }
+                    search(searchController.searchCounter);
+                    searchController.searchCounter++;
                 }
                 if(urlParams.artist&&urlParams.artist!=""){
                     if(urlParams.title&&urlParams.title!=""){

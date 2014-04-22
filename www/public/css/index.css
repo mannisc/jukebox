@@ -320,10 +320,19 @@ input[type=button]{
 }
 
 #controlbar .ui-input-search.animated, #controlbar .ui-input-btn.animated{
-    -webkit-transition: all 0.28s ease-out;
-    -moz-transition: all 0.28s ease-out;
-    -o-transition: all 0.28s ease-out;
-    transition: all 0.28s ease-out;
+   /* -webkit-transition: all 0.5s linear;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.5s linear;
+
+    -webkit-transition: all 280ms cubic-bezier(0.865, 0.105, 0.330, 0.850);
+    -moz-transition: all 280ms cubic-bezier(0.865, 0.105, 0.330, 0.850);
+    -o-transition: all 280ms cubic-bezier(0.865, 0.105, 0.330, 0.850);
+    transition: all 280ms cubic-bezier(0.865, 0.105, 0.330, 0.850); custom */
+    -webkit-transition: all 280ms cubic-bezier(0.825, 0.035, 0.580, 1.000);
+    -moz-transition: all 280ms cubic-bezier(0.825, 0.035, 0.580, 1.000);
+    -o-transition: all 280ms cubic-bezier(0.825, 0.035, 0.580, 1.000);
+    transition: all 280ms cubic-bezier(0.825, 0.035, 0.580, 1.000); /* custom */
 }
 
 
@@ -1090,11 +1099,11 @@ video{
 
 
 #header .ui-btn.animated{
-    -webkit-transition: all 0.5s ease-out;
+    -webkit-transition: all 0.5s linear;
     -moz-transition: all 0.5s ease-out;
     -ms-transition: all 0.5s ease-out;
     -o-transition: all 0.5s ease-out;
-    transition : all .5s linear!important;
+    transition : all 0.5s linear!important;
 
 }
 

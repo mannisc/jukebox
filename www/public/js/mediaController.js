@@ -251,9 +251,12 @@ mediaController.getVersions = function () {
 }
 
 mediaController.playVersion = function (songversion, rating, resetVersion) {
+
+   var loadError = false;
+
     $('#loadversionimg').css("opacity", "1");
     videoController.showBuffering(true);
-    if (videoController.buffered > 0.7)
+   if (videoController.buffered > 0.7)
         videoController.setBufferedPercentage(0);
 
     videoController.setLoopButton(false);
@@ -325,6 +328,7 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
                             setTimeout(function () {
                                 videoController.showBuffering(false);
                             }, 500);
+
                         }
                     })
                 }
@@ -342,7 +346,7 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
 
 }
 
-mediaController.loadStreamURL = function (streamID, searchString, artistString, titleString, streamURL, duration) {
+mediaController.loadStreamURL = function (streamID, searchString, artistString, titleString, streamURL, duration,playedAutomatic) {
 
     var loadError = false;
     //var stime=new Date();
@@ -356,7 +360,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
             //alert("RESPONSE TIME: "+diff+" ms");
             if (data.auth && data.auth == "true") {
                 authController.extractToken(data.token);
-                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration);
+                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration,playedAutomatic);
             }
             else {
                 // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
@@ -408,14 +412,35 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                 videoController.showBuffering(false);
             }, 500);
             //log("COMPLETED")
-            playbackController.isLoading = false;
+            //playbackController.isLoading = false;
+            //console.log("LOADED")
             if (loadError) {
                 //  console.log("ERROR")
-                //error();
+                mediaController.onLoadingError(streamID,playedAutomatic);
             }
         }
     })
 }
+
+
+mediaController.onLoadingError = function (streamID,playedAutomatic) {
+    //console.log("ERROR")
+    if (streamID == mediaController.playCounter) {
+
+        setTimeout(function () {
+            videoController.showBuffering(false);
+        }, 500);
+
+        uiController.toast("Sorry, this song is not available at the moment.", 1500);
+        if (!playedAutomatic)
+            playbackController.resetPlayingSong();
+        else
+            playbackController.playNextSong();
+
+        mediaController.songError();
+    }
+}
+
 
 
 mediaController.playStream = function (artist, title, playedAutomatic) {
@@ -445,23 +470,6 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
     var streamURL = "";
 
 
-    var error = function () {
-        //console.log("ERROR")
-        if (streamID == mediaController.playCounter) {
-
-            setTimeout(function () {
-                videoController.showBuffering(false);
-            }, 500);
-
-            uiController.toast("Sorry, this song is not available at the moment.", 1500);
-            if (!playedAutomatic)
-                playbackController.resetPlayingSong();
-            else
-                playbackController.playNextSong();
-
-            mediaController.songError();
-        }
-    }
 
 
     var play = function (streamID, searchString, artistString, titleString, streamURL) {
@@ -485,7 +493,7 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
                     //  alert(artistString+" - "+titleString);
                     if (authController.ip_token != "auth" && authController.ip_token != "") {
                         var loadError = false;
-                        mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration);
+                        mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration,playedAutomatic);
                     }
                 }
 
@@ -493,7 +501,7 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
             error: function () {
                 // console.log("ERROR")
                 var duration = 200000;
-                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration);
+                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration,playedAutomatic);
             }
 
         })
