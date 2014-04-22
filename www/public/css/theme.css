@@ -60,29 +60,9 @@ padding: .4em 0!important;
 
 /*Player*/
 
-.mejs-overlay-loading {
-    background: none !important;
-}
 
-.mejs-controls .mejs-play button.looped {
-    background-position: -64px 0px !important;
-}
 
-.mejs-controls .mejs-time-rail .mejs-time-current {
-    background: #fff !important;
-    background: rgb(255, 255, 255) !important;
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 255, 255)), to(rgb(200, 200, 200))) !important;
-    background: -webkit-linear-gradient(top, rgb(255, 255, 255), rgb(200, 200, 200)) !important;
-    background: -moz-linear-gradient(top, rgb(255, 255, 255), rgb(200, 200, 200)) !important;
-    background: -o-linear-gradient(top, rgb(255, 255, 255), rgb(200, 200, 200)) !important;
-    background: -ms-linear-gradient(top, rgb(255, 255, 255), rgb(200, 200, 200)) !important;
-    background: linear-gradient(rgb(255, 255, 255), rgb(200, 200, 200)) !important;
-    width: 0;
-}
 
-.mejs-controls .mejs-shuffle-off button {
-    background-position: -32px 0px !important;
-}
 
 /*Header*/
 

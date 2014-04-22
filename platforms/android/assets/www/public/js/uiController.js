@@ -578,15 +578,7 @@ uiController.init = function () {
     $(".ui-input-clear").addClass("ui-btn ui-btn-b ui-shadow ui-corner-all ui-mini");
 
 
-    $(document).keyup(function (evt) {
-        if (evt.keyCode == 32) {
-            videoController.playPauseSong();
-        } else if (evt.keyCode == 38 || evt.keyCode == 37) {
-            videoController.playPrevSong();
-        } else if (evt.keyCode == 40 || evt.keyCode == 39) {
-            playbackController.playNextSong();
-        }
-    })
+
 
     uiController.updateDisplay();
 
