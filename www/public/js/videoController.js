@@ -354,7 +354,7 @@ videoController.isEmbedVideo = function (videoURL) {
 videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
     videoController.isPlaying = false;
     videoController.isLoading = false;
-
+    console.log("LOADDED IN PLAYER")
     videoController.setMaxTime(0);
     videoController.setProgressPercentage(0);
     videoController.setBufferedPercentage(0);
@@ -791,9 +791,7 @@ videoController.setVolume = function (volume, secondTry) {
  */
 videoController.endedSong = function () {
 
-    mediaController.sendRating("2");
-    document.title = $scope.appTitle;
-    videoController.isPlaying = false;
+     videoController.isPlaying = false;
     videoController.disableStopControl(true);
     $("#videoplayer").css("opacity", "0");
     $("#videoplayer").css("pointer-events", "none");
@@ -808,6 +806,7 @@ videoController.endedSong = function () {
         playbackController.playNextSong();
 
     mediaController.mediaEnded();
+
 }
 
 
@@ -822,8 +821,8 @@ videoController.playingSong = function () {
 
         //   helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
 
-
-        playbackController.isLoading = false;
+       // console.log("PLAYINGGGGGGG")
+        //playbackController.isLoading = false;
         videoController.isPlaying = true;
 
         videoController.disablePlayStopControls(false);

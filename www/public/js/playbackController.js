@@ -13,12 +13,21 @@ var playbackController = function () {
 };
 
 
+/**
+ * Double clicked on Element in list
+ * @param event
 
+ */
+playbackController.doubleClickedElement = function (event) {
 
+    event.stopPropagation();
+
+}
 
 
 /**
- * Double clicked on Element in list
+ * Clicked on Element in list
+ * @param event
  * @param element
  * @param onlyStyle
  */
@@ -27,8 +36,9 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
 
-    if (!element.isPlaylist&&$(".songlist li img:hover").length > 0||event.clientX<94) {
-        playlistController.selectSong(event,element)
+    //Clicked on Cover -> Select Song
+    if (!element.isPlaylist && $(".songlist li img:hover").length > 0 || event.clientX < 94) {
+        playlistController.selectSong(element)
         return;
     }
 
@@ -49,11 +59,13 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
 /**
  * Play song, triggered manually or automatic
  * @param song
- * @param onlyStyle
+ * @param resetingSong
  * @param playedAutomatic
  */
-playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
+playbackController.playSong = function (song, resetingSong, playedAutomatic) {
     //Dont play multiple songs within 100ms
+    //alert(Date.now() - playbackController.playSongTimer )
+
     if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 100) {
         playbackController.playSongTimer = Date.now();
         return;
@@ -76,32 +88,38 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     else
         songListElement = $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
 
+    if (!resetingSong) {
+        //Check if song already playing
+        var isSameSongAsLoadedSong = playbackController.playingSong && (((!playbackController.playingSong.gid && !song.gid) || playbackController.playingSong.gid == song.gid) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song));
+        //New song is already loading/playing song
 
-    //Check if song already playing
-    var isSameSongAsLoadedSong = playbackController.playingSong && (((!playbackController.playingSong.gid && !song.gid) || playbackController.playingSong.gid == song.gid) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song));
+        if (isSameSongAsLoadedSong) {
+            //Already Loading, and not loaded yet (no pausing possible)
+            if (playbackController.isLoading) {
+                playbackController.resetPlayingSong();
+                return;
 
-    //New song is already loading/playing song
-    if (isSameSongAsLoadedSong) {
-        //Already Loading, and not loaded yet (no pausing possible)
-        if (playbackController.isLoading)
-            return;
-        //Toggle Playing/Pausing
-        else if (playbackController.playingSong) {
+            }
+            //Toggle Playing/Pausing
+            else if (playbackController.playingSong) {
 
-            if (!$(songListElement.get(0)).hasClass("stillloading"))
-                setTimeout(function () {
+                if (!$(songListElement.get(0)).hasClass("stillloading"))
+                    setTimeout(function () {
 
-                    videoController.playPauseSong();
+                        videoController.playPauseSong();
 
-                }, 50);
-            return;
+                    }, 50);
+                return;
+            }
         }
     }
-
+    console.log("CVCVCVCVCVCVC????"+playbackController.isLoading)
 
     //If not already loading, save the old song to be able to reset if there is a loading error
-    if (!playbackController.isLoading)
+    if (!playbackController.isLoading&&playbackController.playingSong)  {
         playbackController.playingOldSong = playbackController.playingSong;
+        console.log("FFFFFFFFFFFFFFFFFFFFFFF "+playbackController.playingOldSong.name)
+    }
 
     //Set loading/playing Song to selected Song
     playbackController.playingSong = song;
@@ -130,17 +148,17 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
     $(".songlist li").removeClass("loadedsong playing pausing stillloading");
 
 
-    if (!onlyStyle) {
+    if (!resetingSong) {
         if (!isSameSongAsLoadedSong) {
             playbackController.isLoading = true;
 
-/* fadein plaing sign
-            $(songListElement.get(0)).find(".loadingSongImg").css("opacity","0");
-            $(songListElement.get(0)).addClass("stillloading");
-            setTimeout(function(){
-                $(songListElement.get(0)).find(".loadingSongImg").css("opacity","");
-            },300);
-            */
+            /* fadein plaing sign
+             $(songListElement.get(0)).find(".loadingSongImg").css("opacity","0");
+             $(songListElement.get(0)).addClass("stillloading");
+             setTimeout(function(){
+             $(songListElement.get(0)).find(".loadingSongImg").css("opacity","");
+             },300);
+             */
             $(songListElement.get(0)).addClass("stillloading");
 
             playbackController.startedLoadingTime = Date.now();
@@ -154,7 +172,15 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
 
         }
 
+    }else {
+        console.log("!JJJJJJJJJJJJJJJ "+   videoController.isPlaying)
+        if(   videoController.isPlaying)
+          $(songListElement.get(0)).addClass("playing");
+        else
+          $(songListElement.get(0)).addClass("pausing");
+
     }
+
 
 
     //helperFunctions.animateBackground(".songlist li.loadedsong.stillloading .loadingSongImg", "public/img/loader/sprites.png", 46, 46, 18, 46,4.8);
@@ -180,13 +206,17 @@ playbackController.playSong = function (song, onlyStyle, playedAutomatic) {
  * Reset playing song after Loading failed
  */
 playbackController.resetPlayingSong = function () {
-
+    console.log("RESETTTTT")
     playbackController.isLoading = false;
 
-    $(".mejs-controls").find('.mejs-time-loaded').show();
 
-    if ($(".mejs-controls").find('.mejs-time-buffering').css("opacity") > 0)
-        $(".mejs-controls").find('.mejs-time-buffering').fadeOut();
+    $(".videoControlElements-controls").find('.videoControlElements-time-loaded').show();
+
+   // if ($(".videoControlElements-controls").find('.videoControlElements-time-buffering').css("opacity") > 0)
+   //     $(".videoControlElements-controls").find('.videoControlElements-time-buffering').fadeOut();
+
+    videoController.showBuffering(false);
+
 
     mediaController.playCounter = mediaController.playCounter + 1;
 
@@ -196,6 +226,7 @@ playbackController.resetPlayingSong = function () {
     playbackController.playingSong = playbackController.playingOldSong;
 
     if (playbackController.playingSong) {
+        playbackController.playSongTimer = 0;
         playbackController.playSong(playbackController.playingSong, true);      //TODO REMOVE PLAY SONG HERE
         playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
 
