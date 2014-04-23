@@ -1,5 +1,120 @@
 
- /*Container*/
+
+
+#videoplayer {
+    position: absolute;
+    bottom: 60px;
+    text-align: center;
+    pointer-events: none!important;
+    z-index: 10000;
+    display:none!important;
+
+}
+
+
+#videoplayerInner {
+    display: inline-block;
+    pointer-events: auto;
+    z-index: 2 !important;
+
+}
+
+
+
+
+
+#videoplayerInner .mejs-mediaelement {
+    text-align: center;
+}
+
+
+#videoplayer.scaleVideo1{
+
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+
+}
+
+#videoplayer.scaleVideo2{
+
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+
+}
+
+
+
+#videoplayer.animate {
+    -webkit-transition: all 1.5s ease;
+    -moz-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
+    transition: all 1.5s ease;
+}
+
+#videoplayer.animatefast {
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all  0.2s ease;
+    transition: all  0.2s ease;
+}
+
+
+
+#videoplayerInner{
+    border: 1px solid #000;
+    background:#000!important;
+}
+
+
+#videoplayerInner video {
+    -webkit-transition: width 1.5s ease;
+    -moz-transition: width 1.5s ease;
+    -o-transition: width 1.5s ease;
+    transition: width 1.5s ease;
+
+}
+
+
+
+
+
+#videocontrols {
+    z-index:  1000001;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 230px;
+    left: 0px;
+
+    pointer-events: none;
+
+    background-color: #1d1d1d /*{b-bar-background-color}*/;
+    border-color: #1b1b1b /*{b-bar-border}*/;
+    color: #fff /*{b-bar-color}*/;
+    text-shadow: 0 /*{b-bar-shadow-x}*/ 1px /*{b-bar-shadow-y}*/ 0 /*{b-bar-shadow-radius}*/ #111 /*{b-bar-shadow-color}*/;
+    font-weight: bold;
+
+    white-space: nowrap
+}
+
+#videocontrolsInner{
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    opacity:0;
+    width:100%;
+
+}
+
+
+
+
+/*Container*/
 .videoControlElements-container {
     font-family: Helvetica, Arial;
     text-align: left;
@@ -78,11 +193,20 @@
  }
 
 
- #videoccontrols  .videoControlElements-time-rail {
-     -webkit-transition: all 1s ease;
-     -moz-transition: all 1s ease;
-     -o-transition: all 1s ease;
-     transition: all 1s ease;
+
+
+video, iframe{
+    -webkit-transition: height 1s ease!important;
+    -moz-transition: height 1s ease!important;
+    -o-transition: height 1s ease!important;
+    transition: height 1s ease!important;
+}
+
+ #videocontrols  .videoControlElements-time-rail {
+     -webkit-transition: all 0.1s ease;
+     -moz-transition: all 0.1s ease;
+     -o-transition: all 0.1s ease;
+     transition: all 0.1s ease;
  }
 
  #videocontrolsInner .videoControlElements-controls {

@@ -79,8 +79,8 @@ mediaController.mediaEnded = function () {
 
     videoController.isPlaying = false;
     videoController.disableStopControl(true);
-    $("#videoplayer").css("opacity", "0");
-    $("#videoplayer").css("pointer-events", "none");
+    //$("#videoplayer").css("opacity", "0");
+   // $("#videoplayer").css("pointer-events", "none");
 
     videoController.setBufferedPercentage(0);
 
@@ -305,8 +305,8 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
                                             if (resetVersion == 1) {
                                                 mediaController.startVersionIndex = -1;
                                             }
-                                            mediaController.seekTime = uiController.mediaElementPlayer.getCurrentTime();
-                                            mediaController.seekTimeDuration = uiController.mediaElementPlayer.media.duration;
+                                            mediaController.seekTime = videoController.progressTime//uiController.mediaElementPlayer.getCurrentTime();
+                                            mediaController.seekTimeDuration  = videoController.maxTime; //uiController.mediaElementPlayer.media.duration;
                                             mediaController.versionListSong = song;
                                             mediaController.playStreamURLSeek(streamURL, videoURL, true, rating);
 
@@ -355,6 +355,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
         timeout: 30000,
         url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration + "&auth=" + authController.ip_token,
         success: function (data) {
+            if (streamID == mediaController.playCounter) {
             //var etime=new Date();
             //var diff = etime.getTime()-time;
             //alert("RESPONSE TIME: "+diff+" ms");
@@ -364,7 +365,6 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
             }
             else {
                 // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
-                if (streamID == mediaController.playCounter) {
                     mediaController.playCounter++;
                     // console.dir("STREAM");
                     // console.dir(data);
@@ -400,8 +400,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
 
                     } else
                         loadError = true;
-                } else
-                    loadError = true;
+                }
             }
         },
         error: function () {
@@ -513,12 +512,12 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
 }
 
 mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVersions, rating) {
-    $("#videoplayer").removeClass("animate").addClass("animatefast");
-    $("#videoplayer").css("opacity", "0");
-    $("#videoplayer").css("pointer-events", "none");
+   // $("#videoplayer").removeClass("animate").addClass("animatefast");
+   // $("#videoplayer").css("opacity", "0");
+   // $("#videoplayer").css("pointer-events", "none");
 
     setTimeout(function () {
-        $("#videoplayer").removeClass("animatefast").addClass("animate");
+       // $("#videoplayer").removeClass("animatefast").addClass("animate");
 
         // playlistController.playingTitle = playlistController.playlingTitleLoading ;
         // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
@@ -544,7 +543,6 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
             }, 500)
         } else
             videoController.disableVersionControl(true);
-        uiController.mediaElementPlayer.media.addEventListener('loadedmetadata', mediaController.setVideoTime, false);
 
 
     }, 200)
@@ -552,21 +550,7 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
 
 }
 
-mediaController.setVideoTime = function () {
-    var duration = uiController.mediaElementPlayer.media.duration;
-    var relativTime = mediaController.seekTime;
-    // console.dir("SEEK:");
-    // console.dir("duration: "+duration);
-    // console.dir("seekTimeDuration: "+mediaController.seekTimeDuration);
-    // console.dir("relativTime: "+relativTime);
-    if (mediaController.seekTimeDuration > 0 && duration > 0) {
-        //     console.dir("SEEK OK!");
-        //     console.dir(mediaController.seekTimeDuration+" -> "+duration+"  ("+relativTime+")");
-        relativTime = ((mediaController.seekTime * 1.0) / mediaController.seekTimeDuration) * duration;
-    }
-    uiController.mediaElementPlayer.setCurrentTime(relativTime);
-    uiController.mediaElementPlayer.media.removeEventListener('loadedmetadata', mediaController.setVideoTime, false);
-}
+
 
 mediaController.songError = function () {
 
@@ -574,7 +558,7 @@ mediaController.songError = function () {
         videoController.showBuffering(false);
     }, 500);
     uiController.toast("Sorry, this song is not available at the moment.", 1500);
-    $("#videoplayer").css("opacity", "0");
+    // $("#videoplayer").css("opacity", "0");
     playbackController.resetPlayingSong();
 }
 
@@ -677,9 +661,9 @@ mediaController.playNextVersion = function () {
 
 
 mediaController.playStreamURL = function (streamURL, videoURL, differentVersions) {
-    $("#videoplayer").removeClass("animate").addClass("animatefast");
-    $("#videoplayer").css("opacity", "0");
-    $("#videoplayer").css("pointer-events", "none");
+    //$("#videoplayer").removeClass("animate").addClass("animatefast");
+    //$("#videoplayer").css("opacity", "0");
+    //$("#videoplayer").css("pointer-events", "none");
 
     setTimeout(function () {
 
@@ -738,7 +722,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
             }, 200)
       //  }, delayTime)
 
-        $("#videoplayer").removeClass("animatefast").addClass("animate");
+       // $("#videoplayer").removeClass("animatefast").addClass("animate");
 
         // playlistController.playingTitle = playlistController.playlingTitleLoading ;
         // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
