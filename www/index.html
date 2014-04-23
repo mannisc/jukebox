@@ -199,9 +199,9 @@
 
         <ul data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
-            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-click="playbackController.clickedElement($event,song);" ng-dblclick="playbackController.doubleClickedElement($event);"><a tabindex="-1"><img
+            <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1"><img
                     src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" ><img src="public/img/empty.png"
-                                                                                                                                                                                                    class="loadingSongImg"   ng-dblclick="playlistController.deselectSongs($event);" >
+                                                                                                                                                                                                    class="loadingSongImg"   >
 
                 <h3>{{song.name}}</h3>
 
@@ -233,7 +233,7 @@
             </div>
             <div id="sortplaylistbutton">
 
-                <button id="sortplaylistbtn" onclick="uiController.toggleSortablePlaylist(false,true);" data-mini="true" data-type="button" value="" data-theme="b">
+                <button id="sortplaylistbtn" onclick="playlistController.toggleSortablePlaylist(false,true);" data-mini="true" data-type="button" value="" data-theme="b">
                     <img src="public/img/sort.png" width="22px" height="22px" alt="Sort"/>
                 </button>
 
@@ -242,13 +242,13 @@
                 <input id="saveplaylistinpt" class="ui-input ui-body-a ui-corner-all ui-shadow-inset" data-theme="a" placeholder="Enter Name">
             </div>
             <div id="saveplaylistbutton">
-                <button id="saveplaylistbtn" onclick="uiController.toggleSavePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
+                <button id="saveplaylistbtn" onclick="playlistController.toggleSavePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
                     <img src="public/img/plus.png" width="22px" height="22px" alt="Sort"/>
                 </button>
             </div>
             <div id="saveokayplaylistbutton" style="display:none">
 
-                <button id="saveokayplaylistbtn" onclick="uiController.toggleSavePlaylist(true);" class="greenbackground" data-mini="true" data-type="button" value="" data-theme="b">
+                <button id="saveokayplaylistbtn" onclick="playlistController.toggleSavePlaylist(true);" class="greenbackground" data-mini="true" data-type="button" value="" data-theme="b">
                     <img src="public/img/check.png" width="22px" height="22px" alt="Sort"/>
                 </button>
 
@@ -265,9 +265,9 @@
         <div id="playlistInner" class="animate" style="display:none">
             <ul data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
                 <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
-                    ng-click="playbackController.clickedElement($event,song);" ng-dblclick="playbackController.doubleClickedElement($event)"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
+                    ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
                                                                                            class="ui-li-icon ui-corner-none"  >
-                    <img src="public/img/empty.png" class="loadingSongImg" ng-dblclick="playlistController.deselectSongs($event);">
+                    <img src="public/img/empty.png" class="loadingSongImg">
                     <span ng-if="!song.isPlaylist">
                     <h3>{{song.name}}</h3>
                     <p>{{mediaController.getSongArtist(song)}}</p><img class="removesong" ng-style="{'background-image':'url(public/img/trash.png)',display:'none'}" src="public/img/empty.png">
@@ -373,7 +373,7 @@
                     <button type="button" id="facebookpostbutton" data-role="none" style="opacity:0.5"  aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button>
                 </div>
                 <!--div style =class="videoControlElements-button videoControlElements-button-copyright videoControlElements-custom-button">
-                    <button type="button" id="copyrightbutton" data-role="none" style="opacity:0.9"  onclick="window.open('http://www.dailymotion.com/feedback/copyright/notification','_blank')" aria-controls="mep_0" title="Copyright" aria-label="Copyright"></button>
+                    <button type="button" id="copyrightbutton" data-role="none" style="opacity:0.9"  onclick="window.open('','_blank')" aria-controls="mep_0" title="Copyright" aria-label="Copyright"></button>
                 </div-->
 
             </div>
@@ -381,9 +381,13 @@
         </div>
     </div>
 
-    <div id="siteLogo" >
-        <img id="siteLogoImage" width="70px"  src="public/img/external.png" onclick="mediaController.openExternalSite()">
+    <div id="siteLogo" style="display:none" class="fadeincomplete2s" >
+        <img id="siteLogoImage" width="70px"  src="" onclick="mediaController.openExternalSite()">
     </div>
+
+
+
+
 
 </div>
 <!-- /content -->

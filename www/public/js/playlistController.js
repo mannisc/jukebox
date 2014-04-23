@@ -87,7 +87,7 @@ playlistController.selectSong = function (song) {
         var listElement = null;
         if (song.gid) {
             if (!playlistController.sortPlaylist)
-                uiController.toggleSortablePlaylist(false, true);
+                playlistController.toggleSortablePlaylist(false, true);
 
             listElement = $("#playlistInner li[data-songgid='playlistsong" + song.gid + "'] ");
 
@@ -191,12 +191,11 @@ playlistController.selectPlaylist = function (playlist) {
 }
 
 
-
 playlistController.deselectSongs = function (event) {
 //Remove Selection
 
-   if(event)
-       event.stopPropagation();
+    if (event)
+        event.stopPropagation();
 
     $(".songlist li.selected").removeClass("selected");
 
@@ -226,214 +225,203 @@ playlistController.loadPlaylist = function (playlist) {
 
 }
 
+uiController.stopPlaylistScrollingOnClick = function (event) {
+    var myEvent = jQuery.extend({}, event);
+    myEvent.type = "mouseup";
+    myEvent.preventDefault = function () {
+    };
+    setTimeout(function () {
+        uiController.playListScroll.handleEvent(myEvent);
+    }, 10)
+    setTimeout(function () {
+        uiController.playListScroll.handleEvent(myEvent);
+    }, 100)
+}
 
 /**
  * Make Playlist Drag and Droppable
  */
 playlistController.makePlayListSortable = function () {
 
-    var startSorting = function () {
-        playlistController.playlistMouseDown = false;
-        // Add your code to run
-        uiController.stopPlaylistScrollingOnClick(event);
-        //$(that).data("checkdown", setTimeout(function () {
-        if (!playlistController.sortPlaylist) {
-            console.log("DRAGGGGIT!")
-
-            uiController.toggleSortablePlaylist(true);
-
-            var dragHandle = $(that);
-
-            var coords = {
-                clientX: event.clientX,
-                clientY: event.clientY
-            };
-
-            // this actually triggers the drag start event
-            uiController.startedSortPlaylist = true;
-            dragHandle.simulate("mousedown", coords);
-        }
-    }
-
 
     $("#playlistInner li").on("mousedown",function (event) {
         console.log("MDOWN")
-
-        if ($(this).parents("#playlistInner").length == 0)
-            return;
-        if (!playlistController.dragDraggableLastSongTimer || Date.now() - playlistController.dragDraggableLastSongTimer > 500) {
-            playlistController.dragDraggableSongX = event.clientX;
-            playlistController.dragDraggableSongY = event.clientY;
-            playlistController.dragDraggableSongTimer = Date.now();
-            playlistController.dragDraggableSongStartEvent = event;
-        } else
-            playlistController.dragDraggableSongTimer = 0;
-
-    }).on("mouseup",function (event) {
-
-            console.log("MUP")
-
+        if (playlistController.sortPlaylist) {
             if ($(this).parents("#playlistInner").length == 0)
                 return;
-            if (Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30) {
-                uiController.swipeTimer = Date.now();
-                playlistController.dragDraggableSongY = -10;
-            }
-            playlistController.dragDraggableSongTimer = 0;
+            if (!playlistController.dragDraggableLastSongTimer || Date.now() - playlistController.dragDraggableLastSongTimer > 500) {
+                playlistController.dragDraggableSongX = event.clientX;
+                playlistController.dragDraggableSongY = event.clientY;
+                playlistController.dragDraggableSongTimer = Date.now();
+                playlistController.dragDraggableSongStartEvent = event;
+            } else
+                playlistController.dragDraggableSongTimer = 0;
 
-        }).on("mousemove", function (event) {
+        }
 
-            console.log("MMOUVE")
 
-            if ($(this).parents("#searchlist").length == 0)
-                return;
-            if (Math.abs(event.clientY - playlistController.dragDraggableSongY) > 8)
-                playlistController.dragDraggableSongY = -10;
-            if (playlistController.dragDraggableSongY > 0 && Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30) {
-                uiController.swipeTimer = Date.now();
-            } else if (playlistController.dragDraggableSongTimer && Date.now() - playlistController.dragDraggableSongTimer < 500) {
-                if (!uiController.draggingSong && event.clientX - playlistController.dragDraggableSongX > 2 && Math.abs(event.clientY - playlistController.dragDraggableSongY) < Math.abs(event.clientX - playlistController.dragDraggableSongX) * 0.8) {
+    }).on("mouseup", function (event) {
+            if (playlistController.sortPlaylist) {
+                console.log("MUP")
+
+                if ($(this).parents("#playlistInner").length == 0)
+                    return;
+                if (Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30) {
+                    uiController.swipeTimer = Date.now();
                     playlistController.dragDraggableSongY = -10;
+                }
+                playlistController.dragDraggableSongTimer = 0;
+            }
+        })
+        .on("mousemove", function (event) {
+            if (playlistController.sortPlaylist) {
+                console.log("MMOUVE")
+                uiController.stopPlaylistScrollingOnClick(event);
+                if ($(this).parents("#playlistInner").length == 0)
+                    return;
+                if (playlistController.dragDraggableSongTimer && Date.now() - playlistController.dragDraggableSongTimer < 500  && Date.now() - playlistController.dragDraggableSongTimer > 100) {
+
                     playlistController.dragDraggableLastSongTimer = Date.now();
                     playlistController.dragDraggableSongTimer = 0;
 
-                    if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
-                        $("#saveplaylistinpt").val("");
-                        $("#saveokayplaylistbtn").attr("disabled", "disabled").css("opacity", "0.5");
-                        playlistController.loadedPlaylistSongs = [];
-                        $("#saveplaylistbtn img").attr("src", "public/img/save.png");
-                        $scope.safeApply();
-                        $("#clearChoosenPlaylists").show();
-                    }
+                    var dragHandle = $(this);
+                    $(".sortable").sortable("enable");
 
-                    $("#searchlistview .draggableSong").draggable("enable");
-
-                    if (!uiController.sidePanelOpen && uiController.windowWidth < uiController.responsiveWidthSmallest) {
-                        uiController.startedSortPlaylistOpenedPanel = true;
-                        uiController.toggleSidePanel();
-                        var delay = 150;
-
-                    } else {
-                        uiController.startedSortPlaylistOpenedPanel = false;
-                        delay = 0;
-                    }
-
-                    var that = this;
-                    console.log(uiController.startedSortPlaylistOpenedPanel)
                     var coords = {
-                        clientX: playlistController.dragDraggableSongStartEvent.clientX,
-                        clientY: playlistController.dragDraggableSongStartEvent.clientY
+                        clientX: event.clientX,
+                        clientY: event.clientY
                     };
-                    $(that).simulate("mouseup", coords);
 
-                    setTimeout(function () {
-
-                        $(that).simulate("mousedown", coords);
-
-                    }, delay)
+                    // this actually triggers the drag start event
+                    dragHandle.simulate("mousedown", coords);
 
 
                 }
-
             }
-
         }
 
     )
 
     /*
-    if (app.isCordova)
-        return;
-    $("#playlistInner li").on("mousedown",function (event) {
 
-        if ($(this).parents("#playlistInner").length == 0)
-            return;
+     var startSorting = function () {
+     playlistController.playlistMouseDown = false;
+     // Add your code to run
+     uiController.stopPlaylistScrollingOnClick(event);
+     //$(that).data("checkdown", setTimeout(function () {
+     if (!playlistController.sortPlaylist) {
+     console.log("DRAGGGGIT!")
 
-        if (!playlistController.playlistMouseDown) {
-            playlistController.playlistMouseDown = true;
+     playlistController.toggleSortablePlaylist(true);
 
-            var that = this;
-            if (!playlistController.sortPlaylist) {
+     var dragHandle = $(that);
 
-                playlistController.dragSortableSongY = event.clientY;
-                console.log("MDOWN");
-                if ($("#playlistview").height() > $("#playlistInner").height())
+     var coords = {
+     clientX: event.clientX,
+     clientY: event.clientY
+     };
 
-                    $(that).data("checkdown", setTimeout(function () {
-                        playlistController.playlistMouseDown = false;
-                        // Add your code to run
-                        uiController.stopPlaylistScrollingOnClick(event);
-                        //$(that).data("checkdown", setTimeout(function () {
-                        if (!playlistController.sortPlaylist) {
-                            console.log("DRAGGGGIT!")
-
-                            uiController.toggleSortablePlaylist(true);
-
-                            var dragHandle = $(that);
-
-                            var coords = {
-                                clientX: event.clientX,
-                                clientY: event.clientY
-                            };
-
-                            // this actually triggers the drag start event
-                            uiController.startedSortPlaylist = true;
-                            dragHandle.simulate("mousedown", coords);
-                        }
-                        //  }, 10));
-                    }, 350));
-            } else {
+     // this actually triggers the drag start event
+     uiController.startedSortPlaylist = true;
+     dragHandle.simulate("mousedown", coords);
+     }
+     }
 
 
-            }
-        }
-    }).on("mouseup",function (event) {
-            console.log("MUP");
 
 
-            if (Math.abs(event.clientY - playlistController.dragSortableSongY) > 30) {
-                uiController.swipeTimer = Date.now();
-            }
+     if (app.isCordova)
+     return;
+     $("#playlistInner li").on("mousedown",function (event) {
 
-            playlistController.playlistMouseDown = false;
+     if ($(this).parents("#playlistInner").length == 0)
+     return;
 
-            clearTimeout($(this).data("checkdown"));
-            $(this).data("checkdown", null);
+     if (!playlistController.playlistMouseDown) {
+     playlistController.playlistMouseDown = true;
 
-        }).on("mouseout",function (event) {
+     var that = this;
+     if (!playlistController.sortPlaylist) {
 
-            if (playlistController.dragSortableSongY > 0 && Math.abs(event.clientY - playlistController.dragSortableSongY) > 30)
-                uiController.swipeTimer = Date.now();
+     playlistController.dragSortableSongY = event.clientY;
+     console.log("MDOWN");
+     if ($("#playlistview").height() > $("#playlistInner").height())
 
-            playlistController.playlistMouseDown = false;
+     $(that).data("checkdown", setTimeout(function () {
+     playlistController.playlistMouseDown = false;
+     // Add your code to run
+     uiController.stopPlaylistScrollingOnClick(event);
+     //$(that).data("checkdown", setTimeout(function () {
+     if (!playlistController.sortPlaylist) {
+     console.log("DRAGGGGIT!")
 
-            clearTimeout($(this).data("checkdown"));
-            $(this).data("checkdown", null);
+     uiController.toggleSortablePlaylist(true);
 
-        }).on("mousemove", function (event) {
-            // console.log("MOVE " + Math.abs(event.clientY - playlistController.dragSortableSongY))
-            if ($("#playlistview").height() > $("#playlistInner").height()) {
+     var dragHandle = $(that);
 
-                if (Math.abs(event.clientY - playlistController.dragSortableSongY) > 8) {
+     var coords = {
+     clientX: event.clientX,
+     clientY: event.clientY
+     };
 
-                    if ($(this).data("checkdown")) {
-                        clearTimeout($(this).data("checkdown"));
-                    }
-                }
-
-            } else {
-
-
-            }
+     // this actually triggers the drag start event
+     uiController.startedSortPlaylist = true;
+     dragHandle.simulate("mousedown", coords);
+     }
+     //  }, 10));
+     }, 350));
+     } else {
 
 
-            if (playlistController.dragSortableSongY > 0 && Math.abs(event.clientY - playlistController.dragSortableSongY) > 30)
-                uiController.swipeTimer = Date.now();
+     }
+     }
+     }).on("mouseup",function (event) {
+     console.log("MUP");
 
 
-        })
+     if (Math.abs(event.clientY - playlistController.dragSortableSongY) > 30) {
+     uiController.swipeTimer = Date.now();
+     }
 
-    */
+     playlistController.playlistMouseDown = false;
+
+     clearTimeout($(this).data("checkdown"));
+     $(this).data("checkdown", null);
+
+     }).on("mouseout",function (event) {
+
+     if (playlistController.dragSortableSongY > 0 && Math.abs(event.clientY - playlistController.dragSortableSongY) > 30)
+     uiController.swipeTimer = Date.now();
+
+     playlistController.playlistMouseDown = false;
+
+     clearTimeout($(this).data("checkdown"));
+     $(this).data("checkdown", null);
+
+     }).on("mousemove", function (event) {
+     // console.log("MOVE " + Math.abs(event.clientY - playlistController.dragSortableSongY))
+     if ($("#playlistview").height() > $("#playlistInner").height()) {
+
+     if (Math.abs(event.clientY - playlistController.dragSortableSongY) > 8) {
+
+     if ($(this).data("checkdown")) {
+     clearTimeout($(this).data("checkdown"));
+     }
+     }
+
+     } else {
+
+
+     }
+
+
+     if (playlistController.dragSortableSongY > 0 && Math.abs(event.clientY - playlistController.dragSortableSongY) > 30)
+     uiController.swipeTimer = Date.now();
+
+
+     })
+
+     */
 
 
     $("#playlistview").sortable({
@@ -443,7 +431,13 @@ playlistController.makePlayListSortable = function () {
         opacity: 0.9,
 
         helper: function (event, $item) {
-            $($item).addClass("selected");
+
+            if(!$($item).hasClass("selected")) {
+                $("#playlistInner li.selected").removeClass("selected")
+                $($item).addClass("selected");
+            }
+
+
             /*var $helper = $('<ul class="songlist"></ul>').addClass('draggedlistelement draggedsortablelistelement');
 
              var item = $item.clone();
@@ -736,14 +730,186 @@ playlistController.makePlayListSortable = function () {
             }
 
             if (uiController.startedSortPlaylist) {
-                uiController.toggleSortablePlaylist();
+                playlistController.toggleSortablePlaylist();
                 uiController.startedSortPlaylist = false;
             }
+            setTimeout(function(){
+                $(".sortable").sortable("disable");
+            },0)
 
         },
         appendTo: 'body',
         zIndex: "1000000" //or greater than any other relative/absolute/fixed elements and droppables
     }).disableSelection();
 
+}
+
+
+/**
+ * Toggle Save Playlist Funktion
+ * @param savePlaylist
+ */
+playlistController.toggleSavePlaylist = function (savePlaylist) {
+
+
+    if (!accountController.loggedIn) {
+        $('#popupRegister').popup('open', {positionTo: '#registerLink', transition: "pop"});
+        setTimeout(function () {
+            $('#signinusername').focus();
+        }, 500)
+
+        return;
+    }
+
+
+    uiController.savePlaylist = !uiController.savePlaylist;
+
+
+    if (uiController.savePlaylist) {
+
+        if ($('#playlistselectvertical .search-choice').length == 1) {
+            $("#saveplaylistinpt").val($('#playlistselectvertical .search-choice').text());
+            $("#saveokayplaylistbtn").removeAttr("disabled").css("opacity", "1");
+
+        }
+        else {
+            $("#saveplaylistinpt").val("");
+            $("#saveokayplaylistbtn").attr("disabled", "disabled").css("opacity", "0.5");
+
+        }
+
+
+        if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
+            playlistController.loadedPlaylistSongs = [];
+            $("#saveplaylistbtn img").attr("src", "public/img/save.png");
+            $("#clearChoosenPlaylists").show();
+            $scope.safeApply();
+        }
+
+
+        if (playlistController.sortPlaylist) {
+            playlistController.toggleSortablePlaylist();
+        }
+        // $("#saveplaylistbtn").addClass("redbackground");
+        $("#saveplaylistbtn img").attr("src", "public/img/crosswhite.png");
+
+        $("#sortplaylistbtn").hide();
+        $("#playlistselectvertical").hide();
+        $("#saveplaylistinput").show();
+        $("#saveokayplaylistbutton").show();
+
+
+        $("#saveplaylistinpt").focus();
+
+    } else {
+
+
+        //  $("#saveplaylistbtn").removeClass("redbackground");
+        $("#saveplaylistbtn img").attr("src", "public/img/save.png");
+
+        $("#saveplaylistinput").hide();
+        $("#saveokayplaylistbutton").hide();
+        $("#sortplaylistbtn").show();
+        $("#playlistselectvertical").show();
+
+        if (savePlaylist) {
+
+            uiController.savePlaylistVisible();
+
+        }
+
+
+    }
+    uiController.updateUI();
+
+}
+
+
+/**
+ * Toggle Sortable playlist
+ * @param dontShowTrash
+ * @param manuell
+ */
+playlistController.toggleSortablePlaylist = function (dontShowTrash, manuell) {
+    if (manuell) {
+        uiController.startedSortPlaylist = false;
+    }
+
+    playlistController.sortPlaylist = !playlistController.sortPlaylist
+    if (playlistController.sortPlaylist) {
+        if (!dontShowTrash) {
+            $("#sortplaylistbtn img").attr("src", "public/img/check.png");
+
+        }
+        $("#sortplaylistbtn").addClass("greenbackground");
+
+        $("#playlistInner").css("background-color", "rgba(255,255,255,0.1)");
+
+
+        $('#playlistInner').css({backgroundColor: 'rgba(255,255,255,0)'})
+
+        $('#playlistInner').animate({
+            backgroundColor: 'rgba(255,255,255,0.1)'
+        }, 100);
+
+
+        //  if (!dontShowTrash)
+        $("#playlistInner  .removesong").show();
+
+        $("#playlistInner  .ui-btn-icon-right").css("margin-right", "0px");
+
+        $("#playlistInner  .ui-btn-icon-right").css("padding-right", "40px");
+
+
+        uiController.playListScroll.disable();
+        $("#playlistsortstyle").remove();
+        var style = $('<style id="playlistsortstyle">' +
+            '#playlistInner ul li {' +
+            'opacity:0.9!important;' +
+            'margin-bottom:-1px;' +
+            'border-bottom: 1px solid rgba(255,255,255,0.35);' +
+            '}' +
+            '</style>');
+        $('html > head').append(style);
+
+        $("#playlistInner .iScrollVerticalScrollbar").hide();
+
+
+    } else {
+
+        $("#playlistInner li.selected").removeClass("selected");
+
+        if (manuell)
+            var delay = 0;
+        else
+            delay = 1500;
+        // $("#playlistInner").css("background-color", "");
+        setTimeout(function () {
+            if (!playlistController.sortPlaylist) {
+                $('#playlistInner').animate({
+                    backgroundColor: 'rgba(255,255,255,0)'
+                }, 200);
+            }
+        }, delay)
+
+
+        $("#playlistInner  .removesong").hide();
+        $("#playlistInner  .ui-btn-icon-right").css("padding-right", "");
+        $("#playlistInner  .ui-btn-icon-right").css("margin-right", "");
+        if (!dontShowTrash)
+            $("#sortplaylistbtn img").attr("src", "public/img/sort.png");
+
+        $("#sortplaylistbtn").removeClass("greenbackground");
+
+        $("#playlistInner .iScrollVerticalScrollbar").show();
+
+        $(".sortable").sortable("disable");
+
+        uiController.playListScroll.enable();
+        $("#playlistsortstyle").remove();
+    }
+
+
+    setTimeout(uiController.updateUI, 0);
 }
 

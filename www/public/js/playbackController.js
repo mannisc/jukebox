@@ -36,8 +36,17 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
 
+    if($(".removesong:hover").length>0 )
+     return;
+
+
     //Clicked on Cover -> Select Song
-    if (!element.isPlaylist && $(".songlist li img:hover").length > 0 || event.clientX < 94) {
+    console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKK "+(event.clientX-$(".songlist:hover").offset().left))
+
+
+
+
+    if (!element.isPlaylist&& $(".songlist li img:hover").length > 0 ||   (event.clientX-$(".songlist:hover").offset().left)< 65) {
         playlistController.selectSong(element)
         return;
     }

@@ -109,7 +109,7 @@ accountController.logout = function () {
                 else
                 {
                     if (uiController.savePlaylist)
-                        uiController.toggleSavePlaylist();
+                        playlistController.toggleSavePlaylist();
                 }
             }
         })

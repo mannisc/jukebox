@@ -130,9 +130,12 @@ uiController.init = function () {
     $("body").dblclick(function () {
         $("#searchlist li.selected").removeClass("selected");
         if (playlistController.sortPlaylist)
-            uiController.toggleSortablePlaylist(true, true);
+            playlistController.toggleSortablePlaylist(true, true);
 
     })
+
+
+
 
     $('#saveplaylistinpt').keyup(function (evt) {
         if (evt.keyCode == 13) {
@@ -214,7 +217,7 @@ uiController.init = function () {
             $('#rightpanel').panel('close');
         }
         if (playlistController.sortPlaylist)
-            uiController.toggleSortablePlaylist();
+            playlistController.toggleSortablePlaylist();
 
 
         //Resize Songlists/ reset indicator
@@ -288,7 +291,7 @@ uiController.init = function () {
     //Animate Sidde Panel Open Icon
     $("#rightpanel").on("panelbeforeclose", function (event, ui) {
         if (playlistController.sortPlaylist)
-            uiController.toggleSortablePlaylist();
+            playlistController.toggleSortablePlaylist();
         uiController.sidePanelOpen = false;
         uiController.updateUI();
 
@@ -663,167 +666,7 @@ uiController.savePlaylistVisible = function (useSelected) {
     }, 250)
 }
 
-uiController.toggleSavePlaylist = function (savePlaylist) {
 
-
-    if (!accountController.loggedIn) {
-        $('#popupRegister').popup('open', {positionTo: '#registerLink', transition: "pop"});
-        setTimeout(function () {
-            $('#signinusername').focus();
-        }, 500)
-
-        return;
-    }
-
-
-    uiController.savePlaylist = !uiController.savePlaylist;
-
-
-    if (uiController.savePlaylist) {
-
-        if ($('#playlistselectvertical .search-choice').length == 1) {
-            $("#saveplaylistinpt").val($('#playlistselectvertical .search-choice').text());
-            $("#saveokayplaylistbtn").removeAttr("disabled").css("opacity", "1");
-
-        }
-        else {
-            $("#saveplaylistinpt").val("");
-            $("#saveokayplaylistbtn").attr("disabled", "disabled").css("opacity", "0.5");
-
-        }
-
-
-        if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
-            playlistController.loadedPlaylistSongs = [];
-            $("#saveplaylistbtn img").attr("src", "public/img/save.png");
-            $("#clearChoosenPlaylists").show();
-            $scope.safeApply();
-        }
-
-
-        if (playlistController.sortPlaylist) {
-            uiController.toggleSortablePlaylist();
-        }
-        // $("#saveplaylistbtn").addClass("redbackground");
-        $("#saveplaylistbtn img").attr("src", "public/img/crosswhite.png");
-
-        $("#sortplaylistbtn").hide();
-        $("#playlistselectvertical").hide();
-        $("#saveplaylistinput").show();
-        $("#saveokayplaylistbutton").show();
-
-
-        $("#saveplaylistinpt").focus();
-
-    } else {
-
-
-        //  $("#saveplaylistbtn").removeClass("redbackground");
-        $("#saveplaylistbtn img").attr("src", "public/img/save.png");
-
-        $("#saveplaylistinput").hide();
-        $("#saveokayplaylistbutton").hide();
-        $("#sortplaylistbtn").show();
-        $("#playlistselectvertical").show();
-
-        if (savePlaylist) {
-
-            uiController.savePlaylistVisible();
-
-        }
-
-
-    }
-    uiController.updateUI();
-
-}
-
-
-uiController.toggleSortablePlaylist = function (dontShowTrash, manuell) {
-    if (manuell) {
-        uiController.startedSortPlaylist = false;
-    }
-
-    playlistController.sortPlaylist = !playlistController.sortPlaylist
-    if (playlistController.sortPlaylist) {
-        if (!dontShowTrash) {
-            $("#sortplaylistbtn img").attr("src", "public/img/check.png");
-
-        }
-        $("#sortplaylistbtn").addClass("greenbackground");
-
-        $("#playlistInner").css("background-color", "rgba(255,255,255,0.1)");
-
-
-        $('#playlistInner').css({backgroundColor: 'rgba(255,255,255,0)'})
-
-        $('#playlistInner').animate({
-            backgroundColor: 'rgba(255,255,255,0.1)'
-        }, 100);
-
-
-        //  if (!dontShowTrash)
-        $("#playlistInner  .removesong").show();
-
-        $("#playlistInner  .ui-btn-icon-right").css("margin-right", "0px");
-
-        $("#playlistInner  .ui-btn-icon-right").css("padding-right", "40px");
-
-
-        uiController.playListScroll.disable();
-        $("#playlistsortstyle").remove();
-        var style = $('<style id="playlistsortstyle">' +
-            '#playlistInner ul li {' +
-            'opacity:0.9!important;' +
-            'margin-bottom:-1px;' +
-            'border-bottom: 1px solid rgba(255,255,255,0.5);' +
-            '}' +
-            '</style>');
-        $('html > head').append(style);
-
-        $("#playlistInner .iScrollVerticalScrollbar").hide();
-        if (!app.isCordova)
-            $(".sortable").sortable("enable");
-
-
-    } else {
-
-        $("#playlistInner li.selected").removeClass("selected");
-
-        if (manuell)
-            var delay = 0;
-        else
-            delay = 1500;
-        // $("#playlistInner").css("background-color", "");
-        setTimeout(function () {
-            if (!playlistController.sortPlaylist) {
-                $('#playlistInner').animate({
-                    backgroundColor: 'rgba(255,255,255,0)'
-                }, 200);
-            }
-        }, delay)
-
-
-        $("#playlistInner  .removesong").hide();
-        $("#playlistInner  .ui-btn-icon-right").css("padding-right", "");
-        $("#playlistInner  .ui-btn-icon-right").css("margin-right", "");
-        if (!dontShowTrash)
-            $("#sortplaylistbtn img").attr("src", "public/img/sort.png");
-
-        $("#sortplaylistbtn").removeClass("greenbackground");
-
-        $("#playlistInner .iScrollVerticalScrollbar").show();
-        if (!app.isCordova)
-            $(".sortable").sortable("disable");
-        // $(".sortable").enableSelection();
-
-        uiController.playListScroll.enable();
-        $("#playlistsortstyle").remove();
-    }
-
-
-    setTimeout(uiController.updateUI, 0);
-}
 
 uiController.stopScrollingOnClick = function (event) {
     var myEvent = jQuery.extend({}, event);
@@ -839,18 +682,7 @@ uiController.stopScrollingOnClick = function (event) {
 }
 
 
-uiController.stopPlaylistScrollingOnClick = function (event) {
-    var myEvent = jQuery.extend({}, event);
-    myEvent.type = "mouseup";
-    myEvent.preventDefault = function () {
-    };
-    setTimeout(function () {
-        uiController.playListScroll.handleEvent(myEvent);
-    }, 10)
-    setTimeout(function () {
-        uiController.playListScroll.handleEvent(myEvent);
-    }, 100)
-}
+
 
 
 uiController.updateDisplay = function () {

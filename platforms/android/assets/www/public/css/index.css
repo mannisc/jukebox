@@ -503,6 +503,11 @@ video{
     -moz-box-shadow: 5px 5p 15px rgba(0,0,0,0.4);
     -webkit-box-shadow: 5px 15px 5px rgba(0,0,0,0.4);
     box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
 }
 
 
@@ -513,6 +518,11 @@ video{
     background-color:#000!important;
     opacity:1;
     z-index: 2;
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
 }
 
 
@@ -1022,15 +1032,26 @@ a, button, h1, h2, h3{
 
     -webkit-transform-origin: 100% 100%;
     transform-origin: 100%100%!important;
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
 }
 
 
 #siteLogo img{
+    width:110px;
     position: absolute;
-    bottom: 0px;
-    right: 0px;
-    opacity: 0.7;
+    bottom: 50px;
+    right: 15px;
+    opacity: 0.42;
     pointer-events: auto;
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
 
 }
 

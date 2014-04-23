@@ -439,6 +439,8 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
  */
 videoController.playSong = function () {
     if (!videoController.isPlaying && playbackController.playingSong ) {
+        $("video, iframe").css("opacity", "1");
+        $("#siteLogo").fadeOut();
         videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
         videoController.videoPlayer.play();
         videoController.isPlaying = true;
@@ -581,7 +583,6 @@ videoController.updateFullscreenMode = function () {
         $("#controlbarplaylist").css("opacity", "1");
         $(".videoControlElements-custom-button").show();
 
-        $("video, iframe").css("opacity", "1");
 
 
         $("#page, #content").removeClass("fullscreen");
@@ -954,6 +955,9 @@ videoController.playingSong = function () {
 
 
     if (playbackController.playingSong) {
+        $("#siteLogoImage").attr("src","public/img/sites/"+ mediaController.getSiteLogo());
+        $("#siteLogo").show();
+
         videoController.disableFullscreenControl(false);
         //   helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
 
