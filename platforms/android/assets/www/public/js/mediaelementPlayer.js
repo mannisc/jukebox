@@ -133,7 +133,6 @@ var mediaelementPlayer = function (selector) {
                 resizeLayer.insertAfter(".mejs-overlay-play");
                 that.container.find(".mejs-overlay-play").remove();
 
-                $("#siteLogo").appendTo(resizeLayer)
 
                 //TODO ENABLE CLICK ON VIDEO CPLAY/PAUSE FOR ALL PLAYERS In videoController -----------
                 that.container.find(".mejs-overlay-resize").click(function () {

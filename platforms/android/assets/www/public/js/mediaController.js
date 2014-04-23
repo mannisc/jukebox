@@ -80,7 +80,7 @@ mediaController.mediaEnded = function () {
     videoController.isPlaying = false;
     videoController.disableStopControl(true);
     //$("#videoplayer").css("opacity", "0");
-   // $("#videoplayer").css("pointer-events", "none");
+    // $("#videoplayer").css("pointer-events", "none");
 
     videoController.setBufferedPercentage(0);
 
@@ -144,6 +144,22 @@ mediaController.showDuration = function (songversion) {
 }
 
 
+mediaController.getSiteLogo = function () {
+    if (mediaController.currentvideoURL.search(".dailymotion.com") > -1||mediaController.currentvideoURL.search("/dailymotion.com") > -1) {
+        return "dailymotion.png"
+    } else if (mediaController.currentvideoURL.search(".youtube.") > -1||mediaController.currentvideoURL.search("/youtube.") > -1) {
+        return "youtube.png"
+    } else if (mediaController.currentvideoURL.search(".muzu.tv") > -1||mediaController.currentvideoURL.search("/muzu.tv")>-1) {
+        return "muzu.png"
+    }  else if (mediaController.currentvideoURL.search(".vimeo.") > -1||mediaController.currentvideoURL.search("/vimeo.")>-1) {
+        return "vimeo.png"
+    }
+    alert(mediaController.currentvideoURL)
+    return "empty.png";
+
+}
+
+
 mediaController.playSong = function (streamURL, videoURL) {
     mediaController.currentStreamURL = streamURL;
     mediaController.currentvideoURL = videoURL;
@@ -158,7 +174,7 @@ mediaController.playSong = function (streamURL, videoURL) {
 mediaController.getVersions = function () {
     // importController.importPlaylist("https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
     //importController.importPlaylist("http://vimeo.com/channels/rihanna");//
-   // importController.importPlaylist("http://www.dailymotion.com/playlist/xvguj_dailymotionuk_rihanna/1#video=x6f3n8");//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
+    // importController.importPlaylist("http://www.dailymotion.com/playlist/xvguj_dailymotionuk_rihanna/1#video=x6f3n8");//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         var currentsong = playbackController.getPlayingSong();
         if (mediaController.currentStreamURL != "") {
@@ -252,11 +268,11 @@ mediaController.getVersions = function () {
 
 mediaController.playVersion = function (songversion, rating, resetVersion) {
 
-   var loadError = false;
+    var loadError = false;
 
     $('#loadversionimg').css("opacity", "1");
     videoController.showBuffering(true);
-   if (videoController.buffered > 0.7)
+    if (videoController.buffered > 0.7)
         videoController.setBufferedPercentage(0);
 
     videoController.setLoopButton(false);
@@ -306,7 +322,7 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
                                                 mediaController.startVersionIndex = -1;
                                             }
                                             mediaController.seekTime = videoController.progressTime//uiController.mediaElementPlayer.getCurrentTime();
-                                            mediaController.seekTimeDuration  = videoController.maxTime; //uiController.mediaElementPlayer.media.duration;
+                                            mediaController.seekTimeDuration = videoController.maxTime; //uiController.mediaElementPlayer.media.duration;
                                             mediaController.versionListSong = song;
                                             mediaController.playStreamURLSeek(streamURL, videoURL, true, rating);
 
@@ -346,7 +362,7 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
 
 }
 
-mediaController.loadStreamURL = function (streamID, searchString, artistString, titleString, streamURL, duration,playedAutomatic) {
+mediaController.loadStreamURL = function (streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic) {
 
     var loadError = false;
     //var stime=new Date();
@@ -356,15 +372,15 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
         url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration + "&auth=" + authController.ip_token,
         success: function (data) {
             if (streamID == mediaController.playCounter) {
-            //var etime=new Date();
-            //var diff = etime.getTime()-time;
-            //alert("RESPONSE TIME: "+diff+" ms");
-            if (data.auth && data.auth == "true") {
-                authController.extractToken(data.token);
-                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration,playedAutomatic);
-            }
-            else {
-                // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
+                //var etime=new Date();
+                //var diff = etime.getTime()-time;
+                //alert("RESPONSE TIME: "+diff+" ms");
+                if (data.auth && data.auth == "true") {
+                    authController.extractToken(data.token);
+                    mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic);
+                }
+                else {
+                    // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
                     mediaController.playCounter++;
                     // console.dir("STREAM");
                     // console.dir(data);
@@ -415,14 +431,14 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
             //console.log("LOADED")
             if (loadError) {
                 //  console.log("ERROR")
-                mediaController.onLoadingError(streamID,playedAutomatic);
+                mediaController.onLoadingError(streamID, playedAutomatic);
             }
         }
     })
 }
 
 
-mediaController.onLoadingError = function (streamID,playedAutomatic) {
+mediaController.onLoadingError = function (streamID, playedAutomatic) {
     //console.log("ERROR")
     if (streamID == mediaController.playCounter) {
 
@@ -439,7 +455,6 @@ mediaController.onLoadingError = function (streamID,playedAutomatic) {
         mediaController.songError();
     }
 }
-
 
 
 mediaController.playStream = function (artist, title, playedAutomatic) {
@@ -469,8 +484,6 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
     var streamURL = "";
 
 
-
-
     var play = function (streamID, searchString, artistString, titleString, streamURL) {
         mediaController.currentvideoURL = "";
         $.ajax({
@@ -492,7 +505,7 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
                     //  alert(artistString+" - "+titleString);
                     if (authController.ip_token != "auth" && authController.ip_token != "") {
                         var loadError = false;
-                        mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration,playedAutomatic);
+                        mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic);
                     }
                 }
 
@@ -500,7 +513,7 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
             error: function () {
                 // console.log("ERROR")
                 var duration = 200000;
-                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration,playedAutomatic);
+                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic);
             }
 
         })
@@ -512,12 +525,12 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
 }
 
 mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVersions, rating) {
-   // $("#videoplayer").removeClass("animate").addClass("animatefast");
-   // $("#videoplayer").css("opacity", "0");
-   // $("#videoplayer").css("pointer-events", "none");
+    // $("#videoplayer").removeClass("animate").addClass("animatefast");
+    // $("#videoplayer").css("opacity", "0");
+    // $("#videoplayer").css("pointer-events", "none");
 
     setTimeout(function () {
-       // $("#videoplayer").removeClass("animatefast").addClass("animate");
+        // $("#videoplayer").removeClass("animatefast").addClass("animate");
 
         // playlistController.playingTitle = playlistController.playlingTitleLoading ;
         // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
@@ -549,7 +562,6 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
 
 
 }
-
 
 
 mediaController.songError = function () {
@@ -668,7 +680,6 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
     setTimeout(function () {
 
 
-
         if (playbackController.playingSong.gid)
             var listElement = $("#playlistInner li[data-songgid='playlistsong" + playbackController.playingSong.gid + "'] ");
         else
@@ -676,53 +687,53 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
 
         var loadTime = Date.now() - playbackController.startedLoadingTime;
-       /* var delayTime = loadTime % 2000;
-        if(delayTime>400)
-            delayTime = delayTime-400;
-        else
-            delayTime = 0;
-       */
+        /* var delayTime = loadTime % 2000;
+         if(delayTime>400)
+         delayTime = delayTime-400;
+         else
+         delayTime = 0;
+         */
         $(listElement.get(0)).addClass("firstplay");
 
-      //  setTimeout(function () {
+        //  setTimeout(function () {
 
-            var cover = $(listElement.get(0)).find("img.ui-li-icon");
-            var playing =  $(listElement.get(0)).find(".loadingSongImg");
+        var cover = $(listElement.get(0)).find("img.ui-li-icon");
+        var playing = $(listElement.get(0)).find(".loadingSongImg");
 
-            cover.addClass("fadeout");
-            playing.addClass("fadeout");
+        cover.addClass("fadeout");
+        playing.addClass("fadeout");
 
+        setTimeout(function () {
+
+            if ($(listElement.get(0)).hasClass("stillloading")) {
+                $(listElement.get(0)).addClass("playing");
+                $(listElement.get(0)).removeClass("stillloading")
+            }
+
+            //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
+            // $(listElement.get(0)).find(".loadingSongImg").hide();
+            $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "0")
+            $(listElement.get(0)).find(".loadingSongImg").css("opacity", "0")
+
+            $(listElement.get(0)).find(".loadingSongImg").removeClass("fadeout")
+
+            $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeout");
             setTimeout(function () {
+                $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeincomplete")
+                $(listElement.get(0)).removeClass("firstplay");
 
-                if ($(listElement.get(0)).hasClass("stillloading")) {
-                    $(listElement.get(0)).addClass("playing");
-                    $(listElement.get(0)).removeClass("stillloading")
-                }
-
-                //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
-               // $(listElement.get(0)).find(".loadingSongImg").hide();
-                $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "0")
-                $(listElement.get(0)).find(".loadingSongImg").css("opacity", "0")
-
-                $(listElement.get(0)).find(".loadingSongImg").removeClass("fadeout")
-
-                $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeout");
                 setTimeout(function () {
-                    $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeincomplete")
-                    $(listElement.get(0)).removeClass("firstplay");
+                    $(listElement.get(0)).find(".loadingSongImg").css("opacity", "1")
+                    $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "1")
+                    $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeincomplete");
 
-                    setTimeout(function () {
-                        $(listElement.get(0)).find(".loadingSongImg").css("opacity", "1")
-                        $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "1")
-                        $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeincomplete");
-
-                    }, 1000)
-                }, 200)
-
+                }, 1000)
             }, 200)
-      //  }, delayTime)
 
-       // $("#videoplayer").removeClass("animatefast").addClass("animate");
+        }, 200)
+        //  }, delayTime)
+
+        // $("#videoplayer").removeClass("animatefast").addClass("animate");
 
         // playlistController.playingTitle = playlistController.playlingTitleLoading ;
         // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
@@ -760,9 +771,9 @@ mediaController.toggleLyrics = function () {
 
 
     if (!mediaController.showLyrics)
-      setTimeout(function(){
-                 uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
-      },2500);
+        setTimeout(function () {
+            uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
+        }, 2500);
 
     mediaController.showLyrics = !mediaController.showLyrics;
     if (mediaController.showLyrics) {

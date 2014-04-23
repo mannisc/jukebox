@@ -864,12 +864,12 @@ searchController.makeSearchListDraggable = function () {
                     $(that).simulate("mouseup", coords);
 
                     setTimeout(function () {
-
-                        if (!uiController.sortPlaylist) {
-                            uiController.toggleSortablePlaylist(true);
+                        if (!playlistController.sortPlaylist) {
+                            playlistController.toggleSortablePlaylist(true);
                             uiController.startedSortPlaylist = true;
                         } else
                             uiController.startedSortPlaylist = false;
+                        $(".sortable").sortable("enable");
 
                         $(that).simulate("mousedown", coords);
 
@@ -896,7 +896,12 @@ searchController.makeSearchListDraggable = function () {
         connectToSortable: '#playlistview',
 
         helper: function (event, ui) {
-            $(this).addClass("selected");
+
+
+            if(!$(this).hasClass("selected")) {
+                $("#searchlist li.selected").removeClass("selected")
+                $(this).addClass("selected");
+            }
 
             var $helper = $('<ul></ul>').addClass('songlist draggedlistelement draggedsearchlistelement');
 
@@ -918,6 +923,8 @@ searchController.makeSearchListDraggable = function () {
             playlistController.draggedElements = elements;
 
             playlistController.draggedElement = ele.find("li[data-songid='" + $(this).data("songid") + "'] ");
+            $(".songlist").addClass("nohover");
+
             ele.css("opacity", "0");
 
 
@@ -976,6 +983,8 @@ searchController.makeSearchListDraggable = function () {
 
         },
         stop: function (event, ui) {
+            $(".songlist").removeClass("nohover");
+
             var ele = $(playlistController.draggedElements.get(0)).parent();
             ele.attr('style', ele.attr('style') + '; ' + "margin-top:0px" + ' !important');
             ele.addClass("animatemargin");
@@ -992,7 +1001,7 @@ searchController.makeSearchListDraggable = function () {
                 }, 500)
 
             if (uiController.startedSortPlaylist) {
-                uiController.toggleSortablePlaylist();
+                playlistController.toggleSortablePlaylist();
                 uiController.startedSortPlaylist = false;
             }
 

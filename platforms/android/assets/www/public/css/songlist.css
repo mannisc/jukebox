@@ -40,6 +40,7 @@
 
 
 
+
 .songlist   li a  {
     overflow:visible!important;
     margin-left: 5px!important;
@@ -78,7 +79,9 @@
     -webkit-transform: scale(1)!important;
     -moz-transform: scale(1)!important;
     transform: scale(1)!important;
-
+    -moz-box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow:none!important;
 }
 
 
@@ -119,10 +122,11 @@
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
 }
 
 .songlist li.loadedsong.playing img.ui-li-icon{
-    transition: all 0.3s ease;
     background-image:url(../img/play.png)!important;
     background-size:100%;
     background-position: 0px 0px!important;
@@ -236,7 +240,7 @@
     -webkit-transition: opacity 0.2s ease!important;
     -moz-transition: opacity 0.2s ease;!important;
     -o-transition: opacity 0.2s ease!important;
-    transition: all 0.2s ease;
+    transition: opacity 0.2s ease;
 
     -webkit-transform: scale(0.8)!important;
     -moz-transform: scale(0.8)!important;
@@ -398,6 +402,16 @@
     border: none !important;
 }
 
+
+#searchlist .nohover a:hover{
+    filter:none!important;
+    background-image:none!important;
+    -webkit-transition: none!important;
+    -moz-transition: none!important;
+    -o-transition: none!important;
+    transition:  none!important;
+}
+
 /*
 #searchlist li.playing a:hover,#searchlist li.pausing a:hover {
 
@@ -551,14 +565,22 @@
 }
 
 
+#playlistInner .nohover a:hover{
+    filter:none!important;
+    background-image:none!important;
+    -webkit-transition: none!important;
+    -moz-transition: none!important;
+    -o-transition: none!important;
+    transition:  none!important;
+}
 
 #playlistInner .ui-li-has-icon img.removesong{
-    max-height: 1.8em!important;
-    max-width: 1.6em!important;
+    max-height: 2.8em!important;
+    max-width: 2.4em!important;
     margin-top: -0.3em!important;
     position: absolute;
     right: 0.6em;
-    top: .9em;
+    top: 1em;
     background-size:100%;
     background-repeat:no-repeat;
     -webkit-transition: all 0.3s ease;
