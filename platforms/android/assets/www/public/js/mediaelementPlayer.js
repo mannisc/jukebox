@@ -27,6 +27,50 @@ var mediaelementPlayer = function (selector) {
     this.init = function () {
 
         var that = this;
+
+        MediaElementPlayer.prototype.extoptions = {scale: 1.5, displayBox: false};
+        /*OPTIONS: {
+         // if the <video width> is not specified, this is the default
+         defaultVideoWidth: 480,
+         // if the <video height> is not specified, this is the default
+         defaultVideoHeight: 270,
+         // if set, overrides <video width>
+         videoWidth: -1,
+         // if set, overrides <video height>
+         videoHeight: -1,
+         // width of audio player
+         audioWidth: 400,
+         // height of audio player
+         audioHeight: 30,
+         // initial volume when the player starts
+         startVolume: 0.8,
+         // useful for <audio> player loops
+         loop: false,
+         // enables Flash and Silverlight to resize to content size
+         enableAutosize: true,
+         // the order of controls you want on the control bar (and other plugins below)
+         features: ['playpause','progress','current','duration','tracks','volume','fullscreen'],
+         // Hide controls when playing and mouse is not over the video
+         alwaysShowControls: false,
+         // force iPad's native controls
+         iPadUseNativeControls: false,
+         // force iPhone's native controls
+         iPhoneUseNativeControls: false,
+         // force Android's native controls
+         AndroidUseNativeControls: false,
+         // forces the hour marker (##:00:00)
+         alwaysShowHours: false,
+         // show framecount in timecode (##:00:00:00)
+         showTimecodeFrameCount: false,
+         // used when showTimecodeFrameCount is set to true
+         framesPerSecond: 25,
+         // turns keyboard support on and off for this instance
+         enableKeyboard: true,
+         // when this player starts, it will pause other players
+         pauseOtherPlayers: true,
+         // array of keyboard commands
+         keyActions: []
+         }*/
         this.mediaElementPlayer = new MediaElementPlayer(selector, {
             features: [ 'prevtrack', 'playpause', 'stop', 'nexttrack', 'shuffle', 'current', 'progress', 'duration', 'volume', 'fullscreen'],
 
@@ -137,7 +181,7 @@ var mediaelementPlayer = function (selector) {
 
                 mediaElement.addEventListener('loadeddata', function (e) {
                     videoController.setMaxTime(mediaElement.duration)
-                    videoController.normalizeVideoSize(that.videoSelector);
+                    //videoController.normalizeVideoSize(that.videoSelector);
                 });
             },
             error: function () {
@@ -232,13 +276,81 @@ var mediaelementPlayer = function (selector) {
     };
 
 
-    /**
-     * Set Fullscreen Mode
-     * @param mode  0: Window ,1: Background ,2: Fullscreen
-     */
-    this.setFullscreenMode = function (mode) {
 
-    }
 
 
 }
+
+/*
+*
+*
+
+ MediaElementPlayer.prototype.enterFullScreen_org = MediaElementPlayer.prototype.enterFullScreen;
+ MediaElementPlayer.prototype.enterFullScreen = function () {
+ // Your code here
+ $(".mejs-overlay-resize").hide();
+
+
+ $("#videoplayer").css("-webkit-transform", "scale(1)");
+ $("#videoplayer").css("transform", "scale(1)");
+ $("#videoplayer").css("-webkit-transform-origin", "50% 50%");
+ $("#videoplayer").css("transform-origin", "50% 50%");
+ $("#videoplayer").css("opacity", "1");
+ $("#videoplayer").css("pointer-events", "auto");
+
+
+ this.enterFullScreen_org();
+ $("#videoplayer").css("text-align", "left");
+
+
+ }
+ MediaElementPlayer.prototype.exitFullScreen_org = MediaElementPlayer.prototype.exitFullScreen;
+ MediaElementPlayer.prototype.exitFullScreen = function () {
+
+ var setHeight = function () {
+ var height = $("video").outerHeight();  //
+ console.log("Height: " + height);
+ if (height > 0) {
+ uiController.sizeVideoRelative = 400 / height;
+ uiController.styleVideo();
+
+ } else
+ setTimeout(setHeight, 50);
+ }
+ setTimeout(setHeight, 50);
+
+
+ $(".mejs-overlay-resize").show();
+
+ //uiController.translateVideo=0;
+ $("#videoplayer").removeClass("animate")
+
+
+ uiController.updateUI();
+
+ var oSizeVideo = uiController.sizeVideo;
+ uiController.sizeVideo = uiController.sizeVideo * 1.5;
+ uiController.styleVideo();
+ setTimeout(function () {
+ uiController.sizeVideo = oSizeVideo
+ $("#videoplayer").addClass("animate")
+ uiController.styleVideo();
+
+ }, 100)
+ $("#videoplayer").css("text-align", "center")
+
+
+ if (!playbackController.playingSong) {
+ $("#videoplayer").css("opacity", "0");
+ $("#videoplayer").css("pointer-events", "none");
+
+ }
+
+
+ this.exitFullScreen_org();
+
+ }
+*
+*
+*
+* */

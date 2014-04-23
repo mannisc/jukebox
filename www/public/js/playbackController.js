@@ -206,6 +206,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
 playbackController.resetPlayingSong = function () {
     console.log("RESETTTTT")
     playbackController.isLoading = false;
+    mediaController.playCounter = mediaController.playCounter + 1;
 
 
     $(".videoControlElements-controls").find('.videoControlElements-time-loaded').show();
@@ -216,10 +217,9 @@ playbackController.resetPlayingSong = function () {
     videoController.showBuffering(false);
 
 
-    mediaController.playCounter = mediaController.playCounter + 1;
 
-    $("#videoplayer").css("opacity", "0");
-    $("#videoplayer").css("pointer-events", "none");
+   // $("#videoplayer").css("opacity", "0");
+   // $("#videoplayer").css("pointer-events", "none");
 
     playbackController.playingSong = playbackController.playingOldSong;
 
@@ -236,12 +236,12 @@ playbackController.resetPlayingSong = function () {
         $(".songlist li").removeClass("loadedsong playing stillloading pausing");
         videoController.disableControls(true);
         videoController.disableStopControl(true);
-        $("#videoplayer").css("opacity", "0");
-        $("#videoplayer").css("pointer-events", "none");
+       // $("#videoplayer").css("opacity", "0");
+      //  $("#videoplayer").css("pointer-events", "none");
         $(".iScrollPlayIndicator").hide();
 
         playbackController.setNewTitle("", "", true);
-        $(".mejs-button-lyrics button").css("opacity", "0.5");
+        $(".videoControlElements-button-lyrics button").css("opacity", "0.5");
     }
 
 

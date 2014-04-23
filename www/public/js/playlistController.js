@@ -271,7 +271,7 @@ playlistController.makePlayListSortable = function () {
 
     }).on("mouseup",function (event) {
 
-            console.log("MDOWN")
+            console.log("MUP")
 
             if ($(this).parents("#playlistInner").length == 0)
                 return;
@@ -283,6 +283,7 @@ playlistController.makePlayListSortable = function () {
 
         }).on("mousemove", function (event) {
 
+            console.log("MMOUVE")
 
             if ($(this).parents("#searchlist").length == 0)
                 return;
