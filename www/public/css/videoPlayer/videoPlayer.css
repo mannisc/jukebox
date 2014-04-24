@@ -565,6 +565,11 @@ video, iframe{
      background-size: 16px;
  }
 
+.videoControlElements-controls .videoControlElements-button-external button {
+
+    background: transparent url(../../img/externalsite.png) no-repeat;
+    background-size: 16px;
+}
 
 
 
