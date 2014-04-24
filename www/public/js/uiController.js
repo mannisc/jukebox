@@ -19,7 +19,7 @@ uiController.responsiveWidthSmallest = 670;
 uiController.responsiveWidthSmall = 850;
 
 
-uiController.responsiveWidthSmaller = 1080;
+uiController.responsiveWidthSmaller = 1100;
 
 
 uiController.totalTimeWidth = 0;
@@ -182,13 +182,19 @@ uiController.init = function () {
 
     })
 
+
     $("#controlbar .ui-input-clear").click(function () {
         switch (searchController.buttonActive) {
+
+
             case 1:
                 searchController.removeFilterSongs();
                 break;
             case 2:
                 searchController.removeFilterSongs();
+                break;
+            default:
+                searchController.emptySearchList();
                 break;
         }
     })
