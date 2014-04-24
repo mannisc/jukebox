@@ -485,7 +485,7 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
 
 
     var play = function (streamID, searchString, artistString, titleString, streamURL) {
-        mediaController.currentvideoURL = "";
+        //mediaController.currentvideoURL = "";
         $.ajax({
             url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + encodeURIComponent(artistString) + "&track=" + encodeURIComponent(titleString) + "&format=json",
             success: function (data) {
