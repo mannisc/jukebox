@@ -24,6 +24,8 @@ uiController.responsiveWidthSmaller = 1080;
 
 uiController.totalTimeWidth = 0;
 
+uiController.gridLayout =false;
+
 
 /**
  * Init Controller
@@ -988,6 +990,54 @@ uiController.showPlaylists = function () {
         }, 0)
 
     }, 10)
+}
+
+
+/* Toggel Grid Layout*/
+uiController.toggleGridLayout = function () {
+    uiController.gridLayout = !uiController.gridLayout;
+    $("#searchlist  .iScrollIndicator").hide();
+    var scrollY = uiController.searchListScroll.y;
+
+    $("#searchlist ul").toggleClass("gridlayout")
+
+        $("#searchlistview").listview('refresh');
+        playbackController.remarkSong();
+
+        uiController.searchListScroll.refresh();
+
+
+        var cols = Math.floor($("#searchlist ul").width()/250);
+        if(uiController.gridLayout){
+
+            scrollY = scrollY/cols+64
+            if(scrollY>0)
+                scrollY = 0;
+
+            $("#searchlayoutbutton img").attr("src","public/img/list.png");
+            uiController.searchListScroll.scrollTo(0, scrollY);
+
+
+        }
+        else {
+            $("#searchlayoutbutton img").attr("src","public/img/grid.png");
+            uiController.searchListScroll.scrollTo(0, (scrollY-64)*cols);
+        }
+
+
+        if($("#searchlist ul").height()>$("#searchlist").height())
+          $("#searchlist .iScrollIndicator").show();
+        else
+           uiController.searchListScroll.scrollTo(0,0);
+
+
+
+
+
+
+
+
+
 }
 
 
