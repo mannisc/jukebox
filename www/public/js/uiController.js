@@ -1004,14 +1004,18 @@ uiController.toggleGridLayout = function () {
     uiController.gridLayout = !uiController.gridLayout;
     $("#searchlist  .iScrollIndicator").hide();
     var scrollY = uiController.searchListScroll.y;
+    $("#searchlist").hide();
 
+
+    setTimeout(function(){
     $("#searchlist ul").toggleClass("gridlayout")
+        $("#searchlist").css("opacity","0");
+        $("#searchlist").show();
+    },0);
 
-        $("#searchlistview").listview('refresh');
-        playbackController.remarkSong();
-
-        uiController.searchListScroll.refresh();
-
+     setTimeout(function(){
+        $("#searchlist").css("opacity","0");
+        $("#searchlist").show();
         var cols = Math.floor($("#searchlist ul").width()/250);
         if(uiController.gridLayout){
             scrollY = scrollY/cols+64;
@@ -1022,28 +1026,34 @@ uiController.toggleGridLayout = function () {
             $("#searchlayoutbutton img").attr("src","public/img/grid.png");
         }
 
-    if(scrollY>0)
-        scrollY = 0;
-    else if(scrollY< uiController.searchListScroll.maxScrollY)
-        scrollY = uiController.searchListScroll.maxScrollY;
 
-    uiController.searchListScroll.scrollTo(0, scrollY);
+        uiController.searchListScroll.refresh();
+
+        if($("#searchlist ul").height()>$("#searchlist").height())
+            $("#searchlist .iScrollIndicator").show();
+        if(!$("#searchlist ul").height()>$("#searchlist").height())
+            scrollY = 0;
+        else if(scrollY>0)
+            scrollY = 0;
+        else if(scrollY< uiController.searchListScroll.maxScrollY)
+            scrollY = uiController.searchListScroll.maxScrollY;
+
+        uiController.searchListScroll.scrollTo(0, scrollY);
+
+        $("#searchlist").hide();
+        $("#searchlist").css("opacity","1");
+        $("#searchlist").addClass("fadeincomplete");
+        $("#searchlist").show();
+        setTimeout(function(){
+            $("#searchlist").removeClass("fadeincomplete");
+        },1000)
 
 
-    if($("#searchlist ul").height()>$("#searchlist").height())
-          $("#searchlist .iScrollIndicator").show();
-        else
-           uiController.searchListScroll.scrollTo(0,0);
-
-
-
-
-
-
-
-
-
+      },500)
 }
+
+
+
 
 
 
