@@ -918,6 +918,10 @@ searchController.makeSearchListDraggable = function () {
 
             }
 
+            $("#playlistplaceholder").remove();
+            $("<style type='text/css' id='playlistplaceholder'> #playlistInner ul .ui-sortable-placeholder{ height:"+(65*elements.length)+"px !important} </style>").appendTo("head");
+
+
             var ele = $helper.append(elements)
 
             playlistController.draggedElements = elements;

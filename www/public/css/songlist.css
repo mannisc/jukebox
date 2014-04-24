@@ -1,8 +1,18 @@
 
+/*Song Options*/
+
+.songOptions{
+    position:absolute;
+    z-index:1000;
+    width:250px;
+    height:65px;
+    top:0;
+    left:65px;
+    background-color: #f00;
+}
 
 
-
-
+/*Songlist  */
 .songlist{
     margin-bottom:15px!important;
     padding-bottom: 15px!important;
@@ -153,16 +163,39 @@
     perspective-origin: 32px 50%;
 }
 
-.songlist li.loadedsong.stillloading img.ui-li-icon {
+.songlist li.loadedsong.stillloading .ui-li-icon {
     opacity:1;
 
     /*-webkit-transform: rotateY(300deg) scale(1.21)!important;
         -moz-transform: rotateY(359deg) scale(1.21)!important;
         transform: rotateY(359deg) scale(1.21)!important;*/
-    -webkit-animation:spin 2s ease infinite;
+    -webkit-animation:spin 2s ease infinite!important;
     -moz-animation:spin 2s ease infinite!important;
-    animation:spin 2s ease infinite;
+    animation:spin 2s ease infinite!important;
 
+}
+
+
+.songlist li.loadedsong.stillloading .loadingSongImg{
+    /* background-size:9;*/
+
+    -webkit-animation:spinplay 2s ease infinite!important;
+    -moz-animation:spinplay 2s ease infinite!important;
+    animation:spinplay 2s ease infinite!important;
+
+
+}
+
+.songlist li.loadedsong.stillloading img.loadingSongImg{
+    display:block;
+    -webkit-transform-origin: 50% 50%;
+    -moz-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+    transition-property: transform;
+    z-index:10;
 }
 
 
@@ -268,26 +301,7 @@
     transition: all 0.5s ease;
 }
 
-.songlist li.loadedsong.stillloading .loadingSongImg{
-    /* background-size:9;*/
 
-    display:block;
-    -webkit-transform-origin: 50% 50%;
-    -moz-origin: 50% 50%;
-    transform-origin: 50% 50%;
-
-    -webkit-transition-property: -webkit-transform;
-    -moz-transition-property: -moz-transform;
-    -o-transition-property: -o-transform;
-    transition-property: transform;
-
-    -webkit-animation:spinplay 2s ease infinite;
-    -moz-animation:spinplay 2s ease infinite!important;
-    animation:spinplay 2s ease infinite;
-
-    z-index:10;
-
-}
 
 
 .songlist li.loadedsong.pausing img.ui-li-icon {

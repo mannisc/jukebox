@@ -197,7 +197,7 @@
             <input id="filterBasic-input" data-type="search" data-theme="a">
         </form-->
 
-        <ul data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
+        <ul  data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
             <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1"><img
                     src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" ><img src="public/img/empty.png"
@@ -263,10 +263,10 @@
         </div>
 
         <div id="playlistInner" class="animate" style="display:none">
-            <ul data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
-                <li ng-repeat="song in debugObj(playlistController.loadedPlaylistSongs) track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
+            <ul ui-sortable ng-model="playlistController.loadedPlaylistSongs" data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
+                <li ng-repeat="song in playlistController.loadedPlaylistSongs track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
                     ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
-                                                                                           class="ui-li-icon ui-corner-none"  >
+                                                                                                                                                              class="ui-li-icon ui-corner-none"  >
                     <img src="public/img/empty.png" class="loadingSongImg">
                     <span ng-if="!song.isPlaylist">
                     <h3>{{song.name}}</h3>
@@ -275,11 +275,8 @@
                     <span ng-if="song.isPlaylist">
                          <h3>{{song.name}}</h3>
                          <p>Playlist</p><img class="removesong" ng-style="{'background-image':'url(public/img/trash.png)',display:'none'}" src="public/img/empty.png">
-
                     </span>
-
                 </a></li>
-
             </ul>
         </div>
     </div>
@@ -385,7 +382,9 @@
         <img id="siteLogoImage" width="70px"  src="" onclick="mediaController.openExternalSite()">
     </div>
 
+    <div id="songOptions">
 
+    </div>
 
 
 
@@ -508,6 +507,12 @@
 <!-- /page -->
 
 
+<script type="text/javascript" src="public/js/libs/jquery-1.11.0.js"></script>
+
+<script type="text/javascript" src="public/js/preangularload.js"></script>
+
+
+
 <script type="text/javascript" src="public/cordova.js"></script>
 
 <!-- Libraries -->
@@ -515,7 +520,6 @@
 <script type="text/javascript" src="public/js/libs/angular.js"></script>
 
 <!-- jQuery -->
-<script type="text/javascript" src="public/js/libs/jquery-1.11.0.js"></script>
 <script type="text/javascript" src="public/js/libs/jquery-ui.js"></script>
 <script type="text/javascript" src="public/js/libs/jqm/jquery.mobile-1.4.2.js"></script>
 

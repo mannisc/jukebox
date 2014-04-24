@@ -19,8 +19,10 @@
  * @param $timeout
  * @constructor
  */
-function MainController($scope) {
+function MainController($scope,$compile) {
     window.$scope = $scope;
+    window.$compile = $compile;
+
 
     $scope.appTitle = "Songbase.fm";
 

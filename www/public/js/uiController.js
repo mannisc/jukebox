@@ -271,22 +271,7 @@ uiController.init = function () {
     //})
 
 
-    uiController.playListScroll = new IScroll('#playlistInner', {
-        interactiveScrollbars: true,
-
-        zoom: true,
-        scrollX: false,
-        scrollY: true,
-        mouseWheel: true,
-        zoomMin: 0.2,
-        zoomMax: 1,
-        startZoom: 1,
-        // shrinkScrollbars: "scale",
-        // wheelAction: 'zoom',
-        scrollbars: true,
-        noHorizontalZoom: true
-    });
-
+    playlistController.makePlayListScrollable();
 
     //Animate Sidde Panel Open Icon
     $("#rightpanel").on("panelbeforeclose", function (event, ui) {
