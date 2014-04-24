@@ -41,11 +41,6 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
 
 
     //Clicked on Cover -> Select Song
-    console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKK "+(event.clientX-$(".songlist:hover").offset().left))
-
-
-
-
     if (!element.isPlaylist&& $(".songlist li img:hover").length > 0 ||   (event.clientX-$(".songlist:hover").offset().left)< 65) {
         playlistController.selectSong(element)
         return;

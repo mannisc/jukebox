@@ -440,7 +440,7 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
 videoController.playSong = function () {
     if (!videoController.isPlaying && playbackController.playingSong ) {
         $("video, iframe").css("opacity", "1");
-        $("#siteLogo").fadeOut();
+        $("#siteLogo").hide();
         videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
         videoController.videoPlayer.play();
         videoController.isPlaying = true;
