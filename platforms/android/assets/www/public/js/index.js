@@ -100,11 +100,14 @@ $(document).ready(function () {
             setTimeout(function () {
                 if(urlParams.search&&urlParams.search!=""){
 
+                    $("#searchinput").val(urlParams.search);
+
                     function search(searchID){
                         searchController.searchSongs(urlParams.search, "", "",function (list) {  searchController.completeSearch(list,null,searchController.searchCounter) });
                     }
                     search(searchController.searchCounter);
                     searchController.searchCounter++;
+
                 }
                 if(urlParams.artist&&urlParams.artist!=""){
                     if(urlParams.title&&urlParams.title!=""){

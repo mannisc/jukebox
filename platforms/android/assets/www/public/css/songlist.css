@@ -4,12 +4,14 @@
   margin-left: 15px !important;
   text-align: left!important;
   width:100%!important;
+
 }
 
 #searchlist ul.gridlayout li {
   display: inline-block!important;
   vertical-align: top!important;
   width: 250px!important;
+
 }
 
 
@@ -83,6 +85,7 @@
     -o-transition: opacity 0.2s ease!important;
 
 }
+
 
 
 
