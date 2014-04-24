@@ -67,6 +67,7 @@ videoController.fullscreenEnabled = false;
 videoController.versionsEnabled = true;
 videoController.lyricsEnabled = true;
 videoController.sharesocialEnabled = true;
+videoController.externalSiteEnabled = false;
 
 
 
@@ -306,6 +307,16 @@ videoController.init = function () {
         if (videoController.sharesocialEnabled)
 
             mediaController.postOnFacebook();
+
+    });
+
+    //Open external site
+    videoController.controls.find(".videoControlElements-button-external").click(function () {
+
+        if (videoController.externalSiteEnabled) {
+            var mywindow = window.open(mediaController.currentvideoURL, "", "");
+            mywindow.focus();
+        }
     });
 
     //Fade in controls
@@ -754,6 +765,21 @@ videoController.disableFullscreenControl = function (disable) {
     }
 }
 
+
+/**
+ * Disable/Enable External Site Control
+ * @param disable
+ */
+videoController.disableExternalSiteControl = function (disable) {
+    videoController.externalSiteEnabled = !disable;
+    if (disable) {
+        $(".videoControlElements-button-external button").css("opacity", "0.5");
+
+    } else {
+        $(".videoControlElements-button-external button").css("opacity", "1");
+    }
+}
+
 /**
  * Disable/Enable ShareSocial Control
  * @param disable
@@ -958,6 +984,7 @@ videoController.playingSong = function () {
         $("#siteLogoImage").attr("src","public/img/sites/"+ mediaController.getSiteLogo());
         $("#siteLogo").show();
 
+        videoController.disableExternalSiteControl(false);
         videoController.disableFullscreenControl(false);
         //   helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
 
