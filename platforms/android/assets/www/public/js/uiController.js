@@ -1012,26 +1012,25 @@ uiController.toggleGridLayout = function () {
 
         uiController.searchListScroll.refresh();
 
-
         var cols = Math.floor($("#searchlist ul").width()/250);
         if(uiController.gridLayout){
-
-            scrollY = scrollY/cols+64
-            if(scrollY>0)
-                scrollY = 0;
-
+            scrollY = scrollY/cols+64;
             $("#searchlayoutbutton img").attr("src","public/img/list.png");
-            uiController.searchListScroll.scrollTo(0, scrollY);
-
-
         }
         else {
+            scrollY =  (scrollY-64)*cols;
             $("#searchlayoutbutton img").attr("src","public/img/grid.png");
-            uiController.searchListScroll.scrollTo(0, (scrollY-64)*cols);
         }
 
+    if(scrollY>0)
+        scrollY = 0;
+    else if(scrollY< uiController.searchListScroll.maxScrollY)
+        scrollY = uiController.searchListScroll.maxScrollY;
 
-        if($("#searchlist ul").height()>$("#searchlist").height())
+    uiController.searchListScroll.scrollTo(0, scrollY);
+
+
+    if($("#searchlist ul").height()>$("#searchlist").height())
           $("#searchlist .iScrollIndicator").show();
         else
            uiController.searchListScroll.scrollTo(0,0);
