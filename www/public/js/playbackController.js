@@ -36,12 +36,12 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
 
-    if($(".removesong:hover").length>0 )
-     return;
+    if ($(".removesong:hover").length > 0)
+        return;
 
 
     //Clicked on Cover -> Select Song
-    if (!element.isPlaylist&& $(".songlist li img:hover").length > 0 ||   (event.clientX-$(".songlist:hover").offset().left)< 65) {
+    if (!element.isPlaylist && $(".songlist li img:hover").length > 0 || (event.clientX - $(".songlist:hover").offset().left) < 65) {
         playlistController.selectSong(element)
         return;
     }
@@ -119,7 +119,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
     }
 
     //If not already loading, save the old song to be able to reset if there is a loading error
-    if (!playbackController.isLoading&&playbackController.playingSong)  {
+    if (!playbackController.isLoading && playbackController.playingSong) {
         playbackController.playingOldSong = playbackController.playingSong;
     }
 
@@ -174,15 +174,14 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
 
         }
 
-    }else {
-        console.log("!JJJJJJJJJJJJJJJ "+   videoController.isPlaying)
-        if(   videoController.isPlaying)
-          $(songListElement.get(0)).addClass("playing");
+    } else {
+        console.log("!JJJJJJJJJJJJJJJ " + videoController.isPlaying)
+        if (videoController.isPlaying)
+            $(songListElement.get(0)).addClass("playing");
         else
-          $(songListElement.get(0)).addClass("pausing");
+            $(songListElement.get(0)).addClass("pausing");
 
     }
-
 
 
     //helperFunctions.animateBackground(".songlist li.loadedsong.stillloading .loadingSongImg", "public/img/loader/sprites.png", 46, 46, 18, 46,4.8);
@@ -215,15 +214,14 @@ playbackController.resetPlayingSong = function () {
 
     $(".videoControlElements-controls").find('.videoControlElements-time-loaded').show();
 
-   // if ($(".videoControlElements-controls").find('.videoControlElements-time-buffering').css("opacity") > 0)
-   //     $(".videoControlElements-controls").find('.videoControlElements-time-buffering').fadeOut();
+    // if ($(".videoControlElements-controls").find('.videoControlElements-time-buffering').css("opacity") > 0)
+    //     $(".videoControlElements-controls").find('.videoControlElements-time-buffering').fadeOut();
 
     videoController.showBuffering(false);
 
 
-
-   // $("#videoplayer").css("opacity", "0");
-   // $("#videoplayer").css("pointer-events", "none");
+    // $("#videoplayer").css("opacity", "0");
+    // $("#videoplayer").css("pointer-events", "none");
 
     playbackController.playingSong = playbackController.playingOldSong;
 
@@ -240,8 +238,8 @@ playbackController.resetPlayingSong = function () {
         $(".songlist li").removeClass("loadedsong playing stillloading pausing");
         videoController.disableControls(true);
         videoController.disableStopControl(true);
-       // $("#videoplayer").css("opacity", "0");
-      //  $("#videoplayer").css("pointer-events", "none");
+        // $("#videoplayer").css("opacity", "0");
+        //  $("#videoplayer").css("pointer-events", "none");
         $(".iScrollPlayIndicator").hide();
 
         playbackController.setNewTitle("", "", true);
@@ -249,6 +247,27 @@ playbackController.resetPlayingSong = function () {
     }
 
 
+}
+
+/**
+ * Update FB Buttons
+ */
+playbackController.updateFBButtons = function(){
+    $(".fb-like").hide();
+    if( playbackController.playingSong)
+     $("#fblike").html(preloadhtml.sharefb.replace("songbase.fm", "songbase.fm?play=" + playbackController.getPlayingTitle()));
+    else
+        $("#fblike").html(preloadhtml.sharefb);
+
+    try {
+        FB.XFBML.parse();
+        $(".fb-like iframe").get(0).onload = function () {
+            setTimeout(function () {
+                $(".fb-like").show();
+            }, 50)
+        };
+    } catch (ex) {
+    }
 }
 
 
@@ -261,7 +280,9 @@ playbackController.resetPlayingSong = function () {
 playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
 
     if (!isLoaded) {
-        $(".fb-like").hide();
+
+        playbackController.updateFBButtons();
+
         $("#playingSongCover").removeClass("fadeincomplete")
         $("#playingSongTitle").removeClass("fadeincomplete");
         $("#playingSongTitle").hide();
@@ -341,7 +362,7 @@ playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
             $("#playingSongTitleLoading").show();
             $("#playingSongTitle").addClass("fadeincomplete")
             $("#playingSongTitle").show();
-            $(".fb-like").show();
+
 
         }
 
