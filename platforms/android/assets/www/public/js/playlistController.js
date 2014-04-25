@@ -582,7 +582,7 @@ playlistController.makePlayListSortable = function () {
             $("#playlistInner").hide();
             $("#playlistInner").html(
                 window.$compile(
-                    preangularhtml.playlisthtml
+                    preloadhtml.playlisthtml
                 )($scope));
             $("#playlistview").listview();
             playlistController.makePlayListScrollable();
