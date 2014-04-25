@@ -26,7 +26,7 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
 
 
     playlistController.loadedPlaylistSongs[i].gid = playlistController.getNewID();//;"gsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
-    playlistController.loadedPlaylistSongs[i].id = playlistController.loadedPlaylistSongs[i].gid;//;"plsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
+    playlistController.loadedPlaylistSongs[i].id = "plsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
        //   console.log("::: "+ playlistController.loadedPlaylistSongs[i].gid)
 }
 
@@ -77,7 +77,7 @@ playlistController.getNewID = function(){
     var timeNow = new Date();
     playlistController.counterGlobalId++;
     var id = MD5(timeNow.getTime()+"."+Math.random()+"."+playlistController.counterGlobalId);
-    return id;
+    return "id_"+id;
 }
 
 /**
@@ -508,19 +508,19 @@ playlistController.makePlayListSortable = function () {
                             id = playlistController.draggedElements[index].dataset.songid.substring(12);
                             actSong = playlistController.loadedPlaylistSongs[parseInt(id.substring(5))];
                             actSong = jQuery.extend(true, {}, actSong);
-                            actSong.id = playlistController.getNewID();//"plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
+                            actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
                             newLoadedPlaylistSongs.push(actSong);
-                            //actPlsid = actPlsid + 1
+                            actPlsid = actPlsid + 1
 
                         });
                     }
                     else if (!found) {
                         actSong = playlistController.loadedPlaylistSongs[parseInt(id.substring(5))];
                         actSong = jQuery.extend(true, {}, actSong);
-                        actSong.id = playlistController.getNewID();//"plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
+                        actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
 
                         newLoadedPlaylistSongs.push(actSong);
-                        //actPlsid = actPlsid + 1
+                        actPlsid = actPlsid + 1
 
                     }
                 } else {
@@ -545,11 +545,11 @@ playlistController.makePlayListSortable = function () {
                             //playlistController.globalId = playlistController.globalId + 1;
 
 
-                            actSong.id = actSong.gid;//"plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
+                            actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
 
 
                             newLoadedPlaylistSongs.push(actSong);
-                          // actPlsid = actPlsid + 1
+                            actPlsid = actPlsid + 1;
 
                         })
                     }
@@ -563,11 +563,11 @@ playlistController.makePlayListSortable = function () {
 
 
 
-                        actSong.id = actSong.gid//"plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
+                        actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
 
 
                         newLoadedPlaylistSongs.push(actSong);
-                        //actPlsid = actPlsid + 1
+                        actPlsid = actPlsid + 1
 
                     }
                     //  alert(index)

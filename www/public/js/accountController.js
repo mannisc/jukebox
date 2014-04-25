@@ -150,13 +150,14 @@ accountController.loadStoredData = function(){
                 for (var j = 0; j < playlistdata.items.length; j++) {
                     playlists[j] = {
                         name: playlistdata.items[j].name,
-                        gid: parseInt(playlistdata.items[j].gid),
+                        gid: playlistdata.items[j].gid,
                         tracks: playlistdata.items[j].data,
                         isPlaylist: true,
-                        id: parseInt(playlistdata.items[j].gid)
+                        id: playlistdata.items[j].gid
                     }
-                    console.dir("playlistdata.items["+j+"]: ");
-                    console.dir(playlistdata.items[j]);
+                    console.dir("playlists["+j+"]: ");
+                    console.dir(playlists[j]);
+                    console.dir("-----------------");
                 }
                 if (playlists) {
                     //Remove duplicate Playlists
@@ -173,6 +174,10 @@ accountController.loadStoredData = function(){
                             }
                         }
                     }
+
+
+
+
 
                     //Find new playlistController.globalId
                     playlistController.playlists = playlistController.playlists.concat(playlists);
