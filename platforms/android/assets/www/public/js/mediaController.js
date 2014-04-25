@@ -93,18 +93,7 @@ mediaController.mediaEnded = function () {
 }
 
 
-mediaController.postOnFacebook = function () {
-    if (mediaController.currentvideoURL != "") {
-        var song = playbackController.getPlayingSong();
-        mywindow = window.open("http://www.facebook.com/sharer.php?u=" + mediaController.currentvideoURL + "&t=" + mediaController.getSongArtist(song) + " - " + song.name, "", "");
-        mywindow.focus();
-        mediaController.sendRating("1");
-    }
-    else {
-        mywindow = window.open("http://www.facebook.com/sharer.php?u=", "", ""); //TODO
-        mywindow.focus();
-    }
-}
+
 
 
 mediaController.sendRating = function (rating) {
