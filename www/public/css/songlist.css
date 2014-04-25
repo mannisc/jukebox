@@ -17,14 +17,21 @@
 
 /*Song Options*/
 
-.songOptions{
-    position:absolute;
-    z-index:1000;
-    width:250px;
-    height:65px;
-    top:0;
-    left:65px;
-    background-color: #f00;
+#songOptions{
+    position: absolute;
+    height: 53px;
+    top: 6px;
+    left: 10px;
+    background-image: -o-linear-gradient(right, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.4) 53px,rgba(255,255,255,0.9) 54px, rgba(255,255,255,0.55) 80%,rgba(255,255,255,0) 100%);
+    background-image: -moz-linear-gradient(right, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.4) 53px,rgba(255,255,255,0.9) 54px, rgba(255,255,255,0.55) 80%,rgba(255,255,255,0) 100%);
+    background-image: -webkit-linear-gradient(right, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.4) 53px,rgba(255,255,255,0.9) 54px, rgba(255,255,255,0.55) 80%,rgba(255,255,255,0) 100%);
+    background-image: -ms-linear-gradient(right, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.4) 53px,rgba(255,255,255,0.9) 54px, rgba(255,255,255,0.55) 80%,rgba(255,255,255,0) 100%);
+    background-image: linear-gradient(to right, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.4) 53px,rgba(255,255,255,0.9) 54px, rgba(255,255,255,0.55) 80%,rgba(255,255,255,0) 100%);
+    z-index: 10000;
+    -webkit-transition: all 0.7s ease;
+    -moz-transition: all 0.7s ease;
+    -o-transition: all 0.7s ease;
+    transition: all 0.7s ease;
 }
 
 
