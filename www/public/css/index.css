@@ -166,6 +166,9 @@ body {
 
 }
 
+
+
+
 /*Smallest Screen*/
 @media (max-width:669px) {
 
@@ -174,9 +177,6 @@ body {
         display:none!important;
     }
 
-    #fblike{
-        display:none!important;
-    }
 
     #playingSongInfoLink{
      display:none!important;
