@@ -291,6 +291,8 @@ accountController.register = function () {
                             accountController.loggedIn = true;
                             accountController.loginToken = MD5(data + md5pw);
                             accountController.userName = username;
+                            accountController.setCookie("loginToken",Base64.encode(accountController.loginToken),1);
+                            accountController.setCookie("userName",Base64.encode(accountController.userName),1);
                             var btn = $('#header .ui-btn.animated').removeClass("animated");
                             $('#registerLogin').popup('close');
                             uiController.styleTopButtons();
