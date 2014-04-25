@@ -29,8 +29,9 @@
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 
     <?php
-    echo '<meta property="og:image" content="http://www.coldfusionjedi.com/images/ScreenClip145.png"/>';
+       echo '<meta property="og:image" content="http://www.coldfusionjedi.com/images/ScreenClip145.png"/>';
     ?>
+
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 
@@ -108,7 +109,7 @@
         console.log("Installed console ! ");
     </script>
 
-    <title></title>
+    <title>Songbase.fm</title>
 </head>
 <body ng-controller="MainController">
 
@@ -143,7 +144,7 @@
     <img src="public/img/logo.gif" id="iconHeader" style="opacity:0;position:absolute;left: 8px;top: 8px" width="30px" height="30px">
 
 
-    <h1 id="titleHeader" style="display:none">{{appTitle}} </h1>
+    <h1 id="titleHeader" style="display:none">{{appTitle}}</h1>
 
     <img src="public/img/bars-white.png" id="openSidePanelBarIcon" onclick="uiController.toggleSidePanel()" style="position:absolute;right: 6px;top: 13px" width="17px" height="20px"/>
 
