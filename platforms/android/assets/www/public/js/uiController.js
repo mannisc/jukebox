@@ -121,9 +121,7 @@ uiController.init = function () {
 
     //Fade in fb like
 
-    setTimeout(function () {
-        playbackController.updateFBButtons();
-    }, 1000)
+
 
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;

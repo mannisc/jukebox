@@ -14,7 +14,7 @@ var preloadhtml = function(){
 }
 
 
-preloadhtml.sharefb = $("#fblike").html();
-$("#fblike").html("");
+preloadhtml.sharefb = $("#songfblike").html();
+$("#songfblike").html("");
 
 preloadhtml.playlisthtml = $("#playlistInner").html();
