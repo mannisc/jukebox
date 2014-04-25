@@ -755,9 +755,9 @@ uiController.updateUI = function () {
 
         setTimeout(function () {
             if ($("#playlistselectvertical .chosen-container").height() > 0)
-                $("#playlistInner").css("max-height", $(window).height() - 3 - (100 + $("#playlistselectvertical .chosen-container").height() - 30));
+                $("#playlistInner").css("max-height", $(window).height() - 3 -45- (100 + $("#playlistselectvertical .chosen-container").height() - 30));
             else
-                $("#playlistInner").css("max-height", $(window).height() - 3 - 5);
+                $("#playlistInner").css("max-height", $(window).height() - 3-45 - 5);
         }, 100)
 
         if (uiController.sidePanelOpen) {
