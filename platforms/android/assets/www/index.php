@@ -116,13 +116,6 @@
 
 <!-- FACEBOOK -->
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
 <!-- FACEBOOK -->
 
 <div id="lyricsiframe" class="fadeincompleteslow" style="display:none">
@@ -402,7 +395,7 @@
     <img id="siteLogoImage" width="70px"  src="" onclick="mediaController.openExternalSite()">
 </div>
 
-<div id="songOptions">
+<div id="songOptions" style="display:none">
 
 </div>
 
@@ -447,6 +440,8 @@
             <label for="signinpw" class="ui-hidden-accessible">Password:</label>
             <input type="password" name="pass" id="signinpw" value="" placeholder="Password" data-theme="a" >
             <button onclick="accountController.signIn();" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+            <hr>
+            <fb:login-button show-faces="true" width="200"  max-rows="1"></fb:login-button>
         </div>
     </form>
 </div>
@@ -455,6 +450,7 @@
     <form>
         <div style="padding:0px 20px 10px 20px">
             <h3 id="registertitle">Sign Up For Free</h3>
+
             <label for="registerusername" class="ui-hidden-accessible">Username:</label>
             <input type="text" name="user" id="registerusername" value="" placeholder="Username" data-theme="a" >
             <span id="registeruseremail">
@@ -467,9 +463,30 @@
                 <input type="password" name="pass" id="registerpwc" value="" placeholder="Confirm Password" data-theme="a" >
                 </span>
             <button onclick="accountController.register();" type="submit" id="registerButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Create Account</button>
+            <hr>
+            <fb:login-button show-faces="true" width="200"  max-rows="1"></fb:login-button>
         </div>
     </form>
 </div>
+
+<div data-role="popup" id="popupAccount" data-arrow="true" data-theme="a" class="ui-corner-all">
+    <form>
+        <div>
+            <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Account</h3>
+            <ul data-role="listview">
+                <li><a href="#" data-rel="back" id="manageFacebook"><img src="public/img/fb.png">Facebook</a></li>
+                <li><a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png">Google
+                    <!--span class="GoogleBlue">G</span><span class="GoogleRed">o</span><span class="GoogleYellow">o</span><span class="GoogleBlue">g</span><span class="GoogleGreen">l</span><span class="GoogleRed">e</span--></a></li>
+                <li style="border-bottom:1px solid #ddd;"><a href="#" data-rel="back" id="manageDropbox"><img src="public/img/dropbox.png">Dropbox</a></li>
+                <li style="border-top:15px solid rgba(255,255,255,0.8);"><a href="#" onclick="accountController.logout();" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li>
+
+            </ul>
+        </div>
+    </form>
+</div>
+
+
+
 
 <div data-role="popup" id="popupArtist" data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>
@@ -482,7 +499,7 @@
                                                      style="text-decoration:none" target="_blank">Songs from Artist</a></li>
                 <li data-theme="b" class="marked"  style="border-bottom:1px solid #ddd;"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');searchController.searchSimilarSongs(playbackController.playingSong);"
                                                                                             style="text-decoration:none" target="_blank">Similar Songs</a></li>
-                <li data-theme="b" style="border-top:15px solid rgba(255,255,255,0.8);"><a ng-show="playbackController.playingSong" href="http://de.wikipedia.org/w/index.php?go=Artikel&title&search={{mediaController.getSongArtist(playbackController.playingSong)}}"
+                <li data-theme="b" style="border-top:15px solid rgba(255,255,255,0.2);"><a ng-show="playbackController.playingSong" href="http://de.wikipedia.org/w/index.php?go=Artikel&title&search={{mediaController.getSongArtist(playbackController.playingSong)}}"
                                                                                            onclick="$('#popupArtist').popup('close')" style="text-decoration:none" target="_blank">Wikipedia</a></li>
                 <li data-theme="b"><a ng-show="playbackController.playingSong" href="http://www.lastfm.de/search?q={{mediaController.getSongArtist(playbackController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
                                       style="text-decoration:none" target="_blank">last.fm</a></li>
@@ -500,22 +517,6 @@
     </span>
 </div>
 
-
-<div data-role="popup" id="popupAccount" data-arrow="true" data-theme="a" class="ui-corner-all">
-    <form>
-        <div>
-            <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Account</h3>
-            <ul data-role="listview">
-                <li><a href="#" data-rel="back" id="manageFacebook"><img src="public/img/fb.png">Facebook</a></li>
-                <li><a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png">Google
-                    <!--span class="GoogleBlue">G</span><span class="GoogleRed">o</span><span class="GoogleYellow">o</span><span class="GoogleBlue">g</span><span class="GoogleGreen">l</span><span class="GoogleRed">e</span--></a></li>
-                <li style="border-bottom:1px solid #ddd;"><a href="#" data-rel="back" id="manageDropbox"><img src="public/img/dropbox.png">Dropbox</a></li>
-                <li style="border-top:15px solid rgba(255,255,255,0.8);"><a href="#" onclick="accountController.logout();" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li>
-
-            </ul>
-        </div>
-    </form>
-</div>
 
 <!--div data-role="footer" id="footer" data-position="fixed">
     <h4>Footer content</h4>
@@ -634,6 +635,15 @@
 <!--Embed-->
 <script type="text/javascript" src="public/js/dailymotionPlayers.js"></script>
 
+<!-- FACEBOOK
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- FACEBOOK -->
 
 <!-- Preload Images/WebGL-->
 <div style="display:none">
