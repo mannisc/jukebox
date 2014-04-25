@@ -109,8 +109,39 @@ playlistController.selectSong = function (song) {
 
         }
 
+
         if (listElement)
             listElement.toggleClass("selected");
+        if(listElement.hasClass("selected")||(playlistController.lastSelectedSong&&playlistController.lastSelectedSong.hasClass("selected"))) {
+
+            if(!listElement.hasClass("selected")){
+                listElement =  playlistController.lastSelectedSong;
+                playlistController.lastSelectedSong = null;
+            }
+
+            $("#songOptions").css("width","0px");
+            $("#songOptions").css("opacity","0");
+            $("#songOptions").css("left","");
+
+            $("#songOptions").appendTo(listElement)
+            $("#songOptions").show();
+
+            $("#songOptions").css("width","189px");
+            $("#songOptions").css("opacity","0.9");
+            playlistController.lastSelectedSong = playlistController.selectedSong;
+            playlistController.selectedSong =  listElement;
+        }else{
+            $("#songOptions").css("opacity","0");
+            $("#songOptions").css("width","0px");
+            $("#songOptions").css("left","70px");
+
+
+
+
+        }
+
+
+
 
         /*     },250)
          */
