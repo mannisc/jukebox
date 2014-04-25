@@ -759,7 +759,6 @@ uiController.updateUI = function () {
 
         if (uiController.sidePanelOpen) {
 
-            // $("#searchlist").css("width", uiController.windowWidth - $("#rightpanel").width() - 10);
             if (uiController.windowWidth - $("#rightpanel").width() - 10 < 100) {
                 //$("#searchlist li a").wrap('<marquee behavior="alternate"></marquee>');
                 $("#searchlist li").css("max-height", "65px");
@@ -771,6 +770,7 @@ uiController.updateUI = function () {
 
 
         $("#playlist").css("width", $("#rightpanel").width() - 20 - 10);
+
 
         $("#playlistInner li").css("width", $("#rightpanel").width() - 20);
 
@@ -823,7 +823,6 @@ uiController.updateUI = function () {
         $("#searchlist").css("max-height", $(window).height() - 44 - 120 + 6);
 
         var setSelectSize = function () {
-            $("#searchlist").css("width", "");
             $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50 - 40);
             $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50 - 40);
             $("#saveplaylistinput").css("width", $("#playlist").width() - 50 - 40);
@@ -835,6 +834,8 @@ uiController.updateUI = function () {
         setSelectSize();
         $("#playlist").css("width", uiController.windowWidth / 3);
         $("#playlistInner li").css("width", uiController.windowWidth / 3);
+
+        $("#searchlist").css("width",uiController.windowWidth- uiController.windowWidth / 3-30);
 
         setSelectSize();
 
