@@ -306,7 +306,7 @@ videoController.init = function () {
     videoController.controls.find(".videoControlElements-button-facebook").click(function () {
         if (videoController.sharesocialEnabled)
 
-            mediaController.postOnFacebook();
+            facebookHandler.postOnFacebook();
 
     });
 

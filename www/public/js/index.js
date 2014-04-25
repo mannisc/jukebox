@@ -83,12 +83,14 @@ $(document).ready(function () {
 
             app.isCordova = (window.location.hash == "#cordova" );
             loadUrlParams();
+            facebookHandler.init();
             mediaController.init();
             authController.init();
             uiController.init();
             searchController.init();
             accountController.init();
             videoController.init();
+
 
             setTimeout(function(){
                 $("#searchinput").focus();

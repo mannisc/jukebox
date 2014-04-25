@@ -250,9 +250,10 @@ playbackController.resetPlayingSong = function () {
 }
 
 /**
- * Update FB Buttons
+ * Update Song FB Buttons
  */
-playbackController.updateFBButtons = function(){
+playbackController.updateSongFBButtons = function(){
+    return;
     $(".fb-like").hide();
     if( playbackController.playingSong)
      $("#fblike").html(preloadhtml.sharefb.replace("songbase.fm", "songbase.fm?play=" + playbackController.getPlayingTitle()));
@@ -281,7 +282,7 @@ playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
 
     if (!isLoaded) {
 
-        playbackController.updateFBButtons();
+        facebookHandler.updateSongFBButtons();
 
         $("#playingSongCover").removeClass("fadeincomplete")
         $("#playingSongTitle").removeClass("fadeincomplete");

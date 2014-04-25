@@ -1,11 +1,11 @@
-.fb-like {
+.fbb-like {
     margin-top: -39px;
 }
 
 
-#fblike{
+#fbblike{
     height: 55px!important;
-    overflow: hidden;
+    overflow: visible;
     display: inline-block;
     vertical-align: middle;
     margin-top: -12px;
@@ -16,3 +16,10 @@
     transform-origin: 100% 100%!important;
 }
 
+#popupArtist .fb-like{
+    margin: 0px;
+}
+
+#popupArtist .fb_iframe_widget iframe {
+    bottom: 0!important;
+}
