@@ -131,8 +131,11 @@ accountController.logout = function () {
 
 accountController.loadStoredData = function(){
     var playlistsReady = function(playlistdata){
+        console.dir("PLAYLISTS:");
+        console.dir(playlistdata);
         if(playlistdata){
             var playlists = new Array();
+            /*
             playlists[0] = {
                 name: "Youtube - playlist",
                 gid: 1,
@@ -140,17 +143,20 @@ accountController.loadStoredData = function(){
                 isPlaylist: true,
                 id: 1
             }
+            */
             if(playlistdata.items && playlistdata.items.length > 0){
-
+                console.dir("Copy received (stored) data to playlists-Array;!!!!!!!!!!!!!!!");
                 //Copy received (stored) data to playlists-Array;
                 for (var j = 0; j < playlistdata.items.length; j++) {
-                    playlists[0].tracks[j] = {
+                    playlists[j] = {
                         name: playlistdata.items[j].name,
                         gid: parseInt(playlistdata.items[j].gid),
                         tracks: playlistdata.items[j].data,
                         isPlaylist: true,
                         id: parseInt(playlistdata.items[j].gid)
                     }
+                    console.dir("playlistdata.items["+j+"]: ");
+                    console.dir(playlistdata.items[j]);
                 }
                 if (playlists) {
                     //Remove duplicate Playlists
@@ -170,6 +176,7 @@ accountController.loadStoredData = function(){
 
                     //Find new playlistController.globalId
                     playlistController.playlists = playlistController.playlists.concat(playlists);
+                    /*
                     var globalId = playlistController.playlists.length
                     for (var j = 0; j < playlistController.playlists.length; j++) {
                         if(playlistController.playlists[j].gid+1 > globalId){
@@ -178,6 +185,7 @@ accountController.loadStoredData = function(){
                     }
                     playlistController.globalIdPlaylist = globalId;
                     playlistController.globalId         = globalId;
+                    */
 
 
 

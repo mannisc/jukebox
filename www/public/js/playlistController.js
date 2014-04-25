@@ -23,12 +23,16 @@ playlistController.loadedPlaylistSongs = [];
 
 
 for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
-    playlistController.loadedPlaylistSongs[i].id = "plsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
-    playlistController.loadedPlaylistSongs[i].gid = "gsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
-    //   console.log("::: "+ playlistController.loadedPlaylistSongs[i].gid)
+
+
+    playlistController.loadedPlaylistSongs[i].gid = playlistController.getNewID();//;"gsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
+    playlistController.loadedPlaylistSongs[i].id = playlistController.loadedPlaylistSongs[i].gid;//;"plsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
+       //   console.log("::: "+ playlistController.loadedPlaylistSongs[i].gid)
 }
 
-playlistController.globalId = playlistController.loadedPlaylistSongs.length;
+playlistController.globalId = "";//playlistController.loadedPlaylistSongs.length;
+
+
 
 
 playbackController.playedSongs = [];
@@ -59,7 +63,7 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
  */
 
 
-playlistController.globalIdPlaylist = playlistController.playlists.length;
+playlistController.globalIdPlaylist = "";//playlistController.playlists.length;
 
 
 playlistController.loadedPlaylistSongs = playlistController.playlists;
@@ -67,8 +71,14 @@ playlistController.loadedPlaylistSongs = playlistController.playlists;
 playlistController.loadedPlaylistSongs = [];
 playlistController.playlists = [];  //CLEAR_______________________________________________________________
 
-playlistController.counterGlobalId = playlistController.loadedPlaylistSongs.length; //TODO
+playlistController.counterGlobalId = 0;//playlistController.loadedPlaylistSongs.length; //TODO
 
+playlistController.getNewID = function(){
+    var timeNow = new Date();
+    playlistController.counterGlobalId++;
+    var id = MD5(timeNow.getTime()+"."+Math.random()+"."+playlistController.counterGlobalId);
+    return id;
+}
 
 /**
  * Select songs to Drag
@@ -143,6 +153,9 @@ playlistController.savePlaylist = function (useSelected) {
                 break;
             }
         }
+        playlistController.globalIdPlaylist = playlistController.getNewID();
+
+
         if (!exists) {
             for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
                 playlistController.loadedPlaylistSongs[i].playlistgid = playlistController.globalIdPlaylist;
@@ -153,7 +166,7 @@ playlistController.savePlaylist = function (useSelected) {
         }
 
 
-        playlistController.globalIdPlaylist++;
+        //playlistController.globalIdPlaylist++;
         playlistController.playlists = playlists;
 
         // window.localStorage.playlists = JSON.stringify(playlists);
@@ -495,19 +508,19 @@ playlistController.makePlayListSortable = function () {
                             id = playlistController.draggedElements[index].dataset.songid.substring(12);
                             actSong = playlistController.loadedPlaylistSongs[parseInt(id.substring(5))];
                             actSong = jQuery.extend(true, {}, actSong);
-                            actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
+                            actSong.id = playlistController.getNewID();//"plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
                             newLoadedPlaylistSongs.push(actSong);
-                            actPlsid = actPlsid + 1
+                            //actPlsid = actPlsid + 1
 
                         });
                     }
                     else if (!found) {
                         actSong = playlistController.loadedPlaylistSongs[parseInt(id.substring(5))];
                         actSong = jQuery.extend(true, {}, actSong);
-                        actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
+                        actSong.id = playlistController.getNewID();//"plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
 
                         newLoadedPlaylistSongs.push(actSong);
-                        actPlsid = actPlsid + 1
+                        //actPlsid = actPlsid + 1
 
                     }
                 } else {
@@ -528,16 +541,15 @@ playlistController.makePlayListSortable = function () {
 
                             actSong = jQuery.extend(true, {}, actSong);
 
+                            actSong.gid = playlistController.getNewID();//"plsgid" + playlistController.globalId;
+                            //playlistController.globalId = playlistController.globalId + 1;
 
-                            actSong.gid = "plsgid" + playlistController.globalId;
-                            playlistController.globalId = playlistController.globalId + 1;
 
-
-                            actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
+                            actSong.id = actSong.gid;//"plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
 
 
                             newLoadedPlaylistSongs.push(actSong);
-                            actPlsid = actPlsid + 1
+                          // actPlsid = actPlsid + 1
 
                         })
                     }
@@ -547,14 +559,15 @@ playlistController.makePlayListSortable = function () {
 
                         actSong = jQuery.extend(true, {}, actSong);
 
-                        actSong.gid = "plsgid" + playlistController.globalId;
-                        playlistController.globalId = playlistController.globalId + 1;
+                        actSong.gid = playlistController.getNewID();//"plsgid" + playlistController.globalId;
 
-                        actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
+
+
+                        actSong.id = actSong.gid//"plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
 
 
                         newLoadedPlaylistSongs.push(actSong);
-                        actPlsid = actPlsid + 1
+                        //actPlsid = actPlsid + 1
 
                     }
                     //  alert(index)
