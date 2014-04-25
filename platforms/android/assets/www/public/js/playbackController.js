@@ -259,7 +259,9 @@ playbackController.resetPlayingSong = function () {
  * @param isLoaded
  */
 playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
+
     if (!isLoaded) {
+        $(".fb-like").hide();
         $("#playingSongCover").removeClass("fadeincomplete")
         $("#playingSongTitle").removeClass("fadeincomplete");
         $("#playingSongTitle").hide();
@@ -339,7 +341,10 @@ playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
             $("#playingSongTitleLoading").show();
             $("#playingSongTitle").addClass("fadeincomplete")
             $("#playingSongTitle").show();
+            $(".fb-like").show();
+
         }
+
 
     }, 50)
 }

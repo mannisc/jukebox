@@ -119,6 +119,11 @@ uiController.init = function () {
     // Add BETA Status to Title
     $("#titleHeader").append('<span style="position: absolute; top: 10px;left: 170px;color: #a00; font-weight: 100; font-size: 10px;">BETA</span>');
 
+    //Fade in fb like
+
+    setTimeout(function () {
+        $(".fb-like").show();
+    }, 6000)
 
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
@@ -1005,6 +1010,7 @@ uiController.toggleGridLayout = function () {
     uiController.gridLayout = !uiController.gridLayout;
     $("#searchlist  .iScrollIndicator").hide();
     var scrollY = uiController.searchListScroll.y;
+
     $("#searchlist").hide();
 
 
@@ -1012,21 +1018,29 @@ uiController.toggleGridLayout = function () {
     $("#searchlist ul").toggleClass("gridlayout")
         $("#searchlist").css("opacity","0");
         $("#searchlist").show();
+        $("#searchlistview").listview('refresh');
+
     },0);
 
      setTimeout(function(){
-        $("#searchlist").css("opacity","0");
-        $("#searchlist").show();
 
-        // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB "+cols)
+
+         // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB "+cols)
 
          if(uiController.gridLayout){
-             var cols = Math.floor($("#searchlist ul").width()/250);
-             scrollY = scrollY/cols+64;
-            $("#searchlayoutbutton img").attr("src","public/img/list.png");
+             uiController.gridLayoutCols = Math.floor($("#searchlist ul").width()/250);
+
+             scrollY = scrollY/uiController.gridLayoutCols;
+             if(uiController.searchListScroll.toggelLayoutOldY  != uiController.searchListScroll.y)
+                 scrollY = scrollY+64;
+
+
+             $("#searchlayoutbutton img").attr("src","public/img/list.png");
         }
         else {
-            scrollY =  (scrollY-64);
+            scrollY =  (scrollY)*uiController.gridLayoutCols;
+
+
             $("#searchlayoutbutton img").attr("src","public/img/grid.png");
         }
 
@@ -1050,10 +1064,11 @@ uiController.toggleGridLayout = function () {
         $("#searchlist").show();
         setTimeout(function(){
             $("#searchlist").removeClass("fadeincomplete");
-        },1000)
+        },500)
 
+         uiController.searchListScroll.toggelLayoutOldY = scrollY;
 
-      },500)
+     },800)
 }
 
 
