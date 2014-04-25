@@ -1016,13 +1016,16 @@ uiController.toggleGridLayout = function () {
      setTimeout(function(){
         $("#searchlist").css("opacity","0");
         $("#searchlist").show();
-        var cols = Math.floor($("#searchlist ul").width()/250);
-        if(uiController.gridLayout){
-            scrollY = scrollY/cols+64;
+
+        // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB "+cols)
+
+         if(uiController.gridLayout){
+             var cols = Math.floor($("#searchlist ul").width()/250);
+             scrollY = scrollY/cols+64;
             $("#searchlayoutbutton img").attr("src","public/img/list.png");
         }
         else {
-            scrollY =  (scrollY-64)*cols;
+            scrollY =  (scrollY-64);
             $("#searchlayoutbutton img").attr("src","public/img/grid.png");
         }
 
