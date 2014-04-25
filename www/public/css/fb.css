@@ -1,0 +1,18 @@
+.fb-like {
+    margin-top: -39px;
+}
+
+
+#fblike{
+    height: 55px!important;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -12px;
+    margin-right: 4px;
+    -webkit-transform: scale(0.80);
+    -webkit-transform-origin: 100% 100%!important;
+    transform: scale(0.80);
+    transform-origin: 100% 100%!important;
+}
+

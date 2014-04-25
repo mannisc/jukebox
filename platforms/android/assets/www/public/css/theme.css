@@ -53,7 +53,8 @@ padding: .4em 0!important;
 
 
 .ui-header-fixed .ui-btn{
-    margin-top: 1px!important;
+    margin-top: -6px!important;
+    padding-top: 8px;
 
 }
 

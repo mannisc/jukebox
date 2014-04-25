@@ -33,6 +33,7 @@
 
     <link rel="stylesheet" type="text/css" href="public/js/libs/chosen/chosen.min.css"/>
 
+    <link rel="stylesheet" type="text/css" href="public/css/fb.css"/>
 
     <link rel="stylesheet" type="text/css" href="public/css/index.css"/>
     <link rel="stylesheet" type="text/css" href="public/css/songlist.css"/>
@@ -108,6 +109,16 @@
 </head>
 <body ng-controller="MainController">
 
+<!-- FACEBOOK -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- FACEBOOK -->
 
 <div id="lyricsiframe" class="fadeincompleteslow" style="display:none">
     <div id="lyricsifrmback">
@@ -134,9 +145,10 @@
     <img src="public/img/bars-white.png" id="openSidePanelBarIcon" onclick="uiController.toggleSidePanel()" style="position:absolute;right: 6px;top: 13px" width="17px" height="20px"/>
 
 
-
     <div class="ui-btn-right">
-
+        <div id="fblike"  href="#" >
+         <div class="fb-like fadeincompleteslow" style="display:none" data-width ="85px" data-href="https://www.songbase.fm" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>
+        </div>
         <a id="playingSongInfoLink" style="opacity:0" onclick="searchController.getArtistInfo();" ng-show="playbackController.playingSong" href="#popupArtist" data-rel="popup" data-position-to="#playingSongInfoLink"
            class="playingSongInfo  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-custom ui-btn-icon-left ui-btn-a" data-transition="pop">
             <span style="opacity:0">{{playbackController.getPlayingTitle()}}</span>
@@ -172,7 +184,7 @@
 
 
         <div id="controlselecthorizontal">
-            <a id="searchlayoutbutton" data-type="button" data-theme="b" onclick="uiController.toggleGridLayout();" style="width: 4px;height: 20px;" class="ui-input-btn ui-btn ui-btn-b ui-shadow ui-corner-all"><img src="public/img/grid.png"  style="width: 20px;margin-left: -8px;"> </a>
+            <a id="searchlayoutbutton" data-type="button" data-theme="b" onclick="uiController.toggleGridLayout();" style="background-color: #442727;width: 4px;height: 20px;" class="ui-input-btn ui-btn ui-btn-b ui-shadow ui-corner-all"><img src="public/img/grid.png"  style="width: 20px;margin-left: -8px;"> </a>
             <input id="searchbutton1" data-type="button" data-theme="b" onclick="searchController.activateButton(0);searchController.showSearchList()" type="button" value="Songs">
             <input id="searchbutton2" data-type="button" data-theme="b" onclick="searchController.activateButton(1);searchController.showPopulars()" type="button" value="Popular">
             <input id="searchbutton3" data-type="button" data-theme="b" onclick="searchController.activateButton(2);searchController.showSuggestions()" type="button" value="Suggestions">
@@ -367,9 +379,9 @@
                 <div class="videoControlElements-button videoControlElements-button-lyrics videoControlElements-custom-button">
                     <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button>
                 </div>
-                <div class="videoControlElements-button videoControlElements-button-facebook videoControlElements-custom-button">
+                <!--div class="videoControlElements-button videoControlElements-button-facebook videoControlElements-custom-button">
                     <button type="button" id="facebookpostbutton" data-role="none" style="opacity:0.5"  aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button>
-                </div>
+                </div-->
                 <!--div style =class="videoControlElements-button videoControlElements-button-copyright videoControlElements-custom-button">
                     <button type="button" id="copyrightbutton" data-role="none" style="opacity:0.9"  onclick="window.open('','_blank')" aria-controls="mep_0" title="Copyright" aria-label="Copyright"></button>
                 </div-->
@@ -613,6 +625,7 @@
 <!-- Preload Images/WebGL-->
 <div style="display:none">
     <img src="public/img/play.png">
+    <img src="public/img/playloading.png">
     <img src="public/img/pause.png">
     <img src="public/img/crosswhite.png">
     <img src="public/img/save.png">
