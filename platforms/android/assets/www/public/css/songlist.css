@@ -19,8 +19,8 @@
 
 #songOptions{
     position: absolute;
-    height: 43px;
-    top: 10px;
+    height: 39px;
+    top: 13px;
     left: 63px;
   /*  background-image: -o-linear-gradient(right, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 80%,rgba(50,50,50,0) 100%);
     background-image: -moz-linear-gradient(right, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 80%,rgba(50,50,50,0) 100%);
@@ -28,10 +28,10 @@
     background-image: -ms-linear-gradient(right, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 80%,rgba(50,50,50,0) 100%);
     background-image: linear-gradient(to right, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 80%,rgba(50,50,50,0) 100%);      */
     z-index: 10000;
-    -webkit-transition: all 0.4s ease;
-    -moz-transition: all 0.4s ease;
-    -o-transition: all 0.4s ease;
-    transition: all 0.4s ease;
+    -webkit-transition: all 0.35s ease;
+    -moz-transition: all 0.35s ease;
+    -o-transition: all 0.35s ease;
+    transition: all 0.35s ease;
     border: 1px solid rgb(34, 34, 34);
     border-top-left-radius: 0.3125em;
     border-top-right-radius: 0.3125em;
@@ -42,18 +42,84 @@
     background-color: rgb(51, 51, 51);
 
 }
+#songOptions.noanim{
+    -webkit-transition: none!important;
+    -moz-transition:  none!important;
+    -o-transition:  none!important;
+    transition:  none!important;
+}
+
+
+ul.gridlayout #songOptions{
+    left: 68px!important;
+}
+
+
+
+#songOptions img:hover{
+
+    -webkit-transform: scale(1.31);
+    -moz-transform: scale(1.31);
+    transform: scale(1.31)!important;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%!important;
+}
+
+#songOptions img{
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
+}
 
 #songOptions #addToPlaylist{
     position: absolute;
-    top: 3px;
-    left: 2px;
+    top: 1px;
+    left: -3px;
+
 }
+#playlistInner #songOptions #addToPlaylist{
+    display:none!important;
+}
+#songOptions #removeFromPlaylist{
+    position: absolute;
+    top: 1px;
+    left: -3px;
+    background-image:url(../img/trashopt.png) ;
+    background-size:100%;
+    background-repeat:no-repeat;
+}
+
+#songOptions #removeFromPlaylist:hover{
+    background-image:url(../img/trashoptopen.png)!important ;
+    background-size:100%;
+    background-repeat:no-repeat;
+}
+
+#searchlist #songOptions #removeFromPlaylist{
+    display:none!important;
+}
+
+
+
+#songOptions #searchSimilar{
+    position: absolute;
+    top: 1px;
+    left: 47px;
+
+}
+
+
 
 #songOptions #shareSocial{
     position: absolute;
-    top: 3px;
-    left: 55px;
+    top: 1px;
+    left: 96px;
+
 }
+
 
 /*Songlist  */
 .songlist{
@@ -651,6 +717,11 @@
     background-image:url(../img/trashopen.png)!important ;
     background-size:100%;
     background-repeat:no-repeat;
+    -webkit-transform: scale(1.21);
+    -moz-transform: scale(1.21);
+    transform: scale(1.21)!important;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%!important;
 
 }
 
