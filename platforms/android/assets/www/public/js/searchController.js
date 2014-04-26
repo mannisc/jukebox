@@ -31,6 +31,9 @@ searchController.maxPopularSongPages = 2;
 searchController.maxArtistSongPages = 2;
 searchController.serverSearch = false;
 
+//Template
+searchController.preloadedPopularSongs = null;
+//TS_INSERT:PreloadedPopularSongs
 
 searchController.init = function () {
 
@@ -58,6 +61,7 @@ searchController.init = function () {
 
     searchController.activateButton(0, true);
     if (!urlParams.search || urlParams.search == "") {
+
         searchController.showPopulars();
     }
 
@@ -144,7 +148,7 @@ searchController.completeSearch = function (list, appendListInFront, searchID) {
         if (searchController.searchResults.length == 0) {
             changed = true;
         }
-        else {
+        else if (list.track) {
             if (list.track.length != searchController.searchResults.length) {
                 changed = true;
             }
@@ -351,19 +355,27 @@ searchController.filterSongs = function (filterTerm) {
 
 
 searchController.showPopulars = function () {
+    if (searchController.preloadedPopularSongs)
+        setTimeout(function () {
+            searchController.completeSearch(searchController.preloadedPopularSongs, null, searchController.searchCounter)
+        }, 500)
+    else {
 
-    setTimeout(function () {
-        searchController.searchCounter++;
-        function search(searchID) {
-            searchController.topTracks(function (list) {
-                searchController.completeSearch(list, null, searchID)
-            });
-        }
-        search(searchController.searchCounter);
+        setTimeout(function () {
+
+            searchController.searchCounter++;
+            function search(searchID) {
+                searchController.topTracks(function (list) {
+                    searchController.completeSearch(list, null, searchID)
+                });
+            }
+
+            search(searchController.searchCounter);
 
 
-    }, 500)
+        }, 500)
 
+    }
 }
 
 searchController.emptySearchList = function (dontInitFully) {
@@ -428,7 +440,6 @@ searchController.showSuggestions = function () {
         search(searchController.searchCounter);
 
 
-
     }, 500)
 
 }
@@ -450,6 +461,7 @@ searchController.searchArtistSongs = function (artist) {
             searchController.completeSearch(list, [playbackController.playingSong], searchID)
         });
     }
+
     search(searchController.searchCounter);
 
 }
@@ -502,6 +514,7 @@ searchController.searchMusic = function () {
                             searchController.completeSearch(list, null, searchID)
                         });
                     }
+
                     search(searchController.searchCounter);
                 }
             }
@@ -516,6 +529,7 @@ searchController.searchMusic = function () {
                     searchController.completeSearch(list, null, searchID)
                 });
             }
+
             search(searchController.searchCounter);
         }
     }
@@ -747,7 +761,7 @@ searchController.topTracks = function (callbackSuccess) {
                 }
 
             }, error: function () {
-                 setTimeout(searchController.showLoading, 1000);
+                setTimeout(searchController.showLoading, 1000);
             }
         })
     }
@@ -895,7 +909,7 @@ searchController.makeSearchListDraggable = function () {
             $("#songOptions").appendTo("body").hide();
 
 
-            if(!$(this).hasClass("selected")) {
+            if (!$(this).hasClass("selected")) {
                 $("#searchlist li.selected").removeClass("selected")
                 $(this).addClass("selected");
             }
@@ -918,14 +932,14 @@ searchController.makeSearchListDraggable = function () {
             $("#playlistplaceholder").remove();
 
 
-            var eleHeight = (65*elements.length);
-            if(eleHeight>$("#playlistInner").height()*0.7){
-                eleHeight = Math.floor($("#playlistInner").height()*0.7/65)*65;
+            var eleHeight = (65 * elements.length);
+            if (eleHeight > $("#playlistInner").height() * 0.7) {
+                eleHeight = Math.floor($("#playlistInner").height() * 0.7 / 65) * 65;
 
             }
-            if(eleHeight<65)
+            if (eleHeight < 65)
                 eleHeight = 65;
-            $("<style type='text/css' id='playlistplaceholder'> #playlistInner ul .ui-sortable-placeholder{ height:"+eleHeight+"px !important} </style>").appendTo("head");
+            $("<style type='text/css' id='playlistplaceholder'> #playlistInner ul .ui-sortable-placeholder{ height:" + eleHeight + "px !important} </style>").appendTo("head");
 
 
             var ele = $helper.append(elements)
