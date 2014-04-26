@@ -132,8 +132,8 @@ uiController.init = function () {
         $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
 
 
-    $("body").dblclick(function () {
-        $("#searchlist li.selected").removeClass("selected");
+    $("body").dblclick(function (event) {
+        playlistController.deselectSongs(event);
         if (playlistController.sortPlaylist)
             playlistController.toggleSortablePlaylist(true, true);
 

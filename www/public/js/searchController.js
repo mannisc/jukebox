@@ -892,6 +892,7 @@ searchController.makeSearchListDraggable = function () {
         connectToSortable: '#playlistview',
 
         helper: function (event, ui) {
+            $("#songOptions").appendTo("body").hide();
 
 
             if(!$(this).hasClass("selected")) {
@@ -945,7 +946,7 @@ searchController.makeSearchListDraggable = function () {
             return !uiController.stopDrag;
         },
         start: function (event) {
-
+            playlistController.hideSongOptions();
 
             //  setTimeout(function () {debugger}, 3000)
             uiController.draggingSong = true;
