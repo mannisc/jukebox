@@ -396,6 +396,8 @@
 </div>
 
 <div id="songOptions" style="display:none">
+    <img id="addToPlaylist" width="53px" class="fadeincomplete" src="public/img/add.png" onclick="">
+    <img id="shareSocial" width="53px" class="fadeincomplete" src="public/img/share.png" onclick="">
 
 </div>
 
