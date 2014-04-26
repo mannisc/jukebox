@@ -396,8 +396,12 @@
 </div>
 
 <div id="songOptions" style="display:none">
-    <img id="addToPlaylist" width="53px" class="fadeincomplete" src="public/img/add.png" onclick="">
-    <img id="shareSocial" width="53px" class="fadeincomplete" src="public/img/share.png" onclick="">
+    <img id="removeFromPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.removeSongsFromPlaylist(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/empty.png" onclick="">
+
+    <img id="addToPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.addSongsToPlaylist(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/add.png" onclick="">
+    <img id="searchSimilar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px" class="fadeincomplete1p5s" src="public/img/radio.png" onclick="">
+
+    <img id="shareSocial" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px" class="fadeincomplete1p5s" src="public/img/share.png" onclick="">
 
 </div>
 

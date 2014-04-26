@@ -22,6 +22,9 @@ playlistController.NOINTERNETHACK = playlistController.loadedPlaylistSongs;
 playlistController.loadedPlaylistSongs = [];
 
 
+playlistController.selectedSongs = [];
+
+
 for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
 
 
@@ -96,67 +99,39 @@ playlistController.selectSong = function (song) {
         if (song.gid) {
             if (!playlistController.sortPlaylist)
                 playlistController.toggleSortablePlaylist(false, true);
-
             listElement = $("#playlistInner li[data-songgid='playlistsong" + song.gid + "'] ");
-
         }
         else {
-            //  listElement = $("#searchlist li[data-songid='searchsong" + Id + "'] ");
-
             listElement = $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
-
         }
-
 
         if (listElement)
             listElement.toggleClass("selected");
-        if (listElement.hasClass("selected") || (playlistController.lastSelectedSong && playlistController.lastSelectedSong.hasClass("selected"))) {
 
-            setTimeout(function () {
-                if (playlistController.selectedSong == listElement&& (listElement.hasClass("selected") || (playlistController.lastSelectedSong && playlistController.lastSelectedSong.hasClass("selected")))) {
-                    if (!listElement.hasClass("selected")) {
-                        listElement = playlistController.lastSelectedSong;
-                        playlistController.lastSelectedSong = null;
-                    }
+        var showedOptions = false;
 
-                    var width=  $("<h3 id='textMeasuring' style='z-index:10000000;top:80px;left:0;font-size: 1em;font-weight: bold;opacity:1;position:absolute'>"+song.name+"</h3>").appendTo("body").width()
+        if (listElement.hasClass("selected")) {
+            playlistController.selectedSongs.push({ele: listElement, song: song})
+            showedOptions = true;
+            playlistController.hideSongOptions();
+            playlistController.showSongOptions(listElement,song);
 
-                    //alert();
-                    var widthTitle=  $("<div id='textMeasuring2' style='z-index:10000000;top:110px;left:0;font-size: .75em;opacity:1;position:absolute'>"+mediaController.getSongArtist(song)+"</div>").appendTo("body").width()
-                    if(width<widthTitle)
-                        width = widthTitle;
-                    width = width+35;
+        } else if(playlistController.selectedSongs.length>0&&playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song == song) {
 
-                    $("#songOptions").css("left",(width-35)+"px");
-                    $("#songOptions").css("width", "0px");
-                    $("#songOptions").css("opacity", "0");
-
-                    $("#songOptions").appendTo(listElement)
-                    $("#songOptions").show();
-
-
-                   // alert(width)
-
-                    $("#textMeasuring").remove();
-
-                    $("#textMeasuring2").remove();
-
-
-
-
-                    $("#songOptions").css("left",(63+ width)+"px");
-
-                    $("#songOptions").css("width", "112px");
-                    $("#songOptions").css("opacity", "0.8");
+            while (playlistController.selectedSongs.length > 0) {
+                playlistController.selectedSongs.splice(playlistController.selectedSongs.length - 1, 1);
+                if (playlistController.selectedSongs.length > 0 && playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].ele.hasClass("selected")) {
+                    showedOptions = true;
+                    playlistController.hideSongOptions();
+                    playlistController.showSongOptions(playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].ele,playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song);
+                    break;
 
                 }
-            }, 250)
-            playlistController.lastSelectedSong = playlistController.selectedSong;
-            playlistController.selectedSong = listElement;
-        } else {
-            $("#songOptions").css("opacity", "0");
-            $("#songOptions").css("width", "0px");
-            $("#songOptions").css("left", "70px");
+            }
+        }
+
+        if (playlistController.selectedSongs.length==0||(!showedOptions &&  playlistController.selectedSongs.length>0&&playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song == song)) {
+            playlistController.hideSongOptions();
 
 
         }
@@ -167,6 +142,89 @@ playlistController.selectSong = function (song) {
     }
 }
 
+/**
+ * Show Songs Options
+ */
+playlistController.showSongOptions = function (listElement, song) {
+    setTimeout(function () {
+        if (playlistController.selectedSongs.length > 0 && playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song == song && listElement.hasClass("selected")) {
+
+            var width = $("<h3 id='textMeasuring' style='opacity:0;z-index:10000000;top:80px;left:0;font-size: 1em;font-weight: bold;position:absolute'>" + song.name + "</h3>").appendTo("body").width()
+            var widthTitle = $("<div id='textMeasuring2' style='opacity:0;z-index:10000000;top:110px;left:0;font-size: .75em;position:absolute'>" + mediaController.getSongArtist(song) + "</div>").appendTo("body").width()
+            $("#textMeasuring").remove();
+            $("#textMeasuring2").remove();
+
+            if (width < widthTitle)
+                width = widthTitle;
+            width = width + 35;
+
+           if(63+width+150>listElement.outerWidth()-50)
+               width =  listElement.outerWidth()-150-63-50;
+
+            $("#songOptions").appendTo(listElement)
+            $("#songOptions").css("opacity", "0");
+            $("#songOptions").css("left", (63 + width + 20) + "px");
+            $("#songOptions").addClass("noanim").hide();
+
+            $("#songOptions").removeClass("noanim").show();
+
+            setTimeout(function () {
+            $("#songOptions").css("width", "0px");
+
+
+
+            $("#songOptions").css("left", (63 + width) + "px");
+
+            $("#songOptions").css("width", "150px");
+            $("#songOptions").css("opacity", "0.83");
+
+            }, 0)
+        }
+    }, 220)
+}
+
+
+/**
+ * Hide Songs Options
+ */
+playlistController.hideSongOptions = function () {
+
+    $("#songOptions").css("opacity", "0");
+    $("#songOptions").css("width", "0px");
+    $("#songOptions").css("left", (parseInt($("#songOptions").css("left").replace("px", "")) - 5) + "px");
+
+
+}
+
+
+
+/**
+ * Remove selected Songs to Playlist
+ * @param event
+ */
+playlistController.removeSongsFromPlaylist = function (event) {
+    event.stopPropagation();
+
+
+
+
+
+    playlistController.deselectSongs();
+
+}
+
+/**
+ * Add selected Songs to Playlist
+ * @param event
+ */
+playlistController.addSongsToPlaylist = function (event) {
+    event.stopPropagation();
+
+
+
+    playlistController.deselectSongs();
+
+}
 
 /**
  * Save Playlist
@@ -261,7 +319,9 @@ playlistController.deselectSongs = function (event) {
         event.stopPropagation();
 
     $(".songlist li.selected").removeClass("selected");
+    playlistController.selectedSongs = [];
 
+    playlistController.hideSongOptions();
 }
 
 
@@ -404,6 +464,8 @@ playlistController.makePlayListSortable = function () {
         opacity: 0.9,
 
         helper: function (event, $item) {
+            $("#songOptions").appendTo("body").hide();
+
 
             if (!$($item).hasClass("selected")) {
                 $("#playlistInner li.selected").removeClass("selected")
@@ -472,6 +534,7 @@ playlistController.makePlayListSortable = function () {
 
         },
         start: function (event, ui) {
+            playlistController.hideSongOptions();
 
 
             $("#playlistInner").offset().top
@@ -836,7 +899,7 @@ playlistController.toggleSortablePlaylist = function (dontShowTrash, manuell) {
 
     } else {
 
-        $("#playlistInner li.selected").removeClass("selected");
+        playlistController.deselectSongs();
 
         if (manuell)
             var delay = 0;
