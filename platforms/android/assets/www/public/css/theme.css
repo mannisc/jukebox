@@ -179,3 +179,8 @@ padding: .4em 0!important;
 .chosen-container .chosen-drop{
     border: none!important;
 }
+
+.chosen-container-multi .chosen-choices li.search-choice {
+    background-color: #FAFAFA!important;
+    background-image: none!important;
+}

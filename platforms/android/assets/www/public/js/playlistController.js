@@ -97,8 +97,8 @@ playlistController.selectSong = function (song) {
 
         var listElement = null;
         if (song.gid) {
-            if (!playlistController.sortPlaylist)
-                playlistController.toggleSortablePlaylist(false, true);
+            //if (!playlistController.sortPlaylist)
+            //    playlistController.toggleSortablePlaylist(false, true);
             listElement = $("#playlistInner li[data-songgid='playlistsong" + song.gid + "'] ");
         }
         else {
@@ -136,9 +136,6 @@ playlistController.selectSong = function (song) {
 
         }
 
-
-        /*     },250)
-         */
     }
 }
 
