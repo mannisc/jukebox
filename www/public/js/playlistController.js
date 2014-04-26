@@ -27,12 +27,10 @@ for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
 
     playlistController.loadedPlaylistSongs[i].gid = playlistController.getNewID();//;"gsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
     playlistController.loadedPlaylistSongs[i].id = "plsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
-       //   console.log("::: "+ playlistController.loadedPlaylistSongs[i].gid)
+    //   console.log("::: "+ playlistController.loadedPlaylistSongs[i].gid)
 }
 
 playlistController.globalId = "";//playlistController.loadedPlaylistSongs.length;
-
-
 
 
 playbackController.playedSongs = [];
@@ -73,11 +71,11 @@ playlistController.playlists = [];  //CLEAR_____________________________________
 
 playlistController.counterGlobalId = 0;//playlistController.loadedPlaylistSongs.length; //TODO
 
-playlistController.getNewID = function(){
+playlistController.getNewID = function () {
     var timeNow = new Date();
     playlistController.counterGlobalId++;
-    var id = MD5(timeNow.getTime()+"."+Math.random()+"."+playlistController.counterGlobalId);
-    return "id_"+id;
+    var id = MD5(timeNow.getTime() + "." + Math.random() + "." + playlistController.counterGlobalId);
+    return "id_" + id;
 }
 
 /**
@@ -109,8 +107,60 @@ playlistController.selectSong = function (song) {
 
         }
 
+
         if (listElement)
             listElement.toggleClass("selected");
+        if (listElement.hasClass("selected") || (playlistController.lastSelectedSong && playlistController.lastSelectedSong.hasClass("selected"))) {
+
+            setTimeout(function () {
+                if (playlistController.selectedSong == listElement&& (listElement.hasClass("selected") || (playlistController.lastSelectedSong && playlistController.lastSelectedSong.hasClass("selected")))) {
+                    if (!listElement.hasClass("selected")) {
+                        listElement = playlistController.lastSelectedSong;
+                        playlistController.lastSelectedSong = null;
+                    }
+
+                    var width=  $("<h3 id='textMeasuring' style='z-index:10000000;top:80px;left:0;font-size: 1em;font-weight: bold;opacity:1;position:absolute'>"+song.name+"</h3>").appendTo("body").width()
+
+                    //alert();
+                    var widthTitle=  $("<div id='textMeasuring2' style='z-index:10000000;top:110px;left:0;font-size: .75em;opacity:1;position:absolute'>"+mediaController.getSongArtist(song)+"</div>").appendTo("body").width()
+                    if(width<widthTitle)
+                        width = widthTitle;
+                    width = width+35;
+
+                    $("#songOptions").css("left",(width-35)+"px");
+                    $("#songOptions").css("width", "0px");
+                    $("#songOptions").css("opacity", "0");
+
+                    $("#songOptions").appendTo(listElement)
+                    $("#songOptions").show();
+
+
+                   // alert(width)
+
+                    $("#textMeasuring").remove();
+
+                    $("#textMeasuring2").remove();
+
+
+
+
+                    $("#songOptions").css("left",(63+ width)+"px");
+
+                    $("#songOptions").css("width", "112px");
+                    $("#songOptions").css("opacity", "0.8");
+
+                }
+            }, 250)
+            playlistController.lastSelectedSong = playlistController.selectedSong;
+            playlistController.selectedSong = listElement;
+        } else {
+            $("#songOptions").css("opacity", "0");
+            $("#songOptions").css("width", "0px");
+            $("#songOptions").css("left", "70px");
+
+
+        }
+
 
         /*     },250)
          */
@@ -390,13 +440,12 @@ playlistController.makePlayListSortable = function () {
 
             }
 
-           /* setTimeout(function(){
-                var placeholder = $(".ui-sortable-placeholder");
-                placeholder.attr('style', placeholder.attr('style') + '; ' + 'height: '+(65*elements.length)+'px !important');
-            },0) */
+            /* setTimeout(function(){
+             var placeholder = $(".ui-sortable-placeholder");
+             placeholder.attr('style', placeholder.attr('style') + '; ' + 'height: '+(65*elements.length)+'px !important');
+             },0) */
             $("#playlistplaceholder").remove();
-            $("<style type='text/css' id='playlistplaceholder'> #playlistInner ul .ui-sortable-placeholder{ height:"+(65*elements.length)+"px !important} </style>").appendTo("head");
-
+            $("<style type='text/css' id='playlistplaceholder'> #playlistInner ul .ui-sortable-placeholder{ height:" + (65 * elements.length) + "px !important} </style>").appendTo("head");
 
 
             var ele = $helper.append(elements.clone());
@@ -433,7 +482,7 @@ playlistController.makePlayListSortable = function () {
             $("#playlistInner li").removeClass("fadeslideincompletefast");
 
             setTimeout(function () {
-               // debugger;
+                // debugger;
             }, 3000)
 
             $(".draggedsortablelistelement").on('mousemove', function (event) {
@@ -560,7 +609,6 @@ playlistController.makePlayListSortable = function () {
                         actSong = jQuery.extend(true, {}, actSong);
 
                         actSong.gid = playlistController.getNewID();//"plsgid" + playlistController.globalId;
-
 
 
                         actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);

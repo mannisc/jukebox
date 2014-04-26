@@ -874,12 +874,8 @@ searchController.makeSearchListDraggable = function () {
                         $(that).simulate("mousedown", coords);
 
                     }, delay)
-
-
                 }
-
             }
-
         })
 
 
@@ -919,7 +915,16 @@ searchController.makeSearchListDraggable = function () {
             }
 
             $("#playlistplaceholder").remove();
-            $("<style type='text/css' id='playlistplaceholder'> #playlistInner ul .ui-sortable-placeholder{ height:"+(65*elements.length)+"px !important} </style>").appendTo("head");
+
+
+            var eleHeight = (65*elements.length);
+            if(eleHeight>$("#playlistInner").height()*0.7){
+                eleHeight = Math.floor($("#playlistInner").height()*0.7/65)*65;
+
+            }
+            if(eleHeight<65)
+                eleHeight = 65;
+            $("<style type='text/css' id='playlistplaceholder'> #playlistInner ul .ui-sortable-placeholder{ height:"+eleHeight+"px !important} </style>").appendTo("head");
 
 
             var ele = $helper.append(elements)
