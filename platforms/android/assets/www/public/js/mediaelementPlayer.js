@@ -86,7 +86,7 @@ var mediaelementPlayer = function (selector) {
 
 
                 that.container.find("video").css("opacity","0");
-                that.videoElement.addClass("backgroundVideo").insertAfter("#backgroundImage");
+                that.videoElement.parent().addClass("backgroundVideo").insertAfter("#backgroundImage");
 
 
                 setTimeout(function () {
@@ -208,6 +208,8 @@ var mediaelementPlayer = function (selector) {
     this.unload = function (url) {
         this.stop();
         this.stopUpdateTime();
+        this.containerVideo.find("video").first().attr('src','')
+
     }
 
 

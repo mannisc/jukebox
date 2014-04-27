@@ -395,7 +395,7 @@
     <img id="siteLogoImage" width="70px"  src="" onclick="mediaController.openExternalSite()">
 </div>
 
-<div id="songOptions" style="display:none">
+<div id="songOptionsOriginal" style="display:none">
     <img id="removeFromPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.removeSongsFromPlaylist(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/empty.png" onclick="">
 
     <img id="addToPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.addSongsToPlaylist(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/add.png" onclick="">
@@ -632,6 +632,7 @@
 <!--Facebook-->
 <script type="text/javascript" src="public/js/facebookHandler.js"></script>
 
+<script type="text/javascript" src="public/js/libs/screenfull.js"></script>
 
 
 <!-- The Google API Loader script. -->

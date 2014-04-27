@@ -1040,6 +1040,9 @@ uiController.toggleGridLayout = function () {
 
 
             $("#searchlayoutbutton img").attr("src","public/img/grid.png");
+             setTimeout(function(){
+                playlistController.positionSongOptions();
+             },0)
         }
 
 

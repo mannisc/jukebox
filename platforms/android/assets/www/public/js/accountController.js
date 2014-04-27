@@ -40,6 +40,8 @@ accountController.setCookie = function(cname,cvalue,exdays)
 
 accountController.init = function(){
     var trylogin = function () {
+
+
         if (authController.ip_token != "auth" && authController.ip_token != "") {
             var loginTokenBase64 = accountController.getCookie("loginToken");
             var userNameBase64 = accountController.getCookie("userName");
@@ -71,8 +73,12 @@ accountController.init = function(){
         else{
            setTimeout(trylogin, 1000);
         }
+
     }
     setTimeout(trylogin, 1000);
+    setTimeout(function(){
+        $.mobile.loading( "hide");
+    }, 2000);
 }
 
 accountController.toggleSignInRegister = function () {

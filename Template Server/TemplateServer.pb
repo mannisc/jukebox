@@ -33,7 +33,7 @@ If ReceiveHTTPFile("http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&
                 
                 WriteData(1,Buffer_PreloadedPopularSongs,Lof(2))
                 WriteStringN(1,";")
-                WriteStringN(1,"searchController.preloadedPopularSongs = searchController.preloadedPopularSongs.tracks;")
+                ;WriteStringN(1,"searchController.preloadedPopularSongs = searchController.preloadedPopularSongs.tracks;")
 
               Else
                WriteStringN(1,String)
@@ -64,6 +64,6 @@ If ReceiveHTTPFile("http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&
 EndIf
 
 ; IDE Options = PureBasic 5.21 LTS (Windows - x64)
-; CursorPosition = 13
+; CursorPosition = 35
 ; EnableUnicode
 ; EnableXP
