@@ -17,28 +17,25 @@ accountController.userName = "";
 accountController.requestid = 1;
 accountController.showRegisterPopup = false;
 
-accountController.getCookie = function(cname)
-{
+accountController.getCookie = function (cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++)
-    {
+    for (var i = 0; i < ca.length; i++) {
         var c = ca[i].trim();
-        if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
     }
     return "";
 }
 
-accountController.setCookie = function(cname,cvalue,exdays)
-{
+accountController.setCookie = function (cname, cvalue, exdays) {
     var d = new Date();
-    d.setTime(d.getTime()+(exdays*24*60*60*1000));
-    var expires = "expires="+d.toGMTString();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toGMTString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
 }
 
 
-accountController.init = function(){
+accountController.init = function () {
     var trylogin = function () {
 
 
@@ -70,14 +67,14 @@ accountController.init = function(){
                 })
             }
         }
-        else{
-           setTimeout(trylogin, 1000);
+        else {
+            setTimeout(trylogin, 1000);
         }
 
     }
     setTimeout(trylogin, 1000);
-    setTimeout(function(){
-        $.mobile.loading( "hide");
+    setTimeout(function () {
+        $.mobile.loading("hide");
     }, 2000);
 }
 
@@ -103,54 +100,91 @@ accountController.toggleSignInRegister = function () {
 
 accountController.logout = function () {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
-        var token = rsaController.rsa.encrypt(accountController.loginToken);
-        $.ajax({
-            timeout: 30000,
-            url: preferences.serverURL + "?logout=" + token+"&auth="+authController.ip_token,
-            success: function (data) {
-                if(data.auth && data.auth=="true"){
-                    authController.extractToken(data.token);
-                    accountController.logout();
+
+
+        var logout = function () {
+
+            var token = rsaController.rsa.encrypt(accountController.loginToken);
+            $.ajax({
+                timeout: 30000,
+                url: preferences.serverURL + "?logout=" + token + "&auth=" + authController.ip_token,
+                success: function (data) {
+                    if (data.auth && data.auth == "true") {
+                        authController.extractToken(data.token);
+                        accountController.logout();
+                    }
+                    else {
+                        if (uiController.savePlaylist)
+                            playlistController.toggleSavePlaylist();
+                    }
                 }
-                else
-                {
-                    if (uiController.savePlaylist)
-                        playlistController.toggleSavePlaylist();
-                }
-            }
-        })
-        accountController.setCookie("loginToken",Base64.encode(""),0);
-        accountController.setCookie("userName",Base64.encode(""),0);
-        playlistController.loadedPlaylistSongs = new Array();
-        playlistController.loadedPlaylistSongs = new Array();
-        accountController.loggedIn = false;
-        $('#popupLogin').popup('close');
-        uiController.styleTopButtons();
-        $scope.safeApply();
-        uiController.styleTopButtons();
-        /*setTimeout(function(){
-         btn.addClass("animated");
-         },500)*/
-        accountController.requestid = 1;
+            })
+            accountController.setCookie("loginToken", Base64.encode(""), 0);
+            accountController.setCookie("userName", Base64.encode(""), 0);
+            playlistController.loadedPlaylistSongs = [];
+            playlistController.playlists = [];
+
+
+            $('#playlistselectverticalform option').prop('selected', false);
+            $('#playlistselectverticalform').trigger('chosen:updated');
+            setTimeout(function () {
+                $('#playlistselectverticalform').trigger('chosen:close');
+                $("#clearChoosenPlaylists").hide();
+                uiController.updateUI();
+                $("#saveplaylistbtn img").attr("src", "public/img/save.png");
+            }, 0)
+
+
+
+
+            accountController.loggedIn = false;
+            $('#popupLogin').popup('close');
+            uiController.styleTopButtons();
+            $scope.safeApply();
+            uiController.styleTopButtons();
+            /*setTimeout(function(){
+             btn.addClass("animated");
+             },500)*/
+            accountController.requestid = 1;
+        }
+
+
+        //Ask if should be cleared
+        if (playlistController.unsafedSongsExists()) {
+
+            $("#popupAccount").popup("close");
+
+            uiController.popupConfirmLogout = {doIt: function () {
+                logout()
+
+            }}
+            //$( "#popupConfirmLogout" ).popup( "option", "positionTo", "window" );
+            $( "#popupConfirmLogout" ).popup( "option", "transition", "pop" );
+            setTimeout(function () {
+                $("#popupConfirmLogout").popup("open");
+            }, 500)
+        } else
+            logout()
+
     }
 }
 
-accountController.loadStoredData = function(){
-    var playlistsReady = function(playlistdata){
+accountController.loadStoredData = function () {
+    var playlistsReady = function (playlistdata) {
         console.dir("PLAYLISTS:");
         console.dir(playlistdata);
-        if(playlistdata){
+        if (playlistdata) {
             var playlists = new Array();
             /*
-            playlists[0] = {
-                name: "Youtube - playlist",
-                gid: 1,
-                tracks: new Array(),
-                isPlaylist: true,
-                id: 1
-            }
-            */
-            if(playlistdata.items && playlistdata.items.length > 0){
+             playlists[0] = {
+             name: "Youtube - playlist",
+             gid: 1,
+             tracks: new Array(),
+             isPlaylist: true,
+             id: 1
+             }
+             */
+            if (playlistdata.items && playlistdata.items.length > 0) {
                 console.dir("Copy received (stored) data to playlists-Array;!!!!!!!!!!!!!!!");
                 //Copy received (stored) data to playlists-Array;
                 for (var j = 0; j < playlistdata.items.length; j++) {
@@ -161,13 +195,13 @@ accountController.loadStoredData = function(){
                         isPlaylist: true,
                         id: playlistdata.items[j].gid
                     }
-                    console.dir("playlists["+j+"]: ");
+                    console.dir("playlists[" + j + "]: ");
                     console.dir(playlists[j]);
                     console.dir("-----------------");
                 }
                 if (playlists) {
                     //Remove duplicate Playlists
-                    if(playlistController.playlists.length){
+                    if (playlistController.playlists.length) {
                         for (var i = 0; i < playlistController.playlists.length; i++) {
                             for (var j = 0; j < playlists.length; j++) {
                                 if (playlists[j].gid == playlistController.playlists[i].gid) {
@@ -182,22 +216,18 @@ accountController.loadStoredData = function(){
                     }
 
 
-
-
-
                     //Find new playlistController.globalId
                     playlistController.playlists = playlistController.playlists.concat(playlists);
                     /*
-                    var globalId = playlistController.playlists.length
-                    for (var j = 0; j < playlistController.playlists.length; j++) {
-                        if(playlistController.playlists[j].gid+1 > globalId){
-                            globalId = playlistController.playlists[j].gid+1;
-                        }
-                    }
-                    playlistController.globalIdPlaylist = globalId;
-                    playlistController.globalId         = globalId;
-                    */
-
+                     var globalId = playlistController.playlists.length
+                     for (var j = 0; j < playlistController.playlists.length; j++) {
+                     if(playlistController.playlists[j].gid+1 > globalId){
+                     globalId = playlistController.playlists[j].gid+1;
+                     }
+                     }
+                     playlistController.globalIdPlaylist = globalId;
+                     playlistController.globalId         = globalId;
+                     */
 
 
                     console.dir("User playlists: ");
@@ -205,8 +235,12 @@ accountController.loadStoredData = function(){
 
 
                     $scope.safeApply();
-                    uiController.showPlaylists();
-                    setTimeout(function(){$('#searchinput').focus();},500)
+                    if(playlistController.loadedPlaylistSongs.length==0)
+                     uiController.showPlaylists();
+
+                    setTimeout(function () {
+                        $('#searchinput').focus();
+                    }, 500)
                     if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
                         setTimeout(function () {
 
@@ -226,28 +260,27 @@ accountController.loadStoredData = function(){
 
 accountController.signIn = function () {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
-            $.mobile.loading( "show");
+        $.mobile.loading("show");
         var send = function (name, pw) {
             var md5pw = MD5($.trim(pw));
             pw = rsaController.rsa.encrypt(pw);
-            name  = rsaController.rsa.encrypt(name);
+            name = rsaController.rsa.encrypt(name);
             var email = "";
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?login=" + name+ "&email=" + email+ "&pw=" + pw+"&auth="+authController.ip_token,
+                url: preferences.serverURL + "?login=" + name + "&email=" + email + "&pw=" + pw + "&auth=" + authController.ip_token,
                 success: function (data) {
-                    if(data.auth && data.auth=="true"){
+                    if (data.auth && data.auth == "true") {
                         authController.extractToken(data.token);
                         send(name, pw);
                     }
-                    else
-                    {
+                    else {
                         if (data != "") {
                             accountController.loggedIn = true;
                             accountController.loginToken = MD5(data + md5pw);
                             accountController.userName = username;
-                            accountController.setCookie("loginToken",Base64.encode(accountController.loginToken),1);
-                            accountController.setCookie("userName",Base64.encode(accountController.userName),1);
+                            accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
+                            accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
 
                             var btn = $('#header .ui-btn.animated').removeClass("animated");
                             $('#popupLogin').popup('close');
@@ -260,9 +293,7 @@ accountController.signIn = function () {
                             accountController.requestid = 1;
 
                             accountController.loadStoredData();
-                            setTimeout(function(){
-                                $.mobile.loading( "hide");
-                            }, 300);
+
 
                         }
                         else {
@@ -273,6 +304,11 @@ accountController.signIn = function () {
                 error: function () {
                     uiController.toast("Sorry, it is not possible to login at the moment.", 1500);
 
+                },
+                complete: function(){
+                    setTimeout(function () {
+                        $.mobile.loading("hide");
+                    }, 800);
                 }
             })
         }
@@ -294,27 +330,26 @@ accountController.debugData = function (data) {
 
 accountController.register = function () {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
-        var send = function (name,email, pw) {
+        var send = function (name, email, pw) {
             var md5pw = MD5($.trim(pw));
-            name  = rsaController.rsa.encrypt(name);
+            name = rsaController.rsa.encrypt(name);
             email = rsaController.rsa.encrypt(email);
             pw = rsaController.rsa.encrypt(pw);
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?register=" + name + "&email=" + email+ "&pw=" + pw+"&auth="+authController.ip_token,
+                url: preferences.serverURL + "?register=" + name + "&email=" + email + "&pw=" + pw + "&auth=" + authController.ip_token,
                 success: function (data) {
-                    if(data.auth && data.auth=="true"){
+                    if (data.auth && data.auth == "true") {
                         authController.extractToken(data.token);
-                        send(name,email, pw);
+                        send(name, email, pw);
                     }
-                    else
-                    {
+                    else {
                         if (data != "") {
                             accountController.loggedIn = true;
                             accountController.loginToken = MD5(data + md5pw);
                             accountController.userName = username;
-                            accountController.setCookie("loginToken",Base64.encode(accountController.loginToken),1);
-                            accountController.setCookie("userName",Base64.encode(accountController.userName),1);
+                            accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
+                            accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
                             var btn = $('#header .ui-btn.animated').removeClass("animated");
                             $('#registerLogin').popup('close');
                             uiController.styleTopButtons();
@@ -340,7 +375,7 @@ accountController.register = function () {
         var pw = $("#registerpw").val();
         var pwc = $("#registerpwc").val();
         if (pw == pwc && email.length > 5 && pw.length > 3 && username.length > 3) {
-            send(username,email, pw);
+            send(username, email, pw);
         }
         else {
             uiController.toast("Error: Please check your data.", 1500);
@@ -361,11 +396,11 @@ accountController.savePlaylist = function (gid, name, pos, playlistdata) {
             var send = function (savename, savedata, savetoken) {
                 $.ajax({
                     type: "POST",
-                    data: {auth:authController.ip_token,storage: savetoken, gid: gid, pos: pos, n: nonce, type: "playlist", name: savename, data: savedata},
+                    data: {auth: authController.ip_token, storage: savetoken, gid: gid, pos: pos, n: nonce, type: "playlist", name: savename, data: savedata},
                     timeout: 30000,
                     url: preferences.serverURL,// + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data=savedata",
                     success: function (data) {
-                        if(data.auth && data.auth=="true"){
+                        if (data.auth && data.auth == "true") {
                             authController.extractToken(data.token);
                             send(savename, savedata, savetoken);
                         }
@@ -388,13 +423,13 @@ accountController.loadPlaylist = function (name, callbackSuccess) {
                 name = encodeURIComponent(name);
                 $.ajax({
                     timeout: 30000,
-                    url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=playlist&name=" + savename+"&auth="+authController.ip_token,
+                    url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=playlist&name=" + savename + "&auth=" + authController.ip_token,
                     success: function (data) {
-                        if(data.auth && data.auth=="true"){
+                        if (data.auth && data.auth == "true") {
                             authController.extractToken(data.token);
                             send(savename, savetoken);
                         }
-                        else{
+                        else {
                             if (callbackSuccess)
                                 callbackSuccess(data);
                         }
@@ -420,14 +455,13 @@ accountController.loadPlaylists = function (callbackSuccess) {
             var send = function (savetoken) {
                 $.ajax({
                     timeout: 30000,
-                    url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth="+authController.ip_token,
+                    url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth=" + authController.ip_token,
                     success: function (data) {
-                        if(data.auth && data.auth=="true"){
+                        if (data.auth && data.auth == "true") {
                             authController.extractToken(data.token);
                             send(savetoken);
                         }
-                        else
-                        {
+                        else {
                             if (callbackSuccess)
                                 callbackSuccess(data);
                         }
@@ -458,12 +492,12 @@ accountController.saveUserData = function (type, name, userdata) {
             var send = function (savename, savetype, savedata, savetoken) {
                 $.ajax({
                     type: "POST",
-                    data: {auth:authController.ip_token,storage:savetoken,gid:gid,pos:pos,n:nonce,type:savetype,name:savename,data:savedata},
+                    data: {auth: authController.ip_token, storage: savetoken, gid: gid, pos: pos, n: nonce, type: savetype, name: savename, data: savedata},
                     timeout: 30000,
 
                     url: preferences.serverURL, // "?storage=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename+"&data="+savedata,
                     success: function (data) {
-                        if(data.auth && data.auth=="true"){
+                        if (data.auth && data.auth == "true") {
                             authController.extractToken(data.token);
                             send(savename, savetype, savedata, savetoken);
                         }
@@ -486,14 +520,13 @@ accountController.loadUserData = function (type, name, callbackSuccess) {
             var send = function (savename, savetype, savedata, savetoken) {
                 $.ajax({
                     timeout: 30000,
-                    url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=" + savetype + "&name=" + savename+"&auth="+authController.ip_token,
+                    url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=" + savetype + "&name=" + savename + "&auth=" + authController.ip_token,
                     success: function (data) {
-                        if(data.auth && data.auth=="true"){
+                        if (data.auth && data.auth == "true") {
                             authController.extractToken(data.token);
                             send(savename, savetype, savedata, savetoken);
                         }
-                        else
-                        {
+                        else {
                             if (callbackSuccess)
                                 callbackSuccess(data);
                         }
@@ -519,14 +552,13 @@ accountController.loadUserDataItems = function (type, callbackSuccess) {
             var send = function (savename, savetype, savedata, savetoken) {
                 $.ajax({
                     timeout: 30000,
-                    url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=" + savetype+"&auth="+authController.ip_token,
+                    url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=" + savetype + "&auth=" + authController.ip_token,
                     success: function (data) {
-                        if(data.auth && data.auth=="true"){
+                        if (data.auth && data.auth == "true") {
                             authController.extractToken(data.token);
                             send(savename, savetype, savedata, savetoken);
                         }
-                        else
-                        {
+                        else {
                             if (callbackSuccess)
                                 callbackSuccess(data);
                         }

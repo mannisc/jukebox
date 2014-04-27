@@ -588,11 +588,12 @@ videoController.updateFullscreenMode = function () {
 
 
     if (videoController.fullscreenMode == 0) { //Background
-        $("#header").css("opacity", "1");
-        $("#controlbar").css("opacity", "1");
-        $("#searchlist").css("opacity", "1");
-        $("#playlist").css("opacity", "1").addClass("fadeincomplete");
-        $("#controlbarplaylist").css("opacity", "1");
+        $("#header").css("opacity", "1").css("pointer-events","auto");
+
+        $("#controlbar").css("opacity", "1").css("pointer-events","auto");
+        $("#searchlist").css("opacity", "1").css("pointer-events","auto");
+        $("#playlist").css("opacity", "1").addClass("fadeincomplete").css("pointer-events","auto");
+        $("#controlbarplaylist").css("opacity", "1").css("pointer-events","auto");
         $(".videoControlElements-custom-button").show();
 
         $(".backgroundVideo").addClass("background");
@@ -608,11 +609,11 @@ videoController.updateFullscreenMode = function () {
     else if (videoController.fullscreenMode == 1) {
 
         $(".videoControlElements-custom-button").hide();
-        $("#header").css("opacity", "0");
-        $("#controlbar").css("opacity", "0");
-        $("#searchlist").css("opacity", "0");
-        $("#playlist").css("opacity", "0").removeClass("fadeincomplete");
-        $("#controlbarplaylist").css("opacity", "0");
+        $("#header").css("opacity", "0").css("pointer-events","none");
+        $("#controlbar").css("opacity", "0").css("pointer-events","none");
+        $("#searchlist").css("opacity", "0").css("pointer-events","none");
+        $("#playlist").css("opacity", "0").removeClass("fadeincomplete").css("pointer-events","none");
+        $("#controlbarplaylist").css("opacity", "0").css("pointer-events","none");
 
         $(".backgroundVideo").removeClass("background");
 
@@ -868,6 +869,22 @@ videoController.setBufferedPercentage = function (percentage) {
 
 
 }
+
+/**
+ * Show Buffered
+ */
+videoController.showBuffered = function (show) {
+    if (show)
+        videoController.controls.find(".videoControlElements-time-loaded").fadeIn()
+    else
+       videoController.controls.find(".videoControlElements-time-loaded").fadeOut()
+
+
+}
+
+
+
+
 /**
  * Set Song length in seconds
  */

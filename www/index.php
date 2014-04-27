@@ -275,7 +275,7 @@
 
     <div id="playlistInner" class="animate" style="display:none">
         <ul ui-sortable ng-model="playlistController.loadedPlaylistSongs" data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
-            <li ng-repeat="song in playlistController.loadedPlaylistSongs track by song.gid" data-songid="playlistsong{{song.id}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
+            <li ng-repeat="song in playlistController.loadedPlaylistSongs track by song.gid" data-songid="playlistsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
                 ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
                                                                                                                                                           class="ui-li-icon ui-corner-none"  >
                 <img src="public/img/empty.png" class="loadingSongImg">
@@ -436,24 +436,6 @@
     <br>
 </div>
 
-<div data-role="popup" id="popupLogin" data-arrow="true" data-theme="a" class="ui-corner-all">
-    <form>
-        <div style="padding:0px 20px 10px 20px">
-            <h3 id="signintitle">Sign in</h3>
-            <label for="signinusername" class="ui-hidden-accessible">Username:</label>
-            <input type="text" name="user" id="signinusername" value="" placeholder="Username" data-theme="a" >
-            <span id="useremail" style="display:none">
-            <label for="signinuser" class="ui-hidden-accessible">Email Adress:</label>
-            <input type="text" name="user" id="signinuser" value="" placeholder="Email Adress" data-theme="a" >
-            </span>
-            <label for="signinpw" class="ui-hidden-accessible">Password:</label>
-            <input type="password" name="pass" id="signinpw" value="" placeholder="Password" data-theme="a" >
-            <button onclick="accountController.signIn();" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
-            <hr>
-            <fb:login-button show-faces="true" width="200"  max-rows="1"></fb:login-button>
-        </div>
-    </form>
-</div>
 
 <div data-role="popup" id="popupRegister" data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>
@@ -473,10 +455,30 @@
                 </span>
             <button onclick="accountController.register();" type="submit" id="registerButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Create Account</button>
             <hr>
-            <fb:login-button show-faces="true" width="200"  max-rows="1"></fb:login-button>
+            <fb:login-button show-faces="true" width="200"  max-rows="1" size="medium">Sign in with Facebook</fb:login-button>
         </div>
     </form>
 </div>
+
+<div data-role="popup" id="popupLogin" data-arrow="true" data-theme="a" class="ui-corner-all">
+    <form>
+        <div style="padding:0px 20px 10px 20px">
+            <h3 id="signintitle">Sign in</h3>
+            <label for="signinusername" class="ui-hidden-accessible">Username:</label>
+            <input type="text" name="user" id="signinusername" value="" placeholder="Username" data-theme="a" >
+            <span id="useremail" style="display:none">
+            <label for="signinuser" class="ui-hidden-accessible">Email Adress:</label>
+            <input type="text" name="user" id="signinuser" value="" placeholder="Email Adress" data-theme="a" >
+            </span>
+            <label for="signinpw" class="ui-hidden-accessible">Password:</label>
+            <input type="password" name="pass" id="signinpw" value="" placeholder="Password" data-theme="a" >
+            <button onclick="accountController.signIn();" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+            <hr>
+            <fb:login-button show-faces="true" width="200"  max-rows="1" size="medium">Sign in with Facebook</fb:login-button>
+        </div>
+    </form>
+</div>
+
 
 <div data-role="popup" id="popupAccount" data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>
@@ -506,6 +508,24 @@
         </div>
     </form>
 </div>
+
+<div data-role="popup" id="popupConfirmLogout" data-arrow="false" data-dismissible="true" data-theme="a" class="ui-corner-all">
+    <form>
+        <div>
+            <h3 style="text-align: center">Log out?</h3>
+            <p  style="margin-left: 10px;margin-right: 10px;" >Unsafed changes will be lost!</p>
+            <div style="text-align: center;width: 100%">
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" style="margin-left: 10px;" data-rel="back" onclick="uiController.popupConfirmLogout.doIt()">Log out</a>
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
 
 
 

@@ -483,19 +483,13 @@ uiController.init = function () {
 
     $('#playlistselectvertical #clearChoosenPlaylists').click(function (event) {
 
-        console.log("......................----")
-        var unsafed = false;
-        for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
-            console.log(playlistController.loadedPlaylistSongs[i].playlistgid)
-            if (!playlistController.loadedPlaylistSongs[i].playlistgid) {
-                unsafed = true;
 
-            }
-        }
 
-        if(unsafed){
+
+        if(playlistController.unsafedSongsExists()){
            $("#playlistselectvertical .chosen-container").removeClass("chosen-with-drop");
             $( "#popupConfirm" ).popup( "option", "positionTo", "#clearChoosenPlaylists" );
+            $( "#popupConfirm" ).popup( "option", "transition", "pop" );
 
             uiController.popupConfirm = {doIt:function(){
                 uiController.showPlaylists();
