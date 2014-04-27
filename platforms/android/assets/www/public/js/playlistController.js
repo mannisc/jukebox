@@ -242,6 +242,16 @@ playlistController.playSelection = function (event) {
     event.stopPropagation();
 
 
+
+
+
+
+
+
+
+
+
+
     playlistController.deselectSongs();
 
 }
