@@ -231,7 +231,7 @@
     <div id="controlbarplaylist">
 
         <div id="playlistselectvertical">
-            <a href="#" id="clearChoosenPlaylists"  style="display:none" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all" title="Clear Selection">Clear Selection</a>
+            <a href="#" id="clearChoosenPlaylists"   style="display:none" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all" title="Clear Selection">Clear Selection</a>
 
             <form>
                 <select id="playlistselectverticalform" data-role="none" data-placeholder="Select Playlists" multiple class="chosen-select">
@@ -494,7 +494,7 @@
     </form>
 </div>
 
-<div data-role="popup" id="popupConfirm" data-arrow="true" data-theme="a" class="ui-corner-all">
+<div data-role="popup" id="popupConfirm" data-arrow="true" data-dismissible="false" data-theme="a" class="ui-corner-all">
     <form>
         <div>
             <h3 style="text-align: center">Clear Selection?</h3>

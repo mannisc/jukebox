@@ -860,6 +860,7 @@ ul.gridlayout #songOptions{
     margin: -14px .3125em 0;
     border: 0;
     background-color: transparent;
+    z-index:10000;
 }
 
 .chosen-choices.ui-input  {
