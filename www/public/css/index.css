@@ -1084,12 +1084,15 @@ a, button, h1, h2, h3{
     width:100%!important;
     height:100%!important;
     background-color:#000!important;
-    opacity:0.5;
+    opacity:0;
 }
+
 .backgroundVideo.fullscreen{
     opacity:1!important;
 }
-
+.backgroundVideo.background{
+    opacity:0.8!important;
+}
 
 .backgroundVideo *{
     width:100%!important;

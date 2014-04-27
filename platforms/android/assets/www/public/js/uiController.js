@@ -24,7 +24,7 @@ uiController.responsiveWidthSmaller = 1100;
 
 uiController.totalTimeWidth = 0;
 
-uiController.gridLayout =false;
+uiController.gridLayout = false;
 
 
 /**
@@ -34,83 +34,83 @@ uiController.gridLayout =false;
 
 
 //uiController.initMediaPlayer = function () {
-  //  $("#videoplayer").css("opacity", "0");
-  //  $("#videoplayer").css("pointer-events", "none");
+//  $("#videoplayer").css("opacity", "0");
+//  $("#videoplayer").css("pointer-events", "none");
 
-    /*
+/*
 
-    */
-    /*
+ */
+/*
 
-    Hammer($("#videoplayerInner").get(0)).on("swipeup", function (event) {
-        uiController.swipeTimer = Date.now();
-        uiController.noVideoClickTimer = Date.now();
+ Hammer($("#videoplayerInner").get(0)).on("swipeup", function (event) {
+ uiController.swipeTimer = Date.now();
+ uiController.noVideoClickTimer = Date.now();
 
-        if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo)) {
-            uiController.sizeVideo = uiController.sizeVideo * 1.5;
-            uiController.styleVideo();
+ if (!uiController.isMaxVideoSizeFaktor(uiController.sizeVideo)) {
+ uiController.sizeVideo = uiController.sizeVideo * 1.5;
+ uiController.styleVideo();
 
-        }
-    });
-    Hammer($("#videoplayerInner").get(0)).on("swipedown", function (event) {
+ }
+ });
+ Hammer($("#videoplayerInner").get(0)).on("swipedown", function (event) {
 
-        uiController.swipeTimer = Date.now();
-        uiController.noVideoClickTimer = Date.now();
+ uiController.swipeTimer = Date.now();
+ uiController.noVideoClickTimer = Date.now();
 
-        if (uiController.sizeVideo > 0.5) {
-            uiController.sizeVideo = uiController.sizeVideo / 1.5;
-            uiController.styleVideo();
+ if (uiController.sizeVideo > 0.5) {
+ uiController.sizeVideo = uiController.sizeVideo / 1.5;
+ uiController.styleVideo();
 
-        } else {
-            $("#videoplayer").css("opacity", "0");
-            $("#videoplayer").css("pointer-events", "none");
-
-
-        }
-    });
-
-    Hammer($("#videoplayerInner").get(0)).on("swiperight", function (event) {
-        uiController.swipeTimer = Date.now();
-        uiController.noVideoClickTimer = Date.now();
-
-        if (uiController.translateVideo <= uiController.windowWidth / 2) {
-            uiController.translateVideo = uiController.translateVideo + uiController.windowWidth / 8;
-            uiController.styleVideo();
-        }
-
-    });
-    Hammer($("#videoplayerInner").get(0)).on("swipeleft", function (event) {
-        uiController.swipeTimer = Date.now();
-        uiController.noVideoClickTimer = Date.now();
-
-        if (uiController.translateVideo >= -uiController.windowWidth / 2) {
-
-            uiController.translateVideo = uiController.translateVideo - uiController.windowWidth / 8;
-            uiController.styleVideo();
-        }
-    });
-
-    */
+ } else {
+ $("#videoplayer").css("opacity", "0");
+ $("#videoplayer").css("pointer-events", "none");
 
 
+ }
+ });
+
+ Hammer($("#videoplayerInner").get(0)).on("swiperight", function (event) {
+ uiController.swipeTimer = Date.now();
+ uiController.noVideoClickTimer = Date.now();
+
+ if (uiController.translateVideo <= uiController.windowWidth / 2) {
+ uiController.translateVideo = uiController.translateVideo + uiController.windowWidth / 8;
+ uiController.styleVideo();
+ }
+
+ });
+ Hammer($("#videoplayerInner").get(0)).on("swipeleft", function (event) {
+ uiController.swipeTimer = Date.now();
+ uiController.noVideoClickTimer = Date.now();
+
+ if (uiController.translateVideo >= -uiController.windowWidth / 2) {
+
+ uiController.translateVideo = uiController.translateVideo - uiController.windowWidth / 8;
+ uiController.styleVideo();
+ }
+ });
+
+ */
 
 
-   // $("#videoplayer").css("text-align", "center")
-     /*
-    uiController.sizeVideoRelative = 1;
-    uiController.sizeVideo = 1.2;
-    uiController.translateVideo = 0;
-
-    uiController.styleVideo();
 
 
-    setTimeout(function () {
-        //$("#videoplayer").addClass("animate");
-        uiController.sizeVideo = 1;
-        uiController.translateVideo = 0;
-        uiController.styleVideo();
+// $("#videoplayer").css("text-align", "center")
+/*
+ uiController.sizeVideoRelative = 1;
+ uiController.sizeVideo = 1.2;
+ uiController.translateVideo = 0;
 
-    }, 500)*/
+ uiController.styleVideo();
+
+
+ setTimeout(function () {
+ //$("#videoplayer").addClass("animate");
+ uiController.sizeVideo = 1;
+ uiController.translateVideo = 0;
+ uiController.styleVideo();
+
+ }, 500)*/
 //}
 
 uiController.init = function () {
@@ -121,6 +121,9 @@ uiController.init = function () {
 
     //Fade in fb like
 
+    setTimeout(function () {
+        $("#iconHeader").attr("src", "public/img/logo.gif");
+    }, 6000)
 
 
     //Additional Control Buttons
@@ -140,8 +143,6 @@ uiController.init = function () {
     })
 
 
-
-
     $('#saveplaylistinpt').keyup(function (evt) {
         if (evt.keyCode == 13) {
             $("#saveokayplaylistbtn").click();
@@ -150,8 +151,6 @@ uiController.init = function () {
     });
 
     $(".ui-input-clear").addClass("ui-btn ui-btn-b ui-shadow ui-corner-all ui-mini");
-
-
 
 
     uiController.updateDisplay();
@@ -171,7 +170,7 @@ uiController.init = function () {
         // return false;
     });
 
-   // uiController.initMediaPlayer();
+    // uiController.initMediaPlayer();
 
     $("#saveplaylistinpt").on("input", function () {
         if ($("#saveplaylistinpt").val()) {
@@ -332,9 +331,46 @@ uiController.init = function () {
 
 
     $("#playlistselectverticalform").on('change', function (evt, params) {
+        console.log(".....................")
+        var playlistRemoved = function (playlistgid) {
+            for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
+                if (playlistController.loadedPlaylistSongs[i].playlistgid == playlistgid) {
+                    playlistController.loadedPlaylistSongs.splice(i, 1);
+                    i--;
+                }
+            }
 
+            if (playlistController.loadedPlaylistSongs.length == 0 && $('#playlistselectvertical .search-choice').length == 0) {
+                playlistController.loadedPlaylistSongs = playlistController.playlists;
+
+                $("#playlistInner .iScrollPlayIndicator").hide();
+                $("#searchlist .iScrollPlayIndicator").hide();
+
+                $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
+
+            } else
+                $("#clearChoosenPlaylists").show();
+
+
+            $("#playlistview").hide();
+            $scope.safeApply();
+            setTimeout(function () {
+                $("#playlistview").listview('refresh');
+                $("#playlistview").show();
+                playlistController.makePlayListSortable();
+                setTimeout(function () {
+                    uiController.playListScroll.refresh();
+                }, 150)
+            }, 0)
+        }
+
+        //on trigger, all playlists still there, after ms gone if return key pressd
+        var playlistsOldLoaded = [];
+
+        console.log("------------------------------")
 
         $('#playlistselectvertical .search-choice').each(function () {
+            playlistsOldLoaded.push($(this).text());
             if ($(this).data('loaded') != "true") {
                 var playlist = null;
                 var name = $(this).text();
@@ -353,6 +389,37 @@ uiController.init = function () {
 
         })
 
+        //Check if playlist was deleted, is gone after 50 ms in dom
+        setTimeout(function () {
+
+            for (var i = 0; i < playlistsOldLoaded.length; i++) {
+                var name =  playlistsOldLoaded[i];
+                var selections =  $('#playlistselectvertical .search-choice');
+                var found = false;
+                for (var j = 0; j < selections.length; j++) {
+                    if($(selections.get(j)).text()==name){
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found){
+                    console.log("REMOVED")
+                    var playlistgid = null;
+                    for (var i = 0; i < playlistController.playlists.length; i++) {
+                        if (playlistController.playlists[i].name == name) {
+                            playlistgid = playlistController.playlists[i].gid
+                            break;
+                        }
+                    }
+
+                    if (playlistgid != null) {
+                        playlistRemoved(playlistgid);
+                    }
+
+                }
+            }
+        }, 50)
+
 
         $('#playlistselectvertical .search-choice').data('loaded', 'true')
 
@@ -367,42 +434,16 @@ uiController.init = function () {
         var closefunc = function () {
             var playlistgid = null;
             var name = $(this).parent().text();
+
             for (var i = 0; i < playlistController.playlists.length; i++) {
-                if (playlistController.playlists[i].name == name)
+                if (playlistController.playlists[i].name == name) {
                     playlistgid = playlistController.playlists[i].gid
-            }
-            if (playlistgid != null) {
-
-                for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
-                    if (playlistController.loadedPlaylistSongs[i].playlistgid == playlistgid) {
-                        playlistController.loadedPlaylistSongs.splice(i, 1);
-                        i--;
-                    }
+                    break;
                 }
+            }
 
-                if (playlistController.loadedPlaylistSongs.length == 0 && $('#playlistselectverticalform option:selected').length == 0) {
-                    playlistController.loadedPlaylistSongs = playlistController.playlists;
-
-                    $("#playlistInner .iScrollPlayIndicator").hide();
-                    $("#searchlist .iScrollPlayIndicator").hide();
-
-                    $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
-
-                } else
-                    $("#clearChoosenPlaylists").show();
-
-
-                $("#playlistview").hide();
-                $scope.safeApply();
-                setTimeout(function () {
-                    $("#playlistview").listview('refresh');
-                    $("#playlistview").show();
-                    playlistController.makePlayListSortable();
-                    setTimeout(function () {
-                        uiController.playListScroll.refresh();
-                    }, 150)
-                }, 0)
-
+            if (playlistgid != null) {
+                playlistRemoved(playlistgid);
             }
 
 
@@ -410,7 +451,6 @@ uiController.init = function () {
         }
         $('.search-choice-close').unbind('click', closefunc);
         $(".search-choice-close").click(closefunc)
-
 
     });
 
@@ -434,11 +474,39 @@ uiController.init = function () {
     }, 0)
 
 
-    $('#clearChoosenPlaylists').click(function (e) {
+    $('#clearChoosenPlaylists').click(function (event) {
 
-        uiController.showPlaylists();
+        console.log("......................----")
+        var unsafed = false;
+        for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
+            console.log(playlistController.loadedPlaylistSongs[i].playlistgid)
+            if (!playlistController.loadedPlaylistSongs[i].playlistgid) {
+                unsafed = true;
+
+            }
+        }
+
+        if(unsafed){
+           $("#playlistselectvertical .chosen-container").removeClass("chosen-with-drop");
+            $( "#popupConfirm" ).popup( "option", "positionTo", "#clearChoosenPlaylists" );
+
+            uiController.popupConfirm = {doIt:function(){
+                uiController.showPlaylists();
+            }}
+          $("#popupConfirm").popup("open");
+
+        }
+        else{
+            uiController.showPlaylists();
+
+        }
+        event.stopImmediatePropagation();
+        event.stopPropagation();
 
     });
+
+
+
 
     $('.chosen-container input').blur(function () {
         setTimeout(uiController.updateUI, 100);
@@ -549,26 +617,26 @@ uiController.isMaxVideoSizeFaktor = function (sizeVideo) {
 }
 
 /*
-uiController.styleVideo = function (overtakeSize) {
+ uiController.styleVideo = function (overtakeSize) {
 
-    if (uiController.isMaxVideoSizeFaktor(uiController.sizeVideo))
-        var sizeVideo = ( $(window).height() - (82 + 30) ) / ( $("#videoplayer").height() * 0.5 * uiController.sizeVideoRelative);
-    else
-        sizeVideo = uiController.sizeVideo;
+ if (uiController.isMaxVideoSizeFaktor(uiController.sizeVideo))
+ var sizeVideo = ( $(window).height() - (82 + 30) ) / ( $("#videoplayer").height() * 0.5 * uiController.sizeVideoRelative);
+ else
+ sizeVideo = uiController.sizeVideo;
 
-    $("#videoplayer").css("-webkit-transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * sizeVideo * uiController.sizeVideoRelative + ")");
-    $("#videoplayer").css("transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * sizeVideo * uiController.sizeVideoRelative + ")");
-    $("#videoplayer").css("-webkit-transform-origin", "50% 100%");
-    $("#videoplayer").css("transform-origin", "50% 100%");
-
-
-    $("#siteLogo").css("-webkit-transform", "scale(" + 1 / uiController.sizeVideoRelative + ")").css("transform", "scale(" + 1 / uiController.sizeVideoRelative + ")");
+ $("#videoplayer").css("-webkit-transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * sizeVideo * uiController.sizeVideoRelative + ")");
+ $("#videoplayer").css("transform", "translate(" + uiController.translateVideo + "px,0px) scale(" + 0.5 * sizeVideo * uiController.sizeVideoRelative + ")");
+ $("#videoplayer").css("-webkit-transform-origin", "50% 100%");
+ $("#videoplayer").css("transform-origin", "50% 100%");
 
 
-    if (overtakeSize)
-        uiController.sizeVideo = sizeVideo;
-}
-*/
+ $("#siteLogo").css("-webkit-transform", "scale(" + 1 / uiController.sizeVideoRelative + ")").css("transform", "scale(" + 1 / uiController.sizeVideoRelative + ")");
+
+
+ if (overtakeSize)
+ uiController.sizeVideo = sizeVideo;
+ }
+ */
 
 /**
  * Shows a toast
@@ -618,7 +686,10 @@ uiController.toggleSearchButton = function (button) {
 
 }
 
-
+/**
+ * savePlaylist and show green marker
+ * @param useSelected use the only seleted playlist
+ */
 uiController.savePlaylistVisible = function (useSelected) {
 
     var gid = playlistController.savePlaylist(useSelected);
@@ -663,7 +734,6 @@ uiController.savePlaylistVisible = function (useSelected) {
 }
 
 
-
 uiController.stopScrollingOnClick = function (event) {
     var myEvent = jQuery.extend({}, event);
     myEvent.type = "mouseup";
@@ -676,9 +746,6 @@ uiController.stopScrollingOnClick = function (event) {
         uiController.searchListScroll.handleEvent(myEvent);
     }, 100)
 }
-
-
-
 
 
 uiController.updateDisplay = function () {
@@ -711,29 +778,29 @@ uiController.updateUI = function () {
 
 
     /*
-    if (!dontChangeVideOpacity) {
-        if (uiController.windowWidth < uiController.responsiveWidthSmall || $(window).height() < 350) {
+     if (!dontChangeVideOpacity) {
+     if (uiController.windowWidth < uiController.responsiveWidthSmall || $(window).height() < 350) {
 
-            if ($("#videoplayer").css("opacity") != 0) {
-                $("#videoplayer").css("opacity", "0");
-                $("#videoplayer").css("pointer-events", "none");
+     if ($("#videoplayer").css("opacity") != 0) {
+     $("#videoplayer").css("opacity", "0");
+     $("#videoplayer").css("pointer-events", "none");
 
-            }
-        } else {
+     }
+     } else {
 
-            if ($("#videoplayer").css("opacity") != 1 && uiController.playedFirst) {
-                $("#videoplayer").css("opacity", "1");
-                $("#videoplayer").css("pointer-events", "auto");
+     if ($("#videoplayer").css("opacity") != 1 && uiController.playedFirst) {
+     $("#videoplayer").css("opacity", "1");
+     $("#videoplayer").css("pointer-events", "auto");
 
-            }
+     }
 
-        }
-    } */
+     }
+     } */
 
     $(".ui-panel").css("height", $(window).height() - 44 - 3);
     $("#page").css("height", $(window).height() - 44 - 3);
 
-   // $("#videoplayer").css("width", uiController.windowWidth);
+    // $("#videoplayer").css("width", uiController.windowWidth);
 
     if ($(window).height() / 2 - 60 > 65)
         $("#playlisthelp").css("top", $(window).height() / 2 - 60)
@@ -755,9 +822,9 @@ uiController.updateUI = function () {
 
         setTimeout(function () {
             if ($("#playlistselectvertical .chosen-container").height() > 0)
-                $("#playlistInner").css("max-height", $(window).height() - 3 -45- (100 + $("#playlistselectvertical .chosen-container").height() - 30));
+                $("#playlistInner").css("max-height", $(window).height() - 3 - 45 - (100 + $("#playlistselectvertical .chosen-container").height() - 30));
             else
-                $("#playlistInner").css("max-height", $(window).height() - 3-45 - 5);
+                $("#playlistInner").css("max-height", $(window).height() - 3 - 45 - 5);
         }, 100)
 
         if (uiController.sidePanelOpen) {
@@ -838,7 +905,7 @@ uiController.updateUI = function () {
         $("#playlist").css("width", uiController.windowWidth / 3);
         $("#playlistInner li").css("width", uiController.windowWidth / 3);
 
-        $("#searchlist").css("width",uiController.windowWidth- uiController.windowWidth / 3-30);
+        $("#searchlist").css("width", uiController.windowWidth - uiController.windowWidth / 3 - 30);
 
         setSelectSize();
 
@@ -1012,64 +1079,64 @@ uiController.toggleGridLayout = function () {
     $("#searchlist").hide();
 
 
-    setTimeout(function(){
-    $("#searchlist ul").toggleClass("gridlayout")
-        $("#searchlist").css("opacity","0");
+    setTimeout(function () {
+        $("#searchlist ul").toggleClass("gridlayout")
+        $("#searchlist").css("opacity", "0");
         $("#searchlist").show();
         $("#searchlistview").listview('refresh');
 
-    },0);
+    }, 0);
 
-     setTimeout(function(){
-
-
-         // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB "+cols)
-
-         if(uiController.gridLayout){
-             uiController.gridLayoutCols = Math.floor($("#searchlist ul").width()/250);
-
-             scrollY = scrollY/uiController.gridLayoutCols;
-             if(uiController.searchListScroll.toggelLayoutOldY  != uiController.searchListScroll.y)
-                 scrollY = scrollY+64;
+    setTimeout(function () {
 
 
-             $("#searchlayoutbutton img").attr("src","public/img/list.png");
+        // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB "+cols)
+
+        if (uiController.gridLayout) {
+            uiController.gridLayoutCols = Math.floor($("#searchlist ul").width() / 250);
+
+            scrollY = scrollY / uiController.gridLayoutCols;
+            if (uiController.searchListScroll.toggelLayoutOldY != uiController.searchListScroll.y)
+                scrollY = scrollY + 64;
+
+
+            $("#searchlayoutbutton img").attr("src", "public/img/list.png");
         }
         else {
-            scrollY =  (scrollY)*uiController.gridLayoutCols;
+            scrollY = (scrollY) * uiController.gridLayoutCols;
 
 
-            $("#searchlayoutbutton img").attr("src","public/img/grid.png");
-             setTimeout(function(){
+            $("#searchlayoutbutton img").attr("src", "public/img/grid.png");
+            setTimeout(function () {
                 playlistController.positionSongOptions();
-             },0)
+            }, 0)
         }
 
 
         uiController.searchListScroll.refresh();
 
-        if($("#searchlist ul").height()>$("#searchlist").height())
+        if ($("#searchlist ul").height() > $("#searchlist").height())
             $("#searchlist .iScrollIndicator").show();
-        if(!$("#searchlist ul").height()>$("#searchlist").height())
+        if (!$("#searchlist ul").height() > $("#searchlist").height())
             scrollY = 0;
-        else if(scrollY>0)
+        else if (scrollY > 0)
             scrollY = 0;
-        else if(scrollY< uiController.searchListScroll.maxScrollY)
+        else if (scrollY < uiController.searchListScroll.maxScrollY)
             scrollY = uiController.searchListScroll.maxScrollY;
 
         uiController.searchListScroll.scrollTo(0, scrollY);
 
         $("#searchlist").hide();
-        $("#searchlist").css("opacity","1");
+        $("#searchlist").css("opacity", "1");
         $("#searchlist").addClass("fadeincomplete");
         $("#searchlist").show();
-        setTimeout(function(){
+        setTimeout(function () {
             $("#searchlist").removeClass("fadeincomplete");
-        },500)
+        }, 500)
 
-         uiController.searchListScroll.toggelLayoutOldY = scrollY;
+        uiController.searchListScroll.toggelLayoutOldY = scrollY;
 
-     },800)
+    }, 800)
 }
 
 
