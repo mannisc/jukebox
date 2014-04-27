@@ -954,7 +954,6 @@ searchController.makeSearchListDraggable = function () {
 
             ele.css("opacity", "0");
 
-
             //var marquee = $(ele).find("marquee").get(0);
             // $(marquee).replaceWith($(marquee).contents());
 

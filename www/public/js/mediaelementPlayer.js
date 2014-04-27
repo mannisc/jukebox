@@ -86,7 +86,6 @@ var mediaelementPlayer = function (selector) {
 
 
                 that.container.find("video").css("opacity","0");
-                that.videoElement.parent().addClass("backgroundVideo").insertAfter("#backgroundImage");
 
 
                 setTimeout(function () {
@@ -198,6 +197,8 @@ var mediaelementPlayer = function (selector) {
         videoController.setProgressPercentage(0);
         this.mediaElementPlayer.setSrc(url);
         this.mediaElementPlayer.load();
+        this.containerVideo.addClass("backgroundVideo").insertAfter("#backgroundImage");
+
 
     }
 
@@ -208,7 +209,9 @@ var mediaelementPlayer = function (selector) {
     this.unload = function (url) {
         this.stop();
         this.stopUpdateTime();
+        this.containerVideo.addClass("backgroundVideo").insertAfter($(this.container).find(".mejs-inner"));
         this.containerVideo.find("video").first().attr('src','')
+
 
     }
 

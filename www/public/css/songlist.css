@@ -19,8 +19,8 @@
 
 #songOptions{
     position: absolute;
-    height: 39px;
-    top: 13px;
+    height: 38px;
+    top: 14px;
     left: 63px;
   /*  background-image: -o-linear-gradient(right, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 80%,rgba(50,50,50,0) 100%);
     background-image: -moz-linear-gradient(right, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 80%,rgba(50,50,50,0) 100%);
@@ -51,7 +51,12 @@
 
 
 ul.gridlayout #songOptions{
-    left: 68px!important;
+    left: 60px!important;
+    -webkit-transform: scale(0.92);
+    -moz-transform: scale(0.92);
+    transform: scale(0.92)!important;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%!important;
 }
 
 
@@ -74,19 +79,29 @@ ul.gridlayout #songOptions{
 
 }
 
-#songOptions #addToPlaylist{
+
+#songOptions #playSelection{
     position: absolute;
     top: 1px;
     left: -3px;
 
 }
+
+
+#songOptions #addToPlaylist{
+    position: absolute;
+    top: 1px;
+    left: 47px;
+
+}
 #playlistInner #songOptions #addToPlaylist{
     display:none!important;
 }
+
 #songOptions #removeFromPlaylist{
     position: absolute;
     top: 1px;
-    left: -3px;
+    left: 47px;
     background-image:url(../img/trashopt.png) ;
     background-size:100%;
     background-repeat:no-repeat;
@@ -107,7 +122,7 @@ ul.gridlayout #songOptions{
 #songOptions #searchSimilar{
     position: absolute;
     top: 1px;
-    left: 47px;
+    left: 96px;
 
 }
 
@@ -116,7 +131,7 @@ ul.gridlayout #songOptions{
 #songOptions #shareSocial{
     position: absolute;
     top: 1px;
-    left: 96px;
+    left: 145px;
 
 }
 
@@ -855,7 +870,7 @@ ul.gridlayout #songOptions{
     padding: 0.4em!important;
     margin-top: 1px!important;
     min-height: 22px!important;
-    width: 100%!important;
+    width: 100%;
 
 }
 
