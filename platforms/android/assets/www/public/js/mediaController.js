@@ -262,11 +262,6 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
     var loadError = false;
 
     $('#loadversionimg').css("opacity", "1");
-    videoController.showBuffering(true);
-    if (videoController.buffered > 0.7)
-        videoController.setBufferedPercentage(0);
-
-    videoController.setLoopButton(false);
 
     mediaController.playCounter++;
     var streamID = mediaController.playCounter;
@@ -371,6 +366,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                     mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic);
                 }
                 else {
+
                     // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
                     mediaController.playCounter++;
                     // console.dir("STREAM");
@@ -412,11 +408,13 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
         },
         error: function () {
             loadError = true;
+           /* setTimeout(function () {
+                videoController.showBuffered(true);
+                videoController.showBuffering(false);
+            }, 500);*/
         },
         complete: function () {
-            setTimeout(function () {
-                videoController.showBuffering(false);
-            }, 500);
+
             //log("COMPLETED")
             //playbackController.isLoading = false;
             //console.log("LOADED")
@@ -450,10 +448,9 @@ mediaController.onLoadingError = function (streamID, playedAutomatic) {
 
 mediaController.playStream = function (artist, title, playedAutomatic) {
 
-    videoController.showBuffering(true);
+    //videoController.showBuffering(true);
 
-    if (videoController.buffered > 0.7)
-        videoController.setBufferedPercentage(0);
+    //videoController.showBuffered(false);
 
     videoController.setLoopButton(false);
 
@@ -481,11 +478,7 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
             url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + encodeURIComponent(artistString) + "&track=" + encodeURIComponent(titleString) + "&format=json",
             success: function (data) {
                 if (streamID == mediaController.playCounter) {
-                    setTimeout(function () {
-                        if (streamID == mediaController.playCounter)
-                            videoController.showBuffering(true);
 
-                    }, 500);
                     var duration = 200000;
 
                     if (data.track) {
@@ -667,7 +660,10 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
     //$("#videoplayer").removeClass("animate").addClass("animatefast");
     //$("#videoplayer").css("opacity", "0");
     //$("#videoplayer").css("pointer-events", "none");
-
+    /*setTimeout(function () {
+        videoController.showBuffering(false);
+        videoController.showBuffered(true);
+    }, 500);*/
     setTimeout(function () {
 
 

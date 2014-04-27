@@ -94,7 +94,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
 
     if (!resetingSong) {
         //Check if song already playing
-        var isSameSongAsLoadedSong = playbackController.playingSong && (((!playbackController.playingSong.gid && !song.gid) || playbackController.playingSong.gid == song.gid) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song));
+        var isSameSongAsLoadedSong = playbackController.playingSong && (((!playbackController.playingSong.gid && !song.gid) || (playbackController.playingSong.gid && song.gid)) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song));
         //New song is already loading/playing song
 
         if (isSameSongAsLoadedSong) {
@@ -590,7 +590,7 @@ playbackController.remarkSong = function () {
         playbackController.positionPlayIndicator();
 
         if (playbackController.playingSong.gid) {
-            listElement = $("#playlistInner li[data-songgid='playlistsong" + playbackController.playingSong.gid + "'] ");
+            listElement = $($("#playlistInner li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ").get(0));
             listElement.addClass("loadedsong");
         } else {
             listElement = $("#searchlist li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ");
