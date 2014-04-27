@@ -710,7 +710,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                 $(listElement.get(0)).removeClass("firstplay");
 
                 setTimeout(function () {
-                    $(listElement.get(0)).find(".loadingSongImg").css("opacity", "1")
+                    $(listElement.get(0)).find(".loadingSongImg").css("opacity", "")
                     $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "1")
                     $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeincomplete");
 
@@ -783,13 +783,42 @@ mediaController.toggleLyrics = function () {
 }
 
 
+
+mediaController.getCoverSong = function (index,song) {
+    console.dir("KKKKKKKKKKKKKKKK")
+
+    console.dir(song)
+   if (song.isPlaylist)  {
+
+       if(song.tracks&&song.tracks[index]){
+          if(song.tracks[index].isGoogleDrive){
+              return "background-image:url(public/img/playlistgdrive.png)" ;
+
+          }else{
+              return "background-image:url("+mediaController.getSongCover(song.tracks[index])+")" ;
+
+          }
+       }
+      else{
+           return "background-image:url(public/img/playlist.png);opacity:0.9;" ;
+
+
+       }
+
+
+   }else
+    return "display:none";
+
+
+}
+
+
+
 mediaController.getSongCover = function (song) {
     var url = "";
 
     if (song.isPlaylist) {
-        url = "public/img/playlist.png";
-    } else if (song.isGoogleDrive) {
-        url = "public/img/playlistgdrive.png";
+        url = "public/img/empty.png";
     } else {
 
         if (song.image) {

@@ -276,8 +276,14 @@
     <div id="playlistInner" class="animate" style="display:none">
         <ul ui-sortable ng-model="playlistController.loadedPlaylistSongs" data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
             <li ng-repeat="song in playlistController.loadedPlaylistSongs track by song.gid" data-songid="playlistsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
-                ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1"><img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""
-                                                                                                                                                          class="ui-li-icon ui-corner-none"  >
+                ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1">
+
+                <img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""   class="ui-li-icon ui-corner-none"  >
+                <div class="playlistCoverSong" >
+                <img src="public/img/empty.png" class="coverSong1" style="{{mediaController.getCoverSong(0,song)}}">
+                <img src="public/img/black.png" class="coverSong2" style="{{mediaController.getCoverSong(1,song)}}">
+                <img src="public/img/black.png" class="coverSong3" style="{{mediaController.getCoverSong(2,song)}}">
+                </div>
                 <img src="public/img/empty.png" class="loadingSongImg">
                     <span ng-if="!song.isPlaylist">
                     <h3>{{song.name}}</h3>

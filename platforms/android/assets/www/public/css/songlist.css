@@ -277,7 +277,7 @@ ul.gridlayout #songOptions{
     box-shadow: 0px 0px 1px  rgba(0,0,0,0.4)!important;
 }
 
-.songlist li.loadedsong.stillloading {
+.songlist li {
     -webkit-perspective:  150;
     -webkit-perspective-origin: 32px 50%;
     -moz-perspective: 150;
@@ -325,9 +325,148 @@ ul.gridlayout #songOptions{
 
 
 
-.songlist li .loadingSongImg{
+
+
+.songlist li .playlistCoverSong{
     /* background-image:url(../img/songload.gif)!important;
      background-size:9;*/
+    width: 65px!important;
+    height: 65px!important;
+    max-width: 65px!important;
+    max-height: 65px!important;
+    margin-left:3px!important;
+    margin-top:-5px!important;
+    left: -4px!important;
+    top:  5px;
+    z-index:10;
+    overflow:visible;
+    position: absolute;
+
+    -moz-box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+    -webkit-transition: background 0.5s ease;
+    -moz-transition: background  0.5s ease;
+    -o-transition: background 0.5s ease;
+    transition: background 0.5s ease;
+    opacity:0.9;
+
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
+    -webkit-perspective:  150;
+    -webkit-perspective-origin: 50% 50%;
+    -moz-perspective: 150;
+    -moz-perspective-origin: 50% 50%;
+    -ms-perspective: 150;
+    -ms-perspective-origin: 50% 50%;;
+    perspective: 150;
+    perspective-origin: 50% 50%;
+    -webkit-transform: scale(0.68)!important;
+    -moz-transform: scale(0.68)!important;
+    transform:   scale(0.68)!important;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%!important;
+}
+
+
+
+
+.songlist li:hover.selected .playlistCoverSong img{
+    left: 0!important;
+    -webkit-transform: rotateY(360deg) scale(1.21)!important;
+    -moz-transform: rotateY(360deg) scale(1.21)!important;
+    transform: rotateY(360deg) scale(1.21)!important;
+}
+.songlist li.selected .playlistCoverSong img{
+    left: 0!important;
+    -webkit-transform: rotateY(360deg) scale(1.21)!important;
+    -moz-transform: rotateY(360deg) scale(1.21)!important;
+    transform: rotateY(360deg) scale(1.21)!important;
+}
+
+.songlist li .playlistCoverSong img{
+    background-size: 65px 65px!important;
+    width: 65px!important;
+    height: 65px!important;
+    max-width: 65px!important;
+    max-height: 65px!important;
+    left: 0;
+    top: 8px;
+    z-index:10;
+    position: absolute;
+    overflow:visible;
+    -webkit-transform: rotateY(320deg);
+    -moz-transform: rotateY(-320deg);
+    transform: rotateY(320deg)!important;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%!important;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    z-index:40;
+}
+
+
+.songlist li .playlistCoverSong .coverSong1{
+    left: 0!important;
+    -webkit-transform: rotateY(320deg) scale(1.05);
+    -moz-transform: rotateY(320deg) scale(1.05);
+    transform: rotateY(320deg) scale(1.05)!important
+
+
+}
+
+
+.songlist li:hover .playlistCoverSong .coverSong1{
+    left: 0!important;
+    -webkit-transform: rotateY(360deg) scale(1.5)!important;
+    -moz-transform: rotateY(360deg) scale(1.5)!important;
+    transform: rotateY(360deg) scale(1.5)!important;
+}
+
+
+.songlist li:hover .playlistCoverSong .coverSong2{
+    left: 0!important;
+    -webkit-transform: rotateY(360deg) scale(1.2)!important;
+    -moz-transform: rotateY(360deg) scale(1.2)!important;
+    transform: rotateY(360deg) scale(1.2)!important;
+}
+
+
+.songlist li:hover .playlistCoverSong .coverSong3{
+    left: 0!important;
+    -webkit-transform: rotateY(360deg) scale(1.2)!important;
+    -moz-transform: rotateY(360deg) scale(1.2)!important;
+    transform: rotateY(360deg) scale(1.2)!important;
+}
+
+
+
+
+.songlist li .playlistCoverSong .coverSong2{
+    left: 12px!important;
+    z-index:30;
+
+}
+
+.songlist li .playlistCoverSong .coverSong3{
+    left: 22px!important;
+    z-index:20;
+
+}
+
+
+
+
+
+
+.songlist li .loadingSongImg{
+/* background-image:url(../img/songload.gif)!important;
+ background-size:9;*/
     width: 65px!important;
     height: 65px!important;
     max-width: 65px!important;
@@ -363,11 +502,15 @@ ul.gridlayout #songOptions{
 
 }
 
-.songlist li:hover .loadingSongImg {
-    background-image:url(../img/emptycover.png) !important;
-    display:block!important;
 
+
+.songlist li:hover .loadingSongImg {
+    background-image:url(../img/unchecked.png) !important;
+    display:block!important;
+    opacity:0.3;
 }
+
+
 
 
 .songlist li:hover.selected .loadingSongImg{
