@@ -142,6 +142,8 @@ mediaController.getSiteLogo = function () {
         return "muzu.png"
     }  else if (mediaController.currentvideoURL.search(".vimeo.") > -1||mediaController.currentvideoURL.search("/vimeo.")>-1) {
         return "vimeo.png"
+    }  else if (mediaController.currentvideoURL.search(".photobucket.") > -1||mediaController.currentvideoURL.search("/photobucket.")>-1) {
+        return "photobucket.png"
     }
     alert(mediaController.currentvideoURL)
     return "empty.png";
