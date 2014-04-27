@@ -219,6 +219,20 @@ playlistController.hideSongOptions = function () {
 }
 
 
+/**
+ * True if unsafed Songs in playlist
+ */
+playlistController.unsafedSongsExists = function () {
+
+    for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
+        if (!playlistController.loadedPlaylistSongs[i].playlistgid) {
+            return true;
+
+        }
+    }
+
+    return false;
+}
 
 /**
  * Play Selection
@@ -226,12 +240,6 @@ playlistController.hideSongOptions = function () {
  */
 playlistController.playSelection = function (event) {
     event.stopPropagation();
-
-
-
-
-
-
 
 
     playlistController.deselectSongs();
@@ -638,7 +646,7 @@ playlistController.makePlayListSortable = function () {
                 $(this).removeClass("margintop fadeslideincompletefast");
 
                 if ($(this).hasClass("playlistsong")) {
-                    console.dir("Playlist " +$(this).find("h3").text())
+                    console.dir("Playlist " + $(this).find("h3").text())
 
                     id = this.dataset.songid.substring(12);
                     var found = false;
