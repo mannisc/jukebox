@@ -115,6 +115,20 @@ padding: .4em 0!important;
 }
 
 /*Select Drop Down*/
+
+
+.chosen-drop{
+    opacity:0!important;
+    -webkit-transition: opacity 0.3s ease;
+    -moz-transition: opacity 0.3s ease;
+    -ms-transition: opacity 0.3s ease;
+    -o-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+.chosen-drop.visible{
+    opacity:1!important;
+}
+
 .chosen-container .chosen-results li {
     line-height: 30px !important;
 
