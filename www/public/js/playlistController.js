@@ -114,23 +114,23 @@ playlistController.selectSong = function (song) {
             playlistController.selectedSongs.push({ele: listElement, song: song})
             showedOptions = true;
             playlistController.hideSongOptions();
-            playlistController.showSongOptions(listElement,song);
+            playlistController.showSongOptions(listElement, song);
 
-        } else if(playlistController.selectedSongs.length>0&&playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song == song) {
+        } else if (playlistController.selectedSongs.length > 0 && playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song == song) {
 
             while (playlistController.selectedSongs.length > 0) {
                 playlistController.selectedSongs.splice(playlistController.selectedSongs.length - 1, 1);
                 if (playlistController.selectedSongs.length > 0 && playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].ele.hasClass("selected")) {
                     showedOptions = true;
                     playlistController.hideSongOptions();
-                    playlistController.showSongOptions(playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].ele,playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song);
+                    playlistController.showSongOptions(playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].ele, playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song);
                     break;
 
                 }
             }
         }
 
-        if (playlistController.selectedSongs.length==0||(!showedOptions &&  playlistController.selectedSongs.length>0&&playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song == song)) {
+        if (playlistController.selectedSongs.length == 0 || (!showedOptions && playlistController.selectedSongs.length > 0 && playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song == song)) {
             playlistController.hideSongOptions();
 
 
@@ -142,10 +142,33 @@ playlistController.selectSong = function (song) {
 /**
  * Show Songs Options
  */
+playlistController.positionSongOptions = function () {
+    if (playlistController.selectedSongs.length > 0 && $("#songOptions").length > 0) {
+        var song = playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song
+        var width = $("<h3 id='textMeasuring' style='opacity:0;z-index:10000000;top:80px;left:0;font-size: 1em;font-weight: bold;position:absolute'>" + song.name + "</h3>").appendTo("body").width()
+        var widthTitle = $("<div id='textMeasuring2' style='opacity:0;z-index:10000000;top:110px;left:0;font-size: .75em;position:absolute'>" + mediaController.getSongArtist(song) + "</div>").appendTo("body").width()
+        $("#textMeasuring").remove();
+        $("#textMeasuring2").remove();
+
+        if (width < widthTitle)
+            width = widthTitle;
+        width = width + 35;
+
+        if (63 + width + 150 > playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].ele.outerWidth() - 50)
+            width = playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].ele.outerWidth() - 150 - 63 - 50;
+
+        $("#songOptions").css("left", (63 + width) + "px");
+    }
+}
+
+/**
+ * Show Songs Options
+ */
 playlistController.showSongOptions = function (listElement, song) {
     setTimeout(function () {
-        if (playlistController.selectedSongs.length > 0 && playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song == song && listElement.hasClass("selected")) {
 
+
+        if (playlistController.selectedSongs.length > 0 && playlistController.selectedSongs[ playlistController.selectedSongs.length - 1].song == song && listElement.hasClass("selected")) {
             var width = $("<h3 id='textMeasuring' style='opacity:0;z-index:10000000;top:80px;left:0;font-size: 1em;font-weight: bold;position:absolute'>" + song.name + "</h3>").appendTo("body").width()
             var widthTitle = $("<div id='textMeasuring2' style='opacity:0;z-index:10000000;top:110px;left:0;font-size: .75em;position:absolute'>" + mediaController.getSongArtist(song) + "</div>").appendTo("body").width()
             $("#textMeasuring").remove();
@@ -155,10 +178,11 @@ playlistController.showSongOptions = function (listElement, song) {
                 width = widthTitle;
             width = width + 35;
 
-           if(63+width+150>listElement.outerWidth()-50)
-               width =  listElement.outerWidth()-150-63-50;
+            if (63 + width + 150 > listElement.outerWidth() - 50)
+                width = listElement.outerWidth() - 150 - 63 - 50;
 
-            $("#songOptions").appendTo(listElement)
+            $("#songOptionsOriginal").clone(true, true).attr("id", "songOptions").appendTo(listElement)
+
             $("#songOptions").css("opacity", "0");
             $("#songOptions").css("left", (63 + width + 20) + "px");
             $("#songOptions").addClass("noanim").hide();
@@ -166,18 +190,17 @@ playlistController.showSongOptions = function (listElement, song) {
             $("#songOptions").removeClass("noanim").show();
 
             setTimeout(function () {
-            $("#songOptions").css("width", "0px");
+                $("#songOptions").css("width", "0px");
 
 
+                $("#songOptions").css("left", (63 + width) + "px");
 
-            $("#songOptions").css("left", (63 + width) + "px");
-
-            $("#songOptions").css("width", "150px");
-            $("#songOptions").css("opacity", "0.83");
+                $("#songOptions").css("width", "150px");
+                $("#songOptions").css("opacity", "0.83");
 
             }, 0)
         }
-    }, 220)
+    }, 600)
 }
 
 
@@ -185,14 +208,15 @@ playlistController.showSongOptions = function (listElement, song) {
  * Hide Songs Options
  */
 playlistController.hideSongOptions = function () {
-
-    $("#songOptions").css("opacity", "0");
-    $("#songOptions").css("width", "0px");
-    $("#songOptions").css("left", (parseInt($("#songOptions").css("left").replace("px", "")) - 5) + "px");
-
-
+    if ($("#songOptions").length > 0) {
+        $("#songOptions").css("opacity", "0");
+        $("#songOptions").css("width", "0px");
+        $("#songOptions").css("left", (parseInt($("#songOptions").css("left").replace("px", "")) - 5) + "px");
+        setTimeout(function () {
+            $("#songOptions").remove();
+        }, 200)
+    }
 }
-
 
 
 /**
@@ -201,9 +225,6 @@ playlistController.hideSongOptions = function () {
  */
 playlistController.removeSongsFromPlaylist = function (event) {
     event.stopPropagation();
-
-
-
 
 
     playlistController.deselectSongs();
@@ -216,7 +237,6 @@ playlistController.removeSongsFromPlaylist = function (event) {
  */
 playlistController.addSongsToPlaylist = function (event) {
     event.stopPropagation();
-
 
 
     playlistController.deselectSongs();

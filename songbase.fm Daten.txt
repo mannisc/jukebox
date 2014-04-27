@@ -1,3 +1,11 @@
+1&1:
+user: 26001331  pw: Uxut8hec
+----------
+http://dns.idnz.net/auth/
+user: nschmidbartl
+pw: iggels
+----------
+http://dns.dot.fm/
 songbase.fm
 songbase
 iggels
