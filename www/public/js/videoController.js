@@ -595,6 +595,7 @@ videoController.updateFullscreenMode = function () {
         $("#controlbarplaylist").css("opacity", "1");
         $(".videoControlElements-custom-button").show();
 
+        $(".backgroundVideo").addClass("background");
 
         $("#page, #content, .backgroundVideo").removeClass("fullscreen");
 
@@ -612,6 +613,8 @@ videoController.updateFullscreenMode = function () {
         $("#searchlist").css("opacity", "0");
         $("#playlist").css("opacity", "0").removeClass("fadeincomplete");
         $("#controlbarplaylist").css("opacity", "0");
+
+        $(".backgroundVideo").removeClass("background");
 
         $("#page, #content, .backgroundVideo").addClass("fullscreen");
 

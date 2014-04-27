@@ -135,7 +135,7 @@
 <!-- /panel -->
 
 <div data-role="header" id="header" data-position="fixed">
-    <img src="public/img/logo.gif" id="iconHeader" style="opacity:0;position:absolute;left: 8px;top: 8px" width="30px" height="30px">
+    <img src="public/img/logostat.png" id="iconHeader" style="opacity:0;position:absolute;left: 8px;top: 8px" width="30px" height="30px">
 
 
     <h1 id="titleHeader" style="display:none">{{appTitle}}</h1>
@@ -231,7 +231,7 @@
     <div id="controlbarplaylist">
 
         <div id="playlistselectvertical">
-            <a href="#" id="clearChoosenPlaylists" style="display:none" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all" title="Clear Selection">Clear Selection</a>
+            <a href="#" id="clearChoosenPlaylists"  style="display:none" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all" title="Clear Selection">Clear Selection</a>
 
             <form>
                 <select id="playlistselectverticalform" data-role="none" data-placeholder="Select Playlists" multiple class="chosen-select">
@@ -396,12 +396,15 @@
 </div>
 
 <div id="songOptionsOriginal" style="display:none">
-    <img id="removeFromPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.removeSongsFromPlaylist(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/empty.png" onclick="">
 
-    <img id="addToPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.addSongsToPlaylist(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/add.png" onclick="">
-    <img id="searchSimilar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px" class="fadeincomplete1p5s" src="public/img/radio.png" onclick="">
+    <img id="playSelection" onclick="playlistController.playSelection(event)"  ondblclick="playlistController.playSelection(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/playopt.png">
 
-    <img id="shareSocial" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px" class="fadeincomplete1p5s" src="public/img/share.png" onclick="">
+    <img id="removeFromPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.removeSongsFromPlaylist(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/empty.png" >
+
+    <img id="addToPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.addSongsToPlaylist(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/add.png">
+    <img id="searchSimilar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px" class="fadeincomplete1p5s" src="public/img/radio.png" >
+
+    <img id="shareSocial" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px" class="fadeincomplete1p5s" src="public/img/share.png" >
 
 </div>
 
@@ -484,13 +487,25 @@
                 <li><a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png">Google
                     <!--span class="GoogleBlue">G</span><span class="GoogleRed">o</span><span class="GoogleYellow">o</span><span class="GoogleBlue">g</span><span class="GoogleGreen">l</span><span class="GoogleRed">e</span--></a></li>
                 <li style="border-bottom:1px solid #ddd;"><a href="#" data-rel="back" id="manageDropbox"><img src="public/img/dropbox.png">Dropbox</a></li>
-                <li style="border-top:15px solid rgba(255,255,255,0.8);"><a href="#" onclick="accountController.logout();" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li>
+                <li style="border-top:15px solid rgba(255,255,255,0);"><a href="#" onclick="accountController.logout();" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li>
 
             </ul>
         </div>
     </form>
 </div>
 
+<div data-role="popup" id="popupConfirm" data-arrow="true" data-theme="a" class="ui-corner-all">
+    <form>
+        <div>
+            <h3 style="text-align: center">Clear Selection?</h3>
+            <p  style="margin-left: 10px;margin-right: 10px;" >Unsafed changes will be lost!</p>
+            <div style="text-align: center;width: 100%">
+            <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" style="margin-left: 10px;" data-rel="back" onclick="uiController.popupConfirm.doIt()">Clear</a>
+            <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
 
 
 

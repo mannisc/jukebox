@@ -195,7 +195,7 @@ playlistController.showSongOptions = function (listElement, song) {
 
                 $("#songOptions").css("left", (63 + width) + "px");
 
-                $("#songOptions").css("width", "150px");
+                $("#songOptions").css("width", "199px");
                 $("#songOptions").css("opacity", "0.83");
 
             }, 0)
@@ -216,6 +216,26 @@ playlistController.hideSongOptions = function () {
             $("#songOptions").remove();
         }, 200)
     }
+}
+
+
+
+/**
+ * Play Selection
+ * @param event
+ */
+playlistController.playSelection = function (event) {
+    event.stopPropagation();
+
+
+
+
+
+
+
+
+    playlistController.deselectSongs();
+
 }
 
 
@@ -245,7 +265,7 @@ playlistController.addSongsToPlaylist = function (event) {
 
 /**
  * Save Playlist
- * @param useSelected
+ * @param useSelected  use the only seleted playlist
  * @returns {number|gid|playlists.gid|gid|.data.gid|string|string}
  */
 
@@ -278,10 +298,11 @@ playlistController.savePlaylist = function (useSelected) {
                 break;
             }
         }
-        playlistController.globalIdPlaylist = playlistController.getNewID();
 
 
         if (!exists) {
+
+            playlistController.globalIdPlaylist = playlistController.getNewID();
             for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
                 playlistController.loadedPlaylistSongs[i].playlistgid = playlistController.globalIdPlaylist;
             }
@@ -349,10 +370,15 @@ playlistController.loadPlaylist = function (playlist) {
 
 
     playlistController.loadedPlaylistSongs = playlist.tracks.concat(playlistController.loadedPlaylistSongs)
+    for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
+        playlistController.loadedPlaylistSongs[i].id = "plsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
+        //   console.log("::: "+ playlistController.loadedPlaylistSongs[i].gid)
+    }
 
 
     // $("#playlistview").hide();
     $scope.safeApply();
+
     $("#playlistview").listview('refresh');
     playbackController.remarkSong();
 
@@ -537,7 +563,8 @@ playlistController.makePlayListSortable = function () {
                 }
                 playlistController.draggedElements = elements;
 
-            }
+            } else
+                playlistController.draggedElements = null;
 
             return ele;
         },
@@ -601,7 +628,6 @@ playlistController.makePlayListSortable = function () {
 
         stop: function (event, ui) {
 
-
             var newLoadedPlaylistSongs = [];
             if (playlistController.draggedElements) {
                 playlistController.draggedElements.css("opacity", "");
@@ -612,6 +638,8 @@ playlistController.makePlayListSortable = function () {
                 $(this).removeClass("margintop fadeslideincompletefast");
 
                 if ($(this).hasClass("playlistsong")) {
+                    console.dir("Playlist " +$(this).find("h3").text())
+
                     id = this.dataset.songid.substring(12);
                     var found = false;
                     var isElement = false;
@@ -632,27 +660,32 @@ playlistController.makePlayListSortable = function () {
 
                     }
 
-                    if (isElement) {
+                    if (isElement) {//Was Dragged
                         playlistController.draggedElements.each(function (index) {
                             id = playlistController.draggedElements[index].dataset.songid.substring(12);
                             actSong = playlistController.loadedPlaylistSongs[parseInt(id.substring(5))];
                             actSong = jQuery.extend(true, {}, actSong);
                             actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
                             newLoadedPlaylistSongs.push(actSong);
+
                             actPlsid = actPlsid + 1
 
                         });
                     }
                     else if (!found) {
                         actSong = playlistController.loadedPlaylistSongs[parseInt(id.substring(5))];
+
                         actSong = jQuery.extend(true, {}, actSong);
                         actSong.id = "plsid" + helperFunctions.padZeros(actPlsid, ("" + playlistController.loadedPlaylistSongs.length).length);
+
 
                         newLoadedPlaylistSongs.push(actSong);
                         actPlsid = actPlsid + 1
 
+
                     }
-                } else {
+                } else {  //From Searchlist
+
                     var id = this.dataset.songid.substring(10);
                     found = false;
                     isElement = false;
@@ -662,7 +695,7 @@ playlistController.makePlayListSortable = function () {
                             isElement = true;
 
                     }
-                    if (isElement) {
+                    if (isElement) {//Was Dragged
                         playlistController.draggedElements.each(function (index) {
                             var id = playlistController.draggedElements[index].dataset.songid.substring(10);
 
@@ -679,6 +712,7 @@ playlistController.makePlayListSortable = function () {
 
                             newLoadedPlaylistSongs.push(actSong);
                             actPlsid = actPlsid + 1;
+
 
                         })
                     }
@@ -705,7 +739,8 @@ playlistController.makePlayListSortable = function () {
 
             })
 
-            console.log("___________________________")
+
+            console.log("newLoadedPlaylistSongs___________________________")
             console.dir(newLoadedPlaylistSongs)
             playlistController.loadedPlaylistSongs = newLoadedPlaylistSongs;
 

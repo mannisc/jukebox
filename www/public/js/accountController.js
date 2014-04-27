@@ -226,6 +226,7 @@ accountController.loadStoredData = function(){
 
 accountController.signIn = function () {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
+            $.mobile.loading( "show");
         var send = function (name, pw) {
             var md5pw = MD5($.trim(pw));
             pw = rsaController.rsa.encrypt(pw);
@@ -259,7 +260,9 @@ accountController.signIn = function () {
                             accountController.requestid = 1;
 
                             accountController.loadStoredData();
-
+                            setTimeout(function(){
+                                $.mobile.loading( "hide");
+                            }, 300);
 
                         }
                         else {
