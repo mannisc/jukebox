@@ -474,7 +474,14 @@ uiController.init = function () {
     }, 0)
 
 
-    $('#clearChoosenPlaylists').click(function (event) {
+    $('#playlistselectvertical .chosen-container').click(function (event) {
+        if($('#playlistselectvertical #clearChoosenPlaylists:hover').length==0)
+         $(".chosen-drop").addClass("visible")
+
+    } );
+
+
+    $('#playlistselectvertical #clearChoosenPlaylists').click(function (event) {
 
         console.log("......................----")
         var unsafed = false;
@@ -493,15 +500,15 @@ uiController.init = function () {
             uiController.popupConfirm = {doIt:function(){
                 uiController.showPlaylists();
             }}
-          $("#popupConfirm").popup("open");
+            setTimeout(function(){
+                $("#popupConfirm").popup("open");
+            },150)
 
         }
         else{
             uiController.showPlaylists();
 
         }
-        event.stopImmediatePropagation();
-        event.stopPropagation();
 
     });
 

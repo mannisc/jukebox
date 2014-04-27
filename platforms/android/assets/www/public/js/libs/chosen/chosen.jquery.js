@@ -177,7 +177,7 @@
     AbstractChosen.prototype.input_focus = function(evt) {
       var _this = this;
 
-      if (this.is_multiple) {
+        if (this.is_multiple) {
         if (!this.active_field) {
           return setTimeout((function() {
             return _this.container_mousedown();
@@ -387,6 +387,7 @@
 
     AbstractChosen.prototype.choices_click = function(evt) {
       evt.preventDefault();
+
       if (!(this.results_showing || this.is_disabled)) {
         return this.results_show();
       }
@@ -605,7 +606,7 @@
         _this.keydown_checker(evt);
       });
       this.search_field.bind('focus.chosen', function(evt) {
-        _this.input_focus(evt);
+          _this.input_focus(evt);
       });
       if (this.is_multiple) {
         return this.search_choices.bind('click.chosen', function(evt) {
@@ -647,7 +648,9 @@
     };
 
     Chosen.prototype.container_mousedown = function(evt) {
-      if (!this.is_disabled) {
+
+
+        if (!this.is_disabled) {
         if (evt && evt.type === "mousedown" && !this.results_showing) {
           evt.preventDefault();
         }
@@ -798,6 +801,7 @@
     Chosen.prototype.results_hide = function() {
       if (this.results_showing) {
         this.result_clear_highlight();
+          this.container.find(".chosen-drop").removeClass("visible");//CHANGED
         this.container.removeClass("chosen-with-drop");
         this.form_field_jq.trigger("chosen:hiding_dropdown", {
           chosen: this
