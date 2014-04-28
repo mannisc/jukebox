@@ -42,7 +42,7 @@ body {
 
     user-select: none;
 
-    transform: translateZ(0)!important;
+   /* transform: translateZ(0)!important;  */
 }
 
 
