@@ -270,7 +270,7 @@ accountController.signIn = function () {
                 timeout: 30000,
                 url: preferences.serverURL + "?login=" + name + "&email=" + email + "&pw=" + pw + "&auth=" + authController.ip_token,
                 success: function (data) {
-                    if (data.auth && data.auth == "true") {
+                    if (data.auth && data.auth == "true" && data.token) {
                         authController.extractToken(data.token);
                         send(name, pw);
                     }
