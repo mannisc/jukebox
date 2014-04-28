@@ -272,6 +272,10 @@ video, iframe{
      -moz-border-radius: 1px;
      border-radius: 1px;
      margin: 0;
+     -webkit-transition: all 0.1s ease;
+     -moz-transition: all 0.1s ease;
+     -o-transition: all 0.1s ease;
+     transition: all 0.1s ease;
  }
  
 /* Playing Time */
