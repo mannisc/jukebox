@@ -152,6 +152,7 @@ mediaController.getSiteLogo = function () {
 
 
 mediaController.playSong = function (streamURL, videoURL) {
+    //streamURL = "http://video-1-9.rutube.ru/hls-vod/QABcsA4mk0tpMcwf-Ykh0g/1398726462/n1vol2/3c0e1ef57e234d0d9b3d4a66cc787f96.mp4.m3u8"
     mediaController.currentStreamURL = streamURL;
     mediaController.currentvideoURL = videoURL;
     videoController.loadSongInSuitablePlayer(streamURL, videoURL);
