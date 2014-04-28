@@ -195,12 +195,21 @@ ul.gridlayout #songOptions{
 }
 
 
+.songlist li a {
+-moz-perspective: 150px;
+-moz-perspective-origin: 32px 50%;
+ -ms-perspective: 150px;
+    -ms-perspective-origin: 32px 50%;
+}
 
+.songlist li{
+    -moz-transform: translate3d(0,0,0);
+}
 
 .songlist li:hover a img.ui-li-icon{
     -webkit-transform: scale(1.21);
-    -moz-transform: scale(1.21);
-    transform: scale(1.21)!important;
+    -ms-transform: scale(1.21)!important;
+    /*transform: none!important; NOT WORKING FOR FIREFOX*/
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%!important;
     z-index:10;
@@ -280,11 +289,11 @@ ul.gridlayout #songOptions{
 .songlist li {
     -webkit-perspective:  150;
     -webkit-perspective-origin: 32px 50%;
-    -moz-perspective: 150;
+    -moz-perspective: 150px;
     -moz-perspective-origin: 32px 50%;
-    -ms-perspective: 150;
+    -ms-perspective: 150px;
     -ms-perspective-origin: 32px 50%;
-    perspective: 150;
+    perspective: 150px;
     perspective-origin: 32px 50%;
 }
 
@@ -297,8 +306,9 @@ ul.gridlayout #songOptions{
     -webkit-animation:spin 2s ease infinite!important;
     -moz-animation:spin 2s ease infinite!important;
     animation:spin 2s ease infinite!important;
-
 }
+
+
 
 
 .songlist li.loadedsong.stillloading .loadingSongImg{
@@ -358,11 +368,11 @@ ul.gridlayout #songOptions{
 
     -webkit-perspective:  150;
     -webkit-perspective-origin: 50% 50%;
-    -moz-perspective: 150;
+    -moz-perspective: 150px;
     -moz-perspective-origin: 50% 50%;
-    -ms-perspective: 150;
+    -ms-perspective: 150px;
     -ms-perspective-origin: 50% 50%;;
-    perspective: 150;
+    perspective: 150px;
     perspective-origin: 50% 50%;
     -webkit-transform: scale(0.68)!important;
     -moz-transform: scale(0.68)!important;
@@ -531,7 +541,7 @@ ul.gridlayout #songOptions{
 .songlist li.loadedsong.stillloading .loadingSongImg{
     background-image:url(../img/playloading.png)!important;
     display:block!important;
-    opacity:0;
+    opacity:0.95;
     /*-webkit-transition: all 15s ease;
     -moz-transition: all 0.15s ease;
     -o-transition: all 0.15s ease;
@@ -544,10 +554,13 @@ ul.gridlayout #songOptions{
     transition: opacity 0.2s ease;
 
     -webkit-transform: scale(0.8)!important;
-    -moz-transform: scale(0.8)!important;
-    transform: scale(0.8)!important;
+    /* -moz-transform: scale(0.8)!important;  */
+    -ms-transform: scale(0.8)!important;
+
+    /*transform: none!important; NOT WORKING FOR FIREFOX*/
 
 }
+
 
 
 
@@ -1054,6 +1067,7 @@ ul.gridlayout #songOptions{
 .iScrollIndicator{
     background: rgb(55, 55, 55)!important;
     border: 1px solid rgba(155, 155, 155, 0.6)!important;
+    opacity:0.9!important;
 }
 
 
@@ -1095,10 +1109,12 @@ ul.gridlayout #songOptions{
     height: 10px;
 
     border: 1px solid rgba(155, 155, 155, 0.6)!important;
+    background-color: rgba(86, 199, 231,0.8);
+     /*
     background-image: -moz-radial-gradient(45px 45px 45deg, circle cover,  rgba(86, 199, 231,0.8) 0%,  rgba(86, 199, 231,0.8) 100%, rgba(44,124,145,0.8) 95%);
     background-image: -webkit-radial-gradient(45px 45px, circle cover, rgba(44,124,145,0.8), rgba(86, 199, 231, 0.80));
     background-image: radial-gradient(45px 45px 45deg, circle cover, rgba(86, 199, 231,0.8) 0%, rgba(86, 199, 231,0.8) 100%, rgba(44,124,145,0.8) 95%);
-
+      */
 
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
