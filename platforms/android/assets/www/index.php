@@ -17,7 +17,7 @@
     specific language governing permissions and limitations
     under the License.
 -->
-<html ng-app>
+<html ng-app="mainApp">
 <head>
     <!--meta charset="utf-8"/>
     <meta name="format-detection" content="telephone=no"/>
@@ -83,7 +83,6 @@
         window.onerror = function (msg, url, linenumber) {
 
             console.log("ERROR! : " + url + "(" + linenumber + ") : " + JSON.stringify(msg));
-
             // Send Error to server
             if (true || Math.random() > .1) {
                 // Only log 10% of errors
@@ -210,7 +209,7 @@
 
     <ul  data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
-        <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast" ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1"><img
+        <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a ><img
                 src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" ><img src="public/img/empty.png"
                                                                                                                                                                                                    class="loadingSongImg"   >
 
@@ -591,6 +590,7 @@
 <!-- Libraries -->
 <!-- AngularJS -->
 <script type="text/javascript" src="public/js/libs/angular.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-touch.js"></script>
 
 <!-- jQuery -->
 <script type="text/javascript" src="public/js/libs/jquery-ui.js"></script>
