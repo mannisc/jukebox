@@ -18,14 +18,41 @@
  ***********************************************
  */
 
+
 /**
  * Defines NG Module mainApp
  * @type {*|ng.$compileProvider}
  */
-var mainApp = angular.module('mainApp', ['ngRoute', 'ngSanitize']);
+var mainApp = angular.module('mainApp', ['ngTouch' ]);
 
+/*
+mainApp.directive("ngTap", function() {
+    return function($scope, $element, $attributes) {
+        alert("x")
+        var tapped;
+        tapped = false;
+        $element.bind("click", function() {
+            alert("c")
 
-
+            if (!tapped) {
+                return $scope.$apply($attributes["ngTap"]);
+            }
+        });
+        $element.bind("touchstart", function(event) {
+            return tapped = true;
+        });
+        $element.bind("touchmove", function(event) {
+            tapped = false;
+            return event.stopImmediatePropagation();
+        });
+        return $element.bind("touchend", function() {
+            alert("!")
+            if (tapped) {
+                return $scope.$apply($attributes["ngTap"]);
+            }
+        });
+    };
+});
 
 
 // Code
