@@ -93,9 +93,6 @@ mediaController.mediaEnded = function () {
 }
 
 
-
-
-
 mediaController.sendRating = function (rating) {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         var VideoURL = mediaController.currentvideoURL;
@@ -134,19 +131,34 @@ mediaController.showDuration = function (songversion) {
 
 
 mediaController.getSiteLogo = function () {
-    if (mediaController.currentvideoURL.search(".dailymotion.com") > -1||mediaController.currentvideoURL.search("/dailymotion.com") > -1) {
+    if (mediaController.currentvideoURL.toLowerCase().search(".dailymotion.com") > -1 || mediaController.currentvideoURL.toLowerCase().search("/dailymotion.com") > -1) {
         return "dailymotion.png"
-    } else if (mediaController.currentvideoURL.search(".youtube.") > -1||mediaController.currentvideoURL.search("/youtube.") > -1) {
+    } else if (mediaController.currentvideoURL.toLowerCase().search(".youtube.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/youtube.") > -1) {
         return "youtube.png"
-    } else if (mediaController.currentvideoURL.search(".muzu.tv") > -1||mediaController.currentvideoURL.search("/muzu.tv")>-1) {
+    } else if (mediaController.currentvideoURL.toLowerCase().search(".muzu.tv") > -1 || mediaController.currentvideoURL.toLowerCase().search("/muzu.tv") > -1) {
         return "muzu.png"
-    }  else if (mediaController.currentvideoURL.search(".vimeo.") > -1||mediaController.currentvideoURL.search("/vimeo.")>-1) {
+    } else if (mediaController.currentvideoURL.toLowerCase().search(".vimeo.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/vimeo.") > -1) {
         return "vimeo.png"
-    }  else if (mediaController.currentvideoURL.search(".photobucket.") > -1||mediaController.currentvideoURL.search("/photobucket.")>-1) {
+    } else if (mediaController.currentvideoURL.toLowerCase().search(".photobucket.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/photobucket.") > -1) {
         return "photobucket.png"
+    } else if (mediaController.currentvideoURL.toLowerCase().search(".metacafe.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/metacafe.") > -1) {
+        return "metacafe.png"
+    } else if (mediaController.currentvideoURL.toLowerCase().search(".veoh.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/veoh.") > -1) {
+        return "veoh.png"
+
+    } else if (mediaController.currentvideoURL.toLowerCase().search(".blip.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/blip.") > -1) {
+        return "blip.png"
+
+    } else if (mediaController.currentvideoURL.toLowerCase().search(".myvideo.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/myvideo.") > -1) {
+        return "myvideo.png"
+
+    } else if (mediaController.currentvideoURL.toLowerCase().search(".clipfish.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/clipfish.") > -1) {
+        return "clipfish.png"
+
     }
-    alert(mediaController.currentvideoURL)
-    return "empty.png";
+
+    alert(mediaController.currentvideoURL.toLowerCase())
+    return "empty.png"
 
 }
 
@@ -408,10 +420,10 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
         },
         error: function () {
             loadError = true;
-           /* setTimeout(function () {
-                videoController.showBuffered(true);
-                videoController.showBuffering(false);
-            }, 500);*/
+            /* setTimeout(function () {
+             videoController.showBuffered(true);
+             videoController.showBuffering(false);
+             }, 500);*/
         },
         complete: function () {
 
@@ -661,9 +673,9 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
     //$("#videoplayer").css("opacity", "0");
     //$("#videoplayer").css("pointer-events", "none");
     /*setTimeout(function () {
-        videoController.showBuffering(false);
-        videoController.showBuffered(true);
-    }, 500);*/
+     videoController.showBuffering(false);
+     videoController.showBuffered(true);
+     }, 500);*/
     setTimeout(function () {
 
 
@@ -783,35 +795,33 @@ mediaController.toggleLyrics = function () {
 }
 
 
-
-mediaController.getCoverSong = function (index,song) {
+mediaController.getCoverSong = function (index, song) {
     console.dir("KKKKKKKKKKKKKKKK")
 
     console.dir(song)
-   if (song.isPlaylist)  {
+    if (song.isPlaylist) {
 
-       if(song.tracks&&song.tracks[index]){
-          if(song.tracks[index].isGoogleDrive){
-              return "background-image:url(public/img/playlistgdrive.png)" ;
+        if (song.tracks && song.tracks[index]) {
+            if (song.tracks[index].isGoogleDrive) {
+                return "background-image:url(public/img/playlistgdrive.png)";
 
-          }else{
-              return "background-image:url("+mediaController.getSongCover(song.tracks[index])+")" ;
+            } else {
+                return "background-image:url(" + mediaController.getSongCover(song.tracks[index]) + ")";
 
-          }
-       }
-      else{
-           return "background-image:url(public/img/playlist.png);opacity:0.9;" ;
-
-
-       }
+            }
+        }
+        else {
+            return "background-image:url(public/img/playlist.png);opacity:0.9;";
 
 
-   }else
-    return "display:none";
+        }
+
+
+    } else
+        return "display:none";
 
 
 }
-
 
 
 mediaController.getSongCover = function (song) {

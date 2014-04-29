@@ -114,7 +114,19 @@ uiController.gridLayout = false;
 //}
 
 uiController.init = function () {
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        $("#titleHeader").show();
+        $(" #iconHeader").css("opacity", "1");
 
+    } else {
+        setTimeout(function () {
+
+            $("#titleHeader").addClass("fadeincomplete");
+            $("#titleHeader").show();
+            $("#iconHeader").addClass("bounce");
+
+        }, 0);
+    }
 
     // Add BETA Status to Title
     $("#titleHeader").append('<span style="position: absolute; top: 10px;left: 170px;color: #a00; font-weight: 100; font-size: 10px;">BETA</span>');
@@ -201,11 +213,7 @@ uiController.init = function () {
         }
     })
 
-    setTimeout(function () {
-        $("#titleHeader").addClass("fadeincomplete");
-        $("#titleHeader").show();
-        $("#iconHeader").addClass("bounce");
-    }, 0);
+
     uiController.playedFirst = false;
 
 
@@ -261,24 +269,6 @@ uiController.init = function () {
 
 
     });
-
-
-    uiController.searchListScroll = new IScroll('#searchlist', {
-        interactiveScrollbars: true,
-        zoom: true,
-        scrollX: false,
-        scrollY: true,
-        mouseWheel: true,
-        zoomMin: 0.2,
-        zoomMax: 1,
-        startZoom: 1,
-        // wheelAction: 'zoom',
-        scrollbars: true,
-        noHorizontalZoom: true
-    });
-
-    // uiController.searchListScroll.on("scrollStart",function(){
-    //})
 
 
     playlistController.makePlayListScrollable();
@@ -393,16 +383,16 @@ uiController.init = function () {
         setTimeout(function () {
 
             for (var i = 0; i < playlistsOldLoaded.length; i++) {
-                var name =  playlistsOldLoaded[i];
-                var selections =  $('#playlistselectvertical .search-choice');
+                var name = playlistsOldLoaded[i];
+                var selections = $('#playlistselectvertical .search-choice');
                 var found = false;
                 for (var j = 0; j < selections.length; j++) {
-                    if($(selections.get(j)).text()==name){
+                    if ($(selections.get(j)).text() == name) {
                         found = true;
                         break;
                     }
                 }
-                if(!found){
+                if (!found) {
                     console.log("REMOVED")
                     var playlistgid = null;
                     for (var i = 0; i < playlistController.playlists.length; i++) {
@@ -475,38 +465,34 @@ uiController.init = function () {
 
 
     $('#playlistselectvertical .chosen-container').click(function (event) {
-        if($('#playlistselectvertical #clearChoosenPlaylists:hover').length==0)
-         $(".chosen-drop").addClass("visible")
+        if ($('#playlistselectvertical #clearChoosenPlaylists:hover').length == 0)
+            $(".chosen-drop").addClass("visible")
 
-    } );
+    });
 
 
     $('#playlistselectvertical #clearChoosenPlaylists').click(function (event) {
 
 
+        if (playlistController.unsafedSongsExists()) {
+            $("#playlistselectvertical .chosen-container").removeClass("chosen-with-drop");
+            $("#popupConfirm").popup("option", "positionTo", "#clearChoosenPlaylists");
+            $("#popupConfirm").popup("option", "transition", "pop");
 
-
-        if(playlistController.unsafedSongsExists()){
-           $("#playlistselectvertical .chosen-container").removeClass("chosen-with-drop");
-            $( "#popupConfirm" ).popup( "option", "positionTo", "#clearChoosenPlaylists" );
-            $( "#popupConfirm" ).popup( "option", "transition", "pop" );
-
-            uiController.popupConfirm = {doIt:function(){
+            uiController.popupConfirm = {doIt: function () {
                 uiController.showPlaylists();
             }}
-            setTimeout(function(){
+            setTimeout(function () {
                 $("#popupConfirm").popup("open");
-            },150)
+            }, 150)
 
         }
-        else{
+        else {
             uiController.showPlaylists();
 
         }
 
     });
-
-
 
 
     $('.chosen-container input').blur(function () {
@@ -523,6 +509,7 @@ uiController.init = function () {
 
     uiController.updateUI();
     setTimeout(function () {
+
         uiController.updateUI();
         $("#playlist").addClass("fadeincomplete");
         // $("#playlist").css("opacity", "1");
@@ -531,44 +518,49 @@ uiController.init = function () {
 
     $("#playlistselectvertical .ui-input-clear").appendTo("#playlistselectvertical .ui-input");
 
-    var playIndicator = $('<div class="iScrollPlayIndicator fadeincomplete" ' +
-        'style="box-sizing: border-box; ' +
-        ' position: absolute;' +
-        /*' background-color: rgba(245,245,245, 0.498039);' +
-         ' border: 1px solid rgba(255, 255, 255, 0.901961);' +
-         ' border-top-left-radius: 3px;' +
-         ' border-top-right-radius: 3px;' +
-         ' border-bottom-right-radius: 3px;' +
-         ' border-bottom-left-radius: 3px;' +
-         ' width: 100%;' +
-         ' display: block; height: 9px;' +  */
-        ' -webkit-transform: translate(0px, 0px)' +
-        ' -moz-transform: translate(0px, 0px)' +
-        ' -ms-transform: translate(0px, 0px)' +
-        ' transform: translate(0px, 0px)' +
-        ' translateZ(0px);' +
-        ' background-position: initial initial;' +
-        ' background-repeat: initial initial;' +
-        ' display:none;"></div>'
 
-    );
+    setTimeout(function () {
+        var playIndicator = $('<div class="iScrollPlayIndicator fadeincomplete" ' +
+            'style="box-sizing: border-box; ' +
+            ' position: absolute;' +
+            /*' background-color: rgba(245,245,245, 0.498039);' +
+             ' border: 1px solid rgba(255, 255, 255, 0.901961);' +
+             ' border-top-left-radius: 3px;' +
+             ' border-top-right-radius: 3px;' +
+             ' border-bottom-right-radius: 3px;' +
+             ' border-bottom-left-radius: 3px;' +
+             ' width: 100%;' +
+             ' display: block; height: 9px;' +  */
+            ' -webkit-transform: translate(0px, 0px)' +
+            ' -moz-transform: translate(0px, 0px)' +
+            ' -ms-transform: translate(0px, 0px)' +
+            ' transform: translate(0px, 0px)' +
+            ' translateZ(0px);' +
+            ' background-position: initial initial;' +
+            ' background-repeat: initial initial;' +
+            ' display:none;"></div>'
 
-    var playIndicatorPlalist = playIndicator.clone();
+        );
 
-
-    playIndicator.appendTo("#searchlist .iScrollVerticalScrollbar");
-
-    playIndicator.click(function () {
-        uiController.searchListScroll.scrollToElement(".loadedsong", 700);
-    });
+        var playIndicatorPlalist = playIndicator.clone();
 
 
-    playIndicatorPlalist.appendTo("#playlistInner .iScrollVerticalScrollbar");
-    playIndicatorPlalist.click(function () {
-        uiController.playListScroll.scrollToElement(".loadedsong", 700);
-    });
+        playIndicator.appendTo("#searchlist .iScrollVerticalScrollbar");
 
-    $(".iScrollIndicator").addClass("fadeincomplete");
+        playIndicator.click(function () {
+            uiController.searchListScroll.scrollToElement(".loadedsong", 700);
+        });
+
+
+        playIndicatorPlalist.appendTo("#playlistInner .iScrollVerticalScrollbar");
+        playIndicatorPlalist.click(function () {
+            uiController.playListScroll.scrollToElement(".loadedsong", 700);
+        });
+
+        $(".iScrollIndicator").addClass("fadeincomplete");
+
+
+    }, 0)
 
     setTimeout(function () {
         $("#inputclearhide").remove();
@@ -595,19 +587,6 @@ uiController.init = function () {
 
 
 };
-
-
-uiController.styleTopButtons = function () {
-    if (!accountController.loggedIn) {
-        $("#playingSongInfoLink").css("right", "2px");
-        $("#buySongLink").css("right", "2px");
-    } else {
-
-        $("#playingSongInfoLink").css("right", "2px");
-        $("#buySongLink").css("right", "2px");
-    }
-
-}
 
 
 uiController.isMaxVideoSizeFaktor = function (sizeVideo) {

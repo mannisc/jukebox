@@ -411,12 +411,16 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
     videoController.isLoading = false;
     playbackController.isLoading = false;
 
+    $("#backgroundVideo").css("opacity","0");
+
     videoController.setMaxTime(0);
     videoController.setProgressPercentage(0);
     videoController.setBufferedPercentage(0);
 
-    if (videoController.videoPlayer && videoController.videoPlayer.unload)
+
+    if (videoController.videoPlayer && videoController.videoPlayer.unload) {
         videoController.videoPlayer.unload();
+    }
 
 
     //TODO Select embedded Player
@@ -437,10 +441,10 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
 
     if (!playbackController.firstPlayedSongAlready) {
         playbackController.firstPlayedSongAlready = true;
-        $("#backgroundImage").addClass("fadeoutcomplete2s");
+        $("#backgroundImage").addClass("fadeoutcomplete");
         setTimeout(function () {
             $("#backgroundImage").hide();
-        }, 2000)
+        }, 1000)
     }
 
 }
@@ -452,10 +456,13 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
  */
 videoController.playSong = function () {
     if (!videoController.isPlaying && playbackController.playingSong) {
-        $("video, iframe").css("opacity", "1");
+        $("#backgroundVideo").removeClass("animated")
+        $("#backgroundVideo").css("opacity", "0");
+
         $("#siteLogo").hide();
         videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
         videoController.videoPlayer.play();
+
         videoController.isPlaying = true;
         if (!playbackController.isLoading && !$(".songlist li.loadedsong").hasClass("firstplay")) {
             $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
@@ -998,6 +1005,9 @@ videoController.playingSong = function () {
 
 
     if (playbackController.playingSong) {
+       $("#backgroundVideo").addClass("animated")
+        $("#backgroundVideo").css("opacity", "1");
+
         $("#siteLogoImage").attr("src", "public/img/sites/" + mediaController.getSiteLogo());
         $("#siteLogo").show();
 
