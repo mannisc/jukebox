@@ -94,7 +94,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
 
     if (!resetingSong) {
         //Check if song already playing
-        var isSameSongAsLoadedSong = playbackController.playingSong && (((!playbackController.playingSong.gid && !song.gid) || (playbackController.playingSong.gid && song.gid)) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song));
+        var isSameSongAsLoadedSong =songListElement.hasClass("oldloadedsong")||(playbackController.playingSong && (((!playbackController.playingSong.gid && !song.gid) || (playbackController.playingSong.gid && song.gid)) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song)));
         //New song is already loading/playing song
 
         if (isSameSongAsLoadedSong) {
@@ -147,7 +147,9 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
     // $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
 
     //Clear other loading songs
-    $(".songlist li").removeClass("loadedsong playing pausing stillloading");
+    $(".songlist li.loadedsong.stillloading").removeClass("loadedsong stillloading");
+
+    $(".songlist li.loadedsong").addClass("oldloadedsong");    //playing pausing
 
 
     if (!resetingSong) {
@@ -223,9 +225,11 @@ playbackController.resetPlayingSong = function () {
     // $("#videoplayer").css("pointer-events", "none");
 
     playbackController.playingSong = playbackController.playingOldSong;
+    $(".songlist li").removeClass("loadedsong playing stillloading pausing");
 
     if (playbackController.playingSong) {
         playbackController.playSongTimer = 0;
+
         playbackController.playSong(playbackController.playingSong, true);      //TODO REMOVE PLAY SONG HERE
         playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
 
@@ -234,7 +238,6 @@ playbackController.resetPlayingSong = function () {
         //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
         $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
 
-        $(".songlist li").removeClass("loadedsong playing stillloading pausing");
         videoController.disableControls(true);
         videoController.disableStopControl(true);
         // $("#videoplayer").css("opacity", "0");
