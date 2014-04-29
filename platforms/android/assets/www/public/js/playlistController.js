@@ -190,12 +190,10 @@ playlistController.showSongOptions = function (listElement, song) {
             $("#songOptions").removeClass("noanim").show();
 
             setTimeout(function () {
-                $("#songOptions").css("width", "0px");
 
 
                 $("#songOptions").css("left", (63 + width) + "px");
 
-                $("#songOptions").css("width", "199px");
                 $("#songOptions").css("opacity", "0.83");
 
             }, 0)
@@ -225,10 +223,13 @@ playlistController.hideSongOptions = function () {
 playlistController.unsafedSongsExists = function () {
 
     for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
-        if (!playlistController.loadedPlaylistSongs[i].playlistgid) {
+        if (!playlistController.loadedPlaylistSongs[i].isPlaylist)
+            return false;
+
+        if (!playlistController.loadedPlaylistSongs[i].playlistgid)
             return true;
 
-        }
+
     }
 
     return false;
@@ -240,16 +241,6 @@ playlistController.unsafedSongsExists = function () {
  */
 playlistController.playSelection = function (event) {
     event.stopPropagation();
-
-
-
-
-
-
-
-
-
-
 
 
     playlistController.deselectSongs();

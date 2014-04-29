@@ -40,6 +40,27 @@ searchController.preloadedPopularSongs = searchController.preloadedPopularSongs.
 
 searchController.init = function () {
 
+
+    uiController.searchListScroll = new IScroll('#searchlist', {
+        interactiveScrollbars: true,
+        zoom: true,
+        scrollX: false,
+        scrollY: true,
+        mouseWheel: true,
+        zoomMin: 0.2,
+        zoomMax: 1,
+        startZoom: 1,
+        // wheelAction: 'zoom',
+        scrollbars: true,
+        noHorizontalZoom: true,
+        HWCompositing:false
+
+    });
+
+    // uiController.searchListScroll.on("scrollStart",function(){
+    //})
+
+
     $("#searchinput").on("input", function () {
         $("#playlistInner .iScrollPlayIndicator").hide();
         $("#searchlist .iScrollPlayIndicator").hide();
@@ -64,7 +85,6 @@ searchController.init = function () {
 
     searchController.activateButton(0, true);
     if (!urlParams.search || urlParams.search == "") {
-
         searchController.showPopulars();
     }
 
@@ -230,6 +250,7 @@ searchController.completeSearch = function (list, appendListInFront, searchID) {
             }, 100)
             setTimeout(function () {
                 uiController.searchListScroll.refresh();
+
             }, 1000)
         }
     }
