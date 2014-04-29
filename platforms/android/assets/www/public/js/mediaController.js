@@ -705,6 +705,8 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
         setTimeout(function () {
 
+            $(".songlist li.oldloadedsong").removeClass("oldloadedsong loadedsong playing pausing");    //
+
             if ($(listElement.get(0)).hasClass("stillloading")) {
                 $(listElement.get(0)).addClass("playing");
                 $(listElement.get(0)).removeClass("stillloading")
