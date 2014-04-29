@@ -358,10 +358,47 @@ ul.gridlayout #songOptions{
 
 
 
+.songlist li .songTrend{
+    background-size: 10px 10px!important;
+    width: 10px!important;
+    height: 10px!important;
+    max-width: 20px!important;
+    max-height: 20px!important;
+    left: 75px!important;
+    top: 20px;
+    opacity: 0.8!important;
+    z-index: 10;
+    overflow: visible;
+    position: absolute;
+    -moz-box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+    opacity: 0.9;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
+}
+
+
+
+.songWinner{
+    background-image:url(../img/winner.png)!important;
+}
+
+.songLoser{
+    background-image:url(../img/loser.png)!important;
+}
+
+.songNochange{
+    background-image:url(../img/nochange.png)!important;
+}
+
 
 .songlist li .playlistCoverSong{
-    /* background-image:url(../img/songload.gif)!important;
-     background-size:9;*/
+ /* background-image:url(../img/songload.gif)!important;
+  background-size:9;*/
     width: 65px!important;
     height: 65px!important;
     max-width: 65px!important;
@@ -377,10 +414,6 @@ ul.gridlayout #songOptions{
     -moz-box-shadow: none!important;
     -webkit-box-shadow: none!important;
     box-shadow: none!important;
-    -webkit-transition: background 0.5s ease;
-    -moz-transition: background  0.5s ease;
-    -o-transition: background 0.5s ease;
-    transition: background 0.5s ease;
     opacity:0.9;
 
     -webkit-transition: all 0.3s ease;
