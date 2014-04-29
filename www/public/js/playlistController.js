@@ -223,7 +223,8 @@ playlistController.hideSongOptions = function () {
 playlistController.unsafedSongsExists = function () {
 
     for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
-        if (!playlistController.loadedPlaylistSongs[i].isPlaylist)
+
+        if (playlistController.loadedPlaylistSongs[i].isPlaylist)
             return false;
 
         if (!playlistController.loadedPlaylistSongs[i].playlistgid)
