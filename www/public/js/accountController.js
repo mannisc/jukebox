@@ -36,6 +36,20 @@ accountController.setCookie = function (cname, cvalue, exdays) {
 
 
 accountController.init = function () {
+
+
+    $("#popupLogin" ).popup({
+        afteropen: function( event, ui ) {
+            $('#signinusername').focus();
+        }
+    });
+    $("#popupRegister" ).popup({
+        afteropen: function( event, ui ) {
+            $('#registerusername').focus();
+        }
+    });
+
+
     var trylogin = function () {
 
 
@@ -267,7 +281,7 @@ accountController.signIn = function () {
                 timeout: 30000,
                 url: preferences.serverURL + "?login=" + name + "&email=" + email + "&pw=" + pw + "&auth=" + authController.ip_token,
                 success: function (data) {
-                    if (data.auth && data.auth == "true" && data.token) {
+                    if (data.auth && data.auth == "true") {
                         authController.extractToken(data.token);
                         send(name, pw);
                     }
