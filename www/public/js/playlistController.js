@@ -416,6 +416,42 @@ uiController.stopPlaylistScrollingOnClick = function (event) {
 
 
 /**
+ *
+ */
+playlistController.getTrendStyle = function(trend, song){
+   if(song.trend==trend){
+
+     return "";
+   }
+    return "display:none";
+
+}
+/**
+ *
+ */
+playlistController.getTrendTitleStyle   = function(song){
+     console.log(song.trend)
+    if(song.trend==0||song.trend==1||song.trend==2){
+        return "margin-left:13px!important;";
+    }
+    return "";
+
+}
+
+/**
+ *
+ */
+playlistController.getPlaysText= function(song) {
+    if(song.playcount!==undefined&&song.playcount)
+      return " - "+ song.playcount
+
+    return "";
+
+}
+
+
+
+/**
  * Make Playlist Scrollable
  */
 playlistController.makePlayListScrollable = function () {

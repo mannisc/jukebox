@@ -210,12 +210,15 @@
     <ul  data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
         <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a ><img
-                src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" ><img src="public/img/empty.png"
-                                                                                                                                                                                                   class="loadingSongImg"   >
+                src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" ><img src="public/img/empty.png"    class="loadingSongImg"   >
 
-            <h3>{{song.name}}</h3>
+            <img src="public/img/emtpy.png" class="songWinner songTrend" style="{{playlistController.getTrendStyle(0,song)}}">
+            <img src="public/img/emtpy.png" class="songLoser songTrend" style="{{playlistController.getTrendStyle(1,song)}}">
+            <img src="public/img/emtpy.png" class="songNochange songTrend" style="{{playlistController.getTrendStyle(2,song)}}">
 
-            <p>{{mediaController.getSongArtist(song)}}</p></a>
+            <h3 style="{{playlistController.getTrendTitleStyle(song)}}" >{{song.name}}</h3>
+
+            <p>{{mediaController.getSongArtist(song)}} <span style="font-style: italic;font-size: .93em;margin-left:2px;">  {{playlistController.getPlaysText(song)}}</span> </p></a>
         </li>
 
 
@@ -455,7 +458,8 @@
                 </span>
             <button onclick="accountController.register();" type="submit" id="registerButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Create Account</button>
             <hr>
-            <fb:login-button show-faces="true" width="200"  max-rows="1" size="medium">Sign in with Facebook</fb:login-button>
+            <fb:login-button show-faces="true" width="200"  max-rows="1" size="large">Sign in with Facebook</fb:login-button>
+
         </div>
     </form>
 </div>
@@ -474,7 +478,7 @@
             <input type="password" name="pass" id="signinpw" value="" placeholder="Password" data-theme="a" >
             <button onclick="accountController.signIn();" type="submit" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
             <hr>
-            <fb:login-button show-faces="true" width="200"  max-rows="1" size="medium">Sign in with Facebook</fb:login-button>
+            <fb:login-button show-faces="true" width="200"  max-rows="1" size="large">Sign in with Facebook</fb:login-button>
         </div>
     </form>
 </div>
