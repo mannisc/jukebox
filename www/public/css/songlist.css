@@ -549,14 +549,22 @@ ul.gridlayout #songOptions{
     animation-duration:2200ms!important;
 }
 
-.songlist li.selected:hover .loadingSongImg,.songlist li.stillloading .loadingSongImg {
-
+.songlist li.selected:hover .loadingSongImg{
 
     -webkit-animation:none !important;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
     -moz-animation:none !important;
     animation:none !important;
 
 }
+
+.songlist li.stillloading .loadingSongImg, .songlist li.stillloading:hover .loadingSongImg  , .songlist li.stillloading:hover .loadingSongImg:hover {
+    opacity:0!important;
+    -webkit-animation:none !important;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation:none !important;
+    animation:none !important;
+ }
+
+
 
 
 /* Animation */
