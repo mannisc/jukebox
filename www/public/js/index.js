@@ -77,6 +77,10 @@ var loadUrlParams = function(){
 
 
 $(document).ready(function () {
+
+
+
+
     $.mobile.loading( "show");
     var initPage = function () {
         if ($scope.loaded) {
