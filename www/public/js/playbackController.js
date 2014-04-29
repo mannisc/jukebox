@@ -190,7 +190,6 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
 
 
     $scope.safeApply();
-    uiController.styleTopButtons();
     $(songListElement.get(0)).addClass("loadedsong")
 
 

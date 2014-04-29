@@ -1,3 +1,14 @@
+
+
+
+
+.songlist{
+   /* -moz-transitionsdfsdf: -moz-transform 350ms ease 0s!important;  */
+    -moz-transition-timing-function: ease!important;
+}
+
+
+
 /*GRID LAYOUT   */
 #searchlist ul.gridlayout {
   margin: 0 auto!important;
@@ -20,8 +31,10 @@
 #songOptions{
     position: absolute;
     height: 38px;
+    width:199px;
     top: 14px;
     left: 63px;
+
   /*  background-image: -o-linear-gradient(right, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 80%,rgba(50,50,50,0) 100%);
     background-image: -moz-linear-gradient(right, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 80%,rgba(50,50,50,0) 100%);
     background-image: -webkit-linear-gradient(right, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 80%,rgba(50,50,50,0) 100%);
@@ -76,7 +89,7 @@ ul.gridlayout #songOptions{
     -ms-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
-
+    opacity:1;
 }
 
 
@@ -84,6 +97,7 @@ ul.gridlayout #songOptions{
     position: absolute;
     top: 1px;
     left: -3px;
+
 
 }
 
@@ -157,7 +171,6 @@ ul.gridlayout #songOptions{
 
 .songlist .ui-li-has-icon a {
     padding-left: 4.8em !important;
-    padding-top: 0.2em !important;
 
 }
 
@@ -196,19 +209,22 @@ ul.gridlayout #songOptions{
 
 
 .songlist li a {
+    padding-top: 3px !important;
+    padding-bottom: 11px !important;
+    height: 51px !important;
 -moz-perspective: 150px;
 -moz-perspective-origin: 32px 50%;
  -ms-perspective: 150px;
     -ms-perspective-origin: 32px 50%;
 }
 
-.songlist li{
-    -moz-transform: translate3d(0,0,0);
-}
+
 
 .songlist li:hover a img.ui-li-icon{
     -webkit-transform: scale(1.21);
-    -ms-transform: scale(1.21)!important;
+    -moz-transform: scale(1.23);
+    transform: scale(1.23);
+
     /*transform: none!important; NOT WORKING FOR FIREFOX*/
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%!important;
@@ -300,18 +316,24 @@ ul.gridlayout #songOptions{
 .songlist li.loadedsong.stillloading .ui-li-icon {
     opacity:1;
 
-    /*-webkit-transform: rotateY(300deg) scale(1.21)!important;
-        -moz-transform: rotateY(359deg) scale(1.21)!important;
-        transform: rotateY(359deg) scale(1.21)!important;*/
     -webkit-animation:spin 2s ease infinite!important;
     -moz-animation:spin 2s ease infinite!important;
     animation:spin 2s ease infinite!important;
+    animation-fill-mode:forwards;
+    -webkit-animation-fill-mode:forwards; /* Safari and Chrome */
+    -webkit-transition: none!important;
+    -moz-transition: none!important;
+    -o-transition:none!important;
+    transition: none!important;
+}
+
+.songlist li.loadedsong.stillloading:hover a img.ui-li-icon {
+    -moz-transform: none;
 }
 
 
 
-
-.songlist li.loadedsong.stillloading .loadingSongImg{
+.songlistDISABLED li.loadedsong.stillloading .loadingSongImg{
     /* background-size:9;*/
 
     -webkit-animation:spinplay 2s ease infinite!important;
@@ -387,14 +409,14 @@ ul.gridlayout #songOptions{
 .songlist li:hover.selected .playlistCoverSong img{
     left: 0!important;
     -webkit-transform: rotateY(360deg) scale(1.21)!important;
-    -moz-transform: rotateY(360deg) scale(1.21)!important;
-    transform: rotateY(360deg) scale(1.21)!important;
+    -moz-transform: rotateY(360deg) scale(1.23)!important;
+    transform: rotateY(360deg) scale(1.23)!important;
 }
 .songlist li.selected .playlistCoverSong img{
     left: 0!important;
     -webkit-transform: rotateY(360deg) scale(1.21)!important;
-    -moz-transform: rotateY(360deg) scale(1.21)!important;
-    transform: rotateY(360deg) scale(1.21)!important;
+    -moz-transform: rotateY(360deg) scale(1.23)!important;
+    transform: rotateY(360deg) scale(1.23)!important;
 }
 
 .songlist li .playlistCoverSong img{
@@ -422,13 +444,30 @@ ul.gridlayout #songOptions{
 
 
 .songlist li .playlistCoverSong .coverSong1{
-    left: 0!important;
+    left: -5px!important;
     -webkit-transform: rotateY(320deg) scale(1.05);
     -moz-transform: rotateY(320deg) scale(1.05);
     transform: rotateY(320deg) scale(1.05)!important
 
 
 }
+
+
+
+
+.songlist li .playlistCoverSong .coverSong2{
+    left: 6px!important;
+    z-index:30;
+
+}
+
+.songlist li .playlistCoverSong .coverSong3{
+    left: 17px!important;
+    z-index:20;
+
+}
+
+
 
 
 .songlist li:hover .playlistCoverSong .coverSong1{
@@ -455,25 +494,6 @@ ul.gridlayout #songOptions{
 }
 
 
-
-
-.songlist li .playlistCoverSong .coverSong2{
-    left: 12px!important;
-    z-index:30;
-
-}
-
-.songlist li .playlistCoverSong .coverSong3{
-    left: 22px!important;
-    z-index:20;
-
-}
-
-
-
-
-
-
 .songlist li .loadingSongImg{
 /* background-image:url(../img/songload.gif)!important;
  background-size:9;*/
@@ -494,32 +514,73 @@ ul.gridlayout #songOptions{
     -webkit-box-shadow: none!important;
     box-shadow: none!important;
 
-    background-image:url(../img/empty.png) !important;
+    background-image:none !important;
     background-size: 65px 65px!important;
-    -webkit-transition: background 0.5s ease;
-    -moz-transition: background  0.5s ease;
-    -o-transition: background 0.5s ease;
-    transition: background 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all  0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
     opacity:0;
 
 }
 
 
 .songlist li:hover .loadingSongImg:hover {
-    background-image:url(../img/unchecked.png)!important;
-    display:block!important;
-    opacity:1;
+   opacity:1!important;
 
 }
-
 
 
 .songlist li:hover .loadingSongImg {
     background-image:url(../img/unchecked.png) !important;
     display:block!important;
-    opacity:0.3;
+
+    opacity:0;  /* make things invisible upon start */
+    -webkit-animation:fadeinoutcomplete ease 1!important;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation:fadeinoutcomplete ease 1!important;
+    animation:fadeinoutcomplete ease 1!important;
+
+    -webkit-animation-fill-mode:forwards!important;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+    -moz-animation-fill-mode:forwards!important;
+    animation-fill-mode:forwards!important;
+
+    -webkit-animation-duration:2200ms!important;
+    -moz-animation-duration:2200ms!important;
+    animation-duration:2200ms!important;
 }
 
+.songlist li.selected:hover .loadingSongImg,.songlist li.stillloading .loadingSongImg {
+
+
+    -webkit-animation:none !important;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation:none !important;
+    animation:none !important;
+
+}
+
+
+/* Animation */
+
+/*fadeinoutcomplete*/
+@-moz-keyframes fadeinoutcomplete {
+    0% {  opacity:0}
+
+    50% {  opacity:0!important}
+    100% { opacity:0.8 }
+
+}
+
+@-webkit-keyframes fadeinoutcomplete {
+    0% {  opacity:0}
+    50% {  opacity:0}
+    100% { opacity:0.8 }
+}
+
+@keyframes fadeinoutcomplete{
+    0% {  opacity:0}
+    50% {  opacity:0}
+    100% { opacity:0.8 }
+}
 
 
 
@@ -538,7 +599,7 @@ ul.gridlayout #songOptions{
 }
 
 
-.songlist li.loadedsong.stillloading .loadingSongImg{
+.songlistDISABLED li.loadedsong.stillloading .loadingSongImg{
     background-image:url(../img/playloading.png)!important;
     display:block!important;
     opacity:0.95;
@@ -556,8 +617,9 @@ ul.gridlayout #songOptions{
     -webkit-transform: scale(0.8)!important;
     /* -moz-transform: scale(0.8)!important;  */
     -ms-transform: scale(0.8)!important;
+    -moz-transform: none;
 
-    /*transform: none!important; NOT WORKING FOR FIREFOX*/
+    transform: none; /*NOT WORKING FOR FIREFOX*/
 
 }
 
@@ -615,7 +677,7 @@ ul.gridlayout #songOptions{
     padding-top: 5px;
 }
 
-#searchlist {
+#searchlistDISABLED {
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -889,8 +951,8 @@ ul.gridlayout #songOptions{
     background-size:100%;
     background-repeat:no-repeat;
     -webkit-transform: scale(1.21);
-    -moz-transform: scale(1.21);
-    transform: scale(1.21)!important;
+    -moz-transform: scale(1.23);
+    transform: scale(1.23)!important;
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%!important;
 
@@ -1131,10 +1193,10 @@ ul.gridlayout #songOptions{
 
 /*Spinning CoverImage */
 @-moz-keyframes spin {
-    0% {  transform:rotateY(0deg) scale(1.21);  -moz-transform: rotateY(0deg) scale(1.21);}
-    40% {  transform:rotateY(45deg) scale(1.21);  -moz-transform: rotateY(45deg) scale(1.21);}
-    70% { transform:rotateY(360deg) scale(1.21); -moz-transform: rotateY(360deg)  scale(1.21); }
-    100% { transform:rotateY(360deg) scale(1.21); -moz-transform: rotateY(360deg)  scale(1.21); }
+    0% {  transform:rotateY(0deg) scale(1.23);  -moz-transform: rotateY(0deg) scale(1.23);}
+    40% {  transform:rotateY(45deg) scale(1.23);  -moz-transform: rotateY(45deg) scale(1.23);}
+    70% { transform:rotateY(360deg) scale(1.23); -moz-transform: rotateY(360deg)  scale(1.23); }
+    100% { transform:rotateY(360deg) scale(1.23); -moz-transform: rotateY(360deg)  scale(1.23); }
 
 }
 
@@ -1146,10 +1208,10 @@ ul.gridlayout #songOptions{
 }
 
 @keyframes spin{
-    0% { transform:rotateY(0deg) scale(1.21); }
-    40% { transform:rotateY(45deg) scale(1.21); }
-    70% { transform:rotateY(360deg) scale(1.21); }
-    100% { transform:rotateY(360deg) scale(1.21); }
+    0% { transform:rotateY(0deg) scale(1.23); }
+    40% { transform:rotateY(45deg) scale(1.23); }
+    70% { transform:rotateY(360deg) scale(1.23); }
+    100% { transform:rotateY(360deg) scale(1.23); }
 }
 
 

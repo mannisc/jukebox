@@ -83,11 +83,6 @@ var mediaelementPlayer = function (selector) {
                 that.container = $(selector).parents(".mejs-container");
                 that.containerVideo = $(selector).parents(".mejs-mediaelement");
 
-
-
-                that.container.find("video").css("opacity","0");
-
-
                 setTimeout(function () {
                     var oldSetProgressRail = that.mediaElementPlayer.setProgressRail;
                     that.mediaElementPlayer.setProgressRail = function () {
@@ -197,7 +192,7 @@ var mediaelementPlayer = function (selector) {
         videoController.setProgressPercentage(0);
         this.mediaElementPlayer.setSrc(url);
         this.mediaElementPlayer.load();
-        this.containerVideo.addClass("backgroundVideo").insertAfter("#backgroundImage");
+        this.containerVideo.addClass("backgroundVideo").appendTo("#backgroundVideo");
 
 
     }
