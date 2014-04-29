@@ -1006,7 +1006,7 @@ videoController.playingSong = function () {
 
     if (playbackController.playingSong) {
        $("#backgroundVideo").addClass("animated")
-        $("#backgroundVideo").css("opacity", "1");
+        $("#backgroundVideo").css("opacity", "0.3");
 
         $("#siteLogoImage").attr("src", "public/img/sites/" + mediaController.getSiteLogo());
         $("#siteLogo").show();
