@@ -150,10 +150,9 @@ dailymotionPlayer.load = function (url) {
 
     var videoid = getDailyMotionId(url);
 
-    //  $("#dmplayer").addClass("backgroundVideo").insertAfter("#backgroundImage");
     $("#dailymotionPlayer").hide();
     if(videoid){
-        $("#dmplayer").addClass("iframeVideo").insertAfter("#backgroundImage");
+        $("#dmplayer").addClass("iframeVideo").appendTo("#backgroundVideo");
         dailymotionPlayer.dailymotionVideoID = videoid;
         var PARAMS = {background : 'ABE866', autoplay : 0, chromeless : 1,
             foreground : '000000', related: 0, quality: 720,
@@ -217,23 +216,7 @@ dailymotionPlayer.setVolume = function (volume) {
 
 }
 
-/**
- * Set Fullscreen Mode
- * @param mode  0: Window ,1: Background ,2: Fullscreen
 
-dailymotionPlayer.setFullscreenMode = function (mode) {
-    //  dailymotionPlayer.dmplayer.fullscreen(fullscreen);
-
-
-    // $("#dmplayer").addClass("iframeVideo").insertAfter("#backgroundImage");
-    if (playbackController.playingSong)
-        $("#dmplayer").show();
-    $("#dmplayer").css("opacity", "0.8");
-    $("#videoplayer").hide();
-
-
-}
- */
 
 dailymotionPlayer.play = function () {
     if(dailymotionPlayer.dmplayer && dailymotionPlayer.apiready){

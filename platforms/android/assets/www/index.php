@@ -308,11 +308,6 @@
         </video>
 
 
-        <--OLD //TODO REMOVE -->
-        <video id="player1" style="display:none" >
-
-        </video>
-
 
         <!-- embedded players -->
         <div id="embedplayer" >
@@ -403,14 +398,14 @@
 
 <div id="songOptionsOriginal" style="display:none">
 
-    <img id="playSelection" onclick="playlistController.playSelection(event)"  ondblclick="playlistController.playSelection(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/playopt.png">
+    <img id="playSelection" onclick="playlistController.playSelection(event)"  ondblclick="playlistController.playSelection(event)"  width="53px"  src="public/img/playopt.png">
 
-    <img id="removeFromPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.removeSongsFromPlaylist(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/empty.png" >
+    <img id="removeFromPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.removeSongsFromPlaylist(event)"  width="53px" src="public/img/empty.png" >
 
-    <img id="addToPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.addSongsToPlaylist(event)"  width="53px" class="fadeincomplete1p5s" src="public/img/add.png">
-    <img id="searchSimilar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px" class="fadeincomplete1p5s" src="public/img/radio.png" >
+    <img id="addToPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.addSongsToPlaylist(event)"  width="53px"  src="public/img/add.png">
+    <img id="searchSimilar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px"  src="public/img/radio.png" >
 
-    <img id="shareSocial" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px" class="fadeincomplete1p5s" src="public/img/share.png" >
+    <img id="shareSocial" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px"  src="public/img/share.png" >
 
 </div>
 
@@ -571,6 +566,11 @@
 
 
 <img src="public/img/background.jpg" id="backgroundImage">
+<div id="backgroundVideo">
+
+</div>
+
+
 
 </div>
 

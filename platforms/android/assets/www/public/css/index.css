@@ -42,7 +42,6 @@ body {
 
     user-select: none;
 
-   /* transform: translateZ(0)!important;  */
 }
 
 
@@ -1097,9 +1096,29 @@ a, button, h1, h2, h3{
 .backgroundVideo *{
     width:100%!important;
     height:100%!important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+}
+
+#backgroundVideo{
+    width:100%!important;
+    height:100%!important;
 
 }
 
+
+#backgroundVideo.animated{
+    -moz-transform:translateZ(0.1);
+    -webkit-transition: all 1700ms ease;
+    -moz-transition: all 1700ms ease;
+    -ms-transition: all 1700ms ease;
+    -o-transition: all 1700ms ease;
+    transition: all 1700ms ease;
+}
 
 
 #backgroundImage {

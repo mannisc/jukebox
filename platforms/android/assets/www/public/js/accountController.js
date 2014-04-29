@@ -59,7 +59,6 @@ accountController.init = function () {
                                 accountController.userName = Base64.decode(userNameBase64);
                                 accountController.requestid = 1;
                                 $scope.safeApply();
-                                uiController.styleTopButtons();
                                 accountController.loadStoredData();
                             }
                         }
@@ -139,9 +138,7 @@ accountController.logout = function () {
 
             accountController.loggedIn = false;
             $('#popupLogin').popup('close');
-            uiController.styleTopButtons();
             $scope.safeApply();
-            uiController.styleTopButtons();
             /*setTimeout(function(){
              btn.addClass("animated");
              },500)*/
@@ -284,9 +281,7 @@ accountController.signIn = function () {
 
                             var btn = $('#header .ui-btn.animated').removeClass("animated");
                             $('#popupLogin').popup('close');
-                            uiController.styleTopButtons();
                             $scope.safeApply();
-                            uiController.styleTopButtons();
                             setTimeout(function () {
                                 btn.addClass("animated");
                             }, 500)
@@ -352,9 +347,7 @@ accountController.register = function () {
                             accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
                             var btn = $('#header .ui-btn.animated').removeClass("animated");
                             $('#registerLogin').popup('close');
-                            uiController.styleTopButtons();
                             $scope.safeApply();
-                            uiController.styleTopButtons();
                             setTimeout(function () {
                                 btn.addClass("animated");
                             }, 500)

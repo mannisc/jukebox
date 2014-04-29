@@ -70,13 +70,6 @@
 }
 
 
-#videoplayerInner video {
-    -webkit-transition: width 1.5s ease;
-    -moz-transition: width 1.5s ease;
-    -o-transition: width 1.5s ease;
-    transition: width 1.5s ease;
-
-}
 
 
 
@@ -195,13 +188,6 @@
 
 
 
-video, iframe{
-    -webkit-transition: height 1s ease!important;
-    -moz-transition: height 1s ease!important;
-    -o-transition: height 1s ease!important;
-    transition: height 1s ease!important;
-}
-
  #videocontrols  .videoControlElements-time-rail {
      -webkit-transition: all 0.1s ease;
      -moz-transition: all 0.1s ease;
@@ -257,6 +243,8 @@ video, iframe{
      background: #ddd;
      background: rgba(255, 255, 255, 0.9);
      margin: 0;
+     -webkit-transition: all 0.1s ease;
+     /*FIREFOX SLOW*/
  }
 
  .videoControlElements-controls .videoControlElements-volume-button .videoControlElements-volume-slider .videoControlElements-volume-handle {
@@ -273,9 +261,7 @@ video, iframe{
      border-radius: 1px;
      margin: 0;
      -webkit-transition: all 0.1s ease;
-     -moz-transition: all 0.1s ease;
-     -o-transition: all 0.1s ease;
-     transition: all 0.1s ease;
+     /*FIREFOX SLOW*/
  }
  
 /* Playing Time */

@@ -96,8 +96,7 @@ $(document).ready(function () {
                 $("#searchinput").focus();
             }, 500);
 
-            //Show loaded page
-            $("#page").css("opacity", "1");
+
             console.dir(urlParams);
             setTimeout(function () {
                 if(urlParams.search&&urlParams.search!=""){
@@ -124,6 +123,9 @@ $(document).ready(function () {
                 }
             }, 3500);
 
+            //Show loaded page
+            $scope.safeApply();
+            $("#page").css("opacity", "1");
 
         } else
             setTimeout(initPage, 50);

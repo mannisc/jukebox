@@ -1244,8 +1244,8 @@ IScroll.prototype = {
 		wheelDeltaY *= this.options.invertWheelDirection;
         //TODO CHANGED TEMPORARY FIX FOR SLOW MOUSEWHEEL SCROLLING ON FIREFOX
         if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
-            wheelDeltaX = wheelDeltaX*15;
-            wheelDeltaY =  wheelDeltaY*15;
+            wheelDeltaX = wheelDeltaX*20;
+            wheelDeltaY =  wheelDeltaY*20;
         }
 
 		if ( !this.hasVerticalScroll ) {
@@ -1289,7 +1289,7 @@ IScroll.prototype = {
 			newY = this.maxScrollY;
 		}
 
-		this.scrollTo(newX, newY, 500); //Changed from    this.scrollTo(newX, newY, 0);
+		this.scrollTo(newX, newY, 500); //CHANGED from    this.scrollTo(newX, newY, 0);
 
 // INSERT POINT: _wheel
 	},
