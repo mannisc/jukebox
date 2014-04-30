@@ -418,13 +418,8 @@ uiController.stopPlaylistScrollingOnClick = function (event) {
 /**
  *
  */
-playlistController.getTrendStyle = function(trend, song){
-   if(song.trend==trend){
-
-     return "";
-   }
-    return "display:none";
-
+playlistController.hasTrendStyle = function(trend, song){
+     return (song.trend===trend);
 }
 /**
  *
