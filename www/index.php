@@ -209,12 +209,11 @@
 
     <ul  data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
-        <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a ><img
-                src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" ><img src="public/img/empty.png"    class="loadingSongImg"   >
-
-            <img src="public/img/emtpy.png" class="songWinner songTrend" style="{{playlistController.getTrendStyle(0,song)}}">
-            <img src="public/img/emtpy.png" class="songLoser songTrend" style="{{playlistController.getTrendStyle(1,song)}}">
-            <img src="public/img/emtpy.png" class="songNochange songTrend" style="{{playlistController.getTrendStyle(2,song)}}">
+        <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+            <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" ><img src="public/img/empty.png"    class="loadingSongImg"   >
+            <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
+            <img ng-if ="playlistController.hasTrendStyle(1,song)" src="public/img/emtpy.png" class="songLoser songTrend" >
+            <img ng-if ="playlistController.hasTrendStyle(2,song)" src="public/img/emtpy.png" class="songNochange songTrend" >
 
             <h3 style="{{playlistController.getTrendTitleStyle(song)}}" >{{song.name}}</h3>
 
@@ -709,7 +708,7 @@
     <img src="public/img/loadertitle.gif">
     <img src="public/img/cross.png">
     <img src="public/img/loader/sprites.png">
-
+    <img src="public/img/empty.png">
     <canvas id="webglcanvas"></canvas>
 </div>
 
