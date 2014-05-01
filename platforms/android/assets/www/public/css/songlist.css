@@ -255,10 +255,16 @@ ul.gridlayout #songOptions{
 
 
 
-.songlist li p, .songlist li h3  {
+.songlist li p, .songlist li h3 {
        text-shadow: 0 /*{b-bup-shadow-x}*/ 2px /*{b-bup-shadow-y}*/ 1px /*{b-bup-shadow-radius}*/ #111 /*{b-bup-shadow-color}*/!important;
 
 }
+
+
+.songlist li h3.songTitleMargin {
+    margin-left:13px!important;
+}
+
 
 
 
@@ -293,6 +299,12 @@ ul.gridlayout #songOptions{
 
 }
 
+.songlist li.oldloadedsong.playing img.ui-li-icon{
+    background-image:url(../img/play.png)!important;
+    background-size:100%;
+    background-position: 0px 0px!important;
+
+}
 
 
 .songlist li.loadedsong.stillloading:hover a img.ui-li-icon {
@@ -315,7 +327,6 @@ ul.gridlayout #songOptions{
 
 .songlist li.loadedsong.stillloading .ui-li-icon {
     opacity:1;
-
     -webkit-animation:spin 2s ease infinite!important;
     -moz-animation:spin 2s ease infinite!important;
     animation:spin 2s ease infinite!important;
@@ -679,10 +690,10 @@ ul.gridlayout #songOptions{
 
 .songlist li .loadingSongImg {
     background-image:none;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
 
 
@@ -972,6 +983,7 @@ ul.gridlayout #songOptions{
     transition:  none!important;
 }
 
+/*
 #playlistInner .ui-li-has-icon img.removesong{
     max-height: 2.8em!important;
     max-width: 2.4em!important;
@@ -999,7 +1011,7 @@ ul.gridlayout #songOptions{
 
 }
 
-
+     */
 
 
 #playlisthelp{
@@ -1044,13 +1056,7 @@ ul.gridlayout #songOptions{
 }
 
 
-#controlbarplaylist img{
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-}
+
 
 
 #playlistselectvertical {
@@ -1165,6 +1171,7 @@ ul.gridlayout #songOptions{
 
 .iScrollVerticalScrollbar{
     width:9px!important;
+
 }
 
 .iScrollIndicator{

@@ -141,10 +141,6 @@ uiController.init = function () {
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
 
-    if (playlistController.loadedPlaylistSongs.length == 0) {
-        $("#saveplaylistbtn img").attr("src", "public/img/save.png");
-    } else
-        $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
 
 
     $("body").dblclick(function (event) {
@@ -322,37 +318,7 @@ uiController.init = function () {
 
     $("#playlistselectverticalform").on('change', function (evt, params) {
         console.log(".....................")
-        var playlistRemoved = function (playlistgid) {
-            for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
-                if (playlistController.loadedPlaylistSongs[i].playlistgid == playlistgid) {
-                    playlistController.loadedPlaylistSongs.splice(i, 1);
-                    i--;
-                }
-            }
 
-            if (playlistController.loadedPlaylistSongs.length == 0 && $('#playlistselectvertical .search-choice').length == 0) {
-                playlistController.loadedPlaylistSongs = playlistController.playlists;
-
-                $("#playlistInner .iScrollPlayIndicator").hide();
-                $("#searchlist .iScrollPlayIndicator").hide();
-
-                $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
-
-            } else
-                $("#clearChoosenPlaylists").show();
-
-
-            $("#playlistview").hide();
-            $scope.safeApply();
-            setTimeout(function () {
-                $("#playlistview").listview('refresh');
-                $("#playlistview").show();
-                playlistController.makePlayListSortable();
-                setTimeout(function () {
-                    uiController.playListScroll.refresh();
-                }, 150)
-            }, 0)
-        }
 
         //on trigger, all playlists still there, after ms gone if return key pressd
         var playlistsOldLoaded = [];
@@ -370,7 +336,6 @@ uiController.init = function () {
                 }
 
                 if (playlist != null) {
-                    $("#saveplaylistbtn img").attr("src", "public/img/save.png");
                     playlistController.loadPlaylist(playlist);
 
                 }
@@ -403,7 +368,7 @@ uiController.init = function () {
                     }
 
                     if (playlistgid != null) {
-                        playlistRemoved(playlistgid);
+                        playlistController.removeLoadedPlaylist(playlistgid);
                     }
 
                 }
@@ -433,7 +398,7 @@ uiController.init = function () {
             }
 
             if (playlistgid != null) {
-                playlistRemoved(playlistgid);
+                playlistController.removeLoadedPlaylist(playlistgid);
             }
 
 
@@ -671,6 +636,7 @@ uiController.toggleSearchButton = function (button) {
  * @param useSelected use the only seleted playlist
  */
 uiController.savePlaylistVisible = function (useSelected) {
+    $("#saveplaylistbtn img").css("opacity","0")
 
     var gid = playlistController.savePlaylist(useSelected);
 
@@ -678,7 +644,7 @@ uiController.savePlaylistVisible = function (useSelected) {
     $('#playlistselectverticalform').trigger('chosen:updated');
     $('#playlistselectverticalform option[value="' + gid + '"]').prop('selected', true);
     $('#playlistselectverticalform').trigger('chosen:updated');
-    playlistController.loadedPlaylistSongs = [];
+    //playlistController.loadedPlaylistSongs = [];
     // $scope.safeApply();
     setTimeout(function () {
         $('#playlistselectverticalform').trigger('chosen:close');
@@ -691,25 +657,29 @@ uiController.savePlaylistVisible = function (useSelected) {
 
     setTimeout(function () {
         $("#saveplaylistbtn").addClass("greenbackground");
-        $("#saveplaylistbtn img").attr("src", "public/img/check.png");
-        $("#saveplaylistbtn img").fadeTo(300, 0.35, function () {
+        //$("#saveplaylistbtn img").attr("src", "public/img/check.png");
+        $("#saveplaylistbtn img").fadeTo(300,1, function () {
+            setTimeout(function () {
+        $("#saveplaylistbtn img").fadeTo(300, 0.25, function () {
             $("#saveplaylistbtn img").fadeTo(300, 1, function () {
+
                 setTimeout(function () {
-                    $("#saveplaylistbtn img").fadeTo(300, 0.35, function () {
+                    $("#saveplaylistbtn img").fadeTo(300, 0.25, function () {
                         $("#saveplaylistbtn img").fadeTo(300, 1, function () {
                             setTimeout(function () {
                                 $("#saveplaylistbtn").removeClass("greenbackground");
-                                $("#saveplaylistbtn img").attr("src", "public/img/save.png");
-                                ;
+                                //$("#saveplaylistbtn img").attr("src", "public/img/save.png");
 
-                            }, 1000)
+
+                            }, 600)
                         });
                     });
 
-                }, 1000)
+                }, 600)
             });
         });
-
+            },600)
+        });
     }, 250)
 }
 
@@ -1020,13 +990,16 @@ uiController.toggleSidePanel = function () {
  * Show Playlists
  */
 uiController.showPlaylists = function () {
+
     $('#playlistselectverticalform option').prop('selected', false);
     $('#playlistselectverticalform').trigger('chosen:updated');
     setTimeout(function () {
         $('#playlistselectverticalform').trigger('chosen:close');
     }, 0)
     setTimeout(function () {
+        playlistController.loadedPlaylistSongs=[]
 
+        playlistController.playlistMode = true;
         $("#clearChoosenPlaylists").hide();
         uiController.updateUI();
         playlistController.loadedPlaylistSongs = playlistController.playlists;
