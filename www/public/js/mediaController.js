@@ -798,10 +798,13 @@ mediaController.toggleLyrics = function () {
 }
 
 
-mediaController.getCoverSong = function (index, song) {
-    console.dir("KKKKKKKKKKKKKKKK")
-
-    console.dir(song)
+/**
+ * Get the Cover for Playlist
+ * @param index
+ * @param song
+ * @returns {string}
+ */
+mediaController.getPlaylistCoverSong = function (index, song) {
     if (song.isPlaylist) {
 
         if (song.tracks && song.tracks[index]) {
@@ -815,7 +818,6 @@ mediaController.getCoverSong = function (index, song) {
         }
         else {
             return "background-image:url(public/img/playlist.png);opacity:0.9;";
-
 
         }
 

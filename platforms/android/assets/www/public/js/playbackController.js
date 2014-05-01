@@ -33,12 +33,9 @@ playbackController.doubleClickedElement = function (event) {
  */
 playbackController.clickedElement = function (event, element, onlyStyle) {
     //Swiped?
+    console.log("   SWIPE "+uiController.swipeTimer+"   -  "  +( Date.now() - uiController.swipeTimer));
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
-
-    if ($(".removesong:hover").length > 0)
-        return;
-
 
     //Clicked on Cover -> Select Song
     if (!element.isPlaylist && $(".songlist li img:hover").length > 0 || (event.clientX - $(".songlist:hover").offset().left) < 65) {
@@ -88,7 +85,8 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
         isPlaylistSong = false;
 
     if (isPlaylistSong)
-        var songListElement = $("#playlistInner li[data-songid='playlistsong" + songId + "'] ");
+
+       var songListElement = $("#playlistInner li[data-songgid='playlistsong" + songGlobalId + "'] ");
     else
         songListElement = $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
 
@@ -149,7 +147,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
     //Clear other loading songs
     $(".songlist li.loadedsong.stillloading").removeClass("loadedsong stillloading");
 
-    $(".songlist li.loadedsong").addClass("oldloadedsong");    //playing pausing
+    $(".songlist li.loadedsong").addClass("oldloadedsong").removeClass("loadedsong");    //playing pausing
 
 
     if (!resetingSong) {
@@ -536,6 +534,7 @@ playbackController.positionPlayIndicator = function () {
 
     if (playbackController.playingSong.gid) {
         var listElement = $("#playlistInner li[data-songgid='playlistsong" + playbackController.playingSong.gid + "'] ");
+
     } else {
         listElement = $("#searchlist li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ");
     }
@@ -544,18 +543,20 @@ playbackController.positionPlayIndicator = function () {
         $("#searchlist .iScrollPlayIndicator").hide();
     } else {
 
+        var songId = listElement.get(0).dataset.songid.substring(12);
 //Set playing Indicator position
         if (playbackController.playingSong.gid) {
-            var y = parseInt(playbackController.playingSong.id.substring(5)) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner").outerHeight() - 18);
+
+            var y = parseInt(songId.substring(5)) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner").outerHeight() - 18);
 
             $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
-            $("#playlistInner .iScrollPlayIndicator").fadeIn();
+            $("#playlistInner .iScrollPlayIndicator").show();
             $("#searchlist .iScrollPlayIndicator").hide();
         }
         else {
-            y = parseInt(playbackController.playingSong.id.substring(5)) / (searchController.searchResults.length - 1) * ($("#searchlist").outerHeight() - 18);
+            y = parseInt(songId.substring(5)) / (searchController.searchResults.length - 1) * ($("#searchlist").outerHeight() - 18);
             $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
-            $("#searchlist .iScrollPlayIndicator").fadeIn();
+            $("#searchlist .iScrollPlayIndicator").show();
             $("#playlistInner .iScrollPlayIndicator").hide();
         }
     }
@@ -592,7 +593,9 @@ playbackController.remarkSong = function () {
         playbackController.positionPlayIndicator();
 
         if (playbackController.playingSong.gid) {
-            listElement = $($("#playlistInner li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ").get(0));
+            //listElement = $($("#playlistInner li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ").get(0));
+            listElement = $("#playlistInner li[data-songgid='playlistsong" + playbackController.playingSong.gid + "'] ");
+
             listElement.addClass("loadedsong");
         } else {
             listElement = $("#searchlist li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ");
