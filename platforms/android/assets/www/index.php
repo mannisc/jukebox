@@ -209,15 +209,15 @@
 
     <ul  data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d">
 
-        <li ng-repeat="song in searchController.searchResults track by song.id" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li ng-repeat="song in searchController.searchResults track by song.id" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" ><img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
             <img ng-if ="playlistController.hasTrendStyle(1,song)" src="public/img/emtpy.png" class="songLoser songTrend" >
             <img ng-if ="playlistController.hasTrendStyle(2,song)" src="public/img/emtpy.png" class="songNochange songTrend" >
 
-            <h3 style="{{playlistController.getTrendTitleStyle(song)}}" >{{song.name}}</h3>
+            <h3 ng-class="playlistController.getTrendTitleClass(song)" >{{song.name}}</h3>
 
-            <p>{{mediaController.getSongArtist(song)}} <span style="font-style: italic;font-size: .93em;margin-left:2px;">  {{playlistController.getPlaysText(song)}}</span> </p></a>
+            <p>{{mediaController.getSongArtist(song)}} <span class="songPlayCount" style="font-style: italic;font-size: .93em;margin-left:2px;">  {{playlistController.getPlaysText(song)}}</span> </p></a>
         </li>
 
 
@@ -255,7 +255,9 @@
         </div>
         <div id="saveplaylistbutton">
             <button id="saveplaylistbtn" onclick="playlistController.toggleSavePlaylist();" data-mini="true" data-type="button" value="" data-theme="b">
-                <img src="public/img/plus.png" width="22px" height="22px" alt="Sort"/>
+                <img ng-if="playlistController.playlistMode" src="public/img/plus.png" width="22px" height="22px" alt="Sort"/>
+                <img ng-if="!playlistController.playlistMode" src="public/img/save.png" width="22px" height="22px" alt="Sort"/>
+
             </button>
         </div>
         <div id="saveokayplaylistbutton" style="display:none">
@@ -276,19 +278,20 @@
 
     <div id="playlistInner" class="animate" style="display:none">
         <ul ui-sortable ng-model="playlistController.loadedPlaylistSongs" data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
-            <li ng-repeat="song in playlistController.loadedPlaylistSongs track by song.gid" data-songid="playlistsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
+            <li ng-repeat="song in playlistController.loadedPlaylistSongs track by song.gid" data-index="{{$index}}" data-songid="playlistsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
                 ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1">
 
                 <img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""   class="ui-li-icon ui-corner-none"  >
                 <div class="playlistCoverSong" >
-                <img src="public/img/empty.png" class="coverSong1" style="{{mediaController.getCoverSong(0,song)}}">
-                <img src="public/img/black.png" class="coverSong2" style="{{mediaController.getCoverSong(1,song)}}">
-                <img src="public/img/black.png" class="coverSong3" style="{{mediaController.getCoverSong(2,song)}}">
+                <img src="public/img/empty.png" class="coverSong1" style="{{mediaController.getPlaylistCoverSong(0,song)}}">
+                <img src="public/img/black.png" class="coverSong2" style="{{mediaController.getPlaylistCoverSong(1,song)}}">
+                <img src="public/img/black.png" class="coverSong3" style="{{mediaController.getPlaylistCoverSong(2,song)}}">
                 </div>
                 <img src="public/img/empty.png" class="loadingSongImg">
                     <span ng-if="!song.isPlaylist">
                     <h3>{{song.name}}</h3>
-                    <p>{{mediaController.getSongArtist(song)}}</p><img class="removesong" ng-style="{'background-image':'url(public/img/trash.png)',display:'none'}" src="public/img/empty.png">
+                    <p>{{mediaController.getSongArtist(song)}}<span style="font-style: italic;font-size: .93em;margin-left:2px;"> {{playlistController.getSongPlaylistName(song)}} </span>  </p>
+                    <!--img class="removesong" ng-style="{'background-image':'url(public/img/trash.png)',display:'none'}" src="public/img/empty.png"-->
                     </span>
                     <span ng-if="song.isPlaylist">
                          <h3>{{song.name}}</h3>
@@ -462,6 +465,7 @@
         </div>
     </form>
 </div>
+
 
 <div data-role="popup" id="popupLogin" data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>
