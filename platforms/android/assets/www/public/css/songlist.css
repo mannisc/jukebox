@@ -1102,6 +1102,12 @@ ul.gridlayout #songOptions{
     padding: 0.4em 0.5em 0.3em 0.4em !important;
 }
 
+#sortplaylistbutton .ui-btn img{
+    margin-left: 1px;
+    margin-right: -1px;
+}
+
+
 #saveokayplaylistbutton {
     float: left;
     margin-top: -13px;
