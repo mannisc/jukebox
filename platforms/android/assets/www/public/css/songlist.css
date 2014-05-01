@@ -527,6 +527,8 @@ ul.gridlayout #songOptions{
     -webkit-transform: rotateY(360deg) scale(1.2)!important;
     -moz-transform: rotateY(360deg) scale(1.2)!important;
     transform: rotateY(360deg) scale(1.2)!important;
+    opacity:0;
+
 }
 
 
@@ -535,6 +537,8 @@ ul.gridlayout #songOptions{
     -webkit-transform: rotateY(360deg) scale(1.2)!important;
     -moz-transform: rotateY(360deg) scale(1.2)!important;
     transform: rotateY(360deg) scale(1.2)!important;
+    opacity:0;
+
 }
 
 
