@@ -550,17 +550,17 @@
             <div style="font-size: 1em;font-weight: bold;margin-top: -10px; margin-bottom: 10px;"> {{playbackController.playingSong.name}}</div>
             <ul data-role="listview" id="popupArtistExternList" data-theme="b">
                 <li data-theme="b" class="marked"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');searchController.searchArtistSongs(mediaController.getSongArtist(playbackController.playingSong));"
-                                                     style="text-decoration:none" target="_blank">Songs from Artist</a></li>
+                                                     style="text-decoration:none;padding-left: 14px!important" target="_blank">Songs from Artist</a></li>
                 <li data-theme="b" class="marked"  style="border-bottom:1px solid #ddd;"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');searchController.searchSimilarSongs(playbackController.playingSong);"
-                                                                                            style="text-decoration:none" target="_blank">Similar Songs</a></li>
+                                                                                            style="text-decoration:none;padding-left: 14px!important" target="_blank">Similar Songs</a></li>
                 <li data-theme="b" style="border-top:15px solid rgba(255,255,255,0.2);"><a ng-show="playbackController.playingSong" href="http://de.wikipedia.org/w/index.php?go=Artikel&title&search={{mediaController.getSongArtist(playbackController.playingSong)}}"
-                                                                                           onclick="$('#popupArtist').popup('close')" style="text-decoration:none" target="_blank">Wikipedia</a></li>
+                                                                                           onclick="$('#popupArtist').popup('close')" style="text-decoration:none" target="_blank"><img src="public/img/wikipedia.png">Wikipedia</a></li>
                 <li data-theme="b"><a ng-show="playbackController.playingSong" href="http://www.lastfm.de/search?q={{mediaController.getSongArtist(playbackController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
-                                      style="text-decoration:none" target="_blank">last.fm</a></li>
+                                      style="text-decoration:none" target="_blank"><img src="public/img/lastfm.png">last.fm</a></li>
                 <li data-theme="b"><a ng-show="playbackController.playingSong" href="https://myspace.com/search/?q={{mediaController.getSongArtist(playbackController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
-                                      style="text-decoration:none" target="_blank">Myspace</a></li>
+                                      style="text-decoration:none" target="_blank"><img src="public/img/myspace.png">Myspace</a></li>
                 <li data-theme="b"><a ng-show="playbackController.playingSong" href="https://www.google.de/search?q={{mediaController.getSongArtist(playbackController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
-                                      style="text-decoration:none" target="_blank">Google</a></li>
+                                      style="text-decoration:none" target="_blank"><img src="public/img/google.png">Google</a></li>
 
             </ul>
         </div>

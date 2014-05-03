@@ -275,20 +275,20 @@ playlistController.init = function () {
 
     setTimeout(function () {
         uiController.playListScroll.refresh();
+        playlistController.playIndicator = searchController.playIndicator.clone();
+
+        playlistController.playIndicator .appendTo("#playlistInner .iScrollVerticalScrollbar");
+
+        playlistController.playIndicator .click(function () {
+            uiController.playListScroll.scrollToElement(".loadedsong", 700);
+        });
+
+        $(".iScrollIndicator").addClass("fadeincomplete");
 
     }, 150)
 
 
 
-    var playIndicatorPlaylist = searchController.playIndicator.clone();
-
-    playIndicatorPlaylist.appendTo("#playlistInner .iScrollVerticalScrollbar");
-
-    playIndicatorPlaylist.click(function () {
-        uiController.playListScroll.scrollToElement(".loadedsong", 700);
-    });
-
-    $(".iScrollIndicator").addClass("fadeincomplete");
 
 
 
