@@ -85,7 +85,6 @@ mediaController.mediaEnded = function () {
     videoController.setBufferedPercentage(0);
 
     $(".mejs-playpause-button button").addClass("looped");
-    uiController.playedFirst = false;
     uiController.updateUI();
 
     if (!playbackController.isLoading)

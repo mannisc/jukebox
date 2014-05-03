@@ -1051,7 +1051,6 @@ videoController.playingSong = function () {
              }, 100)
              } */
 
-            uiController.playedFirst = true;
             uiController.updateUI(true);
         }
     }
