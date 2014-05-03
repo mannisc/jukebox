@@ -47,6 +47,7 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
     //Playlist or song?
     if (element.isPlaylist) {
         //Select Playlist
+
         playlistController.selectPlaylist(element);
     } else {
         //Play Song
@@ -543,18 +544,18 @@ playbackController.positionPlayIndicator = function () {
         $("#searchlist .iScrollPlayIndicator").hide();
     } else {
 
-        var songId = listElement.get(0).dataset.songid.substring(12);
+        var position = listElement.get(0).dataset.index;
 //Set playing Indicator position
         if (playbackController.playingSong.gid) {
 
-            var y = parseInt(songId.substring(5)) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner").outerHeight() - 18);
+            var y = parseInt(position) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner").outerHeight() - 18);
 
             $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
             $("#playlistInner .iScrollPlayIndicator").show();
             $("#searchlist .iScrollPlayIndicator").hide();
         }
         else {
-            y = parseInt(songId.substring(5)) / (searchController.searchResults.length - 1) * ($("#searchlist").outerHeight() - 18);
+            y = parseInt(position) / (searchController.searchResults.length - 1) * ($("#searchlist").outerHeight() - 18);
             $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
             $("#searchlist .iScrollPlayIndicator").show();
             $("#playlistInner .iScrollPlayIndicator").hide();

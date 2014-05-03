@@ -193,7 +193,6 @@ function executeFileRequest(request) {
 
                     if (playlistController.loadedPlaylistSongs.length > 0) {
                         if (playlistController.loadedPlaylistSongs[0].isPlaylist) {
-                            $("#saveplaylistbtn img").attr("src", "public/img/save.png");
                             playlistController.loadedPlaylistSongs = googleDrivePlaylist;
 
                         } else

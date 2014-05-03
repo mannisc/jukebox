@@ -161,7 +161,9 @@ ul.gridlayout #songOptions{
     height:65px!important;
 }
 
-
+.songlist li.createplaylist a{
+    background-color: rgba(255, 255, 255, 0.12)!important;
+}
 
 .songlist .ui-li-has-icon img {
     max-height: 3.3em !important;
@@ -234,6 +236,7 @@ ul.gridlayout #songOptions{
     -webkit-box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
     box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
 }
+
 
 .songlist li:hover.selected a img.ui-li-icon{
     -webkit-transform: scale(1)!important;
@@ -432,13 +435,13 @@ ul.gridlayout #songOptions{
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 
-    -webkit-perspective:  150;
+    -webkit-perspective:  65;
     -webkit-perspective-origin: 50% 50%;
-    -moz-perspective: 150px;
+    -moz-perspective: 65px;
     -moz-perspective-origin: 50% 50%;
-    -ms-perspective: 150px;
+    -ms-perspective: 65px;
     -ms-perspective-origin: 50% 50%;;
-    perspective: 150px;
+    perspective: 65px;
     perspective-origin: 50% 50%;
     -webkit-transform: scale(0.68)!important;
     -moz-transform: scale(0.68)!important;
@@ -447,20 +450,46 @@ ul.gridlayout #songOptions{
     transform-origin: 50% 50%!important;
 }
 
+.songlist li.createplaylist .playlistCoverSong img{
+    opacity:0!important;
+    -webkit-transition: all 0.7s ease;
+    -moz-transition: all 0.7s ease;
+    -o-transition: all 0.7s ease;
+    transition: all 0.7s ease;
+}
 
+
+.songlist li.createplaylist .playlistCoverSong img.addPlaylist{
+    left: 0!important;
+    -webkit-transform:   translate(2px,-1px)  scale(1.1) !important;  !important;
+    -moz-transform: translate(2px,-1px)  scale(1.1)  !important;
+    transform: translate(2px,-1px)  scale(1.1) !important;
+    opacity:0.85!important
+
+}
+
+.songlist li:hover.createplaylist .playlistCoverSong img.addPlaylist{
+    opacity:1!important;
+    -webkit-transform:   translate(2px,-1px)  scale(1.4) !important;
+    -moz-transform: translate(2px,-1px)  scale(1.4)  !important;
+    transform: translate(2px,-1px)  scale(1.4) !important;
+}
 
 
 .songlist li:hover.selected .playlistCoverSong img{
     left: 0!important;
-    -webkit-transform: rotateY(360deg) scale(1.21)!important;
-    -moz-transform: rotateY(360deg) scale(1.23)!important;
-    transform: rotateY(360deg) scale(1.23)!important;
+    -webkit-transform: rotateY(360deg) scale(1.21)  !important;
+    -moz-transform: rotateY(360deg) scale(1.23)  !important;
+    transform: rotateY(360deg) scale(1.23) !important;
 }
+
+
+
 .songlist li.selected .playlistCoverSong img{
     left: 0!important;
-    -webkit-transform: rotateY(360deg) scale(1.21)!important;
-    -moz-transform: rotateY(360deg) scale(1.23)!important;
-    transform: rotateY(360deg) scale(1.23)!important;
+    -webkit-transform: scale(1.21) rotateY(360deg)   !important;
+    -moz-transform: rotateY(360deg) scale(1.23) !important;
+    transform: rotateY(360deg) scale(1.23)  !important;
 }
 
 .songlist li .playlistCoverSong img{
@@ -474,9 +503,9 @@ ul.gridlayout #songOptions{
     z-index:10;
     position: absolute;
     overflow:visible;
-    -webkit-transform: rotateY(320deg);
-    -moz-transform: rotateY(-320deg);
-    transform: rotateY(320deg)!important;
+    -webkit-transform:   translate(-8px,0) rotateY(320deg) translate(-15px,0) ;
+    -moz-transform: rotateY(-320deg) translate(-15px,0);
+    transform: rotateY(320deg) translate(-15px,0)!important;
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%!important;
     -webkit-transition: all 0.3s ease-out;
@@ -488,25 +517,20 @@ ul.gridlayout #songOptions{
 
 
 .songlist li .playlistCoverSong .coverSong1{
-    left: -5px!important;
-    -webkit-transform: rotateY(320deg) scale(1.05);
-    -moz-transform: rotateY(320deg) scale(1.05);
-    transform: rotateY(320deg) scale(1.05)!important
-
-
+    -webkit-transform:  translate(-8px,0) rotateY(320deg) scale(1.05) translate(-15px,0) ;
+    -moz-transform: rotateY(320deg) scale(1.05) translate(-15px,0);
+    transform: rotateY(320deg) scale(1.05)  translate(-15px,0)!important
 }
 
 
-
-
 .songlist li .playlistCoverSong .coverSong2{
-    left: 6px!important;
+    left: 11px!important;
     z-index:30;
 
 }
 
 .songlist li .playlistCoverSong .coverSong3{
-    left: 17px!important;
+    left:22px!important;
     z-index:20;
 
 }
@@ -515,29 +539,26 @@ ul.gridlayout #songOptions{
 
 
 .songlist li:hover .playlistCoverSong .coverSong1{
-    left: 0!important;
-    -webkit-transform: rotateY(360deg) scale(1.5)!important;
+    -webkit-transform: translate(2px,0) rotateY(360deg) scale(1.5) !important;
     -moz-transform: rotateY(360deg) scale(1.5)!important;
     transform: rotateY(360deg) scale(1.5)!important;
+    opacity:1!important;
 }
 
 
 .songlist li:hover .playlistCoverSong .coverSong2{
-    left: 0!important;
-    -webkit-transform: rotateY(360deg) scale(1.2)!important;
-    -moz-transform: rotateY(360deg) scale(1.2)!important;
-    transform: rotateY(360deg) scale(1.2)!important;
-    opacity:0;
-
+    -webkit-transform: translate(-7px,0) rotateY(360deg) scale(1.45) !important;
+    -moz-transform: rotateY(360deg) scale(1.45) translate(-7px,0)!important;
+    transform: rotateY(360deg) scale(1.45) translate(-7px,0) !important;
+    opacity:0.6!important;
 }
 
 
 .songlist li:hover .playlistCoverSong .coverSong3{
-    left: 0!important;
-    -webkit-transform: rotateY(360deg) scale(1.2)!important;
-    -moz-transform: rotateY(360deg) scale(1.2)!important;
-    transform: rotateY(360deg) scale(1.2)!important;
-    opacity:0;
+    -webkit-transform:translate(-19px,0) rotateY(360deg) scale(1.45) !important;
+    -moz-transform: rotateY(360deg) scale(1.45) translate(-15px,0)!important;
+    transform: rotateY(360deg) scale(1.45) translate(-15px,0)!important;
+    opacity:0.6!important;
 
 }
 
@@ -950,7 +971,7 @@ ul.gridlayout #songOptions{
 
 #playlistInner a {
     background: none ;
-    border: none !important;
+    border: none ;
 }
 
 #playlistInner a img{
@@ -1027,17 +1048,25 @@ ul.gridlayout #songOptions{
     opacity:0.6;
     font-size:22px;
     font-weight:bold;
+    pointer-events: none;
 }
 
+#playlisthelp.invisible{
+    opacity:0!important;
+}
+
+#playlisthelp.invisible:hover{
+    opacity:0!important;
+}
 
 #playlisthelp:hover{
     opacity:1!important;
 }
 #playlisthelp {
-    -webkit-transition: all 1.5s ease;
-    -moz-transition: all 1.5s ease;
-    -o-transition: all 1.5s ease;
-    transition: all 1.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
 
@@ -1069,16 +1098,6 @@ ul.gridlayout #songOptions{
 
 }
 
-
-#saveplaylistinput{
-    margin-top: -15px;
-    float: left;
-}
-
-#saveplaylistinput input{
-    line-height: 1.2em!important;
-    min-height: 34px!important;
-}
 
 
 
@@ -1112,28 +1131,6 @@ ul.gridlayout #songOptions{
 }
 
 
-#saveokayplaylistbutton {
-    float: left;
-    margin-top: -13px;
-    margin-left: 5px;
-
-}
-
-#saveokayplaylistbutton .ui-btn {
-    padding: 0.4em 0.5em 0.3em 0.4em !important;
-}
-
-
-
-#saveplaylistbutton {
-    float: left;
-    margin-top: -13px;
-    margin-left: 5px;
-}
-
-#saveplaylistbutton .ui-btn {
-    padding: 0.4em 0.5em 0.3em 0.4em !important;
-}
 
 
 
@@ -1150,23 +1147,13 @@ ul.gridlayout #songOptions{
 .chosen-choices.ui-input  {
     padding-right:30px;
 }
-.chosen-choices.ui-input  input,  #saveplaylistinpt{
+.chosen-choices.ui-input  input{
 
     padding: 0.4em!important;
     margin-top: 1px!important;
     min-height: 22px!important;
     width: 100%;
-
 }
-
-#saveplaylistbtn{
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-}
-
 
 
 
@@ -1243,6 +1230,151 @@ ul.gridlayout #songOptions{
 , );
 
 }
+
+
+
+.noshadow{
+    -moz-box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+}
+
+
+
+/*draggedlistelement*/
+
+
+.draggedlistelement.animatemargin {
+    -webkit-transition: margin 0.5s ease-out;
+    -moz-transition: margin 0.5s ease-out;
+    -ms-transition: margin 0.5s ease-out;
+    -o-transition: margin 0.5s ease-out;
+    transition: margin 0.5s ease-out;
+}
+
+.draggedlistelement {
+    z-index: 2000 !important;
+    padding: 0;
+    list-style: none;
+    /*  background: #4617B4 !important;*/
+
+
+
+    border: none !important;
+    margin: 0px !important;
+
+}
+
+
+
+.draggedlistelement .margintop{
+
+    margin-top: -5px!important;
+
+}
+
+.draggedlistelement li{
+    height:65px!important;
+
+}
+
+
+
+.draggedlistelement li a {
+
+    /* filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(70,23,180,1), endColorstr=rgba(70,23,180,1))!important;
+     background-image:-moz-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+     background-image:linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+     background-image:-webkit-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+     background-image:-o-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+     background-image:-ms-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
+     background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(70,23,180,1)), color-stop(44%,rgba(70,23,180,1)),color-stop(100%,rgba(70,23,180,0)))!important;
+   */
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(0, 212, 59,0.6), endColorstr=rgba(0, 212, 59,0.6))!important;
+    background-image:-moz-linear-gradient(left, rgba(0, 212, 59,0.6) 0%, rgba(0, 212, 59,0.6) 44%,rgba(0, 212, 59,0) 100%)!important;
+    background-image: linear-gradient(left, rgba(0, 212, 59,0.6) 0%, rgba(0, 212, 59,0.6) 44%,rgba(0, 212, 59,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(0, 212, 59,0.6) 0%, rgba(0, 212, 59,0.6) 44%,rgba(0, 212, 59,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(0, 212, 59,0.6) 0%, rgba(0, 212, 59,0.6) 44%,rgba(0, 212, 59,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(0, 212, 59,0.6) 0%, rgba(0, 212, 59,0.6) 44%,rgba(0, 212, 59,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(0, 212, 59,0.6)), color-stop(44%,rgba(0, 212, 59,0.6)),color-stop(100%,rgba(0, 212, 59,0)))!important;
+
+    opacity:0.8;
+
+    padding: 0;
+    border: none !important;
+    color: #fff !important;
+    min-height: 1.25em;
+    margin: 0;
+    display: block;
+    position: relative;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    margin-left:3px!important;
+    white-space: nowrap;
+
+    padding-left: 4.8em !important;
+    padding-top: 0.2em !important;
+
+    padding-bottom: 0.69em !important;
+    padding-right: 2.5em !important;
+
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
+}
+
+.draggedlistelement li a h3{
+    font-size: 1em;
+    font-weight: bold;
+    display: block;
+    margin: .45em 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    color: #fff /*{b-bup-color}*/;
+    text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-radius}*/ #111 /*{b-bup-shadow-color}*/;
+}
+
+.draggedlistelement li a p{
+    font-size: .75em;
+    font-weight: normal;
+    display: block;
+    margin: .6em 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.draggedlistelement li a img.ui-li-icon{
+    left: 5px !important;
+    top: .9em !important;
+}
+
+.draggedlistelement li a img{
+    position: absolute !important;
+
+    background-size:100%;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 1.3;
+    height: 4em !important;
+    width: 4em !important;
+    -webkit-transform: scale(1);
+    transform: scale(1)!important;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%!important;
+}
+
+.draggedlistelement li  a:after {
+    display: none;
+}
+
+
 
 
 
