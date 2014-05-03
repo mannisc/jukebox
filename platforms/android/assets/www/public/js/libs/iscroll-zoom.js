@@ -1208,7 +1208,7 @@ IScroll.prototype = {
 			return;
 		}
 
-		e.preventDefault();
+        e.preventDefault();
 		e.stopPropagation();
 
 		var wheelDeltaX, wheelDeltaY,
@@ -1219,13 +1219,15 @@ IScroll.prototype = {
 			that._execEvent('scrollStart');
 		}
 
-		// Execute the scrollEnd event after 400ms the wheel stopped scrolling
+        // Execute the scrollEnd event after 400ms the wheel stopped scrolling
 		clearTimeout(this.wheelTimeout);
 		this.wheelTimeout = setTimeout(function () {
 			that._execEvent('scrollEnd');
 			that.wheelTimeout = undefined;
 		}, 400);
-		if ( 'deltaX' in e ) {
+
+
+        if ( 'deltaX' in e ) {
 			wheelDeltaX = -e.deltaX;
 			wheelDeltaY = -e.deltaY;
 		} else if ( 'wheelDeltaX' in e ) {
@@ -1235,9 +1237,23 @@ IScroll.prototype = {
 			wheelDeltaX = wheelDeltaY = e.wheelDelta / 120 * this.options.mouseWheelSpeed;
 		} else if ( 'detail' in e ) {
 			wheelDeltaX = wheelDeltaY = -e.detail / 3 * this.options.mouseWheelSpeed;
-		} else {
-			return;
-		}
+		} else if (e.originalEvent) {
+            e = e.originalEvent;
+            if ( 'deltaX' in e ) {
+                wheelDeltaX = -e.deltaX;
+                wheelDeltaY = -e.deltaY;
+            } else if ( 'wheelDeltaX' in e ) {
+                wheelDeltaX = e.wheelDeltaX / 120 * this.options.mouseWheelSpeed;
+                wheelDeltaY = e.wheelDeltaY / 120 * this.options.mouseWheelSpeed;
+            } else if ( 'wheelDelta' in e ) {
+                wheelDeltaX = wheelDeltaY = e.wheelDelta / 120 * this.options.mouseWheelSpeed;
+            } else if ( 'detail' in e ) {
+                wheelDeltaX = wheelDeltaY = -e.detail / 3 * this.options.mouseWheelSpeed;
+            } else
+              return;
+
+		} else
+            return;
 
 
         wheelDeltaX *= this.options.invertWheelDirection;
@@ -1253,7 +1269,7 @@ IScroll.prototype = {
 			wheelDeltaY = 0;
 		}
 
-		if ( this.options.snap ) {
+        if ( this.options.snap ) {
 			newX = this.currentPage.pageX;
 			newY = this.currentPage.pageY;
 
@@ -1288,6 +1304,10 @@ IScroll.prototype = {
 		} else if ( newY < this.maxScrollY ) {
 			newY = this.maxScrollY;
 		}
+
+        console.log("MMMMMMMMMMMMMMMMMMMM")
+        console.log(newY)
+
 
 		this.scrollTo(newX, newY, 500); //CHANGED from    this.scrollTo(newX, newY, 0);
 
