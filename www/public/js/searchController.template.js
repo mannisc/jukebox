@@ -905,7 +905,7 @@ searchController.makeSearchListDraggable = function () {
 
                     setTimeout(function () {
                         if (!playlistController.sortPlaylist) {
-                            playlistController.toggleSortablePlaylist(true);
+                            playlistController.toggleSortablePlaylist();
                             uiController.startedSortPlaylist = true;
                         } else
                             uiController.startedSortPlaylist = false;

@@ -144,9 +144,7 @@ accountController.logout = function () {
                 $('#playlistselectverticalform').trigger('chosen:close');
                 $("#clearChoosenPlaylists").hide();
                 uiController.updateUI();
-                $("#saveplaylistbtn img").attr("src", "public/img/save.png");
             }, 0)
-
 
 
 
@@ -162,7 +160,6 @@ accountController.logout = function () {
 
         //Ask if should be cleared
         if (playlistController.unsafedSongsExists()) {
-
             $("#popupAccount").popup("close");
 
             uiController.popupConfirmLogout = {doIt: function () {

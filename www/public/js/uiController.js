@@ -146,17 +146,32 @@ uiController.init = function () {
     $("body").dblclick(function (event) {
         playlistController.deselectSongs(event);
         if (playlistController.sortPlaylist)
-            playlistController.toggleSortablePlaylist(true, true);
+            playlistController.toggleSortablePlaylist( true);
 
     })
 
-
+    /* TODO CHANGE TO RIGHT INPUT
     $('#saveplaylistinpt').keyup(function (evt) {
         if (evt.keyCode == 13) {
             $("#saveokayplaylistbtn").click();
             return false;
         }
     });
+     // uiController.initMediaPlayer();
+
+     $("#saveplaylistinpt").on("input", function () {
+     if ($("#saveplaylistinpt").val()) {
+     $("#saveokayplaylistbtn").removeAttr("disabled").css("opacity", "1");
+
+     } else {
+
+     $("#saveokayplaylistbtn").attr("disabled", "disabled").css("opacity", "0.5");
+
+     }
+
+     })
+
+     */
 
     $(".ui-input-clear").addClass("ui-btn ui-btn-b ui-shadow ui-corner-all ui-mini");
 
@@ -178,19 +193,6 @@ uiController.init = function () {
         // return false;
     });
 
-    // uiController.initMediaPlayer();
-
-    $("#saveplaylistinpt").on("input", function () {
-        if ($("#saveplaylistinpt").val()) {
-            $("#saveokayplaylistbtn").removeAttr("disabled").css("opacity", "1");
-
-        } else {
-
-            $("#saveokayplaylistbtn").attr("disabled", "disabled").css("opacity", "0.5");
-
-        }
-
-    })
 
 
     $("#controlbar .ui-input-clear").click(function () {
@@ -210,21 +212,10 @@ uiController.init = function () {
     })
 
 
-    uiController.playedFirst = false;
-
-
-    setTimeout(function () {
-        $("#playlistInner").show();
-    }, 500);
-
-    // / Use Fastclicks
-    //FastClick.attach(document.body);
-
-
     //On Window Resize
     $(window).resize(function () {
 
-        $(".ui-popup:visible").popup("close")
+        //$(".ui-popup:visible").popup("close")
 
 
         if ($('.ui-panel-open').length != 0) {
@@ -267,8 +258,6 @@ uiController.init = function () {
     });
 
 
-    playlistController.makePlayListScrollable();
-
     //Animate Sidde Panel Open Icon
     $("#rightpanel").on("panelbeforeclose", function (event, ui) {
         if (playlistController.sortPlaylist)
@@ -299,239 +288,12 @@ uiController.init = function () {
         }, 500)
     });
 
-    /*
-     $( ".sortable" ).sortable( "disable" );
-
-
-
-     */
-
-    $("#playlistselectverticalform").chosen({disable_search_threshold: 2})
-
-    $(".chosen-choices").addClass("ui-input ui-body-a ui-corner-all ui-shadow-inset");
-    $(".chosen-choices").css("min-height", "2.2em");
-
-
-    $(".chosen-choices input").css("margin-top", "5px")
-    $(".chosen-container").css("margin-top", "-3px")
-
-
-    $("#playlistselectverticalform").on('change', function (evt, params) {
-        console.log(".....................")
-
-
-        //on trigger, all playlists still there, after ms gone if return key pressd
-        var playlistsOldLoaded = [];
-
-        console.log("------------------------------")
-
-        $('#playlistselectvertical .search-choice').each(function () {
-            playlistsOldLoaded.push($(this).text());
-            if ($(this).data('loaded') != "true") {
-                var playlist = null;
-                var name = $(this).text();
-                for (var i = 0; i < playlistController.playlists.length; i++) {
-                    if (playlistController.playlists[i].name == name)
-                        playlist = playlistController.playlists[i];
-                }
-
-                if (playlist != null) {
-                    playlistController.loadPlaylist(playlist);
-
-                }
-
-            }
-
-        })
-
-        //Check if playlist was deleted, is gone after 50 ms in dom
-        setTimeout(function () {
-
-            for (var i = 0; i < playlistsOldLoaded.length; i++) {
-                var name = playlistsOldLoaded[i];
-                var selections = $('#playlistselectvertical .search-choice');
-                var found = false;
-                for (var j = 0; j < selections.length; j++) {
-                    if ($(selections.get(j)).text() == name) {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    console.log("REMOVED")
-                    var playlistgid = null;
-                    for (var i = 0; i < playlistController.playlists.length; i++) {
-                        if (playlistController.playlists[i].name == name) {
-                            playlistgid = playlistController.playlists[i].gid
-                            break;
-                        }
-                    }
-
-                    if (playlistgid != null) {
-                        playlistController.removeLoadedPlaylist(playlistgid);
-                    }
-
-                }
-            }
-        }, 50)
-
-
-        $('#playlistselectvertical .search-choice').data('loaded', 'true')
-
-
-        if ($('#playlistselectverticalform option:selected').size() > 0)
-            $("#clearChoosenPlaylists").show();
-        else
-            $("#clearChoosenPlaylists").hide();
-
-
-        uiController.updateUI();
-        var closefunc = function () {
-            var playlistgid = null;
-            var name = $(this).parent().text();
-
-            for (var i = 0; i < playlistController.playlists.length; i++) {
-                if (playlistController.playlists[i].name == name) {
-                    playlistgid = playlistController.playlists[i].gid
-                    break;
-                }
-            }
-
-            if (playlistgid != null) {
-                playlistController.removeLoadedPlaylist(playlistgid);
-            }
-
-
-            uiController.updateUI();
-        }
-        $('.search-choice-close').unbind('click', closefunc);
-        $(".search-choice-close").click(closefunc)
-
-    });
-
-
-    $("#clearChoosenPlaylists").hide();
-    uiController.updateUI();
-    playlistController.loadedPlaylistSongs = playlistController.playlists;
-    if (playlistController.loadedPlaylistSongs.length > 0)
-        $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
-
-
-    $("#playlistview").hide();
-    $scope.safeApply();
-    setTimeout(function () {
-        $("#playlistview").listview('refresh');
-        $("#playlistview").show();
-        playlistController.makePlayListSortable();
-        setTimeout(function () {
-            uiController.playListScroll.refresh();
-        }, 150)
-    }, 0)
-
-
-    $('#playlistselectvertical .chosen-container').click(function (event) {
-        if ($('#playlistselectvertical #clearChoosenPlaylists:hover').length == 0)
-            $(".chosen-drop").addClass("visible")
-
-    });
-
-
-    $('#playlistselectvertical #clearChoosenPlaylists').click(function (event) {
-
-
-        if (playlistController.unsafedSongsExists()) {
-            $("#playlistselectvertical .chosen-container").removeClass("chosen-with-drop");
-            $("#popupConfirm").popup("option", "positionTo", "#clearChoosenPlaylists");
-            $("#popupConfirm").popup("option", "transition", "pop");
-
-            uiController.popupConfirm = {doIt: function () {
-                uiController.showPlaylists();
-            }}
-            setTimeout(function () {
-                $("#popupConfirm").popup("open");
-            }, 150)
-
-        }
-        else {
-            uiController.showPlaylists();
-
-        }
-
-    });
-
-
-    $('.chosen-container input').blur(function () {
-        setTimeout(uiController.updateUI, 100);
-    });
-
-
-    playlistController.makePlayListSortable();
-
-    if (!app.isCordova) {
-        $(".sortable").sortable("disable");
-    }
-
-
-    uiController.updateUI();
-    setTimeout(function () {
-
-        uiController.updateUI();
-        $("#playlist").addClass("fadeincomplete");
-        // $("#playlist").css("opacity", "1");
-    }, 0);
-
-
-    $("#playlistselectvertical .ui-input-clear").appendTo("#playlistselectvertical .ui-input");
-
-
-    setTimeout(function () {
-        var playIndicator = $('<div class="iScrollPlayIndicator fadeincomplete" ' +
-            'style="box-sizing: border-box; ' +
-            ' position: absolute;' +
-            /*' background-color: rgba(245,245,245, 0.498039);' +
-             ' border: 1px solid rgba(255, 255, 255, 0.901961);' +
-             ' border-top-left-radius: 3px;' +
-             ' border-top-right-radius: 3px;' +
-             ' border-bottom-right-radius: 3px;' +
-             ' border-bottom-left-radius: 3px;' +
-             ' width: 100%;' +
-             ' display: block; height: 9px;' +  */
-            ' -webkit-transform: translate(0px, 0px)' +
-            ' -moz-transform: translate(0px, 0px)' +
-            ' -ms-transform: translate(0px, 0px)' +
-            ' transform: translate(0px, 0px)' +
-            ' translateZ(0px);' +
-            ' background-position: initial initial;' +
-            ' background-repeat: initial initial;' +
-            ' display:none;"></div>'
-
-        );
-
-        var playIndicatorPlalist = playIndicator.clone();
-
-
-        playIndicator.appendTo("#searchlist .iScrollVerticalScrollbar");
-
-        playIndicator.click(function () {
-            uiController.searchListScroll.scrollToElement(".loadedsong", 700);
-        });
-
-
-        playIndicatorPlalist.appendTo("#playlistInner .iScrollVerticalScrollbar");
-        playIndicatorPlalist.click(function () {
-            uiController.playListScroll.scrollToElement(".loadedsong", 700);
-        });
-
-        $(".iScrollIndicator").addClass("fadeincomplete");
-
-
-    }, 0)
 
     setTimeout(function () {
         $("#inputclearhide").remove();
     }, 1000);
-    document.title = $scope.appTitle;
 
+    document.title = $scope.appTitle;
 
     //Init WebGL
     if (window.WebGLRenderingContext) {
@@ -634,7 +396,7 @@ uiController.toggleSearchButton = function (button) {
 /**
  * savePlaylist and show green marker
  * @param useSelected use the only seleted playlist
- */
+ 
 uiController.savePlaylistVisible = function (useSelected) {
     $("#saveplaylistbtn img").css("opacity","0")
 
@@ -682,7 +444,7 @@ uiController.savePlaylistVisible = function (useSelected) {
         });
     }, 250)
 }
-
+*/
 
 uiController.stopScrollingOnClick = function (event) {
     var myEvent = jQuery.extend({}, event);
@@ -843,10 +605,10 @@ uiController.updateUI = function () {
         $("#searchlist").css("max-height", $(window).height() - 44 - 120 + 6);
 
         var setSelectSize = function () {
-            $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 50 - 40);
-            $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 50 - 40);
-            $("#saveplaylistinput").css("width", $("#playlist").width() - 50 - 40);
-            $("#saveplaylistinput").css("max-width", $("#playlist").width() - 50 - 40);
+            $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 45);
+            $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 45);
+            $("#saveplaylistinput").css("width", $("#playlist").width()  - 45);
+            $("#saveplaylistinput").css("max-width", $("#playlist").width()  - 45);
 
             $("#playlistselectvertical input").css("width", 110);
             // $("#playlistselectvertical input").css("max-width", 50);
@@ -959,10 +721,7 @@ uiController.updateUI = function () {
     }, 0)
 
 
-    setTimeout(function () {
-        uiController.searchListScroll.refresh();
-        uiController.playListScroll.refresh();
-    }, 150)
+
 };
 
 
@@ -990,6 +749,7 @@ uiController.toggleSidePanel = function () {
  * Show Playlists
  */
 uiController.showPlaylists = function () {
+    $("#playlistselectvertical .search-field input").attr("placeholder", playlistController.selectPlaylistsPlaceholder)
 
     $('#playlistselectverticalform option').prop('selected', false);
     $('#playlistselectverticalform').trigger('chosen:updated');
@@ -1011,6 +771,7 @@ uiController.showPlaylists = function () {
         $("#playlistview").hide();
         $scope.safeApply();
         setTimeout(function () {
+            uiController.updateUI();
             $("#playlistview").listview('refresh');
             $("#playlistview").show();
             playlistController.makePlayListSortable();

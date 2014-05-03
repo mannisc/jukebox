@@ -92,6 +92,7 @@ $(document).ready(function () {
             authController.init();
             uiController.init();
             searchController.init();
+            playlistController.init();
             accountController.init();
             videoController.init();
 
