@@ -768,12 +768,17 @@ uiController.showPlaylists = function () {
         $("#playlistInner .iScrollPlayIndicator").hide();
         $("#searchlist .iScrollPlayIndicator").hide();
 
-        $("#playlistview").hide();
+       // $("#playlistview").hide();
+
+        $("#playlistInner .songlist").addClass("hidden");
+
         $scope.safeApply();
         setTimeout(function () {
             uiController.updateUI();
             $("#playlistview").listview('refresh');
-            $("#playlistview").show();
+            $("#playlistInner .songlist").removeClass("hidden");
+
+            //  $("#playlistview").show();
             playlistController.makePlayListSortable();
             setTimeout(function () {
                 uiController.playListScroll.refresh();

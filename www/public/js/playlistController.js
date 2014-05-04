@@ -221,6 +221,7 @@ playlistController.init = function () {
     $('#playlistselectvertical .chosen-container').click(function (event) {
         if ($('#playlistselectvertical #clearChoosenPlaylists:hover, #playlistselectvertical .search-choice:hover').length == 0)
             $(".chosen-drop").addClass("visible")
+
         else
          setTimeout(function(){
              $("#playlistselectvertical .chosen-container").removeClass("chosen-with-drop");
@@ -231,7 +232,7 @@ playlistController.init = function () {
     $('#playlistselectvertical #clearChoosenPlaylists').click(function (event) {
 
 
-        if (playlistController.unsafedSongsExists()) {
+        if (playlistController.unsavedSongsExists()) {
             $("#playlistselectvertical .chosen-container").removeClass("chosen-with-drop");
             $("#popupConfirm").popup("option", "positionTo", "#clearChoosenPlaylists");
             $("#popupConfirm").popup("option", "transition", "pop");
@@ -274,16 +275,7 @@ playlistController.init = function () {
 
 
     setTimeout(function () {
-        uiController.playListScroll.refresh();
-        playlistController.playIndicator = searchController.playIndicator.clone();
-
-        playlistController.playIndicator .appendTo("#playlistInner .iScrollVerticalScrollbar");
-
-        playlistController.playIndicator .click(function () {
-            uiController.playListScroll.scrollToElement(".loadedsong", 700);
-        });
-
-        $(".iScrollIndicator").addClass("fadeincomplete");
+        playlistController.createPlayIndicator();
 
     }, 150)
 
@@ -292,6 +284,20 @@ playlistController.init = function () {
 
 
 
+}
+
+
+playlistController.createPlayIndicator = function () {
+    uiController.playListScroll.refresh();
+    playlistController.playIndicator = searchController.playIndicator.clone();
+
+    playlistController.playIndicator .appendTo("#playlistInner .iScrollVerticalScrollbar");
+
+    playlistController.playIndicator .click(function () {
+        uiController.playListScroll.scrollToElement(".loadedsong", 700);
+    });
+
+    $(".iScrollIndicator").addClass("fadeincomplete");
 }
 
 
@@ -441,7 +447,7 @@ playlistController.hideSongOptions = function () {
 /**
  * True if unsafed Songs in playlist
  */
-playlistController.unsafedSongsExists = function () {
+playlistController.unsavedSongsExists = function () {
 
     if (playlistController.playlistMode)
         return false;
@@ -692,6 +698,9 @@ playlistController.loadPlaylist = function (playlist) {
     setTimeout(function () {
         uiController.playListScroll.refresh();
     }, 150)
+    setTimeout(function () {
+        uiController.playListScroll.refresh();
+    }, 1000)
 
 
 }
@@ -1221,6 +1230,7 @@ playlistController.makePlayListSortable = function () {
 
 
             setTimeout(function () {
+                playlistController.createPlayIndicator();
                 playbackController.remarkSong();
                 uiController.playListScroll.refresh();
 
