@@ -159,7 +159,7 @@ accountController.logout = function () {
 
 
         //Ask if should be cleared
-        if (playlistController.unsafedSongsExists()) {
+        if (playlistController.unsavedSongsExists()) {
             $("#popupAccount").popup("close");
 
             uiController.popupConfirmLogout = {doIt: function () {
@@ -237,19 +237,14 @@ accountController.loadStoredData = function () {
                      playlistController.globalId         = globalId;
                      */
 
-
                     console.dir("User playlists: ");
                     console.dir(playlistController.playlists);
 
-
                     $scope.safeApply();
-                    if(playlistController.loadedPlaylistSongs.length==0)
-                     uiController.showPlaylists();
 
-                    setTimeout(function () {
-                        $('#searchinput').focus();
-                    }, 500)
-                    if (playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist) {
+                    if (!playlistController.unsavedSongsExists()) {
+                        uiController.showPlaylists();
+
                         setTimeout(function () {
 
                             playlistController.makePlayListSortable();
@@ -258,6 +253,9 @@ accountController.loadStoredData = function () {
                             }, 150)
                         }, 0)
                     }
+                    setTimeout(function () {
+                        $('#searchinput').focus();
+                    }, 500)
                 }
             }
         }

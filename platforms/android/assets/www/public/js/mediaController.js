@@ -678,11 +678,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
      }, 500);*/
     setTimeout(function () {
 
-
-        if (playbackController.playingSong.gid)
-            var listElement = $("#playlistInner li[data-songgid='playlistsong" + playbackController.playingSong.gid + "'] ");
-        else
-            listElement = $("#searchlist li[data-songid='searchsong" + playbackController.playingSong.id + "'] ");
+        var listElement =  playbackController.getListElementFromSong( playbackController.playingSong)
 
 
         var loadTime = Date.now() - playbackController.startedLoadingTime;
