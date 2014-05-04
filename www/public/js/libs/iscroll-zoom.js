@@ -1237,7 +1237,7 @@ IScroll.prototype = {
 			wheelDeltaX = wheelDeltaY = e.wheelDelta / 120 * this.options.mouseWheelSpeed;
 		} else if ( 'detail' in e ) {
 			wheelDeltaX = wheelDeltaY = -e.detail / 3 * this.options.mouseWheelSpeed;
-		} else if (e.originalEvent) {
+		} else if (e.originalEvent) { //TODO CHANGED !! -----------------------------------------------
             e = e.originalEvent;
             if ( 'deltaX' in e ) {
                 wheelDeltaX = -e.deltaX;
@@ -1304,10 +1304,6 @@ IScroll.prototype = {
 		} else if ( newY < this.maxScrollY ) {
 			newY = this.maxScrollY;
 		}
-
-        console.log("MMMMMMMMMMMMMMMMMMMM")
-        console.log(newY)
-
 
 		this.scrollTo(newX, newY, 500); //CHANGED from    this.scrollTo(newX, newY, 0);
 

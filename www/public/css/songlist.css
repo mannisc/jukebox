@@ -214,11 +214,14 @@ ul.gridlayout #songOptions{
     padding-top: 3px !important;
     padding-bottom: 11px !important;
     height: 51px !important;
--moz-perspective: 150px;
--moz-perspective-origin: 32px 50%;
- -ms-perspective: 150px;
+    -webkit-perspective: 150;
+    -webkit-perspective-origin: 32px 50%;
+    -moz-perspective: 150px;
+    -moz-perspective-origin: 32px 50%;
+    -ms-perspective: 150px;
     -ms-perspective-origin: 32px 50%;
 }
+
 
 
 
@@ -407,6 +410,17 @@ ul.gridlayout #songOptions{
 
 .songNochange{
     background-image:url(../img/nochange.png)!important;
+}
+
+.songlist.hidden li{
+    display:none!important
+}
+
+.songlist.hidden li{
+    display:none!important
+}
+.songlist.hidden li.stayvisible{
+    display: block!important;
 }
 
 
@@ -1111,8 +1125,29 @@ ul.gridlayout #songOptions{
 
 
 
-.chosen-container .chosen-drop {
+#playlistselectvertical .chosen-container .chosen-drop {
     color: #000 !important;
+}
+
+
+#playlistselectvertical .search-choice{
+
+    opacity: 0; /* make things invisible upon start */
+    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: fadeincomplete ease-in 1;
+    animation: fadeincomplete ease-in 1;
+
+    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode: forwards; /*FF 5+*/
+    -o-animation-fill-mode: forwards; /*Not implemented yet*/
+    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards; /*when the spec is finished*/
+
+    -webkit-animation-duration: 0.2s;
+    -moz-animation-duration: 0.2s;
+    animation-duration: 0.2s;
+
+
 }
 
 #sortplaylistbutton {
