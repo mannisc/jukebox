@@ -751,7 +751,7 @@ playlistController.hasTrendStyle = function (trend, song) {
  *
  */
 playlistController.getTrendTitleClass = function (song) {
-    if (song.trend == 0 || song.trend == 1 || song.trend == 2) {
+    if (song.trend == 0 || song.trend == 1 || song.trend == 2 || song.trend == 3) {
         return "songTitleMargin";
     }
     return "";
@@ -759,17 +759,7 @@ playlistController.getTrendTitleClass = function (song) {
 }
 
 
-/**
- *
- */
-playlistController.getTrendTitleStyle = function (song) {
-    console.log(song.trend)
-    if (song.trend == 0 || song.trend == 1 || song.trend == 2) {
-        return "margin-left:13px!important;";
-    }
-    return "";
 
-}
 
 /**
  *

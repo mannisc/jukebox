@@ -121,11 +121,12 @@ ul.gridlayout #songOptions{
     background-repeat:no-repeat;
 }
 
+/*
 #songOptions #removeFromPlaylist:hover{
     background-image:url(../img/trashoptopen.png)!important ;
     background-size:100%;
     background-repeat:no-repeat;
-}
+} */
 
 #searchlist #songOptions #removeFromPlaylist{
     display:none!important;
@@ -410,6 +411,10 @@ ul.gridlayout #songOptions{
 
 .songNochange{
     background-image:url(../img/nochange.png)!important;
+}
+
+.songNew{
+    background-image:url(../img/newsong.png)!important;
 }
 
 .songlist.hidden li{
