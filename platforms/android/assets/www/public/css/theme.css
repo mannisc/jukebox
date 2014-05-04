@@ -113,10 +113,12 @@ html, body, #page, #content {
     -ms-transition: opacity 0.3s ease;
     -o-transition: opacity 0.3s ease;
     transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .chosen-drop.visible {
     opacity: 1 !important;
+    pointer-events:auto!important;
 }
 
 .chosen-container .chosen-results li {

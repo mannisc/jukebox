@@ -107,7 +107,7 @@ $(document).ready(function () {
                 if(urlParams.search&&urlParams.search!=""){
 
                     $("#searchinput").val(urlParams.search);
-
+                    $("#searchinput").trigger("input");
                     function search(searchID){
                         searchController.searchSongs(urlParams.search, "", "",function (list) {  searchController.completeSearch(list,null,searchController.searchCounter) });
                     }
@@ -122,7 +122,7 @@ $(document).ready(function () {
                             name:  urlParams.title,
                             id: "slsid" + helperFunctions.padZeros(1, 2)
                         }
-                        alert(song)
+
                         playbackController.playSong(song,false,false);
                     }
                 }

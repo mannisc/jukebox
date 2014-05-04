@@ -548,10 +548,10 @@ searchController.searchMusic = function () {
         searchController.lastSearchTerm = $("#searchinput").val();
         var song = playbackController.getPlayingSong();
         if (song.name != "" && $("#searchinput").val() != "") {
-            window.history.pushState("", document.title, "/?search=" + searchController.lastSearchTerm + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+            window.history.pushState("", document.title, location.protocol + '//' + location.host + location.pathname+"?search=" + searchController.lastSearchTerm + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
         }
         else {
-            window.history.pushState("", document.title, "?search=" + searchController.lastSearchTerm);
+            window.history.pushState("", document.title, location.protocol + '//' + location.host + location.pathname+"?search=" + searchController.lastSearchTerm);
         }
         if (searchController.serverSearch) {
             var time = 1500;

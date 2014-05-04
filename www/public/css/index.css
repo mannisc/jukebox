@@ -44,6 +44,15 @@ body {
 
 }
 
+/*Noanim TODO disable all animation in div where noanim is set for slow browsers*/
+.noanim *{
+    -webkit-transition:none!important;
+    -webkit-animation:none!important;
+}
+
+.noanim .fadeincomplete{
+   opacity: 1!important;
+}
 
 
 
@@ -1114,7 +1123,7 @@ text-shadow: none!important;
 max-height: 2em!important;
 max-width: 2em!important;
     margin-top:0.25em!important;
-    margin-left:0.95em!important;
+    margin-left:0.7em!important;
 
 }
 
@@ -1127,7 +1136,7 @@ max-width: 2em!important;
     max-height: 2em!important;
     max-width: 2em!important;
     margin-top: 0.25em!important;
-    margin-left: 0.95em!important;
+    margin-left: 0.7em!important;
 }
 
 #popupArtist a {

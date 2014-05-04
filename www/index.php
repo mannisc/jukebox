@@ -160,7 +160,7 @@
 
         <a id="signinLink" ng-if="!accountController.loggedIn" href="#popupLogin" onclick="setTimeout(function(){$('#signinusername').focus();},700)" data-rel="popup" data-position-to="#signinLink"
            class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
-        <a id="linkAccount" ng-if="accountController.loggedIn" href="#popupAccount" data-rel="popup" class="ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a" data-transition="pop">{{accountController.userName}}</a>
+        <a id="linkAccount" ng-if="accountController.loggedIn" href="#popupAccount" data-rel="popup" class="ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a fadeincomplete" data-transition="pop">{{accountController.userName}}</a>
 
 
     </div>
@@ -264,7 +264,7 @@
 
     <div id="playlistInner" class="animate" style="display:none">
         <ul ui-sortable ng-model="playlistController.loadedPlaylistSongs" data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
-            <li ng-if ="playlistController.playlistMode" ng-click="playlistController.createEmptyPlaylist();"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeslideincompletefast createplaylist">
+            <li ng-if ="playlistController.playlistMode" ng-click="playlistController.createEmptyPlaylist();"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete createplaylist stayvisible">
                 <a tabindex="-1">
 
                 <img src="public/img/empty.png"  alt="" class="noshadow ui-li-icon ui-corner-none"  >
