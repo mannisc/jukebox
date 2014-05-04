@@ -212,8 +212,9 @@
         <li ng-repeat="song in searchController.searchResults track by song.id" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" ><img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
-            <img ng-if ="playlistController.hasTrendStyle(1,song)" src="public/img/emtpy.png" class="songLoser songTrend" >
-            <img ng-if ="playlistController.hasTrendStyle(2,song)" src="public/img/emtpy.png" class="songNochange songTrend" >
+            <img ng-if ="playlistController.hasTrendStyle(1,song)" src="public/img/emtpy.png" class="songNochange songTrend" >
+            <img ng-if ="playlistController.hasTrendStyle(2,song)" src="public/img/emtpy.png" class="songLoser songTrend" >
+            <img ng-if ="playlistController.hasTrendStyle(3,song)" src="public/img/emtpy.png" class="songNew songTrend" >
 
             <h3 ng-class="playlistController.getTrendTitleClass(song)" >{{song.name}}</h3>
 
@@ -545,7 +546,7 @@
 <div data-role="popup" id="popupArtist" data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>
         <div style="text-align:center">
-            <h3 style="margin-right: 40px;margin-left: 40px;padding-right: 20px;padding-left: 20px;text-align: center;">{{mediaController.getSongArtist(playbackController.playingSong)}}</h3>
+            <h3 style="margin-top: 12px;margin-right: 40px;margin-left: 40px;padding-right: 20px;padding-left: 20px;text-align: center;">{{mediaController.getSongArtist(playbackController.playingSong)}}</h3>
 
             <div style="font-size: 1em;font-weight: bold;margin-top: -10px; margin-bottom: 10px;"> {{playbackController.playingSong.name}}</div>
             <ul data-role="listview" id="popupArtistExternList" data-theme="b">
@@ -591,6 +592,7 @@
 <script src="http://api.dmcdn.net/all.js"></script>
 <!-- /page -->
 
+<script type="text/javascript" src="public/js/generatedData.js"></script>
 
 <script type="text/javascript" src="public/js/libs/jquery-1.11.0.js"></script>
 
