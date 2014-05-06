@@ -119,6 +119,7 @@ html, body, #page, #content {
 .chosen-drop.visible {
     opacity: 1 !important;
     pointer-events:auto!important;
+    left: 0!important;
 }
 
 .chosen-container .chosen-results li {
@@ -130,21 +131,24 @@ html, body, #page, #content {
     font-size: 16px !important;
 }
 
+
+
+
 .chosen-container-multi .chosen-choices li.search-choice {
-    padding: 7px 25px 6px 5px !important;
+    padding: 9px 35px 2px 35px !important;
 }
 
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
     position: absolute;
     top: 4px;
-    right: 3px;
+    right: 7px;
     display: block;
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     background: url(../img/cross.png) no-repeat;
-    background-size: 18px;
+    background-size: 22px;
     font-size: 1px;
-    opacity: 0.8;
+    opacity: 1;
 }
 
 .chosen-container .chosen-results li.highlighted {
@@ -187,6 +191,31 @@ html, body, #page, #content {
     transition: all 0.25s ease;
 }
 
+.chosen-container-multi .chosen-choices li.search-choice.currentQueue {
+    background: #f6d073!important;
+    background: -moz-linear-gradient(top,#fee6b0,#eeba37)!important;
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fee6b0),color-stop(100%,#eeba37))!important;
+    background: -webkit-linear-gradient(top,#fee6b0,#eeba37)!important;
+    background: -o-linear-gradient(top,#fee6b0,#eeba37)!important;
+    background: -ms-linear-gradient(top,#fee6b0,#eeba37)!important;
+    background: linear-gradient(top,#fee6b0,#eeba37)!important;
+
+}
+
+.chosen-container-multi .chosen-choices li.search-choice.currentQueue:hover {
+    background: #f6d073!important;
+    background: -moz-linear-gradient(top,#fee6b0, #ffc939)!important;
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fee6b0),color-stop(100%,#ffc939))!important;
+    background: -webkit-linear-gradient(top,#fee6b0,#ffc939)!important;
+    background: -o-linear-gradient(top,#fee6b0,#ffc939)!important;
+    background: -ms-linear-gradient(top,#fee6b0,#ffc939)!important;
+    background: linear-gradient(top,#fee6b0,#ffc939)!important;
+
+}
+
+
+
+
 .chosen-container-multi .chosen-choices li.search-choice:hover {
     background-color: rgba(210, 210, 210, 0.29) !important;
     background-image: none !important;
@@ -202,7 +231,16 @@ html, body, #page, #content {
     -moz-transition: text-shadow 0.3s ease;
     -o-transition: text-shadow 0.3s ease;
     transition: text-shadow 0.3s ease;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 80px;
+    height: 18px;
+    display: inline-block;
+    white-space: nowrap;
 }
+
+
 
 
 /*Facebook */

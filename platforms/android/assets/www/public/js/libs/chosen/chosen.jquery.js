@@ -814,6 +814,7 @@
             if (this.results_showing) {
                 this.result_clear_highlight();
                 this.container.find(".chosen-drop").removeClass("visible");//CHANGED
+
                 this.container.removeClass("chosen-with-drop");
                 this.form_field_jq.trigger("chosen:hiding_dropdown", {
                     chosen: this
@@ -889,10 +890,10 @@
         Chosen.prototype.choice_build = function (item) {
             var choice, close_link,
                 _this = this;
-
             choice = $('<li />', {
-                "class": "search-choice"
-            }).html("<span>" + item.html + "</span>");
+                "class": "search-choice "+item.classes //CHANGED  //TODO !!!!!!!!!!!!!!!!!!
+            }).html("<img src= 'public/img/playlist.png ' width='23px' style='position:absolute;top: 4px;left: 5px;' ><span>" + item.html + "</span>");   //CHANGED  //TODO !!!!!!!!!!!!!!!!!!
+
             if (item.disabled) {
                 choice.addClass('search-choice-disabled');
             } else {
@@ -1170,10 +1171,13 @@
                     'style': style_block
                 });
 
-                if (this.search_field.val() == "")
+                if (this.search_field.val() == "") //CHANGED //TODO!!!!!!
                     var text =  $("#playlistselectvertical .search-field input").attr("placeholder");
                 else
                     text = this.search_field.val();
+                setTimeout(function(){
+                    $(".search-field input").css("opacity","");
+                },0)
 
                 div.text(text);
 
@@ -1184,6 +1188,8 @@
                 if (w > f_width - 10) {
                     w = f_width - 10;
                 }
+
+
                 return this.search_field.css({
                     'width': w + 'px'
                 });
