@@ -799,15 +799,20 @@ mediaController.toggleLyrics = function () {
  * @param song
  * @returns {string}
  */
-mediaController.getPlaylistCoverSong = function (index, song) {
+mediaController.getPlaylistCoverSong = function (index,maxIndex, song) {
     if (song.isPlaylist) {
 
-        if (song.tracks && song.tracks[index]) {
-            if (song.tracks[index].isGoogleDrive) {
+
+       var actIndex =  song.tracks.length-1-index;
+
+
+
+        if (song.tracks && song.tracks[actIndex]) {
+            if (song.tracks[actIndex].isGoogleDrive) {
                 return "background-image:url(public/img/playlistgdrive.png)";
 
             } else {
-                return "background-image:url(" + mediaController.getSongCover(song.tracks[index]) + ")";
+                return "background-image:url(" + mediaController.getSongCover(song.tracks[actIndex]) + ")";
 
             }
         }

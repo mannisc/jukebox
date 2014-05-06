@@ -24,6 +24,17 @@ playbackController.doubleClickedElement = function (event) {
 
 }
 
+playbackController.touchedElement = function (event, onlyStyle) {
+
+    if($(event.target).is("li"))
+        var listElement = $(event.target);
+    else
+        listElement =  $(event.target).parents("li");
+    var element = listElement.data("song");
+
+    playbackController.clickedElement(event, element, onlyStyle);
+
+}
 
 /**
  * Clicked on Element in list
@@ -38,7 +49,8 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
         return;
 
     //Clicked on Cover -> Select Song
-    if (!element.isPlaylist && $(".songlist li img:hover").length > 0 || (event.clientX - $(".songlist:hover").offset().left) < 65) {
+     var songlist = $(event.target).parents(".songlist")
+    if (songlist.length>0&& (event.clientX - songlist.offset().left) < 65) {
         playlistController.selectSong(element)
         return;
     }

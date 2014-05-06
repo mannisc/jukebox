@@ -46,6 +46,10 @@ function MainController($scope,$compile) {
         return obj;
     }
 
+    $scope.countLoadedPlaylists = function(){
+        return Object.keys(playlistController.loadedPlaylists).length;
+    }
+
     //Bind Controllers
     $scope.mediaController    = mediaController;
     $scope.uiController       = uiController;

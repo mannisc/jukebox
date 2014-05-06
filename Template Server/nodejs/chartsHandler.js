@@ -87,16 +87,15 @@ chartsHandler.downloadFiles = function (content, callback) {
                             //New
                         }
 
-
-
-
+                       // console.log(song.name + "    "+oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration]+"   "+trend)
 
                        if(trend == 1) {
-                           if(oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration])
+                           if( oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration]!=undefined&&oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration]>=0)
                                trend =  oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration]
                            else
                             trend = 3;
                        }
+
 
                        chartsHandler.charttrends[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] = trend;
 

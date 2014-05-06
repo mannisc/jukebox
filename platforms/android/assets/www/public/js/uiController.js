@@ -114,6 +114,10 @@ uiController.gridLayout = false;
 //}
 
 uiController.init = function () {
+
+    uiController.disableAutoFocus();
+
+
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
         $("#titleHeader").show();
         $(" #iconHeader").css("opacity", "1");
@@ -129,34 +133,33 @@ uiController.init = function () {
     }
 
     // Add BETA Status to Title
-    $("#titleHeader").append('<span style="position: absolute; top: 10px;left: 170px;color: #a00; font-weight: 100; font-size: 10px;">BETA</span>');
+    $("#titleHeader").append('<div style="margin-left:3px;display:inline-block;color: #a00; font-weight: 100; font-size: 16px;"><sup> BETA</sup></div>');
 
     //Fade in fb like
 
     setTimeout(function () {
         $("#iconHeader").attr("src", "public/img/logo.gif");
-    }, 6000)
+    }, 15000)
 
 
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
 
 
-
     $("body").dblclick(function (event) {
         playlistController.deselectSongs(event);
         if (playlistController.sortPlaylist)
-            playlistController.toggleSortablePlaylist( true);
+            playlistController.toggleSortablePlaylist(true);
 
     })
 
     /* TODO CHANGE TO RIGHT INPUT
-    $('#saveplaylistinpt').keyup(function (evt) {
-        if (evt.keyCode == 13) {
-            $("#saveokayplaylistbtn").click();
-            return false;
-        }
-    });
+     $('#saveplaylistinpt').keyup(function (evt) {
+     if (evt.keyCode == 13) {
+     $("#saveokayplaylistbtn").click();
+     return false;
+     }
+     });
      // uiController.initMediaPlayer();
 
      $("#saveplaylistinpt").on("input", function () {
@@ -195,21 +198,6 @@ uiController.init = function () {
 
 
 
-    $("#controlbar .ui-input-clear").click(function () {
-        switch (searchController.buttonActive) {
-
-
-            case 1:
-                searchController.removeFilterSongs();
-                break;
-            case 2:
-                searchController.removeFilterSongs();
-                break;
-            default:
-                searchController.emptySearchList();
-                break;
-        }
-    })
 
 
     //On Window Resize
@@ -396,8 +384,8 @@ uiController.toggleSearchButton = function (button) {
 /**
  * savePlaylist and show green marker
  * @param useSelected use the only seleted playlist
- 
-uiController.savePlaylistVisible = function (useSelected) {
+
+ uiController.savePlaylistVisible = function (useSelected) {
     $("#saveplaylistbtn img").css("opacity","0")
 
     var gid = playlistController.savePlaylist(useSelected);
@@ -444,7 +432,7 @@ uiController.savePlaylistVisible = function (useSelected) {
         });
     }, 250)
 }
-*/
+ */
 
 uiController.stopScrollingOnClick = function (event) {
     var myEvent = jQuery.extend({}, event);
@@ -607,8 +595,8 @@ uiController.updateUI = function () {
         var setSelectSize = function () {
             $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 45);
             $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 45);
-            $("#saveplaylistinput").css("width", $("#playlist").width()  - 45);
-            $("#saveplaylistinput").css("max-width", $("#playlist").width()  - 45);
+            $("#saveplaylistinput").css("width", $("#playlist").width() - 45);
+            $("#saveplaylistinput").css("max-width", $("#playlist").width() - 45);
 
             $("#playlistselectvertical input").css("width", 110);
             // $("#playlistselectvertical input").css("max-width", 50);
@@ -683,7 +671,7 @@ uiController.updateUI = function () {
 
 
     } else {
-        $("#controlbar .ui-input-search").css("max-width", 300);
+        $("#controlbar .ui-input-search").css("max-width", 320);
         $("#controlbar .ui-select").css("max-width", 340);
 
     }
@@ -721,7 +709,6 @@ uiController.updateUI = function () {
     }, 0)
 
 
-
 };
 
 
@@ -757,7 +744,23 @@ uiController.showPlaylists = function () {
         $('#playlistselectverticalform').trigger('chosen:close');
     }, 0)
     setTimeout(function () {
-        playlistController.loadedPlaylistSongs=[]
+
+
+        //Remove empty unnamed Playlists
+        for (var playlist in playlistController.loadedPlaylists) {
+            if (playlistController.loadedPlaylists.hasOwnProperty(playlist)) {
+                if (!playlistController.loadedPlaylists[playlist].tracks || (playlistController.loadedPlaylists[playlist].tracks.length == 0 && playlistController.loadedPlaylists[playlist].isUnnamedPlaylist)) {
+                    for (var j = playlistController.playlists.length - 1; j >= 0; j--) {
+                        if (playlistController.playlists[j].gid == playlistController.loadedPlaylists[playlist].gid) {
+                            playlistController.playlists.splice(i, 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        playlistController.loadedPlaylists = {};
+        playlistController.loadedPlaylistSongs = []
 
         playlistController.playlistMode = true;
         $("#clearChoosenPlaylists").hide();
@@ -768,7 +771,7 @@ uiController.showPlaylists = function () {
         $("#playlistInner .iScrollPlayIndicator").hide();
         $("#searchlist .iScrollPlayIndicator").hide();
 
-       // $("#playlistview").hide();
+        // $("#playlistview").hide();
 
         $("#playlistInner .songlist").addClass("hidden");
 
@@ -859,9 +862,52 @@ uiController.toggleGridLayout = function () {
 }
 
 
+// ==UserScript==
+// @name           Disable auto-focussing
+// @author         ComFreek <comfreek at the following domain 'outlook' with the TLD 'com'>
+// @description    Disable auto-focussing
+// @include *
+// @version        1.0
+// ==/UserScript==
+
+uiController.disableAutoFocus = function () {
 
 
+    function is_touch_device() {
+        return !!window.ontouchstart // works on most browsers
+            || !!window.onmsgesturechange; // works on ie10
+    };
+
+    if (is_touch_device()) {
+        var maxTime = 3000;
+        var timeoutInterval = 5;
+
+        var usedTime = 0;
+        var isManualFocus = false;
+
+        function check() {
+            if (!isManualFocus && document.activeElement.tagName.toLowerCase() == "input") {
+                console.log("BLURRED");
+                document.activeElement.blur();
+            }
+            usedTime += timeoutInterval;
+            if (usedTime < maxTime) {
+                window.setTimeout(check, timeoutInterval);
+            }
+        }
+
+        check();
 
 
+        document.body.addEventListener("click", function (evt) {
+            if (evt.target.tagName == "INPUT") {
+                console.log("MANUAL CLICK");
+                isManualFocus = true;
+            }
+        });
 
-
+        document.body.addEventListener("keydown", function (evt) {
+            isManualFocus = true;
+        });
+    }
+}

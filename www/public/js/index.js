@@ -18,8 +18,6 @@
  */
 
 
-
-
 var app = {
     // Application Constructor
     initialize: function () {
@@ -41,31 +39,32 @@ var app = {
         // Nicht verwenden für Webseite, wird nur in phonegap gefeuert
 
 
-
     }
 
 };
 
 var preferences = {
- //serverURL: "http://localhost:3001/"
- serverURL: "http://info.jukebox.selfhost.eu:3001/"
+    //serverURL: "http://localhost:3001/"
+    serverURL: "http://info.jukebox.selfhost.eu:3001/"
 }
 
 $.support.cors = true;
 
-lyricscallback = function(test){
+lyricscallback = function (test) {
     alert(text)
 }
-lyricsvisible=false;
+lyricsvisible = false;
 
 
 var urlParams;
-var loadUrlParams = function(){
+var loadUrlParams = function () {
     var match,
-        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        pl = /\+/g,  // Regex for replacing addition symbol with a space
         search = /([^&=]+)=?([^&]*)/g,
-        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-        query  = window.location.search.substring(1);
+        decode = function (s) {
+            return decodeURIComponent(s.replace(pl, " "));
+        },
+        query = window.location.search.substring(1);
 
     urlParams = {};
     while (match = search.exec(query))
@@ -74,14 +73,11 @@ var loadUrlParams = function(){
 }
 
 
-
-
 $(document).ready(function () {
 
+    // FastClick.attach(document.body);
 
-
-
-    $.mobile.loading( "show");
+    $.mobile.loading("show");
     var initPage = function () {
         if ($scope.loaded) {
 
@@ -97,33 +93,36 @@ $(document).ready(function () {
             videoController.init();
 
 
-            setTimeout(function(){
+            setTimeout(function () {
                 $("#searchinput").focus();
             }, 500);
 
 
             console.dir(urlParams);
             setTimeout(function () {
-                if(urlParams.search&&urlParams.search!=""){
+                if (urlParams.search && urlParams.search != "") {
 
                     $("#searchinput").val(urlParams.search);
                     $("#searchinput").trigger("input");
-                    function search(searchID){
-                        searchController.searchSongs(urlParams.search, "", "",function (list) {  searchController.completeSearch(list,null,searchController.searchCounter) });
+                    function search(searchID) {
+                        searchController.searchSongs(urlParams.search, "", "", function (list) {
+                            searchController.completeSearch(list, null, searchController.searchCounter)
+                        });
                     }
+
                     search(searchController.searchCounter);
                     searchController.searchCounter++;
 
                 }
-                if(urlParams.artist&&urlParams.artist!=""){
-                    if(urlParams.title&&urlParams.title!=""){
+                if (urlParams.artist && urlParams.artist != "") {
+                    if (urlParams.title && urlParams.title != "") {
                         var song = {
                             artist: urlParams.artist,
-                            name:  urlParams.title,
+                            name: urlParams.title,
                             id: "slsid" + helperFunctions.padZeros(1, 2)
                         }
 
-                        playbackController.playSong(song,false,false);
+                        playbackController.playSong(song, false, false);
                     }
                 }
             }, 3500);
@@ -131,6 +130,17 @@ $(document).ready(function () {
             //Show loaded page
             $scope.safeApply();
             $("#page").css("opacity", "1");
+
+
+            var updatePage = function () {
+                if ($("#playlistInner ul").length > 0) //Check if angular loaded
+                    uiController.updateUI();
+                else
+                    setTimeout(updatePage, 200);
+
+            }
+            setTimeout(updatePage, 500);
+
 
         } else
             setTimeout(initPage, 50);
@@ -152,8 +162,17 @@ jQuery.fn.outerHTML = function (s) {
 };
 
 
-
-
-
+if (!Object.keys) {
+    Object.keys = function (obj) {
+        var keys = [],
+            k;
+        for (k in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, k)) {
+                keys.push(k);
+            }
+        }
+        return keys;
+    };
+}
 
 
