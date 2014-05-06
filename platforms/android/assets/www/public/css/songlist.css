@@ -28,7 +28,7 @@
 
 /*Song Options*/
 
-#songOptions{
+.songOptions{
     position: absolute;
     height: 38px;
     width:199px;
@@ -41,10 +41,10 @@
     background-image: -ms-linear-gradient(right, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 80%,rgba(50,50,50,0) 100%);
     background-image: linear-gradient(to right, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 80%,rgba(50,50,50,0) 100%);      */
     z-index: 10000;
-    -webkit-transition: all 0.35s ease;
-    -moz-transition: all 0.35s ease;
-    -o-transition: all 0.35s ease;
-    transition: all 0.35s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
     border: 1px solid rgb(34, 34, 34);
     border-top-left-radius: 0.3125em;
     border-top-right-radius: 0.3125em;
@@ -55,7 +55,7 @@
     background-color: rgb(51, 51, 51);
 
 }
-#songOptions.noanim{
+.songOptions.noanim{
     -webkit-transition: none!important;
     -moz-transition:  none!important;
     -o-transition:  none!important;
@@ -63,7 +63,7 @@
 }
 
 
-ul.gridlayout #songOptions{
+ul.gridlayout .songOptions{
     left: 60px!important;
     -webkit-transform: scale(0.92);
     -moz-transform: scale(0.92);
@@ -74,7 +74,7 @@ ul.gridlayout #songOptions{
 
 
 
-#songOptions img:hover{
+.songOptions img:hover{
 
     -webkit-transform: scale(1.31);
     -moz-transform: scale(1.31);
@@ -83,7 +83,7 @@ ul.gridlayout #songOptions{
     transform-origin: 50% 50%!important;
 }
 
-#songOptions img{
+.songOptions img{
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
@@ -93,7 +93,7 @@ ul.gridlayout #songOptions{
 }
 
 
-#songOptions #playSelection{
+.songOptions #playSelection{
     position: absolute;
     top: 1px;
     left: -3px;
@@ -102,17 +102,17 @@ ul.gridlayout #songOptions{
 }
 
 
-#songOptions #addToPlaylist{
+.songOptions #addToPlaylist{
     position: absolute;
     top: 1px;
     left: 47px;
 
 }
-#playlistInner #songOptions #addToPlaylist{
+#playlistInner .songOptions #addToPlaylist{
     display:none!important;
 }
 
-#songOptions #removeFromPlaylist{
+.songOptions #removeFromPlaylist{
     position: absolute;
     top: 1px;
     left: 47px;
@@ -122,34 +122,39 @@ ul.gridlayout #songOptions{
 }
 
 /*
-#songOptions #removeFromPlaylist:hover{
+.songOptions #removeFromPlaylist:hover{
     background-image:url(../img/trashoptopen.png)!important ;
     background-size:100%;
     background-repeat:no-repeat;
 } */
 
-#searchlist #songOptions #removeFromPlaylist{
+#searchlist .songOptions #removeFromPlaylist{
     display:none!important;
 }
 
 
 
-#songOptions #searchSimilar{
+.songOptions #searchSimilar{
     position: absolute;
     top: 1px;
     left: 96px;
 
 }
 
-
-
-#songOptions #shareSocial{
+.songOptions #moreOptions{
     position: absolute;
     top: 1px;
     left: 145px;
 
 }
+/*
+.songOptions #shareSocial{
+    position: absolute;
+    top: 1px;
+    left: 145px;
 
+}
+ */
 
 /*Songlist  */
 .songlist{
@@ -162,9 +167,97 @@ ul.gridlayout #songOptions{
     height:65px!important;
 }
 
-.songlist li.createplaylist a{
+.songlist li.specialplaylistbutton.currentqueue a{
     background-color: rgba(255, 255, 255, 0.12)!important;
 }
+
+
+
+.songlist li.specialplaylistbutton.createplaylist a{
+    margin-bottom: 0px!important;
+    border-bottom: none!important;
+    background-color: rgba(255, 255, 255, 0.12)!important;
+
+}
+
+.songlist li.specialplaylistbutton {
+    margin-bottom: 5px!important;
+
+}
+
+.songlist li.specialplaylistbutton  h3{
+text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-radius}*/ #111 /*{b-bup-shadow-color}*/!important;
+ }
+
+.songlist li a{
+    -webkit-transition: background-image 1s ease!important;
+    -moz-transition: background-image 1 ease!important;
+    -o-transition: background-image 1s ease!important;
+    transition: background-image 1s ease!important;
+}
+
+
+.songlist li.addedsongs  .playlistCoverSong .coverSong{
+
+
+
+    -webkit-transform:   translate(-8px,0) rotateY(320deg) translate(-15px,0) ;
+    -moz-transform: rotateY(-320deg) translate(-15px,0);
+    transform: rotateY(320deg) translate(-15px,0)!important;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%!important;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+
+
+    -webkit-animation: bounceopacity ease 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: bounceopacity ease 1;
+    animation: bounceopacity ease 1;
+
+    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode: forwards; /*FF 5+*/
+    -o-animation-fill-mode: forwards; /*Not implemented yet*/
+    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards; /*when the spec is finished*/
+
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    animation-duration: 2s;
+
+
+}
+
+.songlist li.addedsongs a img.ui-li-icon {
+    -moz-box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+}
+
+
+
+@-moz-keyframes bounceopacity {
+    0%{ -moz-transform:opacity(1);}
+    50%{ -moz-transform:scale(0.2); }
+    100%{ -moz-transform:scale(1);}
+}
+
+@-webkit-keyframes bounceopacity {
+    0%{  -webkit-transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    30%{ -webkit-transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
+    60%{ -webkit-transform:translate(-8px,0)  scale(1) rotateY(320deg)   translate(-15px,0); opacity:1 }
+    90%{ -webkit-transform:translate(-8px,0)  scale(1) rotateY(320deg) translate(-15px,0);opacity:1  }
+    100%{ opacity:0 }
+
+}
+
+@keyframes bounceopacity {
+    0%{ transform:opacity(1);}
+    50%{ transform:scale(0.2); }
+    100%{ transform:scale(1);}
+}
+
 
 .songlist .ui-li-has-icon img {
     max-height: 3.3em !important;
@@ -351,15 +444,7 @@ ul.gridlayout #songOptions{
 
 
 
-.songlistDISABLED li.loadedsong.stillloading .loadingSongImg{
-    /* background-size:9;*/
 
-    -webkit-animation:spinplay 2s ease infinite!important;
-    -moz-animation:spinplay 2s ease infinite!important;
-    animation:spinplay 2s ease infinite!important;
-
-
-}
 
 .songlist li.loadedsong.stillloading img.loadingSongImg{
     display:block;
@@ -469,7 +554,7 @@ ul.gridlayout #songOptions{
     transform-origin: 50% 50%!important;
 }
 
-.songlist li.createplaylist .playlistCoverSong img{
+.songlist li.specialplaylistbutton .playlistCoverSong img{
     opacity:0!important;
     -webkit-transition: all 0.7s ease;
     -moz-transition: all 0.7s ease;
@@ -478,7 +563,7 @@ ul.gridlayout #songOptions{
 }
 
 
-.songlist li.createplaylist .playlistCoverSong img.addPlaylist{
+.songlist li.specialplaylistbutton .playlistCoverSong img.addPlaylist{
     left: 0!important;
     -webkit-transform:   translate(2px,-1px)  scale(1.1) !important;  !important;
     -moz-transform: translate(2px,-1px)  scale(1.1)  !important;
@@ -487,7 +572,7 @@ ul.gridlayout #songOptions{
 
 }
 
-.songlist li:hover.createplaylist .playlistCoverSong img.addPlaylist{
+.songlist li:hover.specialplaylistbutton .playlistCoverSong img.addPlaylist{
     opacity:1!important;
     -webkit-transform:   translate(2px,-1px)  scale(1.3) !important;
     -moz-transform: translate(2px,-1px)  scale(1.3)  !important;
@@ -504,6 +589,80 @@ ul.gridlayout #songOptions{
 
 
 
+.songlist.dragging li .playlistCoverSong {
+
+    -webkit-transform: none   !important;
+    -moz-transform: none !important;
+    transform: none  !important;
+
+-webkit-animation: staticbounce ease infinite; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+-moz-animation: staticbounce ease infinite;
+animation: staticbounce ease infinite;
+
+-webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+-moz-animation-fill-mode: forwards; /*FF 5+*/
+-o-animation-fill-mode: forwards; /*Not implemented yet*/
+-ms-animation-fill-mode: forwards; /*IE 10+*/
+animation-fill-mode: forwards; /*when the spec is finished*/
+
+-webkit-animation-duration: 1.5s;
+-moz-animation-duration:  1.5s;
+animation-duration:  1.5s;
+
+
+}
+
+
+
+
+@-moz-keyframes staticbounce {
+    0%{ -moz-transform:scale(1); }
+    50%{ -moz-transform:scale(1.05);  }
+    75%{ -moz-transform:scale(1.1);}
+    100%{ -moz-transform:scale(1); }
+}
+
+@-webkit-keyframes staticbounce {
+    0%{ -webkit-transform: scale(0.68); }
+    50%{ -webkit-transform:scale(0.78);  }
+    100%{ -webkit-transform: scale(0.681); }
+}
+
+@keyframes staticbounce {
+    0%{ transform:scale(1); }
+    50%{transform:scale(1.05);  }
+    75%{ transform:scale(1.1);}
+    100%{ transform:scale(1); }
+}
+
+/*
+@-moz-keyframes bouncerepeat {
+    0%{ -moz-transform:translate(-8px,0) rotateY(320deg) translate(-15px,0) }
+    30%{ -moz-transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
+    60%{ -moz-transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
+
+    100%{ -moz-transform:translate(-8px,0) rotateY(320deg) translate(-15px,0) }
+}
+
+@-webkit-keyframes bouncerepeat {
+    0%{ -webkit-transform:translate(-8px,0) rotateY(320deg) translate(-15px,0) }
+    20%{ -webkit-transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
+    40%{ -webkit-transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
+
+    80%{ -webkit-transform:translate(-8px,0) rotateY(320deg) translate(-15px,0)}
+    100%{ -webkit-transform:translate(-8px,0) rotateY(320deg) translate(-15px,0)}
+
+}
+
+@keyframes bouncerepeat {
+    0%{ transform:translate(-8px,0) rotateY(320deg) translate(-15px,0) }
+    30%{transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
+    60%{ transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
+
+    100%{ transform:translate(-8px,0) rotateY(320deg) translate(-15px,0) }
+}
+
+    */
 .songlist li.selected .playlistCoverSong img{
     left: 0!important;
     -webkit-transform: scale(1.21) rotateY(360deg)   !important;
@@ -535,12 +694,13 @@ ul.gridlayout #songOptions{
 }
 
 
+/*
 .songlist li .playlistCoverSong .coverSong1{
     -webkit-transform:  translate(-8px,0) rotateY(320deg) scale(1.05) translate(-15px,0) ;
     -moz-transform: rotateY(320deg) scale(1.05) translate(-15px,0);
     transform: rotateY(320deg) scale(1.05)  translate(-15px,0)!important
 }
-
+ */
 
 .songlist li .playlistCoverSong .coverSong2{
     left: 11px!important;
@@ -797,17 +957,20 @@ ul.gridlayout #songOptions{
     -ms-transform: translateZ(0);
     -o-transform: translateZ(0);
     transform: translateZ(0);
-    -webkit-touch-callout: none;
+
+  /*  -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+
     -webkit-text-size-adjust: none;
     -moz-text-size-adjust: none;
     -ms-text-size-adjust: none;
     -o-text-size-adjust: none;
     text-size-adjust: none;
-
+       */
 }
 
 #searchlist a {
@@ -973,6 +1136,8 @@ ul.gridlayout #songOptions{
     -ms-transform: translateZ(0);
     -o-transform: translateZ(0);
     transform: translateZ(0);
+
+    /*
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -983,6 +1148,7 @@ ul.gridlayout #songOptions{
     -ms-text-size-adjust: none;
     -o-text-size-adjust: none;
     text-size-adjust: none;
+    */
     min-height:80%;
 
 
@@ -1138,9 +1304,9 @@ ul.gridlayout #songOptions{
 #playlistselectvertical .search-choice{
 
     opacity: 0; /* make things invisible upon start */
-    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeincomplete ease-in 1;
-    animation: fadeincomplete ease-in 1;
+    -webkit-animation: smallbounce ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: smallbounce ease-in 1;
+    animation: smallbounce ease-in 1;
 
     -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
     -moz-animation-fill-mode: forwards; /*FF 5+*/
@@ -1148,12 +1314,56 @@ ul.gridlayout #songOptions{
     -ms-animation-fill-mode: forwards; /*IE 10+*/
     animation-fill-mode: forwards; /*when the spec is finished*/
 
-    -webkit-animation-duration: 0.2s;
-    -moz-animation-duration: 0.2s;
-    animation-duration: 0.2s;
+    -webkit-animation-duration: 0.5s;
+    -moz-animation-duration: 0.5s;
+    animation-duration: 0.5s;
 
+    max-width: 80px;
+    max-height: 25px;
+    border-radius: 6px!important;
 
 }
+
+#playlistselectvertical .search-choice span{
+
+   font-size:14.5px!important;
+
+}
+
+
+
+@-moz-keyframes smallbounce {
+    0%{ -moz-transform:scale(0.6); opacity:0;}
+    50%{ -moz-transform:scale(1.05); opacity:0.4; }
+    75%{ -moz-transform:scale(1); opacity:0.7;}
+    100%{ -moz-transform:scale(1); opacity:1;}
+}
+
+@-webkit-keyframes smallbounce {
+    0%{ -webkit-transform:scale(0.6); opacity:0;}
+    50%{ -webkit-transform:scale(1.05); opacity:0.4;}
+    75%{ -webkit-transform:scale(1); opacity:0.7;}
+    100%{ -webkit-transform:scale(1); opacity:1;}
+}
+
+@keyframes smallbounce {
+    0%{ transform:scale(0.6); opacity:0;}
+    50%{ transform:scale(1.05); opacity:0.4; }
+    75%{transform:scale(1); opacity:0.7;}
+    100%{ transform:scale(1); opacity:1;}
+}
+
+
+#rightpanel {
+    width: 300px !important;
+    max-width: 100% !important;
+    overflow:hidden;
+}
+
+
+
+
+
 
 #sortplaylistbutton {
     float: left;
@@ -1198,7 +1408,7 @@ ul.gridlayout #songOptions{
 
 
 .chosen-choices.ui-input li.search-choice {
-    margin: 4px 0 3px 5px!important;
+    margin: 2px 3px 0px 3px!important;
 }
 
 
@@ -1299,12 +1509,14 @@ ul.gridlayout #songOptions{
     /*  background: #4617B4 !important;*/
 
 
-
     border: none !important;
     margin: 0px !important;
 
 }
 
+.draggedlistelement * {
+    pointer-events:none!important;
+}
 
 
 .draggedlistelement .margintop{
@@ -1431,10 +1643,10 @@ ul.gridlayout #songOptions{
 }
 
 @-webkit-keyframes spin {
-    0% { transform:rotateY(0deg) scale(1.21);  -webkit-transform: rotateY(0deg) scale(1.21);}
-    40% { transform:rotateY(45deg) scale(1.21); -webkit-transform: rotateY(45deg) scale(1.21);}
-    70% { transform:rotateY(360deg) scale(1.21);  -webkit-transform: rotateY(360deg) scale(1.21); }
-    100% { transform:rotateY(360deg) scale(1.21);  -webkit-transform: rotateY(360deg) scale(1.21);  }
+    0% { transform:rotateY(0deg) scale(1.23);  -webkit-transform: rotateY(0deg) scale(1.23);}
+    40% { transform:rotateY(45deg) scale(1.23); -webkit-transform: rotateY(45deg) scale(1.23);}
+    70% { transform:rotateY(360deg) scale(1.23);  -webkit-transform: rotateY(360deg) scale(1.23); }
+    100% { transform:rotateY(360deg) scale(1.23);  -webkit-transform: rotateY(360deg) scale(1.23);  }
 }
 
 @keyframes spin{
