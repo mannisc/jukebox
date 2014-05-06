@@ -5,22 +5,34 @@
     <ignored path="nodejs.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/server.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399221544643" ignored="false" />
-    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/index.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399221710471" ignored="false" />
+    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/index.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399300886724" ignored="false" />
     <file path="/ftpHandler.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399221613824" ignored="false" />
-    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/css/index.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399214867113" ignored="false" />
-    <file path="/index.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399214867113" ignored="false" />
+    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/css/index.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399300001747" ignored="false" />
+    <file path="/index.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399300000988" ignored="false" />
     <file path="/httpHandler.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399216763199" ignored="false" />
-    <file path="/chartsHandler.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399223913496" ignored="false" />
-    <file path="/index.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399220669287" ignored="false" />
-    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/css/songlist.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399219410360" ignored="false" />
-    <file path="/songlist.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399219410360" ignored="false" />
+    <file path="/chartsHandler.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399301464686" ignored="false" />
+    <file path="/index.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399300886702" ignored="false" />
+    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/css/songlist.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399306504348" ignored="false" />
+    <file path="/songlist.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399305942188" ignored="false" />
     <file path="/templateHandler.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399219908170" ignored="false" />
     <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/generatedData.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399220559995" ignored="false" />
     <file path="/generatedData.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399220475278" ignored="false" />
     <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/generatedData.template.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399220485920" ignored="false" />
-    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/searchController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399222169526" ignored="false" />
-    <file path="/searchController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399220630897" ignored="false" />
-    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/playlistController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399222159944" ignored="false" />
+    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/searchController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399306620024" ignored="false" />
+    <file path="/searchController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399306603289" ignored="false" />
+    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/playlistController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399302148645" ignored="false" />
+    <file path="/playlistController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399302150793" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../../aasport/aasport.de/index.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399231563952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../../aasport/aasport.de/php/administration.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399231624579" ignored="false" />
+    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/uiController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399298980725" ignored="false" />
+    <file path="/uiController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399298923209" ignored="false" />
+    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/playbackController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399244361906" ignored="false" />
+    <file path="/playbackController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399244244740" ignored="false" />
+    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/index.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399238952971" ignored="false" />
+    <file path="/a.dummy" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399293415118" ignored="false" />
+    <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/accountController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399302201049" ignored="false" />
+    <file path="/accountController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399301797199" ignored="false" />
+    <file path="$PROJECT_DIR$/../../www/public/css/index.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399294831999" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +82,7 @@
       <file leaf-file-name="chartsHandler.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/chartsHandler.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="99" column="0" selection-start="3304" selection-end="3304" vertical-scroll-proportion="0.40350878">
+            <state line="117" column="76" selection-start="4238" selection-end="4238" vertical-scroll-proportion="0.6874028">
               <folding />
             </state>
           </provider>
@@ -106,9 +118,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="4" />
-    <option name="width" value="1529" />
-    <option name="height" value="826" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1552" />
+    <option name="height" value="842" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -136,7 +149,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -157,13 +169,22 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="FullScreen" value="false" />
   </component>
   <component name="PublishConfig">
     <servers>
+      <server id="18de0fd1-1c8c-4a5e-9ce6-1eb70077034d">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </server>
       <server id="888faf7c-a6c2-4059-8317-625dc2cb7aba">
         <serverdata>
           <mappings>
@@ -194,26 +215,26 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="4" y="0" width="1529" height="826" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1552" height="842" extended-state="6" />
+    <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24948876" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25357872" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25637585" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -277,6 +298,76 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templateHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="57" selection-start="564" selection-end="564" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/httpHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="0" selection-start="197" selection-end="258" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chartsHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="120" selection-start="3235" selection-end="3235" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ftpHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="65" selection-start="708" selection-end="708" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templateHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="57" selection-start="564" selection-end="564" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/httpHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="0" selection-start="197" selection-end="258" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chartsHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="120" selection-start="3235" selection-end="3235" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ftpHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="65" selection-start="708" selection-end="708" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/httpHandler.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="0" selection-start="197" selection-end="258" vertical-scroll-proportion="0.0">
@@ -307,7 +398,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chartsHandler.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="0" selection-start="3304" selection-end="3304" vertical-scroll-proportion="0.40350878">
+        <state line="117" column="76" selection-start="4238" selection-end="4238" vertical-scroll-proportion="0.6874028">
           <folding />
         </state>
       </provider>

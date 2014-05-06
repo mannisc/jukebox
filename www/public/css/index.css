@@ -21,9 +21,9 @@
 }
 
 body {
-    -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
-    -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
-    -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
+    /*-webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
+  /*  -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+ /*   -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
     background-color: #fff;
     background-attachment: fixed;
     font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
@@ -36,11 +36,12 @@ body {
     top: 0px;
     left:0px;
 
-    -webkit-user-select: none;
+    /*-webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
 
     user-select: none;
+    */
 
 }
 
@@ -78,7 +79,7 @@ body {
     }
 
     #controlbar .ui-input-search {
-        width: 280px;
+        width: 320px;
     }
 
 }
@@ -355,10 +356,15 @@ input[type=button]{
     -moz-transition: all 280ms cubic-bezier(0.865, 0.105, 0.330, 0.850);
     -o-transition: all 280ms cubic-bezier(0.865, 0.105, 0.330, 0.850);
     transition: all 280ms cubic-bezier(0.865, 0.105, 0.330, 0.850); custom */
-    -webkit-transition: all 280ms cubic-bezier(0.825, 0.035, 0.580, 1.000);
+  /*  -webkit-transition: all 280ms cubic-bezier(0.825, 0.035, 0.580, 1.000);
     -moz-transition: all 280ms cubic-bezier(0.825, 0.035, 0.580, 1.000);
     -o-transition: all 280ms cubic-bezier(0.825, 0.035, 0.580, 1.000);
     transition: all 280ms cubic-bezier(0.825, 0.035, 0.580, 1.000); /* custom */
+
+    -webkit-transition: all 280ms ease
+    -moz-transition: all 280ms cease;
+    -o-transition: all 280ms ease;
+    transition:none /* custom */
 }
 
 
@@ -1057,6 +1063,20 @@ a, button, h1, h2, h3{
 #popupAccount-popup, #popupArtist-popup,#popupLogin-popup, #popupRegister-popup{
     top: 51px!important;
 }
+
+
+#popupRegister, #popupLogin{
+    max-width: 230px;
+}
+
+
+#popupRegister input, #popupLogin input{
+    -webkit-text-shadow: none!important;
+    text-shadow: none!important;
+}
+
+
+
 
 
 #popupArtist-popup::before {
