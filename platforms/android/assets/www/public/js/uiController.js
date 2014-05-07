@@ -832,6 +832,8 @@ uiController.toggleGridLayout = function () {
             }, 0)
         }
 
+        $scope.safeApply();
+        $("#searchlistview").listview('refresh');
 
         uiController.searchListScroll.refresh();
 
@@ -855,6 +857,8 @@ uiController.toggleGridLayout = function () {
         }, 500)
 
         uiController.searchListScroll.toggelLayoutOldY = scrollY;
+
+
 
     }, 800)
 }
