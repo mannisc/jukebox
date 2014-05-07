@@ -27,7 +27,7 @@ searchController.searchCounter = 0;
 
 searchController.buttonActive = 0;
 
-searchController.showMode=0;
+searchController.showMode = -1;
 
 searchController.maxPopularSongPages = 2;
 searchController.maxArtistSongPages = 2;
@@ -66,10 +66,10 @@ searchController.init = function () {
 
     $("#searchinput").on("input", function () {
 
-       if(searchController.searchTimeout)
-           clearTimeout(searchController.searchTimeout)
+        if (searchController.searchTimeout)
+            clearTimeout(searchController.searchTimeout)
 
-        searchController.searchTimeout = setTimeout(function(){
+        searchController.searchTimeout = setTimeout(function () {
             searchController.searchTimeout = null;
             $("#playlistInner .iScrollPlayIndicator").hide();
             $("#searchlist .iScrollPlayIndicator").hide();
@@ -84,8 +84,7 @@ searchController.init = function () {
                     searchController.filterMusic();
                     break;
             }
-        },150)
-
+        }, 150)
 
 
     })
@@ -233,7 +232,11 @@ searchController.activateButton = function (index, noAnimation) {
 
 searchController.completeSearch = function (list, appendListInFront, searchID) {
 
+
     if (searchController.searchCounter == searchID) {
+
+        if(searchController.showMode == -1)
+            searchController.showMode =0;
 
         uiController.searchListScroll.scrollTo(0, 0, 1000)
         var changed = false;
@@ -278,7 +281,7 @@ searchController.completeSearch = function (list, appendListInFront, searchID) {
 
             $scope.safeApply();
             var num = 1;
-            if (list.track.length) {
+            if (list.track.length>0) {
                 num = Math.min(searchController.maxResults, list.track.length);
 
                 for (i = anzSongs; i < num + anzSongs; i++) {
@@ -292,9 +295,14 @@ searchController.completeSearch = function (list, appendListInFront, searchID) {
 
             }
             else {
-                searchController.searchResults[anzSongs] = list.track;
-                searchController.searchResultsComplete = [];
-                searchController.searchResultsComplete[anzSongs] = list.track[0];
+
+                if(searchController.buttonActive!=0){
+                    searchController.searchResults[anzSongs] = list.track;
+                    searchController.searchResultsComplete = [];
+                    searchController.searchResultsComplete[anzSongs] = list.track[0];
+                } else
+                    searchController.searchResultsComplete = [];
+
             }
 
             for (i = 0; i < searchController.searchResults.length; i++) {
@@ -445,10 +453,15 @@ searchController.filterSongs = function (filterTerm) {
 
 
 searchController.showPopulars = function () {
-    if (searchController.preloadedPopularSongs)
+    if (searchController.preloadedPopularSongs){
+
+        searchController.showedPopulars = true;
+
         setTimeout(function () {
             searchController.completeSearch(searchController.preloadedPopularSongs, null, searchController.searchCounter)
         }, 500)
+
+    }
     else {
 
         setTimeout(function () {
@@ -642,6 +655,7 @@ searchController.showLoading = function (show) {
 
 searchController.searchSongs = function (searchString, title, artist, callbackSuccess) {
     searchController.showLoading(true);
+    searchController.showedPopulars = false;
 
     var searchserver = function () {
         console.dir(preferences.serverURL + "?searchjson=" + searchString + "&auth=" + authController.ip_token);
@@ -671,6 +685,7 @@ searchController.searchSongs = function (searchString, title, artist, callbackSu
                         }
                     }
                     setTimeout(searchController.showLoading, 1000); //show=false
+
                     if (callbackSuccess)
                         callbackSuccess(data);
 
@@ -814,6 +829,7 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
 searchController.topTracks = function (callbackSuccess) {
 
     searchController.showLoading(true);
+    searchController.showedPopulars = true;
 
     //TODO TEEEMMMMMMPPPPPP for no Internet
     /* if (callbackSuccess)
@@ -861,6 +877,8 @@ searchController.topTracks = function (callbackSuccess) {
 
 searchController.suggestions = function (title, artist, callbackSuccess) {
     searchController.showLoading(true);
+    searchController.showedPopulars = false;
+
     $.ajax({
 
         url: "http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=" + artist + "&track=" + title + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
@@ -916,43 +934,76 @@ searchController.getSongFromId = function (id) {
 }
 
 
+searchController.isVisisbleInShowMode = function (showMode) {
+     return searchController.showMode!=-1&&(showMode==searchController.showMode||searchController.showMode==0);
+}
+
 /**
  * Set show Mode of search list ( details or all types)
  * @param showMode
  */
-searchController.setShowMode    = function(showMode){
+searchController.setShowMode = function (showMode) {
+    if(showMode==searchController.showMode)
+       return;
+
+    $("#searchlistview").hide();
+    $("#searchlist .iScrollIndicator").hide();
 
     searchController.showMode = showMode;
-    $(".searchlisttitlebutton").css("opacity","0")
+   //alert()
+    //$(".searchlisttitlebutton").css("opacity", "0").removeClass("fadeincompletefast")
     $scope.safeApply();
-    setTimeout(function () {
-    $("#searchlistview").listview('refresh');
-        alert("!")
-    $(".searchlisttitlebutton").css("opacity","")
-
-    $("#searchlist .iScrollPlayIndicator").hide();
-    playbackController.positionPlayIndicator();
+    //$(".searchlisttitlebutton").css("opacity", "0").removeClass("fadeincompletefast")
 
     setTimeout(function () {
-        uiController.searchListScroll.refresh();
-    }, 1000)
+        $("#searchlistview").listview('refresh');
+        $("#searchlistview").show();
+        setTimeout(function () {
+            uiController.searchListScroll.refresh();
+        //$(".searchlisttitlebutton").css("opacity", "").addClass("fadeincompletefast")
 
+
+        $("#searchlist .iScrollPlayIndicator").hide();
+        playbackController.positionPlayIndicator();
+
+        setTimeout(function () {
+            uiController.searchListScroll.refresh();
+        }, 1000)
+        }, 150)
     }, 0)
 }
 
-searchController.getShowModeLimit = function(type){
+searchController.getShowModeLimit = function (type) {
 
-   if(searchController.showMode!=0)
-    return 100000000;
-  else
-   switch(type) {
-       case 0:
-           return 3;
-           break;
-       case 1:
-           return 100000000;
-           break;
-   }
+    if (searchController.showMode != 0)
+        return 100000000;
+    else
+        switch (type) {
+            case 1:
+
+                 return 20;
+                break;
+
+            case 2:
+                if(uiController.gridLayout)
+                    return uiController.gridLayoutCols;
+                else
+                    return 3;
+                break;
+
+            case 3:
+                if(uiController.gridLayout)
+                  return uiController.gridLayoutCols
+                else
+                 return 1;
+                break;
+            case 4:
+                if(uiController.gridLayout)
+                    return uiController.gridLayoutCols
+                else
+                    return 1;
+                break;
+        }
 
 }
 
@@ -1016,7 +1067,7 @@ searchController.makeSearchListDraggable = function () {
                         $("#playlistview").addClass("dragging")
                         var delay = 150;
 
-                    }else {
+                    } else {
                         $("#searchlistview .draggableSong").draggable("option", "connectToSortable", "#playlistview");
                         delay = 0;
                     }
