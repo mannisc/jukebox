@@ -36,52 +36,50 @@ accountController.setCookie = function (cname, cvalue, exdays) {
 
 
 accountController.init = function () {
-    setTimeout(function(){
-        $("#popupLogin input").on("input",function(){
+    setTimeout(function () {
+        $("#popupLogin input").on("input", function () {
             accountController.resetSignInData();
         })
-        $("#popupRegister input").on("input",function(){
+        $("#popupRegister input").on("input", function () {
             accountController.resetRegisterData();
         })
 
-        $('#popupLogin input').keyup(function(e){
-            if(e.keyCode == 13)
-            {
+        $('#popupLogin input').keyup(function (e) {
+            if (e.keyCode == 13) {
                 accountController.signIn();
             }
         });
 
-        $('#popupLogin input').keyup(function(e){
-            if(e.keyCode == 13)
-            {
+        $('#popupLogin input').keyup(function (e) {
+            if (e.keyCode == 13) {
                 accountController.register();
             }
         });
 
-    },500)
+    }, 500)
 
-    $("#popupLogin" ).popup({
-        beforeposition: function( event, ui ) {
+    $("#popupLogin").popup({
+        beforeposition: function (event, ui) {
             accountController.resetSignInData();
         },
-        afteropen: function( event, ui ) {
+        afteropen: function (event, ui) {
             $('#signinusername').focus();
         },
-        afterclose:function(){
+        afterclose: function () {
             $("#signinpw").val("");
         }
     });
-    $("#popupRegister" ).popup({
-        beforeposition: function( event, ui ) {
+    $("#popupRegister").popup({
+        beforeposition: function (event, ui) {
 
             accountController.resetRegisterData();
 
         },
-        afteropen: function( event, ui ) {
+        afteropen: function (event, ui) {
 
             $('#registerusername').focus();
-        } ,
-        afterclose:function(){
+        },
+        afterclose: function () {
             $("#registerpw").val("");
             $("#registerpwc").val("");
 
@@ -183,7 +181,6 @@ accountController.logout = function () {
             }, 0)
 
 
-
             accountController.loggedIn = false;
             $('#popupLogin').popup('close');
             $scope.safeApply();
@@ -203,7 +200,7 @@ accountController.logout = function () {
 
             }}
             //$( "#popupConfirmLogout" ).popup( "option", "positionTo", "window" );
-            $( "#popupConfirmLogout" ).popup( "option", "transition", "pop" );
+            $("#popupConfirmLogout").popup("option", "transition", "pop");
             setTimeout(function () {
                 $("#popupConfirmLogout").popup("open");
             }, 500)
@@ -218,7 +215,7 @@ accountController.loadStoredData = function () {
         console.dir("PLAYLISTS:");
         console.dir(playlistdata);
         if (playlistdata) {
-            var playlists = new Array();
+            var playlists = [];
             /*
              playlists[0] = {
              name: "Youtube - playlist",
@@ -231,37 +228,93 @@ accountController.loadStoredData = function () {
             if (playlistdata.items && playlistdata.items.length > 0) {
                 console.dir("Copy received (stored) data to playlists-Array;!!!!!!!!!!!!!!!");
                 //Copy received (stored) data to playlists-Array;
+
+
+                var changeCurrentQueue =  (playlistController.currentQueue.tracks.length ==0);
+
                 for (var j = 0; j < playlistdata.items.length; j++) {
-                    playlists[j] = {
-                        name: playlistdata.items[j].name,
-                        gid: playlistdata.items[j].gid,
-                        tracks: playlistdata.items[j].data,
-                        isPlaylist: true,
-                        id: playlistdata.items[j].gid
+
+                    //Delete Queue if already new queue exists
+                    if (playlistdata.items[j].gid == 0 && !changeCurrentQueue) {
+                        playlistdata.items.splice(j, 1);
+                        j = j - 1;
+                    } else {
+
+
+                        playlists[j] = {
+                            name: playlistdata.items[j].name,
+                            gid: playlistdata.items[j].gid,
+                            tracks: playlistdata.items[j].data,
+                            isPlaylist: true,
+                            id: playlistdata.items[j].gid
+                        }
+                        console.dir("playlists[" + j + "]: ");
+                        console.dir(playlists[j]);
+                        console.dir("-----------------");
+
                     }
-                    console.dir("playlists[" + j + "]: ");
-                    console.dir(playlists[j]);
-                    console.dir("-----------------");
+
+
                 }
+
                 if (playlists) {
                     //Remove duplicate Playlists
                     if (playlistController.playlists.length) {
+
                         for (var i = 0; i < playlistController.playlists.length; i++) {
-                            for (var j = 0; j < playlists.length; j++) {
-                                if (playlists[j].gid == playlistController.playlists[i].gid) {
-                                    playlistController.playlists[i].splice(i, 1);
-                                    i = i - 1;
-                                } else if (playlists[j].name == playlistController.playlists[i].name) {
-                                    playlistController.playlists[i].name = playlistController.playlists[i].name + " (2)";
+
+                            //Delete Current Queue an load old one if no tracks in queue
+                            if (playlistController.playlists[i].gid == 0 && changeCurrentQueue) {
+                                playlistController.playlists.splice(i, 1);
+                                i = i - 1;
+                            }
+                            else {
+                                for (var j = 0; j < playlists.length; j++) {
+                                    console.log(i + " - " + j + "     " + playlistController.playlists.length + " :  " + playlists[j].gid + " == " + playlistController.playlists[i].gid)
+                                    if (playlists[j].gid == playlistController.playlists[i].gid) {
+                                        playlistController.playlists.splice(i, 1);
+                                        i = i - 1;
+                                        break;
+                                    }
+                                    /*else if (playlists[j].name == playlistController.playlists[i].name) {
+                                     playlistController.playlists[i].name = playlistController.playlists[i].name + " (2)";
+                                     }  */
+
                                 }
 
                             }
+
+
                         }
+
+
+
+
                     }
 
 
                     //Find new playlistController.globalId
                     playlistController.playlists = playlistController.playlists.concat(playlists);
+
+
+                    //Save Current merged Playlists
+                    if (playlistController.playlists.length) {
+
+                        for (var i = 0; i < playlistController.playlists.length; i++) {
+
+                            if(changeCurrentQueue&&playlistController.playlists[i].gid==0){
+                                playlistController.currentQueue =  playlistController.playlists[i];
+                                playlistController.playlists[i].isCurrentQueue = true;
+                            }
+
+                            accountController.savePlaylist(playlistController.playlists[i], i)
+                        }
+
+                    }
+
+
+
+
                     /*
                      var globalId = playlistController.playlists.length
                      for (var j = 0; j < playlistController.playlists.length; j++) {
@@ -280,7 +333,12 @@ accountController.loadStoredData = function () {
                     $("#playlistview").listview('refresh');
 
                     if (!playlistController.unsavedSongsExists()) {
+
+                        //Avoid flashing of special button
+                        $("#playlistInner .songlist").addClass("avoidhiding");
+
                         uiController.showPlaylists();
+
 
                         setTimeout(function () {
 
@@ -288,6 +346,9 @@ accountController.loadStoredData = function () {
                             setTimeout(function () {
                                 uiController.playListScroll.refresh();
                             }, 150)
+                            setTimeout(function () {
+                                uiController.playListScroll.refresh();
+                            }, 1000)
                         }, 0)
                     }
                     setTimeout(function () {
@@ -343,8 +404,8 @@ accountController.signIn = function () {
 
                         }
                         else {
-                            $("#signinpw").css("background-color","rgb(111, 0, 0)").css("color","#fff");
-                            $("#signinusername").css("background-color","rgb(111, 0, 0)").css("color","#fff");
+                            $("#signinpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            $("#signinusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
 
                         }
                     }
@@ -353,7 +414,7 @@ accountController.signIn = function () {
                     uiController.toast("Sorry, it is not possible to login at the moment.", 1500);
 
                 },
-                complete: function(){
+                complete: function () {
                     setTimeout(function () {
                         $.mobile.loading("hide");
                     }, 800);
@@ -369,26 +430,26 @@ accountController.signIn = function () {
     }
 }
 
-accountController.resetSignInData = function(){
-    $("#signinusername").css("background-color","").css("color","");
-    $("#signinpw").css("background-color","").css("color","");
+accountController.resetSignInData = function () {
+    $("#signinusername").css("background-color", "").css("color", "");
+    $("#signinpw").css("background-color", "").css("color", "");
 
 }
 
-accountController.validateSignInData = function(){
-    var failed =false;
+accountController.validateSignInData = function () {
+    var failed = false;
     var username = $("#signinusername").val();
     var pw = $("#signinpw").val();
 
-    if (pw.length < 1){
-        failed =  true;
-        $("#signinpw").css("background-color","rgb(111, 0, 0)").css("color","#fff");
+    if (pw.length < 1) {
+        failed = true;
+        $("#signinpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
 
     }
 
-    if (username.length < 1){
-        failed =  true;
-        $("#signinusername").css("background-color","rgb(111, 0, 0)").css("color","#fff");
+    if (username.length < 1) {
+        failed = true;
+        $("#signinusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
     }
 
     return !failed;
@@ -398,9 +459,6 @@ accountController.debugData = function (data) {
     console.dir("DATA:");
     console.dir(data);
 }
-
-
-
 
 
 accountController.register = function () {
@@ -442,10 +500,10 @@ accountController.register = function () {
                             $("#popupRegister").popup("close")
                         }
                         else {
-                            $("#registerpw").css("background-color","rgb(111, 0, 0)").css("color","#fff");
-                            $("#registerpwc").css("background-color","rgb(111, 0, 0)").css("color","#fff");
-                            $("#registeruser").css("background-color","rgb(111, 0, 0)").css("color","#fff");
-                            $("#registerusername").css("background-color","rgb(111, 0, 0)").css("color","#fff");
+                            $("#registerpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            $("#registerpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            $("#registeruser").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            $("#registerusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
 
                         }
                     }
@@ -470,85 +528,84 @@ accountController.register = function () {
 }
 
 
-accountController.validateEmail = function(email) {
+accountController.validateEmail = function (email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
 
-accountController.resetRegisterData = function(){
-    $("#registerpw").css("background-color","").css("color","");
-    $("#registerpwc").css("background-color","").css("color","");
-    $("#registeruser").css("background-color","").css("color","");
-    $("#registerusername").css("background-color","").css("color","");
+accountController.resetRegisterData = function () {
+    $("#registerpw").css("background-color", "").css("color", "");
+    $("#registerpwc").css("background-color", "").css("color", "");
+    $("#registeruser").css("background-color", "").css("color", "");
+    $("#registerusername").css("background-color", "").css("color", "");
 }
-accountController.validateRegisterData = function(){
-   var failed =false;
+accountController.validateRegisterData = function () {
+    var failed = false;
     var username = $("#registerusername").val();
     var email = $("#registeruser").val();
     var pw = $("#registerpw").val();
     var pwc = $("#registerpwc").val();
 
-    if (pw.length < 1){
-        failed =  true;
-        $("#registerpw").css("background-color","rgb(111, 0, 0)").css("color","#fff");
-        $("#registerpwc").css("background-color","rgb(111, 0, 0)").css("color","#fff");
+    if (pw.length < 1) {
+        failed = true;
+        $("#registerpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+        $("#registerpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
 
     }
 
-    if (pw != pwc){
-        failed =  true;
-        $("#registerpwc").css("background-color","rgb(111, 0, 0)").css("color","#fff");
+    if (pw != pwc) {
+        failed = true;
+        $("#registerpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
     }
 
 
-    if (!accountController.validateEmail(email)||email.length <= 5){
-        failed =  true;
-        $("#registeruser").css("background-color","rgb(111, 0, 0)").css("color","#fff");
+    if (!accountController.validateEmail(email) || email.length <= 5) {
+        failed = true;
+        $("#registeruser").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
     }
 
-    if (username.length < 1){
-        failed =  true;
-        $("#registerusername").css("background-color","rgb(111, 0, 0)").css("color","#fff");
+    if (username.length < 1) {
+        failed = true;
+        $("#registerusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
     }
 
     return !failed;
 }
 
 
+accountController.savePlaylist = function (playlist, pos) {
 
-accountController.savePlaylist = function (playlist,pos) {
+    if (playlist) {
 
-   if(playlist){
+        var gid = playlist.gid,
+            name = playlist.name,
+            playlistdata = JSON.stringify(playlist.tracks)
 
-    var gid = playlist.gid,
-       name=  playlist.name,
-        playlistdata =  JSON.stringify(playlist.tracks)
-
-    if (authController.ip_token != "auth" && authController.ip_token != "") {
-        if (accountController.loggedIn) {
-            var savename = escape(name);
-            var savedata = escape(playlistdata);
-            accountController.requestid = accountController.requestid + 1;
-            var nonce = accountController.requestid;
-            var savetoken = rsaController.rsa.encrypt(accountController.loginToken + nonce);
-            var send = function (savename, savedata, savetoken) {
-                $.ajax({
-                    type: "POST",
-                    data: {auth: authController.ip_token, storage: savetoken, gid: gid, pos: pos, n: nonce, type: "playlist", name: savename, data: savedata},
-                    timeout: 30000,
-                    url: preferences.serverURL,// + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data=savedata",
-                    success: function (data) {
-                        if (data.auth && data.auth == "true") {
-                            authController.extractToken(data.token);
-                            send(savename, savedata, savetoken);
+        if (authController.ip_token != "auth" && authController.ip_token != "") {
+            if (accountController.loggedIn) {
+                var savename = escape(name);
+                var savedata = escape(playlistdata);
+                accountController.requestid = accountController.requestid + 1;
+                var nonce = accountController.requestid;
+                var savetoken = rsaController.rsa.encrypt(accountController.loginToken + nonce);
+                var send = function (savename, savedata, savetoken) {
+                    $.ajax({
+                        type: "POST",
+                        data: {auth: authController.ip_token, storage: savetoken, gid: gid, pos: pos, n: nonce, type: "playlist", name: savename, data: savedata},
+                        timeout: 30000,
+                        url: preferences.serverURL,// + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data=savedata",
+                        success: function (data) {
+                            if (data.auth && data.auth == "true") {
+                                authController.extractToken(data.token);
+                                send(savename, savedata, savetoken);
+                            }
                         }
-                    }
-                })
+                    })
+                }
+                send(savename, savedata, savetoken);
             }
-            send(savename, savedata, savetoken);
         }
     }
-   }
 }
 
 accountController.loadPlaylist = function (name, callbackSuccess) {

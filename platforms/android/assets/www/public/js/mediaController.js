@@ -799,9 +799,12 @@ mediaController.toggleLyrics = function () {
  * @param song
  * @returns {string}
  */
-mediaController.getPlaylistCoverSong = function (index,maxIndex, song) {
+mediaController.getPlaylistCoverSong = function (index,maxIndex, song, playingSong) {
     if (song.isPlaylist) {
 
+
+        if(playingSong&&playbackController.playingSong)
+            return "background-image:url(" + mediaController.getSongCover(playbackController.playingSong,(index!=0)) + ")";
 
        var actIndex =  song.tracks.length-1-index;
 
@@ -812,7 +815,8 @@ mediaController.getPlaylistCoverSong = function (index,maxIndex, song) {
                 return "background-image:url(public/img/playlistgdrive.png)";
 
             } else {
-                return "background-image:url(" + mediaController.getSongCover(song.tracks[actIndex]) + ")";
+
+                return "background-image:url(" + mediaController.getSongCover(song.tracks[actIndex],(index!=0)) + ")";
 
             }
         }
@@ -829,7 +833,7 @@ mediaController.getPlaylistCoverSong = function (index,maxIndex, song) {
 }
 
 
-mediaController.getSongCover = function (song) {
+mediaController.getSongCover = function (song,lowQuality) {
     var url = "";
 
     if (song.isPlaylist) {
@@ -837,7 +841,8 @@ mediaController.getSongCover = function (song) {
     } else {
 
         if (song.image) {
-            if (song.image[1])
+
+            if (song.image[1]&&!lowQuality)
                 url = song.image[1]['#text'];
             else
                 url = song.image[0]['#text']
