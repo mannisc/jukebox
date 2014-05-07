@@ -226,7 +226,17 @@
 
     <ul  data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d" >
 
-        <li ng-repeat="song in searchController.searchResults track by song.id" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeslideincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li ng-if ="searchController.searchResults.length>0&&searchController.showMode==1" ng-click="searchController.setShowMode(0)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
+            <a tabindex="-1">
+                <h3 style="font-size: 1.1em;margin-top: 7px;">Show All</h3>
+            </a></li>
+        <li ng-if ="searchController.searchResults.length>0&&searchController.showMode==0" ng-click="searchController.setShowMode(1)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
+            <a tabindex="-1">
+
+                <h3 style="font-size: 1.1em;margin-top: 7px;">Songs</h3>
+         </a></li>
+
+        <li ng-repeat="song in searchController.searchResults track by song.id" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -234,7 +244,7 @@
             <img ng-if ="playlistController.hasTrendStyle(2,song)" src="public/img/emtpy.png" class="songLoser songTrend" >
             <img ng-if ="playlistController.hasTrendStyle(3,song)" src="public/img/emtpy.png" class="songNew songTrend" >
 
-            <h3 ng-class="playlistController.getTrendTitleClass(song)" title="{{}}">{{song.name}}</h3>
+            <h3 ng-class="playlistController.getTrendTitleClass(song)" title="{{song.name}}">{{song.name}}</h3>
 
             <p>{{mediaController.getSongArtist(song)}}<span ng-if ="song.playcount !== undefined && song.playcount" class="songPlayCount"><span  style="font-style: normal;font-size: .83em;margin-left:2px;"> ►</span><span  style="font-style: italic;font-size: .93em;margin-left:2px;">{{song.playcount}}</span></span>  </p></a>
         </li>
@@ -256,7 +266,9 @@
 
             <form>
                 <select id="playlistselectverticalform" data-role="none"  multiple class="chosen-select">
-                      <option ng-repeat="playlist in playlistController.playlists track by playlist.gid" value="{{playlist.gid}}" ng-class ="{currentQueue:playlist.isCurrentQueue}">{{playlist.name}}</option>
+                    <option  value="{{playlistController.currentQueue.gid}}" class ="currentQueue">{{playlistController.currentQueue.name}}</option>
+
+                    <option ng-repeat="playlist in playlistController.playlists track by playlist.gid" ng-if ="!playlist.isCurrentQueue" value="{{playlist.gid}}" >{{playlist.name}}</option>
 
                 </select>
 
@@ -285,7 +297,7 @@
     <div id="playlistInner" class="animate" style="display:none">
         <ul ui-sortable ng-model="playlistController.loadedPlaylistSongs" data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
 
-            <li ng-if ="playlistController.playlistMode" ng-click="playlistController.loadCurrentQueue()"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton currentqueue stayvisible">
+            <li ng-if ="playlistController.playlistMode" ng-click="playlistController.loadCurrentQueue($event)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton currentqueue stayvisible">
                 <a tabindex="-1">
 
                     <img src="public/img/empty.png"  alt="" class="noshadow ui-li-icon ui-corner-none"  >
@@ -294,7 +306,7 @@
                     <div class="playlistCoverSong" >
 
 
-                        <img src="public/img/empty.png" class="coverSong1 coverSong" style="{{mediaController.getPlaylistCoverSong(0,2,playlistController.currentQueue)}}">
+                        <img src="public/img/empty.png" class="coverSong1 coverSong" style="{{mediaController.getPlaylistCoverSong(0,2,playlistController.currentQueue,true)}}">
                         <img src="public/img/black.png" class="coverSong2 coverSong" style="{{mediaController.getPlaylistCoverSong(1,2,playlistController.currentQueue)}}">
                         <img src="public/img/black.png" class="coverSong3 coverSong" style="{{mediaController.getPlaylistCoverSong(2,2,playlistController.currentQueue)}}">
 
@@ -310,7 +322,7 @@
 
 
 
-            <li ng-if ="playlistController.playlistMode" ng-click="playlistController.loadNewEmptyPlaylist();"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton createplaylist stayvisible">
+            <li ng-if ="playlistController.playlistMode" ng-click="playlistController.loadNewEmptyPlaylist($event);"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton createplaylist stayvisible">
                 <a tabindex="-1">
 
                 <img src="public/img/empty.png"  alt="" class="noshadow ui-li-icon ui-corner-none"  >
@@ -765,7 +777,8 @@
     <img src="public/img/empty.png">
     <img src="public/img/addplaylist.png">
     <img src="public/img/queue.png">
-    <img style="background-image: url(public/img/cross.png)">
+
+    <img  src="public/img/cross.png"  style="background-image: url(public/img/cross.png)">
 
 
 

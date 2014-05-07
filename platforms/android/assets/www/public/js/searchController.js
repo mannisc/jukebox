@@ -27,6 +27,8 @@ searchController.searchCounter = 0;
 
 searchController.buttonActive = 0;
 
+searchController.showMode=0;
+
 searchController.maxPopularSongPages = 2;
 searchController.maxArtistSongPages = 2;
 searchController.serverSearch = false;
@@ -60,22 +62,31 @@ searchController.init = function () {
 
     // uiController.searchListScroll.on("scrollStart",function(){
     //})
-
+    searchController.searchTimeout = null;
 
     $("#searchinput").on("input", function () {
-        $("#playlistInner .iScrollPlayIndicator").hide();
-        $("#searchlist .iScrollPlayIndicator").hide();
-        switch (searchController.buttonActive) {
-            case 0:
-                searchController.searchMusic();
-                break;
-            case 1:
-                searchController.filterMusic();
-                break;
-            case 2:
-                searchController.filterMusic();
-                break;
-        }
+
+       if(searchController.searchTimeout)
+           clearTimeout(searchController.searchTimeout)
+
+        searchController.searchTimeout = setTimeout(function(){
+            searchController.searchTimeout = null;
+            $("#playlistInner .iScrollPlayIndicator").hide();
+            $("#searchlist .iScrollPlayIndicator").hide();
+            switch (searchController.buttonActive) {
+                case 0:
+                    searchController.searchMusic();
+                    break;
+                case 1:
+                    searchController.filterMusic();
+                    break;
+                case 2:
+                    searchController.filterMusic();
+                    break;
+            }
+        },150)
+
+
 
     })
 
@@ -904,6 +915,26 @@ searchController.getSongFromId = function (id) {
 
 }
 
+
+/**
+ * Set show Mode of search list ( details or all types)
+ * @param showMode
+ */
+searchController.setShowMode    = function(showMode){
+
+    searchController.showMode = showMode;
+    $scope.safeApply();
+    $("#searchlistview").listview('refresh');
+    $("#searchlist .iScrollPlayIndicator").hide();
+    playbackController.positionPlayIndicator();
+
+    setTimeout(function () {
+        uiController.searchListScroll.refresh();
+    }, 1000)
+
+
+}
+
 /**
  * Make  Searchlist Drag and Droppable
  */
@@ -950,35 +981,24 @@ searchController.makeSearchListDraggable = function () {
                 searchController.dragDraggableSongY = -10;
                 uiController.swiping = true;
                 uiController.swipeTimer = Date.now();
-            } else if (searchController.dragDraggableSongTimer && Date.now() - searchController.dragDraggableSongTimer < 500 && Date.now() - searchController.dragDraggableSongTimer > 20) {
-                if (!uiController.draggingSong && event.clientX - searchController.dragDraggableSongX > 2 && Math.abs(event.clientY - searchController.dragDraggableSongY) < Math.abs(event.clientX - searchController.dragDraggableSongX) * 0.8) {
+            } else if (searchController.dragDraggableSongTimer && Date.now() - searchController.dragDraggableSongTimer < 500 && Date.now() - searchController.dragDraggableSongTimer > 1) {
+                if (!uiController.draggingSong && event.clientX - searchController.dragDraggableSongX > 0 && Math.abs(event.clientY - searchController.dragDraggableSongY) < Math.abs(event.clientX - searchController.dragDraggableSongX) * 0.8) {
                     uiController.draggingSong = true;
                     searchController.dragDraggableSongY = -10;
                     searchController.dragDraggableLastSongTimer = Date.now();
                     searchController.dragDraggableSongTimer = 0;
 
-                    var delay = 0;
-                    $("#searchlistview .draggableSong").draggable("option", "connectToSortable", "#playlistview");
 
-
+                    //Playlists are displayed
                     if (playlistController.playlistMode) {
+                        $("#searchlistview .draggableSong").draggable("option", "connectToSortable", "");
+                        $("#playlistview").addClass("dragging")
+                        var delay = 150;
 
-
-                        if (playlistController.playlists.length == 0) {
-                            setTimeout(function () {
-                                playlistController.loadNewEmptyPlaylist();
-                            }, 0)
-
-                        } else {
-                            $("#searchlistview .draggableSong").draggable("option", "connectToSortable", "");
-                            $("#playlistview").addClass("dragging")
-
-                        }
-
-
-                        delay = delay + 150;
+                    }else {
+                        $("#searchlistview .draggableSong").draggable("option", "connectToSortable", "#playlistview");
+                        delay = 0;
                     }
-
 
                     $("#searchlistview .draggableSong").draggable("enable");
 
@@ -1058,8 +1078,8 @@ searchController.makeSearchListDraggable = function () {
 
 
             var eleHeight = (65 * elements.length);
-            if (eleHeight > $("#playlistInner").height() * 0.7) {
-                eleHeight = Math.floor($("#playlistInner").height() * 0.7 / 65) * 65;
+            if (eleHeight > 65 * 4) {
+                eleHeight = 65 * 4;
 
             }
             if (eleHeight < 65)
@@ -1078,7 +1098,11 @@ searchController.makeSearchListDraggable = function () {
 
             //var marquee = $(ele).find("marquee").get(0);
             // $(marquee).replaceWith($(marquee).contents());
-
+            setTimeout(function () {
+                var eleParent = $(playlistController.draggedElements.get(0)).parent();
+                eleParent.attr('style', eleParent.attr('style') + '; ' + "margin-top:" + (-(playlistController.draggedElement.offset().top - playlistController.draggedElements.offset().top)) + "px" + ' !important');
+                eleParent.css("opacity", "1");
+            }, 0);
             return ele;
         }, drag: function (event, ui) {
             return !uiController.stopDrag;
@@ -1093,11 +1117,7 @@ searchController.makeSearchListDraggable = function () {
             uiController.dragSongY = event.clientY;
             uiController.dragSongCheckHorizontal = true;
             uiController.dragSongCheckHorizontalTimer = Date.now();
-            var ele = $(playlistController.draggedElements.get(0)).parent();
-            setTimeout(function () {
-                ele.attr('style', ele.attr('style') + '; ' + "margin-top:" + (-(playlistController.draggedElement.offset().top - playlistController.draggedElements.offset().top)) + "px" + ' !important');
-                ele.css("opacity", "1");
-            }, 0)
+
 
             $(".draggedsearchlistelement").off();
             $(".draggedsearchlistelement").on('mousemove', playlistController.scrollByDragCallback);
@@ -1162,27 +1182,25 @@ searchController.makeSearchListDraggable = function () {
                         }
 
 
-
                         if (newPlaylist) {
+
+                            if (playlistController.loadedPlaylistSongs.indexOf(playlist) == -1)
+                                playlistController.loadedPlaylistSongs.unshift(playlist);
+
+                            $scope.safeApply();
+                            playlistController.chosenElement.trigger('chosen:updated');
+
+                            $("#playlistview").listview('refresh');
+                            uiController.playListScroll.scrollTo(0, scrollY);
+                            uiController.updateUI();
                             setTimeout(function () {
-                                if(playlistController.playlistMode){
-                                    if(playlistController.loadedPlaylistSongs.indexOf(playlist)==-1)
-                                        playlistController.loadedPlaylistSongs.unshift(playlist);
+                                uiController.playListScroll.refresh();
+                            }, 150)
+                            setTimeout(function () {
+                                uiController.playListScroll.refresh();
+                            }, 1000)
 
-                                    $scope.safeApply();
-                                    playlistController.chosenElement.trigger('chosen:updated');
 
-                                    $("#playlistview").listview('refresh');
-                                    uiController.playListScroll.scrollTo(0, scrollY);
-                                    uiController.updateUI();
-                                    setTimeout(function () {
-                                        uiController.playListScroll.refresh();
-                                    }, 150)
-                                    setTimeout(function () {
-                                        uiController.playListScroll.refresh();
-                                    }, 1000)
-                                }
-                            },150)
                         } else
                             $scope.safeApply();
 
@@ -1197,7 +1215,7 @@ searchController.makeSearchListDraggable = function () {
                             setTimeout(function () {
                                 listElement.addClass("hoverable")
                             }, 200)
-                        }, 2500)
+                        }, 2000)
 
                     }
 

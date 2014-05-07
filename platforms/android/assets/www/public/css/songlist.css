@@ -222,7 +222,37 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
 
 }
 
-.songlist li.addedsongs a img.ui-li-icon {
+
+
+.songlist li.addedsongs.specialplaylistbutton  .playlistCoverSong .coverSong{
+
+    -webkit-transform:   none!important;
+    -moz-transform:none!important;
+    transform: none!important;
+
+
+    -webkit-animation: bounceopacityfade ease 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: bounceopacityfade ease 1;
+    animation: bounceopacityfade ease 1;
+
+    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode: forwards; /*FF 5+*/
+    -o-animation-fill-mode: forwards; /*Not implemented yet*/
+    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards; /*when the spec is finished*/
+
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    animation-duration: 2s;
+
+
+}
+
+
+
+
+
+.songlist li.specialplaylistbutton a img.ui-li-icon, .songlist li.playlistsong a img.ui-li-icon {
     -moz-box-shadow: none!important;
     -webkit-box-shadow: none!important;
     box-shadow: none!important;
@@ -230,13 +260,15 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
 
 
 
-@-moz-keyframes bounceopacity {
-    0%{ -moz-transform:opacity(1);}
-    50%{ -moz-transform:scale(0.2); }
-    100%{ -moz-transform:scale(1);}
+
+@-moz-keyframes bounceopacityfade {
+    0%{  -moz-transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    30%{ -moz-transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
+    60%{ -moz-transform:translate(-8px,0)  scale(1) rotateY(320deg)   translate(-15px,0); opacity:1 }
+    100%{ -moz-transform:translate(-8px,0)  scale(1) rotateY(320deg) translate(-15px,0);opacity:0  }
 }
 
-@-webkit-keyframes bounceopacity {
+@-webkit-keyframes bounceopacityfade {
     0%{  -webkit-transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
     30%{ -webkit-transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
     60%{ -webkit-transform:translate(-8px,0)  scale(1) rotateY(320deg)   translate(-15px,0); opacity:1 }
@@ -245,10 +277,36 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
 
 }
 
+@keyframes bounceopacityfade {
+    0%{  -transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    30%{ -transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
+    60%{ -transform:translate(-8px,0)  scale(1) rotateY(320deg)   translate(-15px,0); opacity:1 }
+    100%{ -transform:translate(-8px,0)  scale(1) rotateY(320deg) translate(-15px,0);opacity:1  }
+}
+
+
+
+@-moz-keyframes bounceopacity {
+    0%{  -moz-transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    30%{ -moz-transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
+    60%{ -moz-transform:translate(-8px,0)  scale(1) rotateY(320deg)   translate(-15px,0); opacity:1 }
+    100%{ -moz-transform:translate(-8px,0)  scale(1) rotateY(320deg) translate(-15px,0);opacity:1  }
+}
+
+@-webkit-keyframes bounceopacity {
+    0%{  -webkit-transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    30%{ -webkit-transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
+    60%{ -webkit-transform:translate(-8px,0)  scale(1) rotateY(320deg)   translate(-15px,0); opacity:1 }
+    100%{ -webkit-transform:translate(-8px,0)  scale(1) rotateY(320deg) translate(-15px,0);opacity:1  }
+
+
+}
+
 @keyframes bounceopacity {
-    0%{ transform:opacity(1);}
-    50%{ transform:scale(0.2); }
-    100%{ transform:scale(1);}
+    0%{  -transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    30%{ -transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
+    60%{ -transform:translate(-8px,0)  scale(1) rotateY(320deg)   translate(-15px,0); opacity:1 }
+    100%{ -transform:translate(-8px,0)  scale(1) rotateY(320deg) translate(-15px,0);opacity:0  }
 }
 
 
@@ -322,9 +380,13 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
     transform-origin: 50% 50%!important;
     z-index:10;
     overflow:visible;
-    -moz-box-shadow: 3px 0p 5px rgba(0,0,0,0.4);
+   /* -moz-box-shadow: 3px 0p 5px rgba(0,0,0,0.4);
     -webkit-box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
-    box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
+    box-shadow: 3px 0px 5px rgba(0,0,0,0.4);  */
+
+    -moz-box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
 }
 
 
@@ -402,9 +464,14 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
 
 .songlist li.loadedsong.stillloading:hover a img.ui-li-icon {
 
-    -moz-box-shadow: 0x 0p 1px  rgba(0,0,0,0.4)!important;
+    /*-moz-box-shadow: 0x 0p 1px  rgba(0,0,0,0.4)!important;
     -webkit-box-shadow: 0px 0px  1px rgba(0,0,0,0.4)!important;
     box-shadow: 0px 0px 1px  rgba(0,0,0,0.4)!important;
+   */
+    -moz-box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+
 }
 
 .songlist li {
@@ -499,12 +566,56 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
     display:none!important
 }
 
-.songlist.hidden li{
-    display:none!important
+
+.songlist.avoidhiding li.stayvisible{
+    display:block!important
 }
-.songlist.hidden li.stayvisible{
+
+#searchlist ul li.searchlisttitlebutton{
+    min-height: 0;
+    max-height: 44px;
     display: block!important;
+
 }
+
+
+
+#searchlist ul.gridlayout li.searchlisttitlebutton{
+    width: 50%!important;
+    min-width: 250px!important;
+}
+
+#searchlist li.searchlisttitlebutton a{
+    min-height: 0;
+    max-height: 30px;
+    padding: 3px 0px 11px 6px!important;
+
+
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.2), endColorstr=rgba(255,255,255,0))!important;
+    background-image:-moz-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(255,255,255,0.2)), color-stop(44%,rgba(255,255,255,0.2)),color-stop(100%,rgba(255,255,255,0)))!important;
+
+
+}
+
+#searchlist li:hover.searchlisttitlebutton a{
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.4), endColorstr=rgba(255,255,255,0))!important;
+    background-image:-moz-linear-gradient(left, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.4) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.4) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.4) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.4) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.4) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(255,255,255,0.4)), color-stop(44%,rgba(255,255,255,0.4)),color-stop(100%,rgba(255,255,255,0)))!important;
+
+}
+
+
 
 
 .songlist li .playlistCoverSong{
@@ -609,10 +720,9 @@ animation-duration:  1.5s;
 
 
 @-moz-keyframes staticbounce {
-    0%{ -moz-transform:scale(1); }
-    50%{ -moz-transform:scale(1.05);  }
-    75%{ -moz-transform:scale(1.1);}
-    100%{ -moz-transform:scale(1); }
+    0%{ -moz-transform: scale(0.68); }
+    50%{ -moz-transform:scale(0.78);  }
+    100%{ -moz-transform: scale(0.681);  }
 }
 
 @-webkit-keyframes staticbounce {
@@ -622,40 +732,11 @@ animation-duration:  1.5s;
 }
 
 @keyframes staticbounce {
-    0%{ transform:scale(1); }
-    50%{transform:scale(1.05);  }
-    75%{ transform:scale(1.1);}
-    100%{ transform:scale(1); }
+    0%{ transform: scale(0.68); }
+    50%{ transform:scale(0.78);  }
+    100%{ transform: scale(0.681);  }
 }
 
-/*
-@-moz-keyframes bouncerepeat {
-    0%{ -moz-transform:translate(-8px,0) rotateY(320deg) translate(-15px,0) }
-    30%{ -moz-transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
-    60%{ -moz-transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
-
-    100%{ -moz-transform:translate(-8px,0) rotateY(320deg) translate(-15px,0) }
-}
-
-@-webkit-keyframes bouncerepeat {
-    0%{ -webkit-transform:translate(-8px,0) rotateY(320deg) translate(-15px,0) }
-    20%{ -webkit-transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
-    40%{ -webkit-transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
-
-    80%{ -webkit-transform:translate(-8px,0) rotateY(320deg) translate(-15px,0)}
-    100%{ -webkit-transform:translate(-8px,0) rotateY(320deg) translate(-15px,0)}
-
-}
-
-@keyframes bouncerepeat {
-    0%{ transform:translate(-8px,0) rotateY(320deg) translate(-15px,0) }
-    30%{transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
-    60%{ transform:translate(-8px,0) rotateY(345deg) scale(1.2) translate(-15px,0)  }
-
-    100%{ transform:translate(-8px,0) rotateY(320deg) translate(-15px,0) }
-}
-
-    */
 .songlist li.selected .playlistCoverSong img{
     left: 0!important;
     -webkit-transform: scale(1.21) rotateY(360deg)   !important;
@@ -785,9 +866,9 @@ animation-duration:  1.5s;
     -moz-animation-fill-mode:forwards!important;
     animation-fill-mode:forwards!important;
 
-    -webkit-animation-duration:2200ms!important;
-    -moz-animation-duration:2200ms!important;
-    animation-duration:2200ms!important;
+    -webkit-animation-duration:3000ms!important;
+    -moz-animation-duration:3000ms!important;
+    animation-duration:3000ms!important;
 }
 
 .songlist li.selected:hover .loadingSongImg{
@@ -1311,7 +1392,7 @@ animation-duration:  1.5s;
     -moz-animation-duration: 0.5s;
     animation-duration: 0.5s;
 
-    max-width: 80px;
+    max-width: 75px;
     max-height: 25px;
     border-radius: 6px!important;
 
@@ -1327,7 +1408,7 @@ animation-duration:  1.5s;
 
 @-moz-keyframes smallbounce {
     0%{ -moz-transform:scale(0.6); opacity:0;}
-    50%{ -moz-transform:scale(1.05); opacity:0.4; }
+    50%{ -moz-transform:scale(1.05); opacity:0.4;}
     75%{ -moz-transform:scale(1); opacity:0.7;}
     100%{ -moz-transform:scale(1); opacity:1;}
 }
@@ -1342,8 +1423,8 @@ animation-duration:  1.5s;
 
 @keyframes smallbounce {
     0%{ transform:scale(0.6); opacity:0;}
-    50%{ transform:scale(1.05); opacity:0.4; }
-    75%{transform:scale(1); opacity:0.7;}
+    50%{ transform:scale(1.05); opacity:0.4;}
+    75%{ transform:scale(1); opacity:0.7;}
     100%{ transform:scale(1); opacity:1;}
 }
 
@@ -1637,10 +1718,10 @@ animation-duration:  1.5s;
 }
 
 @-webkit-keyframes spin {
-    0% { transform:rotateY(0deg) scale(1.23);  -webkit-transform: rotateY(0deg) scale(1.23);}
-    40% { transform:rotateY(45deg) scale(1.23); -webkit-transform: rotateY(45deg) scale(1.23);}
-    70% { transform:rotateY(360deg) scale(1.23);  -webkit-transform: rotateY(360deg) scale(1.23); }
-    100% { transform:rotateY(360deg) scale(1.23);  -webkit-transform: rotateY(360deg) scale(1.23);  }
+    0% { transform:rotateY(0deg) scale(1.22);  -webkit-transform: rotateY(0deg) scale(1.22);}
+    40% { transform:rotateY(45deg) scale(1.22); -webkit-transform: rotateY(45deg) scale(1.22);}
+    70% { transform:rotateY(360deg) scale(1.22);  -webkit-transform: rotateY(360deg) scale(1.22); }
+    100% { transform:rotateY(360deg) scale(1.22);  -webkit-transform: rotateY(360deg) scale(1.22);  }
 }
 
 @keyframes spin{
@@ -1651,30 +1732,5 @@ animation-duration:  1.5s;
 }
 
 
-/*Spinning Cover Overlay */
-
-@-moz-keyframes spinplay {
-    0% {  opacity:0.75; transform:rotateY(0deg);  -moz-transform: rotateY(0deg);}
-    50% {  opacity:1;transform:rotateY(45deg);  -moz-transform: rotateY(45deg);}
-    70% {  transform:rotateY(360deg); -moz-transform: rotateY(360deg) ; }
-    100% {opacity:0.75;  transform:rotateY(360deg); -moz-transform: rotateY(360deg) ; }
-
-}
-
-@-webkit-keyframes spinplay {
-    0% { opacity:0.75;transform:rotateY(0deg);  -webkit-transform: rotateY(0deg);}
-    40% { opacity:1;transform:rotateY(45deg); -webkit-transform: rotateY(45deg);}
-    70% {  transform:rotateY(360deg);  -webkit-transform: rotateY(360deg);   }
-    100% {  opacity:0.75; transform:rotateY(360deg);  -webkit-transform: rotateY(360deg); }
-}
-
-@keyframes spinplay{
-    0% { transform:rotateY(0deg); }
-    40% { transform:rotateY(45deg); }
-    50% {  opacity:1;}
-
-    70% { transform:rotateY(360deg); }
-    100% { transform:rotateY(360deg); }
-}
 
 
