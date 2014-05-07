@@ -48,7 +48,7 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
         return;
 
     //Clicked on Cover -> Select Song
-     var songlist = $(event.target).parents(".songlist")
+     var songlist = $(event.target).parents("li")
     if (songlist.length>0&& (event.clientX - songlist.offset().left) < 65) {
         playlistController.selectSong(element)
         return;

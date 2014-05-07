@@ -228,7 +228,7 @@
 
         <li ng-if ="searchController.searchResults.length>0&&searchController.showMode!=0" ng-click="searchController.setShowMode(0)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
             <a tabindex="-1">
-                <h3 style="font-size: 1.1em;margin-top: 7px;">Back to all Results</h3>
+                <h3 style="font-size: 1.1em;margin-top: 7px;">Back to Results</h3>
             </a></li>
 
         <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(3)" ng-click="searchController.setShowMode(3)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
