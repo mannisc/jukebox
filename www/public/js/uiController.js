@@ -120,7 +120,7 @@ uiController.init = function () {
 
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
         $("#titleHeader").show();
-        $(" #iconHeader").css("opacity", "1");
+        $("#iconHeader").css("opacity", "1");
 
     } else {
         setTimeout(function () {
@@ -777,7 +777,7 @@ uiController.showPlaylists = function () {
         setTimeout(function () {
             uiController.updateUI();
             $("#playlistview").listview('refresh');
-            $("#playlistInner .songlist").removeClass("hidden");
+            $("#playlistInner .songlist").removeClass("hidden").removeClass("avoidhiding");
 
             //  $("#playlistview").show();
             playlistController.makePlayListSortable();

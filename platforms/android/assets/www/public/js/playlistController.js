@@ -227,6 +227,36 @@ playlistController.getNewID = function () {
     return "id_" + id;
 }
 
+
+
+playlistController.selectPlaylist = function (playlist) {
+
+    if (playlistController.playlistMode){
+        $("#playlistInner .iScrollIndicator").hide();
+        $("#playlistview").css("opacity", "0")
+
+    }
+
+
+    $("#playlistselectvertical .search-field input").attr("placeholder", "");
+    $('#playlistselectverticalform option[value="' + playlist.gid + '"]').prop('selected', true);
+    $('#playlistselectverticalform').trigger('chosen:updated');
+
+    setTimeout(function () {
+        $('#playlistselectverticalform').trigger('chosen:close');
+        if ($('#playlistselectverticalform option:selected').size() > 1)
+            $("#clearChoosenPlaylists").show();
+        else
+            $("#clearChoosenPlaylists").hide();
+        playlistController.chosenElement.trigger('change');
+        uiController.updateUI();
+        $("#playlistselectvertical .chosen-container").removeClass("chosen-with-drop");
+    }, 0)
+
+
+}
+
+
 /**
  * Select songs to Drag
  * @param song
@@ -413,6 +443,22 @@ playlistController.removeSongsFromPlaylist = function (event) {
 
 }
 
+
+/**
+ * Add selected Songs to Queue
+ * @param event
+ */
+playlistController.addSongsToQueue = function (songs) {
+
+
+
+}
+
+
+
+
+
+
 /**
  * Add selected Songs to Playlist
  * @param event
@@ -438,86 +484,7 @@ playlistController.shareSelectedElements = function (event) {
 }
 
 
-/**
- * Save Playlist
- * @param useSelected  use the only seleted playlist
- * @returns {number|gid|playlists.gid|gid|.data.gid|string|string}
 
-
- playlistController.savePlaylist = function (useSelected) {
-
-    if (!useSelected)
-        var playlistTitle = $("#saveplaylistinpt").val();
-    else
-        playlistTitle = $('#playlistselectvertical .search-choice').text();
-
-    if (playlistTitle) {
-
-
-        var playlists = playlistController.playlists;
-
-        playlistController.loadedPlaylistSongs = $.extend(true, [], playlistController.loadedPlaylistSongs);
-
-        var exists = false;
-        for (var i = 0; i < playlists.length; i++) {
-            if (playlists[i].name == playlistTitle) {
-                exists = true;
-                for (var j = 0; j < playlistController.loadedPlaylistSongs.length; j++) {
-                    playlistController.loadedPlaylistSongs[j].playlistgid = playlists[i].gid;
-                    var newGid = playlistController.getNewID();
-                    if (playbackController.playingSong && playbackController.playingSong.gid == playlistController.loadedPlaylistSongs[j].gid)
-                        playbackController.playingSong = playlistController.loadedPlaylistSongs[j];
-
-                    playlistController.loadedPlaylistSongs[j].gid = newGid
-
-
-                }
-                playlists[i].tracks = playlistController.loadedPlaylistSongs;
-                var playlist = playlists[i];
-                // playlists.splice(i,1);
-                break;
-            }
-        }
-
-
-        if (!exists) {
-
-            playlistController.globalIdPlaylist = playlistController.getNewID();
-            for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
-                playlistController.loadedPlaylistSongs[i].playlistgid = playlistController.globalIdPlaylist;
-            }
-            playlist = {gid: playlistController.globalIdPlaylist, id: playlistController.globalIdPlaylist, name: playlistTitle, isPlaylist: true, tracks: playlistController.loadedPlaylistSongs}
-            playlists.push(playlist);
-
-        }
-
-
-        //playlistController.globalIdPlaylist++;
-        playlistController.playlists = playlists;
-
-        // window.localStorage.playlists = JSON.stringify(playlists);
-        // alert("SAVE!!");
-        console.dir("SAVE");
-        console.dir(playlistController.playlists);
-        console.dir("----");
-        for (var i = 0; i < playlistController.playlists.length; i++) {
-            accountController.savePlaylist(playlistController.playlists[i],i)
-        }
-
-        $scope.safeApply();
-
-
-        $("#playlistview").listview('refresh');
-        $("#playlistview li").removeClass("fadeslideincompletefast");
-
-        $('#playlistselectverticalform').trigger('chosen:updated');
-        return   playlist.gid;
-    }
-
-
-}
-
- */
 
 
 
@@ -633,30 +600,6 @@ playlistController.onLoadedPlaylistsChanged = function () {
 }
 
 
-playlistController.selectPlaylist = function (playlist) {
-
-    if (playlistController.playlistMode)
-        $("#playlistview").css("opacity", "0")
-
-
-    $("#playlistselectvertical .search-field input").attr("placeholder", "");
-    $('#playlistselectverticalform option[value="' + playlist.gid + '"]').prop('selected', true);
-    $('#playlistselectverticalform').trigger('chosen:updated');
-
-    setTimeout(function () {
-        $('#playlistselectverticalform').trigger('chosen:close');
-        if ($('#playlistselectverticalform option:selected').size() > 1)
-            $("#clearChoosenPlaylists").show();
-        else
-            $("#clearChoosenPlaylists").hide();
-        playlistController.chosenElement.trigger('change');
-        uiController.updateUI();
-        $("#playlistselectvertical .chosen-container").removeClass("chosen-with-drop");
-    }, 0)
-
-
-}
-
 
 playlistController.deselectSongs = function (event) {
 //Remove Selection
@@ -673,6 +616,7 @@ playlistController.deselectSongs = function (event) {
 
 playlistController.removeLoadedPlaylist = function (playlistgid) {
     playlistController.chosenClose();
+    $("#playlistInner .iScrollIndicator").hide();
 
 
     $(".search-field input").css("opacity", "0")
@@ -694,7 +638,12 @@ playlistController.removeLoadedPlaylist = function (playlistgid) {
         }
     }
 
+    //Last Playlist Removed
     if (playlistController.loadedPlaylistSongs.length == 0 && $('#playlistselectvertical .search-choice').length == 0) {
+        //Save Queue Scroll Position
+        if(playlistgid==0)
+         playlistController.playlistsQueueScrollY = uiController.playListScroll.y;
+
         playlistController.loadedPlaylistSongs = playlistController.playlists;
         $("#playlistselectvertical .search-field input").attr("placeholder", playlistController.selectPlaylistsPlaceholder)
         playlistController.loadedPlaylists = {};
@@ -702,6 +651,8 @@ playlistController.removeLoadedPlaylist = function (playlistgid) {
         $("#playlistInner .iScrollPlayIndicator").hide();
         $("#searchlist .iScrollPlayIndicator").hide();
         $("#clearChoosenPlaylists").hide();
+
+
 
 
     } else {
@@ -732,13 +683,20 @@ playlistController.removeLoadedPlaylist = function (playlistgid) {
 
 
         $("#playlistview").listview('refresh');
+        uiController.playListScroll.scrollTo(0, playlistController.playlistsScrollY, 0);
+
         $("#playlistview").show();
+
         playlistController.makePlayListSortable();
         setTimeout(function () {
             uiController.playListScroll.refresh();
+
+            if(playlistController.playlistMode)
+                uiController.playListScroll.scrollTo(0, playlistController.playlistsScrollY, 0);
         }, 150)
         setTimeout(function () {
             uiController.playListScroll.refresh();
+
         }, 1000)
     }, 0)
 
@@ -775,6 +733,13 @@ playlistController.loadPlaylist = function (playlist) {
         //  playlistController.loadedPlaylistSongs.length > 0 && playlistController.loadedPlaylistSongs[0].isPlaylist)
         playlistController.loadedPlaylistSongs = [];
         playlistController.playlistMode = false;
+        playlistController.playlistsScrollY = uiController.playListScroll.y;
+        if(playlist.gid==0)
+           uiController.playListScroll.scrollTo(0, playlistController.playlistsQueueScrollY, 0);
+        else
+            uiController.playListScroll.scrollTo(0, 0, 0);
+
+
     }
 
 
@@ -806,6 +771,7 @@ playlistController.loadPlaylist = function (playlist) {
     }, 150)
     setTimeout(function () {
         uiController.playListScroll.refresh();
+
     }, 1000)
 
 
@@ -1413,7 +1379,6 @@ playlistController.getPlaylistPosition = function (gid) {
 
 playlistController.createEmptyPlaylist = function () {
 
-
     var name = "Playlist";
     var id = playlistController.getNewID();
 
@@ -1448,11 +1413,17 @@ playlistController.createEmptyPlaylist = function () {
  */
 
 playlistController.loadCurrentQueue = function () {
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+        return;
+
     var playlist = playlistController.currentQueue;
+    $scope.safeApply();
+
     setTimeout(function () {
         playlistController.selectPlaylist(playlist);
     }, 0)
 
+    event.stopPropagation();
 
 }
 
@@ -1462,7 +1433,8 @@ playlistController.loadCurrentQueue = function () {
  */
 
 playlistController.loadNewEmptyPlaylist = function () {
-
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+        return;
 
     var playlist = playlistController.createEmptyPlaylist();
 
@@ -1473,6 +1445,7 @@ playlistController.loadNewEmptyPlaylist = function () {
         playlistController.selectPlaylist(playlist);
     }, 0)
 
+    event.stopPropagation();
 
 }
 
