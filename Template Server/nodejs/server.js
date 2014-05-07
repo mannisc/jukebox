@@ -72,16 +72,18 @@ function onFTPUploadTemplates() {
 }
 
 
-/*
+ /*
  app.get('/', function(req, res){
+
  res.send('Template Server');
+
  });
 
  app.listen(3000);
 
 
+    */
 
- */
 
 //process.exit();
 

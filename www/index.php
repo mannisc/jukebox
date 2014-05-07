@@ -291,7 +291,7 @@
     <div id="playlistInner" class="animate" style="display:none">
         <ul ui-sortable ng-model="playlistController.loadedPlaylistSongs" data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
 
-            <li ng-if ="playlistController.playlistMode" ng-click="playlistController.loadCurrentQueue()"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete specialplaylistbutton currentqueue stayvisible">
+            <li ng-if ="playlistController.playlistMode" ng-click="playlistController.loadCurrentQueue()"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton currentqueue stayvisible">
                 <a tabindex="-1">
 
                     <img src="public/img/empty.png"  alt="" class="noshadow ui-li-icon ui-corner-none"  >
@@ -316,7 +316,7 @@
 
 
 
-            <li ng-if ="playlistController.playlistMode" ng-click="playlistController.loadNewEmptyPlaylist();"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete specialplaylistbutton createplaylist stayvisible">
+            <li ng-if ="playlistController.playlistMode" ng-click="playlistController.loadNewEmptyPlaylist();"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton createplaylist stayvisible">
                 <a tabindex="-1">
 
                 <img src="public/img/empty.png"  alt="" class="noshadow ui-li-icon ui-corner-none"  >
@@ -336,7 +336,7 @@
 
             </a></li>
 
-            <li ng-repeat="song in playlistController.loadedPlaylistSongs track by song.gid" ng-if ="!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}" data-songid="playlistsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast playlistsong"
+            <li ng-repeat="song in playlistController.loadedPlaylistSongs track by song.gid" ng-if ="!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}" data-songid="playlistsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
                 ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1">
 
                 <img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""   class="ui-li-icon ui-corner-none"  >
@@ -467,7 +467,7 @@
     <img id="addToPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.addSongsToPlaylist(event)"  width="53px"  src="public/img/add.png">
     <img id="searchSimilar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px"  src="public/img/radio.png" >
 
-    <img id="moreOptions" onclick="playlistController.shareSelectedElement();event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px"  src="public/img/moreoptions.png" >
+    <img id="moreOptions" onclick="playlistController.shareSelectedElements();event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px"  src="public/img/moreoptions.png" >
 
     <!--img id="shareSocial" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px"  src="public/img/share.png" -->
 

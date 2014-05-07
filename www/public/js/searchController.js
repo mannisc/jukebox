@@ -98,11 +98,12 @@ searchController.init = function () {
     })
 
 
-
+    /*
     for (var i = 0; i < 4; i++) {
         // searchController.searchButtons[i] =   $("#searchbutton"+(i+1)).parent().clone(true,true);
         console.log($("#searchbutton" + (i + 1)).parent().length)
     }
+     */
 
     searchController.activateButton(0, true);
     if (!urlParams.search || urlParams.search == "") {
@@ -289,9 +290,6 @@ searchController.completeSearch = function (list, appendListInFront, searchID) {
             for (i = 0; i < searchController.searchResults.length; i++) {
                 searchController.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.searchResults.length).length);
             }
-
-            console.log("----------------------")
-            console.dir(searchController.searchResults)
 
 
             $scope.safeApply();
@@ -994,7 +992,6 @@ searchController.makeSearchListDraggable = function () {
                         uiController.startedSortPlaylistOpenedPanel = false;
                     }
 
-                    console.log(uiController.startedSortPlaylistOpenedPanel)
                     var coords = {
                         clientX: searchController.dragDraggableSongStartEvent.clientX,
                         clientY: searchController.dragDraggableSongStartEvent.clientY
@@ -1144,8 +1141,6 @@ searchController.makeSearchListDraggable = function () {
                             playlist.tracks = [];
 
                         playlistController.draggedElements.each(function (index, listElement) {
-                            console.dir($(listElement))
-                            console.dir($(listElement).data("songid"))
 
                             if ($(listElement).data("songid")) {
 
@@ -1161,6 +1156,7 @@ searchController.makeSearchListDraggable = function () {
                                 }
                             }
                         })
+
                         var position = playlistController.getPlaylistPosition(playlist.gid);
                         if (position > -1) {
                             accountController.savePlaylist(playlist, position)
@@ -1185,11 +1181,14 @@ searchController.makeSearchListDraggable = function () {
 
                     }
                     if (listElement.hasClass("playlistsong")||listElement.hasClass("currentqueue")) {
+                        listElement.removeClass("hoverable")
+
                         listElement.addClass("addedsongs")
                         setTimeout(function () {
                             listElement.removeClass("addedsongs")
-
-
+                            setTimeout(function () {
+                              listElement.addClass("hoverable")
+                            }, 200)
                         }, 2500)
 
                     }
