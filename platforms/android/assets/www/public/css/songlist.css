@@ -21,7 +21,7 @@
 #searchlist ul.gridlayout li {
   display: inline-block!important;
   vertical-align: top!important;
-  width: 250px!important;
+  width: 250px;
 
 }
 
@@ -591,7 +591,6 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
     padding: 3px 0px 11px 6px!important;
 
 
-
     filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.2), endColorstr=rgba(255,255,255,0))!important;
     background-image:-moz-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
     background-image:linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
@@ -600,6 +599,18 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
     background-image:-ms-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
     background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(255,255,255,0.2)), color-stop(44%,rgba(255,255,255,0.2)),color-stop(100%,rgba(255,255,255,0)))!important;
 
+
+}
+
+#searchlist li:hover.searchlisttitlebutton a.loaded{
+
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.2), endColorstr=rgba(255,255,255,0))!important;
+    background-image:-moz-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 44%,rgba(255,255,255,0) 100%)!important;
+    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(255,255,255,0.2)), color-stop(44%,rgba(255,255,255,0.2)),color-stop(100%,rgba(255,255,255,0)))!important;
 
 }
 
@@ -614,6 +625,7 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
     background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(255,255,255,0.4)), color-stop(44%,rgba(255,255,255,0.4)),color-stop(100%,rgba(255,255,255,0)))!important;
 
 }
+
 
 
 
