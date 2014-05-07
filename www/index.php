@@ -280,12 +280,6 @@
         <input id="filterBasic-input" data-type="search" data-theme="a">
     </form-->
     <div id="playlisthelp" class="{{playlistController.getHelpStyleClass()}}">
-        <span ng-if="countLoadedPlaylists()>1||!playlistController.loadedPlaylists.0">
-        Drag and Drop your favorite Songs<br>to add them to this Playlist.
-        </span>
-         <span ng-if="countLoadedPlaylists()==1&&playlistController.loadedPlaylists.0">
-        Drag and Drop your favorite Songs<br>to add them to the Play Queue.
-        </span>
     </div>
 
     <div id="playlistInner" class="animate" style="display:none">
