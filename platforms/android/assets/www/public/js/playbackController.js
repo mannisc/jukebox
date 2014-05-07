@@ -44,7 +44,6 @@ playbackController.touchedElement = function (event, onlyStyle) {
  */
 playbackController.clickedElement = function (event, element, onlyStyle) {
     //Swiped?
-    console.log("   SWIPE "+uiController.swipeTimer+"   -  "  +( Date.now() - uiController.swipeTimer));
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
 

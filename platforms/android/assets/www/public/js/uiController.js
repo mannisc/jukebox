@@ -765,7 +765,6 @@ uiController.showPlaylists = function () {
         $("#clearChoosenPlaylists").hide();
         uiController.updateUI();
         playlistController.loadedPlaylistSongs = playlistController.playlists;
-        $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
 
         $("#playlistInner .iScrollPlayIndicator").hide();
         $("#searchlist .iScrollPlayIndicator").hide();
