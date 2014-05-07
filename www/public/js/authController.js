@@ -53,8 +53,7 @@ authController.getToken = function (){
     $.ajax({
         url: preferences.serverURL + "init.js",
         success: function (data) {
-            console.dir("token");
-            console.dir(data);
+
             if(data.auth && data.auth=="true"){
                 authController.extractToken(data.token);
             }

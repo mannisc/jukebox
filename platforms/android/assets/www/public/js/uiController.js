@@ -292,7 +292,6 @@ uiController.init = function () {
                 try {
                     // Try to grab the standard context. If it fails, fallback to experimental.
                     var webglcontext = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-                    console.log("webgl");
                 }
                 catch (e) {
                 }

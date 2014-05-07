@@ -87,8 +87,6 @@ playlistController.init = function () {
 
     var chosen  = $("#playlistselectverticalform").chosen({disable_search_threshold: 2})
 
-    console.log("-----------------")
-    console.dir(chosen)
 
 
     $(".chosen-choices").addClass("ui-input ui-body-a ui-corner-all ui-shadow-inset");
@@ -417,7 +415,7 @@ playlistController.addSongsToPlaylist = function (event) {
  * Share selected Elements
  * @param event
  */
-playlistController.shareSelectedElement = function (event) {
+playlistController.shareSelectedElements = function (event) {
     event.stopPropagation();
 
     //playlistController.selectedSongs
@@ -731,8 +729,7 @@ playlistController.loadPlaylist = function (playlist) {
             playlistController.playlistMode = false;
         }
 
-        console.log("----GGGG------")
-        console.dir(playlist)
+
         playlistController.loadedPlaylistSongs = playlist.tracks.concat(playlistController.loadedPlaylistSongs)
         for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
             playlistController.loadedPlaylistSongs[i].id = "plsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
@@ -839,9 +836,6 @@ playlistController.scrollByDragCallback = function (event) {
     if (uiController.draggingSortableSong || uiController.draggingSong) {
 
         var dragEle = $(".draggedsortablelistelement, .draggedsearchlistelement");
-
-
-        console.dir(dragEle)
 
         if ($("#playlistview").height() > $("#playlistInner").height()) {
             //console.log('X:' + (event.clientX-110) + ' Y: '+(event.clientY-30) );
