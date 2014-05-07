@@ -923,8 +923,13 @@ searchController.getSongFromId = function (id) {
 searchController.setShowMode    = function(showMode){
 
     searchController.showMode = showMode;
+    $(".searchlisttitlebutton").css("opacity","0")
     $scope.safeApply();
+    setTimeout(function () {
     $("#searchlistview").listview('refresh');
+        alert("!")
+    $(".searchlisttitlebutton").css("opacity","")
+
     $("#searchlist .iScrollPlayIndicator").hide();
     playbackController.positionPlayIndicator();
 
@@ -932,6 +937,22 @@ searchController.setShowMode    = function(showMode){
         uiController.searchListScroll.refresh();
     }, 1000)
 
+    }, 0)
+}
+
+searchController.getShowModeLimit = function(type){
+
+   if(searchController.showMode!=0)
+    return 100000000;
+  else
+   switch(type) {
+       case 0:
+           return 3;
+           break;
+       case 1:
+           return 100000000;
+           break;
+   }
 
 }
 
