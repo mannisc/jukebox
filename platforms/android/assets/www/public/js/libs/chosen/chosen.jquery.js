@@ -702,6 +702,8 @@
         };
 
         Chosen.prototype.blur_test = function (evt) {
+
+
             if (!this.active_field && this.container.hasClass("chosen-container-active")) {
                 return this.close_field();
             }
@@ -812,8 +814,8 @@
 
         Chosen.prototype.results_hide = function () {
             if (this.results_showing) {
+
                 this.result_clear_highlight();
-                this.container.find(".chosen-drop").removeClass("visible");//CHANGED
 
                 this.container.removeClass("chosen-with-drop");
                 this.form_field_jq.trigger("chosen:hiding_dropdown", {
