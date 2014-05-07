@@ -64,6 +64,7 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
         //Play Song
         playbackController.playSong(element, onlyStyle, false);
     }
+
     event.stopPropagation();
 
 }
@@ -92,7 +93,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
 
     if (!resetingSong) {
         //Check if song already playing
-        var isSameSongAsLoadedSong = listElement.hasClass("oldloadedsong")||(playbackController.playingSong && (((!playbackController.playingSong.gid && !song.gid) || (playbackController.playingSong.gid && song.gid)) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song)));
+        var isSameSongAsLoadedSong = listElement.hasClass("oldloadedsong")||(listElement.hasClass("loadedsong")&&playbackController.playingSong && (((!playbackController.playingSong.gid && !song.gid) || (playbackController.playingSong.gid && song.gid)) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song)));
         //New song is already loading/playing song
 
         if (isSameSongAsLoadedSong) {
@@ -171,6 +172,8 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
 
             playbackController.playedSongs.push(playbackController.playingSong);
             playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
+
+
 
         }
 

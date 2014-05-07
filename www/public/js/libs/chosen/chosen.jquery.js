@@ -890,6 +890,7 @@
         };
 
         Chosen.prototype.choice_build = function (item) {
+
             var choice, close_link,
                 _this = this;
             choice = $('<li />', {
