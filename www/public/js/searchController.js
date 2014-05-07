@@ -958,6 +958,8 @@ searchController.setShowMode = function (showMode) {
     setTimeout(function () {
         $("#searchlistview").listview('refresh');
         $("#searchlistview").show();
+        searchController.makeSearchListDraggable();
+
         setTimeout(function () {
             uiController.searchListScroll.refresh();
         //$(".searchlisttitlebutton").css("opacity", "").addClass("fadeincompletefast")
