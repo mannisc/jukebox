@@ -29,7 +29,7 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
         event.stopPropagation();
 
     optionsMenu.options = [
-        {text: "Rename", callback: null}
+        {text: "Rename Playlist", callback: null}
     ]
 
     $scope.safeApply();
