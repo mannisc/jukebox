@@ -4,14 +4,14 @@
     <list default="true" id="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" name="Default" comment="" />
     <ignored path="nodejs.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/server.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399221544643" ignored="false" />
+    <file path="/server.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399563736181" ignored="false" />
     <file path="$PROJECT_DIR$/../../platforms/android/assets/www/index.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399300886724" ignored="false" />
     <file path="/ftpHandler.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399221613824" ignored="false" />
     <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/css/index.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399300001747" ignored="false" />
     <file path="/index.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399300000988" ignored="false" />
     <file path="/httpHandler.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399216763199" ignored="false" />
     <file path="/chartsHandler.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399301464686" ignored="false" />
-    <file path="/index.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399300886702" ignored="false" />
+    <file path="/index.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399573458536" ignored="false" />
     <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/css/songlist.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399306504348" ignored="false" />
     <file path="/songlist.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399305942188" ignored="false" />
     <file path="/templateHandler.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399219908170" ignored="false" />
@@ -31,8 +31,16 @@
     <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/index.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399238952971" ignored="false" />
     <file path="/a.dummy" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399293415118" ignored="false" />
     <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/accountController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399302201049" ignored="false" />
-    <file path="/accountController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399301797199" ignored="false" />
+    <file path="/accountController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399573710553" ignored="false" />
     <file path="$PROJECT_DIR$/../../www/public/css/index.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399294831999" ignored="false" />
+    <file path="$PROJECT_DIR$/../../www/public/js/accountController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399573822592" ignored="false" />
+    <file path="$PROJECT_DIR$/../../www/public/js/optionsMenu.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399573421538" ignored="false" />
+    <file path="$PROJECT_DIR$/../../www/index.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399573458536" ignored="false" />
+    <file path="$PROJECT_DIR$/../../www/public/js/authController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399572690813" ignored="false" />
+    <file path="$PROJECT_DIR$/../../www/public/js/mediaController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399572807095" ignored="false" />
+    <file path="/mediaController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399572747088" ignored="false" />
+    <file path="$PROJECT_DIR$/../../www/public/js/index.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399573022412" ignored="false" />
+    <file path="/optionsMenu.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399573418244" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +63,7 @@
       <file leaf-file-name="server.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="100" selection-start="768" selection-end="897" vertical-scroll-proportion="-0.15777262">
+            <state line="124" column="2" selection-start="3359" selection-end="3359" vertical-scroll-proportion="0.67651635">
               <folding />
             </state>
           </provider>
@@ -73,7 +81,7 @@
       <file leaf-file-name="httpHandler.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/httpHandler.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="0" selection-start="197" selection-end="258" vertical-scroll-proportion="0.0">
+            <state line="47" column="24" selection-start="258" selection-end="884" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -118,10 +126,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1912" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1048" />
+    <option name="width" value="1552" />
+    <option name="height" value="842" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -149,6 +157,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -169,7 +178,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -215,14 +223,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1048" extended-state="6" />
+    <frame x="-8" y="-8" width="1552" height="842" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24948876" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20651014" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2624161" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -375,13 +383,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/httpHandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="197" selection-end="258" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templateHandler.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="31" column="57" selection-start="564" selection-end="564" vertical-scroll-proportion="0.0">
@@ -403,9 +404,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/httpHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="24" selection-start="258" selection-end="884" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="100" selection-start="768" selection-end="897" vertical-scroll-proportion="-0.15777262">
+        <state line="124" column="2" selection-start="3359" selection-end="3359" vertical-scroll-proportion="0.67651635">
           <folding />
         </state>
       </provider>

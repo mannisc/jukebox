@@ -101,10 +101,7 @@ mediaController.sendRating = function (rating) {
                 $.ajax({
                     url: preferences.serverURL + "?ratingURL=" + VideoURL + "&rating=" + rating + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name + "&auth=" + authController.ip_token,
                     success: function (data) {
-                        if (data.auth && data.auth == "true") {
-                            authController.extractToken(data.token);
-                            mediaController.sendRating(rating);
-                        }
+                       authController.ensureAuthenticated(data, function(){ mediaController.sendRating(rating);} )
                     }
                 })
             }
@@ -197,11 +194,9 @@ mediaController.getVersions = function () {
                         success: function (data) {
                             // console.dir("loaded " + counter);
                             // console.dir(data);
-                            if (data.auth && data.auth == "true") {
-                                authController.extractToken(data.token);
-                                getsongversions(counter);
-                            }
-                            else {
+
+                            if(authController.ensureAuthenticated(data, function(){ getsongversions(counter);} )){
+
                                 var dataok = false;
                                 if (data.track) {
                                     if (data.track.length > 0) {
@@ -299,11 +294,9 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
                         timeout: 30000,
                         url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name) + "&auth=" + authController.ip_token,
                         success: function (data) {
-                            if (data.auth && data.auth == "true") {
-                                authController.extractToken(data.token);
-                                play(streamID, videoURL);
-                            }
-                            else {
+
+                            if(authController.ensureAuthenticated(data, function(){ play(streamID, videoURL);} )){
+
                                 if (streamID == mediaController.playCounter) {
                                     if (data.streamURL) {
                                         var streamURL = data.streamURL;
@@ -373,13 +366,10 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                 //var etime=new Date();
                 //var diff = etime.getTime()-time;
                 //alert("RESPONSE TIME: "+diff+" ms");
-                if (data.auth && data.auth == "true") {
-                    authController.extractToken(data.token);
-                    mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic);
-                }
-                else {
 
-                    // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
+               if(authController.ensureAuthenticated(data, function(){mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic);} )){
+
+                        // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
                     mediaController.playCounter++;
                     // console.dir("STREAM");
                     // console.dir(data);
@@ -583,11 +573,9 @@ mediaController.playNextVersion = function () {
                         $.ajax({
                             url: preferences.serverURL + "?getversions=8&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name) + "&auth=" + authController.ip_token,
                             success: function (data) {
-                                if (data.auth && data.auth == "true") {
-                                    authController.extractToken(data.token);
-                                    getsongversions(counter);
-                                }
-                                else {
+
+                               if(authController.ensureAuthenticated(data, function(){getsongversions(counter);} )){
+
                                     if (data.track) {
                                         if (playbackController.getPlayingSong() == song) {
                                             mediaController.startVersionIndex = -1;

@@ -14,7 +14,7 @@ var searchController = function () {
 
 };
 
-searchController.maxResults = 150;
+searchController.maxResults = 100;
 
 searchController.displayLimit = searchController.maxResults;
 
@@ -334,17 +334,26 @@ searchController.completeSearch = function (list, appendListInFront, searchID) {
 
 searchController.applySongList = function(){
 
+    console.log("-------------------------------------")
+
     var stepSize = 10;
-    var delays = (Math.ceil(searchController.searchResults.length / stepSize));
-    console.log("DELAYS: " + delays)
+    var stepDelay = 50;
+    if(searchController.showMode == 0)
+        var delays = 1;
+    else
+         delays = (Math.ceil(searchController.searchResults.length / stepSize));
+
+    console.log("DELAYS "+delays)
     for (var i = 1; i <= delays; i++) {
 
         var show = function (index) {
-            console.log("NEXT: "+index+"  "+3000*(index/delays))
             setTimeout(function () {
 
-                console.log("UPDATE " + Date.now()+"  "+delays+"   "+index+" "+ searchController.maxResults *index/delays )
-                searchController.displayLimit = searchController.maxResults *index/delays;
+                if(searchController.showMode == 0)
+                  searchController.displayLimit = searchController.displayLimit = searchController.maxResults;
+                else
+                  searchController.displayLimit = searchController.maxResults *index/delays;
+
 
                 $scope.safeApply();
                // $("#searchlist li").removeClass("fadeincompletefast");
@@ -365,7 +374,7 @@ searchController.applySongList = function(){
                     uiController.searchListScroll.refresh();
 
 
-            }, 50*index)
+            }, stepDelay*index)
 
         }
         show(i)
@@ -990,6 +999,12 @@ searchController.setShowMode = function (showMode) {
     $("#searchlist .iScrollIndicator").hide();
 
     searchController.showMode = showMode;
+
+    if(showMode==0){
+        searchController.displayLimit = 0
+        $scope.safeApply();
+    }
+
     //alert()
     //$(".searchlisttitlebutton").css("opacity", "0").removeClass("fadeincompletefast")
 
@@ -1059,7 +1074,6 @@ searchController.getShowModeLimit = function (type) {
         }
 
     }
-    console.log("LIMIT:: "+type+"   "+limit+"   "+searchController.displayLimit)
     return limit
 }
 

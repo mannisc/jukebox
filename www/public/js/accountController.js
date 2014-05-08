@@ -99,11 +99,8 @@ accountController.init = function () {
                     timeout: 30000,
                     url: preferences.serverURL + "?loginToken=" + token + "&auth=" + authController.ip_token,
                     success: function (data) {
-                        if (data.auth && data.auth == "true") {
-                            authController.extractToken(data.token);
-                            trylogin();
-                        }
-                        else {
+
+                        if(authController.ensureAuthenticated(data, function(){ trylogin();} )){
                             if (data == "ok") {
                                 accountController.loggedIn = true;
                                 accountController.loginToken = Base64.decode(loginTokenBase64);
@@ -159,10 +156,7 @@ accountController.logout = function () {
                 timeout: 30000,
                 url: preferences.serverURL + "?logout=" + token + "&auth=" + authController.ip_token,
                 success: function (data) {
-                    if (data.auth && data.auth == "true") {
-                        authController.extractToken(data.token);
-                        accountController.logout();
-                    }
+                    authController.ensureAuthenticated(data, function(){accountController.logout();} )
 
                 }
             })
@@ -366,24 +360,20 @@ accountController.signIn = function () {
     accountController.resetSignInData();
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         $.mobile.loading("show");
-        var send = function (name, pw) {
-            var md5pw = MD5($.trim(pw));
-            pw = rsaController.rsa.encrypt(pw);
-            name = rsaController.rsa.encrypt(name);
+        var send = function (name,nameEncrypted, pwEncrypted) {
             var email = "";
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?login=" + name + "&email=" + email + "&pw=" + pw + "&auth=" + authController.ip_token,
+                url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + email + "&pw=" + pwEncrypted + "&auth=" + authController.ip_token,
                 success: function (data) {
-                    if (data.auth && data.auth == "true") {
-                        authController.extractToken(data.token);
-                        send(name, pw);
-                    }
-                    else {
+
+                    if(authController.ensureAuthenticated(data, function(){send(name,nameEncrypted, pwEncrypted);} )){
+
                         if (data != "") {
+                            var md5pw = MD5($.trim(pwEncrypted));
                             accountController.loggedIn = true;
                             accountController.loginToken = MD5(data + md5pw);
-                            accountController.userName = username;
+                            accountController.userName = name;
                             accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                             accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
 
@@ -424,11 +414,88 @@ accountController.signIn = function () {
         var username = $("#signinusername").val();
         var pw = $("#signinpw").val();
         if (accountController.validateSignInData()) {
-            send(username, pw);
+            send(username,rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(pw));
         }
 
     }
 }
+
+/**
+ *
+ * @param name
+ * @param email
+ * @param userid
+ * @param extacc 1:facebook
+ * @param access_token
+ */
+accountController.socialSignIn = function (username, email,userid,extacc, access_token) {
+
+    $.mobile.loading("show");
+
+    var send = function (name,nameEncrypted, pwEncrypted) {
+
+        $.ajax({
+            timeout: 30000,
+            url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + email + "&pw=" + pwEncrypted + "&userid="+userid+"&auth=" + authController.ip_token+"&extacc="+extacc,
+            success: function (data) {
+                if(authController.ensureAuthenticated(data, function(){send(name,nameEncrypted, pwEncrypted);} )){
+
+                        if (data != "") {
+                        var md5pw = MD5($.trim(access_token));
+
+                        accountController.loggedIn = true;
+                        accountController.loginToken = MD5(data + md5pw);
+                        accountController.userName = name;
+                        accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
+                        accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
+
+                        var btn = $('#header .ui-btn.animated').removeClass("animated");
+                        $('#popupLogin').popup('close');
+                        $scope.safeApply();
+                        setTimeout(function () {
+                            btn.addClass("animated");
+                        }, 500)
+                        accountController.requestid = 1;
+
+                        accountController.loadStoredData();
+                        $("#signinpw").val("");
+                        $("#signinusername").val("");
+
+                        $("#popupLogin").popup("close")
+
+
+                    }
+                    else {
+                        $("#signinpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                        $("#signinusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+
+                    }
+                }
+            },
+            error: function () {
+                uiController.toast("Sorry, it is not possible to login at the moment.", 1500);
+
+            },
+            complete: function () {
+                setTimeout(function () {
+                    $.mobile.loading("hide");
+                }, 800);
+            }
+        })
+    }
+    send(username,rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(access_token));
+
+}
+
+
+
+
+
+
+
+
+
+
 
 accountController.resetSignInData = function () {
     $("#signinusername").css("background-color", "").css("color", "");
@@ -464,25 +531,19 @@ accountController.debugData = function (data) {
 accountController.register = function () {
     accountController.resetRegisterData();
     if (authController.ip_token != "auth" && authController.ip_token != "") {
-        var send = function (name, email, pw) {
-            var md5pw = MD5($.trim(pw));
-            name = rsaController.rsa.encrypt(name);
-            email = rsaController.rsa.encrypt(email);
-            pw = rsaController.rsa.encrypt(pw);
+        var send = function (name,nameEncrypted, emailEncrypted, pwEncrypted) {
 
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?register=" + name + "&email=" + email + "&pw=" + pw + "&auth=" + authController.ip_token,
+                url: preferences.serverURL + "?register=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&auth=" + authController.ip_token,
                 success: function (data) {
-                    if (data.auth && data.auth == "true") {
-                        authController.extractToken(data.token);
-                        send(name, email, pw);
-                    }
-                    else {
+                    if(authController.ensureAuthenticated(data, function(){send(name,nameEncrypted, emailEncrypted, pwEncrypted);} )){
+
                         if (data != "") {
                             accountController.loggedIn = true;
+                            var md5pw = MD5($.trim(pwEncrypted));
                             accountController.loginToken = MD5(data + md5pw);
-                            accountController.userName = username;
+                            accountController.userName = name;
                             accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                             accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
                             var btn = $('#header .ui-btn.animated').removeClass("animated");
@@ -518,8 +579,8 @@ accountController.register = function () {
         var email = $("#registeruser").val();
         var pw = $("#registerpw").val();
 
-        if (accountController.validateRegisterData()) {
-            send(username, email, pw);
+        if (accountController.validateRegisterData()) {;
+            send(username,rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(pw));
         }
 
     }
@@ -595,11 +656,9 @@ accountController.savePlaylist = function (playlist, pos) {
                         timeout: 30000,
                         url: preferences.serverURL,// + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data=savedata",
                         success: function (data) {
-                            if (data.auth && data.auth == "true") {
-                                authController.extractToken(data.token);
-                                send(savename, savedata, savetoken);
-                            }
+                            authController.ensureAuthenticated(data, function(){send(savename, savedata, savetoken);} )
                         }
+
                     })
                 }
                 send(savename, savedata, savetoken);
@@ -621,11 +680,7 @@ accountController.loadPlaylist = function (name, callbackSuccess) {
                     timeout: 30000,
                     url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=playlist&name=" + savename + "&auth=" + authController.ip_token,
                     success: function (data) {
-                        if (data.auth && data.auth == "true") {
-                            authController.extractToken(data.token);
-                            send(savename, savetoken);
-                        }
-                        else {
+                        if(authController.ensureAuthenticated(data, function(){send(savename, savetoken);} ) ){
                             if (callbackSuccess)
                                 callbackSuccess(data);
                         }
@@ -653,11 +708,7 @@ accountController.loadPlaylists = function (callbackSuccess) {
                     timeout: 30000,
                     url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth=" + authController.ip_token,
                     success: function (data) {
-                        if (data.auth && data.auth == "true") {
-                            authController.extractToken(data.token);
-                            send(savetoken);
-                        }
-                        else {
+                        if(authController.ensureAuthenticated(data, function(){send(savetoken)} ) ){
                             if (callbackSuccess)
                                 callbackSuccess(data);
                         }
@@ -693,10 +744,7 @@ accountController.saveUserData = function (type, name, userdata) {
 
                     url: preferences.serverURL, // "?storage=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename+"&data="+savedata,
                     success: function (data) {
-                        if (data.auth && data.auth == "true") {
-                            authController.extractToken(data.token);
-                            send(savename, savetype, savedata, savetoken);
-                        }
+                        authController.ensureAuthenticated(data, function(){ send(savename, savetype, savedata, savetoken); } )
                     }
                 })
             }
@@ -718,11 +766,8 @@ accountController.loadUserData = function (type, name, callbackSuccess) {
                     timeout: 30000,
                     url: preferences.serverURL + "?getdata=" + savetoken + "&n=" + nonce + "&type=" + savetype + "&name=" + savename + "&auth=" + authController.ip_token,
                     success: function (data) {
-                        if (data.auth && data.auth == "true") {
-                            authController.extractToken(data.token);
-                            send(savename, savetype, savedata, savetoken);
-                        }
-                        else {
+
+                       if(authController.ensureAuthenticated(data, function(){ send(savename, savetype, savedata, savetoken); } )) {
                             if (callbackSuccess)
                                 callbackSuccess(data);
                         }
@@ -737,6 +782,9 @@ accountController.loadUserData = function (type, name, callbackSuccess) {
     }
 }
 
+
+
+
 accountController.loadUserDataItems = function (type, callbackSuccess) {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         if (accountController.loggedIn) {
@@ -750,13 +798,12 @@ accountController.loadUserDataItems = function (type, callbackSuccess) {
                     timeout: 30000,
                     url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=" + savetype + "&auth=" + authController.ip_token,
                     success: function (data) {
-                        if (data.auth && data.auth == "true") {
-                            authController.extractToken(data.token);
-                            send(savename, savetype, savedata, savetoken);
-                        }
-                        else {
+
+                        if(authController.ensureAuthenticated(data, function(){send(savename, savetype, savedata, savetoken); } )) {
+
                             if (callbackSuccess)
                                 callbackSuccess(data);
+
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
@@ -768,3 +815,5 @@ accountController.loadUserDataItems = function (type, callbackSuccess) {
         }
     }
 }
+
+
