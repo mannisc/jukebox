@@ -237,7 +237,7 @@
 
         <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(3)" onclick="searchController.setShowMode(3)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
             <a tabindex="-1" ng-class="{loaded:searchController.showMode==3}">
-                <img src="public/img/empty.png" onclick="event.stopPropagation();$('#popupOptions').popup('open', {positionTo: '#positionArtistResultsOptions', transition: 'pop'});$('#popupOptions').popup('open')"   class="optionsSearchResults"   >
+                <img src="public/img/empty.png" onclick="optionsMenu.openArtistResultsOptions(event,'#positionArtistResultsOptions')"   class="optionsSearchResults"   >
                 <div id="positionArtistResultsOptions" class="positionResultsOptions" ></div>
 
                 <h3  ng-if ="searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Featured Artists</h3>
@@ -262,7 +262,7 @@
         <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(2)" onclick="searchController.setShowMode(2)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
             <a tabindex="-1"  ng-class="{loaded:searchController.showMode==2}">
 
-                <img src="public/img/empty.png" onclick="event.stopPropagation();$('#popupOptions').popup('open', {positionTo: '#positionPlaylistResultsOptions', transition: 'pop'});$('#popupOptions').popup('open')"   class="optionsSearchResults"   >
+                <img src="public/img/empty.png" onclick="optionsMenu.openPlaylistResultsOptions(event,'#positionPlaylistResultsOptions')"   class="optionsSearchResults"   >
                 <div id="positionPlaylistResultsOptions" class="positionResultsOptions" ></div>
 
                 <h3  ng-if ="searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Featured Playlists</h3>
@@ -287,7 +287,7 @@
         <li  ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(1)" onclick="searchController.setShowMode(1)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
             <a tabindex="-1"  ng-class="{loaded:searchController.showMode==1}">
 
-                <img src="public/img/empty.png" onclick="optionsMenu.openSongResultsOptions(event)"   class="optionsSearchResults"   >
+                <img src="public/img/empty.png" onclick="optionsMenu.openSongResultsOptions(event,'#positionSongResultsOptions')"   class="optionsSearchResults"   >
                 <div id="positionSongResultsOptions" class="positionResultsOptions" ></div>
 
                 <h3  ng-if ="searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Popular Songs</h3>
@@ -312,7 +312,7 @@
         <li  ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(4)" onclick="searchController.setShowMode(4)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
             <a tabindex="-1"  ng-class="{loaded:searchController.showMode==4}">
 
-                <img src="public/img/empty.png" onclick="event.stopPropagation();$('#popupOptions').popup('open', {positionTo: '#positionUserResultsOptions', transition: 'pop'});$('#popupOptions').popup('open')"   class="optionsSearchResults"   >
+                <img src="public/img/empty.png" onclick="optionsMenu.openUserResultsOptions(event,'#positionUserResultsOptions')"   class="optionsSearchResults"   >
                 <div id="positionUserResultsOptions" class="positionResultsOptions" ></div>
 
                 <h3   style="font-size: 1.1em;margin-top: 7px;">Users</h3>
@@ -679,11 +679,11 @@
 </div>
 
 
-<div data-role="popup" id="popupOptions" data-arrow="true" data-dismissible="true" data-theme="a" class="ui-corner-all">
+<div data-role="popup" id="popupOptions" data-dismissible="true" data-theme="a" class="ui-corner-all">
     <form>
         <div>
             <ul data-role="listview" id="popupOptionsList" data-theme="b" style="background-color: #545454;">
-                <li ng-repeat = "option in optionsMenu.options" data-theme="b" data-icon="false" class="marked"><a style="text-decoration:none;padding-left: 14px!important" target="_blank">{{option.text}}</a></li>
+                <li ng-repeat = "option in optionsMenu.options" ng-click = "option.callback()" data-theme="b" data-icon="false" class="marked"><a style="text-decoration:none;padding-left: 14px!important" target="_blank">{{option.text}}</a></li>
             </ul>
         </div>
     </form>
