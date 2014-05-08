@@ -926,6 +926,9 @@ video{
 }
 
 
+
+
+
 a, button, h1, h2, h3{
     cursor: default !important;
 
@@ -1075,6 +1078,7 @@ a, button, h1, h2, h3{
 }
 
 
+
 #popupRegister, #popupLogin{
     max-width: 230px;
 }
@@ -1118,6 +1122,25 @@ text-shadow: none!important;
 }
 
 
+
+
+
+
+#popupEditAccount-popup {
+    width: 300px;
+}
+
+
+#popupEditAccount #editButton{
+    margin-top: 20px;
+}
+
+#popupEditAccount #cancelButton{
+    argin-bottom: 0px;
+}
+
+
+
 #popupAccount.ui-popup{
 
     background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.2) 100%); /* FF3.6+ */
@@ -1142,6 +1165,7 @@ text-shadow: none!important;
     color: #000;
 }
 
+
 #popupAccount a:hover{
     background-color: rgba(145, 145, 145, 1);
     color:#fff;
@@ -1156,6 +1180,10 @@ max-width: 2em!important;
     margin-left:0.7em!important;
 
 }
+
+
+
+
 
 #popupAccount #logoutlink:hover{
     background-color: #D3001A  !important ;
