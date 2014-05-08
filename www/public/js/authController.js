@@ -94,13 +94,25 @@ authController.ensureAuthenticated = function(data,ajaxFunction){
 
 }
 
+
 var rsaController = function () {
 };
+
 rsaController.n="a0bb4bfeb95482f621562fa9f946528febc4a23f4aabbc029b4459ca68972ec2ca9e1341ab3282fc7bacabfc0fc48aeb18fe5c964563fdd0116afdd6cb24255158fbf48b2447864303cc18ee0a65b0ee6e660d8ad021d010bb27bccdb19140ee80d0b2a3883d62ca2943a64a02665a1c23e5c786081f6fdfe01b43aee80d917d";
 rsaController.e="3";
 rsaController.rsa = new RSAKey();
 rsaController.rsa.setPublic(rsaController.n, rsaController.e);
 
+rsaController.rsa.encryptUnlimited = function(text){
+    var maxLength = 110;
+    var rsaTextComplete = ""
+    for (var i = 0; i < Math.ceil(text.length/maxLength); i++) {
+        var actText =  text.slice(i*maxLength,(i+1)*maxLength)
+        var rsaText =  rsaController.rsa.encrypt(actText)
+        rsaTextComplete = rsaTextComplete +  rsaText;
+    }
+    return rsaTextComplete;
+}
 
 
 

@@ -87,7 +87,7 @@ function onFTPUploadTemplates() {
 
 //process.exit();
 
-
+/*
 
 https = require('https');
 
@@ -124,7 +124,7 @@ req.end();
 
 
 
-
+  */
 
 
 
