@@ -119,9 +119,14 @@ facebookHandler.updateSongFBButtons = function(){
 
 
     if( playbackController.playingSong)
-        $("#songfblike").html(preloadhtml.sharefb.replace("songbase.fm", "songbase.fm?play=" + playbackController.getPlayingTitle()));
+        $("#songfblikeartist").html(preloadhtml.sharefbartist.replace("songbase.fm", "songbase.fm?play=" + playbackController.getPlayingTitle()));
     else
-        $("#songfblike").html(preloadhtml.sharefb);
+        $("#songfblikeartist").html(preloadhtml.sharefbartist);
+
+    if( playbackController.playingSong)
+        $("#songfblikesong").html(preloadhtml.sharefbsong.replace("songbase.fm", "songbase.fm?play=" + playbackController.getPlayingTitle()));
+    else
+        $("#songfblikesong").html(preloadhtml.sharefbsong);
 
     try {
         FB.XFBML.parse();
