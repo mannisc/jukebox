@@ -163,6 +163,7 @@ mediaController.getSiteLogo = function () {
 
 
 mediaController.playSong = function (streamURL, videoURL) {
+    console.dir("PLAYSONG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     //streamURL = "http://video-1-9.rutube.ru/hls-vod/QABcsA4mk0tpMcwf-Ykh0g/1398726462/n1vol2/3c0e1ef57e234d0d9b3d4a66cc787f96.mp4.m3u8"
     mediaController.currentStreamURL = streamURL;
     mediaController.currentvideoURL = videoURL;
@@ -270,7 +271,7 @@ mediaController.getVersions = function () {
 }
 
 mediaController.playVersion = function (songversion, rating, resetVersion) {
-
+    console.dir("PLAY VERSION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     var loadError = false;
 
     $('#loadversionimg').css("opacity", "1");
@@ -524,7 +525,7 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
     // $("#videoplayer").removeClass("animate").addClass("animatefast");
     // $("#videoplayer").css("opacity", "0");
     // $("#videoplayer").css("pointer-events", "none");
-
+    console.dir("playStreamURLSeek!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     setTimeout(function () {
         // $("#videoplayer").removeClass("animatefast").addClass("animate");
 
@@ -571,6 +572,7 @@ mediaController.songError = function () {
 }
 
 mediaController.playNextVersion = function () {
+    console.dir("playNextVersion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     if (!videoController.versionsEnabled)
         return;
     var currentsong = playbackController.getPlayingSong();
@@ -669,6 +671,7 @@ mediaController.playNextVersion = function () {
 
 
 mediaController.playStreamURL = function (streamURL, videoURL, differentVersions) {
+    console.dir("playStreamURL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     //$("#videoplayer").removeClass("animate").addClass("animatefast");
     //$("#videoplayer").css("opacity", "0");
     //$("#videoplayer").css("pointer-events", "none");
