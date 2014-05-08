@@ -68,7 +68,6 @@ facebookHandler.init = function(){
                 // have logged in to the app.
                 var loginResponse= response;
 
-                alert("connected1")
 
                 FB.api('/me', function(response) {
 
@@ -84,7 +83,6 @@ facebookHandler.init = function(){
                         console.log("BBBBBBBBBBBBBBBBB")
 
                         console.log(JSON.stringify(loginResponse))
-
 
                         console.log(loginResponse.authResponse.accessToken)
 

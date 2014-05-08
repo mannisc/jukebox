@@ -448,7 +448,7 @@ accountController.signIn = function () {
 accountController.socialSignIn = function (username, email, userid, externalAccountIdentifier, access_token) {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         $.mobile.loading("show");
-        accountController.singInBase(username, access_token, rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(access_token), rsaController.rsa.encrypt(userid),externalAccountIdentifier);
+        accountController.singInBase(username, access_token, rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encryptUnlimited(access_token), rsaController.rsa.encrypt(userid),externalAccountIdentifier);
     }
 }
 
@@ -572,7 +572,7 @@ accountController.validateRegisterData = function () {
     var pw = $("#registerpw").val();
     var pwc = $("#registerpwc").val();
 
-    if (pw.length < 1) {
+    if (pw.length < 1 && pw.length > 64) {
         failed = true;
         $("#registerpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
         $("#registerpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
