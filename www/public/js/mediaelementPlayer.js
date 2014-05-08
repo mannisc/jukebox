@@ -168,7 +168,7 @@ var mediaelementPlayer = function (selector) {
 
                 mediaElement.addEventListener("error", function (e) { //TODO VideoController Handling nötig wenn versionen embedded fähig???
                     if (mediaController.currentvideoURL ) {
-                        mediaController.playNextVersion();
+                      //  mediaController.playNextVersion();
                     }
                 });
 
