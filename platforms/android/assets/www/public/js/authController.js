@@ -75,6 +75,25 @@ authController.getToken = function (){
     })
 }
 
+/**
+ * Check if is authenticated, else retry with ajax function and extracted token
+ * @param data
+ * @param ajaxFunction
+ * @returns {boolean}
+ */
+authController.ensureAuthenticated = function(data,ajaxFunction){
+
+    if (data.auth && data.auth == "true") {
+        authController.extractToken(data.token);
+        if(ajaxFunction)
+            ajaxFunction()
+        return false;
+    }
+    else
+        return true
+
+}
+
 var rsaController = function () {
 };
 rsaController.n="6e68b31d0b022f714527b8d3a73a8025e2af97548ea80385f9137a2ef74f1d8422c3d82b0d7973a02fe8f5c961cbf1ed06f457af1cd5575c2f83d305b0a14943";

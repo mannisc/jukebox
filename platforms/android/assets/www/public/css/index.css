@@ -964,7 +964,6 @@ a, button, h1, h2, h3{
 
 
 .backgroundVideo{
-
     width:100%!important;
     height:100%!important;
     background-color:#000!important;
@@ -977,6 +976,17 @@ a, button, h1, h2, h3{
 .backgroundVideo.background{
     opacity:0.8!important;
 }
+
+
+#backgroundVideo.fullscreen{
+    opacity:1!important;
+}
+#backgroundVideo.background{
+    opacity:0.6!important;
+}
+
+
+
 
 .backgroundVideo *{
     width:100%!important;
@@ -1094,7 +1104,7 @@ a, button, h1, h2, h3{
 
 #popupArtist{
 
-
+    padding-bottom: 50px;
 }
 
 #popupArtist .ng-pristine{
@@ -1245,27 +1255,6 @@ max-width: 2em!important;
     -ms-transition: all 2s ease;
     -o-transition: all 2s ease;
     transition: all 2s ease;
-}
-
-
-
-.fbliketitle{
-    display: inline-block;
-    float: left;
-    margin: 3px 10px 2px 0;
-    color: #000!important;
-    text-shadow: none!important;
-    line-height: 1.2!important;
-    font-size: 14px!important;
-    min-height: 0em!important;
-    max-width: 148px;
-    width: 148px;
-    text-align: center;
-    max-height: 16px;
-    overflow: hidden;
-    text-overflow: ellipsis!important;
-    text-shadow: 0 0 10px #ffffff;
-    -webkit-text-shadow: 0 0 10px #ffffff;
 }
 
 
