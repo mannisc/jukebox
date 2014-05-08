@@ -14,7 +14,10 @@ var preloadhtml = function(){
 }
 
 
-preloadhtml.sharefb = $("#songfblike").html();
-$("#songfblike").html("");
+preloadhtml.sharefbartist = $("#songfblikeartist").html();
+$("#songfblikeartist").html("");
+
+preloadhtml.sharefbsong = $("#songfblikesong").html();
+$("#songfblikesong").html("");
 
 preloadhtml.playlisthtml = $("#playlistInner").html();

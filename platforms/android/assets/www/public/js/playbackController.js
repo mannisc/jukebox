@@ -44,12 +44,11 @@ playbackController.touchedElement = function (event, onlyStyle) {
  */
 playbackController.clickedElement = function (event, element, onlyStyle) {
     //Swiped?
-    console.log("   SWIPE "+uiController.swipeTimer+"   -  "  +( Date.now() - uiController.swipeTimer));
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
 
     //Clicked on Cover -> Select Song
-     var songlist = $(event.target).parents(".songlist")
+     var songlist = $(event.target).parents("li")
     if (songlist.length>0&& (event.clientX - songlist.offset().left) < 65) {
         playlistController.selectSong(element)
         return;
@@ -65,6 +64,7 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
         //Play Song
         playbackController.playSong(element, onlyStyle, false);
     }
+
     event.stopPropagation();
 
 }
@@ -93,7 +93,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
 
     if (!resetingSong) {
         //Check if song already playing
-        var isSameSongAsLoadedSong = listElement.hasClass("oldloadedsong")||(playbackController.playingSong && (((!playbackController.playingSong.gid && !song.gid) || (playbackController.playingSong.gid && song.gid)) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song)));
+        var isSameSongAsLoadedSong = listElement.hasClass("oldloadedsong")||(listElement.hasClass("loadedsong")&&playbackController.playingSong && (((!playbackController.playingSong.gid && !song.gid) || (playbackController.playingSong.gid && song.gid)) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song)));
         //New song is already loading/playing song
 
         if (isSameSongAsLoadedSong) {
@@ -106,7 +106,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
             //Toggle Playing/Pausing
             else if (playbackController.playingSong) {
 
-                if (!$(listElement.get(0)).hasClass("stillloading"))
+                if (!listElement.hasClass("stillloading"))
                     setTimeout(function () {
 
                         videoController.playPauseSong();
@@ -162,7 +162,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
              $(songListElement.get(0)).find(".loadingSongImg").css("opacity","");
              },300);
              */
-            $(listElement.get(0)).addClass("stillloading");
+            listElement.addClass("stillloading");
 
             playbackController.startedLoadingTime = Date.now();
             if (playbackController.playingSong.streamURL)
@@ -173,14 +173,16 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
             playbackController.playedSongs.push(playbackController.playingSong);
             playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
 
+
+
         }
 
     } else {
         console.log("!JJJJJJJJJJJJJJJ " + videoController.isPlaying)
         if (videoController.isPlaying)
-            $(listElement.get(0)).addClass("playing");
+            listElement.addClass("playing");
         else
-            $(listElement.get(0)).addClass("pausing");
+            listElement.addClass("pausing");
 
     }
 
@@ -191,7 +193,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
 
 
     $scope.safeApply();
-    $(listElement.get(0)).addClass("loadedsong")
+    listElement.addClass("loadedsong")
 
 
     setTimeout(function () {
@@ -250,27 +252,6 @@ playbackController.resetPlayingSong = function () {
 
 }
 
-/**
- * Update Song FB Buttons
- */
-playbackController.updateSongFBButtons = function(){
-    return;
-    $(".fb-like").hide();
-    if( playbackController.playingSong)
-     $("#fblike").html(preloadhtml.sharefb.replace("songbase.fm", "songbase.fm?play=" + playbackController.getPlayingTitle()));
-    else
-        $("#fblike").html(preloadhtml.sharefb);
-
-    try {
-        FB.XFBML.parse();
-        $(".fb-like iframe").get(0).onload = function () {
-            setTimeout(function () {
-                $(".fb-like").show();
-            }, 50)
-        };
-    } catch (ex) {
-    }
-}
 
 
 /**
