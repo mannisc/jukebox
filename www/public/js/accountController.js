@@ -704,6 +704,7 @@ accountController.loadPlaylists = function (callbackSuccess) {
             var nonce = accountController.requestid;
             var savetoken = rsaController.rsa.encrypt(accountController.loginToken + nonce);
             var send = function (savetoken) {
+                alert(preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth=" + authController.ip_token)
                 $.ajax({
                     timeout: 30000,
                     url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth=" + authController.ip_token,
@@ -714,8 +715,15 @@ accountController.loadPlaylists = function (callbackSuccess) {
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
+
+                        alert("!!!!!!!!")
                         alert(xhr.status);
                         alert(thrownError);
+                        console.log("------------------------")
+                        console.dir(ajaxOptions)
+                        console.dir(thrownError)
+                        console.dir(xhr)
+
                         if (callbackSuccess)
                             callbackSuccess(xhr.responseText);
                     }
