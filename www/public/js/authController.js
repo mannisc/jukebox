@@ -53,8 +53,7 @@ authController.getToken = function (){
     $.ajax({
         url: preferences.serverURL + "init.js",
         success: function (data) {
-            console.dir("token");
-            console.dir(data);
+
             if(data.auth && data.auth=="true"){
                 authController.extractToken(data.token);
             }
@@ -74,6 +73,25 @@ authController.getToken = function (){
         }
 
     })
+}
+
+/**
+ * Check if is authenticated, else retry with ajax function and extracted token
+ * @param data
+ * @param ajaxFunction
+ * @returns {boolean}
+ */
+authController.ensureAuthenticated = function(data,ajaxFunction){
+
+    if (data.auth && data.auth == "true") {
+        authController.extractToken(data.token);
+        if(ajaxFunction)
+            ajaxFunction()
+        return false;
+    }
+    else
+        return true
+
 }
 
 var rsaController = function () {

@@ -120,7 +120,7 @@ uiController.init = function () {
 
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
         $("#titleHeader").show();
-        $(" #iconHeader").css("opacity", "1");
+        $("#iconHeader").css("opacity", "1");
 
     } else {
         setTimeout(function () {
@@ -292,7 +292,6 @@ uiController.init = function () {
                 try {
                     // Try to grab the standard context. If it fails, fallback to experimental.
                     var webglcontext = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-                    console.log("webgl");
                 }
                 catch (e) {
                 }
@@ -766,7 +765,6 @@ uiController.showPlaylists = function () {
         $("#clearChoosenPlaylists").hide();
         uiController.updateUI();
         playlistController.loadedPlaylistSongs = playlistController.playlists;
-        $("#saveplaylistbtn img").attr("src", "public/img/plus.png");
 
         $("#playlistInner .iScrollPlayIndicator").hide();
         $("#searchlist .iScrollPlayIndicator").hide();
@@ -779,7 +777,7 @@ uiController.showPlaylists = function () {
         setTimeout(function () {
             uiController.updateUI();
             $("#playlistview").listview('refresh');
-            $("#playlistInner .songlist").removeClass("hidden");
+            $("#playlistInner .songlist").removeClass("hidden").removeClass("avoidhiding");
 
             //  $("#playlistview").show();
             playlistController.makePlayListSortable();
@@ -815,7 +813,17 @@ uiController.toggleGridLayout = function () {
         // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB "+cols)
 
         if (uiController.gridLayout) {
-            uiController.gridLayoutCols = Math.floor($("#searchlist ul").width() / 250);
+            uiController.gridLayoutCols = Math.floor(($("#searchlist ul").width()-15) / 250);
+
+            if(($("#searchlist ul").width()/uiController.gridLayoutCols-35)>250){
+                $("#gridlayoutwidth").remove();
+                var style = $('<style id="gridlayoutwidth">' +
+                    '#searchlist ul.gridlayout li { width:' + (($("#searchlist ul").width()/uiController.gridLayoutCols-35)) +'px!important;} '+
+                    '</style>');
+                $('html > head').append(style);
+
+            }
+
 
             scrollY = scrollY / uiController.gridLayoutCols;
             if (uiController.searchListScroll.toggelLayoutOldY != uiController.searchListScroll.y)
@@ -834,6 +842,8 @@ uiController.toggleGridLayout = function () {
             }, 0)
         }
 
+        $scope.safeApply();
+        $("#searchlistview").listview('refresh');
 
         uiController.searchListScroll.refresh();
 
@@ -857,6 +867,8 @@ uiController.toggleGridLayout = function () {
         }, 500)
 
         uiController.searchListScroll.toggelLayoutOldY = scrollY;
+
+
 
     }, 800)
 }
