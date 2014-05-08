@@ -74,7 +74,7 @@ facebookHandler.init = function(){
 
                     console.log(JSON.stringify(response));
 
-                    if(!response.email||!response.name) {
+                    if(!response.email||!response.name||!loginResponse.authResponse.accessToken) {
 
                         FB.logout(function(response) {
                          // user is now logged out
@@ -88,7 +88,7 @@ facebookHandler.init = function(){
 
                         console.log(loginResponse.authResponse.accessToken)
 
-
+                        accountController.socialSignIn(username, email,userid,extacc, access_token)
                         /*
                         FB.ui({
                             method: 'share_open_graph',
