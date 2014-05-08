@@ -71,6 +71,8 @@ dailymotionPlayer.eventListener.apiready =  function(e)
             $("#dmplayer").show();
             dailymotionPlayer.apiready = true;
             dailymotionPlayer.dmplayer.play();
+
+            dailymotionPlayer.setVolume(videoController.volume);
             videoController.playingSong();
         }
     }

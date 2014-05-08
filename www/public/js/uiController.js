@@ -813,7 +813,17 @@ uiController.toggleGridLayout = function () {
         // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB "+cols)
 
         if (uiController.gridLayout) {
-            uiController.gridLayoutCols = Math.floor($("#searchlist ul").width() / 250);
+            uiController.gridLayoutCols = Math.floor(($("#searchlist ul").width()-15) / 250);
+
+            if(($("#searchlist ul").width()/uiController.gridLayoutCols-35)>250){
+                $("#gridlayoutwidth").remove();
+                var style = $('<style id="gridlayoutwidth">' +
+                    '#searchlist ul.gridlayout li { width:' + (($("#searchlist ul").width()/uiController.gridLayoutCols-35)) +'px!important;} '+
+                    '</style>');
+                $('html > head').append(style);
+
+            }
+
 
             scrollY = scrollY / uiController.gridLayoutCols;
             if (uiController.searchListScroll.toggelLayoutOldY != uiController.searchListScroll.y)

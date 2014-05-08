@@ -29,11 +29,12 @@
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 
     <?php
-       echo '<meta property="og:image" content="http://www.coldfusionjedi.com/images/ScreenClip145.png"/>';
+       echo '<meta property="og:image" content="public/img/logo.gif"/>';
     ?>
 
 
-    <link rel="icon" href="public/img/iconlink.ico" sizes="64x64 32x32 24x24 16x16" >
+    <link rel="icon" href="public/img/logo/logo.ico" sizes="64x64 32x32 24x24 16x16" >
+
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 
@@ -228,15 +229,20 @@
 
         <li ng-if ="searchController.searchResults.length>0&&searchController.showMode!=0" ng-click="searchController.setShowMode(0)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
             <a tabindex="-1">
-                <h3 style="font-size: 1.1em;margin-top: 7px;">Back to Results</h3>
+                <img src="public/img/empty.png"   class="optionsSearchResultsBack"   >
+                <h3 style="font-size: 1.1em;margin-top: 7px;">Show all</h3>
             </a></li>
 
         <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(3)" ng-click="searchController.setShowMode(3)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
             <a tabindex="-1" ng-class="{loaded:searchController.showMode==3}">
-                <h3 style="font-size: 1.1em;margin-top: 7px;">Artists</h3>
+                <img src="public/img/empty.png" onclick="event.stopPropagation();$('#popupOptions').popup('open', {positionTo: '#positionArtistResultsOptions', transition: 'pop'});$('#popupOptions').popup('open')"   class="optionsSearchResults"   >
+                <div id="positionArtistResultsOptions" class="positionResultsOptions" ></div>
+
+                <h3  ng-if ="searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Featured Artists</h3>
+                <h3  ng-if ="!searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Artists</h3>
             </a>
         </li>
-        <li  ng-if ="searchController.isVisisbleInShowMode(3)" ng-repeat="song in searchController.searchResults  | limitTo:searchController.getShowModeLimit(3) | orderBy : song.gid track by song.id " data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li  ng-if ="searchController.isVisisbleInShowMode(3)" ng-repeat="song in searchController.searchResults  | limitTo:searchController.getShowModeLimit(3)  track by song.id " data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -254,11 +260,14 @@
         <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(2)" ng-click="searchController.setShowMode(2)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
             <a tabindex="-1"  ng-class="{loaded:searchController.showMode==2}">
 
-                <h3  style="font-size: 1.1em;margin-top: 7px;">Playlists/Albums</h3>
+                <img src="public/img/empty.png" onclick="event.stopPropagation();$('#popupOptions').popup('open', {positionTo: '#positionPlaylistResultsOptions', transition: 'pop'});$('#popupOptions').popup('open')"   class="optionsSearchResults"   >
+                <div id="positionPlaylistResultsOptions" class="positionResultsOptions" ></div>
 
+                <h3  ng-if ="searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Featured Playlists</h3>
+                <h3  ng-if ="!searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Playlists/Albums</h3>
             </a>
         </li>
-        <li  ng-if ="searchController.isVisisbleInShowMode(2)" ng-repeat="song in searchController.searchResults  | limitTo:searchController.getShowModeLimit(2)  | orderBy : song.gid track by song.id " data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li  ng-if ="searchController.isVisisbleInShowMode(2)" ng-repeat="song in searchController.searchResults  | limitTo:searchController.getShowModeLimit(2)  track by song.id " data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -273,8 +282,11 @@
 
 
 
-        <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(1)" ng-click="searchController.setShowMode(1)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
+        <li  ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(1)" ng-click="searchController.setShowMode(1)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
             <a tabindex="-1"  ng-class="{loaded:searchController.showMode==1}">
+
+                <img src="public/img/empty.png" onclick="event.stopPropagation();$('#popupOptions').popup('open', {positionTo: '#positionSongResultsOptions', transition: 'pop'});$('#popupOptions').popup('open')"   class="optionsSearchResults"   >
+                <div id="positionSongResultsOptions" class="positionResultsOptions" ></div>
 
                 <h3  ng-if ="searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Popular Songs</h3>
                 <h3  ng-if ="!searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Songs</h3>
@@ -295,8 +307,11 @@
         </li>
 
 
-        <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(4)" ng-click="searchController.setShowMode(4)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
+        <li  ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(4)" ng-click="searchController.setShowMode(4)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
             <a tabindex="-1"  ng-class="{loaded:searchController.showMode==4}">
+
+                <img src="public/img/empty.png" onclick="event.stopPropagation();$('#popupOptions').popup('open', {positionTo: '#positionUserResultsOptions', transition: 'pop'});$('#popupOptions').popup('open')"   class="optionsSearchResults"   >
+                <div id="positionUserResultsOptions" class="positionResultsOptions" ></div>
 
                 <h3   style="font-size: 1.1em;margin-top: 7px;">Users</h3>
 
@@ -535,14 +550,14 @@
 
 <div id="songOptionsOriginal" style="display:none">
 
-    <img id="playSelection" onclick="playlistController.playSelection(event)"  ondblclick="playlistController.playSelection(event)"  width="53px"  src="public/img/playopt.png">
+    <img id="playSelection" onclick="playlistController.playSelection(event)"  ondblclick="playlistController.playSelection(event)"    src="public/img/playopt.png">
 
-    <img id="removeFromPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.removeSongsFromPlaylist(event)"  width="53px" src="public/img/empty.png" >
+    <img id="removeFromPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.removeSongsFromPlaylist(event)"   src="public/img/empty.png" >
 
-    <img id="addToPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.addSongsToPlaylist(event)"  width="53px"  src="public/img/add.png">
-    <img id="searchSimilar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px"  src="public/img/radio.png" >
+    <img id="addToPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.addSongsToPlaylist(event)"    src="public/img/add.png">
+    <img id="searchSimilar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();"   src="public/img/radio.png" >
 
-    <img id="moreOptions" onclick="playlistController.shareSelectedElements();event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px"  src="public/img/moreoptions.png" >
+    <img id="moreOptions" onclick="playlistController.shareSelectedElements();event.stopPropagation();" ondblclick="event.stopPropagation();"   src="public/img/moreoptions.png" >
 
     <!--img id="shareSocial" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px"  src="public/img/share.png" -->
 
@@ -661,7 +676,18 @@
 </div>
 
 
-
+<div data-role="popup" id="popupOptions" data-arrow="true" data-dismissible="true" data-theme="a" class="ui-corner-all">
+    <form>
+        <div>
+            <ul data-role="listview" id="" data-theme="b" style="background-color: #545454;">
+                <li data-theme="b" data-icon="false" class="marked"><a style="text-decoration:none;padding-left: 14px!important" target="_blank">Play Songs</a></li>
+                <li data-theme="b" data-icon="false" class="marked"><a style="text-decoration:none;padding-left: 14px!important" target="_blank">Add Songs to Play Queue</a></li>
+                <li data-theme="b" data-icon="false"  class="marked"><a style="text-decoration:none;padding-left: 14px!important" target="_blank">Add Songs to Playlist</a></li>
+                <li data-theme="b"data-icon="false"  class="marked"><a style="text-decoration:none;padding-left: 14px!important" target="_blank">Add Songs as new Playlist</a></li>
+            </ul>
+        </div>
+    </form>
+</div>
 
 
 
@@ -677,22 +703,40 @@
                                                      style="text-decoration:none;padding-left: 14px!important" target="_blank">Songs from Artist</a></li>
                 <li data-theme="b" class="marked"  style="border-bottom:1px solid #ddd;"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');searchController.searchSimilarSongs(playbackController.playingSong);"
                                                                                             style="text-decoration:none;padding-left: 14px!important" target="_blank">Similar Songs</a></li>
-                <li data-theme="b" style="border-top:15px solid rgba(255,255,255,0.2);"><a ng-show="playbackController.playingSong" href="http://de.wikipedia.org/w/index.php?go=Artikel&title&search={{mediaController.getSongArtist(playbackController.playingSong)}}"
-                                                                                           onclick="$('#popupArtist').popup('close')" style="text-decoration:none" target="_blank"><img src="public/img/wikipedia.png">Wikipedia</a></li>
-                <li data-theme="b"><a ng-show="playbackController.playingSong" href="http://www.lastfm.de/search?q={{mediaController.getSongArtist(playbackController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
-                                      style="text-decoration:none" target="_blank"><img src="public/img/lastfm.png">last.fm</a></li>
+
+
+                <li data-theme="b" style="border-top:5px solid rgba(255,255,255,0.2);"><a ng-show="playbackController.playingSong" href="https://www.facebook.com/search/results.php?q={{mediaController.getSongArtist(playbackController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
+                                      style="text-decoration:none" target="_blank"><img src="public/img/facebook.png">Facebook</a></li>
                 <li data-theme="b"><a ng-show="playbackController.playingSong" href="https://myspace.com/search/?q={{mediaController.getSongArtist(playbackController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
                                       style="text-decoration:none" target="_blank"><img src="public/img/myspace.png">Myspace</a></li>
-                <li data-theme="b"><a ng-show="playbackController.playingSong" href="https://www.google.de/search?q={{mediaController.getSongArtist(playbackController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
+                <li data-theme="b"><a ng-show="playbackController.playingSong" href="http://www.lastfm.de/search?q={{mediaController.getSongArtist(playbackController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
+                                      style="text-decoration:none" target="_blank"><img src="public/img/lastfm.png">last.fm</a></li>
+                <li data-theme="b"><a ng-show="playbackController.playingSong" href="http://de.wikipedia.org/w/index.php?go=Artikel&title&search={{mediaController.getSongArtist(playbackController.playingSong)}}"
+                                                                                           onclick="$('#popupArtist').popup('close')" style="text-decoration:none" target="_blank"><img src="public/img/wikipedia.png">Wikipedia</a></li>
+                <li data-theme="b" style="border-bottom:5px solid rgba(255,255,255,0);"><a ng-show="playbackController.playingSong" href="https://www.google.de/search?q={{mediaController.getSongArtist(playbackController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
                                       style="text-decoration:none" target="_blank"><img src="public/img/google.png">Google</a></li>
 
             </ul>
         </div>
     </form>
-    <span id="songfblike">
+
+    <div style="margin: 3px" >
+        <div class="fbliketitle" >{{mediaController.getSongArtist(playbackController.playingSong)}}</div>
+
+     <span id="songfblikeartist">
+
         <div class="fb-like" style="display:inline-block" data-href="https://www.songbase.fm" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
        <!--div class="fb-like"  data-href="https://www.songbase.fm" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div-->
     </span>
+    </div>
+    <div style="margin: 3px" >
+    <div class="fbliketitle" >{{playbackController.playingSong.name}}</div>
+    <span id="songfblikesong">
+
+        <div class="fb-like" style="display:inline-block" data-href="https://www.songbase.fm" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+       <!--div class="fb-like"  data-href="https://www.songbase.fm" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div-->
+    </span>
+    </div>
 </div>
 
 
@@ -701,10 +745,35 @@
 </div>< /footer -->
 
 
+<!--div style="position:absolute;top: 0;left:0;width: 100%;height:100%">
+
+    <table class="tg">
+
+        <tr>
+            <td class="tg-031e">    <video autoplay="true" preload="true" src="http://media3.muzu.tv/media/web/002/179/019/0001/2179019_web1.mp4?s=1399509464&amp;e=1399510664&amp;h=0a4cb56600154865bcdccc04018f63f2" width="640" height="360"></video>
+            </td>
+            <td class="tg-031e">    <video autoplay="true" preload="true" src="http://media3.muzu.tv/media/web/002/179/019/0001/2179019_web1.mp4?s=1399509464&amp;e=1399510664&amp;h=0a4cb56600154865bcdccc04018f63f2" width="640" height="360"></video>
+            </td>
+
+        </tr>
+        <tr>
+            <td class="tg-031e">    <video autoplay="true" preload="true" src="http://media3.muzu.tv/media/web/002/179/019/0001/2179019_web1.mp4?s=1399509464&amp;e=1399510664&amp;h=0a4cb56600154865bcdccc04018f63f2" width="640" height="360"></video>
+            </td>
+            <td class="tg-031e">    <video autoplay="true" preload="true" src="http://media3.muzu.tv/media/web/002/179/019/0001/2179019_web1.mp4?s=1399509464&amp;e=1399510664&amp;h=0a4cb56600154865bcdccc04018f63f2" width="640" height="360"></video>
+            </td>
+
+        </tr>
+
+    </table>
+
+
+</div-->
+
 <img src="public/img/background.jpg" id="backgroundImage">
 <div id="backgroundVideo">
 
 </div>
+
 
 
 

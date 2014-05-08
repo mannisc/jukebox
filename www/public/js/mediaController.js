@@ -688,12 +688,12 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
          else
          delayTime = 0;
          */
-        $(listElement.get(0)).addClass("firstplay");
+        listElement.addClass("firstplay");
 
         //  setTimeout(function () {
 
-        var cover = $(listElement.get(0)).find("img.ui-li-icon");
-        var playing = $(listElement.get(0)).find(".loadingSongImg");
+        var cover = listElement.find("img.ui-li-icon");
+        var playing = listElement.find(".loadingSongImg");
 
         cover.addClass("fadeout");
         playing.addClass("fadeout");
@@ -702,27 +702,27 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
             $(".songlist li.oldloadedsong").removeClass("oldloadedsong loadedsong playing pausing");    //
 
-            if ($(listElement.get(0)).hasClass("stillloading")) {
-                $(listElement.get(0)).addClass("playing");
-                $(listElement.get(0)).removeClass("stillloading")
+            if (listElement.hasClass("stillloading")) {
+                listElement.addClass("playing");
+                listElement.removeClass("stillloading")
             }
 
             //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
-            // $(listElement.get(0)).find(".loadingSongImg").hide();
-            $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "0")
-            $(listElement.get(0)).find(".loadingSongImg").css("opacity", "0")
+            // listElement.find(".loadingSongImg").hide();
+            listElement.find("img.ui-li-icon").css("opacity", "0")
+            listElement.find(".loadingSongImg").css("opacity", "0")
 
-            $(listElement.get(0)).find(".loadingSongImg").removeClass("fadeout")
+            listElement.find(".loadingSongImg").removeClass("fadeout")
 
-            $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeout");
+            listElement.find("img.ui-li-icon").removeClass("fadeout");
             setTimeout(function () {
-                $(listElement.get(0)).find("img.ui-li-icon").addClass("fadeincomplete")
-                $(listElement.get(0)).removeClass("firstplay");
+                listElement.find("img.ui-li-icon").addClass("fadeincomplete")
+                listElement.removeClass("firstplay");
 
                 setTimeout(function () {
-                    $(listElement.get(0)).find(".loadingSongImg").css("opacity", "")
-                    $(listElement.get(0)).find("img.ui-li-icon").css("opacity", "1")
-                    $(listElement.get(0)).find("img.ui-li-icon").removeClass("fadeincomplete");
+                    listElement.find(".loadingSongImg").css("opacity", "")
+                    listElement.find("img.ui-li-icon").css("opacity", "1")
+                    listElement.find("img.ui-li-icon").removeClass("fadeincomplete");
 
                 }, 1000)
             }, 200)
