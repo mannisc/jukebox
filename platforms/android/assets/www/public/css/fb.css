@@ -18,8 +18,52 @@
 
 #popupArtist .fb-like{
     margin-top: 1px;
+    float: right;
 }
 
 #popupArtist .fb_iframe_widget iframe {
     bottom: 0!important;
+}
+
+
+
+.fbliketitle{
+    position:absolute;
+    display: inline-block;
+    float: left;
+    margin: 3px 10px 2px 0;
+    color: #000!important;
+    line-height: 1.2!important;
+    font-size: 14px!important;
+    min-height: 0em!important;
+    max-width: 148px;
+    font-weight: bold;
+    text-align: center;
+    max-height: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis!important;
+    text-shadow: #ffffff 0px 0px 8px;
+}
+
+.fblikeartisttitle{
+    right: 8px;
+}
+
+.fblikeartistartist{
+    bottom: 5px;
+    right: 8px;
+
+}
+
+#songfblikesong{
+    position:absolute;
+    bottom: 5px;
+
+}
+
+#songfblikeartist{
+    position:absolute;
+    bottom: 31px;
+
 }

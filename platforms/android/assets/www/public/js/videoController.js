@@ -603,9 +603,12 @@ videoController.updateFullscreenMode = function () {
         $("#controlbarplaylist").css("opacity", "1").css("pointer-events","auto");
         $(".videoControlElements-custom-button").show();
 
-        $(".backgroundVideo").addClass("background");
+        $(".backgroundVideo,  #backgroundVideo").addClass("background");
 
-        $("#page, #content, .backgroundVideo").removeClass("fullscreen");
+
+
+
+        $("#page, #content, .backgroundVideo, #backgroundVideo").removeClass("fullscreen");
 
         uiController.updateUI();
         if (videoController.isBrowserFullscreen())
@@ -622,9 +625,9 @@ videoController.updateFullscreenMode = function () {
         $("#playlist").css("opacity", "0").removeClass("fadeincomplete").css("pointer-events","none");
         $("#controlbarplaylist").css("opacity", "0").css("pointer-events","none");
 
-        $(".backgroundVideo").removeClass("background");
+        $(".backgroundVideo,  #backgroundVideo").removeClass("background");
 
-        $("#page, #content, .backgroundVideo").addClass("fullscreen");
+        $("#page, #content, .backgroundVideo,  #backgroundVideo").addClass("fullscreen");
 
 
         uiController.updateUI();
