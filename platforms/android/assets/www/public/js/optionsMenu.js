@@ -58,9 +58,8 @@ optionsMenu.openArtistResultsOptions = function (event, positionTo) {
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions" ).popup( "option", "arrow", "true" );
+    $("#popupOptions" ).popup( "option", "arrow",true );
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
-
 
 }
 
@@ -83,8 +82,7 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions" ).popup( "option", "arrow", "true" );
-
+    $("#popupOptions" ).popup( "option", "arrow",true );
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
 
 
@@ -106,7 +104,7 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions" ).popup( "option", "arrow", "true" );
+    $("#popupOptions" ).popup( "option", "arrow",true );
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
 
 
@@ -131,7 +129,7 @@ optionsMenu.openUserResultsOptions = function (event, positionTo) {
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions" ).popup( "option", "arrow", "true" );
+    $("#popupOptions" ).popup( "option", "arrow",true );
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
 
 

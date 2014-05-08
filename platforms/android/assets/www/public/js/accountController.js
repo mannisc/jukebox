@@ -158,9 +158,15 @@ accountController.logout = function () {
                 timeout: 30000,
                 url: preferences.serverURL + "?logout=" + token + "&auth=" + authController.ip_token,
                 success: function (data) {
-                    authController.ensureAuthenticated(data, function () {
+                    if(authController.ensureAuthenticated(data, function () {
                         accountController.logout();
-                    })
+                    })){
+
+                        if(facebookHandler.loggedIn){
+                            facebookHandler.logout();
+                        }
+
+                    }
 
                 }
             })
@@ -367,7 +373,7 @@ accountController.loadStoredData = function () {
  */
 accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted, pwEncrypted, useridEncrypted, externalAccountIdentifier) {
 
-    alert(preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier)
+    //alert(preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier)
 
     $.ajax({
         timeout: 30000,
@@ -377,6 +383,10 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                 accountController.registerBase(name, pw, nameEncrypted, emailEncrypted, pwEncrypted, useridEncrypted);
             })) {
                 if (data != "") {
+
+                    if(externalAccountIdentifier==1)
+                        facebookHandler.loggedIn = true;
+
                     if(pw!= "" && pw.length < 100){
                        var md5pw = MD5($.trim(pw));
                     }
@@ -402,7 +412,8 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                     $("#signinpw").val("");
                     $("#signinusername").val("");
 
-                    $("#popupLogin").popup("close")
+                    $("#popupLogin").popup("close") ;
+                    $("#popupRegister").popup("close");
 
                 }
                 else {
@@ -414,6 +425,9 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
         },
         error: function () {
             uiController.toast("Sorry, it is not possible to login at the moment.", 1500);
+            if(facebookHandler.loggedIn){
+                facebookHandler.logout();
+            }
 
         },
         complete: function () {
@@ -600,6 +614,16 @@ accountController.validateRegisterData = function () {
     }
 
     return !failed;
+}
+
+
+
+accountController.saveProfile = function () {
+
+    alert("TODO")
+
+    //VALIDATE
+    $("#popupEditAccount").popup("close");
 }
 
 
