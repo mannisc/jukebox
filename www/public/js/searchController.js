@@ -634,7 +634,6 @@ searchController.showLoading = function (show) {
 
 searchController.searchSongs = function (searchString, title, artist, callbackSuccess) {
     searchController.showLoading(true);
-
     var searchserver = function () {
         console.dir(preferences.serverURL + "?searchjson=" + searchString + "&auth=" + authController.ip_token);
         $.ajax({
