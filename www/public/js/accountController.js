@@ -378,7 +378,13 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
             })) {
 
                 if (data != "") {
-                    var md5pw = MD5($.trim(pw));
+                    if(pw!= ""){
+                       var md5pw = MD5($.trim(pw));
+                    }
+                    else
+                    {
+                        var md5pw = "";
+                    }
 
                     accountController.loggedIn = true;
                     accountController.loginToken = MD5(data + md5pw);
