@@ -499,12 +499,19 @@ playlistController.onLoadedPlaylistsChanged = function () {
         $("#playlistselectvertical .search-field input").attr("placeholder", "");
         $('#playlistselectvertical .search-choice').each(function () {
 
-            playlistsOldLoaded.push($(this).text());
+            var name = $(this).find("span").text();
+
+            playlistsOldLoaded.push(name);
+
             if ($(this).data('loaded') != "true") {
+
+                $(this).on("click",function(){
+
+                    optionsMenu.openPlaylistOptions(event,$(this))
+                })
 
                 $(this).find(".search-choice-close").attr("title", "Close")
                 var playlist = null;
-                var name = $(this).find("span").text();
 
                 console.log("------------------------------------------------------------------------------ " + name)
 

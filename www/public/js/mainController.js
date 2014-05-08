@@ -56,7 +56,7 @@ function MainController($scope,$compile) {
     $scope.playbackController = playbackController;
 
     $scope.accountController  = accountController;
-
+    $scope.optionsMenu  = optionsMenu;
 
 
     /*
