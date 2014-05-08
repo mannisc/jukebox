@@ -641,16 +641,46 @@
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Account</h3>
             <ul data-role="listview">
-                <li><a href="#" data-rel="back" id="manageFacebook"><img src="public/img/fb.png">Facebook</a></li>
-                <li><a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png">Google
+                <li  style="border-bottom:1px solid #ddd;"><a href="#" onclick='$.mobile.loading("show");$("#popupAccount").popup("close");setTimeout(function(){$.mobile.loading("hide");$("#popupEditAccount").popup("open");},900);' data-rel="back" id="manageUserProfile" ><img src="public/img/user.png" width="28px" >Your Profile</a></li>
+
+                <li style="border-top:15px solid rgba(255,255,255,0);"><a href="#" data-rel="back" id="manageFacebook"><img src="public/img/fb.png" width="28px" >Facebook</a></li>
+                <li><a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png" width="28px" >Google
                     <!--span class="GoogleBlue">G</span><span class="GoogleRed">o</span><span class="GoogleYellow">o</span><span class="GoogleBlue">g</span><span class="GoogleGreen">l</span><span class="GoogleRed">e</span--></a></li>
-                <li style="border-bottom:1px solid #ddd;"><a href="#" data-rel="back" id="manageDropbox"><img src="public/img/dropbox.png">Dropbox</a></li>
+                <li style="border-bottom:1px solid #ddd;"><a href="#" data-rel="back" id="manageDropbox"><img src="public/img/dropbox.png" width="28px" >Dropbox</a></li>
                 <li style="border-top:15px solid rgba(255,255,255,0);"><a href="#" onclick="accountController.logout();" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li>
 
             </ul>
         </div>
     </form>
 </div>
+
+
+
+
+<div data-role="popup" id="popupEditAccount" data-theme="a" class="ui-corner-all"  >
+    <div style="padding:0px 20px 10px 20px">
+        <h3 id="edittitle">Edit Profile</h3>
+
+        <label for="registerusername" class="ui-hidden-accessible">Username:</label>
+        <input type="text" name="user" id="editusername" value="" placeholder="Username" data-theme="a" >
+            <span id="edituseremail">
+            <label for="registeruser" class="ui-hidden-accessible">Email Adress:</label>
+            <input type="text" name="user" id="edituser" value="" placeholder="Email Adress" data-theme="a" >
+            </span>
+        <label for="registerpw" class="ui-hidden-accessible">Password:</label>
+        <input type="password" name="pass" id="editpw" value="" placeholder="Password" data-theme="a" >
+                <span id="editpwconfirm">
+                <input type="password" name="pass" id="editpwc" value="" placeholder="Confirm Password" data-theme="a" >
+                </span>
+        <button onclick='accountController.saveProfile();' id="editButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Save Changes</button>
+        <button onclick='$("#popupEditAccount").popup("close")' id="cancelButton"  class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-delete">Cancel</button>
+
+
+    </div>
+</div>
+
+
+
 
 <div data-role="popup" id="popupConfirm" data-arrow="true" data-dismissible="false" data-theme="a" class="ui-corner-all">
     <form>
@@ -679,7 +709,7 @@
 </div>
 
 
-<div data-role="popup" id="popupOptions" data-dismissible="true" data-theme="a" class="ui-corner-all">
+<div data-role="popup" id="popupOptions" data-arrow="true" data-dismissible="true" data-theme="a" class="ui-corner-all">
     <form>
         <div>
             <ul data-role="listview" id="popupOptionsList" data-theme="b" style="background-color: #545454;">
@@ -688,6 +718,7 @@
         </div>
     </form>
 </div>
+
 
 
 
