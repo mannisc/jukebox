@@ -360,17 +360,17 @@ accountController.signIn = function () {
     accountController.resetSignInData();
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         $.mobile.loading("show");
-        var send = function (name,nameEncrypted, pwEncrypted) {
+        var send = function (name,pw,nameEncrypted, pwEncrypted) {
             var email = "";
             $.ajax({
                 timeout: 30000,
                 url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + email + "&pw=" + pwEncrypted + "&auth=" + authController.ip_token,
                 success: function (data) {
 
-                    if(authController.ensureAuthenticated(data, function(){send(name,nameEncrypted, pwEncrypted);} )){
+                    if(authController.ensureAuthenticated(data, function(){send(name,pw,nameEncrypted, pwEncrypted);} )){
 
                         if (data != "") {
-                            var md5pw = MD5($.trim(pwEncrypted));
+                            var md5pw = MD5($.trim(pw));
                             accountController.loggedIn = true;
                             accountController.loginToken = MD5(data + md5pw);
                             accountController.userName = name;
@@ -414,7 +414,7 @@ accountController.signIn = function () {
         var username = $("#signinusername").val();
         var pw = $("#signinpw").val();
         if (accountController.validateSignInData()) {
-            send(username,rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(pw));
+            send(username,pw,rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(pw));
         }
 
     }
@@ -432,16 +432,16 @@ accountController.socialSignIn = function (username, email,userid,extacc, access
 
     $.mobile.loading("show");
 
-    var send = function (name,nameEncrypted, pwEncrypted) {
+    var send = function (name,pw,nameEncrypted, pwEncrypted) {
 
         $.ajax({
             timeout: 30000,
             url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + email + "&pw=" + pwEncrypted + "&userid="+userid+"&auth=" + authController.ip_token+"&extacc="+extacc,
             success: function (data) {
-                if(authController.ensureAuthenticated(data, function(){send(name,nameEncrypted, pwEncrypted);} )){
+                if(authController.ensureAuthenticated(data, function(){send(name,pw,nameEncrypted, pwEncrypted);} )){
 
                         if (data != "") {
-                        var md5pw = MD5($.trim(access_token));
+                        var md5pw = MD5($.trim(pw));
 
                         accountController.loggedIn = true;
                         accountController.loginToken = MD5(data + md5pw);
@@ -483,7 +483,7 @@ accountController.socialSignIn = function (username, email,userid,extacc, access
             }
         })
     }
-    send(username,rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(access_token));
+    send(username,access_token,rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(access_token));
 
 }
 
@@ -531,17 +531,17 @@ accountController.debugData = function (data) {
 accountController.register = function () {
     accountController.resetRegisterData();
     if (authController.ip_token != "auth" && authController.ip_token != "") {
-        var send = function (name,nameEncrypted, emailEncrypted, pwEncrypted) {
+        var send = function (name,pw,nameEncrypted, emailEncrypted, pwEncrypted) {
 
             $.ajax({
                 timeout: 30000,
                 url: preferences.serverURL + "?register=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&auth=" + authController.ip_token,
                 success: function (data) {
-                    if(authController.ensureAuthenticated(data, function(){send(name,nameEncrypted, emailEncrypted, pwEncrypted);} )){
+                    if(authController.ensureAuthenticated(data, function(){send(name,pw,nameEncrypted, emailEncrypted, pwEncrypted);} )){
 
                         if (data != "") {
                             accountController.loggedIn = true;
-                            var md5pw = MD5($.trim(pwEncrypted));
+                            var md5pw = MD5($.trim(pw));
                             accountController.loginToken = MD5(data + md5pw);
                             accountController.userName = name;
                             accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
@@ -580,7 +580,7 @@ accountController.register = function () {
         var pw = $("#registerpw").val();
 
         if (accountController.validateRegisterData()) {;
-            send(username,rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(pw));
+            send(username,pw,rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(pw));
         }
 
     }
@@ -704,7 +704,7 @@ accountController.loadPlaylists = function (callbackSuccess) {
             var nonce = accountController.requestid;
             var savetoken = rsaController.rsa.encrypt(accountController.loginToken + nonce);
             var send = function (savetoken) {
-                alert(preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth=" + authController.ip_token)
+
                 $.ajax({
                     timeout: 30000,
                     url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth=" + authController.ip_token,
