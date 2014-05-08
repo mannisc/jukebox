@@ -48,14 +48,34 @@ facebookHandler.loggedIn = false;
  */
 
 facebookHandler.logout = function () {
-    setTimeout(function(){
-        FB.logout(function (response) {
-            facebookHandler.loggedIn = false;
-            //Reload iFrames to see login Button again //TODO Facebook Fix
-            var fbIFrames = $(".fb_iframe_widget iframe");
-            fbIFrames.attr("src", fbIFrames.attr("src"))
-        });
-    },0)
+    facebookHandler.logoutTimer = Date.now();
+    setTimeout(function () {
+            FB.logout(function (response) {
+                facebookHandler.loggedIn = false;
+                setTimeout(function () {
+                    //Reload iFrames to see login Button again //TODO Facebook Fix
+                    var fbIFrames = $(".fb_iframe_widget iframe");
+                    fbIFrames.attr("src", fbIFrames.attr("src"))
+                }, 0)
+                setTimeout(function () {
+                    //Reload iFrames to see login Button again //TODO Facebook Fix
+                    var fbIFrames = $(".fb_iframe_widget iframe");
+                    fbIFrames.attr("src", fbIFrames.attr("src"))
+                }, 500)
+                setTimeout(function () {
+                    //Reload iFrames to see login Button again //TODO Facebook Fix
+                    var fbIFrames = $(".fb_iframe_widget iframe");
+                    fbIFrames.attr("src", fbIFrames.attr("src"))
+                }, 1000)
+                setTimeout(function () {
+                    //Reload iFrames to see login Button again //TODO Facebook Fix
+                    var fbIFrames = $(".fb_iframe_widget iframe");
+                    fbIFrames.attr("src", fbIFrames.attr("src"))
+                }, 2000)
+
+            });
+        }, 0
+    )
 }
 
 
@@ -148,8 +168,12 @@ facebookHandler.init = function () {
                  // dialog right after they log in to Facebook.
                  // The same caveats as above apply to the FB.login() call here.
                  */
-                FB.login(function (response) {
-                }, {scope: 'public_profile, email'});
+                if(!facebookHandler.logoutTimer||  Date.now()-    facebookHandler.logoutTimer > 2000){
+
+                    FB.login(function (response) {
+                    }, {scope: 'public_profile, email'});
+
+                }
 
 
             }
