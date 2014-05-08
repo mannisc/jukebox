@@ -723,6 +723,9 @@ accountController.loadPlaylists = function (callbackSuccess) {
                         console.dir(ajaxOptions)
                         console.dir(thrownError)
                         console.dir(xhr)
+                        console.dir("xhr.responseText");
+                        console.dir(xhr.responseText);
+
 
                         if (callbackSuccess)
                             callbackSuccess(xhr.responseText);
