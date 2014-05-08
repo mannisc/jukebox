@@ -2812,11 +2812,6 @@ if (typeof jQuery != 'undefined') {
             var t = this;
 			if (!player.isVideo)
 				return;
-            console.log("--------------------------------------------")
-
-            console.log(controls)
-            console.log("-----------")
-            console.dir(controls)
 
 			var
 			loading =

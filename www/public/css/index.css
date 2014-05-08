@@ -21,9 +21,9 @@
 }
 
 body {
-    /*-webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
-  /*  -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
- /*   -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
+    -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
     background-color: #fff;
     background-attachment: fixed;
     font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
@@ -364,7 +364,7 @@ input[type=button]{
     -webkit-transition: all 280ms ease
     -moz-transition: all 280ms cease;
     -o-transition: all 280ms ease;
-    transition:none /* custom */
+    transition: all 280ms ease /* custom */
 }
 
 
@@ -428,21 +428,21 @@ video{
 
 @-moz-keyframes bounce {
     0%{ -moz-transform:scale(0); opacity:0;}
-    50%{ -moz-transform:scale(1.4); opacity:0.4; }
+    50%{ -moz-transform:scale(1.2); opacity:0.4; }
     75%{ -moz-transform:scale(0.9); opacity:0.7;}
     100%{ -moz-transform:scale(1); opacity:1;}
 }
 
 @-webkit-keyframes bounce {
     0%{ -webkit-transform:scale(0); opacity:0;}
-    50%{ -webkit-transform:scale(1.4); opacity:0.4;}
+    50%{ -webkit-transform:scale(1.2); opacity:0.4;}
     75%{ -webkit-transform:scale(0.9); opacity:0.7;}
     100%{ -webkit-transform:scale(1); opacity:1;}
 }
 
 @keyframes bounce {
     0%{ -moz-transform:scale(0); opacity:0;}
-    50%{ -moz-transform:scale(1.4); opacity:0.4; }
+    50%{ -moz-transform:scale(1.2); opacity:0.4; }
     75%{ -moz-transform:scale(0.9); opacity:0.7;}
     100%{ -moz-transform:scale(1); opacity:1;}
 }
@@ -845,7 +845,7 @@ video{
 }
 
 #popupArtistExternList li.marked:hover a{
-    background-color: rgba(70,23,180,1)!important;
+    background-color: rgba(145, 145, 145, 0.7)!important;
     color:#fff!important;
 
 
@@ -964,7 +964,6 @@ a, button, h1, h2, h3{
 
 
 .backgroundVideo{
-
     width:100%!important;
     height:100%!important;
     background-color:#000!important;
@@ -977,6 +976,17 @@ a, button, h1, h2, h3{
 .backgroundVideo.background{
     opacity:0.8!important;
 }
+
+
+#backgroundVideo.fullscreen{
+    opacity:1!important;
+}
+#backgroundVideo.background{
+    opacity:0.6!important;
+}
+
+
+
 
 .backgroundVideo *{
     width:100%!important;
@@ -1055,7 +1065,7 @@ a, button, h1, h2, h3{
 
 
 #popupArtist-popup,#popupAccount-popup{
-  width:250px;
+  width:300px;
 }
 
 
@@ -1094,7 +1104,7 @@ a, button, h1, h2, h3{
 
 #popupArtist{
 
-
+    padding-bottom: 50px;
 }
 
 #popupArtist .ng-pristine{
@@ -1246,6 +1256,7 @@ max-width: 2em!important;
     -o-transition: all 2s ease;
     transition: all 2s ease;
 }
+
 
 
 
