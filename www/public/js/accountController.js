@@ -387,7 +387,6 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                     accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
 
                     var btn = $('#header .ui-btn.animated').removeClass("animated");
-                    $('#popupLogin').popup('close');
                     $scope.safeApply();
                     setTimeout(function () {
                         btn.addClass("animated");
@@ -395,6 +394,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                     accountController.requestid = 1;
 
                     accountController.loadStoredData();
+
                     $("#signinpw").val("");
                     $("#signinusername").val("");
 
@@ -505,7 +505,7 @@ accountController.register = function () {
                             accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                             accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
                             var btn = $('#header .ui-btn.animated').removeClass("animated");
-                            $('#registerLogin').popup('close');
+
                             $scope.safeApply();
                             setTimeout(function () {
                                 btn.addClass("animated");
