@@ -106,7 +106,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
             //Toggle Playing/Pausing
             else if (playbackController.playingSong) {
 
-                if (!$(listElement.get(0)).hasClass("stillloading"))
+                if (!listElement.hasClass("stillloading"))
                     setTimeout(function () {
 
                         videoController.playPauseSong();
@@ -162,7 +162,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
              $(songListElement.get(0)).find(".loadingSongImg").css("opacity","");
              },300);
              */
-            $(listElement.get(0)).addClass("stillloading");
+            listElement.addClass("stillloading");
 
             playbackController.startedLoadingTime = Date.now();
             if (playbackController.playingSong.streamURL)
@@ -180,9 +180,9 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
     } else {
         console.log("!JJJJJJJJJJJJJJJ " + videoController.isPlaying)
         if (videoController.isPlaying)
-            $(listElement.get(0)).addClass("playing");
+            listElement.addClass("playing");
         else
-            $(listElement.get(0)).addClass("pausing");
+            listElement.addClass("pausing");
 
     }
 
@@ -193,7 +193,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic) {
 
 
     $scope.safeApply();
-    $(listElement.get(0)).addClass("loadedsong")
+    listElement.addClass("loadedsong")
 
 
     setTimeout(function () {
@@ -252,27 +252,6 @@ playbackController.resetPlayingSong = function () {
 
 }
 
-/**
- * Update Song FB Buttons
- */
-playbackController.updateSongFBButtons = function(){
-    return;
-    $(".fb-like").hide();
-    if( playbackController.playingSong)
-     $("#fblike").html(preloadhtml.sharefb.replace("songbase.fm", "songbase.fm?play=" + playbackController.getPlayingTitle()));
-    else
-        $("#fblike").html(preloadhtml.sharefb);
-
-    try {
-        FB.XFBML.parse();
-        $(".fb-like iframe").get(0).onload = function () {
-            setTimeout(function () {
-                $(".fb-like").show();
-            }, 50)
-        };
-    } catch (ex) {
-    }
-}
 
 
 /**
