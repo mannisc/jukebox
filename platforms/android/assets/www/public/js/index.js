@@ -72,8 +72,22 @@ var loadUrlParams = function () {
 
 }
 
+window.onbeforeunload = function (event) {
+
+    if (typeof event == 'undefined') {
+        event = window.event;
+    }
+
+    if (event&& playlistController.playlists.length>1){//&&accountController.loggedIn ){
+        var message = 'Without an Sonbase.fm Account your unsaved Playlists will be lost!';
+        event.returnValue = message;
+    }
+    return message;
+}
+
 
 $(document).ready(function () {
+
 
     // FastClick.attach(document.body);
 
