@@ -162,36 +162,41 @@ accountController.logout = function () {
                         accountController.logout();
                     })){
 
+
+
+
+                        accountController.setCookie("loginToken", Base64.encode(""), 0);
+                        accountController.setCookie("userName", Base64.encode(""), 0);
+                        playlistController.loadedPlaylistSongs = [];
+                        playlistController.playlists = [];
+
+
+                        $('#playlistselectverticalform option').prop('selected', false);
+                        $('#playlistselectverticalform').trigger('chosen:updated');
+                        setTimeout(function () {
+                            $('#playlistselectverticalform').trigger('chosen:close');
+                            $("#clearChoosenPlaylists").hide();
+                            uiController.updateUI();
+                        }, 0)
+
+
+                        accountController.loggedIn = false;
+                        $('#popupLogin').popup('close');
+                        $scope.safeApply();
+                        /*setTimeout(function(){
+                         btn.addClass("animated");
+                         },500)*/
+                        accountController.requestid = 1;
+
+                        console.log("FB?????"+facebookHandler.loggedIn)
                         if(facebookHandler.loggedIn){
                             facebookHandler.logout();
                         }
-
                     }
 
                 }
             })
-            accountController.setCookie("loginToken", Base64.encode(""), 0);
-            accountController.setCookie("userName", Base64.encode(""), 0);
-            playlistController.loadedPlaylistSongs = [];
-            playlistController.playlists = [];
 
-
-            $('#playlistselectverticalform option').prop('selected', false);
-            $('#playlistselectverticalform').trigger('chosen:updated');
-            setTimeout(function () {
-                $('#playlistselectverticalform').trigger('chosen:close');
-                $("#clearChoosenPlaylists").hide();
-                uiController.updateUI();
-            }, 0)
-
-
-            accountController.loggedIn = false;
-            $('#popupLogin').popup('close');
-            $scope.safeApply();
-            /*setTimeout(function(){
-             btn.addClass("animated");
-             },500)*/
-            accountController.requestid = 1;
         }
 
 
@@ -387,6 +392,8 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                     if(externalAccountIdentifier==1)
                         facebookHandler.loggedIn = true;
 
+                    console.log("LOGIN!!!!! "+externalAccountIdentifier)
+
                     if(pw!= "" && pw.length < 100){
                        var md5pw = MD5($.trim(pw));
                     }
@@ -394,7 +401,10 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                     {
                         var md5pw = "";
                     }
+                    if(!accountController.loggedIn)
+                        accountController.loadStoredData();
                     accountController.loggedIn = true;
+
                     accountController.loginToken = MD5(data + md5pw);
                     accountController.userName = name;
                     accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
@@ -407,7 +417,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                     }, 500)
                     accountController.requestid = 1;
 
-                    accountController.loadStoredData();
+
 
                     $("#signinpw").val("");
                     $("#signinusername").val("");
