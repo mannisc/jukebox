@@ -82,7 +82,7 @@ window.onbeforeunload = function (event) {
         event = window.event;
     }
 
-    if (event&& playlistController.playlists.length>1){//&&accountController.loggedIn ){
+    if (event&& playlistController.playlists.length>1&&!accountController.loggedIn ){
         var message = 'Without an Sonbase.fm Account your unsaved Playlists will be lost!';
         event.returnValue = message;
     }
@@ -91,8 +91,10 @@ window.onbeforeunload = function (event) {
 
 
 $(document).ready(function () {
+    setTimeout(function(){
+        $.mobile.loading("show");
 
-
+    },15000)
     // FastClick.attach(document.body);
 
     $.mobile.loading("show");
