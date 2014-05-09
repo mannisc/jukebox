@@ -91,10 +91,10 @@ window.onbeforeunload = function (event) {
 
 
 $(document).ready(function () {
-    setTimeout(function(){
-        $.mobile.loading("show");
+   // setTimeout(function(){
+       // $.mobile.loading("show");
 
-    },15000)
+   // },15000)
     // FastClick.attach(document.body);
 
     $.mobile.loading("show");

@@ -243,7 +243,7 @@
      background: #ddd;
      background: rgba(255, 255, 255, 0.9);
      margin: 0;
-     -webkit-transition: all 0.1s ease;
+     -webkit-transition: all 0.15s ease;
      /*FIREFOX SLOW*/
  }
 
@@ -260,7 +260,7 @@
      -moz-border-radius: 1px;
      border-radius: 1px;
      margin: 0;
-     -webkit-transition: all 0.1s ease;
+     -webkit-transition: all 0.15s ease;
      /*FIREFOX SLOW*/
  }
  
@@ -365,6 +365,11 @@
      background: -ms-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
      background: linear-gradient(rgba(255,255,255,0.9), rgba(200,200,200,0.8));
      width: 0;
+     -webkit-transition: width 0.3s linear;
+     -moz-transition: width 0.3s linear;
+     -ms-transition: width 0.3s linear;
+     -o-transition: width 0.3s linear;
+     transition: width 0.3s linear;
  }
 
  .videoControlElements-controls .videoControlElements-time-rail .videoControlElements-time-handle {
