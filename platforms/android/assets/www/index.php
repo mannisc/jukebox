@@ -611,7 +611,7 @@
                 </span>
             <button onclick="accountController.register();" id="registerButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Create Account</button>
             <hr>
-            <fb:login-button show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large">Sign in with Facebook</fb:login-button>
+            <fb:login-button  show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large">Sign in with Facebook</fb:login-button>
 
         </div>
 </div>
@@ -631,7 +631,7 @@
             <input type="password" name="pass" id="signinpw" value="" placeholder="Password" data-theme="a" >
             <button onclick="accountController.signIn();"  id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
             <hr>
-            <fb:login-button show-faces="true" width="200" perms="public_profile, email" max-rows="1" size="large">Sign in with Facebook</fb:login-button>
+            <fb:login-button  show-faces="true" width="200" perms="public_profile, email" max-rows="1" size="large">Sign in with Facebook</fb:login-button>
         </div>
 </div>
 
