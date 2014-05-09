@@ -1089,8 +1089,8 @@ a, button, h1, h2, h3{
     max-height: 290px;
 }
 #popupRegister{
-    min-height: 355px;
-    max-height: 355px;
+    min-height: 380px;
+    max-height: 380px;
 }
 
 #popupRegister input, #popupLogin input{
@@ -1139,6 +1139,11 @@ text-shadow: none!important;
     width: 300px;
 }
 
+
+#popupEditAccount{
+    background-color: rgba(255,255,255,0.9)!important;
+
+}
 
 #popupEditAccount #editButton{
     margin-top: 20px;

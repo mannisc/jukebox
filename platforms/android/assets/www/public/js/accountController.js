@@ -162,7 +162,7 @@ accountController.logout = function () {
                         accountController.logout();
                     })){
 
-
+                        accountController.loggedIn = false;
 
 
                         accountController.setCookie("loginToken", Base64.encode(""), 0);
@@ -180,7 +180,7 @@ accountController.logout = function () {
                         }, 0)
 
 
-                        accountController.loggedIn = false;
+
                         $('#popupLogin').popup('close');
                         $scope.safeApply();
                         /*setTimeout(function(){
