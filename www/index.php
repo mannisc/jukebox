@@ -596,7 +596,7 @@
 
 <div data-role="popup" id="popupRegister" data-arrow="true" data-theme="a" class="ui-corner-all"  >
         <div style="padding:0px 20px 10px 20px">
-            <h3 id="registertitle">Sign Up For Free</h3>
+            <h3 id="registertitle">Sign Up <span style="font-style: italic">for free</span></h3>
 
             <label for="registerusername" class="ui-hidden-accessible">Username:</label>
             <input type="text" name="user" id="registerusername" value="" placeholder="Username" data-theme="a" >
@@ -641,7 +641,7 @@
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Account</h3>
             <ul data-role="listview">
-                <li  style="border-bottom:1px solid #ddd;"><a href="#" onclick='$.mobile.loading("show");$("#popupAccount").popup("close");setTimeout(function(){$.mobile.loading("hide");$("#popupEditAccount").popup("open");},900);' data-rel="back" id="manageUserProfile" ><img src="public/img/user.png" width="28px" >Your Profile</a></li>
+                <li  style="border-bottom:1px solid #ddd;"><a href="#" onclick='$.mobile.loading("show");$("#popupAccount").popup("close");setTimeout(function(){$.mobile.loading("hide");$("#popupEditAccount").popup("open");},900);' data-rel="back" id="manageUserProfile" ><img src="public/img/user.png" width="28px" >Your Account</a></li>
 
                 <li style="border-top:15px solid rgba(255,255,255,0);"><a href="#" data-rel="back" id="manageFacebook"><img src="public/img/fb.png" width="28px" >Facebook</a></li>
                 <li><a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png" width="28px" >Google
@@ -659,7 +659,7 @@
 
 <div data-role="popup" id="popupEditAccount" data-theme="a" class="ui-corner-all"  >
     <div style="padding:0px 20px 10px 20px">
-        <h3 id="edittitle">Edit Profile</h3>
+        <h3 id="edittitle">Edit Account</h3>
 
         <label for="registerusername" class="ui-hidden-accessible">Username:</label>
         <input type="text" name="user" id="editusername" value="" placeholder="Username" data-theme="a" >
