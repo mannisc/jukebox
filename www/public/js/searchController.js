@@ -1103,6 +1103,7 @@ searchController.makeSearchListDraggable = function () {
 
                 } else if (searchController.dragDraggableSongTimer && Date.now() - searchController.dragDraggableSongTimer < 500) {
                     if (!uiController.draggingSong && event.clientX - searchController.dragDraggableSongX > 0 && Math.abs(event.clientY - searchController.dragDraggableSongY) < Math.abs(event.clientX - searchController.dragDraggableSongX) * 0.8) {
+                        $("body").off("mousemove");
                         uiController.draggingSong = true;
                         searchController.dragDraggableSongY = -10;
                         searchController.dragDraggableLastSongTimer = Date.now();

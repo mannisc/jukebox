@@ -124,13 +124,13 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
     //Set loading/playing Song to selected Song
 
-   if(!song.gid){
-       song = jQuery.extend(true, {}, song);
-       song.gid = playlistController.getNewID();
+    if (!song.gid) {
+        song = jQuery.extend(true, {}, song);
+        song.gid = playlistController.getNewID();
 
-   } else{
-       $("#searchlist li").removeClass("loadedsong stillloading playing pausing");
-   }
+    } else {
+        $("#searchlist li").removeClass("loadedsong stillloading playing pausing");
+    }
 
 
     playbackController.playingSong = song;
@@ -182,7 +182,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
             playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
 
             if (addSongToQueue) {
-                if(playbackController.playingSong.playlistgid !=   playlistController.currentQueue.gid) {
+                if (playbackController.playingSong.playlistgid != playlistController.currentQueue.gid) {
                     playlistController.insertElementsIntoQueue([playbackController.playingSong]);
                 }
 
@@ -200,6 +200,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
                 }
             }
 
+            playbackController.updatePlayingSongIndex();
 
         }
 
@@ -279,6 +280,24 @@ playbackController.resetPlayingSong = function () {
 
 
 }
+
+/**
+ * Sets new index of Playing song
+ */
+
+playbackController.updatePlayingSongIndex = function () {
+
+    playbackController.playingSongIndex = -1;
+
+
+    for (var i = 0; i < playlistController.currentQueue.tracks.length; i++) {
+        if (playlistController.currentQueue.tracks[i].gid == playbackController.playingSong.gid) {
+            playbackController.playingSongIndex = i;
+            break;
+        }
+    }
+
+};
 
 
 /**
@@ -422,7 +441,7 @@ playbackController.playPrevSong = function () {
         //     alert("prev Song "+song)
 
 
-        var alreadyInList = ((!song.gid||(song.gid==playbackController.playingSong.gid))&&song.name == playbackController.playingSong.name && mediaController.getSongArtist(song) == mediaController.getSongArtist(playbackController.playingSong));
+        var alreadyInList = ((!song.gid || (song.gid == playbackController.playingSong.gid)) && song.name == playbackController.playingSong.name && mediaController.getSongArtist(song) == mediaController.getSongArtist(playbackController.playingSong));
 
         /*if (playbackController.playingSongInPlaylist) {
          alreadyInList = (index >= 0 && song == playlistController.loadedPlaylistSongs[index]);
@@ -539,7 +558,6 @@ playbackController.playNextSong = function () {
 playbackController.positionPlayIndicator = function () {
 
 
-
     var listElement = playbackController.getListElementFromSong(playbackController.playingSong);
 
     if (listElement.length == 0) {
@@ -551,8 +569,8 @@ playbackController.positionPlayIndicator = function () {
 //Set playing Indicator position
 
 
-        if (listElement.parents("#playlistInner").length>0) {
-            console.dir("!!!!!!"+listElement.parents("#playlistInner").length)
+        if (listElement.parents("#playlistInner").length > 0) {
+            console.dir("!!!!!!" + listElement.parents("#playlistInner").length)
             var listElementPlaylist = listElement.filter(':noparents(#playlistInner)');
 
             var position = listElementPlaylist.get(0).dataset.index;
@@ -562,17 +580,17 @@ playbackController.positionPlayIndicator = function () {
             $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
             $("#playlistInner .iScrollPlayIndicator").show();
 
-        }else
-        $("#playlistInner .iScrollPlayIndicator").hide();
+        } else
+            $("#playlistInner .iScrollPlayIndicator").hide();
 
-        if (listElement.parents("#searchlist").length>0) {
+        if (listElement.parents("#searchlist").length > 0) {
 
             var scrollHeight = $("#searchlist").outerHeight() - 18;
 
 
             var listElementSearchlist = listElement.filter(':noparents(#searchlist)');
 
-            var otherTopHeight =  $(".othertopheight.searchlisttitlebutton").length*10;
+            var otherTopHeight = $(".othertopheight.searchlisttitlebutton").length * 10;
             var otherTopElements = $(".othertopheight");
 
             for (var i = 0; i < otherTopElements.length; i++) {
@@ -580,25 +598,25 @@ playbackController.positionPlayIndicator = function () {
             }
 
 
-            otherTopHeight = otherTopHeight/($("#searchlist ul").outerHeight()-65)* scrollHeight;
-            var otherBottomHeight=  $(".otherbottomheight.searchlisttitlebutton").length*10;
+            otherTopHeight = otherTopHeight / ($("#searchlist ul").outerHeight() - 65) * scrollHeight;
+            var otherBottomHeight = $(".otherbottomheight.searchlisttitlebutton").length * 10;
             var otherBottomElements = $(".otherbottomheight");
-            for ( i = 0; i < otherBottomElements.length; i++) {
+            for (i = 0; i < otherBottomElements.length; i++) {
                 otherBottomHeight = otherBottomHeight + $(otherBottomElements.get(i)).height();
 
             }
 
-            otherBottomHeight = otherBottomHeight/($("#searchlist ul").outerHeight()-65)* scrollHeight;
+            otherBottomHeight = otherBottomHeight / ($("#searchlist ul").outerHeight() - 65) * scrollHeight;
 
 
             position = listElementSearchlist.get(0).dataset.index;
 
-            y = parseInt(position) /( Math.min(searchController.getShowModeLimit(1),searchController.searchResults.length) - 1) * (scrollHeight-otherTopHeight-otherBottomHeight)+otherTopHeight;
+            y = parseInt(position) / ( Math.min(searchController.getShowModeLimit(1), searchController.searchResults.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
 
             $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
             $("#searchlist .iScrollPlayIndicator").show();
 
-        }else
+        } else
             $("#searchlist .iScrollPlayIndicator").hide();
 
     }
@@ -632,11 +650,11 @@ playbackController.getListElementFromSong = function (song) {
     if (!song)
         return null;
     //if (song.gid) {
-        //listElement = $($("#playlistInner li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ").get(0));
-        return $("#playlistInner li[data-songgid='playlistsong" + song.gid + "'], #searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
-   // } else {
-        //return $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
-  //  }
+    //listElement = $($("#playlistInner li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ").get(0));
+    return $("#playlistInner li[data-songgid='playlistsong" + song.gid + "'], #searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
+    // } else {
+    //return $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
+    //  }
 
 
 }
@@ -708,7 +726,7 @@ playbackController.getPlayingSong = function () {
 playbackController.getIndexOfSong = function (song, list) {
 
     for (var index = 0; index < list.length; index++) {
-        if ((!song.gid||(song.gid==list[index].gid))&&song.name == list[index].name && mediaController.getSongArtist(song) == mediaController.getSongArtist(list[index])) {
+        if ((!song.gid || (song.gid == list[index].gid)) && song.name == list[index].name && mediaController.getSongArtist(song) == mediaController.getSongArtist(list[index])) {
             return index;
         }
     }
