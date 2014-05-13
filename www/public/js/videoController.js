@@ -466,7 +466,7 @@ videoController.playSong = function () {
         videoController.isPlaying = true;
         if (!playbackController.isLoading && !$(".songlist li.loadedsong").hasClass("firstplay")) {
             $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
-            $($(".songlist li.loadedsong").get(0)).addClass("playing");
+            $(".songlist li.loadedsong").addClass("playing");
             $(".songlist li.loadedsong").removeClass("pausing");
         }
 
@@ -485,7 +485,7 @@ videoController.pauseSong = function () {
         videoController.isPlaying = false;
         if (!playbackController.isLoading) {
             $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
-            $($(".songlist li.loadedsong").get(0)).addClass("pausing");
+            $(".songlist li.loadedsong").addClass("pausing");
             $(".songlist li.loadedsong").removeClass("playing");
         }
 
@@ -511,7 +511,7 @@ videoController.stopSong = function () {
         videoController.setProgressPercentage(0);
 
         $(".songlist li.loadedsong").removeClass("pausing");
-        $($(".songlist li.loadedsong").get(0)).addClass("playing");
+        $(".songlist li.loadedsong").addClass("playing");
 
         if (videoController.stopEnabled == true) {
 
