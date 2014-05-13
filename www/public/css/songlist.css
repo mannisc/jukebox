@@ -164,6 +164,7 @@ ul.gridlayout .songOptions{
 
 .songlist li.specialplaylistbutton.currentqueue a{
     background-color: rgba(255, 255, 255, 0.12)!important;
+    border-bottom: none!important;
 }
 
 
@@ -1659,12 +1660,12 @@ animation-duration:  1.5s;
 
 .draggedlistelement .margintop{
 
-    margin-top: -5px!important;
-
+   margin-top: 0px!important;
 }
 
 .draggedlistelement li{
     height:65px!important;
+    margin-left: 2px!important;
 
 }
 
