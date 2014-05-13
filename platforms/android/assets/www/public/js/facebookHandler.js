@@ -84,8 +84,10 @@ facebookHandler.init = function () {
             // Here we specify what we do with the response anytime this event occurs.
             console.log("FB RESPONSE!!! "+response.status+ "   "+facebookHandler.loggedIn+"    "+accountController.loggedIn)
             if (response.status === 'connected') {
+                if (accountController.loggedIn&&!facebookHandler.loggedIn ) {
+                    facebookHandler.loggedIn = true;
+                } else if (!facebookHandler.loggedIn ) {
 
-                if (!facebookHandler.loggedIn ) {
                     // The response object is returned with a status field that lets the app know the current
                     // login status of the person. In this case, we're handling the situation where they
                     // have logged in to the app.
