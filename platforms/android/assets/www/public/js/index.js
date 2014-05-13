@@ -154,7 +154,8 @@ $(document).ready(function () {
 
             var updatePage = function () {
                 if ($("#playlistInner ul").length > 0) //Check if angular loaded
-                    uiController.updateUI();
+                    setTimeout(uiController.updateUI, 0);
+
                 else
                     setTimeout(updatePage, 200);
 
