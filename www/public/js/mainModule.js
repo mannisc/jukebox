@@ -23,7 +23,7 @@
  * Defines NG Module mainApp
  * @type {*|ng.$compileProvider}
  */
-var mainApp = angular.module('mainApp', ['ngTouch' ]);
+var mainApp = angular.module('mainApp', [ ]);     //'ngTouch'
 
 /*
 mainApp.directive("ngTap", function() {
