@@ -467,7 +467,7 @@
     <div id="videoplayerInner">
 
         <!-- mediaemelemtjs player -->
-        <video id="mediaemelemtjsPlayer1" controls="controls" preload="true">
+        <video id="mediaemelemtjsPlayer1" controls="controls" preload="true" >
             <source src="" type="video/mp4"/>
             <!--   <source src="" type="video/flv"/> -->
         </video>

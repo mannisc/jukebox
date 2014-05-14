@@ -95,7 +95,6 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
         //Check if song already playing
         var isSameSongAsLoadedSong = listElement.hasClass("oldloadedsong") || (listElement.hasClass("loadedsong") && playbackController.playingSong && (((!song.gid) || (playbackController.playingSong.gid == song.gid)) && playbackController.playingSong.name == song.name) && (mediaController.getSongArtist(playbackController.playingSong) == mediaController.getSongArtist(song)));
         //New song is already loading/playing song
-
         if (isSameSongAsLoadedSong) {
             //Already Loading, and not loaded yet (no pausing possible)
             if (playbackController.isLoading) {
@@ -106,12 +105,17 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
             //Toggle Playing/Pausing
             else if (playbackController.playingSong) {
 
-                if (!listElement.hasClass("stillloading"))
-                    setTimeout(function () {
 
-                        videoController.playPauseSong();
 
-                    }, 50);
+                    if (!listElement.hasClass("stillloading")) {
+                        setTimeout(function () {
+
+                            videoController.playPauseSong();
+
+                        }, 50);
+                    }
+
+
                 return;
             }
         }
@@ -162,7 +166,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     if (!resetingSong) {
         if (!isSameSongAsLoadedSong) {
             playbackController.isLoading = true;
-
+            playbackController.playingSongTimer = null;
             /* fadein plaing sign
              $(songListElement.get(0)).find(".loadingSongImg").css("opacity","0");
              $(songListElement.get(0)).addClass("stillloading");
@@ -196,7 +200,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
                                 currentqueueElement.addClass("hoverable")
                             }, 200)
                         }, 2000)
-                    }, 450)
+                    }, 300)
                 }
             }
 

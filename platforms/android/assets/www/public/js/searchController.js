@@ -64,9 +64,9 @@ searchController.init = function () {
 
     uiController.searchListScroll.on('scrollEnd', function () {
       if(uiController.searchListScroll.y==0){
-          $(".iScrollScrollUpIndicator").hide();
+          $("#searchlist .iScrollScrollUpIndicator").hide();
       }else{
-          $(".iScrollScrollUpIndicator").show();
+          $("#searchlist .iScrollScrollUpIndicator").show();
       }
 
     });
@@ -138,7 +138,6 @@ searchController.init = function () {
     $("#searchlist .iScrollVerticalScrollbar").prepend(searchController.scrollUpIndicator);
 
     searchController.scrollUpIndicator.click(function () {
-        searchController.scrollUpIndicator.hide();
         uiController.searchListScroll.scrollTo(0,0, 700);
     });
 
