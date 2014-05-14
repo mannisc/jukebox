@@ -67,6 +67,9 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
 
     event.stopPropagation();
 
+    setTimeout(function () {
+        uiController.stopPlaylistScrollingOnClick(event);
+    }, 0)
 }
 
 
@@ -106,14 +109,13 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
             else if (playbackController.playingSong) {
 
 
+                if (!listElement.hasClass("stillloading")) {
+                    setTimeout(function () {
 
-                    if (!listElement.hasClass("stillloading")) {
-                        setTimeout(function () {
+                        videoController.playPauseSong();
 
-                            videoController.playPauseSong();
-
-                        }, 50);
-                    }
+                    }, 50);
+                }
 
 
                 return;
@@ -128,11 +130,19 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
     //Set loading/playing Song to selected Song
 
-    if (!song.gid) {
-        song = jQuery.extend(true, {}, song);
-        song.gid = playlistController.getNewID();
+    song = jQuery.extend(true, {}, song);
 
+    if (!song.gid) {//Song from searchlist
+        song.gid = playlistController.getNewID();
     } else {
+        if (song.playlistgid != playlistController.currentQueue.gid) { //Song from playlist
+            for (var i = 0; i < playlistController.currentQueue.tracks.length; i++) {
+                var actSong = playlistController.currentQueue.tracks[i];
+                if (song.gid == actSong.gid)
+                    actSong.gid = playlistController.getNewID();
+            }
+        }
+
         $("#searchlist li").removeClass("loadedsong stillloading playing pausing");
     }
 
@@ -294,8 +304,8 @@ playbackController.updatePlayingSongIndex = function () {
     playbackController.playingSongIndex = -1;
 
 
-    for (var i = 0; i < playlistController.currentQueue.tracks.length; i++) {
-        if (playlistController.currentQueue.tracks[i].gid == playbackController.playingSong.gid) {
+    for (var i = playlistController.currentQueue.tracks.length - 1; i >= 0; i--) {
+        if (playlistController.currentQueue.tracks[i].gid == playbackController.playingSong.gid && playlistController.currentQueue.tracks[i].iid == playbackController.playingSong.iid) {
             playbackController.playingSongIndex = i;
             break;
         }
@@ -564,7 +574,7 @@ playbackController.positionPlayIndicator = function () {
 
     var listElement = playbackController.getListElementFromSong(playbackController.playingSong);
 
-    if (listElement.length == 0) {
+    if (!listElement || listElement.length == 0) {
         $("#searchlist .iScrollPlayIndicator").hide();
         $("#playlistInner .iScrollPlayIndicator").hide();
     } else {
@@ -574,12 +584,12 @@ playbackController.positionPlayIndicator = function () {
 
 
         if (listElement.parents("#playlistInner").length > 0) {
-            console.dir("!!!!!!" + listElement.parents("#playlistInner").length)
+
             var listElementPlaylist = listElement.filter(':noparents(#playlistInner)');
 
             var position = listElementPlaylist.get(0).dataset.index;
 
-            var y = parseInt(position) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner").outerHeight() - 18);
+            var y = parseInt(position) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner .iScrollVerticalScrollbar").outerHeight() - 18);
 
             $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
             $("#playlistInner .iScrollPlayIndicator").show();
@@ -652,7 +662,7 @@ playbackController.positionPlayIndicatorAtTop = function (searchlist) {
  */
 playbackController.getListElementFromSong = function (song) {
     if (!song)
-        return null;
+        return [];
     //if (song.gid) {
     //listElement = $($("#playlistInner li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ").get(0));
     return $("#playlistInner li[data-songgid='playlistsong" + song.gid + "'], #searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
@@ -671,7 +681,6 @@ playbackController.remarkSong = function () {
     var listElement;
 
     if (playbackController.playingSong) {
-        console.log("REPOSITION INDICATOR")
         playbackController.positionPlayIndicator();
 
         listElement = playbackController.getListElementFromSong(playbackController.playingSong);
