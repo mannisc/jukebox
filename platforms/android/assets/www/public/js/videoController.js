@@ -351,6 +351,7 @@ videoController.init = function () {
  * Play/Pause Video
  */
 videoController.playPauseSong = function () {
+
     if (videoController.isPlaying)
         videoController.pauseSong();
     else
@@ -412,6 +413,9 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
     playbackController.isLoading = false;
 
     $("#backgroundVideo").css("opacity","0");
+    $("#backgroundVideo").removeClass("animated")
+
+    $("#siteLogo").hide();
 
     videoController.setMaxTime(0);
     videoController.setProgressPercentage(0);
@@ -456,14 +460,13 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
  */
 videoController.playSong = function () {
     if (!videoController.isPlaying && playbackController.playingSong) {
-        $("#backgroundVideo").removeClass("animated")
-        $("#backgroundVideo").css("opacity", "0");
 
-        $("#siteLogo").hide();
         videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
         videoController.videoPlayer.play();
-
         videoController.isPlaying = true;
+
+        videoController.disablePlayStopControls(false);
+
         if (!playbackController.isLoading && !$(".songlist li.loadedsong").hasClass("firstplay")) {
             $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
             $(".songlist li.loadedsong").addClass("playing");
@@ -479,7 +482,8 @@ videoController.playSong = function () {
  * @type {*}
  */
 videoController.pauseSong = function () {
-    if (videoController.isPlaying && !$(".songlist li.loadedsong").hasClass("firstplay")) {
+
+    if (videoController.isPlaying) {
         videoController.controls.find(".videoControlElements-pause").removeClass("videoControlElements-pause").addClass("videoControlElements-play");
         videoController.videoPlayer.pause();
         videoController.isPlaying = false;
@@ -681,6 +685,7 @@ videoController.disablePlayStopControls = function (disable) {
     videoController.playpauseEnabled = !disable;
 
     if (disable) {
+
         $(".videoControlElements-playpause-button button").css("opacity", "0.5");
         $(".videoControlElements-stop-button button").css("opacity", "0.5");
 
@@ -1006,8 +1011,8 @@ videoController.endedSong = function () {
  */
 videoController.playingSong = function () {
 
-
     if (playbackController.playingSong) {
+        playbackController.playingSongTimer = Date.now();
        $("#backgroundVideo").addClass("animated")
         $("#backgroundVideo").css("opacity", "0.6");
 
@@ -1020,9 +1025,8 @@ videoController.playingSong = function () {
 
         // console.log("PLAYINGGGGGGG")
         //playbackController.isLoading = false;
-        videoController.isPlaying = true;
 
-        videoController.disablePlayStopControls(false);
+
 
         $(".videoControlElements-time-loaded").show();
 
