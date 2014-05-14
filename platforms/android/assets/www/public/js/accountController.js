@@ -388,7 +388,6 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                 accountController.registerBase(name, pw, nameEncrypted, emailEncrypted, pwEncrypted, useridEncrypted);
             })) {
                 if (data != "") {
-
                     if(externalAccountIdentifier==1)
                         facebookHandler.loggedIn = true;
 

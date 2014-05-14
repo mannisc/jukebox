@@ -37,7 +37,7 @@ videoController.isPlaying = false;
 videoController.scaleFactor = 1.5;
 
 
-//Video Position Mode 0: Window ,1: Background ,2: Fullscreen
+//Video Position Mode 0:   Background ,1: Fullscreen
 videoController.fullscreenMode = 0;
 
 

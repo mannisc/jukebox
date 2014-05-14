@@ -21,6 +21,7 @@ uiController.responsiveWidthSmall = 850;
 
 uiController.responsiveWidthSmaller = 1100;
 
+uiController.adsWidth  =160;
 
 uiController.totalTimeWidth = 0;
 
@@ -212,10 +213,11 @@ uiController.init = function () {
         if (playlistController.sortPlaylist)
             playlistController.toggleSortablePlaylist();
 
-
+        setTimeout(function () {
+         uiController.updateUI();
+        }, 1000)
         //Resize Songlists/ reset indicator
         setTimeout(function () {
-            uiController.updateUI();
             uiController.searchListScroll.refresh();
             uiController.playListScroll.refresh();
             setTimeout(function () {
@@ -449,10 +451,17 @@ uiController.stopScrollingOnClick = function (event) {
 
 uiController.updateDisplay = function () {
 
-    uiController.windowWidth = $(window).width();
+    if( videoController.fullscreenMode == 0)
+        uiController.windowWidth = $(window).width()- uiController.adsWidth;
+
+    else
+        uiController.windowWidth = $(window).width();
+
 
     $("#page").width(uiController.windowWidth);
-    $("#header").width(uiController.windowWidth);
+
+    $("#header").width($(window).width());
+    $("#videocontrols").width(uiController.windowWidth);
 
 }
 
@@ -465,6 +474,10 @@ uiController.updateUI = function () {
 
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
+
+    $(".sidead").css("line-height",($(window).height()-10-44)+"px");
+
+    //  $(".sidead").css("max-height", ($(window).height() - 44-5)+"px");
 
 
     $("#lyricsiframeresizebar").css("top", -10);//$(window).height() / 2 - 30 - 44);
@@ -589,6 +602,7 @@ uiController.updateUI = function () {
         }, 100)
 
 
+
         $("#searchlist").css("max-height", $(window).height() - 44 - 120 + 6);
 
         var setSelectSize = function () {
@@ -642,7 +656,7 @@ uiController.updateUI = function () {
 
         $("#searchlist").css("max-height", $(window).height() - 44 - 130 - 40 + 12);
 
-        $("#content").css({"width": uiController.windowWidth - 16, "height": $(window).height() - 44 - 4 - 8 });
+        $("#content").css({"width": uiController.windowWidth - 16, "height": $(window).height() - 44 - 4 - 8-20 });
 
 
     }
@@ -698,13 +712,16 @@ uiController.updateUI = function () {
 
 
     setTimeout(function () {
+        $("#videocontrolsInner").css("opacity",0);
+        var positionControls = function(){
 
-        if (Math.abs($("#videocontrolsInner .videoControlElements-controls").css("padding-left").replace("px", "") - ( (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5)) > 1)
-            $("#videocontrolsInner .videoControlElements-controls").css("padding-left", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5);
-        setTimeout(function () {
             if (Math.abs($("#videocontrolsInner .videoControlElements-controls").css("padding-left").replace("px", "") - ( (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5)) > 1)
                 $("#videocontrolsInner .videoControlElements-controls").css("padding-left", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5);
-        }, 50)
+
+
+        }
+        positionControls();
+        setTimeout(positionControls,50)
     }, 0)
 
 

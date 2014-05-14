@@ -978,76 +978,82 @@ playlistController.makePlayListScrollable = function () {
  */
 playlistController.makePlayListSortable = function () {
 
-    $("#playlistInner li").off("mousedown");
 
-    $("#playlistInner li").on("mousedown", function (event) {
-        playlistController.dragDraggableSongY = event.clientY;
-        playlistController.dragDraggableSongX = event.clientX;
+   var startDragFunction = function (event) {
+       playlistController.dragDraggableSongY = event.clientY;
+       playlistController.dragDraggableSongX = event.clientX;
 
-        if (playlistController.sortPlaylist) {
-            if ($(this).parents("#playlistInner").length == 0)
-                return;
-            if (!playlistController.dragDraggableLastSongTimer || Date.now() - playlistController.dragDraggableLastSongTimer > 500) {
-                playlistController.dragDraggableSongTimer = Date.now();
-                playlistController.dragDraggableSongStartEvent = event;
-                playlistController.dragDraggableSongStartElement = this;
-                uiController.swiping = false;
+       if (playlistController.sortPlaylist) {
+           if ($(this).parents("#playlistInner").length == 0)
+               return;
+           if (!playlistController.dragDraggableLastSongTimer || Date.now() - playlistController.dragDraggableLastSongTimer > 500) {
+               playlistController.dragDraggableSongTimer = Date.now();
+               playlistController.dragDraggableSongStartEvent = event;
+               playlistController.dragDraggableSongStartElement = this;
+               uiController.swiping = false;
 
-            } else
-                playlistController.dragDraggableSongTimer = 0;
-
-
-            $("body").on("mouseup ", function (event) {
-                $("body").off("mouseup");
-                $("body").off("mousemove");
-
-                playlistController.dragDraggableSongY = -10;
-
-                if (uiController.swiping || (playlistController.dragDraggableSongY > 0 && Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30)) {
-                    uiController.swipeTimer = Date.now();
-                }
-                playlistController.dragDraggableSongTimer = 0;
-                uiController.swiping = false;
-
-            })
-
-            $("body").on("mousemove ", function (event) {
+           } else
+               playlistController.dragDraggableSongTimer = 0;
 
 
-                if (uiController.swiping || (playlistController.dragDraggableSongY > 0 && Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30)) {
-                    uiController.swipeTimer = Date.now();
-                    uiController.swiping = true;
-                    console.log("SWIPING")
-                }
-                if (playlistController.sortPlaylist) {
+           $("body").on("mouseup ", function (event) {
+               $("body").off("mouseup");
+               $("body").off("mousemove");
+
+               playlistController.dragDraggableSongY = -10;
+
+               if (uiController.swiping || (playlistController.dragDraggableSongY > 0 && Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30)) {
+                   uiController.swipeTimer = Date.now();
+               }
+               playlistController.dragDraggableSongTimer = 0;
+               uiController.swiping = false;
+
+           })
+
+           $("body").on("mousemove ", function (event) {
 
 
-                    if (playlistController.dragDraggableSongTimer && Date.now() - playlistController.dragDraggableSongTimer < 500&&Date.now() - playlistController.dragDraggableSongTimer > 50 ) {
-                        uiController.stopPlaylistScrollingOnClick(event);
+               if (uiController.swiping || (playlistController.dragDraggableSongY > 0 && Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30)) {
+                   uiController.swipeTimer = Date.now();
+                   uiController.swiping = true;
+                   console.log("SWIPING")
+               }
+               if (playlistController.sortPlaylist) {
 
-                        $("body").off("mousemove");
 
-                        playlistController.dragDraggableLastSongTimer = Date.now();
-                        playlistController.dragDraggableSongTimer = 0;
+                   if (playlistController.dragDraggableSongTimer && Date.now() - playlistController.dragDraggableSongTimer < 500&&Date.now() - playlistController.dragDraggableSongTimer > 50 ) {
+                       uiController.stopPlaylistScrollingOnClick(event);
 
-                        $(".sortable").sortable("enable");
+                       $("body").off("mousemove");
 
-                        var coords = {
-                            clientX: playlistController.dragDraggableSongStartEvent.clientX,
-                            clientY: playlistController.dragDraggableSongStartEvent.clientY
-                        };
-                        $(playlistController.dragDraggableSongStartElement).simulate("mouseup", coords);
+                       playlistController.dragDraggableLastSongTimer = Date.now();
+                       playlistController.dragDraggableSongTimer = 0;
 
-                        // this actually triggers the drag start event
-                        $(playlistController.dragDraggableSongStartElement).simulate("mousedown", coords);
+                       $(".sortable").sortable("enable");
 
-                    }
-                }
+                       var coords = {
+                           clientX: playlistController.dragDraggableSongStartEvent.clientX,
+                           clientY: playlistController.dragDraggableSongStartEvent.clientY
+                       };
+                       $(playlistController.dragDraggableSongStartElement).simulate("mouseup", coords);
 
-            })
+                       // this actually triggers the drag start event
+                       $(playlistController.dragDraggableSongStartElement).simulate("mousedown", coords);
 
-        }
-    })
+                   }
+               }
+
+           })
+
+       }
+   }
+
+
+
+
+    $("#playlistInner li").off("mousedown", startDragFunction);
+
+    $("#playlistInner li").on("mousedown", startDragFunction)
 
 
     $("#playlistview").sortable({

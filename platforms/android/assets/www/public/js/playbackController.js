@@ -196,7 +196,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
                                 currentqueueElement.addClass("hoverable")
                             }, 200)
                         }, 2000)
-                    }, 150)
+                    }, 450)
                 }
             }
 
