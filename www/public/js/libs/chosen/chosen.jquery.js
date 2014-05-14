@@ -482,7 +482,7 @@
 
         AbstractChosen.default_single_text = "Select an Option";
 
-        AbstractChosen.default_no_result_text = "No results match";
+        AbstractChosen.default_no_result_text = "No playlists match";    //CHANGED     "No results match"
 
         return AbstractChosen;
 

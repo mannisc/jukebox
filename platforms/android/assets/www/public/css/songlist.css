@@ -438,6 +438,13 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
 
 }
 
+.songlist.disablecoveranim li img.ui-li-icon {
+    -webkit-transition: none!important;
+    -moz-transition: none!important;
+    -o-transition: none!important;
+    transition: none!important;
+}
+
 .songlist li img.ui-li-icon {
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -1669,7 +1676,7 @@ animation-duration:  1.5s;
 
 .draggedlistelement li{
     height:65px!important;
-    margin-left: 2px!important;
+    margin-left: 1px!important;
 
 }
 

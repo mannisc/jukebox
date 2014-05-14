@@ -77,7 +77,9 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
         {text: "Play Playlist Songs", callback: null} ,
         {text: "Add Playlists to Play Queue", callback: null},
         {text: "Add to own Playlist", callback: null},
-        {text: "Add as new Playlist", callback: null}
+        {text: "Add as new Playlist", callback: null},
+        {text: "Select All", callback: null}
+
     ]
 
     $scope.safeApply();
@@ -98,7 +100,9 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
         {text: "Play Songs", callback: null} ,
         {text: "Add Songs to Play Queue", callback: null},
         {text: "Add Songs to Playlist", callback: null},
-        {text: "Add Songs as new Playlist", callback: null}
+        {text: "Add Songs as new Playlist", callback: null},
+        {text: "Select All", callback: null}
+
 
     ]
 

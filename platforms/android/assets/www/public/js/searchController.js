@@ -1064,8 +1064,8 @@ searchController.makeSearchListDraggable = function () {
 
 
            $("body").on("mouseup ", function (event) {
-               $("body").off("mouseup");
-               $("body").off("mousemove");
+               $("body").off("mousemove").off("mouseup");
+
 
                if (uiController.swiping || (searchController.dragDraggableSongY > 0 && Math.abs(event.clientY - searchController.dragDraggableSongY) > 30)) {
                    uiController.swipeTimer = Date.now();
@@ -1074,10 +1074,9 @@ searchController.makeSearchListDraggable = function () {
                setTimeout(function () {
                    $("#playlistview").removeClass("dragging");
                    $(".songlist").removeClass("nohover");
-                   uiController.draggingSong = false;
+
                    uiController.swiping = false;
                    searchController.dragDraggableSongY = 0;
-
                    searchController.dragDraggableSongTimer = 0;
                }, 50)
 
@@ -1098,8 +1097,7 @@ searchController.makeSearchListDraggable = function () {
 
                } else if (searchController.dragDraggableSongTimer && Date.now() - searchController.dragDraggableSongTimer < 500) {
                    if (!uiController.draggingSong && event.clientX - searchController.dragDraggableSongX > 0 && Math.abs(event.clientY - searchController.dragDraggableSongY) < Math.abs(event.clientX - searchController.dragDraggableSongX) * 0.8) {
-                       $("body").off("mousemove");
-                       uiController.draggingSong = true;
+                       $("body").off("mousemove").off("mouseup");
                        searchController.dragDraggableSongY = -10;
                        searchController.dragDraggableLastSongTimer = Date.now();
                        searchController.dragDraggableSongTimer = 0;
@@ -1120,7 +1118,7 @@ searchController.makeSearchListDraggable = function () {
                        if (!uiController.sidePanelOpen && uiController.windowWidth < uiController.responsiveWidthSmallest) {
                            uiController.startedSortPlaylistOpenedPanel = true;
                            uiController.toggleSidePanel();
-                           delay = delay + 150;
+                           delay = delay + 250;
 
                        } else {
                            uiController.startedSortPlaylistOpenedPanel = false;
@@ -1228,15 +1226,16 @@ searchController.makeSearchListDraggable = function () {
                 eleParent.css("opacity", "1");
             }, 0);
             return ele;
-        }, drag: function (event, ui) {
-            return !uiController.stopDrag;
         },
         start: function (event) {
             playlistController.hideSongOptions();
 
             //setTimeout(function () {debugger}, 3000)
-
+            uiController.draggingSortableSong = false;
             uiController.draggingSong = true;
+            uiController.lastDraggingSongFromSearchlist = true;
+
+
             uiController.dragSongX = event.clientX;
             uiController.dragSongY = event.clientY;
             uiController.dragSongCheckHorizontal = true;
@@ -1361,7 +1360,7 @@ searchController.makeSearchListDraggable = function () {
             ele.addClass("animatemargin");
 
             $("#searchlistview .draggableSong").draggable("disable").removeClass("ui-disabled ui-state-disabled");
-            uiController.draggingSong = false;
+
             $(this).css("opacity", "1")
             setTimeout(function () {
                 $("#searchlist li").simulate("mouseup");
@@ -1369,12 +1368,13 @@ searchController.makeSearchListDraggable = function () {
             if (uiController.startedSortPlaylistOpenedPanel)
                 setTimeout(function () {
                     uiController.toggleSidePanel();
-                }, 500)
+                }, 1000)
 
             if (uiController.startedSortPlaylist) {
                 playlistController.toggleSortablePlaylist();
                 uiController.startedSortPlaylist = false;
             }
+            uiController.draggingSong = false;
 
             uiController.swipeTimer = Date.now();
         },
