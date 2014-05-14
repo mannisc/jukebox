@@ -41,6 +41,26 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
 }
 
 
+//Queue
+
+optionsMenu.openQueueOptions = function (event, positionTo) {
+
+    if (event)
+        event.stopPropagation();
+
+    optionsMenu.options = [
+        {text: "Create Playlist", callback: null},
+        {text: "Clear Queue", callback: null}
+    ]
+
+    $scope.safeApply();
+    $("#popupOptionsList").listview("refresh");
+    $("#popupOptions" ).popup( "option", "arrow", "t" );
+    $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
+    $("#popupOptions-popup").css("margin-top","15px");
+
+}
+
 //Search Results
 
 optionsMenu.openArtistResultsOptions = function (event, positionTo) {

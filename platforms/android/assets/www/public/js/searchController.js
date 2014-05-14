@@ -1173,6 +1173,18 @@ searchController.makeSearchListDraggable = function () {
             $("#songOptions").appendTo("body").hide();
 
 
+            $("#draggelement").remove()
+            var style = $('<style id="draggelement">' +
+                '.draggedlistelement li { ' +
+                '        width: ' + $("#playlistInner ul li").width() + 'px !important;' +
+                '        max-width: ' + $("#playlistInner ul li").width() + 'px !important;' +
+                '}' +
+                '.draggedlistelement li a { ' +
+                '        width: ' + ($("#playlistInner ul li a").width()) + 'px !important;' +
+                '}' +
+                '</style>');
+            $('html > head').append(style);
+
             if (!$(this).hasClass("selected")) {
                 $("#searchlist li.selected").removeClass("selected")
                 $(this).addClass("selected");
@@ -1335,15 +1347,10 @@ searchController.makeSearchListDraggable = function () {
 
                     }
                     if (listElement.hasClass("playlistsong") || listElement.hasClass("currentqueue")) {
-                        listElement.removeClass("hoverable")
 
-                        listElement.addClass("addedsongs")
-                        setTimeout(function () {
-                            listElement.removeClass("addedsongs")
-                            setTimeout(function () {
-                                listElement.addClass("hoverable")
-                            }, 200)
-                        }, 2000)
+
+                        playlistController.animateAddedToList(listElement);
+
 
                     }
 
