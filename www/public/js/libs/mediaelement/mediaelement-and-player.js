@@ -2971,18 +2971,16 @@ if (typeof jQuery != 'undefined') {
 			this.setControlsSize();
 		},
 		play: function() {
-            if(!uiController.swipeTimer|| Date.now() -  uiController.swipeTimer >500){    //CHANGED!!!!!!!!!!!!!!!!!!!!!!
                 this.load();
 			    this.media.play();
-            }
+
 
 		},
 		pause: function() {
-            if(!uiController.swipeTimer|| Date.now() -  uiController.swipeTimer >500){    //CHANGED!!!!!!!!!!!!!!!!!!!!!!
                 try {
 				this.media.pause();
 			} catch (e) {}
-            }
+
 		},
 		load: function() {
 			if (!this.isLoaded) {

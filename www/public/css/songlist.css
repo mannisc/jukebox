@@ -1590,28 +1590,15 @@ animation-duration:  1.5s;
 
 .iScrollPlayIndicator{
     pointer-events:auto;
-    opacity:0.9!important;
-
-
     width: 20px;
     height: 20px;
-
     background-image: url(../img/srollpos.png);
     background-size: 50%;
-
     background-repeat:no-repeat;
-
-  /*  border-radius: 4.5px;
-    width: 9px;
-    height: 10px;
-    background-color: rgba(86, 199, 231,0.8);
-   */
-
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
-    right: 0;
 , );
 
 }
@@ -1637,12 +1624,7 @@ animation-duration:  1.5s;
 
 }
 
-#searchlist .iScrollScrollUpIndicator {
-    left: 0!important;
-}
-#playlistInner .iScrollScrollUpIndicator {
-    right: 0!important;
-}
+
 
 .noshadow{
     -moz-box-shadow: none!important;

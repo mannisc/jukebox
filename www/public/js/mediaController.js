@@ -165,8 +165,8 @@ mediaController.playSong = function (streamURL, videoURL) {
     mediaController.currentStreamURL = streamURL;
     mediaController.currentvideoURL = videoURL;
     videoController.loadSongInSuitablePlayer(streamURL, videoURL);
-
     videoController.playSong();
+
 
 
 }
@@ -660,6 +660,10 @@ mediaController.playNextVersion = function () {
 
 mediaController.playStreamURL = function (streamURL, videoURL, differentVersions) {
     console.dir("playStreamURL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+    $(".songlist li.oldloadedsong").removeClass("oldloadedsong loadedsong playing pausing");    //
+
+
     //$("#videoplayer").removeClass("animate").addClass("animatefast");
     //$("#videoplayer").css("opacity", "0");
     //$("#videoplayer").css("pointer-events", "none");
@@ -667,10 +671,12 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
      videoController.showBuffering(false);
      videoController.showBuffered(true);
      }, 500);*/
+    uiController.swipeTimer = Date.now(); //Avoid Clicks
     setTimeout(function () {
 
-        var listElement =  playbackController.getListElementFromSong( playbackController.playingSong)
+        var listElement =  playbackController.getListElementFromSong( playbackController.playingSong);
 
+        if(listElement.hasClass("loadedsong")) {
 
         var loadTime = Date.now() - playbackController.startedLoadingTime;
         /* var delayTime = loadTime % 2000;
@@ -689,9 +695,9 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
         cover.addClass("fadeout");
         playing.addClass("fadeout");
 
-        setTimeout(function () {
+         uiController.swipeTimer = Date.now();//Avoid Clicks
 
-            $(".songlist li.oldloadedsong").removeClass("oldloadedsong loadedsong playing pausing");    //
+         setTimeout(function () {
 
             if (listElement.hasClass("stillloading")) {
                 listElement.addClass("playing");
@@ -718,7 +724,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                 }, 1000)
             }, 200)
 
-        }, 200)
+        }, 100)
         //  }, delayTime)
 
         // $("#videoplayer").removeClass("animatefast").addClass("animate");
@@ -730,7 +736,6 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
         playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
         mediaController.playSong(streamURL, videoURL);
-
 
         //$("#siteLogoImage").attr('onclick',"win=window.open('"+mediaController.currentvideoURL+"', '_blank')");
 
@@ -746,8 +751,8 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
         } else
             videoController.disableVersionControl(true);
 
-
-    }, 200)
+        }
+    }, 100)
 
 
 }
