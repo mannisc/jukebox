@@ -202,15 +202,9 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
                 if (!playedAutomatic && playlistController.playlistMode) {
                     setTimeout(function () {
-                        var currentqueueElement = $(".currentqueue");
-                        currentqueueElement.addClass("addedsongs").removeClass("hoverable")
-                        setTimeout(function () {
-                            currentqueueElement.removeClass("addedsongs")
-                            setTimeout(function () {
-                                currentqueueElement.addClass("hoverable")
-                            }, 200)
-                        }, 2000)
-                    }, 300)
+                            playlistController.animateAddedToList($(".currentqueue"));
+                        }, 300
+                    )
                 }
             }
 

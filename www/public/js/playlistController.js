@@ -450,15 +450,34 @@ playlistController.playSelection = function (event) {
     event.stopPropagation();
 
 
-    for (var i = 0; i < playlistController.selectedSongs.length; i++) {
+    /*for (var i = 0; i < playlistController.selectedSongs.length; i++) {
 
 
-    }
-
+    } */
+    playlistController.insertElementsIntoQueue(playlistController.selectedSongs)
 
     playlistController.deselectSongs();
 
 }
+
+
+
+ /*
+ Animate Songs aadded to Queue
+ */
+playlistController.animateAddedToList = function(listElement) {
+
+
+        listElement.addClass("addedsongs").removeClass("hoverable")
+        setTimeout(function () {
+            listElement.removeClass("addedsongs")
+            setTimeout(function () {
+                listElement.addClass("hoverable")
+            }, 200)
+        }, 2000)
+
+}
+
 
 
 /**
@@ -579,12 +598,6 @@ playlistController.onLoadedPlaylistsChanged = function () {
         var name = $(searchChoice).find("span").text();
 
         playlistsOldLoaded.push(name);
-
-        $(searchChoice).on("click", function () {
-
-            optionsMenu.openPlaylistOptions(event, $(this))
-        })
-
         $(searchChoice).find(".search-choice-close").attr("title", "Close")
         var playlist = null;
 
@@ -595,8 +608,23 @@ playlistController.onLoadedPlaylistsChanged = function () {
                 playlist = playlistController.playlists[i];
         }
 
+
         if (playlist != null && !playlistController.loadedPlaylists[playlist.gid]) {
-            console.log("LOAD PLAYLIST ######" + name)
+
+            //Menus
+            if(playlist.gid==playlistController.currentQueue.gid){
+                $(searchChoice).on("click", function () {
+                    optionsMenu.openQueueOptions(event, $(this))
+                })
+            } else{
+                $(searchChoice).on("click", function () {
+                    optionsMenu.openPlaylistOptions(event, $(this))
+                })
+            }
+
+
+
+
             $("#playlistview").css("opacity", "0")
 
             if (Object.keys(playlistController.loadedPlaylists).length != 0) {
