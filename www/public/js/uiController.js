@@ -704,16 +704,7 @@ uiController.updateUI = function () {
     }, 100)
 
 
-    $("#draggelement").remove()
-    var style = $('<style id="draggelement">' +
-        '.draggedlistelement { ' +
-        '        width: ' + $("#playlistInner ul").width() + 'px !important;' +
-        '}' +
-        '.draggedlistelement li a { ' +
-        '        width: ' + ($("#playlistInner ul").width() - 70) + 'px !important;' +
-        '}' +
-        '</style>');
-    $('html > head').append(style);
+
 
 
     setTimeout(function () {
