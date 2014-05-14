@@ -1370,6 +1370,7 @@ max-width: 2em!important;
     border: none!important;
     display:block!important;
     padding-left:5px!important
+    display:none!important;
 }
 
 #searchlist ul.gridlayout li.searchlisttitlebutton.listad{
