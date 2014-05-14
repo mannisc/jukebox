@@ -193,7 +193,7 @@ playlistController.init = function () {
 
 
     setTimeout(function () {
-        playlistController.createPlayIndicator();
+        playlistController.createScrollIndicators();
 
     }, 150)
 
@@ -201,12 +201,29 @@ playlistController.init = function () {
 }
 
 
-playlistController.createPlayIndicator = function () {
+playlistController.createScrollIndicators = function () {
     uiController.playListScroll.refresh();
     setTimeout(function () {
         uiController.playListScroll.refresh();
     }, 1000)
-    playlistController.playIndicator = searchController.playIndicator.clone();
+
+    playlistController.scrollUpIndicator = $('<div class="iScrollScrollUpIndicator fadeincomplete" style="display:none;"></div>');
+    $("#playlistInner .iScrollVerticalScrollbar").prepend(playlistController.scrollUpIndicator);
+
+    playlistController.scrollUpIndicator.click(function () {
+        uiController.playListScroll.scrollTo(0,0, 700);
+    });
+    uiController.playListScroll.on('scrollEnd', function () {
+        if(uiController.playListScroll.y==0){
+            $("#playlistInner .iScrollScrollUpIndicator").hide();
+        }else{
+            $("#playlistInner .iScrollScrollUpIndicator").show();
+        }
+
+    });
+
+
+    playlistController.playIndicator =  $('<div class="iScrollPlayIndicator fadeincomplete" style="display:none;"></div>');
 
     playlistController.playIndicator.appendTo("#playlistInner .iScrollVerticalScrollbar");
 
@@ -215,6 +232,10 @@ playlistController.createPlayIndicator = function () {
     });
 
     $(".iScrollIndicator").addClass("fadeincomplete");
+
+
+
+
 }
 
 
@@ -698,7 +719,6 @@ playlistController.removeLoadedPlaylist = function (playlistgid) {
         playlistController.loadedPlaylists = {};
         playlistController.playlistMode = true;
         $("#playlistInner .iScrollPlayIndicator").hide();
-        $("#searchlist .iScrollPlayIndicator").hide();
         $("#clearChoosenPlaylists").hide();
 
 
@@ -1368,7 +1388,7 @@ playlistController.makePlayListSortable = function () {
 
 
             setTimeout(function () {
-                playlistController.createPlayIndicator();
+                playlistController.createScrollIndicators();
                 playbackController.remarkSong();
                 uiController.playListScroll.refresh();
                 setTimeout(function () {
