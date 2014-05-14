@@ -128,6 +128,8 @@
 </head>
 <body ng-controller="MainController">
 
+
+
 <!-- FACEBOOK -->
 <div id="fb-root"></div>
 <!-- FACEBOOK -->
@@ -235,6 +237,8 @@
                 <h3 style="font-size: 1.1em;margin-top: 7px;">Show all</h3>
             </a></li>
 
+        <li  ng-if ="searchController.showMode>0&&false" class="fadeincompleteslow searchlisttitlebutton othertopheight stayvisible listad" ><img style="max-width:728px;max-height:90px;width:728px;height:90px"src="public/img/testad2.png"></li>
+
         <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(3)" onclick="searchController.setShowMode(3)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton searchlisttitlebutton  othertopheight stayvisible">
             <a tabindex="-1" ng-class="{loaded:searchController.showMode==3}">
                 <img src="public/img/empty.png" onclick="optionsMenu.openArtistResultsOptions(event,'#positionArtistResultsOptions')"   class="optionsSearchResults"   >
@@ -287,6 +291,8 @@
             <p>{{mediaController.getSongArtist(song)}}<span ng-if ="song.playcount !== undefined && song.playcount" class="songPlayCount"><span  style="font-style: normal;font-size: .83em;margin-left:2px;"> ►</span><span  style="font-style: italic;font-size: .93em;margin-left:2px;">{{song.playcount}}</span></span>  </p></a>
         </li>
 
+
+        <li  ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(1)&&searchController.showMode==0" class="fadeincompleteslow searchlisttitlebutton othertopheight stayvisible listad" ><img style="max-width:728px;max-height:90px;width:728px;height:90px"src="public/img/testad2.png"></li>
 
 
         <li  ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(1)" onclick="searchController.setShowMode(1)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton searchlisttitlebutton othertopheight stayvisible">
@@ -756,6 +762,7 @@
         </div>
     </form>
 
+
     <div style="margin: 3px" >
         <div class="fbliketitle fblikeartisttitle" >{{mediaController.getSongArtist(playbackController.playingSong)}}</div>
 
@@ -805,7 +812,6 @@
 
 </div-->
 
-<img src="public/img/background.jpg" id="backgroundImage">
 <div id="backgroundVideo">
 
 </div>
@@ -968,8 +974,11 @@
     <canvas id="webglcanvas"></canvas>
 </div>
 
+<img src="public/img/background.jpg" id="backgroundImage">
 
 
-
+<div class="sidead fadeincompleteslow">
+    <img src="public/img/testad.png">
+</div>
 </body>
 </html>
