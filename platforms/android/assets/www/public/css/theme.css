@@ -9,13 +9,25 @@
  */
 
 /*make sure the viewport is 100% height*/
-html, body, #page, #content {
-    height: 100%;
+html, body {
     overflow: hidden !important;
+}
+html, body, #page,#content {
+    height: 100%;
+}
+
+/*make sure the viewport is 100% height*/
+#content, #page {
+    overflow-x: visible !important;
+}
+
+.ui-popup-screen {
+
+    width: 200%;
 }
 
 #page {
-    background: #000 !important;
+    background: none !important;
 
 }
 

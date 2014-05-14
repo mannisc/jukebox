@@ -20,6 +20,7 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
 
+
 body {
     -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
@@ -35,6 +36,7 @@ body {
     position:fixed;
     top: 0px;
     left:0px;
+    background-color: #000!important;
 
     /*-webkit-user-select: none;
     -moz-user-select: none;
@@ -1098,6 +1100,7 @@ a, button, h1, h2, h3{
 
 #popupRegister, #popupLogin{
     max-width: 230px;
+    min-width: 230px;
 
 
 }
@@ -1331,4 +1334,47 @@ max-width: 2em!important;
     background-image: -ms-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* IE10 */
     background-image: -o-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* Opera 11.10+ */
     background-image: linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/);
+}
+
+
+/*ADS*/
+
+.sidead{
+ position:absolute;
+    top:0;
+    right:0;
+    width: 160px;
+    height: 100% ;
+    background-color: rgba(255, 255, 255,0.10);
+    margin-top:44px;
+}
+.sidead *{
+    display:inline-block!important;
+    vertical-align: middle!important;
+}
+
+.songlist li.listad{
+    max-width: 728px!important;
+    max-height: 105px!important;
+    width: 728px!important;
+    height: 105px!important;
+    padding: 0!important;
+    padding-top: 15px!important;
+    margin-top: 5px!important;
+    margin-bottom: 5px!important;
+    background: none!important;
+    border: none!important;
+    display:block!important;
+    padding-left:5px!important
+}
+
+#searchlist ul.gridlayout li.searchlisttitlebutton.listad{
+    max-width: 728px!important;
+    max-height: 105px!important;
+    width: 728px!important;
+    height: 105px!important;
+}
+
+.songlist li.listad *{
+  position:relative!important;
 }
