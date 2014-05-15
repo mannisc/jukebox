@@ -130,21 +130,8 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
     //Set loading/playing Song to selected Song
 
-    song = jQuery.extend(true, {}, song);
 
-    if (!song.gid) {//Song from searchlist
-        song.gid = playlistController.getNewID();
-
-    } else {
-        if (song.playlistgid != playlistController.currentQueue.gid) { //Song from playlist
-            for (var i = 0; i < playlistController.currentQueue.tracks.length; i++) {
-                var actSong = playlistController.currentQueue.tracks[i];
-                var newID =  playlistController.getNewID();
-                if(playbackController.playingSong&&playbackController.playingSong.gid== actSong.gid)
-                    playbackController.playingSong.gid = newID;
-                actSong.gid = newID;
-            }
-        }
+    if (song.gid) {//Song from searchlist
 
         $("#searchlist li").removeClass("loadedsong stillloading playing pausing");
     }
@@ -201,9 +188,16 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
             if (addSongToQueue) {
                 if (playbackController.playingSong.playlistgid != playlistController.currentQueue.gid) {
 
+
                     var actSong = jQuery.extend(true, {},  playbackController.playingSong);
+
                     actSong.playlistgid = playlistController.currentQueue.gid;
-                    playlistController.insertSongsIntoQueue([actSong]);
+                    var actSongList = [actSong]
+                    playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue,actSongList)
+
+                    playbackController.playingSong =  actSongList[0];
+
+                    playlistController.insertSongsIntoQueue(actSongList);
                 }
 
                 if (!playedAutomatic && playlistController.playlistMode) {

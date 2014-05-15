@@ -1398,6 +1398,8 @@ searchController.makeSearchListDraggable = function () {
                 uiController.startedSortPlaylist = false;
             }
             uiController.draggingSong = false;
+
+
             playlistController.updateDeselectedSong();
 
             uiController.swipeTimer = Date.now();

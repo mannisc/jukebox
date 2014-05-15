@@ -296,7 +296,8 @@ playlistController.selectPlaylist = function (playlist) {
 //Update List of select songs
 playlistController.updateDeselectedSong = function () {
     for (var i = 0; i < playlistController.selectedSongs.length; i++) {
-        if (playlistController.selectedSongs[i].ele.closest("html").length == 0) {
+
+        if (playlistController.selectedSongs[i].ele.closest("html").length == 0||!playlistController.selectedSongs[i].ele.hasClass("selected")) {
             playlistController.selectedSongs.splice(i, 1);
             i--;
         }
@@ -498,11 +499,12 @@ playlistController.playSelection = function (event) {
 
         playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue,list);
 
-
         playlistController.insertSongsIntoQueue(list);
 
 
         playbackController.playSong(list[0], false, false, false);
+
+        playbackController.playingSong = list[0];
 
 
         if (playlistController.playlistMode) {
@@ -521,9 +523,17 @@ playlistController.playSelection = function (event) {
  * @param event
  */
 playlistController.prepareGIDsToInsertSongsIntoPlaylist = function (playlist,songs) {
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXX")
+
     for (var i = 0; i < songs.length; i++) {
+
         var actSong = jQuery.extend(true, {},  songs[i]);
+
         actSong.playlistgid = playlist.gid;
+
+        console.log(actSong.gid)
+
+
         if (!actSong.gid) {
             actSong.gid = playlistController.getNewID();
         } else {
@@ -538,7 +548,6 @@ playlistController.prepareGIDsToInsertSongsIntoPlaylist = function (playlist,son
 
                 }
             }
-
         }
         songs[i] = actSong;
     }
@@ -633,18 +642,14 @@ playlistController.showMoreSelectionOptions = function (event) {
 
 playlistController.insertSongsIntoQueue = function (songs) {
 
-    var addedSongs = 0;
+
     var tmp = playlistController.currentQueue.tracks.slice(0,playbackController.playingSongIndex + 1).concat(songs);
 
-
     playlistController.currentQueue.tracks = tmp.concat(playlistController.currentQueue.tracks.slice(playbackController.playingSongIndex + 1));
-    console.dir(playlistController.currentQueue.tracks)
-
 
 
     if (playlistController.loadedPlaylists["0"]) {
         if (Object.keys(playlistController.loadedPlaylists).length == 1) {
-
             playlistController.loadedPlaylistSongs = jQuery.extend(true, [], playlistController.currentQueue.tracks);
         }
 
@@ -1785,7 +1790,7 @@ playlistController.makePlayListSortable = function () {
             }, 0)
             uiController.swipeTimer = Date.now();
             uiController.draggingSortableSong = false;
-            playlistController.updateDeselectedSong();
+
 
 
         },
