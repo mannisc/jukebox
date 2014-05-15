@@ -159,6 +159,38 @@ mediaController.getSiteLogo = function () {
 }
 
 
+mediaController.getSiteName = function (url, prefix) {
+    if (url.toLowerCase().search(".dailymotion.com") > -1 || url.toLowerCase().search("/dailymotion.com") > -1) {
+        return prefix+"Dailymotion";
+    } else if (url.toLowerCase().search(".youtube.") > -1 || url.toLowerCase().search("/youtube.") > -1) {
+        return prefix+"Youtube"  ;
+    } else if (url.toLowerCase().search(".muzu.tv") > -1 || url.toLowerCase().search("/muzu.tv") > -1) {
+        return prefix+"Muzu";
+    } else if (url.toLowerCase().search(".vimeo.") > -1 || url.toLowerCase().search("/vimeo.") > -1) {
+        return prefix+"Vimeo" ;
+    } else if (url.toLowerCase().search(".photobucket.") > -1 || url.toLowerCase().search("/photobucket.") > -1) {
+        return prefix+"Photobucket";
+    } else if (url.toLowerCase().search(".metacafe.") > -1 || url.toLowerCase().search("/metacafe.") > -1) {
+        return prefix+"Metacafe";
+    } else if (url.toLowerCase().search(".veoh.") > -1 || url.toLowerCase().search("/veoh.") > -1) {
+        return prefix+"Veoh";
+
+    } else if (url.toLowerCase().search(".blip.") > -1 || url.toLowerCase().search("/blip.") > -1) {
+        return prefix+"Blip" ;
+
+    } else if (url.toLowerCase().search(".myvideo.") > -1 || url.toLowerCase().search("/myvideo.") > -1) {
+        return prefix+"Myvideo";
+
+    } else if (url.toLowerCase().search(".clipfish.") > -1 || url.toLowerCase().search("/clipfish.") > -1) {
+        return prefix+"Clipfish";
+
+    }
+
+    return ""
+
+}
+
+
 mediaController.playSong = function (streamURL, videoURL) {
     console.dir("PLAYSONG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     //streamURL = "http://video-1-9.rutube.ru/hls-vod/QABcsA4mk0tpMcwf-Ykh0g/1398726462/n1vol2/3c0e1ef57e234d0d9b3d4a66cc787f96.mp4.m3u8"
@@ -782,15 +814,37 @@ mediaController.toggleLyrics = function () {
             if( $("#lyricsifrm").attr("src")!=src)
              $("#lyricsifrm").attr("src",src);
 
-            iframe.css("left","").css("opacity","").css("pointer-events","auto");
+            iframe.show();
+            setTimeout(function(){
+                iframe.css("left","").css("opacity","").css("pointer-events","auto");
+            },0)
         }
     } else {
         iframe.css("left","-50px").css("opacity","0").css("pointer-events","none");
+        setTimeout(function(){
+            iframe.hide();
+        },1500)
 
     }
 
 }
 
+
+/**
+ * Get Cover for loaded Playlist
+ * @returns {string}
+ */
+mediaController.getSongCoverForLoadedPlaylist = function()  {
+
+
+      if(playlistController.loadedPlaylists[0]){
+          return mediaController.getSongCover(playbackController.playingSong);
+
+      }else
+          return "public/img/playlist.png";
+
+
+}
 
 /**
  * Get the Cover for Playlist

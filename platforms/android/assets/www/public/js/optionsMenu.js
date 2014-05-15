@@ -19,8 +19,6 @@ optionsMenu.options = [
 ]
 
 
-
-
 //Playlist
 
 optionsMenu.openPlaylistOptions = function (event, positionTo) {
@@ -29,14 +27,19 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
         event.stopPropagation();
 
     optionsMenu.options = [
-        {text: "Rename Playlist", callback: null}
+        {text: "Play", callback: null},
+        {text: "Play next", callback: null},
+        {text: "Add to Queue", callback: null},
+        {text: "Add to Playlist", callback: null},
+        {text: "Rename", callback: null}
+
     ]
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions" ).popup( "option", "arrow", "t" );
+    $("#popupOptions").popup("option", "arrow", "t");
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
-    $("#popupOptions-popup").css("margin-top","15px");
+    $("#popupOptions-popup").css("margin-top", "15px").css("margin-left", "");
 
 }
 
@@ -55,9 +58,66 @@ optionsMenu.openQueueOptions = function (event, positionTo) {
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions" ).popup( "option", "arrow", "t" );
+    $("#popupOptions").popup("option", "arrow", "t");
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
-    $("#popupOptions-popup").css("margin-top","15px");
+    $("#popupOptions-popup").css("margin-top", "15px").css("margin-left", "");
+
+}
+
+
+//Selection
+
+/*
+ optionsMenu.getSongFromListEvent = function(event){
+ var song = null;
+ var listElement = $(event.target).parents("li");
+ if(listElement.length>0){
+ song = listElement[0].dataset.song;
+ if(song){
+ song = JSON.parse(song);
+ }
+ }
+
+
+ return song;
+
+
+ }  */
+
+optionsMenu.openSelectionOptions = function (event, positionTo) {
+
+    if (event)
+        event.stopPropagation();
+
+
+    // var song = optionsMenu.getSongFromListEvent(event);
+
+
+    optionsMenu.options = [
+        {text: "Play next", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                playlistController.playSelectionNext();
+            }, 150)
+        }},
+        {text: "Create new Playlist", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                playlistController.loadNewPlaylistWithSelectedSongs();
+            }, 150)
+        }},
+
+        {text: "Add to Playlist", callback: null},
+        {text: "Share with friends", callback: null}
+
+    ]
+
+    $scope.safeApply();
+    $("#popupOptionsList").listview("refresh");
+    $("#popupOptions").popup("option", "arrow", "l");
+    $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
+    $("#popupOptions-popup").css("margin-top", "7px").css("margin-left", "15px");
+
 
 }
 
@@ -78,14 +138,11 @@ optionsMenu.openArtistResultsOptions = function (event, positionTo) {
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions" ).popup( "option", "arrow",true );
+    $("#popupOptions").popup("option", "arrow", true);
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
+    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "9px");
 
 }
-
-
-
-
 
 
 optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
@@ -104,8 +161,9 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions" ).popup( "option", "arrow",true );
+    $("#popupOptions").popup("option", "arrow", true);
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
+    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "9px");
 
 
 }
@@ -128,8 +186,9 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions" ).popup( "option", "arrow",true );
+    $("#popupOptions").popup("option", "arrow", true);
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
+    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "9px");
 
 
 }
@@ -153,8 +212,9 @@ optionsMenu.openUserResultsOptions = function (event, positionTo) {
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions" ).popup( "option", "arrow",true );
+    $("#popupOptions").popup("option", "arrow", true);
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
+    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "9px");
 
 
 }

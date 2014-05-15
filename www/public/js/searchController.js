@@ -355,7 +355,7 @@ searchController.applySongList = function () {
                 if(index==1){
                     playlistController.updateDeselectedSong();
                     $(".specialplaylistbutton").addClass("fadeincompletefaster");
-
+                    playbackController.positionPlayIndicator();
                 }
 
                 if (index == delays) {
@@ -1144,7 +1144,7 @@ searchController.makeSearchListDraggable = function () {
                            clientY: searchController.dragDraggableSongStartEvent.clientY
                        };
                        $(searchController.dragDraggableSongStartElement).simulate("mouseup", coords);
-
+                       uiController.updateUI();
                        setTimeout(function () {
                            if (!playlistController.sortPlaylist && (!playlistController.playlistMode || playlistController.playlists.length == 0)) {
                                playlistController.toggleSortablePlaylist();
