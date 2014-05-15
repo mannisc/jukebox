@@ -573,9 +573,9 @@
 
     <img id="playSelection" title="Play" onclick="playlistController.playSelection(event)"  ondblclick="playlistController.playSelection(event)"    src="public/img/playopt.png">
 
-    <img id="removeFromPlaylist"  onclick="playlistController.addSelectedElementsToPlaylist(event)"  ondblclick="playlistController.removeSelectedElementsFromPlaylist(event)"   src="public/img/empty.png" >
+    <img id="removeFromPlaylist"  onclick="playlistController.addSelectedElementsToQueue(event)"  ondblclick="playlistController.removeSelectedElementsFromPlaylist(event)"   src="public/img/empty.png" >
 
-    <img id="addToPlaylist" title="Add to queue" onclick="playlistController.addSelectedElementsToPlaylist(event)"  ondblclick="playlistController.addSelectedElementsToPlaylist(event)"    src="public/img/add.png">
+    <img id="addToPlaylist" title="Add to queue" onclick="playlistController.addSelectedElementsToQueue(event)"  ondblclick="playlistController.addSelectedElementsToQueue(event)"    src="public/img/add.png">
 
     <img id="searchSimilar" title="Search similar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();"   src="public/img/radio.png" >
 
