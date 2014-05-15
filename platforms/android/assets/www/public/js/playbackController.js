@@ -200,7 +200,10 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
             if (addSongToQueue) {
                 if (playbackController.playingSong.playlistgid != playlistController.currentQueue.gid) {
-                    playlistController.insertSongsIntoQueue([playbackController.playingSong]);
+
+                    var actSong = jQuery.extend(true, {},  playbackController.playingSong);
+                    actSong.playlistgid = playlistController.currentQueue.gid;
+                    playlistController.insertSongsIntoQueue([actSong]);
                 }
 
                 if (!playedAutomatic && playlistController.playlistMode) {
@@ -685,6 +688,12 @@ playbackController.remarkSong = function () {
 
     if (playbackController.playingSong) {
         playbackController.positionPlayIndicator();
+
+       $(".songlist .loadedsong").removeClass("loadedsong");
+        $(".songlist .playing").removeClass("playing");
+        $(".songlist .pausing").removeClass("pausing");
+        $(".songlist .stillloading").removeClass("stillloading");
+
 
         listElement = playbackController.getListElementFromSong(playbackController.playingSong);
         listElement.addClass("loadedsong");
