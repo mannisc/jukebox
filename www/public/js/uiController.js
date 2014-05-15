@@ -14,13 +14,14 @@ var uiController = function () {
 };
 
 
-uiController.responsiveWidthSmallest = 670;
+uiController.responsiveWidthSmallest = 780;
 
 uiController.responsiveWidthSmall = 850;
 
 
-uiController.responsiveWidthSmaller = 1100;
+uiController.responsiveWidthSmaller = 1165;
 
+uiController.adsWidth  =160;
 
 uiController.totalTimeWidth = 0;
 
@@ -193,7 +194,7 @@ uiController.init = function () {
     $('html > head').append(style);
 
     $('video').bind('contextmenu', function (e) {
-        // return false;
+        //return false;
     });
 
 
@@ -212,10 +213,10 @@ uiController.init = function () {
         if (playlistController.sortPlaylist)
             playlistController.toggleSortablePlaylist();
 
+         uiController.updateUI();
 
         //Resize Songlists/ reset indicator
         setTimeout(function () {
-            uiController.updateUI();
             uiController.searchListScroll.refresh();
             uiController.playListScroll.refresh();
             setTimeout(function () {
@@ -449,10 +450,17 @@ uiController.stopScrollingOnClick = function (event) {
 
 uiController.updateDisplay = function () {
 
-    uiController.windowWidth = $(window).width();
+    if( videoController.fullscreenMode == 0&&$(window).width()>=uiController.responsiveWidthSmallest)
+        uiController.windowWidth = $(window).width()- uiController.adsWidth;
+
+    else
+        uiController.windowWidth = $(window).width();
+
 
     $("#page").width(uiController.windowWidth);
-    $("#header").width(uiController.windowWidth);
+
+    $("#header").width($(window).width());
+    $("#videocontrols").width(uiController.windowWidth);
 
 }
 
@@ -466,9 +474,14 @@ uiController.updateUI = function () {
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
 
+    $(".sidead").css("line-height",($(window).height()-5-44)+"px");
 
-    $("#lyricsiframeresizebar").css("top", -10);//$(window).height() / 2 - 30 - 44);
-    $("#lyricsiframeresizebar").css("right", -2);
+
+    $("#lyricsifrm").css("height",$(window).height()-8-44-44-44)
+
+    //  $(".sidead").css("max-height", ($(window).height() - 44-5)+"px");
+
+
 
     var myIframe = document.getElementById('lyricsifrm');
     setTimeout(function () {
@@ -508,7 +521,7 @@ uiController.updateUI = function () {
 
 
     //Smallest Size
-    if (uiController.windowWidth < uiController.responsiveWidthSmallest) {
+    if ($(window).width() < uiController.responsiveWidthSmallest) {
 
         $("#rightpanel").css("height", $(window).height() - 88);
 
@@ -577,7 +590,7 @@ uiController.updateUI = function () {
                 topDifference = 5;
 
             //Smaller Size
-            if (uiController.windowWidth < uiController.responsiveWidthSmaller && uiController.windowWidth > uiController.responsiveWidthSmall) {
+            if ($(window).width() < uiController.responsiveWidthSmaller && $(window).width() > uiController.responsiveWidthSmall) {
                 $("#playlist").css("max-height", $(window).height() - 110 - 44);
                 $("#playlistInner").css("max-height", $(window).height() - 110 - 100 - topDifference);
 
@@ -587,6 +600,7 @@ uiController.updateUI = function () {
 
             }
         }, 100)
+
 
 
         $("#searchlist").css("max-height", $(window).height() - 44 - 120 + 6);
@@ -602,9 +616,14 @@ uiController.updateUI = function () {
         }
         setSelectSize();
         $("#playlist").css("width", uiController.windowWidth / 3);
+
         $("#playlistInner li").css("width", uiController.windowWidth / 3);
 
+        if($(window).width() < uiController.responsiveWidthSmall)
+            $("#searchlist").css("width", uiController.windowWidth - uiController.windowWidth / 3 - 30-33);
+        else
         $("#searchlist").css("width", uiController.windowWidth - uiController.windowWidth / 3 - 30);
+
 
         setSelectSize();
 
@@ -617,7 +636,7 @@ uiController.updateUI = function () {
 
 
     //Small Size
-    if (uiController.windowWidth < uiController.responsiveWidthSmall) {
+    if ($(window).width() < uiController.responsiveWidthSmall) {
 
         uiController.totalTimeWidth = (uiController.windowWidth / 1.5 - 160);
 
@@ -642,7 +661,7 @@ uiController.updateUI = function () {
 
         $("#searchlist").css("max-height", $(window).height() - 44 - 130 - 40 + 12);
 
-        $("#content").css({"width": uiController.windowWidth - 16, "height": $(window).height() - 44 - 4 - 8 });
+        $("#content").css({"width": uiController.windowWidth - 16, "height": $(window).height() - 44 - 4 - 8});
 
 
     }
@@ -659,7 +678,9 @@ uiController.updateUI = function () {
         $("#videocontrols .videoControlElements-time-total").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 - 105 - uiController.countCustomButtons * 26);
         $("#videocontrols .videoControlElements-time-rail").css("width", (uiController.windowWidth / 1.5 - 160) / 1.3 + 10 - 105 - uiController.countCustomButtons * 26);
 
+
         $("#content").css({"width": uiController.windowWidth - 32, "height": $(window).height() - 44 - 4 - 32 });
+
 
     }
 
@@ -685,26 +706,37 @@ uiController.updateUI = function () {
     }, 100)
 
 
-    $("#draggelement").remove()
-    var style = $('<style id="draggelement">' +
-        '.draggedlistelement { ' +
-        '        width: ' + $("#playlistInner ul").width() + 'px !important;' +
-        '}' +
-        '.draggedlistelement li a { ' +
-        '        width: ' + ($("#playlistInner ul").width() - 70) + 'px !important;' +
-        '}' +
-        '</style>');
-    $('html > head').append(style);
+
 
 
     setTimeout(function () {
 
-        if (Math.abs($("#videocontrolsInner .videoControlElements-controls").css("padding-left").replace("px", "") - ( (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5)) > 1)
-            $("#videocontrolsInner .videoControlElements-controls").css("padding-left", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5);
-        setTimeout(function () {
+
+        $("#draggelement").remove();
+        var style = $('<style id="draggelement">' +
+            '.draggedlistelement li { ' +
+            '        width: ' + $("#playlistInner ul li").width() + 'px !important;' +
+            '        max-width: ' + $("#playlistInner ul li").width() + 'px !important;' +
+            '        min-width: ' + $("#playlistInner ul li").width() + 'px !important;' +
+            '}' +
+            '.draggedlistelement li a { ' +
+            '        width: ' + ($("#playlistInner ul li a").width()) + 'px !important;' +
+            '        max-width: ' + $("#playlistInner ul li a").width() + 'px !important;' +
+            '        min-width: ' + $("#playlistInner ul li a").width() + 'px !important;' +
+            '}' +
+            '</style>');
+        $('html > head').append(style);
+
+        $("#videocontrolsInner").css("opacity",0);
+        var positionControls = function(){
+
             if (Math.abs($("#videocontrolsInner .videoControlElements-controls").css("padding-left").replace("px", "") - ( (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5)) > 1)
                 $("#videocontrolsInner .videoControlElements-controls").css("padding-left", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5);
-        }, 50)
+
+
+        }
+        positionControls();
+        setTimeout(positionControls,50)
     }, 0)
 
 
@@ -793,6 +825,11 @@ uiController.showPlaylists = function () {
 /* Toggel Grid Layout*/
 uiController.toggleGridLayout = function () {
     uiController.gridLayout = !uiController.gridLayout;
+    if (uiController.gridLayout)
+        $("#searchlayoutbutton img").attr("src", "public/img/list.png");
+    else
+        $("#searchlayoutbutton img").attr("src", "public/img/grid.png");
+    setTimeout(function () {
     $("#searchlist  .iScrollIndicator").hide();
     var scrollY = uiController.searchListScroll.y;
 
@@ -813,6 +850,7 @@ uiController.toggleGridLayout = function () {
         // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB "+cols)
 
         if (uiController.gridLayout) {
+
             uiController.gridLayoutCols = Math.floor(($("#searchlist ul").width()-15) / 250);
 
             if(($("#searchlist ul").width()/uiController.gridLayoutCols-35)>250){
@@ -830,13 +868,12 @@ uiController.toggleGridLayout = function () {
                 scrollY = scrollY + 64;
 
 
-            $("#searchlayoutbutton img").attr("src", "public/img/list.png");
         }
         else {
+
             scrollY = (scrollY) * uiController.gridLayoutCols;
 
 
-            $("#searchlayoutbutton img").attr("src", "public/img/grid.png");
             setTimeout(function () {
                 playlistController.positionSongOptions();
             }, 0)
@@ -871,6 +908,7 @@ uiController.toggleGridLayout = function () {
 
 
     }, 800)
+    }, 0);
 }
 
 

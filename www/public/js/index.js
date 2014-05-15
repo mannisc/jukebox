@@ -45,9 +45,7 @@ var app = {
 
 var preferences = {
 
-
-
-   //serverURL: "http://localhost:3001/"
+  // serverURL: "http://localhost:3001/"
    serverURL: "http://info.jukebox.selfhost.eu:3001/"
 
 }
@@ -82,8 +80,8 @@ window.onbeforeunload = function (event) {
         event = window.event;
     }
 
-    if (event&& playlistController.playlists.length>1){//&&accountController.loggedIn ){
-        var message = 'Without an Sonbase.fm Account your unsaved Playlists will be lost!';
+    if (event&& playlistController.playlists.length>1&&!accountController.loggedIn ){
+        var message = 'Without your own free Songbase account your unsaved playlists will be lost!';
         event.returnValue = message;
     }
     return message;
@@ -91,8 +89,10 @@ window.onbeforeunload = function (event) {
 
 
 $(document).ready(function () {
+   // setTimeout(function(){
+       // $.mobile.loading("show");
 
-
+   // },15000)
     // FastClick.attach(document.body);
 
     $.mobile.loading("show");
@@ -140,7 +140,7 @@ $(document).ready(function () {
                             id: "slsid" + helperFunctions.padZeros(1, 2)
                         }
 
-                        playbackController.playSong(song, false, false);
+                        playbackController.playSong(song, false, false,true);
                     }
                 }
             }, 3500);
@@ -152,7 +152,8 @@ $(document).ready(function () {
 
             var updatePage = function () {
                 if ($("#playlistInner ul").length > 0) //Check if angular loaded
-                    uiController.updateUI();
+                    setTimeout(uiController.updateUI, 0);
+
                 else
                     setTimeout(updatePage, 200);
 
@@ -178,6 +179,12 @@ jQuery.fn.outerHTML = function (s) {
         ? this.before(s).remove()
         : jQuery("<p>").append(this.eq(0).clone()).html();
 };
+
+jQuery.expr[':'].noparents = function(a,i,m){
+
+    return jQuery(a).parents(m[3]).length >0;
+};
+
 
 
 if (!Object.keys) {

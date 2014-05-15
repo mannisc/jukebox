@@ -128,17 +128,22 @@
 </head>
 <body ng-controller="MainController">
 
+
+
 <!-- FACEBOOK -->
 <div id="fb-root"></div>
 <!-- FACEBOOK -->
 
-<div id="lyricsiframe" class="fadeincompleteslow" style="display:none">
+<div id="lyricsiframe" style="left:-50px;opacity:0;pointer-events:none;display:none">
     <div id="lyricsifrmback">
+    </div>
+    <div id="lyricstopinfo">
+        These Lyrics are external content from LyricWiki.<br>More information at <a href='{{"http://lyrics.wikia.com/" +mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name}}' target='_blank'>lyrics.wikia.com</a>.
     </div>
     <iframe id="lyricsifrm" src="about:blank" seamless="">
     </iframe>
 
-    <img id="lyricsiframeresizebar" onclick="mediaController.toggleLyrics();" src="public/img/resizebar.png" style="position:absolute;right: 0px;top:0px">
+    <img id="lyricsiframeresizebar" onclick="mediaController.toggleLyrics();" src="public/img/resizebar.png" style="position:absolute;right: 1px;top:1px">
 </div>
 
 
@@ -198,7 +203,7 @@
 
 
     <div id="controlselecthorizontal">
-        <a id="searchlayoutbutton" title="Change list layout" data-type="button" data-theme="b" onclick="uiController.toggleGridLayout();" style="background-color: #442727;width: 3px;height: 20px;" class="ui-input-btn ui-btn ui-btn-b ui-shadow ui-corner-all"><img src="public/img/grid.png"  style="width: 20px;margin-left: -9px;"> </a>
+        <a id="searchlayoutbutton" title="Change list layout" data-type="button" data-theme="b" onclick="uiController.toggleGridLayout();" style="background-color: #442727;width: 3px;height: 20px;" class="ui-input-btn ui-btn ui-btn-b ui-shadow ui-corner-all"><img src="public/img/grid.png"  style="width: 21px;margin-left: -9px;"> </a>
         <input id="searchbutton1" data-type="button" data-theme="b" onclick="searchController.activateButton(0);searchController.showSearchList()" type="button" value="Search">
         <!--input id="searchbutton2"data-type="button" data-theme="b" onclick="searchController.activateButton(1);searchController.showPopulars()" type="button" value="Popular"-->
 
@@ -229,22 +234,26 @@
 
     <ul  data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d" >
 
-        <li ng-if ="searchController.searchResults.length>0&&searchController.showMode!=0" onclick="searchController.setShowMode(0)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
+        <li ng-if ="searchController.searchResults.length>0&&searchController.showMode!=0" onclick="searchController.setShowMode(0)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton searchlisttitlebutton othertopheight stayvisible">
             <a tabindex="-1">
                 <img src="public/img/empty.png"   class="optionsSearchResultsBack"   >
                 <h3 style="font-size: 1.1em;margin-top: 7px;">Show all</h3>
             </a></li>
 
-        <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(3)" onclick="searchController.setShowMode(3)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
+        <li  ng-if ="searchController.showMode>0&&false" class="fadeincompleteslow searchlisttitlebutton othertopheight stayvisible listad" ><img style="max-width:728px;max-height:90px;width:728px;height:90px"src="public/img/testad2.png"></li>
+
+        <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(3)" onclick="searchController.setShowMode(3)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton searchlisttitlebutton  othertopheight stayvisible">
             <a tabindex="-1" ng-class="{loaded:searchController.showMode==3}">
                 <img src="public/img/empty.png" onclick="optionsMenu.openArtistResultsOptions(event,'#positionArtistResultsOptions')"   class="optionsSearchResults"   >
                 <div id="positionArtistResultsOptions" class="positionResultsOptions" ></div>
 
-                <h3  ng-if ="searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Featured Artists</h3>
-                <h3  ng-if ="!searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Artists</h3>
+                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(3)>1"  style="font-size: 1.1em;margin-top: 7px;">Featured Artists</h3>
+                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(3)>1"  style="font-size: 1.1em;margin-top: 7px;">Artists</h3>
+                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(3)<=1"  style="font-size: 1.1em;margin-top: 7px;">Featured Artist</h3>
+                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(3)<=1"  style="font-size: 1.1em;margin-top: 7px;">Artist</h3>
             </a>
         </li>
-        <li  ng-if ="searchController.isVisisbleInShowMode(3)" ng-repeat="song in searchController.searchResults  | limitTo:searchController.getShowModeLimit(3)  track by song.id " data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li  ng-if ="searchController.isVisisbleInShowMode(3)" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.searchResults  | limitTo:searchController.getShowModeLimit(3)  track by song.id " data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast othertopheight"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -259,17 +268,20 @@
 
 
 
-        <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(2)" onclick="searchController.setShowMode(2)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
+        <li ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(2)" onclick="searchController.setShowMode(2)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton searchlisttitlebutton othertopheight stayvisible">
             <a tabindex="-1"  ng-class="{loaded:searchController.showMode==2}">
 
                 <img src="public/img/empty.png" onclick="optionsMenu.openPlaylistResultsOptions(event,'#positionPlaylistResultsOptions')"   class="optionsSearchResults"   >
                 <div id="positionPlaylistResultsOptions" class="positionResultsOptions" ></div>
 
-                <h3  ng-if ="searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Featured Playlists</h3>
-                <h3  ng-if ="!searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Playlists/Albums</h3>
+                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(2)>1"  style="font-size: 1.1em;margin-top: 7px;">Featured Playlists</h3>
+                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(2)>1"  style="font-size: 1.1em;margin-top: 7px;">Playlists/Albums</h3>
+                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(2)<=1"  style="font-size: 1.1em;margin-top: 7px;">Featured Playlist</h3>
+                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(2)<=1"  style="font-size: 1.1em;margin-top: 7px;">Playlist/Album</h3>
+
             </a>
         </li>
-        <li  ng-if ="searchController.isVisisbleInShowMode(2)" ng-repeat="song in searchController.searchResults  | limitTo:searchController.getShowModeLimit(2)  track by song.id " data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li  ng-if ="searchController.isVisisbleInShowMode(2)" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.searchResults  | limitTo:searchController.getShowModeLimit(2)  track by song.id " data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast othertopheight"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -283,8 +295,10 @@
         </li>
 
 
+        <li  ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(1)&&searchController.showMode==0" class="fadeincompleteslow searchlisttitlebutton othertopheight stayvisible listad" ><img style="max-width:728px;max-height:90px;width:728px;height:90px"src="public/img/testad2.png"></li>
 
-        <li  ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(1)" onclick="searchController.setShowMode(1)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
+
+        <li  ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(1)" onclick="searchController.setShowMode(1)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton searchlisttitlebutton othertopheight stayvisible">
             <a tabindex="-1"  ng-class="{loaded:searchController.showMode==1}">
 
                 <img src="public/img/empty.png" onclick="optionsMenu.openSongResultsOptions(event,'#positionSongResultsOptions')"   class="optionsSearchResults"   >
@@ -295,7 +309,7 @@
 
          </a></li>
 
-        <li ng-if ="searchController.isVisisbleInShowMode(1)" ng-repeat="song in searchController.searchResults | limitTo:searchController.getShowModeLimit(1) track by song.id" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li ng-if ="searchController.isVisisbleInShowMode(1)" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.searchResults | limitTo:searchController.getShowModeLimit(1) track by song.id" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -309,7 +323,7 @@
         </li>
 
 
-        <li  ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(4)" onclick="searchController.setShowMode(4)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincompletefast hoverable specialplaylistbutton searchlisttitlebutton stayvisible">
+        <li  ng-if ="searchController.searchResults.length>0&&searchController.isVisisbleInShowMode(4)" onclick="searchController.setShowMode(4)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton searchlisttitlebutton otherbottomheight stayvisible">
             <a tabindex="-1"  ng-class="{loaded:searchController.showMode==4}">
 
                 <img src="public/img/empty.png" onclick="optionsMenu.openUserResultsOptions(event,'#positionUserResultsOptions')"   class="optionsSearchResults"   >
@@ -319,7 +333,7 @@
 
             </a></li>
 
-        <li ng-if ="searchController.isVisisbleInShowMode(4)" ng-repeat="song in searchController.searchResults | limitTo:searchController.getShowModeLimit(4) track by song.id" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li ng-if ="searchController.isVisisbleInShowMode(4)" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.searchResults | limitTo:searchController.getShowModeLimit(4) track by song.id" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}" data-songid="searchsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast otherbottomheight"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -352,7 +366,7 @@
 
             <form>
                 <select id="playlistselectverticalform" data-role="none"  multiple class="chosen-select">
-                    <option  value="{{playlistController.currentQueue.gid}}" class ="currentQueue">{{playlistController.currentQueue.name}}</option>
+                    <option  value="{{playlistController.currentQueue.gid}}" class="currentQueue">{{playlistController.currentQueue.name}}</option>
 
                     <option ng-repeat="playlist in playlistController.playlists track by playlist.gid" ng-if ="!playlist.isCurrentQueue" value="{{playlist.gid}}" >{{playlist.name}}</option>
 
@@ -428,7 +442,7 @@
 
             </a></li>
 
-            <li ng-repeat="song in playlistController.loadedPlaylistSongs track by song.gid" ng-if ="!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}" data-songid="playlistsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
+            <li ng-repeat="song in playlistController.loadedPlaylistSongs track by song.gid" context-menu-DISABLED ="playlistController.selectSong(song)" ng-if ="!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}"  data-song="{{song}}" data-songid="playlistsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
                 ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1">
 
                 <img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""   class="ui-li-icon ui-corner-none"  >
@@ -456,7 +470,7 @@
     <div id="videoplayerInner">
 
         <!-- mediaemelemtjs player -->
-        <video id="mediaemelemtjsPlayer1" controls="controls" preload="true">
+        <video id="mediaemelemtjsPlayer1" controls="controls" preload="true" >
             <source src="" type="video/mp4"/>
             <!--   <source src="" type="video/flv"/> -->
         </video>
@@ -526,6 +540,11 @@
 
             <div class="videoControlElements-button videoControlElements-fullscreen-button">
                 <button type="button" aria-controls="mep_0" title="Fullscreen" style="opacity:0.5" aria-label="Fullscreen"> </button>
+                <div class="videoControlElements-fullscreen-slider" style="display: none;">
+                    <div class="videoControlElements-fullscreen-total"></div>
+                    <div class="videoControlElements-fullscreen-current" style="height: 80px; top: 32px;"></div>
+                    <div class="videoControlElements-fullscreen-handle" style="top: 29px;"></div>
+                </div>
             </div>
 
             <div class="videoControlElements-button videoControlElements-button-choose-version videoControlElements-custom-button">
@@ -554,14 +573,15 @@
 
 <div id="songOptionsOriginal" style="display:none">
 
-    <img id="playSelection" onclick="playlistController.playSelection(event)"  ondblclick="playlistController.playSelection(event)"    src="public/img/playopt.png">
+    <img id="playSelection" title="Play" onclick="playlistController.playSelection(event)"  ondblclick="playlistController.playSelection(event)"    src="public/img/playopt.png">
 
-    <img id="removeFromPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.removeSongsFromPlaylist(event)"   src="public/img/empty.png" >
+    <img id="removeFromPlaylist"  onclick="playlistController.addSelectedElementsToPlaylist(event)"  ondblclick="playlistController.removeSelectedElementsFromPlaylist(event)"   src="public/img/empty.png" >
 
-    <img id="addToPlaylist" onclick="playlistController.addSongsToPlaylist(event)"  ondblclick="playlistController.addSongsToPlaylist(event)"    src="public/img/add.png">
-    <img id="searchSimilar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();"   src="public/img/radio.png" >
+    <img id="addToPlaylist" title="Add to queue" onclick="playlistController.addSelectedElementsToPlaylist(event)"  ondblclick="playlistController.addSelectedElementsToPlaylist(event)"    src="public/img/add.png">
 
-    <img id="moreOptions" onclick="playlistController.shareSelectedElements();event.stopPropagation();" ondblclick="event.stopPropagation();"   src="public/img/moreoptions.png" >
+    <img id="searchSimilar" title="Search similar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();"   src="public/img/radio.png" >
+
+    <img id="moreOptions" onclick="playlistController.showMoreSelectionOptions(event);" ondblclick="event.stopPropagation();"   src="public/img/moreoptions.png" >
 
     <!--img id="shareSocial" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();" width="53px"  src="public/img/share.png" -->
 
@@ -580,11 +600,9 @@
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose Version</h3>
             <ul data-role="listview" id="searchviewVersions" data-theme="b">
-                <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" class="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion,1,1)"><a href="#"
-                                                                                                                                                                                                                          style="padding-left: 15px!important;"
-                                                                                                                                                                                                                          id=""
-                                                                                                                                                                                                                          title="{{songversion.url}}">{{songversion.title}}<span
-                        style="opacity:0"> ..{{mediaController.showDuration(songversion)}}</span> <span style="position:absolute;right: 42px;top:10px;opacity:0.8"> {{ mediaController.showDuration(songversion) }}</span> </a></li>
+                <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b"  class="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion,1,1)">
+                    <a href="#" ng-class="{selectedversion: songversion.url==mediaController.currentvideoURL}" style="padding-left: 15px!important;" id="" title="{{songversion.url}}">{{songversion.title}}{{mediaController.getSiteName(songversion.url ,' - ')}}<span style="opacity:0"> ..{{mediaController.showDuration(songversion)}}</span> <span style="position:absolute;right: 42px;top:10px;opacity:0.8"> {{ mediaController.showDuration(songversion) }}</span> </a>
+                </li>
 
             </ul>
             <div id="loadversionimg" style="opacity:0">
@@ -592,13 +610,12 @@
             </div>
         </div>
     </form>
-    <br>
 </div>
 
 
 <div data-role="popup" id="popupRegister" data-arrow="true" data-theme="a" class="ui-corner-all"  >
         <div style="padding:0px 20px 10px 20px">
-            <h3 id="registertitle">Sign Up For Free</h3>
+            <h3 id="registertitle">Sign Up <span style="font-style: italic">for free</span></h3>
 
             <label for="registerusername" class="ui-hidden-accessible">Username:</label>
             <input type="text" name="user" id="registerusername" value="" placeholder="Username" data-theme="a" >
@@ -613,7 +630,7 @@
                 </span>
             <button onclick="accountController.register();" id="registerButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Create Account</button>
             <hr>
-            <fb:login-button show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large">Sign in with Facebook</fb:login-button>
+            <fb:login-button  show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large">Sign in with Facebook</fb:login-button>
 
         </div>
 </div>
@@ -633,7 +650,7 @@
             <input type="password" name="pass" id="signinpw" value="" placeholder="Password" data-theme="a" >
             <button onclick="accountController.signIn();"  id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
             <hr>
-            <fb:login-button show-faces="true" width="200" perms="public_profile, email" max-rows="1" size="large">Sign in with Facebook</fb:login-button>
+            <fb:login-button  show-faces="true" width="200" perms="public_profile, email" max-rows="1" size="large">Sign in with Facebook</fb:login-button>
         </div>
 </div>
 
@@ -643,7 +660,7 @@
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Account</h3>
             <ul data-role="listview">
-                <li  style="border-bottom:1px solid #ddd;"><a href="#" onclick='$.mobile.loading("show");$("#popupAccount").popup("close");setTimeout(function(){$.mobile.loading("hide");$("#popupEditAccount").popup("open");},900);' data-rel="back" id="manageUserProfile" ><img src="public/img/user.png" width="28px" >Your Profile</a></li>
+                <li  style="border-bottom:1px solid #ddd;"><a href="#" onclick='$.mobile.loading("show");$("#popupAccount").popup("close");setTimeout(function(){$.mobile.loading("hide");$("#popupEditAccount").popup("open");},900);' data-rel="back" id="manageUserProfile" ><img src="public/img/user.png" width="28px" >Your Account</a></li>
 
                 <li style="border-top:15px solid rgba(255,255,255,0);"><a href="#" data-rel="back" id="manageFacebook"><img src="public/img/fb.png" width="28px" >Facebook</a></li>
                 <li><a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png" width="28px" >Google
@@ -661,7 +678,7 @@
 
 <div data-role="popup" id="popupEditAccount" data-theme="a" class="ui-corner-all"  >
     <div style="padding:0px 20px 10px 20px">
-        <h3 id="edittitle">Edit Profile</h3>
+        <h3 id="edittitle">Edit Account</h3>
 
         <label for="registerusername" class="ui-hidden-accessible">Username:</label>
         <input type="text" name="user" id="editusername" value="" placeholder="Username" data-theme="a" >
@@ -753,6 +770,7 @@
         </div>
     </form>
 
+
     <div style="margin: 3px" >
         <div class="fbliketitle fblikeartisttitle" >{{mediaController.getSongArtist(playbackController.playingSong)}}</div>
 
@@ -802,7 +820,6 @@
 
 </div-->
 
-<img src="public/img/background.jpg" id="backgroundImage">
 <div id="backgroundVideo">
 
 </div>
@@ -831,6 +848,9 @@
 <!-- AngularJS -->
 <script type="text/javascript" src="public/js/libs/angular.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-touch.js"></script>
+<script type="text/javascript" src="public/js/libs/ng-context-menu.js"></script>
+
+
 
 <!-- jQuery -->
 <script type="text/javascript" src="public/js/libs/jquery-ui.js"></script>
@@ -842,9 +862,9 @@
 <!-- iScroll -->
 <script type="text/javascript" src="public/js/libs/iscroll-zoom.js"></script>
 
-<!--Fastclick-->
+<!--Fastclick>
 
-<script type="text/javascript" src="public/js/libs/fastclick.js"></script>
+<script type="text/javascript" src="public/js/libs/fastclick.js"></script-->
 
 <!-- mediaplayerjs -->
 
@@ -965,8 +985,11 @@
     <canvas id="webglcanvas"></canvas>
 </div>
 
+<img src="public/img/background.jpg" id="backgroundImage">
 
 
-
+<div class="sidead fadeincompleteslow">
+    <img src="public/img/testad.png">
+</div>
 </body>
 </html>
