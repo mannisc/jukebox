@@ -496,24 +496,8 @@ playlistController.playSelection = function (event) {
 
     if (list.length > 0) {
 
-        list[0] = jQuery.extend(true, {}, list[0]);
-        if (!list[0].gid) {//Song from searchlist, add new id to make it selectable with this id
-            list[0].gid = playlistController.getNewID();
-        } else {
-            for (var i = 0; i < playlistController.currentQueue.tracks.length; i++) {
-                var actSong = playlistController.currentQueue.tracks[i];
-                if (list[0].gid == actSong.gid) {
-                    var newID = playlistController.getNewID();
-                    if (playbackController.playingSong && playbackController.playingSong.gid == actSong.gid)
-                        playbackController.playingSong.gid = newID;
-                    actSong.gid = newID;
+        playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue,list);
 
-                }
-            }
-
-        }
-
-        list[0].playlistgid = playlistController.currentQueue.gid;
 
         playlistController.insertSongsIntoQueue(list);
 
