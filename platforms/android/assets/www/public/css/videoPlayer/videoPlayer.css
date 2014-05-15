@@ -415,6 +415,11 @@
      background: -ms-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
      background: linear-gradient(rgba(44,124,145,0.8), rgba(78,183,212,0.8));
      width: 0;
+     -webkit-transition: width 0.3s linear;
+     -moz-transition: width 0.3s linear;
+     -ms-transition: width 0.3s linear;
+     -o-transition: width 0.3s linear;
+     transition: width 0.3s linear;
  }
 
 
