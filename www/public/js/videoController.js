@@ -514,9 +514,9 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
     $("#backgroundVideo").hide();
     $("#siteLogo").hide();
 
-
     videoController.setMaxTime(0);
-    videoController.setProgressPercentage(0);
+    videoController.setProgressTime(0);
+    videoController.setProgressTime(0);
     videoController.setBufferedPercentage(0);
 
     if (videoController.videoPlayer && videoController.videoPlayer.unload) {

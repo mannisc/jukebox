@@ -32,10 +32,11 @@ background: none!important;
 /*Song Options*/
 
 .songOptions{
+
     position: absolute;
-    height: 38px;
-    width: 199px;
-    top: 13px;
+    height: 35px;
+    width: 182px;
+    top: 15px;
     left: 63px;
     z-index: 10000;
     -webkit-transition: all 0.2s ease;
@@ -88,19 +89,18 @@ ul.gridlayout .songOptions{
     -ms-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
-    opacity:1;
-
+    opacity: 1;
     position: absolute;
-    top: 0px;
-    max-height: 54px !important;
-    max-width: 54px !important;
+    top: 4px;
+    max-height: 44px !important;
+    max-width: 44px !important;
     width: 54px!important;
     height: 54px!important;
 
 }
 
 .songOptions #playSelection{
-    left: -3px;
+    left: 0px;
 }
 
 
@@ -133,13 +133,13 @@ ul.gridlayout .songOptions{
 
 .songOptions #searchSimilar{
 
-    left: 99px;
+    left: 97px;
 
 }
 
 .songOptions #moreOptions{
 
-    left: 145px;
+    left: 140px;
 
 }
 /*
