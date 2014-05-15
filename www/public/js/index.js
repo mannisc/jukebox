@@ -142,7 +142,8 @@ $(document).ready(function () {
                             id: "slsid" + helperFunctions.padZeros(1, 2)
                         }
 
-                        playbackController.playSong(song, false, false,true);
+                        if(!playbackController.playingSong)
+                         playbackController.playSong(song, false, false,true);
                     }
                 }
             }, 3500);
