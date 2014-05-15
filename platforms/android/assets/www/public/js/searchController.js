@@ -261,11 +261,22 @@ searchController.completeSearch = function (list, appendListInFront, searchID) {
             }
         }
         if (changed) {
+
+
+            for (i = 0; i < list.track.length; i++) {
+                if (!list.track[i].name||list.track[i].name =="") {
+                    list.track.splice(i, 1);
+                    i--;
+                }
+
+            }
+
             if (appendListInFront) {
                 for (var j = 0; j < appendListInFront.length; j++) {
                     for (i = 0; i < list.track.length; i++) {
                         if (mediaController.getSongDisplayName(list.track[i]) == mediaController.getSongDisplayName(appendListInFront[j])) {
-                            list.track.splice(i, 0);
+                            list.track.splice(i,1);
+                            i--;
                         }
 
                     }
@@ -342,11 +353,13 @@ searchController.applySongList = function () {
                 $("#searchlistview").listview('refresh');
 
                 if(index==1){
+                    playlistController.updateDeselectedSong();
                     $(".specialplaylistbutton").addClass("fadeincompletefaster");
 
                 }
 
                 if (index == delays) {
+
                     searchController.makeSearchListDraggable();
                     setTimeout(function () {
                         uiController.searchListScroll.refresh();
@@ -536,6 +549,8 @@ searchController.emptySearchList = function (dontInitFully) {
 
     setTimeout(function () {
         uiController.searchListScroll.refresh();
+        playlistController.updateDeselectedSong();
+
     }, 0)
 
     if (!dontInitFully) {
@@ -1173,18 +1188,8 @@ searchController.makeSearchListDraggable = function () {
             $("#songOptions").appendTo("body").hide();
 
 
-            $("#draggelement").remove()
-            var style = $('<style id="draggelement">' +
-                '.draggedlistelement li { ' +
-                '        width: ' + $("#playlistInner ul li").width() + 'px !important;' +
-                '        max-width: ' + $("#playlistInner ul li").width() + 'px !important;' +
-                '}' +
-                '.draggedlistelement li a { ' +
-                '        width: ' + ($("#playlistInner ul li a").width()) + 'px !important;' +
-                '}' +
-                '</style>');
-            $('html > head').append(style);
 
+            $("#playlistInner li.selected").removeClass("selected")
             if (!$(this).hasClass("selected")) {
                 $("#searchlist li.selected").removeClass("selected")
                 $(this).addClass("selected");
@@ -1382,6 +1387,7 @@ searchController.makeSearchListDraggable = function () {
                 uiController.startedSortPlaylist = false;
             }
             uiController.draggingSong = false;
+            playlistController.updateDeselectedSong();
 
             uiController.swipeTimer = Date.now();
         },

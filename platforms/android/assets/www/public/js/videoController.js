@@ -27,6 +27,8 @@ videoController.videoPlayerList[1][0] = dailymotionPlayer;
 
 videoController.videoPlayer = videoController.videoPlayerList[0][0];////embeddedPlayer;//
 
+videoController.videoOpactiy = 0.6;
+
 videoController.isEmbedded = false;
 
 
@@ -192,10 +194,12 @@ videoController.init = function () {
             videoController.controls.find(".videoControlElements-volume-slider").show();
     });
 
+
     videoController.controls.find(".videoControlElements-volume-button").mouseout(function () {
         if (!videoController.changingVolume)
             videoController.controls.find(".videoControlElements-volume-slider").hide();
     });
+
 
     videoController.controls.find(".videoControlElements-volume-slider").click(function (event) {
 
@@ -220,6 +224,7 @@ videoController.init = function () {
             videoController.setVolume(videoController.volume);
         }
     });
+
 
 
     videoController.controls.find(".videoControlElements-volume-handle").bind('mousedown', function (e) {
@@ -272,6 +277,10 @@ videoController.init = function () {
             }, 50)
             $(document).unbind(".videoVolume");
         })
+
+
+
+
     });
 
 
@@ -280,14 +289,101 @@ videoController.init = function () {
 
 
     //Fullscreen
-    videoController.controls.find(".videoControlElements-fullscreen-button").click(function () {
-
-
-
+    videoController.controls.find(".videoControlElements-fullscreen-button button").click(function () {
 
         if (videoController.fullscreenEnabled && videoController.videoPlayer) {
             videoController.toggleFullscreenMode();
         }
+    });
+
+    videoController.controls.find(".videoControlElements-fullscreen-button").mouseover(function () {
+       // if (videoController.fullscreenEnabled && videoController.videoPlayer)
+            videoController.controls.find(".videoControlElements-fullscreen-slider").show();
+    });
+
+
+
+    videoController.controls.find(".videoControlElements-fullscreen-button").mouseout(function () {
+       // if (videoController.fullscreenEnabled && videoController.videoPlayer)
+            videoController.controls.find(".videoControlElements-fullscreen-slider").hide();
+    });
+
+    videoController.controls.find(".videoControlElements-fullscreen-slider").click(function (event) {
+
+        if (!videoController.changingVideoOpactiy) {
+            var total = videoController.controls.find('.videoControlElements-fullscreen-slider'),
+                y = event.pageY - 20,
+                offset = total.offset(),
+                height = total.outerHeight(true) * videoController.scaleFactor / 1.023 - 20,
+                pos,
+                percentage;
+
+            if (y < offset.top) {
+                y = offset.top;
+            } else if (y > height + offset.top) {
+                y = height + offset.top;
+            }
+
+            pos = y - offset.top;
+            percentage = (pos / height);
+            videoController.videoOpactiy = (1 - percentage);
+            // position the slider and handle
+            videoController.setVideoOpacity(videoController.videoOpactiy);
+        }
+    });
+
+    videoController.controls.find(".videoControlElements-fullscreen-handle").bind('mousedown', function (e) {
+
+        var videoOpactiySlider = videoController.controls.find('.videoControlElements-fullscreen-slider'),
+            videoOpactiyTotal = videoController.controls.find('.videoControlElements-fullscreen-total'),
+            videoOpactiyCurrent = videoController.controls.find('.videoControlElements-fullscreen-current'),
+            videoOpactiyHandle = videoController.controls.find('.videoControlElements-fullscreen-handle'),
+            mute = $(".videoControlElements-fullscreen-button");
+
+        var changevideoOpactiyHandler = function (e) {
+            videoController.changingVideoOpactiy = true;
+            var videoOpactiy,
+                totalOffset = videoOpactiyTotal.offset();
+
+            // calculate the new videoOpactiy based on the moust position
+            var
+                railHeight = videoOpactiyTotal.height() * videoController.scaleFactor / 1.023,//CHANGED!!!!!
+                totalTop = parseInt(videoOpactiyTotal.css('top').replace(/px/, ''), 10),
+                newY = e.pageY - totalOffset.top;
+
+            videoOpactiy = (railHeight - newY) / railHeight;
+
+            // the controls just hide themselves (usually when mouse moves too far up)
+            if (totalOffset.top == 0 || totalOffset.left == 0)
+                return;
+
+            // ensure the videoOpactiy isn't outside 0-1
+            videoOpactiy = Math.max(0, videoOpactiy);
+            videoOpactiy = Math.min(videoOpactiy, 1);
+            videoController.videoOpactiy = videoOpactiy;
+
+            // position the slider and handle
+            videoController.setVideoOpacity(videoController.videoOpactiy);
+
+
+
+        }
+
+        $(document).bind('mousemove.videoOpacity', changevideoOpactiyHandler)
+
+        $(document).bind('mouseup.videoOpacity', function (e) {
+
+            if (videoController.controls.find(".videoControlElements-fullscreen-slider:hover").length == 0)
+                videoController.controls.find(".videoControlElements-fullscreen-slider").hide();
+            setTimeout(function () {
+                videoController.changingVideoOpactiy = false;
+            }, 50)
+            $(document).unbind(".videoOpacity");
+        })
+
+
+
+
     });
 
 
@@ -339,6 +435,7 @@ videoController.init = function () {
 
     uiController.noVideoClickTimer = 0;
 
+    videoController.setVideoOpacity(videoController.videoOpactiy);
 
     //TODO Remove
     /*videoController.setMaxTime(341);
@@ -414,13 +511,13 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
 
     $("#backgroundVideo").css("opacity","0");
     $("#backgroundVideo").removeClass("animated")
-
+    $("#backgroundVideo").hide();
     $("#siteLogo").hide();
+
 
     videoController.setMaxTime(0);
     videoController.setProgressPercentage(0);
     videoController.setBufferedPercentage(0);
-
 
     if (videoController.videoPlayer && videoController.videoPlayer.unload) {
         videoController.videoPlayer.unload();
@@ -440,6 +537,8 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
         videoController.videoPlayer = videoController.videoPlayerList[0][0];
         videoController.videoPlayer.load(streamURL);
     }
+
+    $("#backgroundVideo").show();
 
     videoController.updateFullscreenMode();
 
@@ -980,6 +1079,56 @@ videoController.setVolume = function (volume, secondTry) {
 
 
 /**
+ * Position Opacity Handle
+ * @param volume
+ * @param secondTry
+ */
+videoController.setVideoOpacity = function (videoOpactiy, secondTry) {
+
+
+    var videoOpactiySlider = videoController.controls.find('.videoControlElements-fullscreen-slider'),
+        videoOpactiyTotal = videoController.controls.find('.videoControlElements-fullscreen-total'),
+        videoOpactiyCurrent = videoController.controls.find('.videoControlElements-fullscreen-current'),
+        videoOpactiyHandle = videoController.controls.find('.videoControlElements-fullscreen-handle'),
+        mute = $(".videoControlElements-fullscreen-button");
+    if (!videoOpactiySlider.is(':visible') && typeof secondTry == 'undefined') {
+        videoOpactiySlider.show();
+        videoController.setVideoOpacity(videoOpactiy, true);
+        videoOpactiySlider.hide()
+        return;
+    }
+
+    // correct to 0-1
+    videoOpactiy = Math.max(0, videoOpactiy);
+    videoOpactiy = Math.min(videoOpactiy, 1);
+
+
+    var totalHeight = videoOpactiyTotal.height(),
+
+        totalPosition = videoOpactiyTotal.position(),
+
+
+       newTop = totalHeight - (totalHeight * videoOpactiy);
+
+    // handle
+    videoOpactiyHandle.css('top', Math.round(totalPosition.top + newTop - (videoOpactiyHandle.height() / 2)));
+
+    // show the current visibility
+    videoOpactiyCurrent.height(totalHeight - newTop);
+    videoOpactiyCurrent.css('top', totalPosition.top + newTop);
+
+    videoController.videoOpactiy = videoOpactiy;
+    $("#backgroundVideo").css("opacity", videoController.videoOpactiy);
+
+
+}
+
+
+
+
+
+
+/**
  * Callback for "Ended" Video Event
  */
 videoController.endedSong = function () {
@@ -1014,7 +1163,7 @@ videoController.playingSong = function () {
     if (playbackController.playingSong) {
         playbackController.playingSongTimer = Date.now();
        $("#backgroundVideo").addClass("animated")
-        $("#backgroundVideo").css("opacity", "0.6");
+        $("#backgroundVideo").css("opacity", videoController.videoOpactiy);
 
         $("#siteLogoImage").attr("src", "public/img/sites/" + mediaController.getSiteLogo());
         $("#siteLogo").show();
