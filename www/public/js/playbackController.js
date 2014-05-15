@@ -134,6 +134,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
     if (!song.gid) {//Song from searchlist
         song.gid = playlistController.getNewID();
+
     } else {
         if (song.playlistgid != playlistController.currentQueue.gid) { //Song from playlist
             for (var i = 0; i < playlistController.currentQueue.tracks.length; i++) {
@@ -197,7 +198,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
             if (addSongToQueue) {
                 if (playbackController.playingSong.playlistgid != playlistController.currentQueue.gid) {
-                    playlistController.insertElementsIntoQueue([playbackController.playingSong]);
+                    playlistController.insertSongsIntoQueue([playbackController.playingSong]);
                 }
 
                 if (!playedAutomatic && playlistController.playlistMode) {
@@ -295,7 +296,7 @@ playbackController.resetPlayingSong = function () {
 
 playbackController.updatePlayingSongIndex = function () {
 
-    playbackController.playingSongIndex = -1;
+    playbackController.playingSongIndex = 0;
 
 
     for (var i = playlistController.currentQueue.tracks.length - 1; i >= 0; i--) {
@@ -653,17 +654,23 @@ playbackController.positionPlayIndicatorAtTop = function (searchlist) {
 /**
  * Get Songlist element from song
  * @param song
+ * @param onlyList 1:searchlist, 2:playlist
+
  */
-playbackController.getListElementFromSong = function (song) {
+playbackController.getListElementFromSong = function (song,onlyList) {
     if (!song)
         return [];
-    //if (song.gid) {
-    //listElement = $($("#playlistInner li[data-songtitle='" + playbackController.playingSong.name + "-" + mediaController.getSongArtist(playbackController.playingSong) + "'] ").get(0));
-    return $("#playlistInner li[data-songgid='playlistsong" + song.gid + "'], #searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
-    // } else {
-    //return $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
-    //  }
 
+    var playlistElements =[], searchListElements = [];
+
+    if(!onlyList||onlyList==1)
+     searchListElements =   $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
+
+    if(!onlyList||onlyList==2)
+     playlistElements =   $("#playlistInner li[data-songgid='playlistsong" + song.gid + "']");
+
+
+    return $(searchListElements).add(playlistElements);
 
 }
 

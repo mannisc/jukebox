@@ -301,23 +301,51 @@ input[type=button]{
     left: 0px;
     bottom: 45px!important;
     width: 450px;
+    opacity:1;
     z-index: 1000;
     opacity: 0.945;
     z-index:10000!important;
-    background: rgba(29,29,29,0.9);
+    background: rgba(29,29,29,0.96);
     -moz-box-shadow: 6px 0p 10px rgba(0,0,0,0.4);
     -webkit-box-shadow: 6px 0px 10px rgba(0,0,0,0.4);
     box-shadow: 6px 0px 10px rgba(0,0,0,0.4);
+    -webkit-transition: all 1.5s ease-out;
+    -moz-transition: all 1.5s ease-out;
+    -ms-transition: all 1.5s ease-out;
+    -o-transition: all 1.5s ease-out;
+    transition: all 1.5s ease-out;
 }
+
+
+
 #lyricsifrm{
     position:absolute;
-    top:0px;
-    height: 0px;
+    top:44px;
     width: 420px;
-    height:100%;
     border:none!important;
     z-index:10002!important;
 
+}
+
+#lyricstopinfo{
+    position: absolute;
+    width: 408px;
+    height: 32px;
+    top: 0;
+    left: 0;
+    color: #000!important;
+    background-color: #fadb4e;
+    z-index: 10002!important;
+    padding: 6px;
+    font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size: 13px!important;
+    line-height: 16px;
+    text-shadow: none;
+
+}
+
+#lyricstopinfo a{
+    cursor: auto !important;
 }
 
 #lyricsifrmback{
@@ -989,6 +1017,9 @@ a, button, h1, h2, h3{
 }
 
 
+
+
+
 .backgroundVideo{
     width:100%!important;
     height:100%!important;
@@ -1007,9 +1038,7 @@ a, button, h1, h2, h3{
 #backgroundVideo.fullscreen{
     opacity:1!important;
 }
-#backgroundVideo.background{
-    opacity:0.6!important;
-}
+
 
 
 
@@ -1299,17 +1328,39 @@ max-width: 2em!important;
 }
 
 #popupVideoSettings-popup .ui-popup-arrow-container.ui-popup-arrow-b .ui-popup-arrow {
-    margin-left:5px!important;
+    margin-left:4px!important;
 }
+
+
+#popupVideoSettings .selectedversion {
+    background-color:#2E8B2B !important;
+}
+
+
+
+#popupVideoSettings  .selectedversion.ui-icon-carat-r:after {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22iso-8859-1%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20%20width%3D%2214px%22%20height%3D%2214px%22%20viewBox%3D%220%200%2014%2014%22%20style%3D%22enable-background%3Anew%200%200%2014%2014%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20style%3D%22fill%3A%23FFFFFF%3B%22%20points%3D%2214%2C4%2011%2C1%205.003%2C6.997%203%2C5%200%2C8%204.966%2C13%204.983%2C12.982%205%2C13%20%22%2F%3E%3C%2Fsvg%3E")!important
+}
+
+
+
+#popupVideoSettings h3 {
+    margin-top: 10px!important;
+    margin-bottom: 10px!important;
+}
+
 
 #loadversionimg{
     position:absolute;
-    top: 27px;
+    top: 18px;
     left: 15px;
 
 }
 
+#loadversionimg img{
+   opacity: 0.4;
 
+}
 
 .rotateIt{
     -moz-transform: rotate(1deg);
@@ -1349,7 +1400,7 @@ max-width: 2em!important;
     right:0;
     width: 160px;
     height: 100% ;
-    background-color: rgba(255, 255, 255,0.10);
+    background-color: rgba(255, 255, 255,0.03);
     margin-top:44px;
 }
 .sidead *{
@@ -1368,9 +1419,13 @@ max-width: 2em!important;
     margin-bottom: 5px!important;
     background: none!important;
     border: none!important;
+    padding-left:5px!important;
     display:block!important;
-    padding-left:5px!important
+}
+
+#searchlist ul li.searchlisttitlebutton.listad{ /*TODO REMOVE*/
     display:none!important;
+
 }
 
 #searchlist ul.gridlayout li.searchlisttitlebutton.listad{
