@@ -134,13 +134,16 @@
 <div id="fb-root"></div>
 <!-- FACEBOOK -->
 
-<div id="lyricsiframe" class="fadeincompleteslow" style="display:none">
+<div id="lyricsiframe" style="left:-50px;opacity:0;pointer-events:none">
     <div id="lyricsifrmback">
+    </div>
+    <div id="lyricstopinfo">
+        These Lyrics are external content from LyricWiki.<br>More information at <a href='{{"http://lyrics.wikia.com/" +mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name}}' target='_blank'>lyrics.wikia.com</a>.
     </div>
     <iframe id="lyricsifrm" src="about:blank" seamless="">
     </iframe>
 
-    <img id="lyricsiframeresizebar" onclick="mediaController.toggleLyrics();" src="public/img/resizebar.png" style="position:absolute;right: 0px;top:0px">
+    <img id="lyricsiframeresizebar" onclick="mediaController.toggleLyrics();" src="public/img/resizebar.png" style="position:absolute;right: 1px;top:1px">
 </div>
 
 
@@ -535,6 +538,11 @@
 
             <div class="videoControlElements-button videoControlElements-fullscreen-button">
                 <button type="button" aria-controls="mep_0" title="Fullscreen" style="opacity:0.5" aria-label="Fullscreen"> </button>
+                <div class="videoControlElements-fullscreen-slider" style="display: none;">
+                    <div class="videoControlElements-fullscreen-total"></div>
+                    <div class="videoControlElements-fullscreen-current" style="height: 80px; top: 32px;"></div>
+                    <div class="videoControlElements-fullscreen-handle" style="top: 29px;"></div>
+                </div>
             </div>
 
             <div class="videoControlElements-button videoControlElements-button-choose-version videoControlElements-custom-button">
@@ -589,11 +597,9 @@
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose Version</h3>
             <ul data-role="listview" id="searchviewVersions" data-theme="b">
-                <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" class="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion,1,1)"><a href="#"
-                                                                                                                                                                                                                          style="padding-left: 15px!important;"
-                                                                                                                                                                                                                          id=""
-                                                                                                                                                                                                                          title="{{songversion.url}}">{{songversion.title}}<span
-                        style="opacity:0"> ..{{mediaController.showDuration(songversion)}}</span> <span style="position:absolute;right: 42px;top:10px;opacity:0.8"> {{ mediaController.showDuration(songversion) }}</span> </a></li>
+                <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b"  class="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion,1,1)">
+                    <a href="#" ng-class="{selectedversion: songversion.url==mediaController.currentvideoURL}" style="padding-left: 15px!important;" id="" title="{{songversion.url}}">{{songversion.title}}<span style="opacity:0"> ..{{mediaController.showDuration(songversion)}}</span> <span style="position:absolute;right: 42px;top:10px;opacity:0.8"> {{ mediaController.showDuration(songversion) }}</span> </a>
+                </li>
 
             </ul>
             <div id="loadversionimg" style="opacity:0">
@@ -601,7 +607,6 @@
             </div>
         </div>
     </form>
-    <br>
 </div>
 
 

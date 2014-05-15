@@ -166,6 +166,7 @@ mediaController.playSong = function (streamURL, videoURL) {
     mediaController.currentvideoURL = videoURL;
     videoController.loadSongInSuitablePlayer(streamURL, videoURL);
     videoController.playSong();
+    $scope.safeApply();
 
 
 
@@ -217,14 +218,18 @@ mediaController.getVersions = function () {
                                                 catch (e) {
                                                     data.track[i].url = unescape(data.track[i].url);
                                                 }
+
                                             }
                                             mediaController.versionListSong = song;
+
+
                                             mediaController.versionList = data.track;
                                             mediaController.startVersionIndex = -1;
-                                            $scope.safeApply();
-                                            $('#loadversionimg').css("opacity", "0");
-                                            $("#searchviewVersions").listview('refresh');
-                                            $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'});
+                                                 $scope.safeApply();
+                                                 $('#loadversionimg').css("opacity", "0");
+                                                 $("#searchviewVersions").listview('refresh');
+                                                 $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'});
+
                                             ///$('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
                                         }
                                         dataok = true;
@@ -317,7 +322,6 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
                                             mediaController.seekTimeDuration = videoController.maxTime; //uiController.mediaElementPlayer.media.duration;
                                             mediaController.versionListSong = song;
                                             mediaController.playStreamURLSeek(streamURL, videoURL, true, rating);
-
                                         } else
                                             loadError = true;
 
@@ -537,10 +541,11 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
 
         if (differentVersions) {
             videoController.disableVersionControl(false);
-            $("#chooseversionbutton").removeClass("rotateIt");
+
+           /* $("#chooseversionbutton").removeClass("rotateIt");
             setTimeout(function () {
                 $("#chooseversionbutton").addClass("rotateIt");
-            }, 500)
+            }, 500)*/
         } else
             videoController.disableVersionControl(true);
 
@@ -744,10 +749,11 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
         if (differentVersions) {
             videoController.disableVersionControl(false);
-            $("#chooseversionbutton").removeClass("rotateIt");
+
+           /* $("#chooseversionbutton").removeClass("rotateIt");
             setTimeout(function () {
                 $("#chooseversionbutton").addClass("rotateIt");
-            }, 500)
+            }, 500)*/
         } else
             videoController.disableVersionControl(true);
 
@@ -762,28 +768,25 @@ mediaController.toggleLyrics = function () {
 
     var iframe = $('#lyricsiframe');
 
-
+    /*
     if (!mediaController.showLyrics)
+
         setTimeout(function () {
             uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
         }, 2500);
-
+   */
     mediaController.showLyrics = !mediaController.showLyrics;
     if (mediaController.showLyrics) {
         if (playbackController.playingSong) {
-            $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "?useskin=wikiamobile");
-            iframe.removeClass('fadeoutcomplete');
-            iframe.addClass('fadeincompleteslow');
-            iframe.show();
+            var src =   "http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "?useskin=wikiamobile";
+            if( $("#lyricsifrm").attr("src")!=src)
+             $("#lyricsifrm").attr("src",src);
+
+            iframe.css("left","").css("opacity","").css("pointer-events","auto");
         }
     } else {
-        iframe.removeClass('fadeincompleteslow');
-        iframe.addClass('fadeoutcomplete');
-        setTimeout(function () {
-            iframe.removeClass('fadeoutcomplete');
-            iframe.hide();
+        iframe.css("left","-50px").css("opacity","0").css("pointer-events","none");
 
-        }, 1000);
     }
 
 }
