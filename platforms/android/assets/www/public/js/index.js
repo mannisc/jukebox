@@ -45,10 +45,8 @@ var app = {
 
 var preferences = {
 
-
-
- serverURL: "http://localhost:3001/"
-  //serverURL: "http://info.jukebox.selfhost.eu:3001/"
+  // serverURL: "http://localhost:3001/"
+   serverURL: "http://info.jukebox.selfhost.eu:3001/"
 
 }
 
@@ -100,7 +98,7 @@ $(document).ready(function () {
     $.mobile.loading("show");
     var initPage = function () {
         if ($scope.loaded) {
-
+            //setTimeout(function () {$("#dmplayer").addClass("iframeVideo").appendTo("#backgroundVideo")},2000);
             app.isCordova = (window.location.hash == "#cordova" );
             loadUrlParams();
             facebookHandler.init();
