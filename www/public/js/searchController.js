@@ -82,7 +82,6 @@ searchController.init = function () {
 
         //  searchController.searchTimeout = setTimeout(function () {
         //    searchController.searchTimeout = null;
-        $("#playlistInner .iScrollPlayIndicator").hide();
         $("#searchlist .iScrollPlayIndicator").hide();
         switch (searchController.buttonActive) {
             case 0:
@@ -163,7 +162,6 @@ searchController.activateButton = function (index, noAnimation) {
     searchController.buttonActive = index;
     searchController.emptySearchList(true);
 
-    $("#playlistInner .iScrollPlayIndicator").hide();
     $("#searchlist .iScrollPlayIndicator").hide();
 
 

@@ -1608,7 +1608,20 @@ animation-duration:  1.5s;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
-, );
+}
+#playlistInner .iScrollPlayIndicator{
+    background-position: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+}
+
+#searchlist .iScrollPlayIndicator{
+    background-position: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
 
 }
 
@@ -1633,6 +1646,21 @@ animation-duration:  1.5s;
 
 }
 
+#playlistInner .iScrollScrollUpIndicator{
+    background-position: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+}
+
+#searchlist .iScrollScrollUpIndicator{
+    background-position: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+}
 
 
 .noshadow{
