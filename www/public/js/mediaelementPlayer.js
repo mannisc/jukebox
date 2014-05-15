@@ -73,7 +73,8 @@ var mediaelementPlayer = function (selector) {
          }*/
         this.mediaElementPlayer = new MediaElementPlayer(selector, {
             features: [ 'prevtrack', 'playpause', 'stop', 'nexttrack', 'shuffle', 'current', 'progress', 'duration', 'volume', 'fullscreen'],
-
+            // when this player starts, it will pause other players
+            pauseOtherPlayers: true,
             enableKeyboard: false,
             //poster: 'http://mediaelementjs.com/media/echo-hereweare-540x304.jpg',
             alwaysShowControls: true,
@@ -94,8 +95,8 @@ var mediaelementPlayer = function (selector) {
                             var minDiff = target.duration;
                             var minDiffPos = 0;
                             for (var i = 0; i < target.buffered.length; i++) {
-                                var diff = target.buffered.end(i)-target.currentTime;
-                                if(diff>=0&& diff < minDiff)  {
+                                var diff = target.buffered.end(i) - target.currentTime;
+                                if (diff >= 0 && diff < minDiff) {
                                     minDiff = diff;
                                     minDiffPos = target.buffered.end(i);
                                 }
@@ -150,6 +151,20 @@ var mediaelementPlayer = function (selector) {
 
                 mediaElement.addEventListener("canplay", function (e) {
                     that.mediaElementPlayer.media.setVolume(videoController.volume);
+                    that.canplay = true;
+                        if (that.startplay){
+
+                            that.play();
+                        }
+                        else if (that.startplause)
+                            that.pause();
+
+                        that.startplause = false;
+                        that.startplay = false;
+
+
+
+
                 })
 
                 mediaElement.addEventListener("playing", function (e) {
@@ -169,13 +184,14 @@ var mediaelementPlayer = function (selector) {
                 mediaElement.addEventListener("error", function (e) { //TODO VideoController Handling nötig wenn versionen embedded fähig???
 
                     console.log("MEDIAELEMENT ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                   /*  if (mediaController.currentvideoURL ) {
-                        mediaController.playNextVersion();
-                    }  */
+                    /*  if (mediaController.currentvideoURL ) {
+                     mediaController.playNextVersion();
+                     }  */
                 });
 
                 mediaElement.addEventListener('loadeddata', function (e) {
                     videoController.setMaxTime(mediaElement.duration)
+
                     //videoController.normalizeVideoSize(that.videoSelector);
                 });
             },
@@ -192,9 +208,14 @@ var mediaelementPlayer = function (selector) {
      */
     this.load = function (url) {
         videoController.setProgressPercentage(0);
+
         this.mediaElementPlayer.setSrc(url);
         this.mediaElementPlayer.load();
         this.containerVideo.addClass("backgroundVideo").appendTo("#backgroundVideo");
+        this.canplay = false;
+        this.startplay = false;
+        this.startplause = false;
+        console.log("LOAD"+Date.now())
 
 
     }
@@ -207,7 +228,7 @@ var mediaelementPlayer = function (selector) {
         this.stop();
         this.stopUpdateTime();
         this.containerVideo.addClass("backgroundVideo").insertAfter($(this.container).find(".mejs-inner"));
-        this.containerVideo.find("video").first().attr('src','')
+        this.containerVideo.find("video").first().attr('src', '')
 
 
     }
@@ -237,13 +258,29 @@ var mediaelementPlayer = function (selector) {
 
 
     this.play = function () {
-        this.mediaElementPlayer.play();
+        if (this.canplay) {
+
+            this.mediaElementPlayer.play();
+
+        }
+        else {
+            this.startplay = true;
+            this.startplause = false;
+
+        }
     };
 
 
     this.pause = function () {
-        this.mediaElementPlayer.pause();
-        this.stopUpdateTime();
+        if (this.canplay) {
+            this.mediaElementPlayer.pause();
+            this.stopUpdateTime();
+        } else {
+            this.startplay = false;
+            this.startplause = true;
+
+        }
+
 
     };
 
@@ -272,19 +309,16 @@ var mediaelementPlayer = function (selector) {
     }
 
     this.setVolume = function (volume) {
-        if(this.mediaElementPlayer&& this.mediaElementPlayer.media)
-          this.mediaElementPlayer.media.setVolume(volume);
+        if (this.mediaElementPlayer && this.mediaElementPlayer.media)
+            this.mediaElementPlayer.media.setVolume(volume);
     };
-
-
-
 
 
 }
 
 /*
-*
-*
+ *
+ *
 
  MediaElementPlayer.prototype.enterFullScreen_org = MediaElementPlayer.prototype.enterFullScreen;
  MediaElementPlayer.prototype.enterFullScreen = function () {
@@ -351,7 +385,7 @@ var mediaelementPlayer = function (selector) {
  this.exitFullScreen_org();
 
  }
-*
-*
-*
-* */
+ *
+ *
+ *
+ * */
