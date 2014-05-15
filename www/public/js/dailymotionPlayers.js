@@ -70,10 +70,23 @@ dailymotionPlayer.eventListener.apiready =  function(e)
             $("#dailymotionPlayer").show();
             $("#dmplayer").show();
             dailymotionPlayer.apiready = true;
-            dailymotionPlayer.dmplayer.play();
 
-            dailymotionPlayer.setVolume(videoController.volume);
-            videoController.playingSong();
+            dailymotionPlayer.firstplay = true;
+
+            if(dailymotionPlayer.startplay){
+                dailymotionPlayer.play()
+            }
+
+            else if(dailymotionPlayer.startpause){
+                videoController.playingSong();
+                dailymotionPlayer.firstplay = false;
+
+            }
+
+            dailymotionPlayer.startpause = false;
+            dailymotionPlayer.startplay = false;
+
+
         }
     }
 }
@@ -85,13 +98,22 @@ dailymotionPlayer.eventListener.error = function(e)
     }
 }
 
+dailymotionPlayer.eventListener.play = function(e)
+{
+    if(dailymotionPlayer.dmplayer&&dailymotionPlayer.firstplay){
+        videoController.playingSong();
+        dailymotionPlayer.firstplay = false;
+    }
+}
+
 dailymotionPlayer.eventListener.canplaythrough = function(e)
 {
+    /*
     if(e.target.src.search(dailymotionPlayer.dailymotionVideoID)>-1){
         if(dailymotionPlayer.dmplayer){
             dailymotionPlayer.dmplayer.play();
         }
-    }
+    } */
 }
 
 dailymotionPlayer.eventListener.durationchange = function(e)
@@ -161,9 +183,12 @@ dailymotionPlayer.load = function (url) {
             html : 1, highlight : '857580',
             info : 1, network : 'dsl', autoplay : 0};
         dailymotionPlayer.dmplayer = DM.player("dmplayer", {video: videoid,width: "100%", height: "100%", params: PARAMS});
-        dailymotionPlayer.dmplayer.addEventListener("apiready",dailymotionPlayer.eventListener.apiready);
 
         dailymotionPlayer.dmplayer.addEventListener("error",dailymotionPlayer.eventListener.error );
+
+        dailymotionPlayer.dmplayer.addEventListener("apiready",dailymotionPlayer.eventListener.apiready);
+
+        //dailymotionPlayer.dmplayer.addEventListener("canplay",dailymotionPlayer.eventListener.apiready);
 
         dailymotionPlayer.dmplayer.addEventListener("canplaythrough",dailymotionPlayer.eventListener.canplaythrough);
 
@@ -174,6 +199,8 @@ dailymotionPlayer.load = function (url) {
         dailymotionPlayer.dmplayer.addEventListener("progress",dailymotionPlayer.eventListener.progress);
 
         dailymotionPlayer.dmplayer.addEventListener("ended",dailymotionPlayer.eventListener.ended);
+
+        dailymotionPlayer.dmplayer.addEventListener("play",dailymotionPlayer.eventListener.play);
 
     }
 };
@@ -201,6 +228,9 @@ dailymotionPlayer.unload = function () {
        dailymotionPlayer.dmplayer.removeEventListener("ended",dailymotionPlayer.eventListener.ended);
 
         dailymotionPlayer.dmplayer.removeEventListener("error",dailymotionPlayer.eventListener.error);
+
+        dailymotionPlayer.dmplayer.removeEventListener("play",dailymotionPlayer.eventListener.play);
+
     }
     dailymotionPlayer.apiready = false;
     delete dailymotionPlayer.dmplayer;
@@ -221,15 +251,35 @@ dailymotionPlayer.setVolume = function (volume) {
 
 
 dailymotionPlayer.play = function () {
-    if(dailymotionPlayer.dmplayer && dailymotionPlayer.apiready){
-        dailymotionPlayer.dmplayer.play();
+    if(dailymotionPlayer.dmplayer ){
+        if(dailymotionPlayer.apiready){
+            dailymotionPlayer.dmplayer.play();
+            dailymotionPlayer.setVolume(videoController.volume);
+        }
+        else{
+            dailymotionPlayer.startplay = true;
+            dailymotionPlayer.startpause = false;
+
+        }
+
         console.dir("PLAY: "+dailymotionPlayer.dailymotionVideoID);
+
     }
 
 }
 dailymotionPlayer.pause = function () {
-    if(dailymotionPlayer.dmplayer && dailymotionPlayer.apiready){
-        dailymotionPlayer.dmplayer.pause();
+    if(dailymotionPlayer.dmplayer){
+
+        if(dailymotionPlayer.apiready)
+            dailymotionPlayer.dmplayer.pause();
+        else{
+            dailymotionPlayer.startplay = false;
+            dailymotionPlayer.startpause = true;
+
+        }
+
+        console.dir("PAUSE: "+dailymotionPlayer.dailymotionVideoID);
+
     }
 
 }

@@ -482,7 +482,7 @@
 
         AbstractChosen.default_single_text = "Select an Option";
 
-        AbstractChosen.default_no_result_text = "No results match";
+        AbstractChosen.default_no_result_text = "No playlists match";    //CHANGED     "No results match"
 
         return AbstractChosen;
 
@@ -893,9 +893,16 @@
 
             var choice, close_link,
                 _this = this;
+
+            //var html = "<span>" + item.html + "</span>"
+
+            var html = window.$compile(
+                "<img src = 'public/img/emtpy.png' style= 'background-image:url( {{mediaController.getSongCoverForLoadedPlaylist()}} );background-size:  23px;position:absolute;top: 4px;left: 5px;' width='23px' height='23px'   ><span>" + item.html + "</span>"
+            )($scope);
             choice = $('<li />', {
                 "class": "search-choice "+item.classes //CHANGED  //TODO !!!!!!!!!!!!!!!!!!
-            }).html("<img src= 'public/img/playlist.png ' width='23px' style='position:absolute;top: 4px;left: 5px;' ><span>" + item.html + "</span>");   //CHANGED  //TODO !!!!!!!!!!!!!!!!!!
+
+            }).html(html);   //CHANGED  //TODO !!!!!!!!!!!!!!!!!!
 
             if (item.disabled) {
                 choice.addClass('search-choice-disabled');
