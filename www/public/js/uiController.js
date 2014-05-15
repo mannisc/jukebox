@@ -474,13 +474,14 @@ uiController.updateUI = function () {
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
 
-    $(".sidead").css("line-height",($(window).height()-10-44)+"px");
+    $(".sidead").css("line-height",($(window).height()-5-44)+"px");
+
+
+    $("#lyricsifrm").css("height",$(window).height()-8-44-44-44)
 
     //  $(".sidead").css("max-height", ($(window).height() - 44-5)+"px");
 
 
-    $("#lyricsiframeresizebar").css("top", -10);//$(window).height() / 2 - 30 - 44);
-    $("#lyricsiframeresizebar").css("right", -2);
 
     var myIframe = document.getElementById('lyricsifrm');
     setTimeout(function () {
@@ -615,6 +616,7 @@ uiController.updateUI = function () {
         }
         setSelectSize();
         $("#playlist").css("width", uiController.windowWidth / 3);
+
         $("#playlistInner li").css("width", uiController.windowWidth / 3);
 
         if($(window).width() < uiController.responsiveWidthSmall)
@@ -708,6 +710,23 @@ uiController.updateUI = function () {
 
 
     setTimeout(function () {
+
+
+        $("#draggelement").remove();
+        var style = $('<style id="draggelement">' +
+            '.draggedlistelement li { ' +
+            '        width: ' + $("#playlistInner ul li").width() + 'px !important;' +
+            '        max-width: ' + $("#playlistInner ul li").width() + 'px !important;' +
+            '        min-width: ' + $("#playlistInner ul li").width() + 'px !important;' +
+            '}' +
+            '.draggedlistelement li a { ' +
+            '        width: ' + ($("#playlistInner ul li a").width()) + 'px !important;' +
+            '        max-width: ' + $("#playlistInner ul li a").width() + 'px !important;' +
+            '        min-width: ' + $("#playlistInner ul li a").width() + 'px !important;' +
+            '}' +
+            '</style>');
+        $('html > head').append(style);
+
         $("#videocontrolsInner").css("opacity",0);
         var positionControls = function(){
 

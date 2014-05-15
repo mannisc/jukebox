@@ -49,7 +49,7 @@ optionsMenu.openQueueOptions = function (event, positionTo) {
         event.stopPropagation();
 
     optionsMenu.options = [
-        {text: "Create Playlist", callback: null},
+        {text: "Save as Playlist", callback: null},
         {text: "Clear Queue", callback: null}
     ]
 
