@@ -465,7 +465,9 @@
 
         <!-- embedded players -->
         <div id="embedplayer" >
-            <div id="dmplayer" ></div>
+            <div id="dmplayer" >
+             <!-- <iframe src="//player.vimeo.com/video/95255285?portrait=0&badge=0&title=0&byline=0&autoplay=1" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+            </div>
         </div>
 
     </div>
