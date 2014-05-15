@@ -15,7 +15,7 @@ var facebookHandler = function () {
 }
 
 
-facebookHandler.loggedIn = false;
+
 
 /*
 
@@ -48,34 +48,22 @@ facebookHandler.loggedIn = false;
  */
 
 facebookHandler.logout = function () {
-    facebookHandler.logoutTimer = Date.now();
-    setTimeout(function () {
+
+            console.log("!!!!!! LOGOUT")
+            facebookHandler.logoutTimer = Date.now();
             FB.logout(function (response) {
+                facebookHandler.logoutTimer = Date.now();
                 facebookHandler.loggedIn = false;
+                console.log("LOGOUT")
+
                 setTimeout(function () {
                     //Reload iFrames to see login Button again //TODO Facebook Fix
                     var fbIFrames = $(".fb_iframe_widget iframe");
                     fbIFrames.attr("src", fbIFrames.attr("src"))
                 }, 0)
-                setTimeout(function () {
-                    //Reload iFrames to see login Button again //TODO Facebook Fix
-                    var fbIFrames = $(".fb_iframe_widget iframe");
-                    fbIFrames.attr("src", fbIFrames.attr("src"))
-                }, 500)
-                setTimeout(function () {
-                    //Reload iFrames to see login Button again //TODO Facebook Fix
-                    var fbIFrames = $(".fb_iframe_widget iframe");
-                    fbIFrames.attr("src", fbIFrames.attr("src"))
-                }, 1000)
-                setTimeout(function () {
-                    //Reload iFrames to see login Button again //TODO Facebook Fix
-                    var fbIFrames = $(".fb_iframe_widget iframe");
-                    fbIFrames.attr("src", fbIFrames.attr("src"))
-                }, 2000)
-
             });
-        }, 0
-    )
+
+
 }
 
 
@@ -88,15 +76,18 @@ facebookHandler.init = function () {
             cookie: true, // enable cookies to allow the server to access the session
             xfbml: true  // parse XFBML
         });
-
         // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
         // for any authentication related change, such as login, logout or session refresh. This means that
         // whenever someone who was previously logged out tries to log in again, the correct case below
         // will be handled.
         FB.Event.subscribe('auth.authResponseChange', function (response) {
             // Here we specify what we do with the response anytime this event occurs.
+            console.log("FB RESPONSE!!! "+response.status+ "   "+facebookHandler.loggedIn+"    "+accountController.loggedIn)
             if (response.status === 'connected') {
-                if (!facebookHandler.loggedIn && !accountController.loggedIn) {
+                if (accountController.loggedIn&&!facebookHandler.loggedIn ) {
+                    facebookHandler.loggedIn = true;
+                } else if (!facebookHandler.loggedIn ) {
+
                     // The response object is returned with a status field that lets the app know the current
                     // login status of the person. In this case, we're handling the situation where they
                     // have logged in to the app.
@@ -169,7 +160,7 @@ facebookHandler.init = function () {
                  // The same caveats as above apply to the FB.login() call here.
                  */
                 if(!facebookHandler.logoutTimer||  Date.now()-    facebookHandler.logoutTimer > 2000){
-
+                    console.log("AUTOLOGIN!!!!!"+(Date.now()-    facebookHandler.logoutTimer)+"  "+   facebookHandler.logoutTimer)
                     FB.login(function (response) {
                     }, {scope: 'public_profile, email'});
 

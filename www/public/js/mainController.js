@@ -47,6 +47,11 @@ function MainController($scope,$compile) {
     }
 
 
+    $scope.alert = function(msg){
+        alert("NG : "+msg);
+    }
+
+
 
     //Bind Controllers
     $scope.mediaController    = mediaController;

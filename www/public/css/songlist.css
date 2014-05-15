@@ -8,6 +8,9 @@
 }
 
 
+.songlist ul{
+background: none!important;
+}
 
 /*GRID LAYOUT   */
 #searchlist ul.gridlayout {
@@ -29,10 +32,11 @@
 /*Song Options*/
 
 .songOptions{
+
     position: absolute;
-    height: 38px;
-    width: 199px;
-    top: 13px;
+    height: 35px;
+    width: 182px;
+    top: 15px;
     left: 63px;
     z-index: 10000;
     -webkit-transition: all 0.2s ease;
@@ -85,19 +89,18 @@ ul.gridlayout .songOptions{
     -ms-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
-    opacity:1;
-
+    opacity: 1;
     position: absolute;
-    top: 0px;
-    max-height: 54px !important;
-    max-width: 54px !important;
+    top: 4px;
+    max-height: 44px !important;
+    max-width: 44px !important;
     width: 54px!important;
     height: 54px!important;
 
 }
 
 .songOptions #playSelection{
-    left: -3px;
+    left: 0px;
 }
 
 
@@ -130,13 +133,13 @@ ul.gridlayout .songOptions{
 
 .songOptions #searchSimilar{
 
-    left: 99px;
+    left: 97px;
 
 }
 
 .songOptions #moreOptions{
 
-    left: 145px;
+    left: 140px;
 
 }
 /*
@@ -164,6 +167,7 @@ ul.gridlayout .songOptions{
 
 .songlist li.specialplaylistbutton.currentqueue a{
     background-color: rgba(255, 255, 255, 0.12)!important;
+    border-bottom: none!important;
 }
 
 
@@ -354,12 +358,14 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
     padding-top: 3px !important;
     padding-bottom: 11px !important;
     height: 51px !important;
-    -webkit-perspective: 150;
+    -webkit-perspective: 200;
     -webkit-perspective-origin: 32px 50%;
-    -moz-perspective: 150px;
+    -moz-perspective: 200px;
     -moz-perspective-origin: 32px 50%;
-    -ms-perspective: 150px;
+    -ms-perspective: 200px;
     -ms-perspective-origin: 32px 50%;
+    perspective: 200px;
+    perspective-origin: 50% 50%;
 }
 
 
@@ -434,6 +440,13 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
 
 }
 
+.songlist.disablecoveranim li img.ui-li-icon {
+    -webkit-transition: none!important;
+    -moz-transition: none!important;
+    -o-transition: none!important;
+    transition: none!important;
+}
+
 .songlist li img.ui-li-icon {
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -470,13 +483,13 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
 }
 
 .songlist li {
-    -webkit-perspective:  150;
+    -webkit-perspective: 200;
     -webkit-perspective-origin: 32px 50%;
-    -moz-perspective: 150px;
+    -moz-perspective: 200px;
     -moz-perspective-origin: 32px 50%;
-    -ms-perspective: 150px;
+    -ms-perspective: 200px;
     -ms-perspective-origin: 32px 50%;
-    perspective: 150px;
+    perspective: 200px;
     perspective-origin: 32px 50%;
 }
 
@@ -706,13 +719,13 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 
-    -webkit-perspective:  65;
+    -webkit-perspective: 200;
     -webkit-perspective-origin: 50% 50%;
-    -moz-perspective: 65px;
+    -moz-perspective: 200px;
     -moz-perspective-origin: 50% 50%;
-    -ms-perspective: 65px;
+    -ms-perspective: 200px;
     -ms-perspective-origin: 50% 50%;;
-    perspective: 65px;
+    perspective: 200px;
     perspective-origin: 50% 50%;
     -webkit-transform: scale(0.68)!important;
     -moz-transform: scale(0.68)!important;
@@ -1209,7 +1222,7 @@ animation-duration:  1.5s;
     padding-bottom:1px;
     max-height:0px;
     padding-left: 10px;
-    background-color:rgba(255,255,255,0.1);
+    background-color:rgba(255,255,255,0.08);
 }
 
 
@@ -1586,39 +1599,68 @@ animation-duration:  1.5s;
 
 .iScrollPlayIndicator{
     pointer-events:auto;
-    opacity:0.9!important;
+    width: 20px;
+    height: 20px;
+    background-image: url(../img/srollpos.png);
+    background-size: 50%;
+    background-repeat:no-repeat;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#playlistInner .iScrollPlayIndicator{
+    background-position: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
 
-    /*
+}
 
-    width: 0;
-    height: 0;
-    border-top: 9px solid transparent;
-    border-bottom: 9px solid transparent;
+#searchlist .iScrollPlayIndicator{
+    background-position: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
 
-    border-left: 10px solid rgba((86, 199, 231,0.8);
+}
 
-    */
 
+
+.iScrollScrollUpIndicator {
+    pointer-events: auto;
+    opacity: 0.9!important;
     border-radius: 4.5px;
-    width: 9px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
 
-    border: 1px solid rgba(155, 155, 155, 0.6)!important;
-    background-color: rgba(86, 199, 231,0.8);
-     /*
-    background-image: -moz-radial-gradient(45px 45px 45deg, circle cover,  rgba(86, 199, 231,0.8) 0%,  rgba(86, 199, 231,0.8) 100%, rgba(44,124,145,0.8) 95%);
-    background-image: -webkit-radial-gradient(45px 45px, circle cover, rgba(44,124,145,0.8), rgba(86, 199, 231, 0.80));
-    background-image: radial-gradient(45px 45px 45deg, circle cover, rgba(86, 199, 231,0.8) 0%, rgba(86, 199, 231,0.8) 100%, rgba(44,124,145,0.8) 95%);
-      */
+    background-image: url(../img/srollup.png);
+    background-size: 50%;
+    background-repeat:no-repeat;
 
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
-, );
+    position:absolute;
 
 }
 
+#playlistInner .iScrollScrollUpIndicator{
+    background-position: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+}
+
+#searchlist .iScrollScrollUpIndicator{
+    background-position: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+}
 
 
 .noshadow{
@@ -1659,12 +1701,12 @@ animation-duration:  1.5s;
 
 .draggedlistelement .margintop{
 
-    margin-top: -5px!important;
-
+   margin-top: 0px!important;
 }
 
 .draggedlistelement li{
     height:65px!important;
+    margin-left: 1px!important;
 
 }
 
