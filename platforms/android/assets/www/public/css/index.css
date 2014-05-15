@@ -1184,6 +1184,21 @@ text-shadow: none!important;
 }
 
 
+#popupOptions ul{
+    background-color: #333 !important;
+}
+
+
+#popupOptions li{
+    background-color: #333 !important;
+}
+
+#popupOptions li a{
+   border: none!important;
+    border-top: 1px solid rgb(34,34,34)!important;
+    border-bottom: none!important;
+}
+
 
 
 
@@ -1287,6 +1302,10 @@ max-width: 2em!important;
    background-color: #333;
 
     color: #fff;
+}
+#popupVideoSettings ul{
+    background-color: #333!important;
+
 }
 
 #popupVideoSettings a:hover{

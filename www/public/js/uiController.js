@@ -825,6 +825,11 @@ uiController.showPlaylists = function () {
 /* Toggel Grid Layout*/
 uiController.toggleGridLayout = function () {
     uiController.gridLayout = !uiController.gridLayout;
+    if (uiController.gridLayout)
+        $("#searchlayoutbutton img").attr("src", "public/img/list.png");
+    else
+        $("#searchlayoutbutton img").attr("src", "public/img/grid.png");
+    setTimeout(function () {
     $("#searchlist  .iScrollIndicator").hide();
     var scrollY = uiController.searchListScroll.y;
 
@@ -845,6 +850,7 @@ uiController.toggleGridLayout = function () {
         // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB "+cols)
 
         if (uiController.gridLayout) {
+
             uiController.gridLayoutCols = Math.floor(($("#searchlist ul").width()-15) / 250);
 
             if(($("#searchlist ul").width()/uiController.gridLayoutCols-35)>250){
@@ -862,13 +868,12 @@ uiController.toggleGridLayout = function () {
                 scrollY = scrollY + 64;
 
 
-            $("#searchlayoutbutton img").attr("src", "public/img/list.png");
         }
         else {
+
             scrollY = (scrollY) * uiController.gridLayoutCols;
 
 
-            $("#searchlayoutbutton img").attr("src", "public/img/grid.png");
             setTimeout(function () {
                 playlistController.positionSongOptions();
             }, 0)
@@ -903,6 +908,7 @@ uiController.toggleGridLayout = function () {
 
 
     }, 800)
+    }, 0);
 }
 
 

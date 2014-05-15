@@ -139,8 +139,10 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
         if (song.playlistgid != playlistController.currentQueue.gid) { //Song from playlist
             for (var i = 0; i < playlistController.currentQueue.tracks.length; i++) {
                 var actSong = playlistController.currentQueue.tracks[i];
-                if (song.gid == actSong.gid)
-                    actSong.gid = playlistController.getNewID();
+                var newID =  playlistController.getNewID();
+                if(playbackController.playingSong&&playbackController.playingSong.gid== actSong.gid)
+                    playbackController.playingSong.gid = newID;
+                actSong.gid = newID;
             }
         }
 
