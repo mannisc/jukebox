@@ -107,8 +107,17 @@ optionsMenu.openSelectionOptions = function (event, positionTo) {
             }, 150)
         }},
 
-        {text: "Add to Playlist", callback: null},
-        {text: "Share with friends", callback: null}
+        {text: "Add to Playlist", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                playlistController.addSelectedElementsToPlaylist(positionTo);
+            }, 150)
+        }},
+        {text: "Share with friends", callback: function () {
+            optionsMenu.closePopup();
+
+
+        }}
 
     ]
 
@@ -119,6 +128,46 @@ optionsMenu.openSelectionOptions = function (event, positionTo) {
     $("#popupOptions-popup").css("margin-top", "7px").css("margin-left", "15px");
 
 
+}
+
+
+/**
+ * Open Dialog to choose playlist
+ */
+optionsMenu.openChoosePlaylist = function (positionTo, listToAdd) {
+
+    if (event)
+        event.stopPropagation();
+
+    var addToList = function (playlist) {
+        if (listToAdd.length > 0) {
+            playlistController.addSongsToPlaylist(playlist, listToAdd);
+        }
+        playlistController.deselectSongs();
+    }
+
+
+    // var song = optionsMenu.getSongFromListEvent(event);
+    optionsMenu.options = [];
+    for (var i = 0; i < playlistController.playlists.length; i++) {
+
+            var add = function (index) {
+                return function(){
+                    optionsMenu.closePopup();
+                    addToList(playlistController.playlists[index])
+                }
+            };
+
+         var callback =  add(i);
+        optionsMenu.options.push({text: playlistController.playlists[i].name, callback:callback})
+    }
+
+
+    $scope.safeApply();
+    $("#popupOptionsList").listview("refresh");
+    $("#popupOptions").popup("option", "arrow", "l");
+    $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
+    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "18px");
 }
 
 //Search Results

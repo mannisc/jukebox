@@ -837,7 +837,7 @@ mediaController.toggleLyrics = function () {
 mediaController.getSongCoverForLoadedPlaylist = function()  {
 
 
-      if(playlistController.loadedPlaylists[0]){
+      if(playlistController.loadedPlaylists[0]&&playbackController.playingSong){
           return mediaController.getSongCover(playbackController.playingSong);
 
       }else
@@ -899,11 +899,13 @@ mediaController.getSongCover = function (song,lowQuality) {
                 url = song.image[1]['#text'];
             else
                 url = song.image[0]['#text']
-        }
+        }else
+            url = "public/img/playlist.png";
 
     }
     if (!url || $.trim(url) == "")
         url = "public/img/playlist.png";
+
     return url;
 }
 
