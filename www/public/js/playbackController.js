@@ -682,8 +682,15 @@ playbackController.remarkSong = function () {
         playbackController.positionPlayIndicator();
 
        $(".songlist .loadedsong").removeClass("loadedsong");
+        var safe = $(".songlist .oldloadedsong.playing")
         $(".songlist .playing").removeClass("playing");
+        safe.addClass("playing")
+
+        safe = $(".songlist .oldloadedsong.pausing")
         $(".songlist .pausing").removeClass("pausing");
+        safe.addClass("pausing")
+
+
         $(".songlist .stillloading").removeClass("stillloading");
 
 
