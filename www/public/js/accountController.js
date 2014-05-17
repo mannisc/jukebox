@@ -167,17 +167,11 @@ accountController.logout = function () {
 
                         accountController.setCookie("loginToken", Base64.encode(""), 0);
                         accountController.setCookie("userName", Base64.encode(""), 0);
-                        playlistController.loadedPlaylistSongs = [];
+
+
                         playlistController.playlists = [];
 
-
-                        $('#playlistselectverticalform option').prop('selected', false);
-                        $('#playlistselectverticalform').trigger('chosen:updated');
-                        setTimeout(function () {
-                            $('#playlistselectverticalform').trigger('chosen:close');
-                            $("#clearChoosenPlaylists").hide();
-                            uiController.updateUI();
-                        }, 0)
+                        uiController.showPlaylists();
 
 
 
@@ -476,7 +470,16 @@ accountController.socialSignIn = function (username, email, userid, externalAcco
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         $.mobile.loading("show");
         accountController.singInBase(username, access_token, rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encryptUnlimited(access_token), rsaController.rsa.encrypt(userid),externalAccountIdentifier);
+    }else{
+        $.mobile.loading("hide");
+
+        uiController.toast("Sorry, it is not possible to login at the moment.", 1500);
+        if(facebookHandler.loggedIn){
+            facebookHandler.logout();
+        }
+
     }
+
 }
 
 
