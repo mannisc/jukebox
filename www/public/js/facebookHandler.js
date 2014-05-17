@@ -23,7 +23,9 @@ var facebookHandler = function () {
      $.mobile.loading("show");
      $("#popupLogin").popup("close") ;
      $("#popupRegister").popup("close");
-
+     setTimeout(function(){
+         $.mobile.loading("hide");
+     },10000)
      FB.login(function (response) {
      }, {scope: 'public_profile, email'});
 
