@@ -708,20 +708,25 @@ uiController.updateUI = function () {
     setTimeout(function () {
 
 
-        $("#draggelement").remove();
+        var oldDraggelementId = "draggelement"+Date.now()+""+Math.random();
+
+        $("#draggelement").attr("id",oldDraggelementId);
         var style = $('<style id="draggelement">' +
             '.draggedlistelement li { ' +
-            '        width: ' + $("#playlistInner ul li").width() + 'px !important;' +
-            '        max-width: ' + $("#playlistInner ul li").width() + 'px !important;' +
-            '        min-width: ' + $("#playlistInner ul li").width() + 'px !important;' +
+            '        width: ' + ($("#playlistInner ul").width()-18) + 'px !important;' +
+            '        max-width: ' + ($("#playlistInner ul").width()-18) + 'px !important;' +
+            '        min-width: ' +($("#playlistInner ul").width()-18) + 'px !important;' +
             '}' +
             '.draggedlistelement li a { ' +
-            '        width: ' + ($("#playlistInner ul li a").width()) + 'px !important;' +
-            '        max-width: ' + $("#playlistInner ul li a").width() + 'px !important;' +
-            '        min-width: ' + $("#playlistInner ul li a").width() + 'px !important;' +
+            '        width: ' + ($("#playlistInner ul li").width()-90-18) + 'px !important;' +
+            '        max-width: ' + ($("#playlistInner ul li").width()-90-18) + 'px !important;' +
+            '        min-width: ' + ($("#playlistInner ul li").width()-90-18) + 'px !important;' +
             '}' +
             '</style>');
         $('html > head').append(style);
+        setTimeout(function(){
+            $("#"+oldDraggelementId).remove();
+        },0)
 
         $("#videocontrolsInner").css("opacity",0);
         var positionControls = function(){

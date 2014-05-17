@@ -1146,7 +1146,7 @@ searchController.makeSearchListDraggable = function () {
 
                         $("#searchlistview .draggableSong").draggable("enable");
 
-                        if (!uiController.sidePanelOpen && uiController.windowWidth < uiController.responsiveWidthSmallest) {
+                        if (!uiController.sidePanelOpen && $(window).width() < uiController.responsiveWidthSmallest) {
                             uiController.startedSortPlaylistOpenedPanel = true;
                             uiController.toggleSidePanel();
                             delay = delay + 250;
@@ -1394,6 +1394,7 @@ searchController.makeSearchListDraggable = function () {
                 }, 1000)
 
             if (uiController.startedSortPlaylist) {
+                playlistController.sortPlaylist = true;
                 playlistController.toggleSortablePlaylist();
                 uiController.startedSortPlaylist = false;
             }
