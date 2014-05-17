@@ -102,6 +102,11 @@ body {
 @media (min-width:850px) and  (max-width:1164px) {
     #playlist {
         top: 60px !important;
+
+    }
+    .songlist li.specialplaylistbutton h3{
+        font-size: 1em!important;
+        margin-top: 20px!important;
     }
 
 
@@ -401,6 +406,10 @@ input[type=button]{
     transition: all 280ms ease /* custom */
 }
 
+#controlbar input{
+    overflow: visible!important;
+
+}
 
 
 #controlbar .ui-input-search {
@@ -977,6 +986,25 @@ video{
 }
 
 
+#signinButton, #registerButton  {
+
+    padding-left: 2.3em!important;
+    padding-right: 0!important;
+
+}
+
+
+#signinButton:before, #registerButton:before  {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    content: '';
+    border-right: 1px solid #000;
+    box-shadow: 1px 0 #4B4545;
+
+}
 
 
 

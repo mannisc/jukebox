@@ -186,6 +186,7 @@ ul.gridlayout .songOptions{
 
 .songlist li.specialplaylistbutton  h3{
 text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-radius}*/ #111 /*{b-bup-shadow-color}*/!important;
+    text-overflow: clip;
  }
 
 .songlist li a{
@@ -604,7 +605,7 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 #searchlist li.searchlisttitlebutton a{
     min-height: 0;
     max-height: 30px;
-    padding: 3px 0px 11px 40px!important;
+    padding: 3px 0px 11px 46px!important;
 
 
     filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.2), endColorstr=rgba(255,255,255,0))!important;
@@ -632,13 +633,13 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 
 #searchlist li:hover.searchlisttitlebutton a{
 
-    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.4), endColorstr=rgba(255,255,255,0))!important;
-    background-image:-moz-linear-gradient(left, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.4) 44%,rgba(255,255,255,0) 100%)!important;
-    background-image:linear-gradient(left, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.4) 44%,rgba(255,255,255,0) 100%)!important;
-    background-image:-webkit-linear-gradient(left, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.4) 44%,rgba(255,255,255,0) 100%)!important;
-    background-image:-o-linear-gradient(left, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.4) 44%,rgba(255,255,255,0) 100%)!important;
-    background-image:-ms-linear-gradient(left, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.4) 44%,rgba(255,255,255,0) 100%)!important;
-    background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(255,255,255,0.4)), color-stop(44%,rgba(255,255,255,0.4)),color-stop(100%,rgba(255,255,255,0)))!important;
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.5), endColorstr=rgba(255,255,255,0))!important;
+    background-image:-moz-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%)!important;
+    background-image:linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%)!important;
+    background-image:-webkit-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%)!important;
+    background-image:-o-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%)!important;
+    background-image:-ms-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%)!important;
+    background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(255,255,255,0.5)),color-stop(100%,rgba(255,255,255,0)))!important;
 
 }
 
@@ -654,7 +655,7 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 #searchlist li.searchlisttitlebutton a img{
     position: absolute;
     top: 4px;
-    left: 1px;
+    left: 3px;
     width:36px;
     height:36px;
     background-repeat: no-repeat;
@@ -921,10 +922,7 @@ animation-duration:  1.5s;
 
     background-image:none !important;
     background-size: 65px 65px!important;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all  0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+
     opacity:0;
 
 }
@@ -949,9 +947,9 @@ animation-duration:  1.5s;
     -moz-animation-fill-mode:forwards!important;
     animation-fill-mode:forwards!important;
 
-    -webkit-animation-duration:3000ms!important;
-    -moz-animation-duration:3000ms!important;
-    animation-duration:3000ms!important;
+    -webkit-animation-duration:5000ms!important;
+    -moz-animation-duration:5000ms!important;
+    animation-duration:5000ms!important;
 }
 
 .songlist li.selected:hover .loadingSongImg{
@@ -1340,6 +1338,18 @@ animation-duration:  1.5s;
     border: none !important;
 }
 
+
+#playlistInner li.specialplaylistbutton a:hover {
+
+filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.5), endColorstr=rgba(255,255,255,0.12))!important;
+background-image:-moz-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.12) 100%)!important;
+background-image:linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.12) 100%)!important;
+background-image:-webkit-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.12) 100%)!important;
+background-image:-o-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.12) 100%)!important;
+background-image:-ms-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.12) 100%)!important;
+background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(255,255,255,0.5)),color-stop(100%,rgba(255,255,255,0.12)))!important;
+
+}
 
 #playlistInner .nohover a:hover{
     filter:none!important;
