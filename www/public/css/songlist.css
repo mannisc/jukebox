@@ -358,13 +358,13 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
     padding-top: 3px !important;
     padding-bottom: 11px !important;
     height: 51px !important;
-    -webkit-perspective: 200;
+    -webkit-perspective: 150;
     -webkit-perspective-origin: 32px 50%;
-    -moz-perspective: 200px;
+    -moz-perspective: 150px;
     -moz-perspective-origin: 32px 50%;
-    -ms-perspective: 200px;
+    -ms-perspective: 150px;
     -ms-perspective-origin: 32px 50%;
-    perspective: 200px;
+    perspective: 150px;
     perspective-origin: 50% 50%;
 }
 
@@ -488,13 +488,13 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 }
 
 .songlist li {
-    -webkit-perspective: 200;
+    -webkit-perspective: 150;
     -webkit-perspective-origin: 32px 50%;
-    -moz-perspective: 200px;
+    -moz-perspective: 150px;
     -moz-perspective-origin: 32px 50%;
-    -ms-perspective: 200px;
+    -ms-perspective: 150px;
     -ms-perspective-origin: 32px 50%;
-    perspective: 200px;
+    perspective: 150px;
     perspective-origin: 32px 50%;
 }
 
@@ -724,13 +724,13 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 
-    -webkit-perspective: 200;
+    -webkit-perspective: 150;
     -webkit-perspective-origin: 50% 50%;
-    -moz-perspective: 200px;
+    -moz-perspective: 150px;
     -moz-perspective-origin: 50% 50%;
-    -ms-perspective: 200px;
+    -ms-perspective: 150px;
     -ms-perspective-origin: 50% 50%;;
-    perspective: 200px;
+    perspective: 150px;
     perspective-origin: 50% 50%;
     -webkit-transform: scale(0.68)!important;
     -moz-transform: scale(0.68)!important;

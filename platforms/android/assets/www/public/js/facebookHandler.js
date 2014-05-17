@@ -17,39 +17,25 @@ var facebookHandler = function () {
 
 
 
-/*
+
 
  facebookHandler.login = function(){
+     $.mobile.loading("show");
+     $("#popupLogin").popup("close") ;
+     $("#popupRegister").popup("close");
 
- FB.login(function(response) {
+     FB.login(function (response) {
+     }, {scope: 'public_profile, email'});
 
- if (response.authResponse) {
- console.log('Welcome!  Fetching your information.... ');
- //console.log(response); // dump complete info
- access_token = response.authResponse.accessToken; //get access token
- user_id = response.authResponse.userID; //get FB UID
 
- FB.api('/me', function(response) {
- user_email = response.email; //get user email
- alert("!!!")
- // you can store this data into your database
- });
 
- } else {
- //user hit cancel button
- console.log('User cancelled login or did not fully authorize.');
+}
 
- }
- }, {
- scope: 'publish_stream,email'
- });
- }
 
- */
 
 facebookHandler.logout = function () {
-
-            console.log("!!!!!! LOGOUT")
+    $(".fbnativeloginButton iframe").css("opacity","");
+    console.log("!!!!!! LOGOUT")
             facebookHandler.logoutTimer = Date.now();
             FB.logout(function (response) {
                 facebookHandler.logoutTimer = Date.now();
@@ -84,6 +70,10 @@ facebookHandler.init = function () {
             // Here we specify what we do with the response anytime this event occurs.
             console.log("FB RESPONSE!!! "+response.status+ "   "+facebookHandler.loggedIn+"    "+accountController.loggedIn)
             if (response.status === 'connected') {
+
+                $(".fbnativeloginButton iframe").css("opacity","0");
+
+
                 if (accountController.loggedIn&&!facebookHandler.loggedIn ) {
                     facebookHandler.loggedIn = true;
                 } else if (!facebookHandler.loggedIn ) {
