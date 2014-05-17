@@ -1406,6 +1406,9 @@ playlistController.loadCurrentQueue = function () {
 
     setTimeout(function () {
         playlistController.selectPlaylist(playlist);
+        setTimeout(function () {
+            $scope.safeApply();
+        }, 50 )
     }, 0)
 
     event.stopPropagation();
