@@ -473,8 +473,7 @@ accountController.socialSignIn = function (username, email, userid, externalAcco
     }else{
         $.mobile.loading("hide");
 
-        uiController.toast("Sorry, it is not possible to login at the moment.", 1500);
-        if(facebookHandler.loggedIn){
+        if(externalAccountIdentifier==1){
             facebookHandler.logout();
         }
 
