@@ -20,10 +20,14 @@ videoController.videoPlayerList = [
 
 videoController.videoPlayerList[0] = [];
 videoController.videoPlayerList[1] = [];
+videoController.videoPlayerList[2] = [];
 
 videoController.videoPlayerList[0][0] = new mediaelementPlayer("#mediaemelemtjsPlayer1");
 
 videoController.videoPlayerList[1][0] = dailymotionPlayer;
+
+videoController.videoPlayerList[2][0] = vimeoPlayer;
+
 
 videoController.videoPlayer = videoController.videoPlayerList[0][0];////embeddedPlayer;//
 
@@ -497,6 +501,10 @@ videoController.isEmbedVideo = function (videoURL) {
     if (videoURL.search("dailymotion.com") > -1) {
         return videoController.videoPlayerList[1][0];
     }
+
+    //if (videoURL.search("vimeo.com") > -1) {
+    ////    return videoController.videoPlayerList[2][0];
+    ////}
     return null;
 }
 
@@ -535,6 +543,7 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
     else {
         videoController.isEmbedded = false;
         videoController.videoPlayer = videoController.videoPlayerList[0][0];
+        console.dir("PLAY STREAM!!!: "+streamURL);
         videoController.videoPlayer.load(streamURL);
     }
 
