@@ -300,7 +300,7 @@ vimeoPlayer.stop = function () {
     }
 }
 
-vimeoPlayer.setCurrentTime = function(percentage){
+vimeoPlayer.setProgressPercentage = function(percentage){
     if(vimeoPlayer.player && vimeoPlayer.apiready){
         vimeoPlayer.player.api("setCurrentTime",percentage* vimeoPlayer.duration);
     }

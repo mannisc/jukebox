@@ -292,7 +292,10 @@ dailymotionPlayer.stop = function () {
     }
 }
 
-dailymotionPlayer.setCurrentTime = function(percentage){
+
+
+
+dailymotionPlayer.setProgressPercentage = function(percentage){
     if(dailymotionPlayer.player && dailymotionPlayer.apiready){
         dailymotionPlayer.player.seek(percentage* dailymotionPlayer.duration);
     }

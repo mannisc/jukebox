@@ -523,7 +523,7 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
     $("#siteLogo").hide();
 
     videoController.setMaxTime(0);
-    videoController.setProgressTime(0);
+    videoController.setProgressPercentage(0);
     videoController.setProgressTime(0);
     videoController.setBufferedPercentage(0);
 
@@ -1128,6 +1128,11 @@ videoController.setVideoOpacity = function (videoOpactiy, secondTry) {
 
     videoController.videoOpactiy = videoOpactiy;
     $("#backgroundVideo").css("opacity", videoController.videoOpactiy);
+    if(videoController.videoOpactiy==0){
+        $("#backgroundVideo").hide();
+    }else
+        $("#backgroundVideo").show();
+
 
 
 }
@@ -1172,7 +1177,9 @@ videoController.playingSong = function () {
     if (playbackController.playingSong) {
         playbackController.playingSongTimer = Date.now();
        $("#backgroundVideo").addClass("animated")
+
         $("#backgroundVideo").css("opacity", videoController.videoOpactiy);
+
 
         $("#siteLogoImage").attr("src", "public/img/sites/" + mediaController.getSiteLogo());
         $("#siteLogo").show();

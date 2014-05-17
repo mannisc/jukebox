@@ -913,6 +913,7 @@
 <script type="text/javascript" src="public/js/dailymotionPlayer.js"></script>
 <script type="text/javascript" src="public/js/vimeoPlayer.js"></script>
 
+
 <script type="text/javascript" src="public/js/videoController.js"></script>
 <script type="text/javascript" src="public/js/videoPlayer.js"></script>
 
