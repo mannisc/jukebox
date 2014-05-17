@@ -31,7 +31,7 @@ videoController.videoPlayerList[2][0] = vimeoPlayer;
 
 videoController.videoPlayer = videoController.videoPlayerList[0][0];////embeddedPlayer;//
 
-videoController.videoOpactiy = 0.6;
+videoController.videoOpactiy = 0.5;
 
 videoController.isEmbedded = false;
 
