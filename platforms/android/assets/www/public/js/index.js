@@ -95,7 +95,7 @@ $(document).ready(function () {
    // },15000)
     // FastClick.attach(document.body);
 
-    $.mobile.loading("show");
+   // $.mobile.loading("show");
     var initPage = function () {
         if ($scope.loaded) {
             //setTimeout(function () {$("#dmplayer").addClass("iframeVideo").appendTo("#backgroundVideo")},2000);
