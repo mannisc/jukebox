@@ -161,6 +161,7 @@ var mediaelementPlayer = function (selector) {
 
                         that.startplause = false;
                         that.startplay = false;
+                        that.startplay = false;
 
 
 

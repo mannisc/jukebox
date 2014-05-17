@@ -1,5 +1,5 @@
 /**
- * dailymotionPlayer.
+ * vimeoPlayer.
  *
  * >>Description<<
  *
@@ -7,17 +7,22 @@
  * @date 07.04.14 - 09:25
  */
 
-var dailymotionPlayer = function () {
+var vimeoPlayer = function () {
 };
 
-dailymotionPlayer.dmplayer    = null;
-dailymotionPlayer.active      = 0;
-dailymotionPlayer.dailymotion = 0;
-dailymotionPlayer.dailymotionVideoID = "";
-dailymotionPlayer.bufferedTime = 0;
-dailymotionPlayer.duration = 0;
-dailymotionPlayer.currentTime = 0;
-dailymotionPlayer.apiready = false;
+vimeoPlayer.player    = null;
+vimeoPlayer.active      = 0;
+vimeoPlayer.vimeo = 0;
+vimeoPlayer.vimeoVideoID = "";
+vimeoPlayer.bufferedTime = 0;
+vimeoPlayer.duration = 0;
+vimeoPlayer.currentTime = 0;
+vimeoPlayer.apiready = false;
+
+vimeoPlayer.player = null;
+vimeoPlayer.status = null;
+vimeoPlayer.iframe = null;
+
 
 
 window.dmAsyncInit = function()
@@ -29,23 +34,11 @@ window.dmAsyncInit = function()
  * Get VideoID of Dailymotion-Video
  */
 
-function getDailyMotionId(url) {
-    var m = url.match(/^.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/);
-    if (m !== null) {
-        if(m[4] !== undefined) {
-            return m[4];
-        }
-        return m[2];
-    }
-    return null;
-}
-
-
 
 /**
  * Init Player
  */
-dailymotionPlayer.init = function () {
+vimeoPlayer.init = function () {
 
 
 };
@@ -53,106 +46,106 @@ dailymotionPlayer.init = function () {
 /**
  * Set Progress in percentage
  */
-dailymotionPlayer.setProgressPercentage = function(percentage){
+vimeoPlayer.setProgressPercentage = function(percentage){
 
     //Set progress in videoController
     videoController.setProgressPercentage(percentage)
 
 }
 
-dailymotionPlayer.eventListener = function () {};
+vimeoPlayer.eventListener = function () {};
 
-dailymotionPlayer.eventListener.apiready =  function(e)
+vimeoPlayer.eventListener.apiready =  function(e)
 {
-    if(dailymotionPlayer.dmplayer){
-        if(e.target.src.search(dailymotionPlayer.dailymotionVideoID)>-1){
+    if(vimeoPlayer.player){
+        if(e.target.src.search(vimeoPlayer.vimeoVideoID)>-1){
             $(".mejs-time-buffering").hide();
-            $("#dailymotionPlayer").show();
-            $("#dmplayer").show();
-            dailymotionPlayer.apiready = true;
+            $("#vimeoplayer").show();
+            $("#vimeoembedplayer").show();
+            vimeoPlayer.apiready = true;
 
-            dailymotionPlayer.firstplay = true;
+            vimeoPlayer.firstplay = true;
 
-            if(dailymotionPlayer.startplay){
-                dailymotionPlayer.play()
+            if(vimeoPlayer.startplay){
+                vimeoPlayer.play()
             }
 
-            else if(dailymotionPlayer.startpause){
+            else if(vimeoPlayer.startpause){
                 videoController.playingSong();
-                dailymotionPlayer.firstplay = false;
+                vimeoPlayer.firstplay = false;
 
             }
 
-            dailymotionPlayer.startpause = false;
-            dailymotionPlayer.startplay = false;
+            vimeoPlayer.startpause = false;
+            vimeoPlayer.startplay = false;
 
 
         }
     }
 }
 
-dailymotionPlayer.eventListener.error = function(e)
+vimeoPlayer.eventListener.error = function(e)
 {
-    if(dailymotionPlayer.dmplayer){
-        dailymotionPlayer.error();
+    if(vimeoPlayer.player){
+        vimeoPlayer.error();
     }
 }
 
-dailymotionPlayer.eventListener.play = function(e)
+vimeoPlayer.eventListener.play = function(e)
 {
-    if(dailymotionPlayer.dmplayer&&dailymotionPlayer.firstplay){
+    if(vimeoPlayer.player&&vimeoPlayer.firstplay){
         videoController.playingSong();
-        dailymotionPlayer.firstplay = false;
+        vimeoPlayer.firstplay = false;
     }
 }
 
-dailymotionPlayer.eventListener.canplaythrough = function(e)
+vimeoPlayer.eventListener.canplaythrough = function(e)
 {
     /*
-    if(e.target.src.search(dailymotionPlayer.dailymotionVideoID)>-1){
-        if(dailymotionPlayer.dmplayer){
-            dailymotionPlayer.dmplayer.play();
+    if(e.target.src.search(vimeoPlayer.vimeoVideoID)>-1){
+        if(vimeoPlayer.player){
+            vimeoPlayer.player.play();
         }
     } */
 }
 
-dailymotionPlayer.eventListener.durationchange = function(e)
+vimeoPlayer.eventListener.durationchange = function(e)
 {
-    if(dailymotionPlayer.dmplayer){
-        dailymotionPlayer.duration = e.target.duration;
-        // dailymotionPlayer.updateDuration();
-        videoController.setMaxTime(dailymotionPlayer.duration);
+    if(vimeoPlayer.player){
+        vimeoPlayer.duration = e.target.duration;
+        // vimeoPlayer.updateDuration();
+        videoController.setMaxTime(vimeoPlayer.duration);
     }
 }
 
-dailymotionPlayer.eventListener.timeupdate = function(e)
+vimeoPlayer.eventListener.timeupdate = function(e)
 {
-    if(dailymotionPlayer.dmplayer){
-        dailymotionPlayer.currentTime = e.target.currentTime;
-        //console.log("Progress DM: "+dailymotionPlayer.currentTime)
-        videoController.setProgressTime(dailymotionPlayer.currentTime);
+    if(vimeoPlayer.player){
+        vimeoPlayer.currentTime = e.target.currentTime;
+        //console.log("Progress DM: "+vimeoPlayer.currentTime)
+        videoController.setProgressTime(vimeoPlayer.currentTime);
     }
 }
 
-dailymotionPlayer.eventListener.progress = function(e)
+vimeoPlayer.eventListener.progress = function(e)
 {
-    if(dailymotionPlayer.dmplayer){
-        if(e.target.src.search(dailymotionPlayer.dailymotionVideoID)>-1){
-            dailymotionPlayer.bufferedTime = e.target.bufferedTime;
-            if(dailymotionPlayer.duration>0){
+    if(vimeoPlayer.player){
+        if(e.target.src.search(vimeoPlayer.vimeoVideoID)>-1){
+            vimeoPlayer.bufferedTime = e.target.bufferedTime;
+            if(vimeoPlayer.duration>0){
 
-                videoController.setBufferedPercentage(dailymotionPlayer.bufferedTime/dailymotionPlayer.duration);
+                videoController.setBufferedPercentage(vimeoPlayer.bufferedTime/vimeoPlayer.duration);
             }
         }
     }
 
 }
 
-dailymotionPlayer.eventListener.ended = function(e)
+vimeoPlayer.eventListener.ended = function(e)
 {
-    if(dailymotionPlayer.dmplayer){
-        if(e.target.src.search(dailymotionPlayer.dailymotionVideoID)>-1){
-            dailymotionPlayer.mediaEnded();
+    if(vimeoPlayer.player){
+        if(e.target.src.search(vimeoPlayer.vimeoVideoID)>-1){
+            vimeoPlayer.mediaEnded();
             videoController.endedSong();
         }
     }
@@ -163,150 +156,166 @@ dailymotionPlayer.eventListener.ended = function(e)
  * Load Player with Url before using
  */
 
-dailymotionPlayer.load = function (url) {
-  console.dir("LOAD: "+url);
 
-    dailymotionPlayer.active = 1;
-    dailymotionPlayer.bufferedTime = 0;
-    dailymotionPlayer.duration = 0;
-    dailymotionPlayer.currentTime = 0;
-    dailymotionPlayer.apiready = false;
 
-    var videoid = getDailyMotionId(url);
 
-    $("#dailymotionPlayer").hide();
-    if(videoid){
-        $("#dmplayer").addClass("iframeVideo").appendTo("#backgroundVideo");
-        dailymotionPlayer.dailymotionVideoID = videoid;
-        var PARAMS = {background : 'ABE866', autoplay : 0, chromeless : 1,
-            foreground : '000000', related: 0, quality: 720,
-            html : 1, highlight : '857580',
-            info : 1, network : 'dsl', autoplay : 0};
-        dailymotionPlayer.dmplayer = DM.player("dmplayer", {video: videoid,width: "100%", height: "100%", params: PARAMS});
 
-        dailymotionPlayer.dmplayer.addEventListener("error",dailymotionPlayer.eventListener.error );
+vimeoPlayer.loadInit = function(){
+    vimeoPlayer.iframe = $('#vimeoplayerframe')[0];
+    vimeoPlayer.player = $f(vimeoPlayer.iframe);
+    vimeoPlayer.status = $('.status');
 
-        dailymotionPlayer.dmplayer.addEventListener("apiready",dailymotionPlayer.eventListener.apiready);
 
-        //dailymotionPlayer.dmplayer.addEventListener("canplay",dailymotionPlayer.eventListener.apiready);
+    // When the player is ready, add listeners for pause, finish, and playProgress
+    vimeoPlayer.player.addEvent('ready', function() {
 
-        dailymotionPlayer.dmplayer.addEventListener("canplaythrough",dailymotionPlayer.eventListener.canplaythrough);
+        //  player.addEvent('pause', onPause);
+        //  player.addEvent('finish', onFinish);
+        //  player.addEvent('playProgress', onPlayProgress);
+    });
+    vimeoPlayer.player.api("play");
+    vimeoPlayer.apiready = true;
+}
 
-        dailymotionPlayer.dmplayer.addEventListener("durationchange",dailymotionPlayer.eventListener.durationchange);
 
-        dailymotionPlayer.dmplayer.addEventListener("timeupdate",dailymotionPlayer.eventListener.timeupdate);
 
-        dailymotionPlayer.dmplayer.addEventListener("progress",dailymotionPlayer.eventListener.progress);
 
-        dailymotionPlayer.dmplayer.addEventListener("ended",dailymotionPlayer.eventListener.ended);
+vimeoPlayer.load = function (url) {
+  console.dir("VIMEO LOAD: "+url);
 
-        dailymotionPlayer.dmplayer.addEventListener("play",dailymotionPlayer.eventListener.play);
+    vimeoPlayer.active = 1;
+    vimeoPlayer.bufferedTime = 0;
+    vimeoPlayer.duration = 0;
+    vimeoPlayer.currentTime = 0;
+    vimeoPlayer.apiready = false;
 
-    }
+
+    $.ajax({
+        url: "http://vimeo.com/api/oembed.json?url="+escape(url),
+        success: function (data) {
+            //$("#dailymotionPlayer").hide();
+            console.dir("VIMEO JSON")
+            console.dir(data)
+            var videoid = data.video_id;
+
+
+
+
+            if(videoid){
+                console.dir("VIMEO VideoID: "+videoid);
+
+                $("#vimeoplayer").remove();
+                $( "#vimeoembedplayer" ).append('<div id="vimeoplayer" ><iframe id="vimeoplayerframe" src="//player.vimeo.com/video/'+videoid+'?portrait=0&autoplay=1&badge=0&hd=1&title=0&byline=0" width="110%" height="110%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>' );
+                $('#vimeoplayerframe').load(vimeoPlayer.loadInit);
+
+                $("#vimeoPlayer").hide();
+                $("#vimeoembedplayer").show();
+
+                $("#vimeoplayer").addClass("iframeVideo").appendTo("#backgroundVideo");
+
+
+
+
+
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+
+    })
+
+
+
+
 };
 
 /**
  * Unload Player after using
  */
-dailymotionPlayer.unload = function () {
+vimeoPlayer.unload = function () {
+    vimeoPlayer.player.api("unload");
     console.dir("UNLOAD! ");
-    dailymotionPlayer.dailymotionVideoID ="null";
-    dailymotionPlayer.stop();
-    dailymotionPlayer.active = 0;
-    $("#dmplayer").hide();
-    if(dailymotionPlayer.dmplayer){
-       dailymotionPlayer.dmplayer.removeEventListener("apiready",dailymotionPlayer.eventListener.apiready);
+    vimeoPlayer.vimeoVideoID ="null";
+    vimeoPlayer.stop();
+    vimeoPlayer.active = 0;
+    $("#vimeoplayer").hide();
 
-        dailymotionPlayer.dmplayer.removeEventListener("canplaythrough",dailymotionPlayer.eventListener.canplaythrough);
+    vimeoPlayer.apiready = false;
+    delete vimeoPlayer.player;
+    vimeoPlayer.player = null;
 
-        dailymotionPlayer.dmplayer.removeEventListener("durationchange",dailymotionPlayer.eventListener.durationchange);
-
-        dailymotionPlayer.dmplayer.removeEventListener("timeupdate",dailymotionPlayer.eventListener.timeupdate);
-
-        dailymotionPlayer.dmplayer.removeEventListener("progress",dailymotionPlayer.eventListener.progress);
-
-       dailymotionPlayer.dmplayer.removeEventListener("ended",dailymotionPlayer.eventListener.ended);
-
-        dailymotionPlayer.dmplayer.removeEventListener("error",dailymotionPlayer.eventListener.error);
-
-        dailymotionPlayer.dmplayer.removeEventListener("play",dailymotionPlayer.eventListener.play);
-
-    }
-    dailymotionPlayer.apiready = false;
-    delete dailymotionPlayer.dmplayer;
-    dailymotionPlayer.dmplayer = null;
-
-    $("#dmplayer").remove();
-    $( "#embedplayer" ).append('<div id="dmplayer" ></div>' );
+    $("#vimeoplayer").remove();
+    $( "#vimeoembedplayer" ).append('<div id="vimeoplayer" ></div>' );
 };
 
 
-dailymotionPlayer.setVolume = function (volume) {
-    if(dailymotionPlayer.dmplayer && dailymotionPlayer.apiready){
-        dailymotionPlayer.dmplayer.setVolume(volume);
+vimeoPlayer.setVolume = function (volume) {
+    if(vimeoPlayer.player && vimeoPlayer.apiready){
+        vimeoPlayer.player.api("setVolume",volume)
     }
 
 }
 
 
 
-dailymotionPlayer.play = function () {
-    if(dailymotionPlayer.dmplayer ){
-        if(dailymotionPlayer.apiready){
-            dailymotionPlayer.dmplayer.play();
-            dailymotionPlayer.setVolume(videoController.volume);
+vimeoPlayer.play = function () {
+    if(vimeoPlayer.player ){
+        if(vimeoPlayer.apiready){
+            vimeoPlayer.player.api("play");
+            //vimeoPlayer.setVolume(videoController.volume);
         }
         else{
-            dailymotionPlayer.startplay = true;
-            dailymotionPlayer.startpause = false;
+            vimeoPlayer.startplay = true;
+            vimeoPlayer.startpause = false;
 
         }
 
-        console.dir("PLAY: "+dailymotionPlayer.dailymotionVideoID);
+        console.dir("PLAY: "+vimeoPlayer.vimeoVideoID);
 
     }
 
 }
-dailymotionPlayer.pause = function () {
-    if(dailymotionPlayer.dmplayer){
+vimeoPlayer.pause = function () {
+    if(vimeoPlayer.player){
 
-        if(dailymotionPlayer.apiready)
-            dailymotionPlayer.dmplayer.pause();
+        if(vimeoPlayer.apiready)
+            vimeoPlayer.player.api("pause");
         else{
-            dailymotionPlayer.startplay = false;
-            dailymotionPlayer.startpause = true;
+            vimeoPlayer.startplay = false;
+            vimeoPlayer.startpause = true;
 
         }
 
-        console.dir("PAUSE: "+dailymotionPlayer.dailymotionVideoID);
+        console.dir("PAUSE: "+vimeoPlayer.vimeoVideoID);
 
     }
 
 }
 
-dailymotionPlayer.stop = function () {
-    if(dailymotionPlayer.dmplayer && dailymotionPlayer.apiready){
-        dailymotionPlayer.dmplayer.pause();
-        dailymotionPlayer.dmplayer.seek(0);
+vimeoPlayer.stop = function () {
+    if(vimeoPlayer.player && vimeoPlayer.apiready){
+        vimeoPlayer.player.api("pause");
+        vimeoPlayer.player.api("setCurrentTime",0);
     }
 }
 
-dailymotionPlayer.setCurrentTime = function(percentage){
-    if(dailymotionPlayer.dmplayer && dailymotionPlayer.apiready){
-        dailymotionPlayer.dmplayer.seek(percentage* dailymotionPlayer.duration);
+vimeoPlayer.setCurrentTime = function(percentage){
+    if(vimeoPlayer.player && vimeoPlayer.apiready){
+        vimeoPlayer.player.api("setCurrentTime",percentage* vimeoPlayer.duration);
     }
 
 }
 
 
-dailymotionPlayer.mediaEnded = function(){
+vimeoPlayer.mediaEnded = function(){
     videoController.endedSong();
     mediaController.mediaEnded();
 }
 
 
-dailymotionPlayer.error= function (){
-    if(dailymotionPlayer.active == 1){
+vimeoPlayer.error= function (){
+    if(vimeoPlayer.active == 1){
         //TODO FEEDBACK AN SERVER!
         //mediaController.playNextVersion();
     }
