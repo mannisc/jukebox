@@ -996,7 +996,7 @@
 <img src="public/img/background.jpg" id="backgroundImage">
 
 
-<div class="sidead fadeincompleteslow">
+<div class="sideinfo fadeincompleteslow">
     <img src="public/img/testad.png">
 </div>
 </body>
