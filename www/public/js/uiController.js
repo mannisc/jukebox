@@ -474,14 +474,10 @@ uiController.updateUI = function () {
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
 
-    $(".sidead").css("line-height",($(window).height()-5-44)+"px");
+    $(".sideinfo").css("line-height",($(window).height()-5-44)+"px");
 
 
     $("#lyricsifrm").css("height",$(window).height()-8-44-44-44)
-
-    //  $(".sidead").css("max-height", ($(window).height() - 44-5)+"px");
-
-
 
     var myIframe = document.getElementById('lyricsifrm');
     setTimeout(function () {

@@ -372,18 +372,23 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
 
 
 .songlist li:hover a img.ui-li-icon{
-    -webkit-transform: scale(1.21);
-    -moz-transform: scale(1.23);
-    transform: scale(1.23);
+    /*-webkit-transform: scale(1.21);
+   -moz-transform: scale(1.23);
+   transform: scale(1.23);
+   -moz-box-shadow: 3px 0p 5px rgba(0,0,0,0.4);
+-webkit-box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
+box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
+
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1);
 
     /*transform: none!important; NOT WORKING FOR FIREFOX*/
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%!important;
     z-index:10;
     overflow:visible;
-   /* -moz-box-shadow: 3px 0p 5px rgba(0,0,0,0.4);
-    -webkit-box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
-    box-shadow: 3px 0px 5px rgba(0,0,0,0.4);  */
+
 
     -moz-box-shadow: none!important;
     -webkit-box-shadow: none!important;
@@ -762,9 +767,11 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
 
 .songlist li.hoverable.selected:hover .playlistCoverSong img{
     left: 0!important;
+
     -webkit-transform: rotateY(360deg) scale(1.21)  !important;
     -moz-transform: rotateY(360deg) scale(1.23)  !important;
     transform: rotateY(360deg) scale(1.23) !important;
+
 }
 
 
@@ -1815,6 +1822,31 @@ animation-duration:  1.5s;
 
 /*Spinning CoverImage */
 @-moz-keyframes spin {
+    0% {  transform:rotateY(0deg) scale(1);  -moz-transform: rotateY(0deg) scale(1);}
+    40% {  transform:rotateY(45deg) scale(1);  -moz-transform: rotateY(45deg) scale(1);}
+    70% { transform:rotateY(360deg) scale(1); -moz-transform: rotateY(360deg)  scale(1); }
+    100% { transform:rotateY(360deg) scale(1); -moz-transform: rotateY(360deg)  scale(1); }
+
+}
+
+@-webkit-keyframes spin {
+    0% { transform:rotateY(0deg) scale(1);  -webkit-transform: rotateY(0deg) scale(1);}
+    40% { transform:rotateY(45deg) scale(1); -webkit-transform: rotateY(45deg) scale(1);}
+    70% { transform:rotateY(360deg) scale(1);  -webkit-transform: rotateY(360deg) scale(1); }
+    100% { transform:rotateY(360deg) scale(1);  -webkit-transform: rotateY(360deg) scale(1);  }
+}
+
+@keyframes spin{
+    0% { transform:rotateY(0deg) scale(1); }
+    40% { transform:rotateY(45deg) scale(1); }
+    70% { transform:rotateY(360deg) scale(1); }
+    100% { transform:rotateY(360deg) scale(1); }
+}
+
+
+/* CALMER DESING
+
+@-moz-keyframes spin {
     0% {  transform:rotateY(0deg) scale(1.23);  -moz-transform: rotateY(0deg) scale(1.23);}
     40% {  transform:rotateY(45deg) scale(1.23);  -moz-transform: rotateY(45deg) scale(1.23);}
     70% { transform:rotateY(360deg) scale(1.23); -moz-transform: rotateY(360deg)  scale(1.23); }
@@ -1837,5 +1869,9 @@ animation-duration:  1.5s;
 }
 
 
+
+
+
+*/
 
 
