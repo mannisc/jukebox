@@ -67,9 +67,7 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
 
     event.stopPropagation();
 
-    setTimeout(function () {
-        uiController.stopPlaylistScrollingOnClick(event);
-    }, 0)
+
 }
 
 

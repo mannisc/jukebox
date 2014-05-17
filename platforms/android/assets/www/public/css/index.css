@@ -189,8 +189,8 @@ body {
     .videoControlElements-stop-button{
         display:none!important;
     }
-    .sidead{
-        display: none;
+    .sideinfo {
+        display: none!important;
     }
 
     #playingSongInfoLink{
@@ -1413,7 +1413,7 @@ max-width: 2em!important;
 
 /*ADS*/
 
-.sidead{
+.sideinfo {
  position:absolute;
     top:0;
     right:0;
@@ -1421,8 +1421,10 @@ max-width: 2em!important;
     height: 100% ;
     background-color: rgba(255, 255, 255,0.03);
     margin-top:44px;
+
+    display: block!important;
 }
-.sidead *{
+.sideinfo *{
     display:inline-block!important;
     vertical-align: middle!important;
 }
