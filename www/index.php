@@ -478,87 +478,92 @@
 
 
         <!-- embedded players -->
-        <div id="embedplayer" >
-            <div id="dmplayer" >
-             <!-- <iframe src="//player.vimeo.com/video/95255285?portrait=0&badge=0&title=0&byline=0&autoplay=1" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+        <div id="dailymotionembedplayer" >
+            <div id="dailymotionplayer" >
             </div>
         </div>
-
-    </div>
-
-</div>
-<div id="videocontrols" class="videoControlElements-container" style="text-align: center">
-    <div id="videocontrolsInner">
-
-        <div class="videoControlElements-controls">
-            <div class="videoControlElements-button videoControlElements-prevtrack-button videoControlElements-prevtrack">
-                <button type="button" aria-controls="mep_0" title="Previous Track" ></button>
-            </div>
-            <div class="videoControlElements-button videoControlElements-playpause-button videoControlElements-play">
-                <button type="button" aria-controls="mep_0" title="Play/Pause" aria-label="Play/Pause" ></button>
-            </div>
-            <div class="videoControlElements-button videoControlElements-stop-button videoControlElements-stop">
-                <button type="button" aria-controls="mep_0" title="Stop" aria-label="Stop" ></button>
-            </div>
-            <div class="videoControlElements-button videoControlElements-nexttrack-button videoControlElements-nexttrack">
-                <button type="button" aria-controls="mep_0" title="Next Track" ></button>
-            </div>
-            <div class="videoControlElements-button videoControlElements-shuffle-button videoControlElements-shuffle-off">
-                <button type="button" aria-controls="mep_0" title="Shuffle On/Off" style="opacity:0.5" >
-                </button>
-            </div>
-            <div class="videoControlElements-time videoControlElements-currenttime-container">
-                <span class="videoControlElements-currenttime">00:00</span>
-
-            </div>
-            <div class="videoControlElements-time-rail" style="width: 491px;">
-                    <span class="videoControlElements-time-total" style="width: 481px;">
-                        <span class="videoControlElements-time-buffering" style="display: none;"></span>
-                        <span class="videoControlElements-time-loaded"></span>
-                        <span class="videoControlElements-time-current"></span>
-                        <span class="videoControlElements-time-handle"></span>
-                        <span class="videoControlElements-time-float">
-                            <span class="videoControlElements-time-float-current">00:00</span>
-                            <span class="videoControlElements-time-float-corner"></span>
-                        </span>
-                    </span>
-            </div>
-
-            <div class="videoControlElements-time videoControlElements-duration-container">
-                <span class="videoControlElements-duration">00:00</span>
-            </div>
-
-            <div class="videoControlElements-button videoControlElements-volume-button videoControlElements-mute">
-                <button type="button" aria-controls="mep_0" title="Mute Toggle" aria-label="Mute Toggle"></button>
-                <div class="videoControlElements-volume-slider" style="display: none;">
-                    <div class="videoControlElements-volume-total"></div>
-                    <div class="videoControlElements-volume-current" style="height: 80px; top: 32px;"></div>
-                    <div class="videoControlElements-volume-handle" style="top: 29px;"></div>
-                </div>
-            </div>
+        <div id="vimeoembedplayer" >
+            <div id="vimeoplayer" >
+                <!-- <iframe id="vimeoplayerframe" src="//player.vimeo.com/video/95255285?portrait=0&badge=0&title=0&byline=0" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
+              </div>
+          </div>
 
 
-            <div class="videoControlElements-button videoControlElements-fullscreen-button">
-                <button type="button" aria-controls="mep_0" title="Fullscreen" style="opacity:0.5" aria-label="Fullscreen"> </button>
-                <div class="videoControlElements-fullscreen-slider" style="display: none;">
-                    <div class="videoControlElements-fullscreen-total"></div>
-                    <div class="videoControlElements-fullscreen-current" style="height: 80px; top: 32px;"></div>
-                    <div class="videoControlElements-fullscreen-handle" style="top: 29px;"></div>
-                </div>
-            </div>
+      </div>
 
-            <div class="videoControlElements-button videoControlElements-button-choose-version videoControlElements-custom-button">
-                <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
-            </div>
-            <div class="videoControlElements-button videoControlElements-button-lyrics videoControlElements-custom-button">
-                <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button>
-            </div>
-            <div class="videoControlElements-button videoControlElements-button-facebook videoControlElements-custom-button">
-                <button type="button" id="facebookpostbutton" data-role="none"   aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button>
-            </div>
-            <!--div style =class="videoControlElements-button videoControlElements-button-copyright videoControlElements-custom-button">
-                <button type="button" id="copyrightbutton" data-role="none" style="opacity:0.9"  onclick="window.open('','_blank')" aria-controls="mep_0" title="Copyright" aria-label="Copyright"></button>
-            </div-->
+  </div>
+  <div id="videocontrols" class="videoControlElements-container" style="text-align: center">
+      <div id="videocontrolsInner">
+
+          <div class="videoControlElements-controls">
+              <div class="videoControlElements-button videoControlElements-prevtrack-button videoControlElements-prevtrack">
+                  <button type="button" aria-controls="mep_0" title="Previous Track" ></button>
+              </div>
+              <div class="videoControlElements-button videoControlElements-playpause-button videoControlElements-play">
+                  <button type="button" aria-controls="mep_0" title="Play/Pause" aria-label="Play/Pause" ></button>
+              </div>
+              <div class="videoControlElements-button videoControlElements-stop-button videoControlElements-stop">
+                  <button type="button" aria-controls="mep_0" title="Stop" aria-label="Stop" ></button>
+              </div>
+              <div class="videoControlElements-button videoControlElements-nexttrack-button videoControlElements-nexttrack">
+                  <button type="button" aria-controls="mep_0" title="Next Track" ></button>
+              </div>
+              <div class="videoControlElements-button videoControlElements-shuffle-button videoControlElements-shuffle-off">
+                  <button type="button" aria-controls="mep_0" title="Shuffle On/Off" style="opacity:0.5" >
+                  </button>
+              </div>
+              <div class="videoControlElements-time videoControlElements-currenttime-container">
+                  <span class="videoControlElements-currenttime">00:00</span>
+
+              </div>
+              <div class="videoControlElements-time-rail" style="width: 491px;">
+                      <span class="videoControlElements-time-total" style="width: 481px;">
+                          <span class="videoControlElements-time-buffering" style="display: none;"></span>
+                          <span class="videoControlElements-time-loaded"></span>
+                          <span class="videoControlElements-time-current"></span>
+                          <span class="videoControlElements-time-handle"></span>
+                          <span class="videoControlElements-time-float">
+                              <span class="videoControlElements-time-float-current">00:00</span>
+                              <span class="videoControlElements-time-float-corner"></span>
+                          </span>
+                      </span>
+              </div>
+
+              <div class="videoControlElements-time videoControlElements-duration-container">
+                  <span class="videoControlElements-duration">00:00</span>
+              </div>
+
+              <div class="videoControlElements-button videoControlElements-volume-button videoControlElements-mute">
+                  <button type="button" aria-controls="mep_0" title="Mute Toggle" aria-label="Mute Toggle"></button>
+                  <div class="videoControlElements-volume-slider" style="display: none;">
+                      <div class="videoControlElements-volume-total"></div>
+                      <div class="videoControlElements-volume-current" style="height: 80px; top: 32px;"></div>
+                      <div class="videoControlElements-volume-handle" style="top: 29px;"></div>
+                  </div>
+              </div>
+
+
+              <div class="videoControlElements-button videoControlElements-fullscreen-button">
+                  <button type="button" aria-controls="mep_0" title="Fullscreen" style="opacity:0.5" aria-label="Fullscreen"> </button>
+                  <div class="videoControlElements-fullscreen-slider" style="display: none;">
+                      <div class="videoControlElements-fullscreen-total"></div>
+                      <div class="videoControlElements-fullscreen-current" style="height: 80px; top: 32px;"></div>
+                      <div class="videoControlElements-fullscreen-handle" style="top: 29px;"></div>
+                  </div>
+              </div>
+
+              <div class="videoControlElements-button videoControlElements-button-choose-version videoControlElements-custom-button">
+                  <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
+              </div>
+              <div class="videoControlElements-button videoControlElements-button-lyrics videoControlElements-custom-button">
+                  <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button>
+              </div>
+              <div class="videoControlElements-button videoControlElements-button-facebook videoControlElements-custom-button">
+                  <button type="button" id="facebookpostbutton" data-role="none"   aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button>
+              </div>
+              <!--div style =class="videoControlElements-button videoControlElements-button-copyright videoControlElements-custom-button">
+                  <button type="button" id="copyrightbutton" data-role="none" style="opacity:0.9"  onclick="window.open('','_blank')" aria-controls="mep_0" title="Copyright" aria-label="Copyright"></button>
+              </div-->
             <div class="videoControlElements-button videoControlElements-button-external videoControlElements-custom-button">
                 <button type="button" id="openexternalbutton" data-role="none" style="opacity:0.5"  aria-controls="mep_0" title="Open external site" aria-label="Open external site"></button>
             </div>
@@ -830,6 +835,8 @@
 </div>
 
 
+
+
 <!-- /dailymotion -->
 <script src="http://api.dmcdn.net/all.js"></script>
 <!-- /page -->
@@ -850,7 +857,7 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-touch.js"></script>
 <script type="text/javascript" src="public/js/libs/ng-context-menu.js"></script>
 
-
+<script type='text/javascript' src="http://a.vimeocdn.com/js/froogaloop2.min.js"></script>
 
 <!-- jQuery -->
 <script type="text/javascript" src="public/js/libs/jquery-ui.js"></script>
@@ -898,7 +905,9 @@
 <script type="text/javascript" src="public/js/uiController.js"></script>
 
 <script type="text/javascript" src="public/js/mediaelementPlayer.js"></script>
-<script type="text/javascript" src="public/js/dailymotionPlayers.js"></script>
+
+<script type="text/javascript" src="public/js/dailymotionPlayer.js"></script>
+<script type="text/javascript" src="public/js/vimeoPlayer.js"></script>
 
 <script type="text/javascript" src="public/js/videoController.js"></script>
 <script type="text/javascript" src="public/js/videoPlayer.js"></script>
@@ -944,8 +953,7 @@
 <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
 <script src="https://apis.google.com/js/client.js?onload=loadClient"></script>
 
-<!--Embed-->
-<script type="text/javascript" src="public/js/dailymotionPlayers.js"></script>
+
 
 <!--Main NG Controller-->
 <script type="text/javascript" src="public/js/mainController.js"></script>
