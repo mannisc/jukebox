@@ -189,7 +189,7 @@ optionsMenu.openArtistResultsOptions = function (event, positionTo) {
     $("#popupOptionsList").listview("refresh");
     $("#popupOptions").popup("option", "arrow", true);
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
-    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "9px");
+    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "1px");
 
 }
 
@@ -212,7 +212,7 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
     $("#popupOptionsList").listview("refresh");
     $("#popupOptions").popup("option", "arrow", true);
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
-    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "9px");
+    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "1px");
 
 
 }
@@ -237,7 +237,7 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
     $("#popupOptionsList").listview("refresh");
     $("#popupOptions").popup("option", "arrow", true);
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
-    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "9px");
+    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "1px");
 
 
 }
@@ -263,7 +263,7 @@ optionsMenu.openUserResultsOptions = function (event, positionTo) {
     $("#popupOptionsList").listview("refresh");
     $("#popupOptions").popup("option", "arrow", true);
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
-    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "9px");
+    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "1px");
 
 
 }

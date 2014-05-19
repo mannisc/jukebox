@@ -101,7 +101,9 @@ mediaController.sendRating = function (rating) {
                 $.ajax({
                     url: preferences.serverURL + "?ratingURL=" + VideoURL + "&rating=" + rating + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name + "&auth=" + authController.ip_token,
                     success: function (data) {
-                       authController.ensureAuthenticated(data, function(){ mediaController.sendRating(rating);} )
+                        authController.ensureAuthenticated(data, function () {
+                            mediaController.sendRating(rating);
+                        })
                     }
                 })
             }
@@ -161,28 +163,28 @@ mediaController.getSiteLogo = function () {
 
 mediaController.getSiteName = function (url, prefix) {
     if (url.toLowerCase().search(".dailymotion.com") > -1 || url.toLowerCase().search("/dailymotion.com") > -1) {
-        return prefix+"Dailymotion";
+        return prefix + "Dailymotion";
     } else if (url.toLowerCase().search(".youtube.") > -1 || url.toLowerCase().search("/youtube.") > -1) {
-        return prefix+"Youtube"  ;
+        return prefix + "Youtube";
     } else if (url.toLowerCase().search(".muzu.tv") > -1 || url.toLowerCase().search("/muzu.tv") > -1) {
-        return prefix+"Muzu";
+        return prefix + "Muzu";
     } else if (url.toLowerCase().search(".vimeo.") > -1 || url.toLowerCase().search("/vimeo.") > -1) {
-        return prefix+"Vimeo" ;
+        return prefix + "Vimeo";
     } else if (url.toLowerCase().search(".photobucket.") > -1 || url.toLowerCase().search("/photobucket.") > -1) {
-        return prefix+"Photobucket";
+        return prefix + "Photobucket";
     } else if (url.toLowerCase().search(".metacafe.") > -1 || url.toLowerCase().search("/metacafe.") > -1) {
-        return prefix+"Metacafe";
+        return prefix + "Metacafe";
     } else if (url.toLowerCase().search(".veoh.") > -1 || url.toLowerCase().search("/veoh.") > -1) {
-        return prefix+"Veoh";
+        return prefix + "Veoh";
 
     } else if (url.toLowerCase().search(".blip.") > -1 || url.toLowerCase().search("/blip.") > -1) {
-        return prefix+"Blip" ;
+        return prefix + "Blip";
 
     } else if (url.toLowerCase().search(".myvideo.") > -1 || url.toLowerCase().search("/myvideo.") > -1) {
-        return prefix+"Myvideo";
+        return prefix + "Myvideo";
 
     } else if (url.toLowerCase().search(".clipfish.") > -1 || url.toLowerCase().search("/clipfish.") > -1) {
-        return prefix+"Clipfish";
+        return prefix + "Clipfish";
 
     }
 
@@ -199,7 +201,6 @@ mediaController.playSong = function (streamURL, videoURL) {
     videoController.loadSongInSuitablePlayer(streamURL, videoURL);
     videoController.playSong();
     $scope.safeApply();
-
 
 
 }
@@ -229,7 +230,9 @@ mediaController.getVersions = function () {
                             // console.dir("loaded " + counter);
                             // console.dir(data);
 
-                            if(authController.ensureAuthenticated(data, function(){ getsongversions(counter);} )){
+                            if (authController.ensureAuthenticated(data, function () {
+                                getsongversions(counter);
+                            })) {
 
                                 var dataok = false;
                                 if (data.track) {
@@ -257,10 +260,10 @@ mediaController.getVersions = function () {
 
                                             mediaController.versionList = data.track;
                                             mediaController.startVersionIndex = -1;
-                                                 $scope.safeApply();
-                                                 $('#loadversionimg').css("opacity", "0");
-                                                 $("#searchviewVersions").listview('refresh');
-                                                 $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'});
+                                            $scope.safeApply();
+                                            $('#loadversionimg').css("opacity", "0");
+                                            $("#searchviewVersions").listview('refresh');
+                                            $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'});
 
                                             ///$('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
                                         }
@@ -333,7 +336,9 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
                         url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name) + "&auth=" + authController.ip_token,
                         success: function (data) {
 
-                            if(authController.ensureAuthenticated(data, function(){ play(streamID, videoURL);} )){
+                            if (authController.ensureAuthenticated(data, function () {
+                                play(streamID, videoURL);
+                            })) {
 
                                 if (streamID == mediaController.playCounter) {
                                     if (data.streamURL) {
@@ -404,9 +409,11 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                 //var diff = etime.getTime()-time;
                 //alert("RESPONSE TIME: "+diff+" ms");
 
-               if(authController.ensureAuthenticated(data, function(){mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic);} )){
+                if (authController.ensureAuthenticated(data, function () {
+                    mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic);
+                })) {
 
-                        // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
+                    // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
                     mediaController.playCounter++;
                     // console.dir("STREAM");
                     // console.dir(data);
@@ -574,10 +581,10 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
         if (differentVersions) {
             videoController.disableVersionControl(false);
 
-           /* $("#chooseversionbutton").removeClass("rotateIt");
-            setTimeout(function () {
-                $("#chooseversionbutton").addClass("rotateIt");
-            }, 500)*/
+            /* $("#chooseversionbutton").removeClass("rotateIt");
+             setTimeout(function () {
+             $("#chooseversionbutton").addClass("rotateIt");
+             }, 500)*/
         } else
             videoController.disableVersionControl(true);
 
@@ -613,7 +620,9 @@ mediaController.playNextVersion = function () {
                             url: preferences.serverURL + "?getversions=8&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name) + "&auth=" + authController.ip_token,
                             success: function (data) {
 
-                               if(authController.ensureAuthenticated(data, function(){getsongversions(counter);} )){
+                                if (authController.ensureAuthenticated(data, function () {
+                                    getsongversions(counter);
+                                })) {
 
                                     if (data.track) {
                                         if (playbackController.getPlayingSong() == song) {
@@ -711,83 +720,83 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
     uiController.swipeTimer = Date.now(); //Avoid Clicks
     setTimeout(function () {
 
-        var listElement =  playbackController.getListElementFromSong( playbackController.playingSong);
+        var listElement = playbackController.getListElementFromSong(playbackController.playingSong);
 
-        if(listElement.hasClass("loadedsong")) {
+        if (listElement.hasClass("loadedsong")) {
 
-        var loadTime = Date.now() - playbackController.startedLoadingTime;
-        /* var delayTime = loadTime % 2000;
-         if(delayTime>400)
-         delayTime = delayTime-400;
-         else
-         delayTime = 0;
-         */
-        listElement.addClass("firstplay");
+            var loadTime = Date.now() - playbackController.startedLoadingTime;
+            /* var delayTime = loadTime % 2000;
+             if(delayTime>400)
+             delayTime = delayTime-400;
+             else
+             delayTime = 0;
+             */
+            listElement.addClass("firstplay");
 
-        //  setTimeout(function () {
+            //  setTimeout(function () {
 
-        var cover = listElement.find("img.ui-li-icon");
-        var playing = listElement.find(".loadingSongImg");
+            var cover = listElement.find("img.ui-li-icon");
+            var playing = listElement.find(".loadingSongImg");
 
-        cover.addClass("fadeout");
-        playing.addClass("fadeout");
+            cover.addClass("fadeout");
+            playing.addClass("fadeout");
 
-         uiController.swipeTimer = Date.now();//Avoid Clicks
+            uiController.swipeTimer = Date.now();//Avoid Clicks
 
-         setTimeout(function () {
-
-            if (listElement.hasClass("stillloading")) {
-                listElement.addClass("playing");
-                listElement.removeClass("stillloading")
-            }
-
-            //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
-            // listElement.find(".loadingSongImg").hide();
-            listElement.find("img.ui-li-icon").css("opacity", "0")
-            listElement.find(".loadingSongImg").css("opacity", "0")
-
-            listElement.find(".loadingSongImg").removeClass("fadeout")
-
-            listElement.find("img.ui-li-icon").removeClass("fadeout");
             setTimeout(function () {
-                listElement.find("img.ui-li-icon").addClass("fadeincomplete")
-                listElement.removeClass("firstplay");
 
+                if (listElement.hasClass("stillloading")) {
+                    listElement.addClass("playing");
+                    listElement.removeClass("stillloading")
+                }
+
+                //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
+                // listElement.find(".loadingSongImg").hide();
+                listElement.find("img.ui-li-icon").css("opacity", "0")
+                listElement.find(".loadingSongImg").css("opacity", "0")
+
+                listElement.find(".loadingSongImg").removeClass("fadeout")
+
+                listElement.find("img.ui-li-icon").removeClass("fadeout");
                 setTimeout(function () {
-                    listElement.find(".loadingSongImg").css("opacity", "")
-                    listElement.find("img.ui-li-icon").css("opacity", "1")
-                    listElement.find("img.ui-li-icon").removeClass("fadeincomplete");
+                    listElement.find("img.ui-li-icon").addClass("fadeincomplete")
+                    listElement.removeClass("firstplay");
 
-                }, 1000)
-            }, 200)
+                    setTimeout(function () {
+                        listElement.find(".loadingSongImg").css("opacity", "")
+                        listElement.find("img.ui-li-icon").css("opacity", "1")
+                        listElement.find("img.ui-li-icon").removeClass("fadeincomplete");
 
-        }, 100)
-        //  }, delayTime)
+                    }, 1000)
+                }, 200)
 
-        // $("#videoplayer").removeClass("animatefast").addClass("animate");
+            }, 100)
+            //  }, delayTime)
 
-        // playlistController.playingTitle = playlistController.playlingTitleLoading ;
-        // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
+            // $("#videoplayer").removeClass("animatefast").addClass("animate");
 
-        playbackController.playingOldSong = playbackController.playingSong;
+            // playlistController.playingTitle = playlistController.playlingTitleLoading ;
+            // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
 
-        playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
-        mediaController.playSong(streamURL, videoURL);
+            playbackController.playingOldSong = playbackController.playingSong;
 
-        //$("#siteLogoImage").attr('onclick',"win=window.open('"+mediaController.currentvideoURL+"', '_blank')");
+            playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
+            mediaController.playSong(streamURL, videoURL);
 
-        console.dir(streamURL);
+            //$("#siteLogoImage").attr('onclick',"win=window.open('"+mediaController.currentvideoURL+"', '_blank')");
+
+            console.dir(streamURL);
 
 
-        if (differentVersions) {
-            videoController.disableVersionControl(false);
+            if (differentVersions) {
+                videoController.disableVersionControl(false);
 
-           /* $("#chooseversionbutton").removeClass("rotateIt");
-            setTimeout(function () {
-                $("#chooseversionbutton").addClass("rotateIt");
-            }, 500)*/
-        } else
-            videoController.disableVersionControl(true);
+                /* $("#chooseversionbutton").removeClass("rotateIt");
+                 setTimeout(function () {
+                 $("#chooseversionbutton").addClass("rotateIt");
+                 }, 500)*/
+            } else
+                videoController.disableVersionControl(true);
 
         }
     }, 100)
@@ -801,29 +810,29 @@ mediaController.toggleLyrics = function () {
     var iframe = $('#lyricsiframe');
 
     /*
-    if (!mediaController.showLyrics)
+     if (!mediaController.showLyrics)
 
-        setTimeout(function () {
-            uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
-        }, 2500);
-   */
+     setTimeout(function () {
+     uiController.toast("These Lyrics are external content from LyricWiki.<br>More information at <a href='http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "' target='_blank'>lyrics.wikia.com</a>.", 5000)
+     }, 2500);
+     */
     mediaController.showLyrics = !mediaController.showLyrics;
     if (mediaController.showLyrics) {
         if (playbackController.playingSong) {
-            var src =   "http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "?useskin=wikiamobile";
-            if( $("#lyricsifrm").attr("src")!=src)
-             $("#lyricsifrm").attr("src",src);
+            var src = "http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name + "?useskin=wikiamobile";
+            if ($("#lyricsifrm").attr("src") != src)
+                $("#lyricsifrm").attr("src", src);
 
             iframe.show();
-            setTimeout(function(){
-                iframe.css("left","").css("opacity","").css("pointer-events","auto");
-            },0)
+            setTimeout(function () {
+                iframe.css("left", "").css("opacity", "").css("pointer-events", "auto");
+            }, 0)
         }
     } else {
-        iframe.css("left","-50px").css("opacity","0").css("pointer-events","none");
-        setTimeout(function(){
+        iframe.css("left", "-50px").css("opacity", "0").css("pointer-events", "none");
+        setTimeout(function () {
             iframe.hide();
-        },1500)
+        }, 1500)
 
     }
 
@@ -834,42 +843,71 @@ mediaController.toggleLyrics = function () {
  * Get Cover for loaded Playlist
  * @returns {string}
  */
-mediaController.getSongCoverForLoadedPlaylist = function()  {
+mediaController.getSongCoverForLoadedPlaylist = function () {
 
 
-      if(playlistController.loadedPlaylists[0]&&playbackController.playingSong){
-          return mediaController.getSongCover(playbackController.playingSong);
+    if (playlistController.loadedPlaylists[0] && playbackController.playingSong) {
+        return mediaController.getSongCover(playbackController.playingSong);
 
-      }else
-          return "public/img/playlist.png";
+    } else
+        return "public/img/playlist.png";
 
 
 }
 
+
+/**
+ * Get the Cover for Element
+ * @returns {string}
+ */
+mediaController.getImage = function (element, defaultImage) {
+    if (!defaultImage)
+        var url = "public/img/playlist.png";
+    else
+        url = defaultImage
+
+    if (element.image) {
+
+        if (element.image[1])
+            url = element.image[1]['#text'];
+        else
+            url = element.image[0]['#text']
+    } else
+        url = "public/img/playlist.png";
+
+
+    if (!url || $.trim(url) == "")
+        url = "public/img/playlist.png";
+
+    return url ;
+
+}
+
+
 /**
  * Get the Cover for Playlist
  * @param index
- * @param song
+ * @param playlist
  * @returns {string}
  */
-mediaController.getPlaylistCoverSong = function (index,maxIndex, song, playingSong) {
-    if (song.isPlaylist) {
+mediaController.getPlaylistCoverSong = function (index, maxIndex, playlist, playingSong) {
+
+    if (playlist.isPlaylist) {
 
 
-        if(playingSong&&playbackController.playingSong)
-            return "background-image:url(" + mediaController.getSongCover(playbackController.playingSong,(index!=0)) + ")";
+        if (playingSong && playbackController.playingSong)
+            return "background-image:url(" + mediaController.getSongCover(playbackController.playingSong, (index != 0)) + ")";
 
-       var actIndex =  song.tracks.length-1-index;
+        var actIndex = playlist.tracks.length - 1 - index;
 
 
-
-        if (song.tracks && song.tracks[actIndex]) {
-            if (song.tracks[actIndex].isGoogleDrive) {
+        if (playlist.tracks && playlist.tracks[actIndex]) {
+            if (playlist.tracks[actIndex].isGoogleDrive) {
                 return "background-image:url(public/img/playlistgdrive.png)";
 
             } else {
 
-                return "background-image:url(" + mediaController.getSongCover(song.tracks[actIndex],(index!=0)) + ")";
+                return "background-image:url(" + mediaController.getSongCover(playlist.tracks[actIndex], (index != 0)) + ")";
 
             }
         }
@@ -886,7 +924,7 @@ mediaController.getPlaylistCoverSong = function (index,maxIndex, song, playingSo
 }
 
 
-mediaController.getSongCover = function (song,lowQuality) {
+mediaController.getSongCover = function (song, lowQuality) {
     var url = "";
 
     if (song.isPlaylist) {
@@ -895,11 +933,11 @@ mediaController.getSongCover = function (song,lowQuality) {
 
         if (song.image) {
 
-            if (song.image[1]&&!lowQuality)
+            if (song.image[1] && !lowQuality)
                 url = song.image[1]['#text'];
             else
                 url = song.image[0]['#text']
-        }else
+        } else
             url = "public/img/playlist.png";
 
     }
