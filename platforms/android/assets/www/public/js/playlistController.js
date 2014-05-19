@@ -1973,7 +1973,7 @@ playlistController.makePlayListSortable = function () {
                         playlistController.draggedElements.each(function (index) {
                             var id = playlistController.draggedElements[index].dataset.index;
 
-                            var actSong = searchController.searchResults[parseInt(id)];
+                            var actSong = searchController.songs.searchResults[parseInt(id)];
 
                             actSong = jQuery.extend(true, {}, actSong);
 
@@ -2003,7 +2003,7 @@ playlistController.makePlayListSortable = function () {
                     }
                     else {
 
-                        var actSong = searchController.searchResults[parseInt(id)];
+                        var actSong = searchController.songs.searchResults[parseInt(id)];
 
                         actSong = jQuery.extend(true, {}, actSong);
 

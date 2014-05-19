@@ -45,8 +45,8 @@ var app = {
 
 var preferences = {
 
-  serverURL: "http://localhost:3001/"
-  //serverURL: "http://info.jukebox.selfhost.eu:3001/"
+  //serverURL: "http://localhost:3001/"
+  serverURL: "http://info.jukebox.selfhost.eu:3001/"
 
 }
 
@@ -122,14 +122,19 @@ $(document).ready(function () {
 
                     $("#searchinput").val(urlParams.search);
                     $("#searchinput").trigger("input");
+
+
+
+                    /*
                     function search(searchID) {
-                        searchController.searchSongs(urlParams.search, "", "", function (list) {
+                        searchController.songs.startSearchDeferred(urlParams.search, function (list) {
                             searchController.completeSearch(list, null, searchController.searchCounter)
                         });
                     }
 
                     search(searchController.searchCounter);
-                    searchController.searchCounter++;
+                    searchController.searchCounter++;  */
+
 
                 }
                 if (urlParams.artist && urlParams.artist != "") {
