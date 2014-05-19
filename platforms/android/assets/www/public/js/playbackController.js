@@ -617,7 +617,7 @@ playbackController.positionPlayIndicator = function () {
 
             position = listElementSearchlist.get(0).dataset.index;
 
-            y = parseInt(position) / ( Math.min(searchController.getShowModeLimit(1), searchController.searchResults.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
+            y = parseInt(position) / ( Math.min(searchController.getShowModeLimit(1), searchController.songs.searchResults.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
 
             $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
             $("#searchlist .iScrollPlayIndicator").show();
