@@ -222,19 +222,19 @@ uiController.init = function () {
             setTimeout(function () {
                 uiController.searchListScroll.refresh();
                 uiController.playListScroll.refresh();
-                playbackController.remarkSong();
+                playbackController.positionPlayIndicator();
                 setTimeout(function () {
                     uiController.searchListScroll.refresh();
                     uiController.playListScroll.refresh();
-                    playbackController.remarkSong();
+                    playbackController.positionPlayIndicator();
                     setTimeout(function () {
-                        playbackController.remarkSong();
+                        playbackController.positionPlayIndicator();
                         setTimeout(function () {
-                            playbackController.remarkSong();
+                            playbackController.positionPlayIndicator();
                             setTimeout(function () {
                                 uiController.searchListScroll.refresh();
                                 uiController.playListScroll.refresh();
-                                playbackController.remarkSong();
+                                playbackController.positionPlayIndicator();
                             }, 2000)
                         }, 100)
                     }, 100)
@@ -544,7 +544,7 @@ uiController.updateUI = function () {
             }
 
         }
-        $("#searchlist").css("width", uiController.windowWidth - 20);
+        $("#searchcontent").css("width", uiController.windowWidth - 20);
 
 
         $("#playlist").css("width", $("#rightpanel").width() - 20 - 10);
@@ -599,7 +599,7 @@ uiController.updateUI = function () {
 
 
 
-        $("#searchlist").css("max-height", $(window).height() - 44 - 120 + 6);
+        $("#searchcontent").css("max-height", $(window).height() - 44 - 120 + 6);
 
         var setSelectSize = function () {
             $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 45);
@@ -616,9 +616,9 @@ uiController.updateUI = function () {
         $("#playlistInner li").css("width", uiController.windowWidth / 3);
 
         if($(window).width() < uiController.responsiveWidthSmall)
-            $("#searchlist").css("width", uiController.windowWidth - uiController.windowWidth / 3 - 30-33);
+            $("#searchcontent").css("width", uiController.windowWidth - uiController.windowWidth / 3 - 30-33);
         else
-        $("#searchlist").css("width", uiController.windowWidth - uiController.windowWidth / 3 - 30);
+        $("#searchcontent").css("width", uiController.windowWidth - uiController.windowWidth / 3 - 30);
 
 
         setSelectSize();
@@ -655,7 +655,7 @@ uiController.updateUI = function () {
 
         }
 
-        $("#searchlist").css("max-height", $(window).height() - 44 - 130 - 40 + 12);
+        $("#searchcontent").css("max-height", $(window).height() - 44 - 130 - 40 + 12);
 
         $("#content").css({"width": uiController.windowWidth - 16, "height": $(window).height() - 44 - 4 - 8});
 
@@ -912,6 +912,22 @@ uiController.toggleGridLayout = function () {
     }, 0);
 }
 
+//TODO no usage yet, remove uU
+uiController.showBackgroundImage = function(show){
+    if(!show){
+        uiController.showBackgroundImageWasVisible =  ( $("#backgroundImage:visible").length>0) ;
+        $("#backgroundImage").removeClass("fadeoutcomplete").addClass("fadeincompleteslow")
+        $("<style type='text/css' id='hidevideobackground'> #backgroundVideo{ opacity:0!important} #backgroundImage{ display:block!important;}  </style>").appendTo("head");
+
+    }  else{
+
+        $("#hidevideobackground").remove();
+        if(!uiController.showBackgroundImageWasVisible) {
+            $("#backgroundImage").removeClass("fadeincompleteslow").addClass("fadeoutcomplete")
+        }
+    }
+}
+
 
 // ==UserScript==
 // @name           Disable auto-focussing
@@ -925,6 +941,7 @@ uiController.disableAutoFocus = function () {
 
 
     function is_touch_device() {
+
         return !!window.ontouchstart // works on most browsers
             || !!window.onmsgesturechange; // works on ie10
     };

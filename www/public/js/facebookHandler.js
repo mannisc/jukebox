@@ -25,7 +25,7 @@ var facebookHandler = function () {
      $("#popupRegister").popup("close");
      setTimeout(function(){
          $.mobile.loading("hide");
-     },10000)
+     },20000)
      FB.login(function (response) {
      }, {scope: 'public_profile, email'});
 
@@ -54,6 +54,63 @@ facebookHandler.logout = function () {
 
 }
 
+/***
+ * Logged in successfully
+ * @param response
+ */
+facebookHandler.authAndLoggedIn = function(response){
+    $(".fbnativeloginButton iframe").css("opacity","0");
+
+
+    if (accountController.loggedIn&&!facebookHandler.loggedIn ) {
+        facebookHandler.loggedIn = true;
+    } else if (!facebookHandler.loggedIn ) {
+
+        // The response object is returned with a status field that lets the app know the current
+        // login status of the person. In this case, we're handling the situation where they
+        // have logged in to the app.
+        var loginResponse = response;
+        $.mobile.loading("show");
+        $("#popupLogin").popup("close");
+        $("#popupRegister").popup("close");
+
+        FB.api('/me', function (response) {
+
+            console.log(JSON.stringify(response));
+
+            if (!response.email || !response.id || !response.username || !loginResponse.authResponse.accessToken) {
+
+                FB.logout(function (response) {
+                    // user is now logged out
+                });
+
+            } else {
+                console.log("SocialSignIn")
+
+                console.log(JSON.stringify(loginResponse))
+
+                console.log(loginResponse.authResponse.accessToken)
+
+                accountController.socialSignIn(response.username, response.email, response.id, 1, loginResponse.authResponse.accessToken)
+
+
+                /*
+                 FB.ui({
+                 method: 'share_open_graph',
+                 action_type: 'og.likes',
+                 action_properties: JSON.stringify({
+                 object:'https://developers.facebook.com/docs/dialogs/',
+                 })
+                 }, function(response){});
+                 */
+
+
+            }
+
+
+        });
+    }
+}
 
 facebookHandler.init = function () {
 
@@ -73,57 +130,8 @@ facebookHandler.init = function () {
             console.log("FB RESPONSE!!! "+response.status+ "   "+facebookHandler.loggedIn+"    "+accountController.loggedIn)
             if (response.status === 'connected') {
 
-                $(".fbnativeloginButton iframe").css("opacity","0");
+                facebookHandler.authAndLoggedIn(response);
 
-
-                if (accountController.loggedIn&&!facebookHandler.loggedIn ) {
-                    facebookHandler.loggedIn = true;
-                } else if (!facebookHandler.loggedIn ) {
-
-                    // The response object is returned with a status field that lets the app know the current
-                    // login status of the person. In this case, we're handling the situation where they
-                    // have logged in to the app.
-                    var loginResponse = response;
-                    $.mobile.loading("show");
-                    $("#popupLogin").popup("close");
-                    $("#popupRegister").popup("close");
-
-                    FB.api('/me', function (response) {
-
-                        console.log(JSON.stringify(response));
-
-                        if (!response.email || !response.id || !response.username || !loginResponse.authResponse.accessToken) {
-
-                            FB.logout(function (response) {
-                                // user is now logged out
-                            });
-
-                        } else {
-                            console.log("BBBBBBBBBBBBBBBBB")
-
-                            console.log(JSON.stringify(loginResponse))
-
-                            console.log(loginResponse.authResponse.accessToken)
-
-                            accountController.socialSignIn(response.username, response.email, response.id, 1, loginResponse.authResponse.accessToken)
-
-
-                            /*
-                             FB.ui({
-                             method: 'share_open_graph',
-                             action_type: 'og.likes',
-                             action_properties: JSON.stringify({
-                             object:'https://developers.facebook.com/docs/dialogs/',
-                             })
-                             }, function(response){});
-                             */
-
-
-                        }
-
-
-                    });
-                }
             } else if (response.status === 'not_authorized') {
 
                 /*  // In this case, the person is logged into Facebook, but not into the app, so we call

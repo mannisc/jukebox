@@ -79,8 +79,6 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
  */
 playbackController.playSong = function (song, resetingSong, playedAutomatic, addSongToQueue) {
     //Dont play multiple songs within 100ms
-    //alert(Date.now() - playbackController.playSongTimer )
-
     if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 100) {
         playbackController.playSongTimer = Date.now();
         return;
@@ -109,7 +107,6 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
                 if (!listElement.hasClass("stillloading")) {
                     setTimeout(function () {
-
                         videoController.playPauseSong();
 
                     }, 50);
@@ -128,114 +125,112 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
     //Set loading/playing Song to selected Song
 
-
-    if (song.gid) {//Song from searchlist
-
-        $("#searchlist li").removeClass("loadedsong stillloading playing pausing");
-    }
-
-
     playbackController.playingSong = song;
-
-    //Lyrics
-    if (mediaController.showLyrics)
-        $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name);
-
-
-    videoController.disableLyricsControl(false);
-    //Enable stop if there is no old song
-    if (!playbackController.playingOldSong)
-        videoController.disableStopControl(false);
-
-
-    //Enable Controls
-    videoController.disableControls(false);
-
-    //Clear other cover loading circles
-    //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
-    // $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
 
     //Clear other loading songs
     $(".songlist li.loadedsong.stillloading").removeClass("loadedsong stillloading");
 
     $(".songlist li.loadedsong").addClass("oldloadedsong").removeClass("loadedsong");    //playing pausing
 
+    listElement.addClass("loadedsong");
+
+
+    // setTimeout(function () {
+    // playbackController.positionPlayIndicator();
+    // },0)
+    // setTimeout(function () {
+    //if (song.gid) {//Song from searchlist
+    //     $("#searchlist li").removeClass("stillloading playing pausing");
+    // }
+
+
+    // Element added to current play queue, for synchronizing spinning
+    var addedToQueue = false;
 
     if (!resetingSong) {
         if (!isSameSongAsLoadedSong) {
+
+            if (addSongToQueue) {
+                if (playbackController.playingSong.playlistgid != playlistController.currentQueue.gid) {
+                    setTimeout(function () {
+                        var actSong = jQuery.extend(true, {}, playbackController.playingSong);
+
+                        actSong.playlistgid = playlistController.currentQueue.gid;
+                        var actSongList = [actSong];
+                        playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue, actSongList)
+
+                        playbackController.playingSong = actSongList[0];
+                        playlistController.insertSongsIntoQueue(actSongList);
+                    }, 0)
+                    if (playlistController.loadedPlaylists["0"])
+                        addedToQueue = true;
+
+                }
+
+                if (!playedAutomatic && playlistController.playlistMode) {
+                    setTimeout(function () {
+                        playlistController.animateAddedToList($(".currentqueue"));
+                    }, 300)
+                }
+            }
+
+
             playbackController.isLoading = true;
             playbackController.playingSongTimer = null;
-            /* fadein plaing sign
-             $(songListElement.get(0)).find(".loadingSongImg").css("opacity","0");
-             $(songListElement.get(0)).addClass("stillloading");
-             setTimeout(function(){
-             $(songListElement.get(0)).find(".loadingSongImg").css("opacity","");
-             },300);
-             */
-            listElement.addClass("stillloading");
+
 
             playbackController.startedLoadingTime = Date.now();
+
             if (playbackController.playingSong.streamURL)
                 mediaController.playStreamURL(playbackController.playingSong.streamURL);
             else
                 mediaController.playStream(mediaController.getSongArtist(playbackController.playingSong), playbackController.playingSong.name, playedAutomatic);
 
+
             playbackController.playedSongs.push(playbackController.playingSong);
+
             playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
 
-            if (addSongToQueue) {
-                if (playbackController.playingSong.playlistgid != playlistController.currentQueue.gid) {
-
-
-                    var actSong = jQuery.extend(true, {},  playbackController.playingSong);
-
-                    actSong.playlistgid = playlistController.currentQueue.gid;
-                    var actSongList = [actSong]
-                    playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue,actSongList)
-
-                    playbackController.playingSong =  actSongList[0];
-
-                    playlistController.insertSongsIntoQueue(actSongList);
-                }
-
-                if (!playedAutomatic && playlistController.playlistMode) {
-                    setTimeout(function () {
-                            playlistController.animateAddedToList($(".currentqueue"));
-                        }, 300
-                    )
-                }
-            }
 
             playbackController.updatePlayingSongIndex();
 
         }
 
-    } else {
-        console.log("!JJJJJJJJJJJJJJJ " + videoController.isPlaying)
-        if (videoController.isPlaying)
-            listElement.addClass("playing");
-        else
-            listElement.addClass("pausing");
-
     }
 
 
-    //helperFunctions.animateBackground(".songlist li.loadedsong.stillloading .loadingSongImg", "public/img/loader/sprites.png", 46, 46, 18, 46,4.8);
-
-    // $(".songlist li.loadedsong.stillloading .loadingSongImg").show();
-
-
     $scope.safeApply();
-    listElement.addClass("loadedsong")
+
+    if (!addedToQueue) {
+        playbackController.remarkSong();
+
+    }
 
 
     setTimeout(function () {
         $("#playingSongInfoLink").css("opacity", "1");
         $("#buySongLink").css("opacity", "1");
-        //Set playing Indicator position
-        playbackController.positionPlayIndicator();
 
     }, 500)
+
+    setTimeout(function () {
+
+        //Lyrics
+        if (mediaController.showLyrics)
+            $("#lyricsifrm").attr("src", "http://lyrics.wikia.com/" + mediaController.getSongArtist(playbackController.playingSong) + ":" + playbackController.playingSong.name);
+
+
+        videoController.disableLyricsControl(false);
+        //Enable stop if there is no old song
+        if (!playbackController.playingOldSong)
+            videoController.disableStopControl(false);
+
+
+        //Enable Controls
+        videoController.disableControls(false);
+    }, 0)
+
+    //   }, 50 )
 
 }
 
@@ -313,96 +308,99 @@ playbackController.updatePlayingSongIndex = function () {
  * @param isLoaded
  */
 playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
-
-    if (!isLoaded) {
-
-        facebookHandler.updateSongFBButtons();
-
-        $("#playingSongCover").removeClass("fadeincomplete")
-        $("#playingSongTitle").removeClass("fadeincomplete");
-        $("#playingSongTitle").hide();
-        $("#playingSongTitleLoading").hide();
-
-        $("#playingSongCover").hide();
-    }
-    $("#playingSongTitleLoading").removeClass("fadeincomplete").removeClass("fadeoutcomplete");
-
-
-    if (title && title != "")
-        document.title = $scope.appTitle + " : " + title;
-    else
-        document.title = $scope.appTitle;
-
-    var searchinput = "";
-    if ($("#searchinput").val()) {
-        searchinput = $("#searchinput").val()
-    }
-    //TODO COMMEnt REMOVE
-    /*
-     var song = playlistController.getPlayingSong();
-
-     if(song.name!=""&&searchinput!=""){
-     window.history.pushState("",document.title, "/?search="+searchinput+"&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
-     }
-     else if(song.name!=""){
-     window.history.pushState("",document.title, "/?artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
-     }
-     else if(searchinput!=""){
-     window.history.pushState("",document.title, "?search="+searchinput);
-     }
-     */
-
-    //  $("#playingSongCover").attr("src", coverUrl);
-
-    if (!isLoaded) {
-        coverUrl = "public/img/loadertitle.gif";
-
-        $("#playingSongInfoStyle").remove();
-        var style = $('<style id="playingSongInfoStyle">' +
-            '.playingSongInfo.ui-icon-custom:after  {' +
-            ' background-image: url(' + coverUrl + ')' +
-            '}' +
-            '#popupArtist-popup::before{' +
-            '  background-color:rgba(255,255,255,.5)!important' +
-            '}' +
-            '</style>');
-        $('html > head').append(style);
-    }
-    else {
-        $("#playingSongInfoStyle").remove();
-        style = $('<style id="playingSongInfoStyle">' +
-            '.playingSongInfo.ui-icon-custom:after  {' +
-            ' background-image: url(' + coverUrl + ')' +
-            '}' +
-            '#popupArtist-popup::before{' +
-            '  background: url(' + coverUrl + ');' +
-            '  background-size:cover;!important' +
-            '}' +
-            '</style>');
-        $('html > head').append(style);
-
-
-    }
-
-    $scope.safeApply();
     setTimeout(function () {
-        if (isLoaded) {
-            $("#playingSongTitleLoading").addClass("fadeoutcomplete")
-            $("#playingSongTitleLoading").show();
+
+
+        if (!isLoaded) {
+
+            facebookHandler.updateSongFBButtons();
+
+            $("#playingSongCover").removeClass("fadeincomplete")
+            $("#playingSongTitle").removeClass("fadeincomplete");
+            $("#playingSongTitle").hide();
+            $("#playingSongTitleLoading").hide();
+
+            $("#playingSongCover").hide();
+        }
+        $("#playingSongTitleLoading").removeClass("fadeincomplete").removeClass("fadeoutcomplete");
+
+
+        if (title && title != "")
+            document.title = $scope.appTitle + " : " + title;
+        else
+            document.title = $scope.appTitle;
+
+        var searchinput = "";
+        if ($("#searchinput").val()) {
+            searchinput = $("#searchinput").val()
+        }
+        //TODO COMMEnt REMOVE
+        /*
+         var song = playlistController.getPlayingSong();
+
+         if(song.name!=""&&searchinput!=""){
+         window.history.pushState("",document.title, "/?search="+searchinput+"&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+         }
+         else if(song.name!=""){
+         window.history.pushState("",document.title, "/?artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+         }
+         else if(searchinput!=""){
+         window.history.pushState("",document.title, "?search="+searchinput);
+         }
+         */
+
+        //  $("#playingSongCover").attr("src", coverUrl);
+
+        if (!isLoaded) {
+            coverUrl = "public/img/loadertitle.gif";
+
+            $("#playingSongInfoStyle").remove();
+            var style = $('<style id="playingSongInfoStyle">' +
+                '.playingSongInfo.ui-icon-custom:after  {' +
+                ' background-image: url(' + coverUrl + ')' +
+                '}' +
+                '#popupArtist-popup::before{' +
+                '  background-color:rgba(255,255,255,.5)!important' +
+                '}' +
+                '</style>');
+            $('html > head').append(style);
         }
         else {
-            $("#playingSongCover").addClass("fadeincomplete")
-            $("#playingSongCover").show();
-            $("#playingSongTitleLoading").addClass("fadeincomplete")
-            $("#playingSongTitleLoading").show();
-            $("#playingSongTitle").addClass("fadeincomplete")
-            $("#playingSongTitle").show();
+            $("#playingSongInfoStyle").remove();
+            style = $('<style id="playingSongInfoStyle">' +
+                '.playingSongInfo.ui-icon-custom:after  {' +
+                ' background-image: url(' + coverUrl + ')' +
+                '}' +
+                '#popupArtist-popup::before{' +
+                '  background: url(' + coverUrl + ');' +
+                '  background-size:cover;!important' +
+                '}' +
+                '</style>');
+            $('html > head').append(style);
 
 
         }
 
+        $scope.safeApply();
+        setTimeout(function () {
+            if (isLoaded) {
+                $("#playingSongTitleLoading").addClass("fadeoutcomplete")
+                $("#playingSongTitleLoading").show();
+            }
+            else {
+                $("#playingSongCover").addClass("fadeincomplete")
+                $("#playingSongCover").show();
+                $("#playingSongTitleLoading").addClass("fadeincomplete")
+                $("#playingSongTitleLoading").show();
+                $("#playingSongTitle").addClass("fadeincomplete")
+                $("#playingSongTitle").show();
 
-    }, 50)
+
+            }
+
+
+        }, 50)
+    }, 150)
 }
 
 
@@ -413,102 +411,99 @@ playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
 playbackController.playPrevSong = function () {
 
 
-    var emptyList = false;
-    var index = playbackController.getIndexOfSong(playbackController.playingSong, playlistController.currentQueue.tracks);
-    if (index == -1) {
-        if (playbackController.playedSongs.length == 0) {
-            index = 1;
+    if (playlistController.currentQueue.tracks.length == 1) {
+        videoController.setProgressPercentage(0);
+        videoController.setProgressTime(0);
+        videoController.videoPlayer.setProgressPercentage(0);
+        setTimeout(function(){
+            videoController.playSong();
+        },0)
+
+
+    } else {
+
+        var emptyList = false;
+        var index = playbackController.getIndexOfSong(playbackController.playingSong, playlistController.currentQueue.tracks);
+        if (index == -1) {
+            if (playbackController.playedSongs.length == 0) {
+                index = 1;
+            }
+            emptyList = true;
         }
-        emptyList = true;
-    }
+
+        if (playbackController.playedSongs.length > 0) {
+
+            var song = playbackController.playedSongs[playbackController.playedSongs.length - 1];
+            playbackController.playedSongs.splice(playbackController.playedSongs.length - 1, 1);
+
+            var alreadyInList = ((!song.gid || (song.gid == playbackController.playingSong.gid)) && song.name == playbackController.playingSong.name && mediaController.getSongArtist(song) == mediaController.getSongArtist(playbackController.playingSong));
 
 
-    /* else {
-     index = playbackController.getIndexOfSong(playbackController.playingSong, searchController.searchResults);
-     if (index == -1) {
-     if (playbackController.playedSongs.length == 0) {
-     index = 1;
-     }
-     emptyList = true;
+            if (alreadyInList) {
+                if (playbackController.playedSongs.length >= 1) {
+                    song = playbackController.playedSongs[playbackController.playedSongs.length - 1];
+                    playbackController.playedSongs.splice(playbackController.playedSongs.length - 1, 1);
+                }
+                else
+                    song = null;
+            }
+        }
 
-     }
-     } */
+        if (!song) {
 
-    //  index wo in sichtbarem bereich
+            if (emptyList) {
 
-    // alert("actuel Index " + index + " ANZAHL:::: " + playbackController.playedSongs.length)
-
-
-    if (playbackController.playedSongs.length > 0) {
-
-        var song = playbackController.playedSongs[playbackController.playedSongs.length - 1];
-        playbackController.playedSongs.splice(playbackController.playedSongs.length - 1, 1);
-
-        //     alert("prev Song "+song)
+                if (playlistController.currentQueue.tracks.length == 0) {
+                    videoController.disablePositionControls(true);
+                    return;
+                }
+                else
+                    index = 0;
 
 
-        var alreadyInList = ((!song.gid || (song.gid == playbackController.playingSong.gid)) && song.name == playbackController.playingSong.name && mediaController.getSongArtist(song) == mediaController.getSongArtist(playbackController.playingSong));
-
-        /*if (playbackController.playingSongInPlaylist) {
-         alreadyInList = (index >= 0 && song == playlistController.loadedPlaylistSongs[index]);
-         } else {
-         alreadyInList = (index >= 0 && song == searchController.searchResults[index]);
-         } */
-
-        if (alreadyInList) {
-            if (playbackController.playedSongs.length >= 1) {
-                song = playbackController.playedSongs[playbackController.playedSongs.length - 1];
-                playbackController.playedSongs.splice(playbackController.playedSongs.length - 1, 1);
             }
             else
-                song = null;
+                index = index - 1;
+
+
+            // alert("PLAYING " + index)
+
+
+            if (index <= -1)
+                index = playlistController.currentQueue.tracks.length - 1;
+
+
+            playbackController.playSong(playlistController.currentQueue.tracks[index])
+
+            /*else {
+             if (index <= -1)
+             index = searchController.searchResults.length - 1;
+             playbackController.playSong(searchController.searchResults[index])
+             }*/
+
+        } else {
+
+            playbackController.playSong(song)
+
         }
+
     }
-
-    // alert("alreadyInList " + alreadyInList + "   prev song " + song + "   " + playbackController.playedSongs.length)
-
-    if (!song) {
-
-        if (emptyList) {
-
-            if (playlistController.currentQueue.tracks.length == 0) {
-                videoController.disablePositionControls(true);
-                return;
-            }
-            else
-                index = 0;
-
-
-        }
-        else
-            index = index - 1;
-
-
-        // alert("PLAYING " + index)
-
-
-        if (index <= -1)
-            index = playlistController.currentQueue.tracks.length - 1;
-        playbackController.playSong(playlistController.currentQueue.tracks[index])
-
-        /*else {
-         if (index <= -1)
-         index = searchController.searchResults.length - 1;
-         playbackController.playSong(searchController.searchResults[index])
-         }*/
-
-    } else
-        playbackController.playSong(song)
-
-
 }
 
 /**
  * Play next song in songlist
  */
 playbackController.playNextSong = function () {
+    if (playlistController.currentQueue.tracks.length == 1) {
+        videoController.setProgressPercentage(0);
+        videoController.setProgressTime(0);
+        videoController.videoPlayer.setProgressPercentage(0);
+        setTimeout(function(){
+            videoController.playSong();
+        },0)
 
-    if (playbackController.playingSong.gid) {
+
+    } else {
 
         var index = playbackController.getIndexOfSong(playbackController.playingSong, playlistController.currentQueue.tracks);
         if (index >= 0) {
@@ -527,33 +522,12 @@ playbackController.playNextSong = function () {
             playbackController.playSong(playlistController.currentQueue.tracks[index], false, true)
         } else if (playlistController.currentQueue.tracks.length > 0) {
 
+
             playbackController.playSong(playlistController.currentQueue.tracks[0], false, true)
 
         } else
             videoController.disablePositionControls(true);
-
     }
-    /*else {
-
-     index = playbackController.getIndexOfSong(playbackController.playingSong, searchController.searchResults);
-     if (index >= 0) {
-     if (!videoController.shuffleMode) {
-     index = index + 1;
-     if (index == searchController.searchResults.length)
-     index = 0;
-     } else if (searchController.searchResults.length > 1) {
-     oIndex = index;
-     do {
-     index = Math.round(Math.random() * (searchController.searchResults.length - 1))
-     }
-     while (index == oIndex)
-     }
-     playbackController.playSong(searchController.searchResults[index], false, true)
-     } else
-     videoController.disablePositionControls(true);
-
-     } */
-
 
 }
 
@@ -654,20 +628,48 @@ playbackController.positionPlayIndicatorAtTop = function (searchlist) {
  * @param onlyList 1:searchlist, 2:playlist
 
  */
-playbackController.getListElementFromSong = function (song,onlyList) {
+playbackController.getListElementFromSong = function (song, onlyList) {
     if (!song)
-        return [];
+        return $([]);
 
-    var playlistElements =[], searchListElements = [];
+    var playlistElements = [], searchListElements = [];
 
-    if(!onlyList||onlyList==1)
-     searchListElements =   $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
+    if (!onlyList || onlyList == 1)
+        searchListElements = $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
 
-    if(!onlyList||onlyList==2)
-     playlistElements =   $("#playlistInner li[data-songgid='playlistsong" + song.gid + "']");
+    if (!onlyList || onlyList == 2)
+        playlistElements = $("#playlistInner li[data-songgid='playlistsong" + song.gid + "']");
 
 
     return $(searchListElements).add(playlistElements);
+
+}
+
+
+/**
+ * Checks if song is Playing song
+ * @param song
+ * @returns {boolean}
+ */
+playbackController.isPlayingSong = function (song) {
+    if (playbackController.playingSong && song)
+        return  song.gid == playbackController.playingSong.gid || (mediaController.getSongDisplayName(song) == mediaController.getSongDisplayName(playbackController.playingSong))
+    else
+        return false;
+
+
+}
+
+
+/**
+ * Checks if song is Playing and loading song
+ * @param song
+ * @returns {boolean}
+ */
+playbackController.isLoadingSong = function (song) {
+
+    return playbackController.isPlayingSong(song) && playbackController.isLoading;
+
 
 }
 
@@ -678,38 +680,40 @@ playbackController.getListElementFromSong = function (song,onlyList) {
 playbackController.remarkSong = function () {
     var listElement;
 
+
+    $(".songlist .loadedsong").removeClass("loadedsong");
+    var safe = $(".songlist .oldloadedsong.playing")
+    $(".songlist .playing").removeClass("playing");
+    safe.addClass("playing")
+
+    safe = $(".songlist .oldloadedsong.pausing")
+    $(".songlist .pausing").removeClass("pausing");
+    safe.addClass("pausing")
+
+    $(".songlist .stillloading").removeClass("stillloading");
+
     if (playbackController.playingSong) {
-        playbackController.positionPlayIndicator();
-
-       $(".songlist .loadedsong").removeClass("loadedsong");
-        var safe = $(".songlist .oldloadedsong.playing")
-        $(".songlist .playing").removeClass("playing");
-        safe.addClass("playing")
-
-        safe = $(".songlist .oldloadedsong.pausing")
-        $(".songlist .pausing").removeClass("pausing");
-        safe.addClass("pausing")
-
-
-        $(".songlist .stillloading").removeClass("stillloading");
-
-
         listElement = playbackController.getListElementFromSong(playbackController.playingSong);
-        listElement.addClass("loadedsong");
+        if (listElement.length > 0) {
 
-        if (playbackController.isLoading) {
-            listElement.addClass("stillloading");
-            listElement.find(".loadingSongImg").show();
 
-        } else if (videoController.isPlaying) {
-            listElement.addClass("playing");
-            listElement.removeClass("pausing");
+            playbackController.positionPlayIndicator();
+
+            listElement.addClass("loadedsong");
+
+            if (playbackController.isLoading) {
+                listElement.addClass("stillloading");
+                //listElement.find(".loadingSongImg").show();
+
+            } else if (videoController.isPlaying) {
+                listElement.addClass("playing");
+                listElement.removeClass("pausing");
+            }
+            else {
+                listElement.addClass("pausing");
+                listElement.removeClass("playing");
+            }
         }
-        else {
-            listElement.addClass("pausing");
-            listElement.removeClass("playing");
-        }
-
     }
 }
 
