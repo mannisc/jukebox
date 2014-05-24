@@ -39,6 +39,16 @@ html, body, #page,#content {
 
 }
 
+.ui-loader{
+    pointer-events: none!important;
+    opacity: 0.2!important;
+}
+
+.ui-icon-loading {
+
+    background-position: center top !important
+}
+
 .ui-btn, label.ui-btn {
     font-weight: 400 !important;
 }

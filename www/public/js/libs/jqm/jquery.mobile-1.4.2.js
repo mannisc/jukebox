@@ -10267,6 +10267,7 @@ $.widget( "mobile.popup", {
 	},
 
 	_eatEventAndClose: function( theEvent ) {
+
 		theEvent.preventDefault();
 		theEvent.stopImmediatePropagation();
 		if ( this.options.dismissible ) {
@@ -10376,7 +10377,8 @@ $.widget( "mobile.popup", {
 	// When the popup is open, attempting to focus on an element that is not a
 	// child of the popup will redirect focus to the popup
 	_handleDocumentFocusIn: function( theEvent ) {
-		var target,
+
+        var target,
 			targetElement = theEvent.target,
 			ui = this._ui;
 
@@ -10386,7 +10388,8 @@ $.widget( "mobile.popup", {
 
 		if ( targetElement !== ui.container[ 0 ] ) {
 			target = $( targetElement );
-			if ( 0 === target.parents().filter( ui.container[ 0 ] ).length ) {
+
+            if ( 0 === target.parents().filter( ui.container[ 0 ] ).length ) {
 				$( this.document[ 0 ].activeElement ).one( "focus", function(/* theEvent */) {
 					target.blur();
 				});
@@ -10468,7 +10471,8 @@ $.widget( "mobile.popup", {
 
 		if ( newOptions.disabled !== undefined ) {
 			if ( newOptions.disabled ) {
-				this.close();
+
+                this.close();
 			}
 		}
 
@@ -10875,7 +10879,9 @@ $.widget( "mobile.popup", {
 	},
 
 	_destroy: function() {
-		if ( $.mobile.popup.active === this ) {
+
+
+        if ( $.mobile.popup.active === this ) {
 			this.element.one( "popupafterclose", $.proxy( this, "_unenhance" ) );
 			this.close();
 		} else {
@@ -10886,6 +10892,8 @@ $.widget( "mobile.popup", {
 	},
 
 	_closePopup: function( theEvent, data ) {
+
+
 		var parsedDst, toUrl,
 			currentOptions = this.options,
 			immediate = false;
@@ -10921,7 +10929,12 @@ $.widget( "mobile.popup", {
 		// unbind click handlers added when history is disabled
 		this.element.undelegate( currentOptions.closeLinkSelector, currentOptions.closeLinkEvents );
 
-		this._close( immediate );
+
+        if(jqmAllowPopUpClosing){
+        this._close( immediate );
+
+        } //CHANGED
+
 	},
 
 	// any navigation event after a popup is opened should close the popup
@@ -10929,7 +10942,10 @@ $.widget( "mobile.popup", {
 	//      alter the url (eg, dialogs from popups)
 	_bindContainerClose: function() {
 		this.window
-			.on( this.options.closeEvents, $.proxy( this, "_closePopup" ) );
+			.on( this.options.closeEvents, $.proxy( this, "_closePopup" )
+
+            );
+
 	},
 
 	widget: function() {
@@ -10939,7 +10955,7 @@ $.widget( "mobile.popup", {
 	// TODO no clear deliniation of what should be here and
 	// what should be in _open. Seems to be "visual" vs "history" for now
 	open: function( options ) {
-		var url, hashkey, activePage, currentIsDialog, hasHash, urlHistory,
+        var url, hashkey, activePage, currentIsDialog, hasHash, urlHistory,
 			self = this,
 			currentOptions = this.options;
 
@@ -11011,6 +11027,7 @@ $.widget( "mobile.popup", {
 	},
 
 	close: function() {
+
 		// make sure close is idempotent
 		if ( $.mobile.popup.active !== this ) {
 			return this;

@@ -23,6 +23,8 @@ ftpHandler.connect(ftpProperties, onFTPConnection);
 
 //Connected
 function onFTPConnection() {
+     console.log("Started--------------------------")
+
     console.log("FTP Connected")
 
     ftpHandler.downloadFile("/test/public/js/generatedData.template.js", "generatedData.template.js", onFTPDownloadTemplates)
@@ -68,6 +70,7 @@ function onChartsUpdated(tracks) {
 function onFTPUploadTemplates() {
 
     console.log("Templates Uploaded")
+        console.log("Finished--------------------------")
 
 }
 

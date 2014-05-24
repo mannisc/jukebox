@@ -14516,7 +14516,6 @@ $.widget( "ui.tabs", {
 		if ( disabled === false ) {
 			return;
 		}
-
 		if ( index === undefined ) {
 			disabled = false;
 		} else {

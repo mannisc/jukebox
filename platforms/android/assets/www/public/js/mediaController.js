@@ -86,7 +86,6 @@ mediaController.mediaEnded = function () {
 
     $(".mejs-playpause-button button").addClass("looped");
     uiController.updateUI();
-
     if (!playbackController.isLoading)
         playbackController.playNextSong();
 }
@@ -722,7 +721,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
         var listElement = playbackController.getListElementFromSong(playbackController.playingSong);
 
-        if (listElement.hasClass("loadedsong")) {
+        if (listElement.length>0&&listElement.hasClass("loadedsong")) {
 
             var loadTime = Date.now() - playbackController.startedLoadingTime;
             /* var delayTime = loadTime % 2000;
@@ -750,8 +749,6 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                     listElement.removeClass("stillloading")
                 }
 
-                //helperFunctions.clearBackground(".songlist li.loadedsong.stillloading .loadingSongImg");
-                // listElement.find(".loadingSongImg").hide();
                 listElement.find("img.ui-li-icon").css("opacity", "0")
                 listElement.find(".loadingSongImg").css("opacity", "0")
 
@@ -768,9 +765,9 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                         listElement.find("img.ui-li-icon").removeClass("fadeincomplete");
 
                     }, 1000)
-                }, 200)
+                }, 50)
 
-            }, 100)
+            }, 350)
             //  }, delayTime)
 
             // $("#videoplayer").removeClass("animatefast").addClass("animate");

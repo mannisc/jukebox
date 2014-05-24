@@ -24,12 +24,14 @@ function MainController($scope,$compile) {
     window.$compile = $compile;
 
 
+
     $scope.appTitle = "Songbase.fm";
 
 
 
     //Safe NG Apply, applies changed to the $scope model to the html dom
     $scope.safeApply = function () {
+        //console.dir(new Error().stack)
         var phase = this.$root.$$phase;
         if (phase != '$apply' && phase != '$digest') {
             this.$apply();
