@@ -300,7 +300,7 @@ var mediaelementPlayer = function (selector) {
         var newTime = percentage * this.mediaElementPlayer.media.duration;
 
         // seek to where the mouse is
-        if (newTime !== this.mediaElementPlayer.media.currentTime) {
+        if (newTime&&newTime !== this.mediaElementPlayer.media.currentTime) {
             this.mediaElementPlayer.media.setCurrentTime(newTime);
         }
 

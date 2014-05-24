@@ -59,7 +59,7 @@ chartsHandler.downloadFiles = function (content, callback) {
 
     } else {
 
-
+        chartsHandler.fs.createReadStream("charttrends.txt").pipe(chartsHandler.fs.createWriteStream("charttrends_backup.txt"));
         var oldCharttrend = chartsHandler.fs.readFileSync("charttrends.txt");
         if (oldCharttrend && oldCharttrend != "") {
 
@@ -70,21 +70,21 @@ chartsHandler.downloadFiles = function (content, callback) {
 
                 oldChartindex = JSON.parse(oldChartindex);
                 if (oldChartindex) {
-
+                    var countChanges=0;
                     for (var i = 0; i < chartsHandler.tracks.length; i++) {
                         var song = chartsHandler.tracks[i];
 
-                        var trend = 3;
-                        //Winner
-                        if (oldChartindex[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] < i + 1) {
-                            trend = 0;
-                            //Same
-                        } else if (oldChartindex[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] == i + 1) {
-                            trend = 1;
-                            //Loser
-                        } else if (oldChartindex[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] > i + 1) {
+                        var trend = 3;  //New
+                        
+                        if (oldChartindex[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] < i + 1) {//Loser
                             trend = 2;
-                            //New
+                           
+                        } else if (oldChartindex[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] == i + 1) { //Same
+                            trend = 1;
+                            
+                        } else if (oldChartindex[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] > i + 1) {//Winner
+                            trend = 0;
+                          
                         }
 
                        // console.log(song.name + "    "+oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration]+"   "+trend)
@@ -94,8 +94,11 @@ chartsHandler.downloadFiles = function (content, callback) {
                                trend =  oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration]
                            else
                             trend = 3;
-                       }
+                       }else
+					    countChanges++;
 
+					   
+					   
 
                        chartsHandler.charttrends[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] = trend;
 
@@ -106,7 +109,7 @@ chartsHandler.downloadFiles = function (content, callback) {
 
 
                     }
-
+                    console.log(countChanges+" Updates");
                     chartsHandler.fs.writeFileSync("charttrends.txt", JSON.stringify(chartsHandler.charttrends));
                     chartsHandler.fs.writeFileSync("chartindex.txt", JSON.stringify(chartsHandler.chartindex));
 

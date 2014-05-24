@@ -895,7 +895,7 @@
                 _this = this;
 
             //var html = "<span>" + item.html + "</span>"
-
+            //CHANGED
             var html = window.$compile(
                 "<img src = 'public/img/emtpy.png' style= 'background-image:url( {{mediaController.getSongCoverForLoadedPlaylist()}} );background-size:  23px;position:absolute;top: 4px;left: 5px;' width='23px' height='23px'   ><span>" + item.html + "</span>"
             )($scope);
@@ -903,6 +903,7 @@
                 "class": "search-choice "+item.classes //CHANGED  //TODO !!!!!!!!!!!!!!!!!!
 
             }).html(html);   //CHANGED  //TODO !!!!!!!!!!!!!!!!!!
+
 
             if (item.disabled) {
                 choice.addClass('search-choice-disabled');
@@ -915,6 +916,7 @@
                     return _this.choice_destroy_link_click(evt);
                 });
                 choice.append(close_link);
+                $scope.safeApply();//CHANGED
             }
             return this.search_container.before(choice);
         };

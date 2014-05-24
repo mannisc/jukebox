@@ -147,20 +147,25 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd) {
     }
 
 
+    var add = function (index) {
+        return function(){
+            optionsMenu.closePopup();
+            setTimeout(function(){
+                addToList(playlistController.playlists[index])
+            },150);
+        }
+    };
     // var song = optionsMenu.getSongFromListEvent(event);
     optionsMenu.options = [];
     for (var i = 0; i < playlistController.playlists.length; i++) {
-
-            var add = function (index) {
-                return function(){
-                    optionsMenu.closePopup();
-                    addToList(playlistController.playlists[index])
-                }
-            };
-
-         var callback =  add(i);
-        optionsMenu.options.push({text: playlistController.playlists[i].name, callback:callback})
+        if(playlistController.playlists[i].gid!=playlistController.currentQueue.gid){
+            var callback =  add(i);
+            optionsMenu.options.push({text: playlistController.playlists[i].name, callback:callback})
+        }
     }
+    //Add Current Queue add end, because its most unlikely  to be choosen
+    callback =  add(playlistController.getPlaylistIndexFromId(playlistController.currentQueue.gid));
+    optionsMenu.options.push({text: playlistController.currentQueue.name, callback:callback, currentQueue:true})
 
 
     $scope.safeApply();
@@ -224,6 +229,7 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
         event.stopPropagation();
 
     optionsMenu.options = [
+
         {text: "Play Songs", callback: null} ,
         {text: "Add Songs to Play Queue", callback: null},
         {text: "Add Songs to Playlist", callback: null},
@@ -232,6 +238,14 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
 
 
     ]
+
+    //More Results can be displayed
+    if(!searchController.isOnlyTypeDisplayed(1)) {
+        optionsMenu.options.unshift({text: "Show all results", callback: null})
+    }
+
+
+
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
