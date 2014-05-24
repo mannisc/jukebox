@@ -301,6 +301,7 @@ videoController.init = function () {
     });
 
     videoController.controls.find(".videoControlElements-fullscreen-button").mouseover(function () {
+        if (videoController.fullscreenMode == 0)
        // if (videoController.fullscreenEnabled && videoController.videoPlayer)
             videoController.controls.find(".videoControlElements-fullscreen-slider").show();
     });
@@ -568,7 +569,6 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
  */
 videoController.playSong = function () {
     if (!videoController.isPlaying && playbackController.playingSong) {
-
         videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
         videoController.videoPlayer.play();
         videoController.isPlaying = true;
@@ -1186,7 +1186,6 @@ videoController.playingSong = function () {
 
         videoController.disableExternalSiteControl(false);
         videoController.disableFullscreenControl(false);
-        //   helperFunctions.clearBackground(".songlist li.loadedsong.stillloading #loadingSongImg");
 
         // console.log("PLAYINGGGGGGG")
         //playbackController.isLoading = false;

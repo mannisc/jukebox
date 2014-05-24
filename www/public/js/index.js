@@ -87,9 +87,26 @@ window.onbeforeunload = function (event) {
     return message;
 }
 
+jqmAllowPopUpClosing = false;
+
+
+var readyStateCheckInterval = setInterval(function() {
+    if (document.readyState === "complete"&&$scope&&$scope.loaded) {
+        clearInterval(readyStateCheckInterval);
+
+        setTimeout(function(){
+            jqmAllowPopUpClosing = true;
+        },0)
+
+    }
+}, 100);
+
 
 $(document).ready(function () {
-   // setTimeout(function(){
+
+
+
+    // setTimeout(function(){
        // $.mobile.loading("show");
 
    // },15000)
@@ -98,6 +115,10 @@ $(document).ready(function () {
    // $.mobile.loading("show");
     var initPage = function () {
         if ($scope.loaded) {
+
+
+
+
             //setTimeout(function () {$("#dmplayer").addClass("iframeVideo").appendTo("#backgroundVideo")},2000);
             app.isCordova = (window.location.hash == "#cordova" );
             loadUrlParams();
@@ -112,6 +133,7 @@ $(document).ready(function () {
 
 
             setTimeout(function () {
+               if($(":focus").length==0)
                 $("#searchinput").focus();
             }, 500);
 
@@ -121,8 +143,8 @@ $(document).ready(function () {
                 if (urlParams.search && urlParams.search != "") {
 
                     $("#searchinput").val(urlParams.search);
-                    $("#searchinput").trigger("input");
 
+                    $("#searchinput").trigger("input");
 
 
                     /*

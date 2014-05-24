@@ -162,19 +162,19 @@ var utils = (function () {
 
 	me.extend(me.ease = {}, {
 		quadratic: {
-			style: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+			style: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)', //CHANGED
 			fn: function (k) {
 				return k * ( 2 - k );
 			}
 		},
 		circular: {
-			style: 'cubic-bezier(0.1, 0.57, 0.1, 1)',	// Not properly "circular" but this looks better, it should be (0.075, 0.82, 0.165, 1)
+			style: 'cubic-bezier(0.1, 0.57, 0.1, 1) ',//CHANGED	// Not properly "circular" but this looks better, it should be (0.075, 0.82, 0.165, 1)
 			fn: function (k) {
 				return Math.sqrt( 1 - ( --k * k ) );
 			}
 		},
 		back: {
-			style: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+			style: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', //CHANGED
 			fn: function (k) {
 				var b = 4;
 				return ( k = k - 1 ) * k * ( ( b + 1 ) * k + b ) + 1;
@@ -753,8 +753,12 @@ IScroll.prototype = {
 		this.isInTransition = this.options.useTransition && time > 0;
 
 		if ( !time || (this.options.useTransition && easing.style) ) {
-			this._transitionTimingFunction(easing.style);
-			this._transitionTime(time);
+
+            this._transitionTimingFunction(easing.style);
+            this._transitionTime(time);
+
+
+
 			this._translate(x, y);
 		} else {
 			this._animate(x, y, time, easing.fn);
@@ -814,6 +818,7 @@ IScroll.prototype = {
 	},
 
 	_transitionTimingFunction: function (easing) {
+
 		this.scrollerStyle[utils.style.transitionTimingFunction] = easing;
 
 

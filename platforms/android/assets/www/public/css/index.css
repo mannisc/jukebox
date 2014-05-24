@@ -45,6 +45,10 @@ body {
     user-select: none;
     */
 
+   /* -webkit-perspective: 150px;
+    -moz-perspective: 150px;
+    perspective: 150px; */
+
 }
 
 /*Noanim TODO disable all animation in div where noanim is set for slow browsers*/
@@ -68,7 +72,9 @@ body {
         float: left;
     }
 
-    #searchlist {
+
+
+    #searchcontent {
         margin-top: 5px !important;
     }
 
@@ -152,7 +158,7 @@ body {
 
     }
 
-    #searchlist {
+    #searchcontent {
         margin-top: 50px;
     }
 
@@ -1222,10 +1228,61 @@ text-shadow: none!important;
 }
 
 #popupOptions li a{
-   border: none!important;
+     border: none!important;
     border-top: 1px solid rgb(34,34,34)!important;
     border-bottom: none!important;
+
+    background: -moz-linear-gradient(top, #3a3a3a 0%, #333 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3a3a3a), color-stop(100%,#333)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #3a3a3a 0%,#333 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #3a3a3a 0%,#333 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #3a3a3a 0%,#333 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #3a3a3a 0%,#333 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3a3a', endColorstr='#333',GradientType=0 ); /* IE6-9 */
+
+    text-shadow: none!important;
 }
+
+
+#popupOptions li:hover a{
+
+
+    background: -moz-linear-gradient(top, #4a4a4a 0%, #444 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4a4a4a), color-stop(100%,#444)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #4a4a4a 0%,#444 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #4a4a4a 0%,#444 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #4a4a4a 0%,#444 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #4a4a4a 0%,#444 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4a4a4a', endColorstr='#444',GradientType=0 ); /* IE6-9 */
+}
+
+
+
+
+#popupOptions li a.currentqueue{
+    color:          #000 !important;
+    background: #f6d073!important;
+    background: #f6d073!important;
+    background: -moz-linear-gradient(top,#fee6b0,#eeba37)!important;
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fee6b0),color-stop(100%,#eeba37))!important;
+    background: -webkit-linear-gradient(top,#fee6b0,#eeba37)!important;
+    background: -o-linear-gradient(top,#fee6b0,#eeba37)!important;
+    background: -ms-linear-gradient(top,#fee6b0,#eeba37)!important;
+    background: linear-gradient(top,#fee6b0,#eeba37)!important;
+}
+
+#popupOptions li:hover a.currentqueue {
+
+
+    background: -moz-linear-gradient(top,#fef6c0,feca47)!important;
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fef6c0),color-stop(100%,#feca47))!important;
+    background: -webkit-linear-gradient(top,#fef6c0,#feca47)!important;
+    background: -o-linear-gradient(top,#fef6c0,#feca47)!important;
+    background: -ms-linear-gradient(top,#fef6c0,#feca47)!important;
+    background: linear-gradient(top,#fef6c0,#feca47)!important;
+}
+
+
 
 
 
@@ -1294,11 +1351,6 @@ max-width: 2em!important;
 
 
 
-
-#popupAccount #logoutlink:hover{
-    background-color: #D3001A  !important ;
-
-}
 
 #popupArtist a img {
     max-height: 2em!important;
@@ -1437,6 +1489,34 @@ max-width: 2em!important;
     background-image: -o-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* Opera 11.10+ */
     background-image: linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/);
 }
+
+
+
+
+/*Explore Area*/
+
+#explorearea{
+    position: absolute;
+    z-index: 2;
+    top: -5px;
+    left: 0;
+    height: 100%;
+    width:  100%;
+    background: none;
+    overflow: hidden;
+    padding-top: 5px;
+}
+
+#explorearea h1 {
+    margin: 0.3em!important;
+    margin-left: 0.6em!important;
+
+}
+
+
+
+
+
 
 
 /*ADS*/
