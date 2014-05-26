@@ -259,7 +259,7 @@ accountController.loadStoredData = function () {
                                         var oldName = playlistController.playlists[i].name;
                                         do {
                                             var foundSame = false;
-                                            playlistController.playlists[i].name = oldName + " #" + (countSame + 1) + " renamed";
+                                            playlistController.playlists[i].name = oldName + " #" + (countSame + 1);
 
                                             for (var k = 0; k < playlists.length; k++) {
                                                 if (playlists[k].name == playlistController.playlists[i].name) {

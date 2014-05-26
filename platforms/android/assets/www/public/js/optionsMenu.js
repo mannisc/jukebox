@@ -31,15 +31,20 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
         {text: "Play next", callback: null},
         {text: "Add to Queue", callback: null},
         {text: "Add to Playlist", callback: null},
-        {text: "Rename", callback: null}
-
-    ]
+        {text: "Rename", callback:  function () {
+            optionsMenu.closePopup();
+            playlistController.editedPlaylist = playlistController.getLoadedPlaylist()
+            $scope.safeApply();
+            setTimeout(function () {
+                $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
+            }, 510)
+        }}]
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions").popup("option", "arrow", "t");
+    $("#popupOptions").popup("option", "arrow", "r");
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
-    $("#popupOptions-popup").css("margin-top", "15px").css("margin-left", "");
+    $("#popupOptions-popup").css("margin-top", "3px").css("margin-left", "-10px");
 
 }
 
@@ -58,9 +63,9 @@ optionsMenu.openQueueOptions = function (event, positionTo) {
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions").popup("option", "arrow", "t");
+    $("#popupOptions").popup("option", "arrow", "r");
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
-    $("#popupOptions-popup").css("margin-top", "15px").css("margin-left", "");
+    $("#popupOptions-popup").css("margin-top", "3px").css("margin-left", "-10px");
 
 }
 
