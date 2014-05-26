@@ -894,11 +894,16 @@
             var choice, close_link,
                 _this = this;
 
-            //var html = "<span>" + item.html + "</span>"
+            var html = "<span>" + item.html + "</span>"
             //CHANGED
+            /*
             var html = window.$compile(
                 "<img src = 'public/img/emtpy.png' style= 'background-image:url( {{mediaController.getSongCoverForLoadedPlaylist()}} );background-size:  23px;position:absolute;top: 4px;left: 5px;' width='23px' height='23px'   ><span>" + item.html + "</span>"
             )($scope);
+
+
+            */
+
             choice = $('<li />', {
                 "class": "search-choice "+item.classes //CHANGED  //TODO !!!!!!!!!!!!!!!!!!
 
@@ -1187,6 +1192,8 @@
                     var text =  $("#playlistselectvertical .search-field input").attr("placeholder");
                 else
                     text = this.search_field.val();
+
+
                 setTimeout(function(){
                     $(".search-field input").css("opacity","");
                 },0)

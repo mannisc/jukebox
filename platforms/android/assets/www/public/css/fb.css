@@ -51,9 +51,10 @@ background:none!important;
     overflow: hidden;
 }
 
+/*
 .fbnativeloginButton iframe{
-margin-top:-25px;
-}
+ margin-top:-25px;
+} */
 
 #fbblike{
     height: 55px!important;

@@ -885,6 +885,11 @@ video{
   */
 
 
+#popupTextInput .saveButton {
+    margin-top: 20px;
+}
+
+
 
 
 #popupArtistExternList li a{
@@ -1171,6 +1176,7 @@ a, button, h1, h2, h3{
 
 
 }
+/*
 #popupLogin{
     min-height: 320px;
     max-height: 320px;
@@ -1179,6 +1185,8 @@ a, button, h1, h2, h3{
     min-height: 410px;
     max-height:410px;
 }
+ */
+
 
 #popupRegister input, #popupLogin input{
     -webkit-text-shadow: none!important;
@@ -1552,12 +1560,12 @@ max-width: 2em!important;
     display:block!important;
 }
 
-#searchlist ul li.searchlisttitlebutton.listad{ /*TODO REMOVE*/
+#searchlist ul li.songlisttitlebutton.listad{ /*TODO REMOVE*/
     display:none!important;
 
 }
 
-#searchlist ul.gridlayout li.searchlisttitlebutton.listad{
+#searchlist ul.gridlayout li.songlisttitlebutton.listad{
     max-width: 728px!important;
     max-height: 105px!important;
     width: 728px!important;
