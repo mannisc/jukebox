@@ -1730,7 +1730,7 @@ searchController.setShowMode = function (showMode) {
     }, 0);
 
 
-    //$(".searchlisttitlebutton").css("opacity", "0").removeClass("fadeincompletefast")
+    //$(".songlisttitlebutton").css("opacity", "0").removeClass("fadeincompletefast")
 
     searchController.applySongList(searchController.currentSearchID);
     setTimeout(function () {
@@ -2045,7 +2045,13 @@ searchController.makeSearchListDraggable = function () {
 
             return ele;
         },
+
         start: function (event) {
+
+            $(".importplaylist").hide();
+
+
+
             var eleParent = $(playlistController.draggedElements.get(0)).parent();
             eleParent.attr('style', eleParent.attr('style') + '; ' + "margin-top:" + (-(playlistController.draggedElement.offset().top - playlistController.draggedElements.offset().top)) + "px" + ' !important');
             eleParent.css("opacity", "1");
@@ -2074,6 +2080,10 @@ searchController.makeSearchListDraggable = function () {
             if (playlistController.playlistMode) {
                 $("#playlistview").addClass("dragging")
             }
+            $scope.safeApply();// enable  uiController.draggingSong
+            $("#playlistview").listview('refresh');
+
+
 
         },
         stop: function (event, ui) {
@@ -2166,7 +2176,11 @@ searchController.makeSearchListDraggable = function () {
                     playlistController.animateAddedToList(listElement);
                 }
             } else{
-                $(".importplaylist").hide();
+                setTimeout(function(){
+                    if(!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length==0)
+                     $(".importplaylist").show();
+
+                },1000)
             }
 
             $("#playlistview").removeClass("dragging")
@@ -2198,6 +2212,8 @@ searchController.makeSearchListDraggable = function () {
             }
             uiController.draggingSong = false;
 
+            $scope.safeApply();// enable  uiController.draggingSong
+            $("#playlistview").listview('refresh');
 
             playlistController.updateDeselectedSong();
 

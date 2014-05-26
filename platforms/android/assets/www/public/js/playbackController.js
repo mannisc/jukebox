@@ -570,7 +570,7 @@ playbackController.positionPlayIndicator = function () {
 
             var listElementSearchlist = listElement.filter(':noparents(#searchlist)');
 
-            var otherTopHeight = $(".othertopheight.searchlisttitlebutton").length * 10;
+            var otherTopHeight = $(".othertopheight.songlisttitlebutton").length * 10;
             var otherTopElements = $(".othertopheight");
 
             for (var i = 0; i < otherTopElements.length; i++) {
@@ -579,11 +579,10 @@ playbackController.positionPlayIndicator = function () {
 
 
             otherTopHeight = otherTopHeight / ($("#searchlist ul").outerHeight() - 65) * scrollHeight;
-            var otherBottomHeight = $(".otherbottomheight.searchlisttitlebutton").length * 10;
+            var otherBottomHeight = $(".otherbottomheight.songlisttitlebutton").length * 10;
             var otherBottomElements = $(".otherbottomheight");
             for (i = 0; i < otherBottomElements.length; i++) {
                 otherBottomHeight = otherBottomHeight + $(otherBottomElements.get(i)).height();
-
             }
 
             otherBottomHeight = otherBottomHeight / ($("#searchlist ul").outerHeight() - 65) * scrollHeight;
