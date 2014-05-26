@@ -510,10 +510,10 @@ uiController.updateUI = function () {
 
     // $("#videoplayer").css("width", uiController.windowWidth);
 
-    if ($(window).height() / 2 - 60 > 65)
-        $("#playlisthelp").css("top", $(window).height() / 2 - 60)
+    if (65*2-30+$(window).height() / 2 - 60 > 65)
+        $("#playlisthelp").css("top", 75-30+$(window).height() / 2 - 60)
     else
-        $("#playlisthelp").css("top", 65)
+        $("#playlisthelp").css("top", 75-30+65)
 
 
     //Smallest Size
@@ -768,14 +768,14 @@ uiController.toggleSidePanel = function () {
  * Show Playlists
  */
 uiController.showPlaylists = function () {
-    $("#playlistselectvertical .search-field input").attr("placeholder", playlistController.selectPlaylistsPlaceholder)
+   // $("#playlistselectvertical .search-field input").attr("placeholder", playlistController.selectPlaylistsPlaceholder)
 
     $('#playlistselectverticalform option').prop('selected', false);
     $('#playlistselectverticalform').trigger('chosen:updated');
     setTimeout(function () {
         $('#playlistselectverticalform').trigger('chosen:close');
     }, 0)
-    setTimeout(function () {
+    //setTimeout(function () {
 
 
         //Remove empty unnamed Playlists
@@ -784,7 +784,7 @@ uiController.showPlaylists = function () {
                 if (!playlistController.loadedPlaylists[playlist].tracks || (playlistController.loadedPlaylists[playlist].tracks.length == 0 && playlistController.loadedPlaylists[playlist].isUnnamedPlaylist)) {
                     for (var j = playlistController.playlists.length - 1; j >= 0; j--) {
                         if (playlistController.playlists[j].gid == playlistController.loadedPlaylists[playlist].gid) {
-                            playlistController.playlists.splice(i, 1);
+                            playlistController.playlists.splice(j, 1);
                         }
                     }
                 }
@@ -792,9 +792,10 @@ uiController.showPlaylists = function () {
         }
 
         playlistController.loadedPlaylists = {};
-        playlistController.loadedPlaylistSongs = []
+        playlistController.loadedPlaylistSongs = [];
 
         playlistController.playlistMode = true;
+
         $("#clearChoosenPlaylists").hide();
         uiController.updateUI();
         playlistController.loadedPlaylistSongs = playlistController.playlists;
@@ -819,7 +820,7 @@ uiController.showPlaylists = function () {
             }, 150)
         }, 0)
 
-    }, 10)
+    //}, 10)
 }
 
 

@@ -20,9 +20,9 @@
  * @constructor
  */
 function MainController($scope,$compile) {
+
     window.$scope = $scope;
     window.$compile = $compile;
-
 
 
     $scope.appTitle = "Songbase.fm";
