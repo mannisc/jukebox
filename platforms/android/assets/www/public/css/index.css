@@ -417,9 +417,32 @@ input[type=button]{
 
 }
 
+.ui-input-btn, .ui-btn{
+    -webkit-box-shadow: none!important;
+    -moz-box-shadow: none!important;
+    box-shadow:none!important;
+}
+
+#controlbar div.ui-input-btn{
+
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3a3a3a), color-stop(100%,#333));
+    background: -webkit-linear-gradient(top, #3a3a3a 0%,#333 100%);
+    background: -o-linear-gradient(top, #3a3a3a 0%,#333 100%);
+    background: -ms-linear-gradient(top, #3a3a3a 0%,#333 100%);
+    background: linear-gradient(to bottom, #3a3a3a 0%,#333 100%);
+    border-color: #333;
+
+}
+
+#controlbar .ui-input-btn input{
+    background: none!important;
+}
+
+
 
 #controlbar .ui-input-search {
-    margin-right: 10px;;
+    margin-right: 10px;
+    margin-top: 9px;
 
 }
 #controlbar .ui-input-btn{

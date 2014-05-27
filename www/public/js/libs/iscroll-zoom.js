@@ -2010,6 +2010,7 @@ Indicator.prototype = {
 
 	transitionTime: function (time) {
 		time = time || 0;
+
 		this.indicatorStyle[utils.style.transitionDuration] = time + 'ms';
 
 		if ( !time && utils.isBadAndroid ) {

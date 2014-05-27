@@ -19,6 +19,8 @@ authController.ip_token = "auth";
 authController.clientip = "";
 
 authController.extractToken = function(token){
+
+    //alert(token);
     if(token=="init"){
         authController.getToken();
     }
@@ -50,10 +52,12 @@ authController.extractToken = function(token){
 }
 
 authController.getToken = function (){
+    //alert("get TOKEN!")
     $.ajax({
         url: preferences.serverURL + "init.js?nocache="+Date.now(),
         success: function (data) {
-
+           // console.dir("TOKEN:")      ;
+           // console.dir(data);
             if(data.auth && data.auth=="true"){
                 authController.extractToken(data.token);
             }
@@ -66,6 +70,7 @@ authController.getToken = function (){
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
+        //    alert("error!");
             uiController.toast("Sorry, the Songbase.fm server is not available at the moment!", 1500);
             setTimeout(function () {
                 authController.getToken();
