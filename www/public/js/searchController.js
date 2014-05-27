@@ -2080,14 +2080,12 @@ searchController.makeSearchListDraggable = function () {
             if (playlistController.playlistMode) {
                 $("#playlistview").addClass("dragging")
             }
-            $scope.safeApply();// enable  uiController.draggingSong
-            $("#playlistview").listview('refresh');
+
 
 
 
         },
         stop: function (event, ui) {
-
             if (playlistController.playlistMode && playlistController.playlists.length > 0) {
                 $(".draggedlistelement").remove();
 
@@ -2104,7 +2102,6 @@ searchController.makeSearchListDraggable = function () {
                         if (listElement.hasClass("playlistsong")) {
                             var playlist = playlistController.getPlaylistFromId(listElement.data("songgid").substring(12))
                             var newPlaylist = false;
-                            var newPlaylist = false;
 
                         } else if (listElement.hasClass("currentqueue")) {
 
@@ -2114,6 +2111,13 @@ searchController.makeSearchListDraggable = function () {
 
                         } else if (listElement.hasClass("createplaylist")) {
                             playlist = playlistController.createEmptyPlaylist();
+                            playlistController.editedPlaylist =  jQuery.extend(true, {},playlist);
+                            playlistController.editedPlaylistTitle = "Name Playlist";
+
+                            setTimeout(function () {
+                                $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
+                            }, 500)
+
                             delete playlist.isUnnamedPlaylist;
                             // playlistController.loadedPlaylistSongs.unshift(playlist);
 
@@ -2144,16 +2148,17 @@ searchController.makeSearchListDraggable = function () {
                                 playlistController.playlistChanged(playlist, position)
                             }
 
-
+                            //Dropped on Create new playlist
                             if (newPlaylist) {
 
-                                if (playlistController.loadedPlaylistSongs.indexOf(playlist) == -1)
+                               if (playlistController.loadedPlaylistSongs.indexOf(playlist) == -1)
                                     playlistController.loadedPlaylistSongs.unshift(playlist);
 
                                 $scope.safeApply();
+                                $("#playlistview").listview('refresh');
+
                                 playlistController.chosenElement.trigger('chosen:updated');
 
-                                $("#playlistview").listview('refresh');
                                 uiController.playListScroll.scrollTo(0, scrollY);
                                 uiController.updateUI();
                                 setTimeout(function () {
@@ -2212,12 +2217,10 @@ searchController.makeSearchListDraggable = function () {
             }
             uiController.draggingSong = false;
 
-            $scope.safeApply();// enable  uiController.draggingSong
-            $("#playlistview").listview('refresh');
-
             playlistController.updateDeselectedSong();
 
             uiController.swipeTimer = Date.now();
+
 
 
         },
