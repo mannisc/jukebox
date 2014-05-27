@@ -27,13 +27,23 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
         event.stopPropagation();
 
     optionsMenu.options = [
-        {text: "Play", callback: null},
-        {text: "Play next", callback: null},
-        {text: "Add to Queue", callback: null},
-        {text: "Add to Playlist", callback: null},
+        {text: "Play", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+              playlistController.playSelection(event)
+            }, 150)
+        }},
+        {text: "Play next", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                playlistController.playSelectionNext();
+            }, 150)
+        }},
+        {text: "Add to Playlist", callback:   function () {}},
         {text: "Rename", callback:  function () {
             optionsMenu.closePopup();
-            playlistController.editedPlaylist = playlistController.getLoadedPlaylist()
+            playlistController.editedPlaylistTitle = "Rename Playlist";
+            playlistController.editedPlaylist =  jQuery.extend(true, {},playlistController.getLoadedPlaylist());
             $scope.safeApply();
             setTimeout(function () {
                 $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
@@ -89,7 +99,7 @@ optionsMenu.openQueueOptions = function (event, positionTo) {
 
  }  */
 
-optionsMenu.openSelectionOptions = function (event, positionTo) {
+optionsMenu.openSearchListSelectionOptions = function (event, positionTo) {
 
     if (event)
         event.stopPropagation();
@@ -134,6 +144,88 @@ optionsMenu.openSelectionOptions = function (event, positionTo) {
 
 
 }
+
+
+optionsMenu.openPlayListSelectionPlaylistOptions = function (event, positionTo) {
+
+    if (event)
+        event.stopPropagation();
+
+
+    // var song = optionsMenu.getSongFromListEvent(event);
+
+
+    optionsMenu.options = [
+        {text: "Play next", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                playlistController.playSelectionNext();
+            }, 150)
+        }},
+        {text: "Add to Playlist", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                playlistController.addSelectedElementsToPlaylist(positionTo);
+            }, 150)
+        }},
+        {text: "Share with friends", callback: function () {
+            optionsMenu.closePopup();
+
+
+        }}
+
+    ]
+
+    $scope.safeApply();
+    $("#popupOptionsList").listview("refresh");
+    $("#popupOptions").popup("option", "arrow", "l");
+    $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
+    $("#popupOptions-popup").css("margin-top", "7px").css("margin-left", "15px");
+
+
+}
+
+
+
+optionsMenu.openPlayListSelectionSongOptions = function (event, positionTo) {
+
+    if (event)
+        event.stopPropagation();
+
+
+    // var song = optionsMenu.getSongFromListEvent(event);
+
+
+    optionsMenu.options = [
+        {text: "Play next", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                playlistController.playSelectionNext();
+            }, 150)
+        }},
+        {text: "Add to Playlist", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                playlistController.addSelectedElementsToPlaylist(positionTo);
+            }, 150)
+        }},
+        {text: "Share with friends", callback: function () {
+            optionsMenu.closePopup();
+
+
+        }}
+
+    ]
+
+    $scope.safeApply();
+    $("#popupOptionsList").listview("refresh");
+    $("#popupOptions").popup("option", "arrow", "l");
+    $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
+    $("#popupOptions-popup").css("margin-top", "7px").css("margin-left", "15px");
+
+
+}
+
 
 
 /**
@@ -227,6 +319,11 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
 
 }
 
+/**
+ * Menu for all Songs in Searchlist
+ * @param event
+ * @param positionTo
+ */
 
 optionsMenu.openSongResultsOptions = function (event, positionTo) {
 
