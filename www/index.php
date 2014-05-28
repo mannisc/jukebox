@@ -516,7 +516,7 @@
 
             </a></li>
 
-            <li ng-repeat="song in playlistController.loadedPlaylistSongs track by song.gid" context-menu-DISABLED ="playlistController.selectSong(song)" ng-if ="!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}"  data-song="{{song}}" data-songid="playlistsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
+            <li ng-repeat="song in playlistController.loadedPlaylistSongs | limitTo: playlistController.getDisplayLimit()  track by song.gid" context-menu-DISABLED ="playlistController.selectSong(song)" ng-if ="!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}"  data-song="{{song}}" data-songid="playlistsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
                 ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1">
 
                 <img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""   class="ui-li-icon ui-corner-none"  >
@@ -636,7 +636,7 @@
                   <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button>
               </div>
               <div class="videoControlElements-button videoControlElements-button-facebook videoControlElements-custom-button">
-                  <button type="button" id="facebookpostbutton" data-role="none"   aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button>
+                  <button type="button" id="facebookpostbutton" data-role="none"   style="opacity:0.5" aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button>
               </div>
               <!--div style =class="videoControlElements-button videoControlElements-button-copyright videoControlElements-custom-button">
                   <button type="button" id="copyrightbutton" data-role="none" style="opacity:0.9"  onclick="window.open('','_blank')" aria-controls="mep_0" title="Copyright" aria-label="Copyright"></button>
@@ -657,7 +657,7 @@
 
     <img id="playSelection" title="Play" onclick="playlistController.playSelection(event)"  ondblclick="playlistController.playSelection(event)"    src="public/img/playopt.png">
 
-    <img id="removeFromPlaylist"  onclick="playlistController.addSelectedElementsToQueue(event)"  ondblclick="playlistController.removeSelectedElementsFromPlaylist(event)"   src="public/img/empty.png" >
+    <img id="removeFromPlaylist"  onclick="playlistController.removeSelectedElementsFromPlaylist(event)"  ondblclick="playlistController.removeSelectedElementsFromPlaylist(event)"   src="public/img/empty.png" >
 
     <img id="addToPlaylist" title="Add to queue" onclick="playlistController.addSelectedElementsToQueue(event)"  ondblclick="playlistController.addSelectedElementsToQueue(event)"    src="public/img/add.png">
 
@@ -697,14 +697,33 @@
 
 
 
-<div data-role="popup" id="popupSocial" data-arrow="true" data-theme="a" class="ui-corner-all">
-    <form>
-        <div>
-            <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Share</h3>
+<div data-role="popup" id="popupSocial" data-theme="a" class="ui-corner-all">
+    <a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
 
-            <div style="height:100px"></div>
+    <div>
+        <div >
+
+            <h3 style="margin-right: 10px;margin-left: 10px;text-align: center;" class="ng-binding">Like and Share</h3>
+            <div class="popupSocialContainer">
+
+
+                <table border="0">
+                    <tr>
+                        <td> <div class="fbliketitle fblikeartisttitle" >{{mediaController.getSongArtist(playbackController.playingSong)}}</div></td>
+                        <td id="fbtitlebox"><div class="fb-like" data-show-faces="true" style="display:inline-block" data-href="https://www.songbase.fm" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></td>
+
+                    </tr>
+                    <tr>
+                        <td><div class="fbliketitle fblikeartistartist" >{{playbackController.playingSong.name}}</div></td>
+                        <td id="fbartistbox" > <div class="fb-like fbartistbox"  data-show-faces="true" style="display:inline-block"  data-href="https://www.songbase.fm" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></td>
+
+                    </tr>
+                </table>
+
+
+            </div>
         </div>
-    </form>
+    </div>
 </div>
 
 <div data-role="popup" id="popupRegister" data-arrow="true" data-theme="a" class="ui-corner-all"  >
@@ -897,23 +916,7 @@
     </form>
 
 
-    <div style="margin: 3px" >
-        <div class="fbliketitle fblikeartisttitle" >{{mediaController.getSongArtist(playbackController.playingSong)}}</div>
 
-     <span id="songfblikeartist">
-
-        <div class="fb-like" style="display:inline-block" data-href="https://www.songbase.fm" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-       <!--div class="fb-like"  data-href="https://www.songbase.fm" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div-->
-    </span>
-    </div>
-    <div style="margin: 3px" >
-    <div class="fbliketitle fblikeartistartist" >{{playbackController.playingSong.name}}</div>
-    <span id="songfblikesong">
-
-        <div class="fb-like" style="display:inline-block" data-href="https://www.songbase.fm" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-       <!--div class="fb-like"  data-href="https://www.songbase.fm" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div-->
-    </span>
-    </div>
 </div>
 
 

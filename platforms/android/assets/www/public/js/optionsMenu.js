@@ -303,7 +303,7 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd,arrowDirection)
     if(arrowDirection=="r")
         $("#popupOptions-popup").css("margin-top", "3px").css("margin-left", "-10px");
     else
-        $("#popupOptions-popup").css("margin-top", "").css("margin-left", "18px");
+    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "18px");
 
 }
 
@@ -316,9 +316,8 @@ optionsMenu.openArtistResultsOptions = function (event, positionTo) {
 
     optionsMenu.options = [
         {text: "Play Artists Songs", callback: null} ,
-        {text: "Add Songs to Play Queue", callback: null},
         {text: "Add Songs to Playlist", callback: null},
-        {text: "Add Songs as new Playlist", callback: null}
+        {text: "Create new Playlist", callback: null}
 
     ]
 
@@ -367,11 +366,32 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
 
     optionsMenu.options = [
 
-        {text: "Play Songs", callback: null} ,
-        {text: "Add Songs to Play Queue", callback: null},
-        {text: "Add Songs to Playlist", callback: null},
-        {text: "Add Songs as new Playlist", callback: null},
-        {text: "Select All", callback: null}
+        {text: "Play Songs", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                var playlist = searchController.songs.searchResults;
+                if(playlist&&playlist.length>0)
+                    playlistController.playSongList(playlist.slice(0,searchController.maxResults));
+            }, 150)
+        }} ,
+        {text: "Add Songs to Playlist", callback: function(){
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                var playlist = searchController.songs.searchResults;
+                if(playlist&&playlist.length>0)
+                    playlistController.addSongListElementsToPlaylist(positionTo , playlist.slice(0,searchController.maxResults),"l");
+
+            }, 150)
+        }},
+        {text: "Create new Playlist", callback:  function () {
+            optionsMenu.closePopup();
+            var playlist = searchController.songs.searchResults||[];
+            setTimeout(function () {
+                if(playlist&&playlist.length>0)
+                  playlistController.loadNewPlaylistWithSongs(playlist.slice(0,searchController.maxResults))
+            }, 150)
+        }}
+        //,{text: "Select All", callback: null}
 
 
     ]
