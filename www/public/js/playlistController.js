@@ -1263,7 +1263,9 @@ playlistController.renamePlaylist = function(playlist,name) {
 }
 
 playlistController.importPlaylistPopup = function(){
-    var url = "http://www.dailymotion.com/playlist/x1j6fr_DM-Music_rihanna-clips/1#video=xguhys";//"http://www.dailymotion.com/de";//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF&proxmate=us";
+    var url = "http://www.viva.tv/musikvideo/1908-viva-neu/playlist"//http://www.mtv.de/charts/5-hitlist-germany-top-100/video/60825-auf-uns";
+    //"http://www.clipfish.de/suche/Rihanna/video/bestertreffer/1";//http://vimeo.com/search?q=Rihanna";//http://www.dailymotion.com/playlist/x1j6fr_DM-Music_rihanna-clips/1#video=xguhys";//"http://www.dailymotion.com/de";//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF&proxmate=us";
+
     importController.importPlaylist(url);
 }
 
