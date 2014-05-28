@@ -2189,7 +2189,7 @@ searchController.makeSearchListDraggable = function () {
                                        playlistController.loadedPlaylistSongs.push(playlist);
 
                                }
-
+                                playlistController.displayLimit =  playlistController.loadedPlaylistSongs.length;
 
                                 $scope.safeApply();
                                 $("#playlistview").listview('refresh');
