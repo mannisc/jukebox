@@ -1289,12 +1289,12 @@ text-shadow: none!important;
 
 
 
-
+  /*
 #popupOptions li a.currentqueue{
     color:          #000 !important;
     background: #f6d073!important;
     background: #f6d073!important;
-    background: -moz-linear-gradient(top,#fee6b0,#eeba37)!important;
+    background: -moz-linear-gradient(top, #fee6b0,#eeba37)!important;
     background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fee6b0),color-stop(100%,#eeba37))!important;
     background: -webkit-linear-gradient(top,#fee6b0,#eeba37)!important;
     background: -o-linear-gradient(top,#fee6b0,#eeba37)!important;
@@ -1312,7 +1312,7 @@ text-shadow: none!important;
     background: -ms-linear-gradient(top,#fef6c0,#feca47)!important;
     background: linear-gradient(top,#fef6c0,#feca47)!important;
 }
-
+  */
 
 
 

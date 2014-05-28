@@ -30,25 +30,38 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
         {text: "Play", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
-              playlistController.playSelection(event)
+                var playlist = playlistController.getLoadedPlaylist();
+                if(playlist&&playlist.tracks.length>0)
+                 playlistController.playSongList(playlist.tracks);
             }, 150)
         }},
         {text: "Play next", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
-                playlistController.playSelectionNext();
+                var playlist = playlistController.getLoadedPlaylist();
+                if(playlist&&playlist.tracks.length>0)
+                 playlistController.playSongListNext(playlist.tracks);
             }, 150)
         }},
-        {text: "Add to Playlist", callback:   function () {}},
-        {text: "Rename", callback:  function () {
+        {text: "Add to Playlist", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                var playlist = playlistController.getLoadedPlaylist();
+                if(playlist&&playlist.tracks.length>0)
+                playlistController.addSongListElementsToPlaylist(positionTo , playlist.tracks);
+
+            }, 150)
+        }},
+        {text: "Rename", callback: function () {
             optionsMenu.closePopup();
             playlistController.editedPlaylistTitle = "Rename Playlist";
-            playlistController.editedPlaylist =  jQuery.extend(true, {},playlistController.getLoadedPlaylist());
+            playlistController.editedPlaylist = jQuery.extend(true, {}, playlistController.getLoadedPlaylist());
             $scope.safeApply();
             setTimeout(function () {
                 $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
             }, 510)
-        }}]
+        }}
+    ]
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
@@ -162,6 +175,7 @@ optionsMenu.openPlayListSelectionPlaylistOptions = function (event, positionTo) 
                 playlistController.playSelectionNext();
             }, 150)
         }},
+
         {text: "Add to Playlist", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
@@ -172,9 +186,28 @@ optionsMenu.openPlayListSelectionPlaylistOptions = function (event, positionTo) 
             optionsMenu.closePopup();
 
 
-        }}
+        }
+        }
 
     ]
+
+    //Only one Playlist Selected
+    if (playlistController.selectedSongs.length == 1) {
+        optionsMenu.options.push(
+            {text: "Rename", callback: function () {
+                console.dir(playlistController.selectedSongs[0])
+                optionsMenu.closePopup();
+                playlistController.editedPlaylistTitle = "Rename Playlist";
+
+                playlistController.editedPlaylist = jQuery.extend(true, {},playlistController.selectedSongs[0].song);
+                $scope.safeApply();
+                setTimeout(function () {
+                    $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
+                }, 510)
+            }}
+        )
+    }
+
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
@@ -184,7 +217,6 @@ optionsMenu.openPlayListSelectionPlaylistOptions = function (event, positionTo) 
 
 
 }
-
 
 
 optionsMenu.openPlayListSelectionSongOptions = function (event, positionTo) {
@@ -227,7 +259,6 @@ optionsMenu.openPlayListSelectionSongOptions = function (event, positionTo) {
 }
 
 
-
 /**
  * Open Dialog to choose playlist
  */
@@ -245,24 +276,24 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd) {
 
 
     var add = function (index) {
-        return function(){
+        return function () {
             optionsMenu.closePopup();
-            setTimeout(function(){
+            setTimeout(function () {
                 addToList(playlistController.playlists[index])
-            },150);
+            }, 150);
         }
     };
     // var song = optionsMenu.getSongFromListEvent(event);
     optionsMenu.options = [];
     for (var i = 0; i < playlistController.playlists.length; i++) {
-        if(playlistController.playlists[i].gid!=playlistController.currentQueue.gid){
-            var callback =  add(i);
-            optionsMenu.options.push({text: playlistController.playlists[i].name, callback:callback})
+        if (playlistController.playlists[i].gid != playlistController.currentQueue.gid) {
+            var callback = add(i);
+            optionsMenu.options.push({text: playlistController.playlists[i].name, callback: callback})
         }
     }
     //Add Current Queue add end, because its most unlikely  to be choosen
-    callback =  add(playlistController.getPlaylistIndexFromId(playlistController.currentQueue.gid));
-    optionsMenu.options.push({text: playlistController.currentQueue.name, callback:callback, currentQueue:true})
+    callback = add(playlistController.getPlaylistIndexFromId(playlistController.currentQueue.gid));
+    optionsMenu.options.push({text: playlistController.currentQueue.name, callback: callback, currentQueue: true})
 
 
     $scope.safeApply();
@@ -342,11 +373,9 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
     ]
 
     //More Results can be displayed
-    if(!searchController.isOnlyTypeDisplayed(1)) {
+    if (!searchController.isOnlyTypeDisplayed(1)) {
         optionsMenu.options.unshift({text: "Show all results", callback: null})
     }
-
-
 
 
     $scope.safeApply();
