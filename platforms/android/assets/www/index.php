@@ -222,7 +222,7 @@
 
         <input id="searchbutton2" data-type="button" data-theme="b" onclick="setTimeout(function (){ searchController.showSuggestions()}, 350);searchController.activateButton(1);" type="button" value="Suggestions">
         <input id="searchbutton3" data-type="button" data-theme="b" onclick="setTimeout(function (){ searchController.showExplore()}, 350);searchController.activateButton(2);" type="button" value="Explore">
-        <a id="searchlayoutbutton" title="Change list layout" data-type="button" data-theme="b" onclick="uiController.toggleGridLayout();" style="background-color: #442727;width: 3px;height: 20px;" class="ui-input-btn ui-btn ui-btn-b ui-shadow ui-corner-all"><img src="public/img/grid.png"  style="width: 21px;margin-left: -9px;"> </a>
+        <a id="searchlayoutbutton" title="Change list layout" data-type="button" data-theme="b" onclick="uiController.toggleGridLayout();" style="margin-left: -3px;background-color: #442727;width: 3px;height: 20px;" class="ui-input-btn ui-btn ui-btn-b ui-shadow ui-corner-all"><img src="public/img/grid.png"  style="width: 21px;margin-left: -9px;"> </a>
 
         <!--input id="searchbutton4" data-type="button" data-theme="b" onclick="searchController.activateButton(3);searchController.showPlaylists()" type="button" value="Playlists"-->
     </div>
@@ -433,8 +433,6 @@
     <div id="playlistInner" class="animate">
         <ul ui-sortable ng-model="playlistController.loadedPlaylistSongs" data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
 
-
-
             <li ng-if ="!playlistController.playlistMode" ng-click="uiController.showPlaylists();"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton showplaylists othertopheight stayvisible">
                 <a tabindex="-1" >
                     <img src="public/img/empty.png" onclick=""  class="optionsPlaylistBack"   >
@@ -443,9 +441,9 @@
                 </a>
             </li>
 
-            <li ng-if ="!playlistController.playlistMode"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton currentplaylist othertopheight stayvisible">
+            <li ng-if ="!playlistController.playlistMode"  onclick="playlistController.openLoadedPlaylistMenu(event,this)"   ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton currentplaylist othertopheight stayvisible">
                 <a tabindex="-1"  ng-class="{loaded:!searchController.playlistMode}">
-                    <img src="public/img/empty.png" onclick="playlistController.openLoadedPlaylistMenu(event,this)"  class="optionsPlaylist"   >
+                    <img src="public/img/empty.png" class="optionsPlaylist"   >
 
                     <h3 style="font-size: 1.1em;margin-top: 7px;">{{playlistController.getLoadedPlaylist().name}}</h3>
                 </a>
