@@ -1262,7 +1262,7 @@ playlistController.renamePlaylist = function(playlist,name) {
 }
 
 playlistController.importPlaylistPopup = function(){
-    var url = "https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF&proxmate=us";
+    var url = "http://www.dailymotion.com/playlist/x1j6fr_DM-Music_rihanna-clips/1#video=xguhys";//"http://www.dailymotion.com/de";//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF&proxmate=us";
     importController.importPlaylist(url);
 }
 
