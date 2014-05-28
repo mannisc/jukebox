@@ -498,11 +498,12 @@ playlistController.playSongList = function (songlist) {
 
         playlistController.insertSongsIntoQueue(songlist);
 
-
-        playbackController.playSong(songlist[0], false, false, false);
+        setTimeout(function () {
+         playbackController.playSong(songlist[0], false, false, false);
 
         playbackController.playingSong = songlist[0];
-
+            }, 300
+        )
 
         if (playlistController.playlistMode) {
             setTimeout(function () {
@@ -1261,6 +1262,10 @@ playlistController.renamePlaylist = function(playlist,name) {
 
 }
 
+playlistController.importPlaylistPopup = function(){
+    var url = "http://www.dailymotion.com/playlist/x1j6fr_DM-Music_rihanna-clips/1#video=xguhys";//"http://www.dailymotion.com/de";//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF&proxmate=us";
+    importController.importPlaylist(url);
+}
 
 
 playlistController.loadPlaylist = function (playlist) {
@@ -1617,9 +1622,10 @@ playlistController.loadNewPlaylistWithSongs = function (songs) {
 
     }, 0)
     setTimeout(function () {
-        $scope.safeApply();
         playlistController.editedPlaylist = playlist;
         playlistController.editedPlaylistTitle = "Rename Playlist";
+        $scope.safeApply();
+
         $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
     }, 150)
 }

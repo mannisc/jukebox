@@ -267,12 +267,30 @@
 
  /*Video Slider*/
 
-/*Volume slider*/
+.videoControlElements-button button{
+    -webkit-transition: all 0.15s linear;
+    -moz-transition: all 0.15s linear;
+    -ms-transition: all 0.15s linear;
+    -o-transition: all 0.15s linear;
+    transition: all 0.15s linear;
+}
+
+
+#videocontrols .videoControlElements-fullscreen-button button{
+    background-image: url(fullscreen.png);
+    background-position:0 0;
+    background-size: 16px ;
+
+}
+
+
+/*OPACITY slider*/
 .videoControlElements-controls .videoControlElements-fullscreen-button .videoControlElements-fullscreen-slider {
     display: none;
     height: 115px;
     width: 25px;
-    background: none;
+
+
     background: rgba(50, 50, 50, 0.9);
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
