@@ -265,7 +265,10 @@ mediaController.getVersions = function () {
                                             $scope.safeApply();
                                             $('#loadversionimg').css("opacity", "0");
                                             $("#searchviewVersions").listview('refresh');
+                                            $("#popupVideoSettings-popup").css("margin-left", "");
+
                                             $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'});
+                                            $("#popupVideoSettings-popup").css("margin-left", "1px");
 
                                             ///$('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
                                         }
@@ -725,6 +728,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
         var listElement = playbackController.getListElementFromSong(playbackController.playingSong);
 
         if (listElement.length>0&&listElement.hasClass("loadedsong")) {
+            uiController.dontRemark = true;
 
             var loadTime = Date.now() - playbackController.startedLoadingTime;
             /* var delayTime = loadTime % 2000;
@@ -766,11 +770,11 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                         listElement.find(".loadingSongImg").css("opacity", "")
                         listElement.find("img.ui-li-icon").css("opacity", "1")
                         listElement.find("img.ui-li-icon").removeClass("fadeincomplete");
-
+                        uiController.dontRemark = false;
                     }, 1000)
-                }, 50)
+                }, 250)
 
-            }, 450)
+            }, 250)
             //  }, delayTime)
 
             // $("#videoplayer").removeClass("animatefast").addClass("animate");

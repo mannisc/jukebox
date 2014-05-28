@@ -267,7 +267,7 @@
 
  /*Video Slider*/
 
-.videoControlElements-button button{
+#videocontrols .videoControlElements-fullscreen-button button{
     -webkit-transition: all 0.15s linear;
     -moz-transition: all 0.15s linear;
     -ms-transition: all 0.15s linear;
