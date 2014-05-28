@@ -449,7 +449,7 @@
                 </a>
             </li>
 
-            <li ng-if ="!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length == 0" ng-click=""  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton createplaylist importplaylist stayvisible">
+            <li ng-if ="!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length == 0" ng-click="playlistController.importPlaylistPopup();"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton createplaylist importplaylist stayvisible">
                 <a tabindex="-1">
 
                     <img src="public/img/empty.png"  alt="" class="noshadow ui-li-icon ui-corner-none"  >
