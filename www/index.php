@@ -528,7 +528,7 @@
                 <img src="public/img/empty.png" class="loadingSongImg">
                     <span ng-if="!song.isPlaylist">
                     <h3>{{song.name}}</h3>
-                    <p>{{mediaController.getSongArtist(song)}}<span style="font-style: italic;font-size: .93em;margin-left:2px;"> {{playlistController.getSongPlaylistName(song)}} </span>  </p>
+                    <p>{{mediaController.getSongArtist(song)}}<!--span style="font-style: italic;font-size: .93em;margin-left:2px;"> {{playlistController.getSongPlaylistName(song)}} </span-->  </p>
                     <!--img class="removesong" ng-style="{'background-image':'url(public/img/trash.png)',display:'none'}" src="public/img/empty.png"-->
                     </span>
                     <span ng-if="song.isPlaylist">
