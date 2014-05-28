@@ -71,8 +71,8 @@ videoController.timerailEnabled = true;
 videoController.volumeEnabled = true;
 videoController.fullscreenEnabled = false;
 videoController.versionsEnabled = true;
-videoController.lyricsEnabled = true;
-videoController.sharesocialEnabled = true;
+videoController.lyricsEnabled = false;
+videoController.sharesocialEnabled = false;
 videoController.externalSiteEnabled = false;
 
 
@@ -423,9 +423,15 @@ videoController.init = function () {
 
     //Share Social
     videoController.controls.find(".videoControlElements-button-facebook").click(function () {
-        if (videoController.sharesocialEnabled)
+        if (videoController.sharesocialEnabled){
+            $("#popupSocial").popup('open', {positionTo: "window", transition: 'slideup'});
 
-            facebookHandler.postOnFacebook();
+        }
+
+
+
+
+        //  facebookHandler.postOnFacebook();
 
     });
 
@@ -889,6 +895,7 @@ videoController.disableLyricsControl = function (disable) {
         $(".videoControlElements-button-lyrics button").css("opacity", "1");
     }
 }
+
 
 
 /**
