@@ -82,7 +82,7 @@ background:none!important;
 
 
 .fbliketitle{
-    position:absolute;
+
     display: inline-block;
     float: left;
     margin: 3px 10px 2px 0;
@@ -90,7 +90,7 @@ background:none!important;
     line-height: 1.2!important;
     font-size: 14px!important;
     min-height: 0em!important;
-    max-width: 148px;
+    /* max-width: 148px; */
     font-weight: bold;
     text-align: center;
     max-height: 16px;
@@ -100,6 +100,7 @@ background:none!important;
     text-shadow: #ffffff 0px 0px 8px;
 }
 
+
 .fblikeartisttitle{
     margin-top: 2px;
     left: 144px;
@@ -107,19 +108,6 @@ background:none!important;
 }
 
 .fblikeartistartist{
-    bottom: 5px;
     left: 144px;
-
 }
 
-#songfblikesong{
-    position:absolute;
-    bottom: 5px;
-
-}
-
-#songfblikeartist{
-    position:absolute;
-    bottom: 31px;
-
-}
