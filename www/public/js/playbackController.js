@@ -88,11 +88,9 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     //Song for which version list is currently loaded set to null
     mediaController.versionListSong = null;
 
-  /// if(playbackController.playingSong)
- //   alert(playbackController.playingSong.gid +"   "+song.gid)
 
     var listElement = playbackController.getListElementFromSong(song);
-   // alert(listElement.length)
+
 
     if (!resetingSong) {
         //Check if song already playing
@@ -119,8 +117,10 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
                 return;
             }
+
         }
     }
+
 
     //If not already loading, save the old song to be able to reset if there is a loading error
     if (!playbackController.isLoading && playbackController.playingSong) {
@@ -128,7 +128,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     }
 
     //Set loading/playing Song to selected Song
-
+    playbackController.updatePlayingSongIndex();
     playbackController.playingSong = song;
 
     //Clear other loading songs
@@ -136,6 +136,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
     $(".songlist li.loadedsong").addClass("oldloadedsong").removeClass("loadedsong");    //playing pausing
 
+    listElement.removeClass("playing pausing oldloadedsong");
 
     listElement.addClass("loadedsong");
 
@@ -155,30 +156,38 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     if (!resetingSong) {
         if (!isSameSongAsLoadedSong) {
 
+            playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
+
+
             if (addSongToQueue) {
                 if (playbackController.playingSong.playlistgid != playlistController.currentQueue.gid) {
+
+                    var actSong = jQuery.extend(true, {}, playbackController.playingSong);
+
+                    actSong.playlistgid = playlistController.currentQueue.gid;
+                    var actSongList = [actSong];
+                    playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue, actSongList)
+                    //alert(actSong.gid)
+                    //playbackController.playingSong.gid= actSong.gid;
+                    playbackController.playingSong = actSongList[0];
+
                     setTimeout(function () {
-                        var actSong = jQuery.extend(true, {}, playbackController.playingSong);
-
-                        actSong.playlistgid = playlistController.currentQueue.gid;
-                        var actSongList = [actSong];
-                        playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue, actSongList)
-
-                        playbackController.playingSong = actSongList[0];
                         playlistController.insertSongsIntoQueue(actSongList);
+                        playbackController.updatePlayingSongIndex();
                     }, 0)
                     if (playlistController.loadedPlaylists["0"])
                         addedToQueue = true;
 
-                }
+                } else
+                playbackController.updatePlayingSongIndex();
 
                 if (!playedAutomatic && playlistController.playlistMode) {
                     setTimeout(function () {
                         playlistController.animateAddedToList($(".currentqueue"));
                     }, 300)
                 }
-            }
-
+            } else
+                playbackController.updatePlayingSongIndex();
 
             playbackController.isLoading = true;
             playbackController.playingSongTimer = null;
@@ -194,10 +203,6 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
             playbackController.playedSongs.push(playbackController.playingSong);
 
-            playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
-
-
-            playbackController.updatePlayingSongIndex();
 
         }
 
@@ -226,6 +231,8 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
 
         videoController.disableLyricsControl(false);
+        videoController.disableShareSocialControl(false);
+
         //Enable stop if there is no old song
         if (!playbackController.playingOldSong)
             videoController.disableStopControl(false);
@@ -292,15 +299,18 @@ playbackController.resetPlayingSong = function () {
  */
 
 playbackController.updatePlayingSongIndex = function () {
-
     playbackController.playingSongIndex = 0;
 
+    if (playbackController.playingSong) {
+        for (var i = playlistController.currentQueue.tracks.length - 1; i >= 0; i--) {
 
-    for (var i = playlistController.currentQueue.tracks.length - 1; i >= 0; i--) {
-        if (playlistController.currentQueue.tracks[i].gid == playbackController.playingSong.gid && playlistController.currentQueue.tracks[i].iid == playbackController.playingSong.iid) {
-            playbackController.playingSongIndex = i;
-            break;
+            if (playlistController.currentQueue.tracks[i].gid == playbackController.playingSong.gid) {
+                playbackController.playingSongIndex = i;
+                console.log("........ " + i)
+                break;
+            }
         }
+
     }
 
 };
@@ -420,9 +430,9 @@ playbackController.playPrevSong = function () {
         videoController.setProgressPercentage(0);
         videoController.setProgressTime(0);
         videoController.videoPlayer.setProgressPercentage(0);
-        setTimeout(function(){
+        setTimeout(function () {
             videoController.playSong();
-        },0)
+        }, 0)
 
 
     } else {
@@ -503,9 +513,9 @@ playbackController.playNextSong = function () {
         videoController.setProgressPercentage(0);
         videoController.setProgressTime(0);
         videoController.videoPlayer.setProgressPercentage(0);
-        setTimeout(function(){
+        setTimeout(function () {
             videoController.playSong();
-        },0)
+        }, 0)
 
 
     } else {
@@ -682,43 +692,52 @@ playbackController.isLoadingSong = function (song) {
  * Remark song if list after list reload
  */
 playbackController.remarkSong = function () {
-    var listElement;
+    if (uiController.dontRemark) {
+        setTimeout(function () {
+            playbackController.remarkSong();
+        }, 150)
+    }
+    else {
+        var listElement;
 
 
-    $(".songlist .loadedsong").removeClass("loadedsong");
-    var safe = $(".songlist .oldloadedsong.playing")
-    $(".songlist .playing").removeClass("playing");
-    safe.addClass("playing")
+        $(".songlist .loadedsong").removeClass("loadedsong");
+        var safe = $(".songlist .oldloadedsong.playing")
+        $(".songlist .playing").removeClass("playing");
+        safe.addClass("playing")
 
-    safe = $(".songlist .oldloadedsong.pausing")
-    $(".songlist .pausing").removeClass("pausing");
-    safe.addClass("pausing")
+        safe = $(".songlist .oldloadedsong.pausing")
+        $(".songlist .pausing").removeClass("pausing");
+        safe.addClass("pausing")
 
-    $(".songlist .stillloading").removeClass("stillloading");
+        $(".songlist .stillloading").removeClass("stillloading");
 
-    if (playbackController.playingSong) {
-        listElement = playbackController.getListElementFromSong(playbackController.playingSong);
-        if (listElement.length > 0) {
+        if (playbackController.playingSong) {
+            listElement = playbackController.getListElementFromSong(playbackController.playingSong);
+            if (listElement.length > 0) {
 
 
-            playbackController.positionPlayIndicator();
+                playbackController.positionPlayIndicator();
 
-            listElement.addClass("loadedsong");
+                listElement.addClass("loadedsong");
 
-            if (playbackController.isLoading) {
-                listElement.addClass("stillloading");
-                //listElement.find(".loadingSongImg").show();
+                if (playbackController.isLoading) {
+                    listElement.addClass("stillloading");
+                    //listElement.find(".loadingSongImg").show();
 
-            } else if (videoController.isPlaying) {
-                listElement.addClass("playing");
-                listElement.removeClass("pausing");
-            }
-            else {
-                listElement.addClass("pausing");
-                listElement.removeClass("playing");
+                } else if (videoController.isPlaying) {
+
+                    listElement.addClass("playing");
+                    listElement.removeClass("pausing");
+                }
+                else {
+                    listElement.addClass("pausing");
+                    listElement.removeClass("playing");
+                }
             }
         }
     }
+
 }
 
 

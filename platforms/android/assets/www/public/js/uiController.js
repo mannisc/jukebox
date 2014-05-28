@@ -485,6 +485,9 @@ uiController.updateUI = function () {
     }, 2000)
 
 
+
+    $("#playlistview").css("min-height",$("#playlistInner").height()-20);
+
     /*
      if (!dontChangeVideOpacity) {
      if (uiController.windowWidth < uiController.responsiveWidthSmall || $(window).height() < 350) {
@@ -807,7 +810,9 @@ uiController.showPlaylists = function () {
 
         $("#playlistInner .songlist").addClass("hidden");
 
-        $scope.safeApply();
+    playlistController.applySongList();
+    /*
+    $scope.safeApply();
         setTimeout(function () {
             uiController.updateUI();
             $("#playlistview").listview('refresh');
@@ -820,6 +825,7 @@ uiController.showPlaylists = function () {
             }, 150)
         }, 0)
 
+        */
     //}, 10)
 }
 
