@@ -1233,10 +1233,7 @@ a, button, h1, h2, h3{
     z-index: 0;
 }
 
-#popupArtist{
 
-    padding-bottom: 50px;
-}
 
 #popupArtist .ng-pristine{
 text-shadow: none!important;
