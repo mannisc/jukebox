@@ -23,7 +23,7 @@ importController.importPlaylist = function(url){
             for (var j = 0; j <  data.track.length; j++) {
                 playlist[j] = {
                     artist: unescape(data.track[j].artist),
-                    title: unescape(data.track[j].title),
+                    name: unescape(data.track[j].name),
                     gid: playlistController.getNewID(),
                     id: "plsid" + helperFunctions.padZeros(j, ("" + playlistController.loadedPlaylistSongs.length).length)
                 }
