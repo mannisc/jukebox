@@ -768,9 +768,9 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                         listElement.find("img.ui-li-icon").removeClass("fadeincomplete");
 
                     }, 1000)
-                }, 50)
+                }, 100)
 
-            }, 450)
+            }, 250)
             //  }, delayTime)
 
             // $("#videoplayer").removeClass("animatefast").addClass("animate");

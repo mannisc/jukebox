@@ -224,8 +224,8 @@ body {
     }
 
     #playlistselectvertical .chosen-container {
-        min-width: 180px !important;
-        max-width: 180px !important;
+        min-width: 222px !important;
+        max-width: 222px !important;
     }
 
     #sortplaylisttext {

@@ -88,11 +88,13 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     //Song for which version list is currently loaded set to null
     mediaController.versionListSong = null;
 
-  /// if(playbackController.playingSong)
- //   alert(playbackController.playingSong.gid +"   "+song.gid)
+
+
 
     var listElement = playbackController.getListElementFromSong(song);
-   // alert(listElement.length)
+
+
+
 
     if (!resetingSong) {
         //Check if song already playing
@@ -119,8 +121,12 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
                 return;
             }
+
         }
     }
+
+
+
 
     //If not already loading, save the old song to be able to reset if there is a loading error
     if (!playbackController.isLoading && playbackController.playingSong) {
@@ -136,6 +142,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
     $(".songlist li.loadedsong").addClass("oldloadedsong").removeClass("loadedsong");    //playing pausing
 
+    listElement.removeClass("playing pausing oldloadedsong");
 
     listElement.addClass("loadedsong");
 
@@ -154,6 +161,9 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
     if (!resetingSong) {
         if (!isSameSongAsLoadedSong) {
+
+            playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
+
 
             if (addSongToQueue) {
                 if (playbackController.playingSong.playlistgid != playlistController.currentQueue.gid) {
@@ -194,7 +204,6 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
             playbackController.playedSongs.push(playbackController.playingSong);
 
-            playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
 
 
             playbackController.updatePlayingSongIndex();

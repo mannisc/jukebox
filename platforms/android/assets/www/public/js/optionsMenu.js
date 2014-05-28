@@ -48,7 +48,7 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
             setTimeout(function () {
                 var playlist = playlistController.getLoadedPlaylist();
                 if(playlist&&playlist.tracks.length>0)
-                playlistController.addSongListElementsToPlaylist(positionTo , playlist.tracks);
+                playlistController.addSongListElementsToPlaylist(positionTo , playlist.tracks,"r");
 
             }, 150)
         }},
@@ -262,7 +262,7 @@ optionsMenu.openPlayListSelectionSongOptions = function (event, positionTo) {
 /**
  * Open Dialog to choose playlist
  */
-optionsMenu.openChoosePlaylist = function (positionTo, listToAdd) {
+optionsMenu.openChoosePlaylist = function (positionTo, listToAdd,arrowDirection) {
 
     if (event)
         event.stopPropagation();
@@ -298,9 +298,13 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd) {
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
-    $("#popupOptions").popup("option", "arrow", "l");
+    $("#popupOptions").popup("option", "arrow", arrowDirection);
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
-    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "18px");
+    if(arrowDirection=="r")
+        $("#popupOptions-popup").css("margin-top", "3px").css("margin-left", "-10px");
+    else
+        $("#popupOptions-popup").css("margin-top", "").css("margin-left", "18px");
+
 }
 
 //Search Results
