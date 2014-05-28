@@ -1563,10 +1563,12 @@ max-width: 2em!important;
 
     display: block!important;
 }
-.sideinfo *{
+.sideinfo > ins{
     display:inline-block!important;
     vertical-align: middle!important;
 }
+
+
 
 .songlist li.listad{
     max-width: 728px!important;

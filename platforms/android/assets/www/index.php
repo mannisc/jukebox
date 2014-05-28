@@ -449,7 +449,7 @@
                 </a>
             </li>
 
-            <li ng-if ="!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length == 0" ng-click=""  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton createplaylist importplaylist stayvisible">
+            <li ng-if ="!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length == 0" ng-click="playlistController.importPlaylistPopup();"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton createplaylist importplaylist stayvisible">
                 <a tabindex="-1">
 
                     <img src="public/img/empty.png"  alt="" class="noshadow ui-li-icon ui-corner-none"  >
@@ -694,6 +694,18 @@
     </form>
 </div>
 
+
+
+
+<div data-role="popup" id="popupSocial" data-arrow="true" data-theme="a" class="ui-corner-all">
+    <form>
+        <div>
+            <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Share</h3>
+
+            <div style="height:100px"></div>
+        </div>
+    </form>
+</div>
 
 <div data-role="popup" id="popupRegister" data-arrow="true" data-theme="a" class="ui-corner-all"  >
         <div style="padding:0px 20px 10px 20px">
@@ -1096,7 +1108,7 @@
     <img  src="public/img/cross.png"  style="background-image: url(public/img/cross.png)">
 
 
-
+    <img src="public/img/brightness.png">
 
     <canvas id="webglcanvas"></canvas>
 </div>
@@ -1105,7 +1117,16 @@
 
 
 <div class="sideinfo fadeincompleteslow">
-    <img src="public/img/testad.png">
+    <!--img src="public/img/testad.png"-->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Main Right -->
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:160px;height:600px"
+         data-ad-client="ca-pub-2111240458873424"
+         data-ad-slot="7525906597"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 </div>
 
 
