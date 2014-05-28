@@ -2091,14 +2091,21 @@ searchController.makeSearchListDraggable = function () {
 
                 var x = event.clientX, y = event.clientY,
                     elementMouseIsOver = document.elementFromPoint(x, y);
-                var listElement = $(elementMouseIsOver).parents("li")
+
+                var listElement = $(elementMouseIsOver).parents("li");
+                if(listElement.length==0)
+                     listElement = $(elementMouseIsOver).parents("ul");
+                if(listElement.length==0)
+                     listElement = $(elementMouseIsOver)
+
+
 
                 setTimeout(function () {
 
 
-                    if (listElement && listElement.parents("#playlistInner").length > 0) {
+                    if (listElement &&  ( listElement.parents("#playlistInner").length > 0) || listElement.attr("id")=="playlistInner") {
 
-
+                        var newPlaylistAtTop = false;
                         if (listElement.hasClass("playlistsong")) {
                             var playlist = playlistController.getPlaylistFromId(listElement.data("songgid").substring(12))
                             var newPlaylist = false;
@@ -2109,10 +2116,15 @@ searchController.makeSearchListDraggable = function () {
                             newPlaylist = false;
 
 
-                        } else if (listElement.hasClass("createplaylist")) {
-                            playlist = playlistController.createEmptyPlaylist();
+                        } else  {  //if (listElement.hasClass("createplaylist"))
+
+                            //Create Playlist Button was used to add at Top
+                            if (listElement.hasClass("createplaylist"))
+                              newPlaylistAtTop = true;
+
+                            playlist = playlistController.createEmptyPlaylist(!newPlaylistAtTop);
                             playlistController.editedPlaylist =  jQuery.extend(true, {},playlist);
-                            playlistController.editedPlaylistTitle = "Name Playlist";
+                            playlistController.editedPlaylistTitle = "Rename Playlist";
 
                             setTimeout(function () {
                                 $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
@@ -2123,6 +2135,9 @@ searchController.makeSearchListDraggable = function () {
 
                             newPlaylist = true;
                         }
+
+
+
 
                         if (playlist) {
                             if (!playlist.tracks)
@@ -2150,9 +2165,14 @@ searchController.makeSearchListDraggable = function () {
 
                             //Dropped on Create new playlist
                             if (newPlaylist) {
+                               if (playlistController.loadedPlaylistSongs.indexOf(playlist) == -1) {
+                                   if(newPlaylistAtTop)
+                                       playlistController.loadedPlaylistSongs.unshift(playlist);
+                                   else
+                                       playlistController.loadedPlaylistSongs.push(playlist);
 
-                               if (playlistController.loadedPlaylistSongs.indexOf(playlist) == -1)
-                                    playlistController.loadedPlaylistSongs.unshift(playlist);
+                               }
+
 
                                 $scope.safeApply();
                                 $("#playlistview").listview('refresh');
