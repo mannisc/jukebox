@@ -10,6 +10,7 @@ var importController = function () {
 };
 
 importController.importPlaylist = function(url){
+    $("#popupImportInput").popup("close");
     $.ajax({
         url: preferences.serverURL + "?importplaylist="+encodeURIComponent(url)+"&auth="+authController.ip_token,
         success: function (data) {
