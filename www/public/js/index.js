@@ -231,3 +231,8 @@ if (!Object.keys) {
 }
 
 
+//Log Snapshot
+window.console.dirx = function(obj){
+    console.dir(JSON.parse(JSON.stringify(obj)));
+}
+
