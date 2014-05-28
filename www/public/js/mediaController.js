@@ -770,7 +770,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                     }, 1000)
                 }, 50)
 
-            }, 350)
+            }, 450)
             //  }, delayTime)
 
             // $("#videoplayer").removeClass("animatefast").addClass("animate");

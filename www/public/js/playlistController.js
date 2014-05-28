@@ -498,11 +498,12 @@ playlistController.playSongList = function (songlist) {
 
         playlistController.insertSongsIntoQueue(songlist);
 
-
-        playbackController.playSong(songlist[0], false, false, false);
+        setTimeout(function () {
+         playbackController.playSong(songlist[0], false, false, false);
 
         playbackController.playingSong = songlist[0];
-
+            }, 300
+        )
 
         if (playlistController.playlistMode) {
             setTimeout(function () {
@@ -1621,9 +1622,10 @@ playlistController.loadNewPlaylistWithSongs = function (songs) {
 
     }, 0)
     setTimeout(function () {
-        $scope.safeApply();
         playlistController.editedPlaylist = playlist;
         playlistController.editedPlaylistTitle = "Rename Playlist";
+        $scope.safeApply();
+
         $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
     }, 150)
 }

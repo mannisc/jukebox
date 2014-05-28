@@ -313,6 +313,22 @@ videoController.init = function () {
             videoController.controls.find(".videoControlElements-fullscreen-slider").hide();
     });
 
+    videoController.controls.find(".videoControlElements-fullscreen-slider").mouseover(function () {
+      $(".videoControlElements-fullscreen-button button").css("background-image","url(public/img/brightness.png)")
+
+
+    });
+
+
+
+    videoController.controls.find(".videoControlElements-fullscreen-slider").mouseout(function () {
+        $(".videoControlElements-fullscreen-button button").css("background","")
+
+    });
+
+
+
+
     videoController.controls.find(".videoControlElements-fullscreen-slider").click(function (event) {
 
         if (!videoController.changingVideoOpactiy) {
