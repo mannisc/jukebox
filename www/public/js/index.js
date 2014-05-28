@@ -45,7 +45,8 @@ var app = {
 
 var preferences = {
 
- // serverURL: "http://localhost:3001/"
+ // serverURL: "http://localhost:3001/",
+
   serverURL: "http://info.jukebox.selfhost.eu:3001/"
 
 }
