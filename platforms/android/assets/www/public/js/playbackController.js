@@ -88,7 +88,11 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     //Song for which version list is currently loaded set to null
     mediaController.versionListSong = null;
 
+  /// if(playbackController.playingSong)
+ //   alert(playbackController.playingSong.gid +"   "+song.gid)
+
     var listElement = playbackController.getListElementFromSong(song);
+   // alert(listElement.length)
 
     if (!resetingSong) {
         //Check if song already playing
@@ -131,6 +135,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     $(".songlist li.loadedsong.stillloading").removeClass("loadedsong stillloading");
 
     $(".songlist li.loadedsong").addClass("oldloadedsong").removeClass("loadedsong");    //playing pausing
+
 
     listElement.addClass("loadedsong");
 

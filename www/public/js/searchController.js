@@ -136,7 +136,8 @@ searchController.init = function () {
 
         switch (searchController.buttonActive) {
             case 0://Search
-                searchController.startSearch("");//Show Populars
+                searchController.startSearch();//Show Populars
+                break;
             case 1://Suggestions
                 searchController.removeFilterSongs();
                 break;
@@ -201,7 +202,7 @@ searchController.activateButton = function (index, noAnimation) {
 
     searchController.buttonActive = index;
     searchController.emptySearchList(true);
-
+    console.log("XXXXXXXääääääääääääääääääääääääääääääääääääää")
     $("#searchlist .iScrollPlayIndicator").hide();
     $("#searchlist .iScrollScrollUpIndicator").hide();
 
@@ -379,9 +380,10 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
 searchController.startSearch = function (searchTerm) {
     if (!searchTerm)
         searchTerm = $("#searchinput").val();
+
     searchController.showLoading(true);
 
-    if (searchTerm && searchTerm != "") {
+    if (searchTerm && $.trim(searchTerm) != "") {
         searchController.showedPopulars = false;
 
         searchController.currentSearchID = searchController.currentSearchID + 1;
@@ -402,6 +404,7 @@ searchController.startSearch = function (searchTerm) {
         search(searchController.currentSearchID);
 
     } else {
+
         searchController.showPopulars();
     }
 
@@ -509,6 +512,7 @@ searchController.emptySearchList = function (dontInitFully) {
     searchController.displayLimit = 0;
 
     $scope.safeApply();
+    console.log("EMPTYÄÄÄÄÄAYYYYIIIIIII")
 
     $("#searchlistview").listview('refresh');
     $("#searchlist .iScrollIndicator").hide();
@@ -1040,22 +1044,28 @@ searchController.applySongList = function (currentSearchID) {
     console.log(delays)
     console.log(size + "  " + stepSize)
 
+
     var songInList = searchController.isSongInList(playbackController.playingSong);
     $("#searchlist .loadedsong").removeClass("loadedsong playing pausing stillloading");
     $("#searchlist .oldloadedsong").removeClass("loadedsong");
+
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXx")
+
+    console.log(searchController.songs.searchResults.length)
 
     for (var i = 1; i <= delays; i++) {
 
         var show = function (index) {
             setTimeout(function () {
-
                 if (searchController.currentSearchID == currentSearchID) {
+                    console.log(index+" mm  "+searchController.songs.searchResults.length)
 
 
                     /*  if (searchController.showMode == 0)
                      searchController.displayLimit = searchController.maxResults;
                      else*/
                     searchController.displayLimit = size * index / delays;
+
                     console.log("safeapply")
                     $scope.safeApply();
                     $("#searchlistview").listview('refresh');
@@ -1137,6 +1147,7 @@ searchController.filterMusicOOOLLLDDDDDDD = function () {
 
 searchController.removeFilterSongs = function () {
     uiController.searchListScroll.scrollTo(0, 0, 1000)
+    console.log("!!!!!!!!!! gGGGGGGGG")
     searchController.songs.searchResults = [];
     $scope.safeApply();
     var num = Math.min(searchController.maxResults, searchController.searchResultsComplete.length);
