@@ -14,10 +14,10 @@ var preloadhtml = function(){
 }
 
 
-preloadhtml.sharefbartist = $("#songfblikeartist").html();
-$("#songfblikeartist").html("");
+preloadhtml.sharefbartist = $("#fbartistbox").html();
+$("#fbartistbox").html("");
 
-preloadhtml.sharefbsong = $("#songfblikesong").html();
-$("#songfblikesong").html("");
+preloadhtml.sharefbsong = $("#fbtitlebox").html();
+$("#fbtitlebox").html("");
 
 preloadhtml.playlisthtml = $("#playlistInner").html();
