@@ -193,10 +193,10 @@ searchController.activateButton = function (index, noAnimation) {
     if (searchController.buttonActive == 0) {
         searchController.searchSongsString = $("#searchinput").val();
     }
+    //Explore
     if(searchController.buttonActive == 2&&index!=2){
-        $("#explorearea").hide();
+        searchController.hideExplore();
     }
-
 
 
     searchController.buttonActive = index;
@@ -1337,7 +1337,7 @@ searchController.showSuggestions = function () {  //Todo find songs the user rea
 
 searchController.showExplore = function(){
      $("#explorearea").show();
-
+     $("#searchlayoutbutton").hide();
 
 
 
@@ -1347,6 +1347,12 @@ searchController.showExplore = function(){
 }
 
 
+searchController.hideExplore = function(){
+    $("#explorearea").hide();
+    $("#searchlayoutbutton").show();
+
+
+}
 
 
 
