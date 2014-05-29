@@ -205,6 +205,8 @@ playlistController.init = function () {
     });
 
 
+
+
     setTimeout(function () {
         playlistController.createScrollIndicators();
 
@@ -244,7 +246,9 @@ playlistController.createScrollIndicators = function () {
         uiController.playListScroll.scrollToElement(".loadedsong", 700);
     });
 
-    $(".iScrollIndicator").addClass("fadeincomplete");
+        $(".iScrollIndicator").addClass("fadeincomplete");
+
+
 
 
 }
@@ -2021,6 +2025,7 @@ playlistController.makePlayListScrollable = function () {
         scrollbars: true,
         noHorizontalZoom: true
     });
+    $(".iScrollIndicator").addClass("fadeincomplete").hide();
 
 }
 
