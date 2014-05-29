@@ -92,7 +92,7 @@ body {
 
 }
 
-/*Smaller Screen*/
+/*Big Screen*/
 @media (min-width:1165px) {
 
     #playlist {
@@ -110,12 +110,17 @@ body {
         top: 60px !important;
 
     }
-    .songlist li.specialplaylistbutton h3{
-        font-size: 1em!important;
-        margin-top: 20px!important;
-    }
 
 
+
+}
+
+@media (max-width:1000px) {
+.songlist li.specialplaylistbutton h3{
+    font-size: 1em!important;
+    margin-top: 20px!important;
+
+}
 }
 
 /*Small Screen*/
@@ -127,6 +132,10 @@ body {
 
 
 
+.fb-recommendations-bar{
+     display:none!important;
+
+}
 
     #controlbar .ui-input-search {
         display: inline-block;
@@ -1577,10 +1586,12 @@ transition: all 2s ease;
 
     display: block!important;
 }
-.sideinfo > ins{
-    display:inline-block!important;
+
+.sideinfo > ins, .sideinfo > img{
+    display:inline-block;
     vertical-align: middle!important;
 }
+
 
 
 
