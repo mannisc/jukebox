@@ -954,7 +954,7 @@
 </div>
 
 
-
+<div class="fb-recommendations-bar" data-href="https://www.songbase.fm" data-site="songbase.fm" data-read-time="30" data-side="right" data-action="recommend"></div>
 
 </div>
 
@@ -1120,7 +1120,7 @@
 
 
 <div class="sideinfo fadeincompleteslow">
-    <!--img src="public/img/testad.png"-->
+    <img src="public/img/blocked.gif" style="display:none" class="blocked fadeincomplete">
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- Main Right -->
     <ins class="adsbygoogle"
