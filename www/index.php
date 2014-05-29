@@ -881,7 +881,17 @@
 </div>
 
 
+<div data-role="popup" id="popupImportInput"  data-dismissible="true" data-theme="a" class="ui-corner-all">
+    <!--a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a-->
 
+    <div style="padding:0px 20px 10px 20px">
+        <h3>Enter URL of webpage:</h3>
+
+        <input type="text" name="user" ng-model="" placeholder="URL" data-theme="a" >
+        <button  onclick='importController.importPlaylist($("#popupImportInput input").val());' class="saveButton ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Import Playlist</button>
+
+    </div>
+</div>
 
 
 
