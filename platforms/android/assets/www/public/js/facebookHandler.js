@@ -46,7 +46,7 @@ facebookHandler.logout = function () {
 
                 setTimeout(function () {
                     //Reload iFrames to see login Button again //TODO Facebook Fix
-                    var fbIFrames = $(".fb_iframe_widget iframe");
+                    var fbIFrames = $(".ui-popup .fb_iframe_widget iframe");
                     fbIFrames.attr("src", fbIFrames.attr("src"))
                 }, 0)
             });
@@ -191,10 +191,13 @@ facebookHandler.init = function () {
 }
 
 
+
 /**
  * Update FB Buttons
  */
 facebookHandler.updateSongFBButtons = function () {
+
+
 
 
     if (playbackController.playingSong)
@@ -208,7 +211,9 @@ facebookHandler.updateSongFBButtons = function () {
         $("#fbtitlebox").html(preloadhtml.sharefbsong);
 
     try {
-        FB.XFBML.parse();
+        FB.XFBML.parse($("#fbtitlebox").get(0));
+        FB.XFBML.parse( $("#fbartistbox").get(0));
+
     } catch (ex) {
     }
 }

@@ -930,8 +930,9 @@ mediaController.getPlaylistCoverSong = function (index, maxIndex, playlist, play
 
 mediaController.getSongCover = function (song, lowQuality) {
     var url = "";
-
-    if (song.isPlaylist) {
+    if(!song)
+        url = "public/img/playlist.png";
+    else if (song.isPlaylist) {
         url = "public/img/empty.png";
     } else {
 
