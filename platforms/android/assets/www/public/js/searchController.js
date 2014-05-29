@@ -92,6 +92,8 @@ searchController.init = function () {
 
 
     });
+    $(".iScrollIndicator").addClass("fadeincomplete").hide();
+
 
     uiController.searchListScroll.on('scrollEnd', function () {
         if (uiController.searchListScroll.y == 0) {
@@ -181,7 +183,8 @@ searchController.init = function () {
     });
 
 
-    $(".iScrollIndicator").addClass("fadeincomplete");
+
+
 
 }
 
