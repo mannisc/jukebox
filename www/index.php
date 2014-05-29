@@ -682,7 +682,7 @@
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose Version</h3>
             <ul data-role="listview" id="searchviewVersions" data-theme="b">
-                <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b"  class="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion,1,1)">
+                <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" ng-if="songversion.duration>0;"  class="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion,1,1)">
                     <a href="#" ng-class="{selectedversion: songversion.url==mediaController.currentvideoURL}" style="padding-left: 15px!important;" id="" title="{{songversion.url}}">{{songversion.title}}{{mediaController.getSiteName(songversion.url ,' - ')}}<span style="opacity:0"> ..{{mediaController.showDuration(songversion)}}</span> <span style="position:absolute;right: 42px;top:10px;opacity:0.8"> {{ mediaController.showDuration(songversion) }}</span> </a>
                 </li>
 
@@ -702,9 +702,10 @@
 
     <div>
         <div >
-
-            <h3 style="margin-right: 10px;margin-left: 10px;text-align: center;" class="ng-binding">Like and Share</h3>
+            <img width="45px" style="position:absolute;top:13px;left:13px" src="{{mediaController.getSongCover(playbackController.playingSong,false)}}">
+            <h3 style="margin-right: 20px;margin-left: 70px;text-align: left;" class="ng-binding">Like and Share</h3>
             <div class="popupSocialContainer">
+
 
 
                 <table border="0">
@@ -719,6 +720,7 @@
 
                     </tr>
                 </table>
+
 
 
             </div>
@@ -746,6 +748,7 @@
             <button onclick="facebookHandler.login()"  class="fbloginbutton ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in with Facebook</button>
 
             <fb:login-button class="fbnativeloginButton"  show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large">Sign in with Facebook</fb:login-button>
+
 
         </div>
 </div>
@@ -964,7 +967,7 @@
 </div>
 
 
-<div class="fb-recommendations-bar" data-href="https://www.songbase.fm" data-site="songbase.fm" data-read-time="30" data-side="right" data-action="recommend"></div>
+<div class="fb-recommendations-bar" data-href="http://www.songbase.fm" data-site="songbase.fm" data-read-time="30" data-side="right" data-action="recommend"></div>
 
 </div>
 
