@@ -11,10 +11,11 @@ var importController = function () {
 
 importController.importPlaylist = function(url){
     $("#popupImportInput").popup("close");
+    $.mobile.loading("show");
     $.ajax({
         url: preferences.serverURL + "?importplaylist="+encodeURIComponent(url)+"&auth="+authController.ip_token,
         success: function (data) {
-          alert();
+
            console.dir("imported playlist:");
            console.dir(data);
            var playlist = [];
@@ -41,6 +42,9 @@ importController.importPlaylist = function(url){
         error: function (xhr, ajaxOptions, thrownError) {
             console.dir("imported playlist - error:");
             console.dir(xhr.responseText);
+        },
+        complete: function(){
+            $.mobile.loading("hide");
         }
     })
 }
