@@ -21,6 +21,7 @@ playbackController.playingSongIndex = 0;
 
 playlistController.globalId = "";//playlistController.loadedPlaylistSongs.length;
 
+playlistController.editedPlaylist = {name:""};
 
 playbackController.playedSongs = [];
 
