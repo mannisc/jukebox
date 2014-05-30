@@ -1029,11 +1029,19 @@ video{
 }
 
 
-#signinButton, #registerButton  {
+#signinButton, #registerButton {
 
     padding-left: 2.3em!important;
     padding-right: 0!important;
 
+}
+
+#signoutButton{
+    margin-top: 18px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 250px;
 }
 
 

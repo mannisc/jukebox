@@ -36,7 +36,7 @@ var facebookHandler = function () {
 
 
 facebookHandler.logout = function () {
-    $(".fbnativeloginButton iframe").css("opacity","");
+   // $(".fbnativeloginButton iframe").css("opacity","");
     console.log("!!!!!! LOGOUT")
             facebookHandler.logoutTimer = Date.now();
             FB.logout(function (response) {
@@ -44,11 +44,11 @@ facebookHandler.logout = function () {
                 facebookHandler.loggedIn = false;
                 console.log("LOGOUT")
 
-                setTimeout(function () {
+               /* setTimeout(function () {
                     //Reload iFrames to see login Button again //TODO Facebook Fix
                     var fbIFrames = $(".ui-popup .fb_iframe_widget iframe");
                     fbIFrames.attr("src", fbIFrames.attr("src"))
-                }, 0)
+                }, 0) */
             });
 
 
@@ -59,7 +59,7 @@ facebookHandler.logout = function () {
  * @param response
  */
 facebookHandler.authAndLoggedIn = function(response){
-    $(".fbnativeloginButton iframe").css("opacity","0");
+ //   $(".fbnativeloginButton iframe").css("opacity","0");
 
 
     if (accountController.loggedIn&&!facebookHandler.loggedIn ) {
