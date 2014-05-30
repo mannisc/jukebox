@@ -93,7 +93,7 @@ mediaController.mediaEnded = function () {
 
 mediaController.sendRating = function (rating) {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
-        var VideoURL = mediaController.currentvideoURL;
+        var VideoURL = escape(mediaController.currentvideoURL);
         var song = playbackController.getPlayingSong();
         var rate = function (song, VideoURL) {
             if (mediaController.currentvideoURL != "" && song) {
