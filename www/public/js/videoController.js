@@ -670,7 +670,7 @@ videoController.stopSong = function () {
  */
 videoController.isBrowserFullscreen = function () {
 
-    return (window.fullScreen) ||
+    return (document.fullscreen||document.mozFullScreen||document.webkitIsFullScreen||document.msFullscreenElement||window.fullScreen) ||
         (window.innerWidth == screen.width && window.innerHeight == screen.height);
 }
 
@@ -728,7 +728,47 @@ videoController.toggleBrowserFullScreen = function () {
 videoController.updateFullscreenMode = function () {
 
 
+    var hideControlsTimer = null;
+    var hideControlsPointerX = null;
+    var hideControlsPointerY = null;
+
+    var hideControls= function(event){
+
+        if(!hideControlsPointerX||!event|| (Math.abs(hideControlsPointerX-event.clientX)>20&&Math.abs(hideControlsPointerY-event.clientY )>20)){
+            if(event){
+                hideControlsPointerX = event.clientX;
+                hideControlsPointerY = event.clientY;
+            }
+
+            if(hideControlsTimer){
+                clearTimeout(hideControlsTimer)
+                $("#videocontrols").css("opacity","");
+                $("#siteLogo img").css("bottom","");
+            }
+
+
+
+            hideControlsTimer = setTimeout(function(){
+                if (videoController.fullscreenMode == 1){
+                    $("#videocontrols").css("opacity","0");
+                    $("#siteLogo img").css("bottom","15px");
+
+                }
+            },3500)
+
+        }
+
+    }
+
+
     if (videoController.fullscreenMode == 0) { //Background
+
+        if(hideControlsTimer){
+            clearTimeout(hideControlsTimer);
+            $("#videocontrols").removeClass("fadeoutcomplete");
+        }
+        $("body").off("mousemove mouseup",hideControls);
+
         $("#header").css("opacity", "1").css("pointer-events","auto");
 
         $("#controlbar").css("opacity", "1").css("pointer-events","auto");
@@ -740,7 +780,8 @@ videoController.updateFullscreenMode = function () {
         $(".backgroundVideo,  #backgroundVideo").addClass("background");
 
 
-
+        $(".fb-recommendations-bar-container").show();
+        $(".sideinfo").show();
 
         $("#page, #content, .backgroundVideo, #backgroundVideo").removeClass("fullscreen");
 
@@ -751,6 +792,11 @@ videoController.updateFullscreenMode = function () {
     }
 
     else if (videoController.fullscreenMode == 1) {
+        setTimeout(function(){
+                hideControls();
+            $("body").on("mousemove mouseup", hideControls);
+            },2000);
+
 
         $(".videoControlElements-custom-button").hide();
         $("#header").css("opacity", "0").css("pointer-events","none");
@@ -763,6 +809,8 @@ videoController.updateFullscreenMode = function () {
 
         $("#page, #content, .backgroundVideo,  #backgroundVideo").addClass("fullscreen");
 
+        $(".fb-recommendations-bar-container").hide();
+        $(".sideinfo").hide();
 
         uiController.updateUI();
 
