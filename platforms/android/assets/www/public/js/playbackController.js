@@ -155,20 +155,19 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
     if (!resetingSong) {
         if (!isSameSongAsLoadedSong) {
-
             playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
 
 
             if (addSongToQueue) {
                 if (playbackController.playingSong.playlistgid != playlistController.currentQueue.gid) {
 
-                    var actSong = jQuery.extend(true, {}, playbackController.playingSong);
+                    var actSong = jQuery.extend(true, {}, song);
 
                     actSong.playlistgid = playlistController.currentQueue.gid;
                     var actSongList = [actSong];
                     playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue, actSongList)
                     //alert(actSong.gid)
-                    //playbackController.playingSong.gid= actSong.gid;
+                    playbackController.playingSong.gid= actSong.gid;  //neccessary if gid was changed because same music title was played
                     playbackController.playingSong = actSongList[0];
 
                     setTimeout(function () {
@@ -179,7 +178,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
                         addedToQueue = true;
 
                 } else
-                playbackController.updatePlayingSongIndex();
+                    playbackController.updatePlayingSongIndex();
 
                 if (!playedAutomatic && playlistController.playlistMode) {
                     setTimeout(function () {
@@ -563,14 +562,13 @@ playbackController.positionPlayIndicator = function () {
 
 //Set playing Indicator position
 
-
         if (listElement.parents("#playlistInner").length > 0) {
 
             var listElementPlaylist = listElement.filter(':noparents(#playlistInner)');
 
             var position = listElementPlaylist.get(0).dataset.index;
 
-            var y = parseInt(position) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner .iScrollVerticalScrollbar").outerHeight() - 18);
+            var y = 5+ parseInt(position) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner .iScrollVerticalScrollbar").height() - 10);
 
             $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
             $("#playlistInner .iScrollPlayIndicator").show();
@@ -580,13 +578,13 @@ playbackController.positionPlayIndicator = function () {
 
         if (listElement.parents("#searchlist").length > 0) {
 
-            var scrollHeight = $("#searchlist").outerHeight() - 18;
+            var scrollHeight = $("#searchlist .iScrollVerticalScrollbar").height();
 
 
             var listElementSearchlist = listElement.filter(':noparents(#searchlist)');
 
-            var otherTopHeight = $(".othertopheight.songlisttitlebutton").length * 10;
-            var otherTopElements = $(".othertopheight");
+            var otherTopHeight = $("#searchlist .othertopheight.songlisttitlebutton:visible").length * 10;
+            var otherTopElements = $("#searchlist .othertopheight:visible");
 
             for (var i = 0; i < otherTopElements.length; i++) {
                 otherTopHeight = otherTopHeight + $(otherTopElements.get(i)).height();
@@ -594,24 +592,34 @@ playbackController.positionPlayIndicator = function () {
 
 
             otherTopHeight = otherTopHeight / ($("#searchlist ul").outerHeight() - 65) * scrollHeight;
-            var otherBottomHeight = $(".otherbottomheight.songlisttitlebutton").length * 10;
-            var otherBottomElements = $(".otherbottomheight");
+
+            var otherBottomHeight = $("#searchlist .otherbottomheight.songlisttitlebutton:visible").length * 10;
+            var otherBottomElements = $("#searchlist .otherbottomheight:visible");
             for (i = 0; i < otherBottomElements.length; i++) {
                 otherBottomHeight = otherBottomHeight + $(otherBottomElements.get(i)).height();
             }
 
             otherBottomHeight = otherBottomHeight / ($("#searchlist ul").outerHeight() - 65) * scrollHeight;
+            console.log("otherTopHeightORIG "+otherTopHeight)
 
+            console.log("otherTopHeight "+otherTopHeight)
+            console.log("otherBottomHeight "+otherBottomHeight)
+            console.log("otherBottomHeight "+y+"  "+scrollHeight)
 
             position = listElementSearchlist.get(0).dataset.index;
 
-            y = parseInt(position) / ( Math.min(searchController.getShowModeLimit(1), searchController.songs.searchResults.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
+
+            y = 5+parseInt(position) / ( Math.min(searchController.getShowModeLimit(1), searchController.songs.searchResults.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
+
+            if(y>scrollHeight)
+                y = scrollHeight;
 
             $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
             $("#searchlist .iScrollPlayIndicator").show();
 
         } else
             $("#searchlist .iScrollPlayIndicator").hide();
+
 
     }
 }
@@ -700,20 +708,20 @@ playbackController.remarkSong = function () {
     else {
         var listElement;
 
+        listElement = playbackController.getListElementFromSong(playbackController.playingSong);
 
-        $(".songlist .loadedsong").removeClass("loadedsong");
+        $(".songlist .loadedsong").not(listElement).removeClass("loadedsong");
         var safe = $(".songlist .oldloadedsong.playing")
-        $(".songlist .playing").removeClass("playing");
+        $(".songlist .playing").not(listElement).removeClass("playing");
         safe.addClass("playing")
 
         safe = $(".songlist .oldloadedsong.pausing")
         $(".songlist .pausing").removeClass("pausing");
         safe.addClass("pausing")
 
-        $(".songlist .stillloading").removeClass("stillloading");
+        $(".songlist .stillloading").not(listElement).removeClass("stillloading");
 
         if (playbackController.playingSong) {
-            listElement = playbackController.getListElementFromSong(playbackController.playingSong);
             if (listElement.length > 0) {
 
 
@@ -753,10 +761,6 @@ playbackController.getPlayingTitle = function () {
     else
         return "";
 }
-
-
-
-
 
 
 /**
