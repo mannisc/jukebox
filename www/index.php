@@ -747,7 +747,7 @@
             <hr>
             <button onclick="facebookHandler.login()"  class="fbloginbutton ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in with Facebook</button>
 
-            <fb:login-button class="fbnativeloginButton"  show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large">Sign in with Facebook</fb:login-button>
+            <!--fb:login-button class="fbnativeloginButton"  show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large"></fb:login-button-->
 
 
         </div>
@@ -770,7 +770,7 @@
             <hr>
             <button onclick="facebookHandler.login()"  class="fbloginbutton ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in with Facebook</button>
 
-            <fb:login-button class="fbnativeloginButton"  show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large">Sign in with Facebook</fb:login-button>
+            <!--fb:login-button class="fbnativeloginButton"  show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large"></fb:login-button-->
         </div>
 </div>
 
@@ -781,16 +781,20 @@
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Account</h3>
             <ul data-role="listview">
                 <li  style="border-bottom:1px solid #ddd;"><a href="#" onclick='$.mobile.loading("show");$("#popupAccount").popup("close");setTimeout(function(){$.mobile.loading("hide");$("#popupEditAccount").popup("open");},900);' data-rel="back" id="manageUserProfile" ><img src="public/img/user.png" width="28px" >Your Account</a></li>
-                <li style="border-top:15px solid rgba(255,255,255,0);">
+                <li style="border-top:15px solid rgba(255,255,255,0);border-bottom:1px solid #ddd">
                     <a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png" width="28px" >Google Drive
                         <!--span class="GoogleBlue">G</span><span class="GoogleRed">o</span><span class="GoogleYellow">o</span><span class="GoogleBlue">g</span><span class="GoogleGreen">l</span><span class="GoogleRed">e</span--></a></li>
                 <li style="display:none">
                     <a href="#" data-rel="back" id="manageFacebook"><img src="public/img/fb.png" width="28px" >Facebook</a></li>
                   <li style="border-bottom:1px solid #ddd;;display:none">
                     <a href="#" data-rel="back" id="manageDropbox"><img src="public/img/dropbox.png" width="28px" >Dropbox</a></li>
-                <li style="border-top:15px solid rgba(255,255,255,0);"><a href="#" onclick="accountController.logout();" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li>
+                <!--li style="border-top:15px solid rgba(255,255,255,0);"><a href="#" onclick="accountController.logout();" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li-->
 
             </ul>
+
+            <!--fb:login-button class="fbnativeloginButton"  show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large"></fb:login-button-->
+            <button onclick="accountController.logout();"  id="signoutButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-forward">Log out</button>
+
         </div>
     </form>
 </div>
@@ -890,7 +894,7 @@
     <div style="padding:0px 20px 10px 20px">
         <h3>Enter URL of webpage:</h3>
 
-        <input type="text" name="user" ng-model="" placeholder="URL" data-theme="a" >
+        <input type="text" name="user"  placeholder="URL" data-theme="a" >
         <button  onclick='importController.importPlaylist($("#popupImportInput input").val());' class="saveButton ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Import Playlist</button>
 
     </div>
@@ -966,8 +970,9 @@
 
 </div>
 
-
-<div class="fb-recommendations-bar" data-href="http://www.songbase.fm" data-site="songbase.fm" data-read-time="30" data-side="right" data-action="recommend"></div>
+<div class="fb-recommendations-bar-container">
+<div class="fb-recommendations-bar" data-trigger="manual" data-href="http://www.songbase.fm" data-site="songbase.fm" data-read-time="30" data-side="right" data-action="recommend"></div>
+</div>
 
 </div>
 

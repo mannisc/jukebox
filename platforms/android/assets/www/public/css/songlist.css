@@ -1805,7 +1805,7 @@ background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop
     transition: all 0.3s ease;
 }
 #playlistInner .iScrollPlayIndicator{
-    background-position: 10px;
+    background-position-x: 10px;
     position: absolute;
     top: 0;
     right: 0;
@@ -1813,7 +1813,7 @@ background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop
 }
 
 #searchlist .iScrollPlayIndicator{
-    background-position: 0px;
+    background-position-x: 0px;
     position: absolute;
     top: 0;
     left: 0;
