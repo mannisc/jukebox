@@ -200,7 +200,6 @@ accountController.loadStoredData = function () {
                 for (var j = 0; j < playlistdata.items.length; j++) {
 
                     //Current Queue was saved
-
                     if (playlistdata.items[j].gid == 0){
                         currentQueueSaved = true;
                     }
@@ -232,6 +231,24 @@ accountController.loadStoredData = function () {
                     changeCurrentQueue = false;
 
                 if (playlists) {
+
+
+                    //CORRUPTED PLAYLISTS HANDLING
+                    //Only one current playlist
+                    var tmpCounter = 0;
+                    for (var j = 0; j < playlists.length; j++) {
+                        if (playlists[j].gid == 0) {
+                            tmpCounter ++;
+                            if(tmpCounter>1) {
+                                playlists.splice(j, 1);
+                                j--;
+                            }
+
+                        }
+                    }
+
+
+
                     //Remove duplicate Playlists
                     if (playlistController.playlists.length) {
                         var changed = false;
@@ -284,7 +301,6 @@ accountController.loadStoredData = function () {
 
 
                     }
-
                     console.log("!!!!!!!!!!!")
                     console.log(JSON.stringify( playlistController.playlists))
                     //Find new playlistController.globalId

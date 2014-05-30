@@ -283,12 +283,15 @@ uiController.init = function () {
 
 
     //Detect Adblock
-    setTimeout(function () {
-
+    var checkAdblock =  function () {
         if ($(".sideinfo .adsbygoogle").children().length == 0) {
             $(".sideinfo .blocked").show();
-        }
-    }, 10000);
+        }else
+            $(".sideinfo .blocked").hide();
+
+        setTimeout(checkAdblock,3000)
+    }
+    setTimeout(checkAdblock, 10000);
 
 
     //Init WebGL
@@ -806,7 +809,7 @@ uiController.showPlaylists = function () {
     playlistController.loadedPlaylistSongs = playlistController.playlists;
 
     $("#playlistInner .iScrollPlayIndicator").hide();
-    $("#searchlist .iScrollPlayIndicator").hide();
+  //  $("#searchlist .iScrollPlayIndicator").hide();
 
     // $("#playlistview").hide();
 

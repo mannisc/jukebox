@@ -259,6 +259,8 @@ playlistController.getNewID = function () {
     var timeNow = new Date();
     playlistController.counterGlobalId++;
     var id = MD5(timeNow.getTime() + "." + Math.random() + "." + playlistController.counterGlobalId);
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "+id  );
+    console.dir(new Error().stack)
     return "id_" + id;
 }
 
