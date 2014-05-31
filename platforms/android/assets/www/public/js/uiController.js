@@ -494,9 +494,10 @@ uiController.updateUI = function () {
         myIframe.contentWindow.scrollTo(0, 100);
     }, 2000)
 
-
+    $("#playlistview").css("min-height", "");
+    setTimeout(function () {
     $("#playlistview").css("min-height", $("#playlistInner").height() - 20);
-
+    }, 500)
     /*
      if (!dontChangeVideOpacity) {
      if (uiController.windowWidth < uiController.responsiveWidthSmall || $(window).height() < 350) {
