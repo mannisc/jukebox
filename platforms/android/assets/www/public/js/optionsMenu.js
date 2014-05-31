@@ -80,8 +80,14 @@ optionsMenu.openQueueOptions = function (event, positionTo) {
         event.stopPropagation();
 
     optionsMenu.options = [
-        {text: "Save as Playlist", callback: null},
-        {text: "Clear Queue", callback: null}
+        {text: "Save as Playlist", callback: function () {
+            optionsMenu.closePopup();
+
+        }},
+        {text: "Clear Queue", callback:  function () {
+            optionsMenu.closePopup();
+            playlistController.clearQueue();
+        }}
     ]
 
     $scope.safeApply();
@@ -366,7 +372,7 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
 
     optionsMenu.options = [
 
-        {text: "Play Songs", callback: function () {
+        {text: "Play", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
                 var playlist = searchController.songs.searchResults;
@@ -374,7 +380,15 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
                     playlistController.playSongList(playlist.slice(0,searchController.maxResults));
             }, 150)
         }} ,
-        {text: "Add Songs to Playlist", callback: function(){
+        {text: "Play next", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                var playlist = searchController.songs.searchResults;
+                if(playlist&&playlist.length>0)
+                    playlistController.playSongListNext(playlist.slice(0,searchController.maxResults));
+            }, 150)
+        }},
+        {text: "Add to Playlist", callback: function(){
             optionsMenu.closePopup();
             setTimeout(function () {
                 var playlist = searchController.songs.searchResults;
