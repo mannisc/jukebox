@@ -404,7 +404,7 @@ playlistController.isSongInList = function (song) {
 /*
  Select Playlist in dropdown menu, used to load list
  */
-playlistController.selectPlaylist = function (playlist) {
+playlistController.showPlaylist = function (playlist) {
 
     if (playlistController.playlistMode) {
         $("#playlistInner .iScrollIndicator").hide();
@@ -1760,7 +1760,7 @@ playlistController.loadCurrentQueue = function () {
     $scope.safeApply();
 
     setTimeout(function () {
-        playlistController.selectPlaylist(playlist);
+        playlistController.showPlaylist(playlist);
         setTimeout(function () {
             $scope.safeApply();
         }, 50)
@@ -1784,7 +1784,9 @@ playlistController.loadNewPlaylistWithSongs = function (songs) {
 
     for (var i = 0; i < songs.length; i++) {
         var song = jQuery.extend(true, {}, songs[i]);
-        song.gid = playlistController.getNewID();
+        if(song.playlistgid!=playlistController.currentQueue.gid||!song.gid)
+         song.gid = playlistController.getNewID()
+
         song.playlistgid = playlist.gid;
         song.id = "plsid" + helperFunctions.padZeros(song, ("" + playlistController.loadedPlaylistSongs.length).length);
         songs[i] = song;
@@ -1803,7 +1805,7 @@ playlistController.loadNewPlaylistWithSongs = function (songs) {
 
     $scope.safeApply();
     setTimeout(function () {
-        playlistController.selectPlaylist(playlist);
+        playlistController.showPlaylist(playlist);
 
     }, 0)
 
@@ -1827,7 +1829,7 @@ playlistController.loadNewEmptyPlaylist = function () {
     $scope.safeApply();
 
     setTimeout(function () {
-        playlistController.selectPlaylist(playlist);
+        playlistController.showPlaylist(playlist);
 
 
     }, 0)

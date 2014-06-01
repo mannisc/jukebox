@@ -83,6 +83,12 @@ optionsMenu.openQueueOptions = function (event, positionTo) {
         {text: "Save as Playlist", callback: function () {
             optionsMenu.closePopup();
 
+            var playlist = playlistController.loadedPlaylistSongs||[];
+            setTimeout(function () {
+                if(playlist&&playlist.length>0)
+                    playlistController.loadNewPlaylistWithSongs(playlist.slice(0,searchController.maxResults))
+            }, 150)
+
         }},
         {text: "Clear Queue", callback:  function () {
             optionsMenu.closePopup();

@@ -59,7 +59,7 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
     if (element.isPlaylist) {
         //Select Playlist
 
-        playlistController.selectPlaylist(element);
+        playlistController.showPlaylist(element);
     } else {
         //Play Song
         playbackController.playSong(element, onlyStyle, false, true);
@@ -129,7 +129,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
     //Set loading/playing Song to selected Song
     playbackController.updatePlayingSongIndex();
-    playbackController.playingSong = song;
+    playbackController.playingSong = jQuery.extend(true, {}, song);
 
     //Clear other loading songs
     $(".songlist li.loadedsong.stillloading").removeClass("loadedsong stillloading");
@@ -564,11 +564,35 @@ playbackController.positionPlayIndicator = function () {
 
         if (listElement.parents("#playlistInner").length > 0) {
 
+            var scrollHeight = $("#playlistInner .iScrollVerticalScrollbar").height();
+
             var listElementPlaylist = listElement.filter(':noparents(#playlistInner)');
+
+            var otherTopHeight = $("#playlistInner .othertopheight.songlisttitlebutton:visible").length * 10;
+            var otherTopElements = $("#playlistInner .othertopheight:visible");
+
+            for (var i = 0; i < otherTopElements.length; i++) {
+                otherTopHeight = otherTopHeight + $(otherTopElements.get(i)).height();
+            }
+
+
+            otherTopHeight = otherTopHeight / ($("#playlistInner ul").outerHeight() - 65) * scrollHeight;
+
+            var otherBottomHeight = $("#playlistInner .otherbottomheight.songlisttitlebutton:visible").length * 10;
+            var otherBottomElements = $("#playlistInner .otherbottomheight:visible");
+            for (i = 0; i < otherBottomElements.length; i++) {
+                otherBottomHeight = otherBottomHeight + $(otherBottomElements.get(i)).height();
+            }
+
+            otherBottomHeight = otherBottomHeight / ($("#playlistInner ul").outerHeight() - 65) * scrollHeight;
+
 
             var position = listElementPlaylist.get(0).dataset.index;
 
-            var y = 5+ parseInt(position) / (playlistController.loadedPlaylistSongs.length - 1) * ($("#playlistInner .iScrollVerticalScrollbar").height() - 10);
+           var y = 5+parseInt(position) / ( Math.min(playlistController.getDisplayLimit(), playlistController.loadedPlaylistSongs.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
+
+            if(y>scrollHeight)
+                y = scrollHeight;
 
             $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
             $("#playlistInner .iScrollPlayIndicator").show();
@@ -578,13 +602,13 @@ playbackController.positionPlayIndicator = function () {
 
         if (listElement.parents("#searchlist").length > 0) {
 
-            var scrollHeight = $("#searchlist .iScrollVerticalScrollbar").height();
+             scrollHeight = $("#searchlist .iScrollVerticalScrollbar").height();
 
 
-            var listElementSearchlist = listElement.filter(':noparents(#searchlist)');
+            var  listElementSearchlist = listElement.filter(':noparents(#searchlist)');
 
-            var otherTopHeight = $("#searchlist .othertopheight.songlisttitlebutton:visible").length * 10;
-            var otherTopElements = $("#searchlist .othertopheight:visible");
+             otherTopHeight = $("#searchlist .othertopheight.songlisttitlebutton:visible").length * 10;
+             otherTopElements = $("#searchlist .othertopheight:visible");
 
             for (var i = 0; i < otherTopElements.length; i++) {
                 otherTopHeight = otherTopHeight + $(otherTopElements.get(i)).height();
@@ -593,18 +617,14 @@ playbackController.positionPlayIndicator = function () {
 
             otherTopHeight = otherTopHeight / ($("#searchlist ul").outerHeight() - 65) * scrollHeight;
 
-            var otherBottomHeight = $("#searchlist .otherbottomheight.songlisttitlebutton:visible").length * 10;
-            var otherBottomElements = $("#searchlist .otherbottomheight:visible");
+             otherBottomHeight = $("#searchlist .otherbottomheight.songlisttitlebutton:visible").length * 10;
+             otherBottomElements = $("#searchlist .otherbottomheight:visible");
             for (i = 0; i < otherBottomElements.length; i++) {
                 otherBottomHeight = otherBottomHeight + $(otherBottomElements.get(i)).height();
             }
 
             otherBottomHeight = otherBottomHeight / ($("#searchlist ul").outerHeight() - 65) * scrollHeight;
-            console.log("otherTopHeightORIG "+otherTopHeight)
 
-            console.log("otherTopHeight "+otherTopHeight)
-            console.log("otherBottomHeight "+otherBottomHeight)
-            console.log("otherBottomHeight "+y+"  "+scrollHeight)
 
             position = listElementSearchlist.get(0).dataset.index;
 
