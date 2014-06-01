@@ -846,7 +846,7 @@
 
 
 
-<div data-role="popup" id="popupConfirmLogout" data-arrow="false" data-dismissible="true" data-theme="a" class="ui-corner-all">
+<!--div data-role="popup" id="popupConfirmLogout" data-arrow="false" data-dismissible="true" data-theme="a" class="ui-corner-all">
     <form>
         <div>
             <h3 style="text-align: center">Log out?</h3>
@@ -857,7 +857,7 @@
             </div>
         </div>
     </form>
-</div>
+</div--->
 
 
 <div data-role="popup" id="popupOptions" data-arrow="true" data-dismissible="true" data-theme="a" class="ui-corner-all">
@@ -874,6 +874,23 @@
         </div>
     </form>
 </div>
+
+
+<div data-role="popup" id="popupConfirm"data-theme="c" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+    <div data-role="header" data-theme="a" class="ui-corner-top">
+        <h1>Delete</h1>
+    </div>
+    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content" style="padding-bottom: 5px;">
+        <p>Really delete?</p>
+        <a href="#" onclick = "playlistController.removeSelectedElementsFromPlaylist(event,true)" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Delete</a>
+        <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancel</a>
+
+    </div>
+</div>
+
+
+
+
 
 <div data-role="popup" id="popupTextInput"  data-dismissible="true" data-theme="a" class="ui-corner-all">
     <!--a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a-->
