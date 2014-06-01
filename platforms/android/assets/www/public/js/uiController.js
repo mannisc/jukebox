@@ -469,7 +469,11 @@ uiController.updateDisplay = function () {
 
     $("#page").width(uiController.windowWidth);
 
-    $("#header").width($(window).width());
+    if($(window).height()>710)
+      $("#header").width($(window).width());
+    else
+      $("#header").width($(window).width()-160);
+
     $("#videocontrols").width(uiController.windowWidth);
 
 }
