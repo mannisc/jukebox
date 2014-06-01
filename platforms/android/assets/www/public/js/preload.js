@@ -20,4 +20,8 @@ $("#fbartistbox").html("");
 preloadhtml.sharefbsong = $("#fbtitlebox").html();
 $("#fbtitlebox").html("");
 
+
+preloadhtml.recommendfb = $(".fb-recommendations-bar-container").html();
+$(".fb-recommendations-bar-container").html("");
+
 preloadhtml.playlisthtml = $("#playlistInner").html();
