@@ -134,10 +134,10 @@ accountController.logout = function () {
                         playlistController.playlists = [playlistController.currentQueue];
 
                         uiController.showPlaylists();
-
+                        $scope.safeApply();
 
                         $('#popupLogin').popup('close');
-                        $scope.safeApply();
+
                         /*setTimeout(function(){
                          btn.addClass("animated");
                          },500)*/
@@ -418,7 +418,11 @@ accountController.singInAuto = function () {
                                     $("#popupLogin").popup("close");
                                     $("#popupRegister").popup("close");
                                     $(".ui-popup-screen.in").click();
-                                    $scope.safeApply();
+
+
+
+
+
                                     setTimeout(function () {
                                         $(".ui-popup-screen.in").click();
                                         alert("TODO AUTOLOGIn POPUP HIDE")
@@ -509,7 +513,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                         $("#signinpw").val("");
                         $("#signinusername").val("");
                         var btn = $('#header .ui-btn.animated').removeClass("animated");
-                        $scope.safeApply();
+
                         setTimeout(function () {
                             btn.addClass("animated");
                         }, 500)
@@ -654,7 +658,7 @@ accountController.register = function () {
                                 $("#registerusername").val("");
                                 var btn = $('#header .ui-btn.animated').removeClass("animated");
 
-                                $scope.safeApply();
+
                                 setTimeout(function () {
                                     btn.addClass("animated");
                                 }, 500)
