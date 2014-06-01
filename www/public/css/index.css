@@ -1191,6 +1191,10 @@ a, button, h1, h2, h3{
 
 }
 
+.ui-popup-container p{
+   color: #000!important;
+
+}
 
 .ui-popup.ui-body-a{
     background-color:rgba(0,0,0,0)!important;
