@@ -991,30 +991,93 @@ playlistController.addSelectedElementsToQueue = function (event) {
  * Remove selected Songs to Playlist
  * @param event
  */
-playlistController.removeSelectedElementsFromPlaylist = function (event) {
+playlistController.removeSelectedElementsFromPlaylist = function (event, noConfirmPopup) {
     event.stopPropagation();
+    var doReallyDelete = function () {
 
-    var list = [];
-    //Extract all songs from selected songs and playlists
-    //for (var i = playlistController.selectedSongs.length - 1; i >= 0; i--) {
-    for (var i = 0; i < playlistController.selectedSongs.length; i++) {
+        for (var i = 0; i < playlistController.selectedSongs.length; i++) {
 
-        var element = playlistController.selectedSongs[i].song;
-        if (element.isPlaylist) {
-        } else {
-            var playlist = playlistController.getLoadedPlaylist();
-            for (var j = 0; j < playlistController.playlist.tracks.length; j++) {
-                if (playlistController.playlist.tracks[j].gid == playlistController.selectedSongs.gid) {
-                    alert("DELETE")
+            var element = playlistController.selectedSongs[i].song;
+            if (element.gid) {
+
+                if (element.isPlaylist) {
+                    for (var j = 0; j < playlistController.playlists.length; j++) {
+                        if (playlistController.playlists[j].gid == playlistController.selectedSongs[i].song.gid) {
+                            playlistController.playlists.splice(j, 1);
+                            j--;
+                            //TODO DELETE ON SERVER
+                        }
+                    }
+
+
+                } else {
+                    var playlist = playlistController.getLoadedPlaylist();
+                    for (var j = 0; j < playlist.tracks.length; j++) {
+                        if (playlist.tracks[j].gid == playlistController.selectedSongs[i].song.gid) {
+                            playlist.tracks.splice(j, 1);
+                            j--;
+                            //TODO UPDATE PLAYLIST ON SERVER
+                        }
+                    }
+                    for (var j = 0; j < playlistController.loadedPlaylistSongs.length; j++) {
+                        if (playlistController.loadedPlaylistSongs[j].gid == playlistController.selectedSongs[i].song.gid) {
+                            playlistController.loadedPlaylistSongs.splice(j, 1);
+                            j--;
+                        }
+                    }
+
                 }
+
+
             }
 
 
         }
-    }
-    $scope.safeApply();
 
-    playlistController.deselectSongs();
+        $scope.safeApply();
+
+        playbackController.remarkSong();
+        $("#playlistview").listview('refresh');
+
+        setTimeout(function () {
+            $("#playlistview").listview('refresh');
+
+            uiController.updateUI();
+            setTimeout(function () {
+                playbackController.remarkSong();
+                uiController.playListScroll.refresh();
+                setTimeout(function () {
+                    uiController.playListScroll.refresh();
+                }, 1000)
+            }, 150)
+        }, 0)
+        playlistController.deselectSongs();
+
+    }
+
+    //Extract all songs from selected songs and playlists
+    //for (var i = playlistController.selectedSongs.length - 1; i >= 0; i--) {
+    var playlistsDelete = false;
+    if (!noConfirmPopup) {
+
+        for (var i = 0; i < playlistController.selectedSongs.length; i++) {
+            var element = playlistController.selectedSongs[i].song;
+            if (element.gid && element.isPlaylist) {
+                playlistsDelete = true;
+                break;
+            }
+        }
+    }
+
+
+
+    if (playlistsDelete) {
+
+        $("#popupConfirm").popup('open', {transition: 'pop'});
+    }
+    else
+        doReallyDelete();
+
 
 }
 
@@ -1505,7 +1568,7 @@ playlistController.loadPlaylist = function (playlist) {
     if (playlistController.renameLoadedPlaylist) {
         playlistController.renameLoadedPlaylist = false;
         var showRename = function () {
-              alert($(".ui-popup-container.ui-popup-active , .ui-popup-container.reverse.out").length)
+            alert($(".ui-popup-container.ui-popup-active , .ui-popup-container.reverse.out").length)
             if ($(".ui-popup-container.ui-popup-active , .ui-popup-container.reverse.out").length == 0) {
                 playlistController.editedPlaylist = jQuery.extend(true, {}, playlist);
                 playlistController.editedPlaylistTitle = "Rename Playlist";
