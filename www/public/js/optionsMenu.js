@@ -459,6 +459,7 @@ optionsMenu.openUserResultsOptions = function (event, positionTo) {
 
 
 optionsMenu.closePopup = function () {
+    jqmAllowPopUpClosing = true;
     $("#popupOptions").popup('close');
 
 }

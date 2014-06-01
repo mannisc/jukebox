@@ -823,7 +823,7 @@ playlistController.clearQueue = function () {
 
 
     if (playbackController.playingSong)
-        playlistController.loadedPlaylistSongs = [jQuery.extend(true, {},playbackController.playingSong)];
+        playlistController.loadedPlaylistSongs = [jQuery.extend(true, {}, playbackController.playingSong)];
     else
         playlistController.loadedPlaylistSongs = [];
 
@@ -1504,14 +1504,20 @@ playlistController.loadPlaylist = function (playlist) {
     //List was loaded first time after creation, so ask ro rename it
     if (playlistController.renameLoadedPlaylist) {
         playlistController.renameLoadedPlaylist = false;
-        setTimeout(function () {
-            playlistController.editedPlaylist = jQuery.extend(true, {}, playlist);
-            playlistController.editedPlaylistTitle = "Rename Playlist";
-            $scope.safeApply();
+        var showRename = function () {
+              alert($(".ui-popup-container.ui-popup-active , .ui-popup-container.reverse.out").length)
+            if ($(".ui-popup-container.ui-popup-active , .ui-popup-container.reverse.out").length == 0) {
+                playlistController.editedPlaylist = jQuery.extend(true, {}, playlist);
+                playlistController.editedPlaylistTitle = "Rename Playlist";
+                $scope.safeApply();
 
-            $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
+                $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
+            } else
+                setTimeout(showRename, 150)
 
-        }, 0)
+        }
+        setTimeout(showRename, 0)
+
     }
 }
 
@@ -1784,8 +1790,8 @@ playlistController.loadNewPlaylistWithSongs = function (songs) {
 
     for (var i = 0; i < songs.length; i++) {
         var song = jQuery.extend(true, {}, songs[i]);
-        if(song.playlistgid!=playlistController.currentQueue.gid||!song.gid)
-         song.gid = playlistController.getNewID()
+        if (song.playlistgid != playlistController.currentQueue.gid || !song.gid)
+            song.gid = playlistController.getNewID()
 
         song.playlistgid = playlist.gid;
         song.id = "plsid" + helperFunctions.padZeros(song, ("" + playlistController.loadedPlaylistSongs.length).length);
