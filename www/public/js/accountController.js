@@ -192,21 +192,25 @@ accountController.loadStoredData = function () {
                 console.dir("Copy received (stored) data to playlists-Array;!!!!!!!!!!!!!!!");
                 //Copy received (stored) data to playlists-Array;
 
-                console.log("!!!!!!!!!!!1")
-                console.log(JSON.stringify( playlistController.playlists))
+                console.log("!!!!!!!!!!!!")
+                console.log(JSON.stringify(playlistController.playlists))
 
                 var changeCurrentQueue = (playlistController.currentQueue.tracks.length == 0);
                 var currentQueueSaved = false;
                 for (var j = 0; j < playlistdata.items.length; j++) {
 
                     //Current Queue was saved
-                    if (playlistdata.items[j].gid == 0){
+                    if (playlistdata.items[j].gid == 0) {
                         currentQueueSaved = true;
                     }
                     //Delete Queue if already new queue exists
 
                     if (playlistdata.items[j].gid == 0 && !changeCurrentQueue) {
                         playlistdata.items.splice(j, 1);
+
+
+
+
                         j = j - 1;
                     } else {
 
@@ -227,38 +231,37 @@ accountController.loadStoredData = function () {
 
                 }
 
-                if(!currentQueueSaved)
+                if (!currentQueueSaved)
                     changeCurrentQueue = false;
 
                 if (playlists) {
 
 
                     //CORRUPTED PLAYLISTS HANDLING
-                    //Only one current playlist
+                    //Only one current playlist //TODO could be removed, no playlist should be corrupt on live mode----------------------
                     var tmpCounter = 0;
                     for (var j = 0; j < playlists.length; j++) {
-                        if (playlists[j].gid == 0) {
-                            tmpCounter ++;
-                            if(tmpCounter>1) {
+                        if (playlists[j].gid == playlistController.currentQueue.gid) {
+                            tmpCounter++;
+                            if (tmpCounter > 1) {
                                 playlists.splice(j, 1);
+
                                 j--;
                             }
 
                         }
                     }
-
+                    //TODO rmve----------------------
 
 
                     //Remove duplicate Playlists
-                    if (playlistController.playlists.length) {
-                        var changed = false;
+                    if (playlistController.playlists.length > 0) {
                         for (var i = 0; i < playlistController.playlists.length; i++) {
-
+                            playlistController.playlists[i].new = true;
                             //Delete Current Queue an load old one if no tracks in queue
-                            if (playlistController.playlists[i].gid == 0 && changeCurrentQueue) {
+                            if (playlistController.playlists[i].gid == playlistController.currentQueue.gid && changeCurrentQueue) {
                                 playlistController.playlists.splice(i, 1);
                                 i = i - 1;
-                                changed = true;
                             }
                             else {
                                 for (var j = 0; j < playlists.length; j++) {
@@ -266,8 +269,6 @@ accountController.loadStoredData = function () {
                                     if (playlists[j].gid == playlistController.playlists[i].gid) {
                                         playlistController.playlists.splice(i, 1);
                                         i = i - 1;
-                                        changed = true;
-
                                         break;
                                     }
                                     else if (playlists[j].name == playlistController.playlists[i].name) {
@@ -287,8 +288,6 @@ accountController.loadStoredData = function () {
 
                                             countSame++;
                                         } while (foundSame)
-                                        changed = true;
-
 
                                     }
 
@@ -302,23 +301,30 @@ accountController.loadStoredData = function () {
 
                     }
                     console.log("!!!!!!!!!!!")
-                    console.log(JSON.stringify( playlistController.playlists))
+                    console.log(JSON.stringify(playlistController.playlists))
                     //Find new playlistController.globalId
                     playlistController.playlists = playlistController.playlists.concat(playlists);
-                   console.log("......")
-                    console.log(JSON.stringify( playlistController.playlists))
+                    console.log("......")
+                    console.log(JSON.stringify(playlistController.playlists))
 
                     //Save Current merged Playlists
-                    if (changed&&playlistController.playlists.length) {
+                    if (playlistController.playlists.length > 0) {
 
-                        for (var i = 0; i < playlistController.playlists.length; i++) {
+                        for (var i = 0; i < playlistController.playlists.length; i++)
+                        {
 
                             if (changeCurrentQueue && playlistController.playlists[i].gid == 0) {
                                 playlistController.currentQueue = playlistController.playlists[i];
                                 playlistController.playlists[i].isCurrentQueue = true;
                             }
-                            playlistController.playlistChanged(playlistController.playlists[i], i);
+                            if (playlistController.playlists[i].new||(playlistController.playlists[i].gid == playlistController.currentQueue.gid&& changeCurrentQueue)) {
+                                delete playlistController.playlists[i].new;
+                                accountController.savePlaylist(playlistController.playlists[i].gid, playlistController.playlists[i].name, playlistController.playlists[i].tracks);
+
+                            }
+
                         }
+                        accountController.savePlaylistsPosition();
 
                     }
 
@@ -358,20 +364,20 @@ accountController.loadStoredData = function () {
                     }, 0)
 
                     setTimeout(function () {
-                        if($(":focus").length==0)
-                        $('#searchinput').focus();
+                        if ($(":focus").length == 0)
+                            $('#searchinput').focus();
                     }, 500)
                 }
 
                 setTimeout(function () {
                     $.mobile.loading("hide");
-                },1000);
+                }, 1000);
 
 
             } else
-              $.mobile.loading("hide");
-        }else
-          $.mobile.loading("hide");
+                $.mobile.loading("hide");
+        } else
+            $.mobile.loading("hide");
     }
     accountController.loadPlaylists(playlistsReady)
 }
@@ -414,30 +420,27 @@ accountController.singInAuto = function () {
                                 accountController.requestid = 1;
 
 
-                              setTimeout(function () {
+                                setTimeout(function () {
                                     $("#popupLogin").popup("close");
                                     $("#popupRegister").popup("close");
                                     $(".ui-popup-screen.in").click();
 
 
-
-
-
                                     setTimeout(function () {
                                         $(".ui-popup-screen.in").click();
                                         alert("TODO AUTOLOGIn POPUP HIDE")
-                                    },500);
+                                    }, 500);
 
-                                },500);
+                                }, 500);
 
                                 accountController.loadStoredData();
-                            }else{
+                            } else {
                                 accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                                 accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
                             }
                         }
                     },
-                    error:function(){
+                    error: function () {
                         $.mobile.loading("hide");
                     }
                 })
@@ -498,10 +501,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                     }
 
 
-
                     accountController.requestid = 1;
-
-
 
 
                     $("#popupLogin").popup("close");
@@ -517,7 +517,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                         setTimeout(function () {
                             btn.addClass("animated");
                         }, 500)
-                    },500)
+                    }, 500)
 
                 }
                 else {
@@ -553,7 +553,7 @@ accountController.signIn = function () {
             var email = username;
             username = "";
         } else
-         email ="";
+            email = "";
         var pw = $("#signinpw").val();
 
         if (accountController.validateSignInData())
@@ -639,11 +639,10 @@ accountController.register = function () {
                             accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
 
 
-
-
                             for (var i = 0; i < playlistController.playlists.length; i++) {
-                                playlistController.playlistChanged(playlistController.playlists[i], i);
+                                accountController.savePlaylist(playlistController.playlists[i].gid, playlistController.playlists[i].name, playlistController.playlists[i].tracks);
                             }
+                            accountController.savePlaylistsPosition();
 
                             accountController.requestid = 1;
 
@@ -665,8 +664,6 @@ accountController.register = function () {
                             }, 500)
 
 
-
-
                         }
                         else {
                             $("#registerpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
@@ -679,7 +676,7 @@ accountController.register = function () {
                 },
                 error: function () {
                     uiController.toast("Sorry, it is not possible to register at the moment.", 1500);
-                },complete: function(){
+                }, complete: function () {
                     $.mobile.loading("hide");
                 }
 
@@ -756,16 +753,103 @@ accountController.saveProfile = function () {
 }
 
 
+/**
+ * Save Playlist Positions
+ */
+accountController.deletePlaylist = function (gid) {
 
-accountController.savePlaylist = function (playlist, pos) {
     if (accountController.loggedIn) {
-        if (playlist) {
-            var gid = playlist.gid,
-                name = playlist.name,
-                playlistdata = JSON.stringify(playlist.tracks)
+        if (gid) {
 
             if (authController.ip_token != "auth" && authController.ip_token != "") {
 
+
+                accountController.requestid = accountController.requestid + 1;
+                var nonce = accountController.requestid;
+                var savetoken = rsaController.rsa.encrypt(accountController.loginToken + nonce);
+
+                var send = function (savetoken) {
+                    console.log("DELETEEEEEEE")
+                    //Updateplaylist defines action
+                    var postData = { deleteplaylist: savetoken, auth: authController.ip_token, gid: gid, n: nonce};
+
+                    $.ajax({
+                        type: "POST",
+                        data: postData,
+                        timeout: 30000,
+                        url: preferences.serverURL,
+                        success: function (data) {
+                            authController.ensureAuthenticated(data, function () {
+                                send(savetoken);
+                            })
+                        }
+
+                    })
+
+                }
+                send(savetoken);
+            }
+        }
+    }
+}
+
+
+/**
+ * Save Playlist Positions
+ */
+accountController.savePlaylistsPosition = function () {
+
+    if (accountController.loggedIn) {
+
+        if (authController.ip_token != "auth" && authController.ip_token != "") {
+
+
+            accountController.requestid = accountController.requestid + 1;
+            var nonce = accountController.requestid;
+            var savetoken = rsaController.rsa.encrypt(accountController.loginToken + nonce);
+
+            //Updateplaylist defines action
+            var postData = { updateplaylistpositions: savetoken, auth: authController.ip_token, n: nonce};
+
+            for (var i = 0; i < playlistController.playlists.length; i++) {
+                postData["gid" + (i + 1)] = playlistController.playlists[i].gid
+            }
+
+            var send = function () {
+                $.ajax({
+                    type: "POST",
+                    data: postData,
+                    timeout: 30000,
+                    url: preferences.serverURL,
+                    success: function (data) {
+                        authController.ensureAuthenticated(data, function () {
+                            send();
+                        })
+                    }
+
+                })
+
+            }
+            send();
+        }
+
+    }
+}
+
+
+/**
+ * Save Playlist on Server
+ * All properties that are not set wont be updated
+ * @param playlist
+ * @param pos
+ */
+accountController.savePlaylist = function (gid, name, tracks) {
+    if (accountController.loggedIn) {
+        if (gid) {
+
+            var playlistdata = JSON.stringify(tracks)
+
+            if (authController.ip_token != "auth" && authController.ip_token != "") {
 
 
                 var savename = escape(name);
@@ -775,17 +859,22 @@ accountController.savePlaylist = function (playlist, pos) {
                 var savetoken = rsaController.rsa.encrypt(accountController.loginToken + nonce);
 
 
-
                 var send = function (savename, savedata, savetoken) {
-                    var postData = {auth: authController.ip_token, storage: savetoken, gid: gid, pos: pos, n: nonce, type: "playlist", name: savename, data: savedata};
-                    if(pos!=undefined&&pos!=null&&pos!=false&&pos>-1)
-                        postData.pos = pos;
+
+                    //Updateplaylist defines action
+                    var postData = { updateplaylist: savetoken, auth: authController.ip_token, gid: gid, n: nonce};
+
+                    if (savename != undefined && savename != null && savename != false)
+                        postData.name = savename;
+
+                    if (savedata != undefined && savedata != null && savedata != false)
+                        postData.tracks = savedata;
 
                     $.ajax({
                         type: "POST",
-                        data:postData,
+                        data: postData,
                         timeout: 30000,
-                        url: preferences.serverURL,// + "?storage=" +savetoken+"&gid="+gid+"&pos="+pos+"&n="+nonce+"&type=playlist&name="+savename+"&data=savedata",
+                        url: preferences.serverURL,
                         success: function (data) {
                             authController.ensureAuthenticated(data, function () {
                                 send(savename, savedata, savetoken);
@@ -793,6 +882,8 @@ accountController.savePlaylist = function (playlist, pos) {
                         }
 
                     })
+
+
                 }
                 send(savename, savedata, savetoken);
             }

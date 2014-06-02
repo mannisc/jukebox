@@ -210,6 +210,7 @@ uiController.init = function () {
         if (playlistController.sortPlaylist)
             playlistController.toggleSortablePlaylist();
 
+        $("#playlistview").css("min-height", "");
         uiController.updateUI();
 
         //Resize Songlists/ reset indicator
@@ -498,7 +499,7 @@ uiController.updateUI = function () {
         myIframe.contentWindow.scrollTo(0, 100);
     }, 2000)
 
-    $("#playlistview").css("min-height", "");
+
     setTimeout(function () {
     $("#playlistview").css("min-height", $("#playlistInner").height() - 20);
     }, 500)
