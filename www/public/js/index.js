@@ -49,7 +49,12 @@ var preferences = {
 
 serverURL: "http://info.jukebox.selfhost.eu:3001/"
 
+
+
 }
+
+
+
 
 $.support.cors = true;
 

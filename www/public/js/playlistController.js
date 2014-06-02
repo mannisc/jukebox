@@ -787,8 +787,9 @@ playlistController.playlistChanged = function (playlist, position) {
         position = playlistController.getPlaylistPosition(playlist.gid);
 
 
+
     if (position > -1) {
-        accountController.savePlaylist(playlist, position);
+        accountController.savePlaylist(playlist.gid,playlist.name,playlist.tracks, position);
     }
 
 }
@@ -928,7 +929,7 @@ playlistController.addSongsToPlaylist = function (playlist, songs) {
     playlist.tracks = playlist.tracks.concat(songs);
 
     setTimeout(function () {
-        playlistController.playlistChanged(playlist)
+        accountController.savePlaylist(playlist.gid,playlist.name,playlist.tracks);
     }, 0);
     $scope.safeApply();
     if (playlistController.playlistMode) {
@@ -994,7 +995,7 @@ playlistController.addSelectedElementsToQueue = function (event) {
 playlistController.removeSelectedElementsFromPlaylist = function (event, noConfirmPopup) {
     event.stopPropagation();
     var doReallyDelete = function () {
-
+        var deletedPlaylist = false;
         for (var i = 0; i < playlistController.selectedSongs.length; i++) {
 
             var element = playlistController.selectedSongs[i].song;
@@ -1003,9 +1004,12 @@ playlistController.removeSelectedElementsFromPlaylist = function (event, noConfi
                 if (element.isPlaylist) {
                     for (var j = 0; j < playlistController.playlists.length; j++) {
                         if (playlistController.playlists[j].gid == playlistController.selectedSongs[i].song.gid) {
+                            accountController.deletePlaylist(playlistController.playlists[j].gid) ;
+                            alert("!! "+playlistController.playlists[j].name)
+
                             playlistController.playlists.splice(j, 1);
+                            deletedPlaylist = true;
                             j--;
-                            //TODO DELETE ON SERVER
                         }
                     }
 
@@ -1016,7 +1020,8 @@ playlistController.removeSelectedElementsFromPlaylist = function (event, noConfi
                         if (playlist.tracks[j].gid == playlistController.selectedSongs[i].song.gid) {
                             playlist.tracks.splice(j, 1);
                             j--;
-                            //TODO UPDATE PLAYLIST ON SERVER
+                            accountController.savePlaylist(playlist.gid,playlist.name,playlist.tracks);
+
                         }
                     }
                     for (var j = 0; j < playlistController.loadedPlaylistSongs.length; j++) {
@@ -1031,6 +1036,11 @@ playlistController.removeSelectedElementsFromPlaylist = function (event, noConfi
 
             }
 
+
+        }
+        console.log(":::::::::::::::::::::::::::: "+deletedPlaylist)
+        if(deletedPlaylist){
+            accountController.savePlaylistsPosition();
 
         }
 
@@ -1503,8 +1513,11 @@ playlistController.renamePlaylist = function (playlist, name) {
             playlist = playlistController.getPlaylistFromId(playlist.gid)
             if (playlist) {
                 playlist.name = name;
-                delete playlist.isUnnamedPlaylist
+                delete playlist.isUnnamedPlaylist;
+
                 $scope.safeApply();
+                accountController.savePlaylist(playlist.gid,playlist.name);
+
             }
 
 
@@ -1812,6 +1825,8 @@ playlistController.createEmptyPlaylist = function (addAtBottom) {
     else
         playlistController.playlists.unshift(playlist);
 
+
+
     return playlist;
 
 }
@@ -1865,8 +1880,10 @@ playlistController.loadNewPlaylistWithSongs = function (songs) {
 
     playlist.tracks = songs;
     setTimeout(function () {
-        playlistController.playlistChanged(playlist)
+        accountController.savePlaylist(playlist.gid,playlist.name,playlist.tracks);
+        accountController.savePlaylistsPosition();
     }, 0)
+
     $("#playlistview").hide();
     $("#playlisthelp").hide();
 
@@ -1890,17 +1907,19 @@ playlistController.loadNewEmptyPlaylist = function () {
         return;
 
     var playlist = playlistController.createEmptyPlaylist();
+    setTimeout(function () {
+         accountController.savePlaylist(playlist.gid,playlist.name,[]);
+        accountController.savePlaylistsPosition();
+    }, 0)
 
     playlistController.editedPlaylist = jQuery.extend(true, {}, playlist);
-    ;
+
     playlistController.editedPlaylistTitle = "Rename Playlist";
 
     $scope.safeApply();
 
     setTimeout(function () {
         playlistController.showPlaylist(playlist);
-
-
     }, 0)
     setTimeout(function () {
         $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
@@ -1996,9 +2015,11 @@ playlistController.loadNewEmptyPlaylist = function () {
  * @param manuell
  */
 playlistController.toggleSortablePlaylist = function (manuell) {
+    console.log("!!!")
     if (manuell && playlistController.sortPlaylistTimer && Date.now() - playlistController.sortPlaylistTimer < 500) {
         return;
     }
+    console.log("!!!2")
 
 
     if (manuell) {
@@ -2033,6 +2054,7 @@ playlistController.toggleSortablePlaylist = function (manuell) {
 
         // $("#playlistInner .iScrollVerticalScrollbar").hide();
 
+        console.log("!!!3")
 
     } else {
         playlistController.deselectSongs();
@@ -2475,8 +2497,12 @@ playlistController.makePlayListSortable = function () {
             playlistController.loadedPlaylistSongs = newLoadedPlaylistSongs;
             playlistController.displayLimit = playlistController.loadedPlaylistSongs.length;
 
-            if (playlistController.playlistMode)
+            if (playlistController.playlistMode)   {
                 playlistController.playlists = playlistController.loadedPlaylistSongs;
+                setTimeout(function () {
+                  accountController.savePlaylistsPosition();
+                },0)
+            }
             else {
                 if ($('#playlistselectverticalform option:selected').size() > 1)
                     $("#clearChoosenPlaylists").show();
@@ -2506,9 +2532,8 @@ playlistController.makePlayListSortable = function () {
                             if (playlistController.loadedPlaylists[playlist].tracks.length > 0) {
                                 var position = playlistController.getPlaylistPosition(playlistController.loadedPlaylists[playlist].gid);
                                 if (position > -1) {
-                                    playlistController.playlistChanged(playlistController.loadedPlaylists[playlist], position)
-
-
+                                    var savePlaylist = playlistController.loadedPlaylists[playlist];
+                                    accountController.savePlaylist(savePlaylist.gid,savePlaylist.name,savePlaylist.tracks);
                                 }
 
                             }

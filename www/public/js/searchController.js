@@ -1580,18 +1580,22 @@ searchController.makeSearchListDraggable = function () {
                         //  uiController.updateUI();
 
                         setTimeout(function () {
+                            console.log("MOUSEUP??"+uiController.mouseUp)
+
                             if (!uiController.mouseUp) {
                                 if (!playlistController.sortPlaylist && !playlistController.playlistMode) {
                                     playlistController.toggleSortablePlaylist();
-
+                                    console.log("STARTTTTTSORTABLE")
                                     uiController.startedSortPlaylist = true;
 
                                 } else
                                     uiController.startedSortPlaylist = false;
 
 
-                               console.log("! "+uiController.startedSortPlaylist+"   "+playlistController.playlistMode)
+                                console.log("! "+uiController.startedSortPlaylist+"   "+playlistController.playlistMode)
                                 $(searchController.dragDraggableSongStartElement).simulate("mousedown", coords);
+
+                                uiController.updateUI();
                             }
                         }, delay)
                     }
@@ -1785,10 +1789,10 @@ searchController.makeSearchListDraggable = function () {
                                 }
                             })
 
-                            var position = playlistController.getPlaylistPosition(playlist.gid);
-                            if (position > -1) {
-                                playlistController.playlistChanged(playlist, position)
-                            }
+                            setTimeout(function () {
+                                accountController.savePlaylist(playlist.gid,playlist.name,playlist.tracks);
+                                accountController.savePlaylistsPosition();
+                            }, 0);
 
                             //Dropped on Create new playlist
                             if (newPlaylist) {
@@ -1800,6 +1804,7 @@ searchController.makeSearchListDraggable = function () {
 
                                }
                                 playlistController.displayLimit =  playlistController.loadedPlaylistSongs.length;
+
 
                                 $scope.safeApply();
                                 $("#playlistview").listview('refresh');
