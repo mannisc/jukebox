@@ -326,6 +326,9 @@ accountController.loadStoredData = function () {
                         }
                         accountController.savePlaylistsPosition();
 
+
+                        playbackController.updatePlayingSongIndex();
+
                     }
 
 

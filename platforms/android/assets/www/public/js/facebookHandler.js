@@ -27,6 +27,9 @@ var facebookHandler = function () {
          $.mobile.loading("hide");
      },20000)
      FB.login(function (response) {
+         if (!response.authResponse) {
+             $.mobile.loading("hide");
+         }
      }, {scope: 'public_profile, email'});
 
 
@@ -39,7 +42,8 @@ facebookHandler.logout = function () {
    // $(".fbnativeloginButton iframe").css("opacity","");
     console.log("!!!!!! LOGOUT")
             facebookHandler.logoutTimer = Date.now();
-            FB.logout(function (response) {
+
+          //  FB.logout(function (response) {
                 facebookHandler.logoutTimer = Date.now();
                 facebookHandler.loggedIn = false;
                 console.log("LOGOUT")
@@ -49,7 +53,7 @@ facebookHandler.logout = function () {
                     var fbIFrames = $(".ui-popup .fb_iframe_widget iframe");
                     fbIFrames.attr("src", fbIFrames.attr("src"))
                 }, 0) */
-            });
+          //  });
 
 
 }
@@ -80,10 +84,10 @@ facebookHandler.authAndLoggedIn = function(response){
 
             if (!response.email || !response.id || !response.username || !loginResponse.authResponse.accessToken) {
 
-                FB.logout(function (response) {
+               /* FB.logout(function (response) {
                     // user is now logged out
                 });
-
+                     */
             } else {
                 console.log("SocialSignIn")
 

@@ -1284,7 +1284,10 @@ text-shadow: none!important;
 
 #popupOptions ul{
     background-color: #333 !important;
+    max-height: 478px;
+    overflow-y: auto;
 }
+
 
 
 #popupOptions li{
@@ -1613,6 +1616,10 @@ transition: all 2s ease;
 
     display: block!important;
 
+}
+
+.adsbygoogle{
+    background-color: rgba(255, 255, 255,0.1);
 }
 
 .sideinfo > ins, .sideinfo > img{

@@ -162,7 +162,7 @@ ul.gridlayout .songOptions{
     height:65px!important;
 }
 
- #playlistInner li.songlisttitlebutton.specialplaylistbutton.currentplaylist a ,  #playlistInner li:hover.songlisttitlebutton.specialplaylistbutton.songlisttitlebutton a.loaded{
+ #playlistInner li.songlisttitlebutton.specialplaylistbutton.currentplaylist a ,  #playlistInnerDISABLED li:hover.songlisttitlebutton.specialplaylistbutton.songlisttitlebutton a.loaded{
 
 
     /* background: -moz-linear-gradient(top,rgba(254,240,176, 0.12),rgba(238,186,155, 0.12))!important;
@@ -178,7 +178,7 @@ ul.gridlayout .songOptions{
      border-bottom: none!important;
 }
 
-#playlistInner li:hover.songlisttitlebutton.specialplaylistbutton.currentplaylist  a {
+#playlistInnerDISABLED li:hover.songlisttitlebutton.specialplaylistbutton.currentplaylist  a {
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.5), endColorstr=rgba(255,255,255,0))!important;
     background-image: -moz-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%)!important;
     background-image: linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%)!important;
@@ -219,7 +219,7 @@ ul.gridlayout .songOptions{
 }
 
 
-#playlistInner li:hover.songlisttitlebutton.specialplaylistbutton.songlisttitlebutton  a {
+#playlistInnerDISABLED li:hover.songlisttitlebutton.specialplaylistbutton.songlisttitlebutton  a {
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.5), endColorstr=rgba(255,255,255,0))!important;
     background-image: -moz-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%)!important;
     background-image: linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%)!important;
@@ -758,7 +758,7 @@ max-width: 320px;
 
 }
 
-#searchlist li:hover.songlisttitlebutton a, #playlistInner li:hover.songlisttitlebutton a{
+#searchlistDISABLED li:hover.songlisttitlebutton a, #playlistInner li:hover.songlisttitlebutton a{
 
     filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.5), endColorstr=rgba(255,255,255,0))!important;
     background-image:-moz-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%)!important;
@@ -874,10 +874,10 @@ max-width: 320px;
 
 .songlist li.specialplaylistbutton .playlistCoverSong img{
     opacity:0!important;
-    -webkit-transition: all 0.7s ease;
-    -moz-transition: all 0.7s ease;
-    -o-transition: all 0.7s ease;
-    transition: all 0.7s ease;
+    -webkit-transition: all 1.5s ease;
+    -moz-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
+    transition: all 1.5s ease;
 }
 
 
@@ -1004,10 +1004,10 @@ animation-duration:  1.5s;
     transform: rotateY(320deg) translate(-15px,0)!important;
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%!important;
-    -webkit-transition: all 0.6s ease-out;
-    -moz-transition: all 0.6s ease-out;
-    -o-transition: all 0.6s ease-out;
-    transition: all 0.6s ease-out;
+    -webkit-transition: all 1.5s ease;
+    -moz-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
+    transition: all 1.5s ease;
     z-index:40;
 }
 
@@ -1521,7 +1521,7 @@ animation-duration:  1.5s;
 }
 
 
-#playlistInner li.specialplaylistbutton a:hover {
+#playlistInnerDISABLED li.specialplaylistbutton a:hover {
 
 filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.5), endColorstr=rgba(255,255,255,0.12))!important;
 background-image:-moz-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.12) 100%)!important;
