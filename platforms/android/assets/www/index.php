@@ -220,8 +220,8 @@
         <input id="searchbutton1" data-type="button" data-theme="b" onclick="setTimeout(function () {searchController.startSearch()}, 350);searchController.activateButton(0);" type="button" value="Search">
         <!--input id="searchbutton2"data-type="button" data-theme="b" onclick="searchController.activateButton(1);searchController.showPopulars()" type="button" value="Popular"-->
 
-        <input id="searchbutton2" data-type="button" data-theme="b" onclick="setTimeout(function (){ searchController.showSuggestions()}, 350);searchController.activateButton(1);" type="button" value="Suggestions">
-        <input id="searchbutton3" data-type="button" data-theme="b" onclick="setTimeout(function (){ searchController.showExplore()}, 350);searchController.activateButton(2);" type="button" value="Explore">
+        <input id="searchbutton2" data-type="button" data-theme="b" onclick="setTimeout(function (){ searchController.showSuggestions()}, 350);searchController.activateButton(1);" type="button" value="Explore">
+        <!--input id="searchbutton3"  data-type="button" data-theme="b" onclick="setTimeout(function (){ searchController.showExplore()}, 350);searchController.activateButton(2);" type="button" value="Explore"-->
         <a id="searchlayoutbutton" title="Change list layout" data-type="button" data-theme="b" onclick="uiController.toggleGridLayout();" style="margin-left: -3px;background-color: #442727;width: 3px;height: 20px;" class="ui-input-btn ui-btn ui-btn-b ui-shadow ui-corner-all"><img src="public/img/grid.png"  style="width: 21px;margin-left: -9px;"> </a>
 
         <!--input id="searchbutton4" data-type="button" data-theme="b" onclick="searchController.activateButton(3);searchController.showPlaylists()" type="button" value="Playlists"-->
