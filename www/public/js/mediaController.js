@@ -727,7 +727,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
 
         var listElement = playbackController.getListElementFromSong(playbackController.playingSong);
 
-        if (listElement.length>0&&listElement.hasClass("loadedsong")) {
+        if (listElement.length==0||(listElement.length>0&&listElement.hasClass("loadedsong"))) {
             uiController.dontRemark = true;
 
             var loadTime = Date.now() - playbackController.startedLoadingTime;
@@ -756,7 +756,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                     listElement.removeClass("stillloading")
                 }
 
-                listElement.find("img.ui-li-icon").css("opacity", "0")
+                listElement.find("img.ui-li-icon").css("opacity", "0.001")
                 listElement.find(".loadingSongImg").css("opacity", "0")
 
                 listElement.find(".loadingSongImg").removeClass("fadeout")
@@ -765,14 +765,13 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
                 setTimeout(function () {
                     listElement.find("img.ui-li-icon").addClass("fadeincomplete")
                     listElement.removeClass("firstplay");
-
                     setTimeout(function () {
                         listElement.find(".loadingSongImg").css("opacity", "")
                         listElement.find("img.ui-li-icon").css("opacity", "1")
                         listElement.find("img.ui-li-icon").removeClass("fadeincomplete");
                         uiController.dontRemark = false;
                     }, 1000)
-                }, 450)
+                }, 500)
 
             }, 50)
             //  }, delayTime)

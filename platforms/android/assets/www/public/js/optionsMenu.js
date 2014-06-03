@@ -54,12 +54,18 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
         }},
         {text: "Rename", callback: function () {
             optionsMenu.closePopup();
+            $("#popupOptions").popup({
+                afterclose: function () {
+                    $("#popupOptions").popup({afterclose:null});
+                    setTimeout(function () {
+                        $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
+                    }, 100)
+                }
+            });
             playlistController.editedPlaylistTitle = "Rename Playlist";
             playlistController.editedPlaylist = jQuery.extend(true, {}, playlistController.getLoadedPlaylist());
             $scope.safeApply();
-            setTimeout(function () {
-                $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
-            }, 510)
+
         }}
     ]
 
@@ -207,15 +213,23 @@ optionsMenu.openPlayListSelectionPlaylistOptions = function (event, positionTo) 
     if (playlistController.selectedSongs.length == 1) {
         optionsMenu.options.push(
             {text: "Rename", callback: function () {
-                console.dir(playlistController.selectedSongs[0])
+
+                $("#popupOptions").popup({
+                    afterclose: function () {
+                        $("#popupOptions").popup({afterclose:null});
+                        setTimeout(function () {
+                            $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
+                        }, 100)
+                    }
+                });
+
                 optionsMenu.closePopup();
                 playlistController.editedPlaylistTitle = "Rename Playlist";
 
                 playlistController.editedPlaylist = jQuery.extend(true, {},playlistController.selectedSongs[0].song);
                 $scope.safeApply();
-                setTimeout(function () {
-                    $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
-                }, 510)
+
+
             }}
         )
     }
