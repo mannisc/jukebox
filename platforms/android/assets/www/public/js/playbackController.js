@@ -58,8 +58,15 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
     //Playlist or song?
     if (element.isPlaylist) {
         //Select Playlist
+        if(element.gid){
+            playlistController.showPlaylist(element);
 
-        playlistController.showPlaylist(element);
+        //Show playlist in search list
+        }else {
+            searchController.showPlaylist(element);
+        }
+
+
     } else {
         //Play Song
         playbackController.playSong(element, onlyStyle, false, true);

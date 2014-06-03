@@ -253,13 +253,34 @@
 
     <ul  ng-show ="searchController.displayLimit!=0" data-role="listview" id="searchlistview" class="connectedSortable songlist fast3d" >
 
-        <li ng-if ="searchController.showed&&searchController.showMode!=0" onclick="searchController.setShowMode(0)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton othertopheight stayvisible">
+
+
+
+        <li ng-if ="searchController.showed&&searchController.showMode!=0&&searchController.showMode<5" onclick="searchController.setShowMode(0)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton othertopheight stayvisible">
             <a tabindex="-1">
                 <img src="public/img/empty.png"   class="optionsSearchResultsBack"   >
                 <h3 style="font-size: 1.1em;margin-top: 7px;">Show all results</h3>
             </a></li>
 
-        <li  ng-if ="searchController.showMode>0&&false" class="fadeincompleteslow songlisttitlebutton othertopheight stayvisible listad" ><img style="max-width:728px;max-height:90px;width:728px;height:90px"src="public/img/testad2.png"></li>
+        <li  ng-if ="searchController.showMode>0&&false" class="fadeincompleteslow songlisttitlebutton othertopheight stayvisible listad" ><img style="max-width:728px;max-height:90px;width:728px;height:90px"src=""></li>
+
+
+        <li ng-if ="searchController.showMode==5" onclick="searchController.backShowMode();"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton othertopheight stayvisible">
+            <a tabindex="-1">
+                <img src="public/img/empty.png"   class="optionsSearchResultsBack"   >
+                <h3 style="font-size: 1.1em;margin-top: 7px;">Back</h3>
+            </a></li>
+
+
+        <li ng-if ="searchController.showMode==5"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton  othertopheight stayvisible">
+            <a tabindex="-1" ng-class="{loaded:searchController.isOnlyTypeDisplayed(3)}">
+                <img src="public/img/empty.png" onclick="optionsMenu.openPlaylistResultsOptions(event,'#positionPlaylistOptions')"   class="optionsSearchResults"   >
+                <div id="positionPlaylistOptions" class="positionResultsOptions" ></div>
+
+                <h3  style="font-size: 1.1em;margin-top: 7px;">{{searchController.showedPlaylist.name}}</h3>
+
+            </a></li>
+
 
         <li ng-if ="searchController.artists.searchResults.length>0&&searchController.isVisisbleInShowMode(3)" onclick="searchController.setShowMode(3)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton  othertopheight stayvisible">
             <a tabindex="-1" ng-class="{loaded:searchController.isOnlyTypeDisplayed(3)}">
