@@ -56,6 +56,7 @@ var preferences = {
 
 
 
+
 $.support.cors = true;
 
 lyricscallback = function (test) {
