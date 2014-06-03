@@ -225,7 +225,7 @@ playlistController.createScrollIndicators = function () {
     $("#playlistInner .iScrollVerticalScrollbar").prepend(playlistController.scrollUpIndicator);
 
     playlistController.scrollUpIndicator.click(function () {
-        uiController.playListScroll.scrollTo(0, 0, 700);
+        uiController.playListScroll.scrollTo(0, 0, 200);
     });
     uiController.playListScroll.on('scrollEnd', function () {
         if (uiController.playListScroll.y == 0) {
@@ -832,6 +832,8 @@ playlistController.clearQueue = function () {
 
     playbackController.updatePlayingSongIndex();
 
+    accountController.savePlaylist(playlistController.currentQueue.gid, null, playlistController.currentQueue.tracks);
+
 //playlistController.playlistChanged(playlistController.currentQueue, 0);
 
     $("#playlistInner .iScrollPlayIndicator").hide();
@@ -1235,7 +1237,6 @@ playlistController.onLoadedPlaylistsChanged = function () {
 
         }
         if (name) {
-            console.log("NEWWWWWWWWW" + name)
 
             //    var searchChoice = searchChoices.get(searchChoices.length - 1);
             searchChoice.find(".search-choice-close").attr("title", "Close")
@@ -1529,7 +1530,8 @@ playlistController.renamePlaylist = function (playlist, name) {
 
 playlistController.importPlaylistPopup = function () {
 
-    $("#popupImportInput").popup("open");
+
+    $("#popupImportInput").popup("open",{transition: 'pop'});
 
 }
 
@@ -1581,10 +1583,9 @@ playlistController.loadPlaylist = function (playlist) {
     if (playlistController.renameLoadedPlaylist) {
         playlistController.renameLoadedPlaylist = false;
         var showRename = function () {
-            alert($(".ui-popup-container.ui-popup-active , .ui-popup-container.reverse.out").length)
             if ($(".ui-popup-container.ui-popup-active , .ui-popup-container.reverse.out").length == 0) {
                 playlistController.editedPlaylist = jQuery.extend(true, {}, playlist);
-                playlistController.editedPlaylistTitle = "Rename Playlist";
+                playlistController.editedPlaylistTitle = "New Playlist";
                 $scope.safeApply();
 
                 $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
@@ -1912,18 +1913,16 @@ playlistController.loadNewEmptyPlaylist = function () {
         accountController.savePlaylistsPosition();
     }, 0)
 
-    playlistController.editedPlaylist = jQuery.extend(true, {}, playlist);
 
-    playlistController.editedPlaylistTitle = "Rename Playlist";
+
+    playlistController.renameLoadedPlaylist = true;
 
     $scope.safeApply();
 
     setTimeout(function () {
         playlistController.showPlaylist(playlist);
     }, 0)
-    setTimeout(function () {
-        $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
-    }, 150)
+
     event.stopPropagation();
 
 }

@@ -170,7 +170,7 @@ searchController.init = function () {
     $("#searchlist .iScrollVerticalScrollbar").prepend(searchController.scrollUpIndicator);
 
     searchController.scrollUpIndicator.click(function () {
-        uiController.searchListScroll.scrollTo(0, 0, 700);
+        uiController.searchListScroll.scrollTo(0, 0, 200);
     });
 
 
@@ -1755,7 +1755,7 @@ searchController.makeSearchListDraggable = function () {
 
                             playlist = playlistController.createEmptyPlaylist(!newPlaylistAtTop);
                             playlistController.editedPlaylist =  jQuery.extend(true, {},playlist);
-                            playlistController.editedPlaylistTitle = "Rename Playlist";
+                            playlistController.editedPlaylistTitle = "New Playlist";
 
                             setTimeout(function () {
                                 $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
