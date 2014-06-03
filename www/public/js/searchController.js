@@ -414,6 +414,19 @@ searchController.startSearch = function (searchTerm) {
 };
 
 
+searchController.showSimilarSongs = function (event) {
+    event.stopPropagation();
+
+    var list = playlistController.getSongListFromSelection();
+
+    var index = Math.round(Math.random() * (list.length - 1));
+    var song = list[index];
+    playlistController.deselectSongs();
+    searchController.searchSimilarSongs(song);
+
+}
+
+
 searchController.searchSimilarSongs = function (song) {
     searchController.activateButton(1);
 
