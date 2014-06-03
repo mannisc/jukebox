@@ -324,20 +324,21 @@ playbackController.updatePlayingSongIndex = function () {
  * @param isLoaded
  */
 playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
+    if (!isLoaded) {
+
+        facebookHandler.updateSongFBButtons();
+
+        $("#playingSongCover").removeClass("fadeincomplete")
+        $("#playingSongTitle").removeClass("fadeincomplete");
+        $("#playingSongTitle").hide();
+        $("#playingSongTitleLoading").hide();
+
+        $("#playingSongCover").hide();
+    }
+
     setTimeout(function () {
 
 
-        if (!isLoaded) {
-
-            facebookHandler.updateSongFBButtons();
-
-            $("#playingSongCover").removeClass("fadeincomplete")
-            $("#playingSongTitle").removeClass("fadeincomplete");
-            $("#playingSongTitle").hide();
-            $("#playingSongTitleLoading").hide();
-
-            $("#playingSongCover").hide();
-        }
         $("#playingSongTitleLoading").removeClass("fadeincomplete").removeClass("fadeoutcomplete");
 
 
