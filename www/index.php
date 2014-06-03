@@ -661,7 +661,7 @@
 
     <img id="addToPlaylist" title="Add to queue" onclick="playlistController.addSelectedElementsToQueue(event)"  ondblclick="playlistController.addSelectedElementsToQueue(event)"    src="public/img/add.png">
 
-    <img id="searchSimilar" title="Search similar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();"   src="public/img/radio.png" >
+    <img id="searchSimilar" title="Search similar" onclick="searchController.showSimilarSongs(event);" ondblclick="searchController.showSimilarSongs(event);"   src="public/img/radio.png" >
 
     <img id="moreOptions" onclick="playlistController.showMoreSelectionOptions(event,this);" ondblclick="event.stopPropagation();"   src="public/img/moreoptions.png" >
 
