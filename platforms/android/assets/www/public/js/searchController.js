@@ -256,7 +256,7 @@ searchController.activateButton = function (index, noAnimation) {
          break; */
         case 1:
             $("#searchinput").val("");
-            $(input).insertAfter(button).find("input").attr("placeholder", "Filter Suggestions");
+            $(input).insertAfter(button).find("input").attr("placeholder", "Filter Songs");
             break;
         case 2:
             $("#searchinput").val("");
