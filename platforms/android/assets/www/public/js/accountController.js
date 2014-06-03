@@ -14,6 +14,9 @@ var accountController = function () {
 accountController.loginToken = "";
 accountController.loggedIn = false;
 accountController.userName = "";
+accountController.userEmail = "";
+accountController.defaultPassword = "*****"
+
 accountController.requestid = 1;
 accountController.showRegisterPopup = false;
 
@@ -402,6 +405,7 @@ accountController.singInAuto = function () {
 
             var loginTokenBase64 = accountController.getCookie("loginToken");
             var userNameBase64 = accountController.getCookie("userName");
+            var emailBase64 = accountController.getCookie("userEmail");
             if (loginTokenBase64 != "" && userNameBase64 != "") {
 
                 var token = rsaController.rsa.encrypt(Base64.decode(loginTokenBase64));
@@ -419,7 +423,11 @@ accountController.singInAuto = function () {
                                 $.mobile.loading("show");
                                 accountController.loggedIn = true;
                                 accountController.loginToken = Base64.decode(loginTokenBase64);
-                                accountController.userName = Base64.decode(userNameBase64);
+
+                                accountController.setUserData(Base64.decode(userNameBase64),Base64.decode(emailBase64));
+
+
+
                                 accountController.requestid = 1;
 
 
@@ -430,8 +438,10 @@ accountController.singInAuto = function () {
 
 
                                     setTimeout(function () {
-                                        $(".ui-popup-screen.in").click();
-                                        alert("TODO AUTOLOGIn POPUP HIDE")
+                                        $(".ui-popup-screen.in:visible").click();
+                                        setTimeout(function () {
+                                            $(".ui-popup-screen.in:visible").click();
+                                        }, 500);
                                     }, 500);
 
                                 }, 500);
@@ -440,6 +450,7 @@ accountController.singInAuto = function () {
                             } else {
                                 accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                                 accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
+                                accountController.setCookie("userEmail", Base64.encode(accountController.userEmail), 1);
                             }
                         }
                     },
@@ -455,6 +466,100 @@ accountController.singInAuto = function () {
     }
 
 }
+
+
+
+/**
+ * Opens edit account Popup
+ */
+accountController.openEditAccountPopup = function(){
+    $.mobile.loading("show");
+    $("#popupAccount").popup("close");
+    setTimeout(function(){
+        $.mobile.loading("hide");
+        accountController.resetEditAccountData();
+        $("#editusername").val(accountController.userName);
+        $("#editemail").val(accountController.userEmail);
+
+        $("#editpw").val(accountController.defaultPassword);
+        $("#editpwc").val(accountController.defaultPassword);
+
+        $("#popupEditAccount").popup("open");
+    },900);
+}
+
+/**
+ * Save Account
+ */
+accountController.saveAccount = function () {
+
+    //Validate
+    if(accountController.validateEditAccountData()){
+        alert("SAVE")
+
+        $("#popupEditAccount").popup("close");
+    }
+
+}
+
+/**
+ * Reset Input Forms
+ */
+accountController.resetEditAccountData = function () {
+    $("#editusername").css("background-color", "").css("color", "");
+    $("#editemail").css("background-color", "").css("color", "");
+    $("#editpw").css("background-color", "").css("color", "");
+    $("#editpwc").css("background-color", "").css("color", "");
+}
+/**
+ * Validate Edit Account Data
+ * @returns {boolean}
+ */
+accountController.validateEditAccountData = function () {
+    var failed = false;
+    var username = $("#editusername").val();
+    var email = $("#editemail").val();
+    var pw = $("#editpw").val();
+    var pwc = $("#editpwc").val();
+
+    alert(pw+".   ."+pwc)
+
+    if (pw.length < 1 || pw.length > 64 || $.trim(pw) == accountController.defaultPassword) {
+        failed = true;
+        $("#editpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+        $("#editpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+
+    }
+
+    if (pw != pwc) {
+        failed = true;
+        $("#editpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+    }
+
+
+    if (!accountController.validateEmail(email) || email.length <= 5) {
+        failed = true;
+        $("#editemail").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+    }
+
+    if (username.length < 1) {
+        failed = true;
+        $("#editusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+    }
+
+    return !failed;
+}
+
+
+/**
+ * Sets the current User data locally
+ */
+accountController.setUserData = function(userName,userEmail){
+    accountController.userName = userName;
+    accountController.userEmail = userEmail;
+
+}
+
 
 
 /**
@@ -474,6 +579,10 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
         timeout: 30000,
         url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier,
         success: function (data) {
+           var usertoken = data.token;
+            accountController.userEmail = data.email;
+
+
             if (authController.ensureAuthenticated(data, function () {
                 accountController.singInBase(name, pw, nameEncrypted, emailEncrypted, pwEncrypted, useridEncrypted, externalAccountIdentifier);
             })) {
@@ -499,7 +608,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                         accountController.userName = name;
                         accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                         accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
-
+                        accountController.setCookie("userEmail", Base64.encode(accountController.userEmail), 1);
                         accountController.loadStoredData();
                     }
 
@@ -637,9 +746,10 @@ accountController.register = function () {
                             accountController.loggedIn = true;
                             var md5pw = MD5($.trim(pw));
                             accountController.loginToken = MD5(data + md5pw);
-                            accountController.userName = name;
+                            accountController.setUserData(name,"");
                             accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                             accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
+                            accountController.setCookie("userEmail", Base64.encode(accountController.userEmail), 1);
 
 
                             for (var i = 0; i < playlistController.playlists.length; i++) {
@@ -720,7 +830,7 @@ accountController.validateRegisterData = function () {
     var pw = $("#registerpw").val();
     var pwc = $("#registerpwc").val();
 
-    if (pw.length < 1 && pw.length > 64) {
+    if (pw.length < 1 || pw.length > 64 || $.trim(pw) == accountController.defaultPassword) {
         failed = true;
         $("#registerpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
         $("#registerpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
@@ -746,14 +856,6 @@ accountController.validateRegisterData = function () {
     return !failed;
 }
 
-
-accountController.saveProfile = function () {
-
-    alert("TODO")
-
-    //VALIDATE
-    $("#popupEditAccount").popup("close");
-}
 
 
 /**
@@ -951,9 +1053,9 @@ accountController.loadPlaylists = function (callbackSuccess) {
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
 
-                        alert("!!!!!!!!")
+                       /* alert("!!!!!!!!")
                         alert(xhr.status);
-                        alert(thrownError);
+                        alert(thrownError);*/
                         console.log("------------------------")
                         console.dir(ajaxOptions)
                         console.dir(thrownError)
