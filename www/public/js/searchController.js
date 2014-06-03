@@ -668,7 +668,8 @@ searchController.songs.completeSearch = function (localList, onlineList) {
 
     var songList = localList.concat(onlineList)
 
-
+   // console.dir("completeSearch##############################################################################");
+   // console.dir(songList);
     //Set Artist of song and remove songs without name
     for (var i = 0; i < songList.length; i++) {
         var song = songList[i];
@@ -687,7 +688,15 @@ searchController.songs.completeSearch = function (localList, onlineList) {
 
             song.artist.name = $.trim(song.artist.name);
             song.name = $.trim(song.name);
-
+            if(song.mbid){
+                delete song.mbid
+            }
+            if(song.streamable){
+                delete song.streamable
+            }
+            if(song.url){
+                delete song.url
+            }
         }
     }
 
