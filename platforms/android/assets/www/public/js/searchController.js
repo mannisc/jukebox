@@ -414,6 +414,19 @@ searchController.startSearch = function (searchTerm) {
 };
 
 
+searchController.showSimilarSongs = function (event) {
+    event.stopPropagation();
+
+    var list = playlistController.getSongListFromSelection();
+
+    var index = Math.round(Math.random() * (list.length - 1));
+    var song = list[index];
+    playlistController.deselectSongs();
+    searchController.searchSimilarSongs(song);
+
+}
+
+
 searchController.searchSimilarSongs = function (song) {
     searchController.activateButton(1);
 
@@ -655,7 +668,8 @@ searchController.songs.completeSearch = function (localList, onlineList) {
 
     var songList = localList.concat(onlineList)
 
-
+   // console.dir("completeSearch##############################################################################");
+   // console.dir(songList);
     //Set Artist of song and remove songs without name
     for (var i = 0; i < songList.length; i++) {
         var song = songList[i];
@@ -674,7 +688,15 @@ searchController.songs.completeSearch = function (localList, onlineList) {
 
             song.artist.name = $.trim(song.artist.name);
             song.name = $.trim(song.name);
-
+            if(song.mbid){
+                delete song.mbid
+            }
+            if(song.streamable){
+                delete song.streamable
+            }
+            if(song.url){
+                delete song.url
+            }
         }
     }
 
