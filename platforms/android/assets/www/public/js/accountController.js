@@ -620,14 +620,18 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
         timeout: 30000,
         url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier,
         success: function (data) {
-           var usertoken = data.token;
-            accountController.userEmail = data.email;
+            console.dir("LOGIN DATA:")
+           console.dir(data)
 
+           if(data){
+                var usertoken = data.token;
+                accountController.userEmail = data.email;
+           }
 
-            if (authController.ensureAuthenticated(data, function () {
+            if (authController.ensureAuthenticated(usertoken, function () {
                 accountController.singInBase(name, pw, nameEncrypted, emailEncrypted, pwEncrypted, useridEncrypted, externalAccountIdentifier);
             })) {
-                if (data != "") {
+                if (usertoken != "" && usertoken) {
                     if (externalAccountIdentifier == 1) {
                         accountController.setCookie("fbLogin", Base64.encode("true"), 1);
                         facebookHandler.loggedIn = true;
@@ -645,7 +649,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
 
                     if (!accountController.loggedIn) {
                         accountController.loggedIn = true;
-                        accountController.loginToken = MD5(data + md5pw);
+                        accountController.loginToken = MD5(usertoken + md5pw);
                         accountController.userName = name;
                         accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                         accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
@@ -773,7 +777,7 @@ accountController.register = function () {
     accountController.resetRegisterData();
     if (authController.ip_token != "auth" && authController.ip_token != "") {
 
-        var send = function (name, pw, nameEncrypted, emailEncrypted, pwEncrypted) {
+        var send = function (name, pw, nameEncrypted ,emailEncrypted, pwEncrypted) {
 
             $.ajax({
                 timeout: 30000,
@@ -786,10 +790,11 @@ accountController.register = function () {
                             accountController.loggedIn = true;
                             var md5pw = MD5($.trim(pw));
                             accountController.loginToken = MD5(data + md5pw);
-                            accountController.setUserData(name,"");
+                           // alert(email)
+                            accountController.setUserData(name,email);
                             accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                             accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
-                            accountController.setCookie("userEmail", Base64.encode(accountController.userEmail), 1);
+                            accountController.setCookie("userEmail", Base64.encode(email), 1);
 
 
                             for (var i = 0; i < playlistController.playlists.length; i++) {
@@ -846,7 +851,7 @@ accountController.register = function () {
         if (accountController.validateRegisterData()) {
             $.mobile.loading("show");
 
-            send(username, pw, rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(pw));
+            send(username, pw, rsaController.rsa.encrypt(username),rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(pw));
         }
 
     }
