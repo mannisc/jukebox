@@ -402,6 +402,7 @@ accountController.singInAuto = function () {
 
             var loginTokenBase64 = accountController.getCookie("loginToken");
             var userNameBase64 = accountController.getCookie("userName");
+            var emailBase64 = accountController.getCookie("userEmail");
             if (loginTokenBase64 != "" && userNameBase64 != "") {
 
                 var token = rsaController.rsa.encrypt(Base64.decode(loginTokenBase64));
@@ -420,6 +421,7 @@ accountController.singInAuto = function () {
                                 accountController.loggedIn = true;
                                 accountController.loginToken = Base64.decode(loginTokenBase64);
                                 accountController.userName = Base64.decode(userNameBase64);
+                                emailBase64
                                 accountController.requestid = 1;
 
 
