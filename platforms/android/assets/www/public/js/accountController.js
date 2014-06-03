@@ -493,13 +493,54 @@ accountController.openEditAccountPopup = function(){
  */
 accountController.saveAccount = function () {
 
-    //Validate
-    if(accountController.validateEditAccountData()){
-        alert("SAVE")
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
 
-        $("#popupEditAccount").popup("close");
+        var send = function (name, pw, nameEncrypted, oldNameEncrypted, emailEncrypted, pwEncrypted) {
+            alert("AJAX "+preferences.serverURL + "?editaccount=" + oldNameEncrypted+"&name="+ nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&auth=" + authController.ip_token)
+            $.ajax({
+                timeout: 30000,
+                url: preferences.serverURL + "?editaccount=" + oldNameEncrypted+"&name="+ nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&auth=" + authController.ip_token,
+                success: function (data) {
+                    if (authController.ensureAuthenticated(data, function () {
+                        send(name, pw, nameEncrypted, emailEncrypted, pwEncrypted);
+                    })) {
+                        alert("..............." + data)
+                        if (data != "") {
+
+                            $("#popupEditAccount").popup("close");
+
+                        }
+                        else {
+                            $("#registerpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            $("#registerpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            $("#registeruser").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            $("#registerusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+
+                        }
+                    }
+                },
+                error: function () {
+                    uiController.toast("Sorry, it is not possible to register at the moment.", 1500);
+                }, complete: function () {
+                    $.mobile.loading("hide");
+                }
+
+            })
+        }
+
+        var username = $("#editusername").val();
+        var oldusername =  accountController.userEmail;
+        var email = $("#editemail").val();
+        var pw = $("#editpw").val();
+
+        if (accountController.validateEditAccountData()) {
+            $.mobile.loading("show");
+
+            send(username, pw, rsaController.rsa.encrypt(username),rsaController.rsa.encrypt(oldusername), rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(pw));
+        }
+
+
     }
-
 }
 
 /**
@@ -741,7 +782,6 @@ accountController.register = function () {
                     if (authController.ensureAuthenticated(data, function () {
                         send(name, pw, nameEncrypted, emailEncrypted, pwEncrypted);
                     })) {
-
                         if (data != "") {
                             accountController.loggedIn = true;
                             var md5pw = MD5($.trim(pw));
@@ -760,10 +800,13 @@ accountController.register = function () {
                             accountController.requestid = 1;
 
 
+
                             $("#popupRegister").popup("close");
                             $(".ui-popup-screen.in").click();
 
+                            $scope.safeApply();//Nötig!
                             setTimeout(function () {
+
                                 $("#registerpw").val("");
                                 $("#registerpwc").val("");
                                 $("#registeruser").val("");
