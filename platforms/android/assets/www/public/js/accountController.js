@@ -15,7 +15,7 @@ accountController.loginToken = "";
 accountController.loggedIn = false;
 accountController.userName = "";
 accountController.userEmail = "";
-accountController.defaultPassword = "*****"
+accountController.defaultPassword = "*♥*♥*";
 
 accountController.requestid = 1;
 accountController.showRegisterPopup = false;
@@ -212,8 +212,6 @@ accountController.loadStoredData = function () {
                         playlistdata.items.splice(j, 1);
 
 
-
-
                         j = j - 1;
                     } else {
 
@@ -313,14 +311,13 @@ accountController.loadStoredData = function () {
                     //Save Current merged Playlists
                     if (playlistController.playlists.length > 0) {
 
-                        for (var i = 0; i < playlistController.playlists.length; i++)
-                        {
+                        for (var i = 0; i < playlistController.playlists.length; i++) {
 
                             if (changeCurrentQueue && playlistController.playlists[i].gid == 0) {
                                 playlistController.currentQueue = playlistController.playlists[i];
                                 playlistController.playlists[i].isCurrentQueue = true;
                             }
-                            if (playlistController.playlists[i].new||(playlistController.playlists[i].gid == playlistController.currentQueue.gid&& changeCurrentQueue)) {
+                            if (playlistController.playlists[i].new || (playlistController.playlists[i].gid == playlistController.currentQueue.gid && changeCurrentQueue)) {
                                 delete playlistController.playlists[i].new;
                                 accountController.savePlaylist(playlistController.playlists[i].gid, playlistController.playlists[i].name, playlistController.playlists[i].tracks);
 
@@ -373,17 +370,27 @@ accountController.loadStoredData = function () {
                         if ($(":focus").length == 0)
                             $('#searchinput').focus();
                     }, 500)
+                    setTimeout(function () {
+                        $.mobile.loading("hide");
+                    }, 1000);
+
+                } else {
+                    $scope.safeApply();
+                    $.mobile.loading("hide");
+
                 }
 
-                setTimeout(function () {
-                    $.mobile.loading("hide");
-                }, 1000);
 
-
-            } else
+            } else {
+                $scope.safeApply();
                 $.mobile.loading("hide");
-        } else
+
+            }
+        } else {
+            $scope.safeApply();
             $.mobile.loading("hide");
+
+        }
     }
     accountController.loadPlaylists(playlistsReady)
 }
@@ -424,8 +431,7 @@ accountController.singInAuto = function () {
                                 accountController.loggedIn = true;
                                 accountController.loginToken = Base64.decode(loginTokenBase64);
 
-                                accountController.setUserData(Base64.decode(userNameBase64),Base64.decode(emailBase64));
-
+                                accountController.setUserData(Base64.decode(userNameBase64), Base64.decode(emailBase64));
 
 
                                 accountController.requestid = 1;
@@ -468,14 +474,13 @@ accountController.singInAuto = function () {
 }
 
 
-
 /**
  * Opens edit account Popup
  */
-accountController.openEditAccountPopup = function(){
+accountController.openEditAccountPopup = function () {
     $.mobile.loading("show");
     $("#popupAccount").popup("close");
-    setTimeout(function(){
+    setTimeout(function () {
         $.mobile.loading("hide");
         accountController.resetEditAccountData();
         $("#editusername").val(accountController.userName);
@@ -485,7 +490,7 @@ accountController.openEditAccountPopup = function(){
         $("#editpwc").val(accountController.defaultPassword);
 
         $("#popupEditAccount").popup("open");
-    },900);
+    }, 900);
 }
 
 /**
@@ -495,14 +500,22 @@ accountController.saveAccount = function () {
 
     if (authController.ip_token != "auth" && authController.ip_token != "") {
 
-        var send = function (name, pw, nameEncrypted, oldNameEncrypted, emailEncrypted, pwEncrypted) {
-            alert("AJAX "+preferences.serverURL + "?editaccount=" + oldNameEncrypted+"&name="+ nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&auth=" + authController.ip_token)
+        var send = function ( nameEncrypted, oldNameEncrypted, emailEncrypted, pwEncrypted) {
+
+
+            var data = "?editaccount=" + oldNameEncrypted + "&name=" + nameEncrypted + "&email=" + emailEncrypted + "&auth=" + authController.ip_token;
+            if (pwEncrypted) {
+                data = data + "&pw=" + pwEncrypted
+            }
+
+            alert(data)
+
             $.ajax({
                 timeout: 30000,
-                url: preferences.serverURL + "?editaccount=" + oldNameEncrypted+"&name="+ nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&auth=" + authController.ip_token,
+                url: preferences.serverURL + data,
                 success: function (data) {
                     if (authController.ensureAuthenticated(data, function () {
-                        send(name, pw, nameEncrypted, emailEncrypted, pwEncrypted);
+                        send( nameEncrypted, emailEncrypted, pwEncrypted);
                     })) {
                         alert("..............." + data)
                         if (data != "") {
@@ -529,14 +542,21 @@ accountController.saveAccount = function () {
         }
 
         var username = $("#editusername").val();
-        var oldusername =  accountController.userEmail;
+        var oldusername = accountController.userEmail;
         var email = $("#editemail").val();
         var pw = $("#editpw").val();
+        if ($.trim(pw) == accountController.defaultPassword) {
+            pw = false;
+        }
 
         if (accountController.validateEditAccountData()) {
             $.mobile.loading("show");
+            if (pw)
+                var pwEncrypted = rsaController.rsa.encrypt(pw);
+            else
+                pwEncrypted = false;
 
-            send(username, pw, rsaController.rsa.encrypt(username),rsaController.rsa.encrypt(oldusername), rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(pw));
+            send( rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(oldusername), rsaController.rsa.encrypt(email), pwEncrypted);
         }
 
 
@@ -563,9 +583,8 @@ accountController.validateEditAccountData = function () {
     var pw = $("#editpw").val();
     var pwc = $("#editpwc").val();
 
-    alert(pw+".   ."+pwc)
 
-    if (pw.length < 1 || pw.length > 64 || $.trim(pw) == accountController.defaultPassword) {
+    if (pw.length < 1 || pw.length > 64) {
         failed = true;
         $("#editpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
         $("#editpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
@@ -595,12 +614,11 @@ accountController.validateEditAccountData = function () {
 /**
  * Sets the current User data locally
  */
-accountController.setUserData = function(userName,userEmail){
+accountController.setUserData = function (userName, userEmail) {
     accountController.userName = userName;
     accountController.userEmail = userEmail;
 
 }
-
 
 
 /**
@@ -621,12 +639,12 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
         url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier,
         success: function (data) {
             console.dir("LOGIN DATA:")
-           console.dir(data)
+            console.dir(data)
 
-           if(data){
+            if (data) {
                 var usertoken = data.token;
                 accountController.userEmail = data.email;
-           }
+            }
 
             if (authController.ensureAuthenticated(usertoken, function () {
                 accountController.singInBase(name, pw, nameEncrypted, emailEncrypted, pwEncrypted, useridEncrypted, externalAccountIdentifier);
@@ -777,7 +795,7 @@ accountController.register = function () {
     accountController.resetRegisterData();
     if (authController.ip_token != "auth" && authController.ip_token != "") {
 
-        var send = function (name, pw, nameEncrypted ,emailEncrypted, pwEncrypted) {
+        var send = function (name, pw, nameEncrypted, emailEncrypted, pwEncrypted) {
 
             $.ajax({
                 timeout: 30000,
@@ -790,8 +808,8 @@ accountController.register = function () {
                             accountController.loggedIn = true;
                             var md5pw = MD5($.trim(pw));
                             accountController.loginToken = MD5(data + md5pw);
-                           // alert(email)
-                            accountController.setUserData(name,email);
+                            // alert(email)
+                            accountController.setUserData(name, email);
                             accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                             accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
                             accountController.setCookie("userEmail", Base64.encode(email), 1);
@@ -803,7 +821,6 @@ accountController.register = function () {
                             accountController.savePlaylistsPosition();
 
                             accountController.requestid = 1;
-
 
 
                             $("#popupRegister").popup("close");
@@ -851,7 +868,7 @@ accountController.register = function () {
         if (accountController.validateRegisterData()) {
             $.mobile.loading("show");
 
-            send(username, pw, rsaController.rsa.encrypt(username),rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(pw));
+            send(username, pw, rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(pw));
         }
 
     }
@@ -903,7 +920,6 @@ accountController.validateRegisterData = function () {
 
     return !failed;
 }
-
 
 
 /**
@@ -1101,9 +1117,9 @@ accountController.loadPlaylists = function (callbackSuccess) {
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
 
-                       /* alert("!!!!!!!!")
-                        alert(xhr.status);
-                        alert(thrownError);*/
+                        /* alert("!!!!!!!!")
+                         alert(xhr.status);
+                         alert(thrownError);*/
                         console.log("------------------------")
                         console.dir(ajaxOptions)
                         console.dir(thrownError)
