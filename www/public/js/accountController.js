@@ -405,6 +405,7 @@ accountController.singInAuto = function () {
 
             var loginTokenBase64 = accountController.getCookie("loginToken");
             var userNameBase64 = accountController.getCookie("userName");
+            var emailBase64 = accountController.getCookie("userEmail");
             if (loginTokenBase64 != "" && userNameBase64 != "") {
 
                 var token = rsaController.rsa.encrypt(Base64.decode(loginTokenBase64));
@@ -422,7 +423,10 @@ accountController.singInAuto = function () {
                                 $.mobile.loading("show");
                                 accountController.loggedIn = true;
                                 accountController.loginToken = Base64.decode(loginTokenBase64);
-                                accountController.setUserData(Base64.decode(userNameBase64),"");
+
+                                accountController.setUserData(Base64.decode(userNameBase64),Base64.decode(emailBase64));
+
+
 
                                 accountController.requestid = 1;
 
@@ -446,6 +450,7 @@ accountController.singInAuto = function () {
                             } else {
                                 accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                                 accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
+                                accountController.setCookie("userEmail", Base64.encode(accountController.userEmail), 1);
                             }
                         }
                     },
@@ -574,6 +579,10 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
         timeout: 30000,
         url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier,
         success: function (data) {
+           var usertoken = data.token;
+            accountController.userEmail = data.email;
+
+
             if (authController.ensureAuthenticated(data, function () {
                 accountController.singInBase(name, pw, nameEncrypted, emailEncrypted, pwEncrypted, useridEncrypted, externalAccountIdentifier);
             })) {
@@ -599,7 +608,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                         accountController.userName = name;
                         accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                         accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
-
+                        accountController.setCookie("userEmail", Base64.encode(accountController.userEmail), 1);
                         accountController.loadStoredData();
                     }
 
@@ -740,6 +749,7 @@ accountController.register = function () {
                             accountController.setUserData(name,"");
                             accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
                             accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
+                            accountController.setCookie("userEmail", Base64.encode(accountController.userEmail), 1);
 
 
                             for (var i = 0; i < playlistController.playlists.length; i++) {
