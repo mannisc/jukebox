@@ -73,6 +73,11 @@ body {
 
     .sideinfo{
         margin-top: 0!important;
+        background-color: rgba(7, 7, 7, 1)!important;
+    }
+
+    .adsbygoogle{
+        background: none!important;
     }
 
 
@@ -1247,7 +1252,7 @@ a, button, h1, h2, h3{
  */
 
 
-#popupRegister input, #popupLogin input{
+#popupRegister input, #popupLogin input, #popupEditAccount input{
     -webkit-text-shadow: none!important;
     text-shadow: none!important;
 }

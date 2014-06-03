@@ -780,7 +780,7 @@
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Account</h3>
             <ul data-role="listview">
-                <li  style="border-bottom:1px solid #ddd;"><a href="#" onclick='$.mobile.loading("show");$("#popupAccount").popup("close");setTimeout(function(){$.mobile.loading("hide");$("#popupEditAccount").popup("open");},900);' data-rel="back" id="manageUserProfile" ><img src="public/img/user.png" width="28px" >Your Account</a></li>
+                <li  style="border-bottom:1px solid #ddd;"><a href="#" onclick='accountController.openEditAccountPopup();' data-rel="back" id="manageUserProfile" ><img src="public/img/user.png" width="28px" >Your Account</a></li>
                 <li style="border-top:15px solid rgba(255,255,255,0);border-bottom:1px solid #ddd">
                     <a href="#" data-rel="back" onclick="googleHandler.login();" id="manageGoogle"><img src="public/img/gdrive.png" width="28px" >Google Drive
                         <!--span class="GoogleBlue">G</span><span class="GoogleRed">o</span><span class="GoogleYellow">o</span><span class="GoogleBlue">g</span><span class="GoogleGreen">l</span><span class="GoogleRed">e</span--></a></li>
@@ -811,15 +811,15 @@
         <label for="registerusername" class="ui-hidden-accessible">Username:</label>
         <input type="text" name="user" id="editusername" value="" placeholder="Username" data-theme="a" >
             <span id="edituseremail">
-            <label for="registeruser" class="ui-hidden-accessible">Email Adress:</label>
-            <input type="text" name="user" id="edituser" value="" placeholder="Email Adress" data-theme="a" >
+            <label for="editemail" class="ui-hidden-accessible">Email Adress:</label>
+            <input type="text" name="user" id="editemail" value="" placeholder="Email Adress" data-theme="a" >
             </span>
-        <label for="registerpw" class="ui-hidden-accessible">Password:</label>
+        <label for="editpw" class="ui-hidden-accessible">Password:</label>
         <input type="password" name="pass" id="editpw" value="" placeholder="Password" data-theme="a" >
-                <span id="editpwconfirm">
-                <input type="password" name="pass" id="editpwc" value="" placeholder="Confirm Password" data-theme="a" >
-                </span>
-        <button onclick='accountController.saveProfile();' id="editButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Save Changes</button>
+        <span id="editpwconfirm">
+        <input type="password" name="pass" id="editpwc" value="" placeholder="Confirm Password" data-theme="a" >
+        </span>
+        <button onclick='accountController.saveAccount();' id="editButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Save Changes</button>
         <button onclick='$("#popupEditAccount").popup("close")' id="cancelButton"  class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-delete">Cancel</button>
 
 
