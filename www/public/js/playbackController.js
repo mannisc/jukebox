@@ -310,6 +310,8 @@ playbackController.updatePlayingSongIndex = function () {
             }
         }
 
+    }else if(playlistController.currentQueue.tracks &&playlistController.currentQueue.tracks.length>0){
+        playbackController.playingSongIndex = playlistController.currentQueue.tracks.length - 1;
     }
 
 };

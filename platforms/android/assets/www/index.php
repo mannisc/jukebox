@@ -196,7 +196,7 @@
         <a id="registerLink"  ng-if="!accountController.loggedIn" href="#popupRegister" onclick="" data-rel="popup" data-position-to="#registerLink"
            class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-plus ui-btn-icon-left ui-btn-a" data-transition="pop">Sign up</a>
 
-        <a id="linkAccount" ng-if="accountController.loggedIn" href="#popupAccount" data-rel="popup" class="ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a fadeincomplete" data-transition="pop">{{accountController.userName}}</a>
+        <a id="linkAccount" ng-if="accountController.loggedIn" href="#popupAccount" data-rel="popup" data-transition="pop" class="ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-user ui-btn-icon-left ui-btn-a fadeincomplete" >{{accountController.userName}}</a>
 
 
     </div>
