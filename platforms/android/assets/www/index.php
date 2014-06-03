@@ -173,7 +173,7 @@
 
     <h1 id="titleHeader" style="margin-top: 2px!important;opacity:0;display:inline-block;">{{appTitle}}</h1>
 
-    <a href="#popupFeedback"   data-rel="popup"  data-transition="pop" style="position: absolute;left: 210px;top: 5px;" href="" >Give us your Feedback</a>
+    <a id="feedbackButton" class="fadeincomplete" style="display:none;position: absolute;left: 210px;top: 5px;"  href="#popupFeedback"   data-rel="popup"  data-transition="pop" href="" >Give us your Feedback</a>
 
     <img src="public/img/bars-white.png" id="openSidePanelBarIcon" onclick="uiController.toggleSidePanel()" style="position:absolute;right: 6px;top: 13px" width="17px" height="20px"/>
 
@@ -683,11 +683,12 @@
         <div style="text-align:center;padding-right:5px;padding-left:5px;padding-bottom:9px">
             <h3 style="margin-right: 110px; margin-left:110px;text-align: center">Feedback</h3>
             <textarea style=" resize: none;"></textarea>
-            <a href="#" class="ui-btn-inline ui-link ui-btn ui-shadow ui-corner-all">Send</a>
-
+            <a href="#" class="ui-btn-inline ui-link ui-btn ui-shadow ui-corner-all" onclick="feedback.sendFeedback();" style="background-color: #0F702A;text-shadow: none!important;color: #fff;">Send Feedback</a>
+            <a href="#" class="ui-btn-inline ui-link ui-btn ui-shadow ui-corner-all" onclick="$('#popupFeedback').popup('close');$('.ui-popup-screen.in').click();">Cancel</a>
         </div>
     </form>
 </div>
+
 
 
 <div data-role="popup" id="popupVideoSettings" data-arrow="true" data-theme="a" class="ui-corner-all">

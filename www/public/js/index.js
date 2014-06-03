@@ -112,6 +112,10 @@ var readyStateCheckInterval = setInterval(function() {
 $(document).ready(function () {
 
 
+     //FEEDBACK
+    feedback.initFeedback();
+
+
 
 
     // setTimeout(function(){
@@ -241,4 +245,41 @@ if (!Object.keys) {
 window.console.dirx = function(obj){
     console.dir(JSON.parse(JSON.stringify(obj)));
 }
+
+
+//FEEDBACK
+var feedback = function(){};
+
+feedback.initFeedback = function(){
+    setTimeout(function(){
+        $("#feedbackButton").show();
+    },2000)
+
+    $("#popupFeedback").popup({
+        beforeposition: function (event, ui) {
+            $('#popupFeedback textarea').val("\n\n"+"Used Browser: "+navigator.userAgent)
+        },
+        afteropen: function (event, ui) {
+            $('#popupFeedback textarea').focus();
+
+        }
+    });
+}
+
+feedback.sendFeedback = function(){
+
+    if($.trim($('#popupFeedback textarea').val())!="") {
+        var feedback = $.trim($('#popupFeedback textarea').val());
+        $("#popupFeedback").popup("close");
+        feedback = rsaController.rsa.encryptUnlimited(feedback);
+        $.ajax({
+            type:"POST",
+            data: {feedback:feedback, auth: authController.ip_token},
+            url: preferences.serverURL
+        });
+    }
+
+
+}
+
 
