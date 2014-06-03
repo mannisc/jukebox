@@ -337,7 +337,7 @@
                 <div id="positionSongResultsOptions" class="positionResultsOptions" ></div>
 
                 <h3  ng-if ="searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Popular Songs<span ng-if ="!searchController.isOnlyTypeDisplayed(1)"> ...</span></h3>
-                <h3  ng-if ="!searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Songs<span ng-if ="!searchController.isOnlyTypeDisplayed(1)"> ...</span></h3>
+                <h3  ng-if ="!searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Songs<span ng-if ="!searchController.isOnlyTypeDisplayed(1)">   ... </span></h3>
 
          </a></li>
 
