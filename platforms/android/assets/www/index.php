@@ -173,6 +173,8 @@
 
     <h1 id="titleHeader" style="margin-top: 2px!important;opacity:0;display:inline-block;">{{appTitle}}</h1>
 
+    <a href="#popupFeedback"   data-rel="popup"  data-transition="pop" style="position: absolute;left: 210px;top: 5px;" href="" >Give us your Feedback</a>
+
     <img src="public/img/bars-white.png" id="openSidePanelBarIcon" onclick="uiController.toggleSidePanel()" style="position:absolute;right: 6px;top: 13px" width="17px" height="20px"/>
 
 
@@ -676,6 +678,17 @@
 
 
 <!-- Popups ---------------------------------------->
+<div data-role="popup" id="popupFeedback" data-dismissible="true" data-arrow="true" data-overlay-theme="b" data-theme="a" class="ui-corner-all">
+    <form>
+        <div style="text-align:center;padding-right:5px;padding-left:5px;padding-bottom:9px">
+            <h3 style="margin-right: 110px; margin-left:110px;text-align: center">Feedback</h3>
+            <textarea style=" resize: none;"></textarea>
+            <a href="#" class="ui-btn-inline ui-link ui-btn ui-shadow ui-corner-all">Send</a>
+
+        </div>
+    </form>
+</div>
+
 
 <div data-role="popup" id="popupVideoSettings" data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>
