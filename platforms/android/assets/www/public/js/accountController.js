@@ -508,7 +508,7 @@ accountController.saveAccount = function () {
                 data = data + "&pw=" + pwEncrypted
             }
 
-            alert(data)
+           // alert(data)
 
             $.ajax({
                 timeout: 30000,
@@ -548,7 +548,7 @@ accountController.saveAccount = function () {
         }
 
         var username = $("#editusername").val();
-        var oldusername = accountController.userEmail;
+        var oldusername = accountController.userName;
         var email = $("#editemail").val();
         var pw = $("#editpw").val();
         if ($.trim(pw) == accountController.defaultPassword) {
