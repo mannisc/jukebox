@@ -52,7 +52,10 @@ searchController.searchCounter = 0;
 
 searchController.buttonActive = -1;
 
-searchController.showMode = -1; //-1: nichts, 0: Alle Ergebnisse 1: songs,2:  playlists, 3: artists,4: user
+searchController.showMode = -1; //-1: nichts, 0: Alle Ergebnisse 1: songs,2:  playlists, 3: artists,4: user , 5: one playlist
+
+
+
 
 searchController.maxPopularSongPages = 2;
 searchController.maxArtistSongPages = 2;
@@ -248,7 +251,7 @@ searchController.activateButton = function (index, noAnimation) {
     switch (index) {
         case 0:
             $("#searchinput").val(searchController.searchSongsString);
-            $(input).insertAfter(button).find("input").attr("placeholder", "Search Songs, Playlists, Users...");
+            $(input).insertAfter(button).find("input").attr("placeholder", "Search Songs, Playlists, Arists...");
             break;
         /*case 1:
          $("#searchinput").val("");
@@ -887,7 +890,10 @@ searchController.applySongList = function (currentSearchID) {
         var size = searchController.maxResults;
     }
     else {
-        size = Math.min(searchController.showed.searchResults.length, searchController.maxResults)
+        if(searchController.showed)
+         size = Math.min(searchController.showed.searchResults.length, searchController.maxResults)
+        else
+          size =   searchController.maxResults;
     }
 
     var delays = (Math.ceil(size / stepSize));
@@ -1234,28 +1240,42 @@ searchController.topTracks = function (callbackSuccess) {
     func(1, null);
 }
 
-searchController.suggestions = function (title, artist, callbackSuccess) {
-    searchController.showLoading(true);
-    searchController.showedPopulars = false;
 
-    $.ajax({
-
-        url: "http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=" + artist + "&track=" + title + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
-        success: function (data) {
-            if (data.similartracks) {
-                if (data.similartracks != "\n") {
-                    if (callbackSuccess)
-                        callbackSuccess(data.similartracks);
-
-
-                }
-            }
-        }, complete: function () {
-            setTimeout(searchController.showLoading, 1000);
-        }
-    })
-
+/**
+ * Show one Playlist in search list
+ */
+searchController.showPlaylist = function(playlist){
+    console.dir(playlist)
+    searchController.showedPlaylist = playlist;
+    $("#searchlistview").hide();
+    $("#searchlist .iScrollIndicator").hide();
+    $("#searchlist .iScrollScrollUpIndicator").hide();
+    searchController.oldShowMode =  searchController.showMode;
+    searchController.showMode = 5;
+    $scope.safeApply();
+    setTimeout(function () {
+        $("#searchlistview").listview('refresh');
+        $("#searchlistview").show();
+    }, 150);
+    setTimeout(function () {
+        uiController.searchListScroll.refresh();
+    }, 150)
+    setTimeout(function () {
+        uiController.searchListScroll.refresh();
+    }, 1000)
 }
+
+/**
+ *  Back to last show Mode
+ */
+searchController.backShowMode= function(){
+    if(searchController.oldShowMode!==undefined)
+     searchController.setShowMode(searchController.oldShowMode);
+}
+
+
+
+
 
 
 searchController.getArtistInfo = function () {
@@ -1321,6 +1341,7 @@ searchController.isVisisbleInShowMode = function (showMode) {
  * @param showMode
  */
 searchController.setShowMode = function (showMode) {
+
     if (showMode == searchController.showMode)
         return;
 
@@ -1328,7 +1349,6 @@ searchController.setShowMode = function (showMode) {
 
     if (searchController.isOnlyTypeDisplayed(showMode))
         return;
-
     $("#searchlistview").hide();
     $("#searchlist .iScrollIndicator").hide();
     $("#searchlist .iScrollScrollUpIndicator").hide();
@@ -1433,6 +1453,8 @@ searchController.isOnlyResultType = function (type) {
             break;
 
     }
+
+    return false;
 }
 
 
