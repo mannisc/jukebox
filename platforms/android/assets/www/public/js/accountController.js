@@ -517,10 +517,16 @@ accountController.saveAccount = function () {
                     if (authController.ensureAuthenticated(data, function () {
                         send( nameEncrypted, emailEncrypted, pwEncrypted);
                     })) {
-                        alert("..............." + data)
+
                         if (data != "") {
 
-                            $("#popupEditAccount").popup("close");
+                            if(data=="ok"){
+                                accountController.userName = newusername;
+                                accountController.userEmail = newemail;
+                                $scope.safeApply();
+                                $("#popupEditAccount").popup("close");
+
+                            }
 
                         }
                         else {
@@ -533,7 +539,7 @@ accountController.saveAccount = function () {
                     }
                 },
                 error: function () {
-                    uiController.toast("Sorry, it is not possible to register at the moment.", 1500);
+                    uiController.toast("Sorry, it is not possible to edit your account at the moment", 1500);
                 }, complete: function () {
                     $.mobile.loading("hide");
                 }
@@ -555,6 +561,8 @@ accountController.saveAccount = function () {
                 var pwEncrypted = rsaController.rsa.encrypt(pw);
             else
                 pwEncrypted = false;
+            var newusername = username;
+            var newemail = email;
 
             send( rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(oldusername), rsaController.rsa.encrypt(email), pwEncrypted);
         }
