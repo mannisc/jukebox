@@ -269,8 +269,9 @@ feedback.initFeedback = function(){
 feedback.sendFeedback = function(){
 
     if($.trim($('#popupFeedback textarea').val())!="") {
-        var feedback = $.trim($('#popupFeedback textarea').val());
+        var feedback = escape($('#popupFeedback textarea').val());
         $("#popupFeedback").popup("close");
+
         feedback = rsaController.rsa.encryptUnlimited(feedback);
         $.ajax({
             type:"POST",
