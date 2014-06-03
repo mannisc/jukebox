@@ -946,7 +946,6 @@ accountController.deletePlaylist = function (gid) {
                 var savetoken = rsaController.rsa.encrypt(accountController.loginToken + nonce);
 
                 var send = function (savetoken) {
-                    console.log("DELETEEEEEEE")
                     //Updateplaylist defines action
                     var postData = { deleteplaylist: savetoken, auth: authController.ip_token, gid: gid, n: nonce};
 
