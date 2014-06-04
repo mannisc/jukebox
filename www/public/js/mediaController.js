@@ -91,6 +91,26 @@ mediaController.mediaEnded = function () {
 }
 
 
+mediaController.loadPreview = function(song){
+    console.dir("loadpreview ajax!!!!");
+    var artistString = mediaController.getSongArtist(song);
+    var titleString = song.name
+    $.ajax({
+        url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + encodeURIComponent(artistString) + "&track=" + encodeURIComponent(titleString) + "&format=json",
+        success: function (data) {
+            if(data){
+                if(data.track){
+                    if(data.track.album){
+                        song.image = data.track.album.image;
+                        $scope.safeApply();
+                    }
+                }
+            }
+        }
+    })
+
+}
+
 mediaController.sendRating = function (rating) {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         var VideoURL = escape(mediaController.currentvideoURL);
