@@ -860,7 +860,7 @@ playlistController.insertSongsIntoQueue = function (songs) {
 
     if (playlistController.loadedPlaylists["0"]) {
         if (Object.keys(playlistController.loadedPlaylists).length == 1) {
-            playlistController.loadedPlaylistSongs = jQuery.extend(true, [], playlistController.currentQueue.tracks);
+            playlistController.loadedPlaylistSongs =  playlistController.currentQueue.tracks;
         }
         playlistController.displayLimit = playlistController.loadedPlaylistSongs.length;
 
@@ -942,7 +942,7 @@ playlistController.addSongsToPlaylist = function (playlist, songs) {
     } else if (playlistController.getLoadedPlaylist().gid == playlist.gid) {
         if (Object.keys(playlistController.loadedPlaylists).length == 1) {
 
-            playlistController.loadedPlaylistSongs = jQuery.extend(true, [], playlist.tracks);
+            playlistController.loadedPlaylistSongs =  playlist.tracks;
         }
         playlistController.displayLimit = playlistController.loadedPlaylistSongs.length;
 
@@ -1556,11 +1556,13 @@ playlistController.loadPlaylist = function (playlist) {
     else
         uiController.playListScroll.scrollTo(0, 0, 0);
 
-    playlistController.loadedPlaylistSongs = playlist.tracks.concat(playlistController.loadedPlaylistSongs)
-    for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
+    playlistController.loadedPlaylistSongs = playlist.tracks;
+
+
+  /*  for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
         playlistController.loadedPlaylistSongs[i].id = "plsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
         //   console.log("::: "+ playlistController.loadedPlaylistSongs[i].gid)
-    }
+    }*/
 
     if (Object.keys(playlistController.loadedPlaylists).length > 1 || !playlistController.loadedPlaylists["0"]) {
         $("#playlisthelp").html(playlistController.playlistHelp.playlist)
@@ -2512,7 +2514,7 @@ playlistController.makePlayListSortable = function () {
                 for (var playlist in playlistController.loadedPlaylists) {
                     if (playlistController.loadedPlaylists.hasOwnProperty(playlist)) {
                         if (playlistController.loadedPlaylists[playlist].isUnnamedPlaylist || playlistCount == 1) {
-                            playlistController.loadedPlaylists[playlist].tracks = jQuery.extend(true, [], playlistController.loadedPlaylistSongs);
+                            playlistController.loadedPlaylists[playlist].tracks = playlistController.loadedPlaylistSongs;
 
 
                         }
