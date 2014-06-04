@@ -88,7 +88,7 @@ authController.getToken = function (){
  */
 authController.ensureAuthenticated = function(data,ajaxFunction){
 
-    if (data.auth && data.auth == "true") {
+    if (data==undefined||!data||(data.auth && data.auth == "true")) {
         authController.extractToken(data.token);
         if(ajaxFunction)
             ajaxFunction()
