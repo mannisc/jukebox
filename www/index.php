@@ -827,7 +827,7 @@
 
 
 <div data-role="popup" id="popupAccount" data-arrow="true" data-theme="a" class="ui-corner-all">
-    <form>
+    <!--<form>-->
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Account</h3>
             <ul data-role="listview">
@@ -839,6 +839,25 @@
                     <a href="#" data-rel="back" id="manageFacebook"><img src="public/img/fb.png" width="28px" >Facebook</a></li>
                   <li style="border-bottom:1px solid #ddd;;display:none">
                     <a href="#" data-rel="back" id="manageDropbox"><img src="public/img/dropbox.png" width="28px" >Dropbox</a></li>
+
+
+
+
+                <li style="min-height:30px;margin-top:10px;text-align: center">
+                    <div style="float:left;font-size: 14px!important">
+                    <img src="public/img/dropbox.png" width="28px" >
+                    Support us:
+                    </div>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="UVQ7RE3L8GWG8">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="Please Support us!" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+                    </form>
+
+
+                </li>
+
                 <!--li style="border-top:15px solid rgba(255,255,255,0);"><a href="#" onclick="accountController.logout();" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li-->
 
             </ul>
@@ -847,7 +866,7 @@
             <button onclick="accountController.logout();"  id="signoutButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-forward">Log out</button>
 
         </div>
-    </form>
+    <!--</form>-->
 </div>
 
 
