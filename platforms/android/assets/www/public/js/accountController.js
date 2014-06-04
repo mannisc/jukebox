@@ -658,70 +658,78 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
             console.dir("LOGIN DATA:")
             console.dir(data)
 
-
-            if (data) {
-                var usertoken = data.token;
-                accountController.userEmail = data.email;
+            if(data.match && data.match("error:")){
+                $("#signinpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                $("#signinusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                setTimeout(function () {
+                    $.mobile.loading("hide");
+                }, 800);
             }
+            else
+            {
+                if (data) {
+                    var usertoken = data.token;
+                    accountController.userEmail = data.email;
+                    if (authController.ensureAuthenticated(usertoken, function () {
+                        accountController.singInBase(name, pw, nameEncrypted, emailEncrypted, pwEncrypted, useridEncrypted, externalAccountIdentifier);
+                    })) {
 
-            if (authController.ensureAuthenticated(usertoken, function () {
-                accountController.singInBase(name, pw, nameEncrypted, emailEncrypted, pwEncrypted, useridEncrypted, externalAccountIdentifier);
-            })) {
+                        if (usertoken != "" && usertoken) {
+                            if (externalAccountIdentifier == 1) {
+                                accountController.setCookie("fbLogin", Base64.encode("true"), 1);
+                                facebookHandler.loggedIn = true;
 
-                if (usertoken != "" && usertoken) {
-                    if (externalAccountIdentifier == 1) {
-                        accountController.setCookie("fbLogin", Base64.encode("true"), 1);
-                        facebookHandler.loggedIn = true;
+                            }
+
+                            console.log("LOGIN!!!!! " + externalAccountIdentifier + "   " + accountController.loggedIn)
+
+                            if (pw != "" && pw.length < 100) {
+                                var md5pw = MD5($.trim(pw));
+                            }
+                            else {
+                                var md5pw = "";
+                            }
+
+                            if (!accountController.loggedIn) {
+                                accountController.loggedIn = true;
+                                accountController.loginToken = MD5(usertoken + md5pw);
+                                accountController.userName = name;
+                                accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
+                                accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
+                                accountController.setCookie("userEmail", Base64.encode(accountController.userEmail), 1);
+                                accountController.loadStoredData();
+                            }
+
+
+                            accountController.requestid = 1;
+
+
+                            $("#popupLogin").popup("close");
+                            $("#popupRegister").popup("close");
+                            $(".ui-popup-screen.in").click();
+
+
+                            setTimeout(function () {
+                                $("#signinpw").val("");
+                                $("#signinusername").val("");
+                                var btn = $('#header .ui-btn.animated').removeClass("animated");
+
+                                setTimeout(function () {
+                                    btn.addClass("animated");
+                                }, 500)
+                            }, 500)
+
+                        }
+                        else {
+                            $("#signinpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            $("#signinusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            setTimeout(function () {
+                                $.mobile.loading("hide");
+                            }, 800);
+                        }
 
                     }
-
-                    console.log("LOGIN!!!!! " + externalAccountIdentifier + "   " + accountController.loggedIn)
-
-                    if (pw != "" && pw.length < 100) {
-                        var md5pw = MD5($.trim(pw));
-                    }
-                    else {
-                        var md5pw = "";
-                    }
-
-                    if (!accountController.loggedIn) {
-                        accountController.loggedIn = true;
-                        accountController.loginToken = MD5(usertoken + md5pw);
-                        accountController.userName = name;
-                        accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
-                        accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
-                        accountController.setCookie("userEmail", Base64.encode(accountController.userEmail), 1);
-                        accountController.loadStoredData();
-                    }
-
-
-                    accountController.requestid = 1;
-
-
-                    $("#popupLogin").popup("close");
-                    $("#popupRegister").popup("close");
-                    $(".ui-popup-screen.in").click();
-
-
-                    setTimeout(function () {
-                        $("#signinpw").val("");
-                        $("#signinusername").val("");
-                        var btn = $('#header .ui-btn.animated').removeClass("animated");
-
-                        setTimeout(function () {
-                            btn.addClass("animated");
-                        }, 500)
-                    }, 500)
-
                 }
-                else {
-                    $("#signinpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
-                    $("#signinusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
-                    setTimeout(function () {
-                        $.mobile.loading("hide");
-                    }, 800);
-                }
-
             }
         },
         error: function () {
@@ -824,15 +832,19 @@ accountController.register = function () {
                     if (authController.ensureAuthenticated(data, function () {
                         send(name, pw, nameEncrypted, emailEncrypted, pwEncrypted);
                     })) {
-                        if (data == "userexists") {
+                        if (data == "error: 2") {
 
                             $("#registerusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
                             $("#registerusernamealreadyexists").show();
                             $.mobile.loading("hide");
                         }
                         else {
-
+                            if(data.match && data.match("error:"))
+                            {
+                                data = "";
+                            }
                             if (data != "") {
+
                                 accountController.loggedIn = true;
                                 var md5pw = MD5($.trim(pw));
                                 accountController.loginToken = MD5(data + md5pw);
