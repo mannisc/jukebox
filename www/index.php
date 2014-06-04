@@ -301,10 +301,10 @@
                 <img src="public/img/empty.png" onclick="optionsMenu.openArtistResultsOptions(event,'#positionArtistResultsOptions')"   class="optionsSearchResults"   >
                 <div id="positionArtistResultsOptions" class="positionResultsOptions" ></div>
 
-                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(3)>1"  style="font-size: 1.1em;margin-top: 7px;">Featured Artists<span ng-if ="!searchController.isOnlyTypeDisplayed(3)"> ...</span></h3>
-                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(3)>1"  style="font-size: 1.1em;margin-top: 7px;">Artists<span ng-if ="!searchController.isOnlyTypeDisplayed(3)"> ...</span></h3>
-                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(3)<=1"  style="font-size: 1.1em;margin-top: 7px;">Featured Artist<span ng-if ="!searchController.isOnlyTypeDisplayed(3)"> ...</span></h3>
-                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(3)<=1"  style="font-size: 1.1em;margin-top: 7px;">Artist<span ng-if ="!searchController.isOnlyTypeDisplayed(3)"> ...</span></h3>
+                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(3)>1"  style="font-size: 1.1em;margin-top: 7px;">Featured Artists<span ng-if ="!searchController.isOnlyTypeDisplayed(3)" style="font-size: 13px;"> ...</span></h3>
+                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(3)>1"  style="font-size: 1.1em;margin-top: 7px;">Artists<span ng-if ="!searchController.isOnlyTypeDisplayed(3)" style="font-size: 13px;"> ...</span></h3>
+                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(3)<=1"  style="font-size: 1.1em;margin-top: 7px;">Featured Artist<span ng-if ="!searchController.isOnlyTypeDisplayed(3)" style="font-size: 13px;"> ...</span></h3>
+                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(3)<=1"  style="font-size: 1.1em;margin-top: 7px;">Artist<span ng-if ="!searchController.isOnlyTypeDisplayed(3)" style="font-size: 13px;"> ...</span></h3>
             </a>
         </li>
         
@@ -330,10 +330,10 @@
                 <img src="public/img/empty.png" onclick="optionsMenu.openPlaylistResultsOptions(event,'#positionPlaylistResultsOptions')"   class="optionsSearchResults"   >
                 <div id="positionPlaylistResultsOptions" class="positionResultsOptions" ></div>
 
-                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(2)>1"  style="font-size: 1.1em;margin-top: 7px;">Featured Playlists<span ng-if ="!searchController.isOnlyTypeDisplayed(2)"> ...</span></h3>
-                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(2)>1"  style="font-size: 1.1em;margin-top: 7px;">Playlists<span ng-if ="!searchController.isOnlyTypeDisplayed(2)"> ...</span></h3>
-                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(2)<=1"  style="font-size: 1.1em;margin-top: 7px;">Featured Playlist<span ng-if ="!searchController.isOnlyTypeDisplayed(2)"> ...</span></h3>
-                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(2)<=1"  style="font-size: 1.1em;margin-top: 7px;">Playlist<span ng-if ="!searchController.isOnlyTypeDisplayed(2)"> ...</span></h3>
+                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(2)>1"  style="font-size: 1.1em;margin-top: 7px;">Featured Playlists<span ng-if ="!searchController.isOnlyTypeDisplayed(2)" style="font-size: 13px;"> ...</span></h3>
+                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(2)>1"  style="font-size: 1.1em;margin-top: 7px;">Playlists<span ng-if ="!searchController.isOnlyTypeDisplayed(2)" style="font-size: 13px;"> ...</span></h3>
+                <h3  ng-if ="searchController.showedPopulars&&searchController.getShowModeLimit(2)<=1"  style="font-size: 1.1em;margin-top: 7px;">Featured Playlist<span ng-if ="!searchController.isOnlyTypeDisplayed(2)" style="font-size: 13px;"> ...</span></h3>
+                <h3  ng-if ="!searchController.showedPopulars&&searchController.getShowModeLimit(2)<=1"  style="font-size: 1.1em;margin-top: 7px;">Playlist<span ng-if ="!searchController.isOnlyTypeDisplayed(2)"  style="font-size: 13px;"> ...</span></h3>
 
             </a>
         </li>
@@ -371,8 +371,8 @@
                 <img src="public/img/empty.png" onclick="optionsMenu.openSongResultsOptions(event,'#positionSongResultsOptions')"   class="optionsSearchResults"   >
                 <div id="positionSongResultsOptions" class="positionResultsOptions" ></div>
 
-                <h3  ng-if ="searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Popular Songs<span ng-if ="!searchController.isOnlyTypeDisplayed(1)"> ...</span></h3>
-                <h3  ng-if ="!searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Songs<span ng-if ="!searchController.isOnlyTypeDisplayed(1)">   ... </span></h3>
+                <h3  ng-if ="searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Popular Songs<span ng-if ="!searchController.isOnlyTypeDisplayed(1)" style="font-size: 13px;"> ...</span></h3>
+                <h3  ng-if ="!searchController.showedPopulars"  style="font-size: 1.1em;margin-top: 7px;">Songs<span ng-if ="!searchController.isOnlyTypeDisplayed(1)" style="font-size: 13px;">   ... </span></h3>
 
          </a></li>
 
@@ -396,7 +396,7 @@
                 <img src="public/img/empty.png" onclick="optionsMenu.openUserResultsOptions(event,'#positionUserResultsOptions')"   class="optionsSearchResults"   >
                 <div id="positionUserResultsOptions" class="positionResultsOptions" ></div>
 
-                <h3   style="font-size: 1.1em;margin-top: 7px;">Users<span ng-if ="!searchController.isOnlyTypeDisplayed(4)"> ...</span></h3>
+                <h3   style="font-size: 1.1em;margin-top: 7px;">Users<span ng-if ="!searchController.isOnlyTypeDisplayed(4)" style="font-size: 13px;"> ...</span></h3>
 
             </a></li>
 
@@ -958,7 +958,7 @@
 
 
 <div data-role="popup" id="popupImportInput"  data-dismissible="true" data-theme="a" class="ui-corner-all">
-    <!--a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a-->
+    <a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
 
     <div style="padding:0px 20px 10px 20px">
         <h3>Enter URL of webpage:</h3>

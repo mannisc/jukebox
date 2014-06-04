@@ -71,8 +71,14 @@ searchController.searchTypeUsers = 3;
 
 
 //Generated data
-if (generatedData && generatedData.charts)
+
+if (generatedData && generatedData.charts) {
+
     searchController.preloadedPopularSongs = {"track": generatedData.charts};
+    setTimeout(function(){
+        searchController.songs.cleanList(searchController.preloadedPopularSongs.track);
+    },0)
+}
 else
     searchController.preloadedPopularSongs = {"track": []}
 
@@ -255,7 +261,7 @@ searchController.activateButton = function (index, noAnimation) {
     switch (index) {
         case 0:
             $("#searchinput").val(searchController.searchSongsString);
-            $(input).insertAfter(button).find("input").attr("placeholder", "Search Songs, Playlists, Arists...");
+            $(input).insertAfter(button).find("input").attr("placeholder", "Search Songs and Playlists");
             break;
         /*case 1:
          $("#searchinput").val("");
@@ -661,34 +667,23 @@ searchController.songs.startSuggestionsSearchDeferred = function (artist, title)
 
 }
 
+searchController.formatNumber = function(x) {
+    if(x.indexOf(".")==-1)
+     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    else
+     return x
+}
 
-searchController.songs.completeSearch = function (localList, onlineList) {
-
-
-    //Is from last fm or native server -> so convert and extract songlist accordingly
-    if (onlineList.native) {
-        onlineList = onlineList.list;
-    } else {
-        if (onlineList.list.results && onlineList.list.results.trackmatches)
-            onlineList = onlineList.list.results.trackmatches.track;
-        else if (onlineList.list)
-            onlineList = onlineList.list.track;
-
-    }
-    if (!onlineList)
-        onlineList = [];
-
-    var songList = localList.concat(onlineList)
-
-    // console.dir("completeSearch##############################################################################");
-    // console.dir(songList);
-    //Set Artist of song and remove songs without name
+searchController.songs.cleanList = function(songList){
     for (var i = 0; i < songList.length; i++) {
         var song = songList[i];
         if (!song.name || song.name == "") {
             songList.splice(i, 1);
             i--;
         } else {
+
+            if(song.playcount)
+             song.playcount = searchController.formatNumber(song.playcount);
 
             if (song.artist) {
                 if (!song.artist.name) {
@@ -711,6 +706,33 @@ searchController.songs.completeSearch = function (localList, onlineList) {
             }
         }
     }
+}
+
+
+searchController.songs.completeSearch = function (localList, onlineList) {
+
+
+    //Is from last fm or native server -> so convert and extract songlist accordingly
+    if (onlineList.native) {
+        onlineList = onlineList.list;
+    } else {
+        if (onlineList.list.results && onlineList.list.results.trackmatches)
+            onlineList = onlineList.list.results.trackmatches.track;
+        else if (onlineList.list)
+            onlineList = onlineList.list.track;
+
+    }
+    if (!onlineList)
+        onlineList = [];
+
+    var songList = localList.concat(onlineList)
+
+    // console.dir("completeSearch##############################################################################");
+    // console.dir(songList);
+    //Set Artist of song and remove songs without name
+    searchController.songs.cleanList(songList)
+
+
 
     //Check if something changed
     var changedResults = false;
@@ -835,9 +857,10 @@ searchController.artists.startSearchDeferred = function (searchTerm) {
     var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=%searchTerm&limit=100&api_key="+searchController.lastfmapikey+"&format=json";
 
     $.when(
-            searchController.basicLocalSearchDeferred(searchTerm, searchController.searchTypeArtists),
-            searchController.basicOnlineSearchDeferred(onlineSearchURL, searchTerm, searchController.searchTypeArtists, true)
+            searchController.basicLocalSearchDeferred(searchTerm, searchController.searchTypeArtists)
+                        //searchController.basicOnlineSearchDeferred(onlineSearchURL, searchTerm, searchController.searchTypeArtists, true)
         ).then(function (localList, onlineList) {
+
 
             var artistList = searchController.artists.completeSearch(localList, onlineList)
             deferred.resolve(artistList);
@@ -848,12 +871,16 @@ searchController.artists.startSearchDeferred = function (searchTerm) {
 
 
 searchController.artists.completeSearch = function (localList, onlineList) {
+    if(!onlineList)
+        onlineList = [];
 
     //Is from last fm or native server -> so convert and extract songlist accordingly
     if (onlineList.native) {
         onlineList = onlineList.list;
-    } else
+    } else if(onlineList.list)
         onlineList = onlineList.list.results.artistmatches.artist;
+    else
+        onlineList  = [];
 
     var artistList = localList.concat(onlineList)
 
@@ -1294,8 +1321,12 @@ searchController.loadPlaylistTracks = function (playlist) {
     $.ajax({
         url: url,
         success: function (data) {
-            if(data.album&&data.album.tracks&&data.album.tracks.track)
-             playlist.tracks=data.album.tracks.track;
+            if(data.album&&data.album.tracks&&data.album.tracks.track){
+                searchController.songs.cleanList(data.album.tracks.track);
+                playlist.tracks=data.album.tracks.track;
+            }
+
+
 
             console.dir(playlist);
 
@@ -1539,7 +1570,7 @@ searchController.getShowModeLimit = function (type) {
                 if (uiController.gridLayout)
                     limit = uiController.gridLayoutCols;
                 else
-                    limit = 1;
+                    limit = 3;//TODO Change when other results available
                 break;
             case 3: //artists
 
