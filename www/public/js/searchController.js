@@ -424,6 +424,7 @@ searchController.showSimilarSongs = function (event) {
 
     var index = Math.round(Math.random() * (list.length - 1));
     var song = list[index];
+
     playlistController.deselectSongs();
     searchController.searchSimilarSongs(song);
 
@@ -498,6 +499,10 @@ searchController.completedSearch = function (songList, playlistList, artistsList
             searchController.artists.searchResults = artistsList;
         if (userList != null)//Something Changed
             searchController.users.searchResults = userList;
+
+        console.dir("songList!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        console.dir(songList);
+
 
 
         searchController.applySongList(searchController.currentSearchID);
