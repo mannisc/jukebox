@@ -443,6 +443,7 @@ input[type=button]{
 
 #controlbar input{
     overflow: visible!important;
+    text-shadow: none!important;
 
 }
 
@@ -1210,6 +1211,11 @@ a, button, h1, h2, h3{
 
 }
 
+#popupFeedback.ui-body-a{
+    background-image: url( ../img/bug.gif )!important;
+
+}
+
 .ui-popup.ui-body-a{
     background-color:rgba(0,0,0,0)!important;
 }
@@ -1458,15 +1464,20 @@ max-width: 2em!important;
    position:relative;
     margin-left: 5px;
     margin-right: 5px;
-   height:60px ;
+     height:75px ;
     text-align : center;
 
 }
+
 
 #popupSocial table{
 
   display: inline-block;
 
+}
+
+#popupSocial td{
+    height: 30px;
 }
 
 

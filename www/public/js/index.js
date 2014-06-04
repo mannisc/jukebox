@@ -257,7 +257,7 @@ feedback.initFeedback = function(){
 
     $("#popupFeedback").popup({
         beforeposition: function (event, ui) {
-            $('#popupFeedback textarea').val("\n\n"+"Used Browser: "+navigator.userAgent)
+            $('#popupFeedback textarea').val("")
         },
         afteropen: function (event, ui) {
             $('#popupFeedback textarea').focus();
@@ -269,7 +269,7 @@ feedback.initFeedback = function(){
 feedback.sendFeedback = function(){
 
     if($.trim($('#popupFeedback textarea').val())!="") {
-        var feedback = escape($('#popupFeedback textarea').val());
+        var feedback = escape($('#popupFeedback textarea').val()+"\n\n"+"Browser: "+navigator.userAgent);
         $("#popupFeedback").popup("close");
 
         feedback = rsaController.rsa.encryptUnlimited(feedback);
