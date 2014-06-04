@@ -751,7 +751,7 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
     uiController.swipeTimer = Date.now(); //Avoid Clicks
     setTimeout(function () {
 
-        var listElement = playbackController.getListElementFromSong(playbackController.playingSong);
+        var listElement = playbackController.getListElementFromElement(playbackController.playingSong);
 
         if (listElement.length==0||(listElement.length>0&&listElement.hasClass("loadedsong"))) {
             uiController.dontRemark = true;
@@ -978,6 +978,8 @@ mediaController.getSongCover = function (song, lowQuality) {
 }
 
 
+
+
 mediaController.getSongDisplayName = function (song) {
     if (!song)
         return mediaController.unknownData;
@@ -993,6 +995,21 @@ mediaController.getSongDisplayName = function (song) {
             return artist + " - " + song.name;
         else
             return artist + " - " + mediaController.unknownData;
+
+    }
+
+}
+
+/**
+ * Returns Title for Element, used in List to identify elemenet
+ * @param element
+ * @returns {string}
+ */
+mediaController.getElementTitle = function(element) {
+    if(element.isPlaylist){
+       return "Playlist: "+ element.name+" - "+element.artist.name
+    } else{
+       return "Song: "+ element.name+" - "+element.artist.name
 
     }
 
