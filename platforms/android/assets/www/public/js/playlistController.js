@@ -857,6 +857,11 @@ playlistController.insertSongsIntoQueue = function (songs) {
 
     playlistController.currentQueue.tracks = tmp.concat(playlistController.currentQueue.tracks.slice(playbackController.playingSongIndex + 1));
 
+    for (var j =  playbackController.playingSongIndex; j <  playbackController.playingSongIndex+ songs.length&&j<playlistController.currentQueue.tracks.length; j++) {
+        if(!playlistController.currentQueue.tracks[j].image){
+            setTimeout(mediaController.loadPreview(playlistController.currentQueue.tracks[j]), j*300);
+        }
+    }
 
     if (playlistController.loadedPlaylists["0"]) {
         if (Object.keys(playlistController.loadedPlaylists).length == 1) {
@@ -927,7 +932,17 @@ playlistController.addSelectedElementsToPlaylist = function (positionTo) {
 playlistController.addSongsToPlaylist = function (playlist, songs) {
 
     playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlist, songs);
+    var oldLength =   playlist.tracks.length;
     playlist.tracks = playlist.tracks.concat(songs);
+
+
+    for (var j =  oldLength; j<playlist.tracks.length; j++) {
+        if(!playlist.tracks[j].image){
+            setTimeout(mediaController.loadPreview(playlist.tracks[j]), j*300);
+        }
+    }
+
+
 
     setTimeout(function () {
         accountController.savePlaylist(playlist.gid,playlist.name,playlist.tracks);

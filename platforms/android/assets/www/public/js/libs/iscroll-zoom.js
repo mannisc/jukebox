@@ -330,6 +330,8 @@ IScroll.prototype = {
 	version: '5.1.1',
 
 	_init: function () {
+
+
 		this._initEvents();
 
 		if ( this.options.zoom ) {
@@ -1310,7 +1312,12 @@ IScroll.prototype = {
 			newY = this.maxScrollY;
 		}
 
-		this.scrollTo(newX, newY, 500); //CHANGED from    this.scrollTo(newX, newY, 0);
+        if(!IScrollinitTimer||Date.now()- IScrollinitTimer< 10000)
+            var   scrolltime = 0;
+        else
+         scrolltime = 500;
+
+        this.scrollTo(newX, newY, scrolltime); //CHANGED from    this.scrollTo(newX, newY, 0);
 
 // INSERT POINT: _wheel
 	},

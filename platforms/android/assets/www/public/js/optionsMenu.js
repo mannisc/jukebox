@@ -31,24 +31,24 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
             optionsMenu.closePopup();
             setTimeout(function () {
                 var playlist = playlistController.getLoadedPlaylist();
-                if(playlist&&playlist.tracks.length>0)
-                 playlistController.playSongList(playlist.tracks);
+                if (playlist && playlist.tracks.length > 0)
+                    playlistController.playSongList(playlist.tracks);
             }, 150)
         }},
         {text: "Play next", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
                 var playlist = playlistController.getLoadedPlaylist();
-                if(playlist&&playlist.tracks.length>0)
-                 playlistController.playSongListNext(playlist.tracks);
+                if (playlist && playlist.tracks.length > 0)
+                    playlistController.playSongListNext(playlist.tracks);
             }, 150)
         }},
         {text: "Add to Playlist", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
                 var playlist = playlistController.getLoadedPlaylist();
-                if(playlist&&playlist.tracks.length>0)
-                playlistController.addSongListElementsToPlaylist(positionTo , playlist.tracks,"r");
+                if (playlist && playlist.tracks.length > 0)
+                    playlistController.addSongListElementsToPlaylist(positionTo, playlist.tracks, "r");
 
             }, 150)
         }},
@@ -56,7 +56,7 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
             optionsMenu.closePopup();
             $("#popupOptions").popup({
                 afterclose: function () {
-                    $("#popupOptions").popup({afterclose:null});
+                    $("#popupOptions").popup({afterclose: null});
                     setTimeout(function () {
                         $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
                     }, 100)
@@ -89,14 +89,14 @@ optionsMenu.openQueueOptions = function (event, positionTo) {
         {text: "Save as Playlist", callback: function () {
             optionsMenu.closePopup();
 
-            var playlist = playlistController.loadedPlaylistSongs||[];
+            var playlist = playlistController.loadedPlaylistSongs || [];
             setTimeout(function () {
-                if(playlist&&playlist.length>0)
-                    playlistController.loadNewPlaylistWithSongs(playlist.slice(0,searchController.maxResults))
+                if (playlist && playlist.length > 0)
+                    playlistController.loadNewPlaylistWithSongs(playlist.slice(0, searchController.maxResults))
             }, 150)
 
         }},
-        {text: "Clear Queue", callback:  function () {
+        {text: "Clear Queue", callback: function () {
             optionsMenu.closePopup();
             playlistController.clearQueue();
         }}
@@ -216,7 +216,7 @@ optionsMenu.openPlayListSelectionPlaylistOptions = function (event, positionTo) 
 
                 $("#popupOptions").popup({
                     afterclose: function () {
-                        $("#popupOptions").popup({afterclose:null});
+                        $("#popupOptions").popup({afterclose: null});
                         setTimeout(function () {
                             $("#popupTextInput").popup('open', {positionTo: "window", transition: 'pop'});
                         }, 100)
@@ -226,7 +226,7 @@ optionsMenu.openPlayListSelectionPlaylistOptions = function (event, positionTo) 
                 optionsMenu.closePopup();
                 playlistController.editedPlaylistTitle = "Rename Playlist";
 
-                playlistController.editedPlaylist = jQuery.extend(true, {},playlistController.selectedSongs[0].song);
+                playlistController.editedPlaylist = jQuery.extend(true, {}, playlistController.selectedSongs[0].song);
                 $scope.safeApply();
 
 
@@ -288,7 +288,7 @@ optionsMenu.openPlayListSelectionSongOptions = function (event, positionTo) {
 /**
  * Open Dialog to choose playlist
  */
-optionsMenu.openChoosePlaylist = function (positionTo, listToAdd,arrowDirection) {
+optionsMenu.openChoosePlaylist = function (positionTo, listToAdd, arrowDirection) {
 
     if (event)
         event.stopPropagation();
@@ -326,10 +326,10 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd,arrowDirection)
     $("#popupOptionsList").listview("refresh");
     $("#popupOptions").popup("option", "arrow", arrowDirection);
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
-    if(arrowDirection=="r")
+    if (arrowDirection == "r")
         $("#popupOptions-popup").css("margin-top", "3px").css("margin-left", "-10px");
     else
-    $("#popupOptions-popup").css("margin-top", "").css("margin-left", "18px");
+        $("#popupOptions-popup").css("margin-top", "").css("margin-left", "18px");
 
 }
 
@@ -341,7 +341,7 @@ optionsMenu.openArtistResultsOptions = function (event, positionTo) {
         event.stopPropagation();
 
     optionsMenu.options = [
-        {text: "Play Artists Songs", callback: null} ,
+        {text: "Play", callback: null} ,
         {text: "Add Songs to Playlist", callback: null},
         {text: "Create new Playlist", callback: null}
 
@@ -362,13 +362,77 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
         event.stopPropagation();
 
     optionsMenu.options = [
-        {text: "Play Playlist Songs", callback: null} ,
-        {text: "Add Playlists to Play Queue", callback: null},
-        {text: "Add to own Playlist", callback: null},
-        {text: "Add as new Playlist", callback: null},
+        {text: "Play", callback: function () {
+            optionsMenu.closePopup();
+            if (searchController.playlists.searchResults && searchController.playlists.searchResults.length > 0) {
+                setTimeout(function () {
+                    $.mobile.loading("show");
+                    var playlists = searchController.playlists.searchResults.concat();
+                    var addPlaylist = function (playlists, index, playlistLength) {
+                        if (index > 0 && playlists[index - 1] && playlists[index - 1].tracks && playlists[index - 1].tracks.length) {
+                            playlistLength = playlistLength + playlists[index - 1].tracks.length;
+                            if (playlistLength > 0) {
+                                if (index == 1)
+                                    playlistController.playSongList(playlists[index - 1].tracks.concat());
+                                else
+                                    playlistController.playSongListNext(playlists[index - 1].tracks.concat());
+                            }
+                        }
+                        if (index < playlists.length && playlistLength < searchController.maxResults * 2) {
+                            searchController.loadPlaylistTracks(playlists[index], function () {
+                                addPlaylist(playlists, index + 1, playlistLength);
+                            }, false)
+                        } else {
+                            $.mobile.loading("hide");
+                        }
+                    }
+                    addPlaylist(playlists, 0, 0)
+                }, 150)
+            }
+
+        }} ,
+        {text: "Play next", callback: function () {
+            optionsMenu.closePopup();
+            if (searchController.playlists.searchResults && searchController.playlists.searchResults.length > 0) {
+                setTimeout(function () {
+                    $.mobile.loading("show");
+                    var playlists = searchController.playlists.searchResults.concat();
+                    var addPlaylist = function (playlists, index, playlistLength) {
+                        if (index > 0 && playlists[index - 1] && playlists[index - 1].tracks && playlists[index - 1].tracks.length) {
+                            playlistLength = playlistLength + playlists[index - 1].tracks.length;
+                            if (playlistLength > 0) {
+                                playlistController.addSongsToPlaylist (playlistController.currentQueue,playlists[index - 1].tracks.concat());
+                            }
+                        }
+                        if (index < playlists.length && playlistLength < searchController.maxResults * 2) {
+                            searchController.loadPlaylistTracks(playlists[index], function () {
+                                addPlaylist(playlists, index + 1, playlistLength);
+                            }, false)
+                        } else {
+                            $.mobile.loading("hide");
+                        }
+                    }
+                    addPlaylist(playlists, 0, 0)
+                }, 150)
+            }
+
+        }} ,
+        {text: "Add to Playlist", callback: null},
+        {text: "Create new Playlist", callback: null},
         {text: "Select All", callback: null}
 
     ]
+
+
+    //More Results can be displayed
+    if (!searchController.isOnlyTypeDisplayed(2)) {
+        optionsMenu.options.unshift({text: "Show all results", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                searchController.setShowMode(2)
+            }, 150)
+        }})
+    }
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");
@@ -396,33 +460,33 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
             optionsMenu.closePopup();
             setTimeout(function () {
                 var playlist = searchController.songs.searchResults;
-                if(playlist&&playlist.length>0)
-                    playlistController.playSongList(playlist.slice(0,searchController.maxResults));
+                if (playlist && playlist.length > 0)
+                    playlistController.playSongList(playlist.slice(0, searchController.maxResults));
             }, 150)
         }} ,
         {text: "Play next", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
                 var playlist = searchController.songs.searchResults;
-                if(playlist&&playlist.length>0)
-                    playlistController.playSongListNext(playlist.slice(0,searchController.maxResults));
+                if (playlist && playlist.length > 0)
+                    playlistController.playSongListNext(playlist.slice(0, searchController.maxResults));
             }, 150)
         }},
-        {text: "Add to Playlist", callback: function(){
+        {text: "Add to Playlist", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
                 var playlist = searchController.songs.searchResults;
-                if(playlist&&playlist.length>0)
-                    playlistController.addSongListElementsToPlaylist(positionTo , playlist.slice(0,searchController.maxResults),"l");
+                if (playlist && playlist.length > 0)
+                    playlistController.addSongListElementsToPlaylist(positionTo, playlist.slice(0, searchController.maxResults), "l");
 
             }, 150)
         }},
-        {text: "Create new Playlist", callback:  function () {
+        {text: "Create new Playlist", callback: function () {
             optionsMenu.closePopup();
-            var playlist = searchController.songs.searchResults||[];
+            var playlist = searchController.songs.searchResults || [];
             setTimeout(function () {
-                if(playlist&&playlist.length>0)
-                  playlistController.loadNewPlaylistWithSongs(playlist.slice(0,searchController.maxResults))
+                if (playlist && playlist.length > 0)
+                    playlistController.loadNewPlaylistWithSongs(playlist.slice(0, searchController.maxResults))
             }, 150)
         }}
         //,{text: "Select All", callback: null}
@@ -432,7 +496,12 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
 
     //More Results can be displayed
     if (!searchController.isOnlyTypeDisplayed(1)) {
-        optionsMenu.options.unshift({text: "Show all results", callback: null})
+        optionsMenu.options.unshift({text: "Show all results", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                searchController.setShowMode(1)
+            }, 150)
+        }})
     }
 
 
