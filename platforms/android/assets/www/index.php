@@ -281,7 +281,7 @@
 
             </a></li>
 
-        <li ng-if ="searchController.showMode==5" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.showedPlaylist.tracks track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li ng-if ="searchController.showMode==5" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.showedPlaylist.tracks track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(song)}}"  class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -308,7 +308,7 @@
             </a>
         </li>
         
-        <li  ng-if ="searchController.isVisisbleInShowMode(3)" context-menu-DISABLED ="playlistController.selectSong(artist)" ng-repeat="artist in searchController.artists.searchResults  | limitTo:searchController.getShowModeLimit(3)  track by $index " data-artist="{{artist}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-songtitle ="{{artist.name}}-{{mediaController.getSongArtist(artist)}}"   class="fadeincompletefast othertopheight"  ng-click="playbackController.clickedElement($event,artist);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li  ng-if ="searchController.isVisisbleInShowMode(3)" context-menu-DISABLED ="playlistController.selectSong(artist)" ng-repeat="artist in searchController.artists.searchResults  | limitTo:searchController.getShowModeLimit(3)  track by $index " data-artist="{{artist}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(artist)}}"   class="fadeincompletefast othertopheight"  ng-click="playbackController.clickedElement($event,artist);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getImage(artist)+')','background-size':'100%'}"  alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
 
@@ -338,18 +338,17 @@
             </a>
         </li>
         
-        <li  ng-if ="searchController.isVisisbleInShowMode(2)" context-menu-DISABLED ="playlistController.selectSong(playlist)" ng-repeat="playlist in searchController.playlists.searchResults | limitTo:searchController.getShowModeLimit(2)  track by $index " data-playlist="{{playlist}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"    class="fadeincompletefast othertopheight draggableSong"  ng-click="playbackController.clickedElement($event,playlist);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li  ng-if ="searchController.isVisisbleInShowMode(2)" context-menu-DISABLED ="playlistController.selectSong(playlist)" ng-repeat="playlist in searchController.playlists.searchResults | limitTo:searchController.getShowModeLimit(2)  track by $index " data-playlist="{{playlist}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(playlist)}}"  class="fadeincompletefast othertopheight draggableSong hoverable"  ng-click="playbackController.clickedElement($event,playlist);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
 
             <img src="public/img/empty.png"   ng-style="{'background-image':'url(public/img/empty.png)','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
-
-
-            <img src="public/img/empty.png"    class="loadingSongImg"   >
 
             <div class="playlistCoverSong" >
                 <img src="public/img/empty.png" class="coverSong1 coverSong" style="background-image:url({{mediaController.getImage(playlist)}})">
                 <img src="public/img/black.png" class="coverSong2 coverSong" style="background-image:url(public/img/playlist.png)">
                 <img src="public/img/black.png" class="coverSong3 coverSong" style="background-image:url(public/img/playlist.png)">
             </div>
+
+            <img src="public/img/empty.png"    class="loadingSongImg"   >
 
             <img ng-if ="playlistController.hasTrendStyle(0,playlist)" src="public/img/empty.png" class="songWinner songTrend" >
             <img ng-if ="playlistController.hasTrendStyle(1,playlist)" src="public/img/emtpy.png" class="songNochange songTrend" >
@@ -376,7 +375,7 @@
 
          </a></li>
 
-        <li ng-if ="searchController.isVisisbleInShowMode(1)&&!song.tmpHide" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.songs.searchResults | limitTo:searchController.getShowModeLimit(1) track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li ng-if ="searchController.isVisisbleInShowMode(1)&&!song.tmpHide" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.songs.searchResults | limitTo:searchController.getShowModeLimit(1) track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -412,7 +411,7 @@
 
             <h3 ng-class="playlistController.getTrendTitleClass(user)" title="{{user.name}}">{{user.name}}</h3>
 
-            <p>{{mediaController.getSongArtist(user)}}<span ng-if ="user.playcount !== undefined && user.playcount" class="songPlayCount"><span  style="font-style: normal;font-size: .83em;margin-left:2px;"> ►</span><span  style="font-style: italic;font-size: .93em;margin-left:2px;">{{user.playcount}}</span></span>  </p></a>
+            <p>{{mediaController.getSongArtist(user)}}<span ng-if ="user.playcount !== undefined && user.playcount" class="songPlayCount"><span  style="font-style: normal;font-size: .83em;margin-left:2px;"> ?</span><span  style="font-style: italic;font-size: .93em;margin-left:2px;">{{user.playcount}}</span></span>  </p></a>
         </li>
 
 
@@ -553,7 +552,7 @@
 
             </a></li>
 
-            <li ng-repeat="song in playlistController.loadedPlaylistSongs | limitTo: playlistController.getDisplayLimit()  track by song.gid" context-menu-DISABLED ="playlistController.selectSong(song)" ng-if ="!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}"  data-song="{{song}}" data-songid="playlistsong{{song.id}}" data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
+            <li ng-repeat="song in playlistController.loadedPlaylistSongs | limitTo: playlistController.getDisplayLimit()  track by song.gid" context-menu-DISABLED ="playlistController.selectSong(song)" ng-if ="!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}"  data-song="{{song}}" data-songid="playlistsong{{song.id}}" data-elementtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
                 ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1">
 
                 <img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""   class="ui-li-icon ui-corner-none"  >
@@ -827,7 +826,7 @@
 
 
 <div data-role="popup" id="popupAccount" data-arrow="true" data-theme="a" class="ui-corner-all">
-    <form>
+    <!--<form>-->
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Account</h3>
             <ul data-role="listview">
@@ -839,6 +838,29 @@
                     <a href="#" data-rel="back" id="manageFacebook"><img src="public/img/fb.png" width="28px" >Facebook</a></li>
                   <li style="border-bottom:1px solid #ddd;;display:none">
                     <a href="#" data-rel="back" id="manageDropbox"><img src="public/img/dropbox.png" width="28px" >Dropbox</a></li>
+
+
+
+
+                <li style="border-bottom:1px solid #ddd;min-height:25px;margin-top:10px;padding-top: 0;padding-bottom: 2px;padding-left: 13px;">
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <div style="float:left;font-size: 14px!important;">
+                           <img src="public/img/paypal.png" width="28px" >
+                        </div>
+                        <div style="float:left;font-size: 14px!important;margin-top:3px;margin-left:10px;">
+                            Support us:
+                        </div>
+                        <div style=" text-align: right;margin-top:9px">
+                            <input type="hidden" name="cmd" value="_s-xclick">
+                            <input type="hidden" name="hosted_button_id" value="UVQ7RE3L8GWG8">
+                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                            <img alt="Please Support us!" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+                        </div>
+                    </form>
+
+
+                </li>
+
                 <!--li style="border-top:15px solid rgba(255,255,255,0);"><a href="#" onclick="accountController.logout();" id="logoutlink" data-rel="back"><img src="public/img/logout.png">Log out</a></li-->
 
             </ul>
@@ -847,7 +869,7 @@
             <button onclick="accountController.logout();"  id="signoutButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-forward">Log out</button>
 
         </div>
-    </form>
+    <!--</form>-->
 </div>
 
 
@@ -855,7 +877,7 @@
 
 <div data-role="popup" id="popupEditAccount" data-theme="a" class="ui-corner-all"  >
     <!--a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a-->
-    <img width="40px" style="position:absolute;top:15px;left:33px" src="public/img/logoblack.png">
+    <img width="40px" style="position:absolute;top:16px;left:33px" src="public/img/logoblack.png">
     <div style="padding:0px 20px 10px 20px">
         <h3 style="margin-left: 60px;text-align: left;" id="edittitle">Edit Account</h3>
         <label for="registerusername" class="ui-hidden-accessible">Username:</label>
