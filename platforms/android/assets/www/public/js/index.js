@@ -109,14 +109,18 @@ var readyStateCheckInterval = setInterval(function() {
 }, 100);
 
 
+IScrollinitTimer = 0;
+
 $(document).ready(function () {
 
 
      //FEEDBACK
     feedback.initFeedback();
 
-
-
+    //Enable smooth sscrolling after this time
+    setTimeout(function(){
+      IScrollinitTimer = Date.now()//CHANGED
+    },1000)
 
     // setTimeout(function(){
        // $.mobile.loading("show");

@@ -855,7 +855,7 @@
 
 <div data-role="popup" id="popupEditAccount" data-theme="a" class="ui-corner-all"  >
     <!--a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a-->
-    <img width="40px" style="position:absolute;top:15px;left:33px" src="public/img/logoblack.png">
+    <img width="40px" style="position:absolute;top:16px;left:33px" src="public/img/logoblack.png">
     <div style="padding:0px 20px 10px 20px">
         <h3 style="margin-left: 60px;text-align: left;" id="edittitle">Edit Account</h3>
         <label for="registerusername" class="ui-hidden-accessible">Username:</label>
