@@ -87,19 +87,22 @@ authController.getToken = function (){
  * @returns {boolean}
  */
 authController.ensureAuthenticated = function(data,ajaxFunction){
+    if(data){
+        if (data.auth){
+            if(data.auth == "true") {
+                authController.extractToken(data.token);
+                if(ajaxFunction)
+                    ajaxFunction()
+                return false;
+            }
+            else
+                return false;
 
-    if (data.auth){
-        if(data.auth == "true") {
-            authController.extractToken(data.token);
-            if(ajaxFunction)
-                ajaxFunction()
-            return false;
         }
         else
-         return true;
+            return true;
     }
-    else
-        return true
+    return true;
 
 }
 
