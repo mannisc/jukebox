@@ -450,7 +450,7 @@ videoController.init = function () {
         $("#videocontrolsInner").css("opacity", "1");
         $("#videocontrolsInner").addClass("fadeincomplete");
         $("#videocontrolsInner").show();
-    }, 0);
+    }, 1000);
     $("#videocontrols").css("background", "none");
 
 

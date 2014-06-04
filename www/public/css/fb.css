@@ -110,23 +110,25 @@ background:none!important;
 .fblikeartistartist{
     left: 144px;
 }
-
+/*
 .ui-popup .fb_iframe_widget > span {
-    margin-bottom: -27px;
+   margin-bottom: -27px;
 }
+
 
 .ui-popup .fb_iframe_widget iframe {
-    width: 190px;
-    min-height: 105px;
-    top: -27px;
+   width: 190px;
+   min-height: 105px;
+   top: -27px;
 }
+
 
 .ui-popup .fb_iframe_widget > span {
 
-    width: 190px;
-    min-height: 105px;
+   width: 190px;
+   min-height: 105px;
 }
-
+ */
 #popupAccount .fb_iframe_widget iframe {
     top: -2px;
     left: 10px;

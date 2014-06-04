@@ -489,7 +489,8 @@ accountController.openEditAccountPopup = function () {
         $("#editpw").val(accountController.defaultPassword);
         $("#editpwc").val(accountController.defaultPassword);
 
-        $("#popupEditAccount").popup("open");
+
+        $("#popupEditAccount").popup("open",{transition: 'pop'});
     }, 900);
 }
 
@@ -500,7 +501,7 @@ accountController.saveAccount = function () {
 
     if (authController.ip_token != "auth" && authController.ip_token != "") {
 
-        var send = function ( nameEncrypted, oldNameEncrypted, emailEncrypted, pwEncrypted) {
+        var send = function (nameEncrypted, oldNameEncrypted, emailEncrypted, pwEncrypted) {
 
 
             var data = "?editaccount=" + oldNameEncrypted + "&name=" + nameEncrypted + "&email=" + emailEncrypted + "&auth=" + authController.ip_token;
@@ -508,33 +509,39 @@ accountController.saveAccount = function () {
                 data = data + "&pw=" + pwEncrypted
             }
 
-           // alert(data)
+            // alert(data)
 
             $.ajax({
                 timeout: 30000,
                 url: preferences.serverURL + data,
                 success: function (data) {
                     if (authController.ensureAuthenticated(data, function () {
-                        send( nameEncrypted, emailEncrypted, pwEncrypted);
+                        send(nameEncrypted, emailEncrypted, pwEncrypted);
                     })) {
+                        if (data == "userexists") {
 
-                        if (data != "") {
-
-                            if(data=="ok"){
-                                accountController.userName = newusername;
-                                accountController.userEmail = newemail;
-                                $scope.safeApply();
-                                $("#popupEditAccount").popup("close");
-
-                            }
-
+                            $("#editusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            $("#editusernamealreadyexists").show();
                         }
                         else {
-                            $("#registerpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
-                            $("#registerpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
-                            $("#registeruser").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
-                            $("#registerusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            if (data != "") {
 
+                                if (data == "ok") {
+                                    accountController.userName = newusername;
+                                    accountController.userEmail = newemail;
+                                    $scope.safeApply();
+                                    $("#popupEditAccount").popup("close");
+
+                                }
+
+                            }
+                            else {
+                                $("#editusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                                $("#editpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                                $("#editpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                                $("#editemail").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+
+                            }
                         }
                     }
                 },
@@ -564,7 +571,7 @@ accountController.saveAccount = function () {
             var newusername = username;
             var newemail = email;
 
-            send( rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(oldusername), rsaController.rsa.encrypt(email), pwEncrypted);
+            send(rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(oldusername), rsaController.rsa.encrypt(email), pwEncrypted);
         }
 
 
@@ -579,6 +586,8 @@ accountController.resetEditAccountData = function () {
     $("#editemail").css("background-color", "").css("color", "");
     $("#editpw").css("background-color", "").css("color", "");
     $("#editpwc").css("background-color", "").css("color", "");
+    $("#editusernamealreadyexists").hide();
+
 }
 /**
  * Validate Edit Account Data
@@ -649,6 +658,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
             console.dir("LOGIN DATA:")
             console.dir(data)
 
+
             if (data) {
                 var usertoken = data.token;
                 accountController.userEmail = data.email;
@@ -657,6 +667,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
             if (authController.ensureAuthenticated(usertoken, function () {
                 accountController.singInBase(name, pw, nameEncrypted, emailEncrypted, pwEncrypted, useridEncrypted, externalAccountIdentifier);
             })) {
+
                 if (usertoken != "" && usertoken) {
                     if (externalAccountIdentifier == 1) {
                         accountController.setCookie("fbLogin", Base64.encode("true"), 1);
@@ -710,6 +721,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                         $.mobile.loading("hide");
                     }, 800);
                 }
+
             }
         },
         error: function () {
@@ -812,51 +824,60 @@ accountController.register = function () {
                     if (authController.ensureAuthenticated(data, function () {
                         send(name, pw, nameEncrypted, emailEncrypted, pwEncrypted);
                     })) {
-                        if (data != "") {
-                            accountController.loggedIn = true;
-                            var md5pw = MD5($.trim(pw));
-                            accountController.loginToken = MD5(data + md5pw);
-                            // alert(email)
-                            accountController.setUserData(name, email);
-                            accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
-                            accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
-                            accountController.setCookie("userEmail", Base64.encode(email), 1);
+                        if (data == "userexists") {
 
-
-                            for (var i = 0; i < playlistController.playlists.length; i++) {
-                                accountController.savePlaylist(playlistController.playlists[i].gid, playlistController.playlists[i].name, playlistController.playlists[i].tracks);
-                            }
-                            accountController.savePlaylistsPosition();
-
-                            accountController.requestid = 1;
-
-
-                            $("#popupRegister").popup("close");
-                            $(".ui-popup-screen.in").click();
-
-                            $scope.safeApply();//Nötig!
-                            setTimeout(function () {
-
-                                $("#registerpw").val("");
-                                $("#registerpwc").val("");
-                                $("#registeruser").val("");
-                                $("#registerusername").val("");
-                                var btn = $('#header .ui-btn.animated').removeClass("animated");
-
-
-                                setTimeout(function () {
-                                    btn.addClass("animated");
-                                }, 500)
-                            }, 500)
-
-
+                            $("#registerusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                            $("#registerusernamealreadyexists").show();
+                            $.mobile.loading("hide");
                         }
                         else {
-                            $("#registerpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
-                            $("#registerpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
-                            $("#registeruser").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
-                            $("#registerusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
 
+                            if (data != "") {
+                                accountController.loggedIn = true;
+                                var md5pw = MD5($.trim(pw));
+                                accountController.loginToken = MD5(data + md5pw);
+                                // alert(email)
+                                accountController.setUserData(name, email);
+                                accountController.setCookie("loginToken", Base64.encode(accountController.loginToken), 1);
+                                accountController.setCookie("userName", Base64.encode(accountController.userName), 1);
+                                accountController.setCookie("userEmail", Base64.encode(email), 1);
+
+
+                                for (var i = 0; i < playlistController.playlists.length; i++) {
+                                    accountController.savePlaylist(playlistController.playlists[i].gid, playlistController.playlists[i].name, playlistController.playlists[i].tracks);
+                                }
+                                accountController.savePlaylistsPosition();
+
+                                accountController.requestid = 1;
+
+
+                                $("#popupRegister").popup("close");
+                                $(".ui-popup-screen.in").click();
+
+                                $scope.safeApply();//Nötig!
+                                setTimeout(function () {
+
+                                    $("#registerpw").val("");
+                                    $("#registerpwc").val("");
+                                    $("#registeruser").val("");
+                                    $("#registerusername").val("");
+                                    var btn = $('#header .ui-btn.animated').removeClass("animated");
+
+
+                                    setTimeout(function () {
+                                        btn.addClass("animated");
+                                    }, 500)
+                                }, 500)
+
+
+                            }
+                            else {
+                                $("#registerpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                                $("#registerpwc").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                                $("#registeruser").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+                                $("#registerusername").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
+
+                            }
                         }
                     }
                 },
@@ -895,6 +916,8 @@ accountController.resetRegisterData = function () {
     $("#registerpwc").css("background-color", "").css("color", "");
     $("#registeruser").css("background-color", "").css("color", "");
     $("#registerusername").css("background-color", "").css("color", "");
+    $("#registerusernamealreadyexists").hide();
+
 }
 accountController.validateRegisterData = function () {
     var failed = false;
