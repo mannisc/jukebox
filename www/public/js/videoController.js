@@ -691,6 +691,17 @@ videoController.toggleBrowserFullScreen = function () {
 
     var element = document.getElementById("page");
 
+
+
+    console.dir("FULLSCREEEN!!!!");
+    console.dir(document.webkitIsFullScreen);
+    console.dir( element.webkitRequestFullScreen);
+    console.dir();
+
+
+    document.documentElement.webkitRequestFullScreen();
+
+
     if (element.requestFullScreen) {
 
         if (!document.fullScreen) {
@@ -708,6 +719,8 @@ videoController.toggleBrowserFullScreen = function () {
         }
 
     } else if (element.webkitRequestFullScreen) {
+
+
 
         if (!document.webkitIsFullScreen) {
             element.webkitRequestFullScreen();
