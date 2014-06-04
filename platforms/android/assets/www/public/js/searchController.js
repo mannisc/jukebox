@@ -339,6 +339,11 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
                         list = data.track;
                     }
 
+                    //Load Covers
+                    for (var j = 0; j <  data.track.length; j++) {
+                          setTimeout(mediaController.loadPreview(data.track[j]), j*300);
+                    }
+
                     deferred.resolve({list: list, native: true});
 
                 }
@@ -1303,8 +1308,24 @@ searchController.showPlaylist = function (playlist) {
     $("#searchlistview").hide();
     $("#searchlist .iScrollIndicator").hide();
     $("#searchlist .iScrollScrollUpIndicator").hide();
+
+    var callbackComplete = function(){
+        $scope.safeApply();
+        setTimeout(function () {
+            $("#searchlistview").listview('refresh');
+            searchController.makeSearchListDraggable();
+            $("#searchlistview").show();
+        }, 150);
+        setTimeout(function () {
+            uiController.searchListScroll.refresh();
+        }, 150)
+        setTimeout(function () {
+            uiController.searchListScroll.refresh();
+        }, 1000)
+    }
+
     setTimeout(function () {
-     searchController.loadPlaylistTracks(playlist);
+     searchController.loadPlaylistTracks(playlist,callbackComplete,true);
     }, 0);
 
 }
@@ -1313,7 +1334,7 @@ searchController.showPlaylist = function (playlist) {
 /**
  * Load Tracks of Playlist from last.fm
  */
-searchController.loadPlaylistTracks = function (playlist) {
+searchController.loadPlaylistTracks = function (playlist,completeCallback, loadPreviews) {
 
 
     var url = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key="+searchController.lastfmapikey+"&artist="+playlist.artist.name+"&album="+playlist.name+"&format=json";
@@ -1326,13 +1347,16 @@ searchController.loadPlaylistTracks = function (playlist) {
                 searchController.songs.cleanList(data.album.tracks.track);
 
                 playlist.tracks=data.album.tracks.track;
-                if(playlist.tracks.length){
+                if(playlist.tracks.length&&loadPreviews){
                     for (var j = 0; j <  playlist.tracks.length; j++) {
+
                         if(!playlist.tracks[j].image){
                             setTimeout(mediaController.loadPreview(playlist.tracks[j]), j*300);
                         }
+
                     }
                 }
+
                 console.dir(playlist);
             }
 
@@ -1343,19 +1367,10 @@ searchController.loadPlaylistTracks = function (playlist) {
 
         },
         complete: function(){
-            $scope.safeApply();
+            if(completeCallback)
+                completeCallback();
 
-            setTimeout(function () {
-                $("#searchlistview").listview('refresh');
-                searchController.makeSearchListDraggable();
-                $("#searchlistview").show();
-            }, 150);
-            setTimeout(function () {
-                uiController.searchListScroll.refresh();
-            }, 150)
-            setTimeout(function () {
-                uiController.searchListScroll.refresh();
-            }, 1000)
+
         }
 
     })
