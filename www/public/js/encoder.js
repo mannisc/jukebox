@@ -11,6 +11,8 @@ var Base64 = {
 
 // public method for encoding
     encode : function (input) {
+        if(!input)
+            return input;
         var output = "";
         var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
         var i = 0;
@@ -45,6 +47,8 @@ var Base64 = {
 
 // public method for decoding
     decode : function (input) {
+        if(!input)
+            return input;
         var output = "";
         var chr1, chr2, chr3;
         var enc1, enc2, enc3, enc4;
@@ -82,6 +86,8 @@ var Base64 = {
 
 // private method for UTF-8 encoding
     _utf8_encode : function (string) {
+        if(!string)
+         return string;
         string = string.replace(/\r\n/g,"\n");
         var utftext = "";
 
@@ -109,6 +115,8 @@ var Base64 = {
 
 // private method for UTF-8 decoding
     _utf8_decode : function (utftext) {
+        if(!utftext)
+            return utftext;
         var string = "";
         var i = 0;
         var c = c1 = c2 = 0;
@@ -141,6 +149,8 @@ var Base64 = {
 }
 
 var MD5 = function (string) {
+    if(!string)
+        return string;
     function RotateLeft(lValue, iShiftBits) {
         return (lValue<<iShiftBits) | (lValue>>>(32-iShiftBits));
     }
@@ -322,6 +332,8 @@ var MD5 = function (string) {
 }
 
 var SHA1 = function(msg) {
+    if(!msg)
+      return msg;
     function rotate_left(n,s) {
         var t4 = ( n<<s ) | (n>>>(32-s));
         return t4;

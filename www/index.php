@@ -281,6 +281,20 @@
 
             </a></li>
 
+        <li ng-if ="searchController.showMode==5" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.showedPlaylist.tracks track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-songtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+            <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
+            <img src="public/img/empty.png"    class="loadingSongImg"   >
+            <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
+            <img ng-if ="playlistController.hasTrendStyle(1,song)" src="public/img/emtpy.png" class="songNochange songTrend" >
+            <img ng-if ="playlistController.hasTrendStyle(2,song)" src="public/img/emtpy.png" class="songLoser songTrend" >
+            <img ng-if ="playlistController.hasTrendStyle(3,song)" src="public/img/emtpy.png" class="songNew songTrend" >
+
+            <h3 ng-class="playlistController.getTrendTitleClass(song)" title="{{song.name}}">{{song.name}}</h3>
+
+            <p title="{{mediaController.getSongArtist(song)}}">{{mediaController.getSongArtist(song)}}<span ng-if ="song.playcount !== undefined && song.playcount" class="songPlayCount"><span  style="font-style: normal;font-size: .83em;margin-left:2px;"> &#9658;</span><span  style="font-style: italic;font-size: .93em;margin-left:2px;">{{song.playcount}}</span></span>  </p></a>
+        </li>
+
+
 
         <li ng-if ="searchController.artists.searchResults.length>0&&searchController.isVisisbleInShowMode(3)" onclick="searchController.setShowMode(3)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton  othertopheight stayvisible">
             <a tabindex="-1" ng-class="{loaded:searchController.isOnlyTypeDisplayed(3)}">
@@ -324,7 +338,7 @@
             </a>
         </li>
         
-        <li  ng-if ="searchController.isVisisbleInShowMode(2)" context-menu-DISABLED ="playlistController.selectSong(playlist)" ng-repeat="playlist in searchController.playlists.searchResults | limitTo:searchController.getShowModeLimit(2)  track by $index " data-playlist="{{playlist}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"    class="fadeincompletefast othertopheight"  ng-click="playbackController.clickedElement($event,playlist);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li  ng-if ="searchController.isVisisbleInShowMode(2)" context-menu-DISABLED ="playlistController.selectSong(playlist)" ng-repeat="playlist in searchController.playlists.searchResults | limitTo:searchController.getShowModeLimit(2)  track by $index " data-playlist="{{playlist}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"    class="fadeincompletefast othertopheight draggableSong"  ng-click="playbackController.clickedElement($event,playlist);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
 
             <img src="public/img/empty.png"   ng-style="{'background-image':'url(public/img/empty.png)','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
 
@@ -348,7 +362,7 @@
         </li>
 
 
-        <li  ng-if ="searchController.songs.searchResults.length>0&&searchController.isVisisbleInShowMode(1)&&searchController.showMode==0" class="fadeincompleteslow songlisttitlebutton othertopheight stayvisible listad" ><img style="max-width:728px;max-height:90px;width:728px;height:90px"src="public/img/testad2.png"></li>
+        <li  ng-if ="searchController.songs.searchResults.length>0&&searchController.isVisisbleInShowMode(1)&&searchController.showMode==0" class="fadeincompleteslow songlisttitlebutton othertopheight stayvisible listad" ><img style="max-width:728px;max-height:90px;width:728px;height:90px"src=""></li>      <!--public/img/testad2.png-->
 
 
         <li  ng-if ="searchController.songs.searchResults.length>0&&searchController.isVisisbleInShowMode(1)" onclick="searchController.setShowMode(1)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton othertopheight stayvisible">
@@ -768,7 +782,9 @@
             <h3 id="registertitle">Sign Up <span style="font-style: italic">for free</span></h3>
 
             <label for="registerusername" class="ui-hidden-accessible">Username:</label>
+
             <input type="text" name="user" id="registerusername" value="" placeholder="Username" data-theme="a" >
+            <div id= "registerusernamealreadyexists" style="color:#f00;display:none" >Username already exists</div>
             <span id="registeruseremail">
             <label for="registeruser" class="ui-hidden-accessible">Email Adress:</label>
             <input type="text" name="user" id="registeruser" value="" placeholder="Email Adress" data-theme="a" >
@@ -838,13 +854,14 @@
 
 
 <div data-role="popup" id="popupEditAccount" data-theme="a" class="ui-corner-all"  >
-    <a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
-
+    <!--a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a-->
+    <img width="40px" style="position:absolute;top:15px;left:33px" src="public/img/logoblack.png">
     <div style="padding:0px 20px 10px 20px">
-        <h3 id="edittitle">Edit Account</h3>
-
+        <h3 style="margin-left: 60px;text-align: left;" id="edittitle">Edit Account</h3>
         <label for="registerusername" class="ui-hidden-accessible">Username:</label>
         <input type="text" name="user" id="editusername" value="" placeholder="Username" data-theme="a" >
+        <div id= "editusernamealreadyexists" style="color:#f00;display:none" >Username already exists</div>
+
             <span id="edituseremail">
             <label for="editemail" class="ui-hidden-accessible">Email Adress:</label>
             <input type="text" name="user" id="editemail" value="" placeholder="Email Adress" data-theme="a" >

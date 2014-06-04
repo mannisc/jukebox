@@ -119,6 +119,10 @@ uiController.init = function () {
     uiController.disableAutoFocus();
 
 
+    $(".ui-icon-loading").click(function(){
+        $(".ui-icon-loading").hide();
+    })
+
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
         $("#titleHeader").show();
         $("#iconHeader").css("opacity", "1");
