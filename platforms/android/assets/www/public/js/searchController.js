@@ -15,6 +15,9 @@ var searchController = function () {
 };
 
 
+searchController.lastfmapikey="019c7bcfc5d37775d1e7f651d4c08e6f";
+
+
 searchController.songs = function () {
 };
 
@@ -53,8 +56,6 @@ searchController.searchCounter = 0;
 searchController.buttonActive = -1;
 
 searchController.showMode = -1; //-1: nichts, 0: Alle Ergebnisse 1: songs,2:  playlists, 3: artists,4: user , 5: one playlist
-
-
 
 
 searchController.maxPopularSongPages = 2;
@@ -110,16 +111,22 @@ searchController.init = function () {
     // uiController.searchListScroll.on("scrollStart",function(){
     //})
 
+    setTimeout(function(){ //available after 10 seconds
+        $("#searchinput").focus(function () {
+            var that = $(this);
+            window.setTimeout(function () {
+                if ($(".ui-popup-active, .ui-popup-container.pop.in").length == 0)
+                    that.select();
+            }, 100);
+        });
+    },10000)
 
-    $("#searchinput").focus(function () {
-        var that = $(this);
-        window.setTimeout(function () {
-            if($(".ui-popup-active, .ui-popup-container.pop.in").length==0)
-           that.select();
-        }, 100);
-    });
 
     $("#searchinput").on("input", function () {
+
+        if( searchController.showMode == 5)
+          searchController.backShowMode();
+
 
         $("#searchlist .iScrollPlayIndicator").hide();
         $("#searchlist .iScrollScrollUpIndicator").hide();
@@ -186,22 +193,19 @@ searchController.init = function () {
     });
 
 
-
-
-
 }
 
 
 searchController.activateButton = function (index, noAnimation) {
-    if( searchController.buttonActive == index)
-     return;
+    if (searchController.buttonActive == index)
+        return;
 
     //Unload actions for views
     if (searchController.buttonActive == 0) {
         searchController.searchSongsString = $("#searchinput").val();
     }
     //Explore
-    if(searchController.buttonActive == 2&&index!=2){
+    if (searchController.buttonActive == 2 && index != 2) {
         searchController.hideExplore();
     }
 
@@ -458,7 +462,7 @@ searchController.searchSimilarSongs = function (song) {
                             }
                         }
 
-                        song = jQuery.extend(true, {},song);
+                        song = jQuery.extend(true, {}, song);
                         delete song.gid;
                         delete song.playlistgid;
 
@@ -617,7 +621,7 @@ searchController.filterMusic = function (filterTerm) {
 searchController.songs.startSearchDeferred = function (searchTerm) {
     var deferred = $.Deferred();
 
-    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=track.search&track=%searchTerm&limit=100&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json";
+    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=track.search&track=%searchTerm&limit=100&api_key="+searchController.lastfmapikey+"&format=json";
 
     $.when(
             searchController.basicLocalSearchDeferred(searchTerm, searchController.searchTypeSongs),
@@ -635,7 +639,7 @@ searchController.songs.startSearchDeferred = function (searchTerm) {
 searchController.songs.startSuggestionsSearchDeferred = function (artist, title) {
     var deferred = $.Deferred();
 
-    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&%searchTerm&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json"
+    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&%searchTerm&api_key="+searchController.lastfmapikey+"&format=json"
 
     $.when(
 
@@ -671,8 +675,8 @@ searchController.songs.completeSearch = function (localList, onlineList) {
 
     var songList = localList.concat(onlineList)
 
-   // console.dir("completeSearch##############################################################################");
-   // console.dir(songList);
+    // console.dir("completeSearch##############################################################################");
+    // console.dir(songList);
     //Set Artist of song and remove songs without name
     for (var i = 0; i < songList.length; i++) {
         var song = songList[i];
@@ -691,13 +695,13 @@ searchController.songs.completeSearch = function (localList, onlineList) {
 
             song.artist.name = $.trim(song.artist.name);
             song.name = $.trim(song.name);
-            if(song.mbid){
+            if (song.mbid) {
                 delete song.mbid
             }
-            if(song.streamable){
+            if (song.streamable) {
                 delete song.streamable
             }
-            if(song.url){
+            if (song.url) {
                 delete song.url
             }
         }
@@ -729,8 +733,6 @@ searchController.songs.completeSearch = function (localList, onlineList) {
 }
 
 
-
-
 /*Playlists -------------------------------------------------------------------------------------------------------------------------------------*/
 
 /**
@@ -742,7 +744,7 @@ searchController.playlists.startSearchDeferred = function (searchTerm) {
     var deferred = $.Deferred();
 
 
-    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=album.search&album=%searchTerm&limit=100&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json";
+    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=album.search&album=%searchTerm&limit=100&api_key="+searchController.lastfmapikey+"&format=json";
 
     $.when(
             searchController.basicLocalSearchDeferred(searchTerm, searchController.searchTypePlaylists),
@@ -776,6 +778,17 @@ searchController.playlists.completeSearch = function (localList, onlineList) {
             i--;
         } else {
             playlistList[i].isPlaylist = true;
+
+            if (playlist.artist) {
+                if (!playlist.artist.name) {
+                    if (playlist.artist)
+                        playlist.artist = {name: playlist.artist};
+                }
+            } else
+                playlist.artist = {name: mediaController.unknownData};
+
+            playlist.artist.name = $.trim(playlist.artist.name);
+
             playlist.name = $.trim(playlist.name);
 
         }
@@ -814,7 +827,7 @@ searchController.artists.startSearchDeferred = function (searchTerm) {
     var deferred = $.Deferred();
 
 
-    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=%searchTerm&limit=100&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json";
+    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=%searchTerm&limit=100&api_key="+searchController.lastfmapikey+"&format=json";
 
     $.when(
             searchController.basicLocalSearchDeferred(searchTerm, searchController.searchTypeArtists),
@@ -877,6 +890,19 @@ searchController.artists.completeSearch = function (localList, onlineList) {
 /*Others -------------------------------------------------------------------------------------------------------------------------------------*/
 
 
+/**
+ * Get Song from From Index
+ * @param index
+ */
+searchController.getSongFromIndex = function(index){
+    if(searchController.showMode==5)
+     return searchController.showedPlaylist.tracks[index];
+    else
+     return searchController.songs.searchResults[index];
+
+
+
+}
 
 searchController.applySongList = function (currentSearchID) {
 
@@ -890,10 +916,10 @@ searchController.applySongList = function (currentSearchID) {
         var size = searchController.maxResults;
     }
     else {
-        if(searchController.showed)
-         size = Math.min(searchController.showed.searchResults.length, searchController.maxResults)
+        if (searchController.showed)
+            size = Math.min(searchController.showed.searchResults.length, searchController.maxResults)
         else
-          size =   searchController.maxResults;
+            size = searchController.maxResults;
     }
 
     var delays = (Math.ceil(size / stepSize));
@@ -914,7 +940,7 @@ searchController.applySongList = function (currentSearchID) {
         var show = function (index) {
             setTimeout(function () {
                 if (searchController.currentSearchID == currentSearchID) {
-                    console.log(index+" mm  "+searchController.songs.searchResults.length)
+                    console.log(index + " mm  " + searchController.songs.searchResults.length)
 
 
                     /*  if (searchController.showMode == 0)
@@ -972,8 +998,6 @@ searchController.applySongList = function (currentSearchID) {
 }
 
 
-
-
 searchController.removeFilterSongs = function () {
     uiController.searchListScroll.scrollTo(0, 0, 1000)
     console.log("!!!!!!!!!! gGGGGGGGG")
@@ -1016,7 +1040,7 @@ searchController.showSuggestions = function () {  //Todo find songs the user rea
 
             song = playlistController.currentQueue[index];
         }
-        else if (!playlistController.playlistMode&& playlistController.loadedPlaylistSongs.length > 0) { //Loaded Songs
+        else if (!playlistController.playlistMode && playlistController.loadedPlaylistSongs.length > 0) { //Loaded Songs
             index = Math.round(Math.random() * (playlistController.loadedPlaylistSongs.length - 1));
 
             song = playlistController.loadedPlaylistSongs[index];
@@ -1024,14 +1048,13 @@ searchController.showSuggestions = function () {  //Todo find songs the user rea
         else if (searchController.playlists.length > 0) {  //Playlist
             index = Math.round(Math.random() * (searchController.songs.playlists.length - 1));
             if (searchController.playlists[index].tracks.length > 0) {
-             var index2 = Math.round(Math.random() * (searchController.playlists[index].tracks.length - 1));
-             song = searchController.playlists[index].tracks[index2];
+                var index2 = Math.round(Math.random() * (searchController.playlists[index].tracks.length - 1));
+                song = searchController.playlists[index].tracks[index2];
             }
         } else if (searchController.songs.searchResults.length > 0) {    //SearchResult
             index = Math.round(Math.random() * (searchController.songs.searchResults.length - 1));
             song = searchController.songs.searchResults[index];
         }
-
 
 
     }
@@ -1051,11 +1074,9 @@ searchController.showSuggestions = function () {  //Todo find songs the user rea
 }
 
 
-searchController.showExplore = function(){
-     $("#explorearea").show();
-     $("#searchlayoutbutton").hide();
-
-
+searchController.showExplore = function () {
+    $("#explorearea").show();
+    $("#searchlayoutbutton").hide();
 
 
     searchController.emptySearchList()
@@ -1063,15 +1084,12 @@ searchController.showExplore = function(){
 }
 
 
-searchController.hideExplore = function(){
+searchController.hideExplore = function () {
     $("#explorearea").hide();
     $("#searchlayoutbutton").show();
 
 
 }
-
-
-
 
 
 searchController.searchArtistSongs = function (artist) {
@@ -1084,15 +1102,12 @@ searchController.searchArtistSongs = function (artist) {
         searchController.searchSongsFromArtist(artist, function (list) {
 
 
-
         });
     }
 
     search(searchController.searchCounter);
 
 }
-
-
 
 
 searchController.showLoading = function (show) {
@@ -1149,7 +1164,7 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
     var func = function (page, topresults) {
         $.ajax({
 
-            url: "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + searchString + "&page=" + page + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
+            url: "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + searchString + "&page=" + page + "&api_key="+searchController.lastfmapikey+"&format=json",
             success: function (data) {
                 var dataOK = false;
                 if (data.toptracks) {
@@ -1204,7 +1219,7 @@ searchController.topTracks = function (callbackSuccess) {
 
     var func = function (page, topresults) {
         $.ajax({
-            url: "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&page=" + page + "&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&format=json",
+            url: "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&page=" + page + "&api_key="+searchController.lastfmapikey+"&format=json",
             success: function (data) {
                 var dataOK = false;
                 if (data.tracks) {
@@ -1244,38 +1259,76 @@ searchController.topTracks = function (callbackSuccess) {
 /**
  * Show one Playlist in search list
  */
-searchController.showPlaylist = function(playlist){
+searchController.showPlaylist = function (playlist) {
     console.dir(playlist)
+    playlist.tracks=[];
     searchController.showedPlaylist = playlist;
     $("#searchlistview").hide();
     $("#searchlist .iScrollIndicator").hide();
     $("#searchlist .iScrollScrollUpIndicator").hide();
-    searchController.oldShowMode =  searchController.showMode;
+    searchController.oldShowMode = searchController.showMode;
     searchController.showMode = 5;
-    $scope.safeApply();
+    $("#searchlistview").hide();
+    $("#searchlist .iScrollIndicator").hide();
+    $("#searchlist .iScrollScrollUpIndicator").hide();
     setTimeout(function () {
-        $("#searchlistview").listview('refresh');
-        $("#searchlistview").show();
-    }, 150);
-    setTimeout(function () {
-        uiController.searchListScroll.refresh();
-    }, 150)
-    setTimeout(function () {
-        uiController.searchListScroll.refresh();
-    }, 1000)
+     searchController.loadPlaylistTracks(playlist);
+    }, 0);
+
 }
+
+
+/**
+ * Load Tracks of Playlist from last.fm
+ */
+searchController.loadPlaylistTracks = function (playlist) {
+
+
+    var url = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key="+searchController.lastfmapikey+"&artist="+playlist.artist.name+"&album="+playlist.name+"&format=json";
+
+    $.ajax({
+        url: url,
+        success: function (data) {
+            if(data.album&&data.album.tracks&&data.album.tracks.track)
+             playlist.tracks=data.album.tracks.track;
+
+            console.dir(playlist);
+
+
+
+        },
+        error: function () {
+
+
+        },
+        complete: function(){
+            $scope.safeApply();
+
+            setTimeout(function () {
+                $("#searchlistview").listview('refresh');
+                searchController.makeSearchListDraggable();
+                $("#searchlistview").show();
+            }, 150);
+            setTimeout(function () {
+                uiController.searchListScroll.refresh();
+            }, 150)
+            setTimeout(function () {
+                uiController.searchListScroll.refresh();
+            }, 1000)
+        }
+
+    })
+
+}
+
 
 /**
  *  Back to last show Mode
  */
-searchController.backShowMode= function(){
-    if(searchController.oldShowMode!==undefined)
-     searchController.setShowMode(searchController.oldShowMode);
+searchController.backShowMode = function () {
+    if (searchController.oldShowMode !== undefined)
+        searchController.setShowMode(searchController.oldShowMode);
 }
-
-
-
-
 
 
 searchController.getArtistInfo = function () {
@@ -1575,7 +1628,7 @@ searchController.makeSearchListDraggable = function () {
                         if (!searchController.mainDraggedElement.hasClass("draggableSong"))
                             searchController.mainDraggedElement = $(searchController.dragDraggableSongStartEvent.target).parents("li")
 
-                        if (searchController.mainDraggedElement.length==0)
+                        if (searchController.mainDraggedElement.length == 0)
                             return;
 
 
@@ -1584,13 +1637,13 @@ searchController.makeSearchListDraggable = function () {
                         //Playlists are displayed
                         if (playlistController.playlistMode) {
                             $("#searchlistview .draggableSong").draggable("option", "connectToSortable", "");
-                            if(playlistController.sortPlaylist)
+                            if (playlistController.sortPlaylist)
                                 playlistController.toggleSortablePlaylist();
                         } else {
                             $("#searchlistview .draggableSong").draggable("option", "connectToSortable", "#playlistview");
                         }
 
-                       //   $("#searchlistview .draggableSong")
+                        //   $("#searchlistview .draggableSong")
 
                         searchController.mainDraggedElement.draggable("enable");
 
@@ -1615,16 +1668,16 @@ searchController.makeSearchListDraggable = function () {
                         $("body").on("mouseup ", function (event) {
                             $("body").off("mouseup");
                             uiController.mouseUp = true;
-                            if(searchController.mainDraggedElement){
+                            if (searchController.mainDraggedElement) {
                                 searchController.mainDraggedElement.draggable("disable").removeClass("ui-disabled ui-state-disabled");
-                                searchController.mainDraggedElement=null;
+                                searchController.mainDraggedElement = null;
                             }
                         })
 
                         //  uiController.updateUI();
 
                         setTimeout(function () {
-                            console.log("MOUSEUP??"+uiController.mouseUp)
+                            console.log("MOUSEUP??" + uiController.mouseUp)
 
                             if (!uiController.mouseUp) {
                                 if (!playlistController.sortPlaylist && !playlistController.playlistMode) {
@@ -1636,7 +1689,7 @@ searchController.makeSearchListDraggable = function () {
                                     uiController.startedSortPlaylist = false;
 
 
-                                console.log("! "+uiController.startedSortPlaylist+"   "+playlistController.playlistMode)
+                                console.log("! " + uiController.startedSortPlaylist + "   " + playlistController.playlistMode)
                                 $(searchController.dragDraggableSongStartElement).simulate("mousedown", coords);
 
                                 uiController.updateUI();
@@ -1726,7 +1779,6 @@ searchController.makeSearchListDraggable = function () {
             $(".importplaylist").hide();
 
 
-
             var eleParent = $(playlistController.draggedElements.get(0)).parent();
             eleParent.attr('style', eleParent.attr('style') + '; ' + "margin-top:" + (-(playlistController.draggedElement.offset().top - playlistController.draggedElements.offset().top)) + "px" + ' !important');
             eleParent.css("opacity", "1");
@@ -1757,8 +1809,6 @@ searchController.makeSearchListDraggable = function () {
             }
 
 
-
-
         },
         stop: function (event, ui) {
             if (playlistController.playlistMode && playlistController.playlists.length > 0) {
@@ -1768,17 +1818,16 @@ searchController.makeSearchListDraggable = function () {
                     elementMouseIsOver = document.elementFromPoint(x, y);
 
                 var listElement = $(elementMouseIsOver).parents("li");
-                if(listElement.length==0)
-                     listElement = $(elementMouseIsOver).parents("ul");
-                if(listElement.length==0)
-                     listElement = $(elementMouseIsOver)
-
+                if (listElement.length == 0)
+                    listElement = $(elementMouseIsOver).parents("ul");
+                if (listElement.length == 0)
+                    listElement = $(elementMouseIsOver)
 
 
                 setTimeout(function () {
 
 
-                    if (listElement &&  ( listElement.parents("#playlistInner").length > 0) || listElement.attr("id")=="playlistInner") {
+                    if (listElement && ( listElement.parents("#playlistInner").length > 0) || listElement.attr("id") == "playlistInner") {
 
                         var newPlaylistAtTop = false;
                         if (listElement.hasClass("playlistsong")) {
@@ -1791,14 +1840,14 @@ searchController.makeSearchListDraggable = function () {
                             newPlaylist = false;
 
 
-                        } else  {  //if (listElement.hasClass("createplaylist"))
+                        } else {  //if (listElement.hasClass("createplaylist"))
 
                             //Create Playlist Button was used to add at Top
                             if (listElement.hasClass("createplaylist"))
-                              newPlaylistAtTop = true;
+                                newPlaylistAtTop = true;
 
                             playlist = playlistController.createEmptyPlaylist(!newPlaylistAtTop);
-                            playlistController.editedPlaylist =  jQuery.extend(true, {},playlist);
+                            playlistController.editedPlaylist = jQuery.extend(true, {}, playlist);
                             playlistController.editedPlaylistTitle = "New Playlist";
 
                             setTimeout(function () {
@@ -1810,8 +1859,6 @@ searchController.makeSearchListDraggable = function () {
 
                             newPlaylist = true;
                         }
-
-
 
 
                         if (playlist) {
@@ -1834,20 +1881,20 @@ searchController.makeSearchListDraggable = function () {
                             })
 
                             setTimeout(function () {
-                                accountController.savePlaylist(playlist.gid,playlist.name,playlist.tracks);
+                                accountController.savePlaylist(playlist.gid, playlist.name, playlist.tracks);
                                 accountController.savePlaylistsPosition();
                             }, 0);
 
                             //Dropped on Create new playlist
                             if (newPlaylist) {
-                               if (playlistController.loadedPlaylistSongs.indexOf(playlist) == -1) {
-                                   if(newPlaylistAtTop)
-                                       playlistController.loadedPlaylistSongs.unshift(playlist);
-                                   else
-                                       playlistController.loadedPlaylistSongs.push(playlist);
+                                if (playlistController.loadedPlaylistSongs.indexOf(playlist) == -1) {
+                                    if (newPlaylistAtTop)
+                                        playlistController.loadedPlaylistSongs.unshift(playlist);
+                                    else
+                                        playlistController.loadedPlaylistSongs.push(playlist);
 
-                               }
-                                playlistController.displayLimit =  playlistController.loadedPlaylistSongs.length;
+                                }
+                                playlistController.displayLimit = playlistController.loadedPlaylistSongs.length;
 
 
                                 $scope.safeApply();
@@ -1876,12 +1923,12 @@ searchController.makeSearchListDraggable = function () {
                 if (listElement.hasClass("playlistsong") || listElement.hasClass("currentqueue")) {
                     playlistController.animateAddedToList(listElement);
                 }
-            } else{
-                setTimeout(function(){
-                    if(!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length==0)
-                     $(".importplaylist").show();
+            } else {
+                setTimeout(function () {
+                    if (!playlistController.playlistMode && playlistController.loadedPlaylistSongs.length == 0)
+                        $(".importplaylist").show();
 
-                },1000)
+                }, 1000)
             }
 
             $("#playlistview").removeClass("dragging")
@@ -1891,9 +1938,9 @@ searchController.makeSearchListDraggable = function () {
             ele.attr('style', ele.attr('style') + '; ' + "margin-top:0px" + ' !important');
             ele.addClass("animatemargin");
 
-            if(searchController.mainDraggedElement){
+            if (searchController.mainDraggedElement) {
                 searchController.mainDraggedElement.draggable("disable").removeClass("ui-disabled ui-state-disabled");
-                searchController.mainDraggedElement=null;
+                searchController.mainDraggedElement = null;
             }
 
 
@@ -1916,7 +1963,6 @@ searchController.makeSearchListDraggable = function () {
             playlistController.updateDeselectedSong();
 
             uiController.swipeTimer = Date.now();
-
 
 
         },
