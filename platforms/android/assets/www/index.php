@@ -843,16 +843,20 @@
 
 
 
-                <li style="min-height:30px;margin-top:10px;text-align: center">
-                    <div style="float:left;font-size: 14px!important">
-                    <img src="public/img/dropbox.png" width="28px" >
-                    Support us:
-                    </div>
+                <li style="border-bottom:1px solid #ddd;min-height:25px;margin-top:10px;padding-top: 0;padding-bottom: 2px;padding-left: 13px;">
                     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="UVQ7RE3L8GWG8">
-                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                        <img alt="Please Support us!" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+                        <div style="float:left;font-size: 14px!important;">
+                           <img src="public/img/paypal.png" width="28px" >
+                        </div>
+                        <div style="float:left;font-size: 14px!important;margin-top:3px;margin-left:10px;">
+                            Support us:
+                        </div>
+                        <div style=" text-align: right;margin-top:9px">
+                            <input type="hidden" name="cmd" value="_s-xclick">
+                            <input type="hidden" name="hosted_button_id" value="UVQ7RE3L8GWG8">
+                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                            <img alt="Please Support us!" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+                        </div>
                     </form>
 
 
