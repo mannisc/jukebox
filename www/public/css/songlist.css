@@ -1039,7 +1039,7 @@ animation-duration:  1.5s;
 
 
 
-.songlist li.hoverable .playlistCoverSong:hover .coverSong1, #searchlist li .playlistCoverSong:hover .coverSong1, .songlist li.hoverable.specialplaylistbutton:hover .playlistCoverSong .coverSong1 {
+.songlist li.hoverable .playlistCoverSong:hover .coverSong1,  .songlist li.hoverable.specialplaylistbutton:hover .playlistCoverSong .coverSong1 {
     -webkit-transform: translate(2px,0) rotateY(360deg) scale(1.5) !important;
     -moz-transform: rotateY(360deg) scale(1.5)!important;
     transform: rotateY(360deg) scale(1.5)!important;
@@ -1047,7 +1047,7 @@ animation-duration:  1.5s;
 }
 
 
-.songlist li.hoverable .playlistCoverSong:hover .coverSong2, #searchlist li .playlistCoverSong:hover .coverSong2, .songlist li.hoverable.specialplaylistbutton:hover .playlistCoverSong .coverSong2 {
+.songlist li.hoverable .playlistCoverSong:hover .coverSong2,  .songlist li.hoverable.specialplaylistbutton:hover .playlistCoverSong .coverSong2 {
     -webkit-transform: translate(-7px,0) rotateY(360deg) scale(1.45) !important;
     -moz-transform:translate(-7px,0) rotateY(360deg) scale(1.45) !important;
     transform: translate(-7px,0) rotateY(360deg) scale(1.45) !important;
@@ -1055,7 +1055,7 @@ animation-duration:  1.5s;
 }
 
 
-.songlist li.hoverable .playlistCoverSong:hover .coverSong3, #searchlist li .playlistCoverSong:hover .coverSong3, .songlist li.hoverable.specialplaylistbutton:hover .playlistCoverSong .coverSong3{
+.songlist li.hoverable .playlistCoverSong:hover .coverSong3, .songlist li.hoverable.specialplaylistbutton:hover .playlistCoverSong .coverSong3{
     -webkit-transform:translate(-19px,0) rotateY(360deg) scale(1.45) !important;
     -moz-transform: translate(-19px,0) rotateY(360deg) scale(1.45)!important;
     transform: translate(-19px,0) rotateY(360deg) scale(1.45)!important;
