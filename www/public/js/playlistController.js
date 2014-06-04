@@ -471,12 +471,12 @@ playlistController.selectSong = function (song) {
         var listElement = null;
         if (song.gid) {
 
-            listElement = playbackController.getListElementFromSong(song, 2)
+            listElement = playbackController.getListElementFromElement(song, 2)
 
 
         }
         else {
-            listElement = playbackController.getListElementFromSong(song, 1)
+            listElement = playbackController.getListElementFromElement(song, 1)
 
         }
 
@@ -607,8 +607,7 @@ playlistController.getSongListFromSelection = function () {
     for (var i = 0; i < playlistController.selectedSongs.length; i++) {
 
         var element = playlistController.selectedSongs[i].song;
-        console.log("Q!!!!Q!!!!!!Q!!!!!!Q!!!!!!Q!!!!!!!!")
-        console.dir(element)
+
         if (element.isPlaylist) {
             if (element.tracks && element.tracks.length > 0) {
                 for (var j = 0; j < element.tracks.length; j++) {
@@ -931,6 +930,7 @@ playlistController.addSelectedElementsToPlaylist = function (positionTo) {
 
 playlistController.addSongsToPlaylist = function (playlist, songs) {
 
+
     playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlist, songs);
     var oldLength =   playlist.tracks.length;
     playlist.tracks = playlist.tracks.concat(songs);
@@ -952,7 +952,7 @@ playlistController.addSongsToPlaylist = function (playlist, songs) {
         if (playlist.gid == playlistController.currentQueue.gid)
             playlistController.animateAddedToList($(".currentqueue"));
         else
-            playlistController.animateAddedToList(playbackController.getListElementFromSong(playlist));
+            playlistController.animateAddedToList(playbackController.getListElementFromElement(playlist));
 
     } else if (playlistController.getLoadedPlaylist().gid == playlist.gid) {
         if (Object.keys(playlistController.loadedPlaylists).length == 1) {

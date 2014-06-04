@@ -96,7 +96,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     mediaController.versionListSong = null;
 
 
-    var listElement = playbackController.getListElementFromSong(song);
+    var listElement = playbackController.getListElementFromElement(song);
 
 
     if (!resetingSong) {
@@ -562,7 +562,7 @@ playbackController.playNextSong = function () {
 playbackController.positionPlayIndicator = function () {
 
 
-    var listElement = playbackController.getListElementFromSong(playbackController.playingSong);
+    var listElement = playbackController.getListElementFromElement(playbackController.playingSong);
 
     if (!listElement || listElement.length == 0) {
         $("#searchlist .iScrollPlayIndicator").hide();
@@ -675,22 +675,22 @@ playbackController.positionPlayIndicatorAtTop = function (searchlist) {
 
 
 /**
- * Get Songlist element from song
- * @param song
+ * Get Dom List Element from element
+ * @param element
  * @param onlyList 1:searchlist, 2:playlist
 
  */
-playbackController.getListElementFromSong = function (song, onlyList) {
-    if (!song)
+playbackController.getListElementFromElement = function (element, onlyList) {
+    if (!element)
         return $([]);
 
     var playlistElements = [], searchListElements = [];
 
     if (!onlyList || onlyList == 1)
-        searchListElements = $("#searchlist li[data-songtitle='" + song.name + "-" + mediaController.getSongArtist(song) + "'] ");
+        searchListElements = $("#searchlist li[data-elementtitle='" + mediaController.getElementTitle(element) + "'] ");
 
     if (!onlyList || onlyList == 2)
-        playlistElements = $("#playlistInner li[data-songgid='playlistsong" + song.gid + "']");
+        playlistElements = $("#playlistInner li[data-songgid='playlistsong" + element.gid + "']");
 
 
     return $(searchListElements).add(playlistElements);
@@ -738,7 +738,7 @@ playbackController.remarkSong = function () {
     else {
         var listElement;
 
-        listElement = playbackController.getListElementFromSong(playbackController.playingSong);
+        listElement = playbackController.getListElementFromElement(playbackController.playingSong);
 
         $(".songlist .loadedsong").not(listElement).removeClass("loadedsong");
         var safe = $(".songlist .oldloadedsong.playing")
