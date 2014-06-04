@@ -31,7 +31,13 @@ mediaController.buySong = function () {
     var song = playbackController.getPlayingSong();
     if (song) {
         var keywords = mediaController.getSongArtist(song) + " - " + song.name;
-        mywindow = window.open("http://www.amazon.de/s/?_encoding=UTF8&ajr=0&camp=1638&creative=19454&field-keywords=" + keywords + "&linkCode=ur2&rh=n%3A77195031%2Ck%3A" + keywords + "&site-redirect=de&tag=iggels-21&url=search-alias%3Ddigital-music", "Amazon", "");
+        var language = window.navigator.userLanguage || window.navigator.language;
+        if(language == "de" || language == "de-at" || language == "de-li"){
+            mywindow = window.open("http://www.amazon.de/s/?_encoding=UTF8&ajr=0&camp=1638&creative=19454&field-keywords=" + keywords + "&linkCode=ur2&rh=n%3A77195031%2Ck%3A" + keywords + "&site-redirect=de&tag=iggels-21&url=search-alias%3Ddigital-music", "Amazon", "");
+        }
+        else{
+            mywindow = window.open("http://www.amazon.com/mn/search/?_encoding=UTF8&camp=1789&creative=390957&field-keywords=" + keywords + "&linkCode=ur2&linkId=MYPSR6WWIWMTB2LT&tag=songbasefm-20&url=search-alias%3Daps&linkId=D6BN5D5GAFQZOEN3", "Amazon", "");
+        }
         mywindow.focus();
         mediaController.getPrice();
     }
