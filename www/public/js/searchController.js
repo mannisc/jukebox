@@ -1294,13 +1294,17 @@ searchController.loadPlaylistTracks = function (playlist) {
     $.ajax({
         url: url,
         success: function (data) {
-            if(data.album&&data.album.tracks&&data.album.tracks.track)
-             playlist.tracks=data.album.tracks.track;
-
-            console.dir(playlist);
-
-
-
+            if(data.album&&data.album.tracks&&data.album.tracks.track){
+                playlist.tracks=data.album.tracks.track;
+                if(playlist.tracks.length){
+                    for (var j = 0; j <  playlist.tracks.length; j++) {
+                        if(!playlist.tracks[j].image){
+                            setTimeout(mediaController.loadPreview(playlist.tracks[j]), j*300);
+                        }
+                    }
+                }
+                console.dir(playlist);
+            }
         },
         error: function () {
 
