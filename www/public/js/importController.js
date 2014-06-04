@@ -21,28 +21,31 @@ importController.importPlaylist = function(url){
            var playlist = [];
             console.dir("current playlist:");
             console.dir(playlistController.getLoadedPlaylist());
-
-            for (var j = 0; j <  data.track.length; j++) {
-                playlist[j] = {
-                    artist: unescape(data.track[j].artist),
-                    name: unescape(data.track[j].name),
-                    gid: playlistController.getNewID(),
-                    id: "plsid" + helperFunctions.padZeros(j, ("" + playlistController.loadedPlaylistSongs.length).length)
+            if(data.track){
+                if(data.track.length){
+                    for (var j = 0; j <  data.track.length; j++) {
+                        playlist[j] = {
+                            artist: unescape(data.track[j].artist),
+                            name: unescape(data.track[j].name),
+                            gid: playlistController.getNewID(),
+                            id: "plsid" + helperFunctions.padZeros(j, ("" + playlistController.loadedPlaylistSongs.length).length)
+                        }
+                    }
                 }
-
-
             }
+
 
             playlistController.addSongsToPlaylist(playlistController.getLoadedPlaylist(), playlist)
 
 
             var loadedplaylist = playlistController.getLoadedPlaylist();
-            for (var j = 0; j <  loadedplaylist.tracks.length; j++) {
-                if(!loadedplaylist.tracks[j].image){
-                    setTimeout(mediaController.loadPreview(loadedplaylist.tracks[j]), j*300);
+            if(loadedplaylist.tracks.length){
+                for (var j = 0; j <  loadedplaylist.tracks.length; j++) {
+                    if(!loadedplaylist.tracks[j].image){
+                        setTimeout(mediaController.loadPreview(loadedplaylist.tracks[j]), j*300);
+                    }
                 }
             }
-
 
             console.dir("new playlist:");
 
