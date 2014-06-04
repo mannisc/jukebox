@@ -92,7 +92,7 @@ optionsMenu.openQueueOptions = function (event, positionTo) {
             var playlist = playlistController.loadedPlaylistSongs || [];
             setTimeout(function () {
                 if (playlist && playlist.length > 0)
-                    playlistController.loadNewPlaylistWithSongs(playlist.slice(0, searchController.maxResults))
+                    playlistController.loadNewPlaylistWithSongs(playlist)
             }, 150)
 
         }},
@@ -375,10 +375,10 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
                                 if (index == 1)
                                     playlistController.playSongList(playlists[index - 1].tracks.concat());
                                 else
-                                    playlistController.playSongListNext(playlists[index - 1].tracks.concat());
+                                    playlistController.addSongsToPlaylist(playlistController.currentQueue, playlists[index - 1].tracks.concat());
                             }
                         }
-                        if (index < playlists.length && playlistLength < searchController.maxResults * 2) {
+                        if (index < playlists.length && playlistLength < searchController.maxResults) {
                             searchController.loadPlaylistTracks(playlists[index], function () {
                                 addPlaylist(playlists, index + 1, playlistLength);
                             }, false)
@@ -401,10 +401,10 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
                         if (index > 0 && playlists[index - 1] && playlists[index - 1].tracks && playlists[index - 1].tracks.length) {
                             playlistLength = playlistLength + playlists[index - 1].tracks.length;
                             if (playlistLength > 0) {
-                                playlistController.addSongsToPlaylist (playlistController.currentQueue,playlists[index - 1].tracks.concat());
+                                playlistController.addSongsToPlaylist(playlistController.currentQueue, playlists[index - 1].tracks.concat());
                             }
                         }
-                        if (index < playlists.length && playlistLength < searchController.maxResults * 2) {
+                        if (index < playlists.length && playlistLength < searchController.maxResults) {
                             searchController.loadPlaylistTracks(playlists[index], function () {
                                 addPlaylist(playlists, index + 1, playlistLength);
                             }, false)
@@ -417,7 +417,25 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
             }
 
         }} ,
-        {text: "Add to Playlist", callback: null},
+        {text: "Add to Playlist", callback: function () {
+            optionsMenu.closePopup();
+            if (searchController.playlists.searchResults && searchController.playlists.searchResults.length > 0) {
+                setTimeout(function () {
+                    var playlists = searchController.playlists.searchResults.concat();
+                    playlistController.addSongListElementsToPlaylist(positionTo, playlists, "l");
+                }, 150)
+            }
+
+
+
+        }
+
+
+
+
+
+
+        },
         {text: "Create new Playlist", callback: null},
         {text: "Select All", callback: null}
 
