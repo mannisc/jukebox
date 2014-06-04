@@ -29,15 +29,24 @@ importController.importPlaylist = function(url){
                     gid: playlistController.getNewID(),
                     id: "plsid" + helperFunctions.padZeros(j, ("" + playlistController.loadedPlaylistSongs.length).length)
                 }
+
+
             }
 
             playlistController.addSongsToPlaylist(playlistController.getLoadedPlaylist(), playlist)
 
 
+            var loadedplaylist = playlistController.getLoadedPlaylist();
+            for (var j = 0; j <  loadedplaylist.tracks.length; j++) {
+                if(!loadedplaylist.tracks[j].image){
+                    setTimeout(mediaController.loadPreview(loadedplaylist.tracks[j]), j*300);
+                }
+            }
+
 
             console.dir("new playlist:");
 
-            console.dir(playlistController.getLoadedPlaylist());
+            console.dir(loadedplaylist);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.dir("imported playlist - error:");
