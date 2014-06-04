@@ -30,6 +30,9 @@ chartsHandler.update = function (http, apiKey, maxPages, callback) {
 }
 
 
+
+
+
 chartsHandler.getSongArtist = function (song) {
     var artist = chartsHandler.unknownData + "-id:" + Date.now();
     if (!song)
