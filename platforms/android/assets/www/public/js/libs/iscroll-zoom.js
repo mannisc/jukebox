@@ -842,7 +842,7 @@ IScroll.prototype = {
 
 		if ( this.options.useTransform ) {
 
-/* REPLACE START: _translate */			this.scrollerStyle[utils.style.transform] = 'translate(' + x + 'px,' + y + 'px) scale(' + this.scale + ') ' + this.translateZ;/* REPLACE END: _translate */
+/* REPLACE START: _translate */			this.scrollerStyle[utils.style.transform] = 'translate3d( ' + x + 'px,' + y + 'px , 0px) scale(' + this.scale + ')  ' + this.translateZ;/* REPLACE END: _translate */
 
 		} else {
 			x = Math.round(x);

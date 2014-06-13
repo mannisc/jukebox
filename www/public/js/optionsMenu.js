@@ -294,10 +294,53 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd, arrowDirection
         event.stopPropagation();
 
     var addToList = function (playlist) {
-        if (listToAdd.length > 0) {
-            playlistController.addSongsToPlaylist(playlist, listToAdd);
+
+        var addSongsToList = function (listToAdd) {
+            if (listToAdd.length > 0) {
+                playlistController.addSongsToPlaylist(playlist, listToAdd);
+            }
+            playlistController.deselectSongs();
         }
-        playlistController.deselectSongs();
+
+        uiController.disableUI(true);
+
+        var addPlaylist = function (elements, index, songList) {
+
+            if (index > 0 && elements[index - 1]) {
+                //Playlist with loaded Tracks
+                if (elements[index - 1].isPlaylist) {
+                    if(elements[index - 1].tracks && elements[index - 1].tracks.length) {
+                     songList = songList.concat(elements[index - 1].tracks);
+                    }
+                }else {//Song
+                    songList = songList.concat([elements[index - 1]]);
+
+                }
+            }
+
+            if ( index < elements.length && songList.length < searchController.maxResults) {
+
+                //Playlist without loaded Tracks
+                if (elements[index].isPlaylist&&!elements[index].tracks ){
+                    searchController.loadPlaylistTracks(elements[index], function () {
+                        addPlaylist(elements, index + 1, songList);
+                    }, false)
+                }else//Song
+                    addPlaylist(elements, index + 1, songList);
+
+            } else {
+
+                addSongsToList( songList.concat());
+                uiController.disableUI(false);
+
+            }
+        }
+        console.log("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
+
+        console.log(listToAdd)
+        addPlaylist(listToAdd, 0, [])
+
+
     }
 
 
@@ -366,7 +409,7 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
             optionsMenu.closePopup();
             if (searchController.playlists.searchResults && searchController.playlists.searchResults.length > 0) {
                 setTimeout(function () {
-                    $.mobile.loading("show");
+                    uiController.disableUI(true);
                     var playlists = searchController.playlists.searchResults.concat();
                     var addPlaylist = function (playlists, index, playlistLength) {
                         if (index > 0 && playlists[index - 1] && playlists[index - 1].tracks && playlists[index - 1].tracks.length) {
@@ -383,7 +426,8 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
                                 addPlaylist(playlists, index + 1, playlistLength);
                             }, false)
                         } else {
-                            $.mobile.loading("hide");
+                            uiController.disableUI(false);
+
                         }
                     }
                     addPlaylist(playlists, 0, 0)
@@ -395,7 +439,7 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
             optionsMenu.closePopup();
             if (searchController.playlists.searchResults && searchController.playlists.searchResults.length > 0) {
                 setTimeout(function () {
-                    $.mobile.loading("show");
+                    uiController.disableUI(true);
                     var playlists = searchController.playlists.searchResults.concat();
                     var addPlaylist = function (playlists, index, playlistLength) {
                         if (index > 0 && playlists[index - 1] && playlists[index - 1].tracks && playlists[index - 1].tracks.length) {
@@ -409,7 +453,8 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
                                 addPlaylist(playlists, index + 1, playlistLength);
                             }, false)
                         } else {
-                            $.mobile.loading("hide");
+                            uiController.disableUI(false);
+
                         }
                     }
                     addPlaylist(playlists, 0, 0)
@@ -425,7 +470,6 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
                     playlistController.addSongListElementsToPlaylist(positionTo, playlists, "l");
                 }, 150)
             }
-
 
 
         }
@@ -461,13 +505,14 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
 
 }
 
+
 /**
- * Menu for all Songs in Searchlist
+ * Menu for all Songs in Song List
  * @param event
  * @param positionTo
  */
 
-optionsMenu.openSongResultsOptions = function (event, positionTo) {
+optionsMenu.openSongListOptions = function (event, songList, positionTo, isNotSearchList) {
 
     if (event)
         event.stopPropagation();
@@ -477,7 +522,7 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
         {text: "Play", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
-                var playlist = searchController.songs.searchResults;
+                var playlist = songList;
                 if (playlist && playlist.length > 0)
                     playlistController.playSongList(playlist.slice(0, searchController.maxResults));
             }, 150)
@@ -485,7 +530,7 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
         {text: "Play next", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
-                var playlist = searchController.songs.searchResults;
+                var playlist = songList;
                 if (playlist && playlist.length > 0)
                     playlistController.playSongListNext(playlist.slice(0, searchController.maxResults));
             }, 150)
@@ -493,7 +538,7 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
         {text: "Add to Playlist", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
-                var playlist = searchController.songs.searchResults;
+                var playlist = songList;
                 if (playlist && playlist.length > 0)
                     playlistController.addSongListElementsToPlaylist(positionTo, playlist.slice(0, searchController.maxResults), "l");
 
@@ -501,7 +546,7 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
         }},
         {text: "Create new Playlist", callback: function () {
             optionsMenu.closePopup();
-            var playlist = searchController.songs.searchResults || [];
+            var playlist = songList || [];
             setTimeout(function () {
                 if (playlist && playlist.length > 0)
                     playlistController.loadNewPlaylistWithSongs(playlist.slice(0, searchController.maxResults))
@@ -512,14 +557,16 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
 
     ]
 
-    //More Results can be displayed
-    if (!searchController.isOnlyTypeDisplayed(1)) {
-        optionsMenu.options.unshift({text: "Show all results", callback: function () {
-            optionsMenu.closePopup();
-            setTimeout(function () {
-                searchController.setShowMode(1)
-            }, 150)
-        }})
+    if (!isNotSearchList) {
+        //More Results can be displayed
+        if (!searchController.isOnlyTypeDisplayed(1)) {
+            optionsMenu.options.unshift({text: "Show all results", callback: function () {
+                optionsMenu.closePopup();
+                setTimeout(function () {
+                    searchController.setShowMode(1)
+                }, 150)
+            }})
+        }
     }
 
 
@@ -530,6 +577,28 @@ optionsMenu.openSongResultsOptions = function (event, positionTo) {
     $("#popupOptions-popup").css("margin-top", "").css("margin-left", "1px");
 
 
+}
+
+
+/**
+ * Menu for all Songs in Explore List
+ * @param event
+ * @param positionTo
+ */
+
+optionsMenu.openSongExploreOptions = function (event, positionTo) {
+    optionsMenu.openSongListOptions(event, exploreController.songs.searchResults, positionTo, true)
+}
+
+
+/**
+ * Menu for all Songs in Searchlist
+ * @param event
+ * @param positionTo
+ */
+
+optionsMenu.openSongResultsOptions = function (event, positionTo) {
+    optionsMenu.openSongListOptions(event, searchController.songs.searchResults, positionTo)
 }
 
 
