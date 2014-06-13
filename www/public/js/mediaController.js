@@ -338,6 +338,44 @@ mediaController.getVersions = function () {
 
 mediaController.reloadVersions = function(){
     $('#loadversionimg').css("opacity", "1");
+    var song = playbackController.getPlayingSong();
+    var reload = function (artistString, titleString,duration) {
+        $.ajax({
+            timeout: 30000,
+            url: preferences.serverURL + "?reloadversions=" + artistString + "&title=" + titleString + "&duration=" + duration + "&auth=" + authController.ip_token,
+            success: function (data) {
+                $('#loadversionimg').css("opacity", "0");
+            }
+        })
+    }
+    var getinfo = function (artistString, titleString) {
+        //mediaController.currentvideoURL = "";
+        $.ajax({
+            url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + artistString + "&track=" + titleString + "&format=json",
+            success: function (data) {
+
+                    var duration = 200000;
+
+                    if (data.track) {
+                        if (data.track.duration) {
+                            duration = data.track.duration;
+                        }
+                    }
+                    //  alert(artistString+" - "+titleString);
+                    if (authController.ip_token != "auth" && authController.ip_token != "") {
+                        var loadError = false;
+                        reload(artistString, titleString,duration);
+                     }
+
+            }
+
+        })
+    }
+
+
+   var artistString = encodeURIComponent(mediaController.getSongArtist(song));
+   var titleString = encodeURIComponent(song.name);
+   getinfo(artistString,titleString);
 
 
 }
