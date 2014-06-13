@@ -759,15 +759,15 @@
                  <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" ng-if="songversion.duration>0;"  class="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion,1,1)">
                     <a href="#" ng-class="{selectedversion: songversion.url==mediaController.currentvideoURL}" style="padding-left: 15px!important;" id="" title="{{songversion.url}}">{{songversion.title}}{{mediaController.getSiteName(songversion.url ,' - ')}}<span style="opacity:0"> ..{{mediaController.showDuration(songversion)}}</span> <span style="position:absolute;right: 42px;top:10px;opacity:0.8"> {{ mediaController.showDuration(songversion) }}</span> </a>
                 </li>
-                <h3 style="margin-right: 40px; margin-left:40px;text-align: center;height:37px;">
-                <a  href="#"  id="ReloadVersions" title="ReloadVersions" onclick="mediaController.reloadVersions();" >Search for new versions of this song </a>
-                </h3>
             </ul>
+            <div id = "reloadVersionButton" style="margin-right: 10px; margin-left:10px;margin-top:2px;margin-bottom:2px;text-align: center;">
+                <a  href="#" class="ReloadVersions  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-search ui-btn-icon-left ui-btn-a"  id="ReloadVersions" title="ReloadVersions" onclick="mediaController.reloadVersions();" >Search for new versions of this song </a>
+            </div>
             <div id="loadversionimg" style="opacity:0">
                 <img src="public/img/loader.gif"/>
             </div>
         </div>
-    </form>
+    </form> 
 </div>
 
 
