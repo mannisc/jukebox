@@ -124,7 +124,8 @@ uiController.init = function () {
     })
 
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-        $("#titleHeader").show();
+        $("#titleHeader").show().css("opacity", "1");
+
         $("#iconHeader").css("opacity", "1");
 
     } else {
@@ -932,6 +933,26 @@ uiController.toggleGridLayout = function () {
         }, 800)
     }, 0);
 }
+
+
+
+
+
+uiController.disableUI = function(disable){
+   if(disable){
+       $(".fullscreendisable").show()
+       $.mobile.loading("show");
+
+   } else{
+       $(".fullscreendisable").hide()
+       $.mobile.loading("hide");
+
+   }
+
+
+}
+
+
 
 //TODO no usage yet, remove uU
 uiController.showBackgroundImage = function (show) {

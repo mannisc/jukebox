@@ -44,10 +44,15 @@ background: none!important;
     -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
     border: 1px solid rgba(0,0,0,0.25);
+    border-radius: 2px!important;
+
+    /*
     border-top-left-radius: 0.3125em;
     border-top-right-radius: 0.3125em;
     border-bottom-right-radius: 0.3125em;
     border-bottom-left-radius: 0.3125em;
+    */
+
     -webkit-box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 3px;
     box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 3px;
     background-color: rgb(51, 51, 51);
@@ -455,7 +460,7 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
     -ms-perspective: 150px!important;
     -ms-perspective-origin: 32px 50%!important;
     perspective: 150px!important;
-    perspective-origin: 50% 50%!important;
+    perspective-origin: 32px 50%!important;
 }
 
 
@@ -474,7 +479,7 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
       -ms-perspective: 150px!important;
       -ms-perspective-origin: 32px 50%!important;
       perspective: 150px!important;
-      perspective-origin: 50% 50%!important;
+      perspective-origin: 32px 50%!important;
 }
 
 
@@ -486,14 +491,14 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
    -moz-box-shadow: 3px 0p 5px rgba(0,0,0,0.4);
 -webkit-box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
 box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
-
-    -webkit-transform:none!important;
-  -moz-transform: none!important;
-  transform: none!important;
-
-   /* -webkit-transform-origin: 50% 50%;
-    transform-origin: 50% 50%!important;
-    */
+    /*
+     -webkit-transform:none!important;
+   -moz-transform: none!important;
+   transform: none!important;
+     */
+     /* -webkit-transform-origin: 50% 50%;
+      transform-origin: 50% 50%!important;
+      */
 
 
     -webkit-transform: rotateY(0deg) ;
@@ -1751,6 +1756,7 @@ background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop
 
 .chosen-choices.ui-input  {
     padding-right:30px;
+    border: 1px solid rgb(10, 10, 177);
 }
 .chosen-choices.ui-input  input{
 
