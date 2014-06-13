@@ -96,8 +96,12 @@ mediaController.mediaEnded = function () {
         playbackController.playNextSong();
 }
 
+mediaController.loadPreviewSafeApplyTimer =   null;
 
 mediaController.loadPreview = function(song){
+
+
+
     console.dir("loadpreview ajax!!!!");
     var artistString = mediaController.getSongArtist(song);
     var titleString = song.name
@@ -108,7 +112,14 @@ mediaController.loadPreview = function(song){
                 if(data.track){
                     if(data.track.album){
                         song.image = data.track.album.image;
-                        $scope.safeApply();
+                        if(mediaController.loadPreviewSafeApplyTimer)  {
+                            clearTimeout(mediaController.loadPreviewSafeApplyTimer)
+                            mediaController.loadPreviewSafeApplyTimer = null;
+                        }
+                        mediaController.loadPreviewSafeApplyTimer = setTimeout(function(){
+                            mediaController.loadPreviewSafeApplyTimer = null;
+                            $scope.safeApply();
+                        },500)
                     }
                 }
             }
@@ -335,6 +346,13 @@ mediaController.getVersions = function () {
         }
     }
 }
+
+mediaController.reloadVersions = function(){
+    $('#loadversionimg').css("opacity", "1");
+
+
+}
+
 
 mediaController.playVersion = function (songversion, rating, resetVersion) {
     console.dir("PLAY VERSION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -1006,10 +1024,21 @@ mediaController.getSongDisplayName = function (song) {
  * @returns {string}
  */
 mediaController.getElementTitle = function(element) {
+
+    var name = element.name;
+
+    var artist =element.artist.name;
+    if (element.artist&&element.artist.name)
+        artist = element.artist.name;
+    else
+        artist = mediaController.unknownData;
+
+
     if(element.isPlaylist){
-       return "Playlist: "+ element.name+" - "+element.artist.name
+       return "Playlist: "+ name+" - " +  artist;
     } else{
-       return "Song: "+ element.name+" - "+element.artist.name
+
+       return "Song: "+ name+" - " +  artist;
 
     }
 

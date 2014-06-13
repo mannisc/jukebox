@@ -895,15 +895,17 @@ playlistController.insertSongsIntoQueue = function (songs) {
 
 /**
  * Add selected Songs to Songlist
- * @param event
+ * @param positionTo
+ * @param listToAdd   list of songs AND playlists
+ * @param arrowDirection
  */
-playlistController.addSongListElementsToPlaylist = function (positionTo, songlist, arrowDirection) {
+playlistController.addSongListElementsToPlaylist = function (positionTo, listToAdd, arrowDirection) {
 
-    songlist = jQuery.extend(true, [], songlist);
+    listToAdd = jQuery.extend(true, [], listToAdd);
 
     //Let the user choose the playlist
     setTimeout(function () {
-        optionsMenu.openChoosePlaylist(positionTo, songlist, arrowDirection);
+        optionsMenu.openChoosePlaylist(positionTo, listToAdd, arrowDirection);
     }, 300)
 
 
@@ -1021,7 +1023,6 @@ playlistController.removeSelectedElementsFromPlaylist = function (event, noConfi
                     for (var j = 0; j < playlistController.playlists.length; j++) {
                         if (playlistController.playlists[j].gid == playlistController.selectedSongs[i].song.gid) {
                             accountController.deletePlaylist(playlistController.playlists[j].gid) ;
-                            alert("!! "+playlistController.playlists[j].name)
 
                             playlistController.playlists.splice(j, 1);
                             deletedPlaylist = true;
