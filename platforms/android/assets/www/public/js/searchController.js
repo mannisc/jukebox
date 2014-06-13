@@ -117,15 +117,6 @@ searchController.init = function () {
     // uiController.searchListScroll.on("scrollStart",function(){
     //})
 
-    setTimeout(function(){ //available after 10 seconds
-        $("#searchinput").focus(function () {
-            var that = $(this);
-            window.setTimeout(function () {
-                if ($(".ui-popup-active, .ui-popup-container.pop.in").length == 0)
-                    that.select();
-            }, 100);
-        });
-    },10000)
 
 
     $("#searchinput").on("input", function () {
