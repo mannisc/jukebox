@@ -139,8 +139,11 @@ $(document).ready(function () {
             facebookHandler.init();
             mediaController.init();
             authController.init();
+
             uiController.init();
-            searchController.init();
+
+            viewController.init();
+
             playlistController.init();
             accountController.init();
             videoController.init();

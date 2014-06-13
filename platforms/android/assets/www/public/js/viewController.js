@@ -13,12 +13,28 @@ var viewController = function () {
 
 };
 
-viewController.buttonActive = -1;
 
 
+viewController.views = [searchController,exploreController,myBaseController];
+
+viewController.activeView = null;
+
+
+
+/**
+ * Init View Controller
+ */
 viewController.init = function () {
 
-    setTimeout(function(){ //available after 10 seconds
+    //Init Views
+    for (var i = 0; i < viewController.views.length; i++) {
+        if( viewController.views[i].init)
+         viewController.views[i].init();
+    }
+
+
+    //Select Full Text if focused, available after 10 seconds  after startup
+    setTimeout(function(){
         $("#searchinput").focus(function () {
             var that = $(this);
             window.setTimeout(function () {
@@ -26,162 +42,236 @@ viewController.init = function () {
                     that.select();
             }, 100);
         });
-    },10000)
+    },10000);
 
-
+    //  Text entered into input
     $("#searchinput").on("input", function () {
-
-        if( searchController.showMode == 5)
-            searchController.backShowMode();
-
-
-        $("#searchlist .iScrollPlayIndicator").hide();
-        $("#searchlist .iScrollScrollUpIndicator").hide();
-
-        switch (searchController.buttonActive) {
-            case 0:
-                searchController.startSearch();
-                break;
-            case 1:
-                searchController.filterMusic();
-                break;
-            case 2:
-                searchController.filterMusic();
-                break;
-        }
+        viewController.activeView.onInput();
     })
 
     $("#controlbar .ui-input-clear").click(function () {
 
-        switch (searchController.buttonActive) {
-            case 0://Search
-                searchController.startSearch();//Show Populars
-                break;
-            case 1://Suggestions
-                searchController.removeFilterSongs();
-                break;
-            case 2://Explore
+        viewController.activeView.onClear();
 
-                break;
-            default:
-
-                break;
-        }
     })
 
 
-    searchController.activateButton(0, true);
+    //Show search at startup
+    viewController.activateView(searchController,true);
 
+    //Show Start Results
     if (!urlParams.search || urlParams.search == "") {
         setTimeout(function () {
-            searchController.startSearch()
+            viewController.activeView.onInput();
         }, 500)
 
     }
 
-    setTimeout(function () {
-        uiController.searchListScroll.refresh();
-    }, 150)
-
-    searchController.scrollUpIndicator = $('<div class="iScrollScrollUpIndicator fadeincomplete" style="display:none;"></div>');
-    $("#searchlist .iScrollVerticalScrollbar").prepend(searchController.scrollUpIndicator);
-
-    searchController.scrollUpIndicator.click(function () {
-        uiController.searchListScroll.scrollTo(0, 0, 200);
-    });
-
-
-    searchController.playIndicator = $('<div class="iScrollPlayIndicator fadeincomplete" style="display:none;"></div>');
-
-
-    searchController.playIndicator.appendTo("#searchlist .iScrollVerticalScrollbar");
-    searchController.playIndicator.click(function () {
-        uiController.searchListScroll.scrollToElement(".loadedsong", 700);
-    });
-
-
 }
 
+/**
+ * Shows loading bar in input
+ * @param show
+ */
+viewController.showLoading = function (show) {
+    if (show)
+        $(".ui-alt-icon.ui-icon-search, .ui-alt-icon .ui-icon-search, .ui-input-search").addClass("loading");
+    else
+        $(".ui-alt-icon.ui-icon-search, .ui-alt-icon .ui-icon-search, .ui-input-search").removeClass("loading");
+}
 
-searchController.activateButton = function (index, noAnimation) {
-    if (searchController.buttonActive == index)
-        return;
+/**
+ * Returns true if is active View
+ * @param view
+ * @returns {boolean}
+ */
+viewController.isActiveView = function(view){
+  return  viewController.activeView==view;
+}
 
-    //Unload actions for views
-    if (searchController.buttonActive == 0) {
-        searchController.searchSongsString = $("#searchinput").val();
-    }
-    //Explore
-    if (searchController.buttonActive == 2 && index != 2) {
-        searchController.hideExplore();
-    }
+/**
+ * Activated View
+ * @param viewController
+ */
+viewController.activateView = function(view, noAnimation, showFunction){
+    if(!viewController.isActiveView(view)){
+        viewController.showLoading(false);
+
+        $("#controlbar .ui-input-clear").addClass("ui-input-clear-hidden");
 
 
-    searchController.buttonActive = index;
-    searchController.emptySearchList(true);
-    console.log("XXXXXXXääääääääääääääääääääääääääääääääääääää")
-    $("#searchlist .iScrollPlayIndicator").hide();
-    $("#searchlist .iScrollScrollUpIndicator").hide();
+        //Old View exists
+        if(viewController.activeView){
+            viewController.activeView.hideView();
 
+            if(viewController.activeView.usesSearchList){
+                $("#searchlist .iScrollPlayIndicator").hide();
+                $("#searchlist .iScrollScrollUpIndicator").hide();
+                $("#searchlist .iScrollIndicator").hide();
 
-    var input = $("#searchinput").parent();
-    var oIndex = input.data("button");
-    if (oIndex) {
-        var oButton = $("#searchbutton" + oIndex).parent();
-        oButton.show();
-        var width = oButton.width();
-        oButton.removeClass("animated");
-        oButton.css("width", input.width());
+            }
 
-        setTimeout(function () {
-            oButton.addClass("animated");
-            oButton.css("width", width)
+        }
 
-        }, 50)
-    }
-    input.data("button", index + 1);
+        viewController.activeView =  view;
 
-    var button = $("#searchbutton" + (index + 1)).parent();
+        var index = viewController.activeView.index;
 
-    input.removeClass("animated");
-    if (!noAnimation)
-        input.css("width", button.width());
-    setTimeout(function () {
+        var input = $("#searchinput").parent();
+        var oIndex = input.data("button");
+        if (oIndex) {
+            var oButton = $("#searchbutton" + oIndex).parent();
+            oButton.show();
+            var width = oButton.width();
+            oButton.removeClass("animated");
+            oButton.css("width", input.width());
+
+            setTimeout(function () {
+                oButton.addClass("animated");
+                oButton.css("width", width)
+
+            }, 50)
+        }
+        input.data("button", index + 1);
+
+        var button = $("#searchbutton" + (index + 1)).parent();
+
+        input.removeClass("animated");
         if (!noAnimation)
-            input.addClass("animated");
+            input.css("width", button.width());
 
-        input.css("width", "");
         setTimeout(function () {
-            input.find("input").focus();
-        }, 500)
+            if (!noAnimation)
+                input.addClass("animated");
 
-        uiController.toggleSearchButton(index + 1);
+            input.css("width", "");
+            setTimeout(function () {
+                input.find("input").focus();
+            }, 500)
 
-    }, 60)
+            uiController.toggleSearchButton(index + 1);
 
-    switch (index) {
-        case 0:
-            $("#searchinput").val(searchController.searchSongsString);
-            $(input).insertAfter(button).find("input").attr("placeholder", "Search Songs and Playlists");
-            break;
-        /*case 1:
-         $("#searchinput").val("");
-         $(input).insertAfter(button).find("input").attr("placeholder", "Filter Popular Songs");
-         break; */
-        case 1:
-            $("#searchinput").val("");
-            $(input).insertAfter(button).find("input").attr("placeholder", "Filter Songs");
-            break;
-        case 2:
-            $("#searchinput").val("");
-            $(input).insertAfter(button).find("input").attr("placeholder", "Search Content");
-            break;
-        case 3:
-            $("#searchinput").val("");
-            $(input).insertAfter(button).find("input").attr("placeholder", "Search Playlists");
-            break;
+        }, 60)
+
+        $("#searchinput").val("");
+
+        if(viewController.activeView.inputText)
+         $(input).insertAfter(button).find("input").attr("placeholder", viewController.activeView.inputText );
+
+        button.hide();
+
+        if(viewController.activeView.usesSearchList) {
+            $("#searchlayoutbutton").show();
+            $("#searchlist").show();
+        }
+        else {
+            $("#searchlayoutbutton").hide();
+            $("#searchlist").hide();
+        }
+
+        viewController.activeView.showView(showFunction);
     }
 
-
-    button.hide();
 }
+
+
+/**
+ * Applies Song list for active View
+ *
+ * used interface:
+ *   .currentSearchID
+ *   .isSongInList
+ *   .displayLimit
+ *
+ * @param currentSearchID
+ * @param size
+ * @param delays
+ */
+
+viewController.applySongList = function (currentSearchID,size,delays,stepSize,stepDelay) {
+
+    console.log("-------------------------------------")
+
+    $(".specialplaylistbutton").removeClass("fadeincompletefaster");
+    $("#searchlist .iScrollIndicator").hide();
+
+
+
+    console.log(delays)
+    console.log(size + "  " + stepSize)
+
+    var songInList = viewController.activeView.isSongInList(playbackController.playingSong);
+    $("#searchlist .loadedsong").removeClass("loadedsong playing pausing stillloading");
+    $("#searchlist .oldloadedsong").removeClass("loadedsong");
+
+
+
+    for (var i = 1; i <= delays; i++) {
+
+        var show = function (index) {
+            setTimeout(function () {
+                if (viewController.activeView.currentSearchID == currentSearchID) {
+                    console.log(index + " mm  " + viewController.activeView.songs.searchResults.length)
+
+
+                    /*  if (searchController.showMode == 0)
+                     searchController.displayLimit = searchController.maxResults;
+                     else*/
+                    viewController.activeView.displayLimit = size * index / delays;
+
+                    console.log("safeapply")
+                    $scope.safeApply();
+
+                    //New Elements Applied
+                    if ((songInList && $("#searchlist .loadedsong").length == 0) || index == 1)
+                        playbackController.remarkSong();
+
+
+                    //First new elements applied
+                    if (index == 1) {
+
+                        if (songInList)
+                            playbackController.positionPlayIndicator();
+
+                        playlistController.updateDeselectedSong();
+                        $(".specialplaylistbutton").addClass("fadeincompletefaster");
+
+
+
+
+                    }
+                    //All elements applied
+                    if (index == delays) {
+                        if (songInList)
+                            playbackController.positionPlayIndicator();
+
+                        searchController.makeSearchListDraggable();
+                        setTimeout(function () {
+                            uiController.searchListScroll.refresh();
+                            $("#searchlistview li").removeClass("fadeincompletefast fadeincompletefaster");
+
+
+                        }, 500)
+                        setTimeout(function () {
+                            uiController.searchListScroll.refresh();
+
+                        }, 2000)
+                    } else if (index % 3 == 0) {
+                        uiController.searchListScroll.refresh();
+                        if (songInList)
+                            playbackController.positionPlayIndicator();
+                    }
+                    $("#searchlistview").listview('refresh');
+
+
+                }
+            }, stepDelay * (index - 1))
+
+        }
+        show(i)
+    }
+
+}
+
+
+
