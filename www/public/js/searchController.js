@@ -40,6 +40,12 @@ searchController.artists.searchResults = [];
 searchController.users.searchResults = [];
 
 
+searchController.usesSearchList = true;
+
+searchController.index = 0;
+
+searchController.inputText = "Search Songs and Playlists";
+
 searchController.currentSearchID = 0;
 
 searchController.maxResults = 100;
@@ -48,20 +54,11 @@ searchController.displayLimit = searchController.maxResults;
 
 searchController.searchSongsString = "";
 
-
-searchController.searchResultsComplete = [];
-
-searchController.searchCounter = 0;
-
-searchController.buttonActive = -1;
-
+//What content is displayed in the list
 searchController.showMode = -1; //-1: nichts, 0: Alle Ergebnisse 1: songs,2:  playlists, 3: artists,4: user , 5: one playlist
-
 
 searchController.maxPopularSongPages = 2;
 searchController.maxArtistSongPages = 2;
-searchController.serverSearch = false;
-
 
 /*Search types*/
 searchController.searchTypeSongs = 0;
@@ -73,7 +70,6 @@ searchController.searchTypeUsers = 3;
 //Generated data
 
 if (generatedData && generatedData.charts) {
-
     searchController.preloadedPopularSongs = {"track": generatedData.charts};
     setTimeout(function(){
         searchController.songs.cleanList(searchController.preloadedPopularSongs.track);
@@ -84,8 +80,6 @@ else
 
 
 searchController.init = function () {
-
-
     uiController.searchListScroll = new IScroll('#searchlist', {
         interactiveScrollbars: true,
         zoom: true,
@@ -94,7 +88,9 @@ searchController.init = function () {
         mouseWheel: true,
         zoomMin: 0.2,
         zoomMax: 1,
+
         startZoom: 1,
+        useTransition:true,
         // wheelAction: 'zoom',
         scrollbars: true,
         noHorizontalZoom: true,
@@ -114,60 +110,6 @@ searchController.init = function () {
 
     });
 
-    // uiController.searchListScroll.on("scrollStart",function(){
-    //})
-
-
-
-    $("#searchinput").on("input", function () {
-
-        if( searchController.showMode == 5)
-          searchController.backShowMode();
-
-
-        $("#searchlist .iScrollPlayIndicator").hide();
-        $("#searchlist .iScrollScrollUpIndicator").hide();
-
-        switch (searchController.buttonActive) {
-            case 0:
-                searchController.startSearch();
-                break;
-            case 1:
-                searchController.filterMusic();
-                break;
-            case 2:
-                searchController.filterMusic();
-                break;
-        }
-    })
-
-    $("#controlbar .ui-input-clear").click(function () {
-
-        switch (searchController.buttonActive) {
-            case 0://Search
-                searchController.startSearch();//Show Populars
-                break;
-            case 1://Suggestions
-                searchController.removeFilterSongs();
-                break;
-            case 2://Explore
-
-                break;
-            default:
-
-                break;
-        }
-    })
-
-
-    searchController.activateButton(0, true);
-
-    if (!urlParams.search || urlParams.search == "") {
-        setTimeout(function () {
-            searchController.startSearch()
-        }, 500)
-
-    }
 
     setTimeout(function () {
         uiController.searchListScroll.refresh();
@@ -180,10 +122,7 @@ searchController.init = function () {
         uiController.searchListScroll.scrollTo(0, 0, 200);
     });
 
-
     searchController.playIndicator = $('<div class="iScrollPlayIndicator fadeincomplete" style="display:none;"></div>');
-
-
     searchController.playIndicator.appendTo("#searchlist .iScrollVerticalScrollbar");
     searchController.playIndicator.click(function () {
         uiController.searchListScroll.scrollToElement(".loadedsong", 700);
@@ -193,87 +132,71 @@ searchController.init = function () {
 }
 
 
-searchController.activateButton = function (index, noAnimation) {
-    if (searchController.buttonActive == index)
-        return;
-
-    //Unload actions for views
-    if (searchController.buttonActive == 0) {
-        searchController.searchSongsString = $("#searchinput").val();
-    }
-    //Explore
-    if (searchController.buttonActive == 2 && index != 2) {
-        searchController.hideExplore();
-    }
 
 
-    searchController.buttonActive = index;
-    searchController.emptySearchList(true);
-    console.log("XXXXXXXääääääääääääääääääääääääääääääääääääää")
+/**
+ * Something was entered in input
+ */
+searchController.onInput = function(){
+
+    if( searchController.showMode == 5)
+        searchController.backShowMode();
+
     $("#searchlist .iScrollPlayIndicator").hide();
     $("#searchlist .iScrollScrollUpIndicator").hide();
 
+    searchController.startSearch();
 
-    var input = $("#searchinput").parent();
-    var oIndex = input.data("button");
-    if (oIndex) {
-        var oButton = $("#searchbutton" + oIndex).parent();
-        oButton.show();
-        var width = oButton.width();
-        oButton.removeClass("animated");
-        oButton.css("width", input.width());
+}
 
-        setTimeout(function () {
-            oButton.addClass("animated");
-            oButton.css("width", width)
-
-        }, 50)
-    }
-    input.data("button", index + 1);
-
-    var button = $("#searchbutton" + (index + 1)).parent();
-
-    input.removeClass("animated");
-    if (!noAnimation)
-        input.css("width", button.width());
-    setTimeout(function () {
-        if (!noAnimation)
-            input.addClass("animated");
-
-        input.css("width", "");
-        setTimeout(function () {
-            input.find("input").focus();
-        }, 500)
-
-        uiController.toggleSearchButton(index + 1);
-
-    }, 60)
-
-    switch (index) {
-        case 0:
-            $("#searchinput").val(searchController.searchSongsString);
-            $(input).insertAfter(button).find("input").attr("placeholder", "Search Songs and Playlists");
-            break;
-        /*case 1:
-         $("#searchinput").val("");
-         $(input).insertAfter(button).find("input").attr("placeholder", "Filter Popular Songs");
-         break; */
-        case 1:
-            $("#searchinput").val("");
-            $(input).insertAfter(button).find("input").attr("placeholder", "Filter Songs");
-            break;
-        case 2:
-            $("#searchinput").val("");
-            $(input).insertAfter(button).find("input").attr("placeholder", "Search Content");
-            break;
-        case 3:
-            $("#searchinput").val("");
-            $(input).insertAfter(button).find("input").attr("placeholder", "Search Playlists");
-            break;
-    }
+/**
+ * Input was cleared
+ */
+searchController.onClear = function(){
+    searchController.startSearch();//Show Populars
+}
 
 
-    button.hide();
+/**
+ *  Show View
+ */
+searchController.showView = function(){
+    uiController.searchListScroll.scrollTo(0, 0,0);
+
+    searchController.visible = true;
+
+    $("#searchinput").val(searchController.searchSongsString);
+
+    setTimeout(function(){
+        if(  searchController.visible){
+            searchController.displayLimit = 0;
+
+            searchController.applySongList(searchController.currentSearchID);
+
+
+
+        }
+
+    },350)
+}
+
+
+/**
+ * Hide View
+ */
+searchController.hideView = function(){
+
+    searchController.visible = false;
+
+    searchController.currentSearchID++;
+
+    searchController.displayLimit = 0;
+
+    searchController.searchSongsString = $("#searchinput").val();
+    $scope.safeApply();
+    $("#searchlistview").listview('refresh');
+
+
 }
 
 
@@ -292,7 +215,6 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
     var deferred = $.Deferred();
 
     searchURL = searchURL.replace("%searchTerm", searchTerm);
-
 
     var searchserver = function () {
         if (!nativeSearchTerm)
@@ -354,15 +276,12 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
                 data = {};
             //Search Results
             if (data.results && !(data.results.trackmatches == "\n" || data.results.albummatches == "\n" || data.results.artistmatches == "\n")) {
-                searchController.serverSearch = false;
                 deferred.resolve({list: data, native: false});
             } // Similarity search
             else if (data.similartracks && !(data.similartracks == "\n")) {
-                searchController.serverSearch = false;
                 deferred.resolve({list: data.similartracks, native: false});
             } else {
                 if (!dontSearchNative) {
-                    searchController.serverSearch = true;
                     searchserver();
                 } else
                     deferred.resolve({list: [], native: true});
@@ -374,7 +293,6 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
         error: function () {
 
             if (!dontSearchNative) {
-                searchController.serverSearch = true;
                 searchserver();
             } else
                 deferred.resolve({list: [], native: true});
@@ -393,7 +311,7 @@ searchController.startSearch = function (searchTerm) {
     if (!searchTerm)
         searchTerm = $("#searchinput").val();
 
-    searchController.showLoading(true);
+    viewController.showLoading(true);
 
     if (searchTerm && $.trim(searchTerm) != "") {
         searchController.showedPopulars = false;
@@ -423,67 +341,6 @@ searchController.startSearch = function (searchTerm) {
 };
 
 
-searchController.showSimilarSongs = function (event) {
-    event.stopPropagation();
-
-    var list = playlistController.getSongListFromSelection();
-
-    var index = Math.round(Math.random() * (list.length - 1));
-    var song = list[index];
-
-    playlistController.deselectSongs();
-    searchController.searchSimilarSongs(song);
-
-}
-
-
-searchController.searchSimilarSongs = function (song) {
-    searchController.activateButton(1);
-
-
-    searchController.showLoading(true);
-
-    searchController.showedPopulars = false;
-
-    searchController.currentSearchID = searchController.currentSearchID + 1;
-
-    var search = function (searchID) {
-        $.when(
-                searchController.songs.startSuggestionsSearchDeferred(mediaController.getSongArtist(song), song.name)
-
-            ).then(function (songList) {
-                if (searchID == searchController.currentSearchID) {
-
-                    if (song) {
-
-                        for (var i = 0; i < songList.length; i++) {
-
-                            if (mediaController.getSongDisplayName(songList[i]).toLowerCase() == mediaController.getSongDisplayName(song).toLowerCase()) {
-                                songList.splice(i, 1);
-
-                                i--;
-                            }
-                        }
-
-                        song = jQuery.extend(true, {}, song);
-                        delete song.gid;
-                        delete song.playlistgid;
-
-                        songList = [song].concat(songList);
-
-
-                    }
-
-                    searchController.completedSearch(songList, null, null, null);
-
-                }
-            });
-    };
-
-    search(searchController.currentSearchID);
-
-}
-
 
 /**
  * Search was completed
@@ -512,7 +369,7 @@ searchController.completedSearch = function (songList, playlistList, artistsList
 
 
         searchController.applySongList(searchController.currentSearchID);
-        setTimeout(searchController.showLoading, 100); //show=false
+        setTimeout(viewController.showLoading, 100); //show=false
 
     }
 
@@ -537,8 +394,9 @@ searchController.showPopulars = function () {
 
 
 searchController.emptySearchList = function (dontInitFully) {
-    searchController.searchCounter++;
-    searchController.showLoading(false);
+
+    searchController.currentSearchID++;
+    viewController.showLoading(false);
     searchController.songs.searchResults = [];
     searchController.playlists.searchResults = [];
     searchController.artists.searchResults = [];
@@ -576,7 +434,7 @@ searchController.emptySearchList = function (dontInitFully) {
 searchController.filterMusic = function (filterTerm) {
     if (!filterTerm)
         filterTerm = $("#searchinput").val();
-    searchController.showLoading(true);
+    viewController.showLoading(true);
     uiController.searchListScroll.scrollTo(0, 0, 1000)
 
     filterTerm = filterTerm.toLowerCase();
@@ -607,7 +465,7 @@ searchController.filterMusic = function (filterTerm) {
 
     setTimeout(function () {
         uiController.searchListScroll.refresh();
-        searchController.showLoading(false);
+        viewController.showLoading(false);
     }, 1000)
     searchController.makeSearchListDraggable();
     setTimeout(function () {
@@ -643,25 +501,6 @@ searchController.songs.startSearchDeferred = function (searchTerm) {
 }
 
 
-searchController.songs.startSuggestionsSearchDeferred = function (artist, title) {
-    var deferred = $.Deferred();
-
-    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&%searchTerm&api_key="+searchController.lastfmapikey+"&format=json"
-
-    $.when(
-
-            searchController.basicOnlineSearchDeferred(onlineSearchURL, "artist=" + artist + "&track=" + title, searchController.searchTypeSongs, false, artist)
-
-        ).then(function (onlineList) {
-            var songList = searchController.songs.completeSearch([], onlineList);
-            console.log("FFFOUNDDDD")
-            console.dir(JSON.stringify(songList))
-            deferred.resolve(songList);
-
-        });
-    return deferred.promise();
-
-}
 
 searchController.formatNumber = function(x) {
     if(x.indexOf(".")==-1)
@@ -705,8 +544,7 @@ searchController.songs.cleanList = function(songList){
 }
 
 
-searchController.songs.completeSearch = function (localList, onlineList) {
-
+searchController.songs.completeSearch =  function (localList, onlineList) {
 
     //Is from last fm or native server -> so convert and extract songlist accordingly
     if (onlineList.native) {
@@ -754,6 +592,8 @@ searchController.songs.completeSearch = function (localList, onlineList) {
 
     return songList;
 }
+
+
 
 
 /*Playlists -------------------------------------------------------------------------------------------------------------------------------------*/
@@ -932,6 +772,12 @@ searchController.getSongFromIndex = function(index){
 
 }
 
+
+/**
+ * Applies search List so that song does not stop all the time
+ * @param currentSearchID
+ */
+
 searchController.applySongList = function (currentSearchID) {
 
     console.log("-------------------------------------")
@@ -940,6 +786,7 @@ searchController.applySongList = function (currentSearchID) {
 
     var stepSize = 10;
     var stepDelay = 50;
+
     if (searchController.showMode == 0) {
         var size = searchController.maxResults;
     }
@@ -954,177 +801,28 @@ searchController.applySongList = function (currentSearchID) {
     console.log(delays)
     console.log(size + "  " + stepSize)
 
-
-    var songInList = searchController.isSongInList(playbackController.playingSong);
-    $("#searchlist .loadedsong").removeClass("loadedsong playing pausing stillloading");
-    $("#searchlist .oldloadedsong").removeClass("loadedsong");
-
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXx")
-
-    console.log(searchController.songs.searchResults.length)
-
-    for (var i = 1; i <= delays; i++) {
-
-        var show = function (index) {
-            setTimeout(function () {
-                if (searchController.currentSearchID == currentSearchID) {
-                    console.log(index + " mm  " + searchController.songs.searchResults.length)
-
-
-                    /*  if (searchController.showMode == 0)
-                     searchController.displayLimit = searchController.maxResults;
-                     else*/
-                    searchController.displayLimit = size * index / delays;
-
-                    console.log("safeapply")
-                    $scope.safeApply();
-                    $("#searchlistview").listview('refresh');
-
-                    //New Elements Applied
-                    if ((songInList && $("#searchlist .loadedsong").length == 0) || index == 1)
-                        playbackController.remarkSong();
-
-
-                    //First new elements applied
-                    if (index == 1) {
-                        if (songInList)
-                            playbackController.positionPlayIndicator();
-
-                        playlistController.updateDeselectedSong();
-                        $(".specialplaylistbutton").addClass("fadeincompletefaster");
-                    }
-                    //All elements applied
-                    if (index == delays) {
-                        if (songInList)
-                            playbackController.positionPlayIndicator();
-
-                        searchController.makeSearchListDraggable();
-                        setTimeout(function () {
-                            uiController.searchListScroll.refresh();
-                            $("#searchlistview li").removeClass("fadeincompletefast fadeincompletefaster");
-
-
-                        }, 500)
-                        setTimeout(function () {
-                            uiController.searchListScroll.refresh();
-
-                        }, 2000)
-                    } else if (index % 3 == 0) {
-                        uiController.searchListScroll.refresh();
-                        if (songInList)
-                            playbackController.positionPlayIndicator();
-                    }
-
-
-                }
-            }, stepDelay * (index - 1))
-
-        }
-        show(i)
-    }
+    viewController.applySongList(currentSearchID,size,delays,stepSize,stepDelay);
 
 }
 
 
-searchController.removeFilterSongs = function () {
-    uiController.searchListScroll.scrollTo(0, 0, 1000)
-    console.log("!!!!!!!!!! gGGGGGGGG")
-    searchController.songs.searchResults = [];
-    $scope.safeApply();
-    var num = Math.min(searchController.maxResults, searchController.searchResultsComplete.length);
-    for (var i = 0; i < num; i++) {
-        searchController.songs.searchResults[i] = searchController.searchResultsComplete[i];
-    }
-
-    for (var i = 0; i < searchController.songs.searchResults.length; i++) {
-        searchController.songs.searchResults[i].id = "slsid" + helperFunctions.padZeros(i, ("" + searchController.songs.searchResults.length).length);
-    }
-    $scope.safeApply();
-    playbackController.remarkSong();
-
-    $("#searchlistview").listview('refresh');
-
-    setTimeout(function () {
-        uiController.searchListScroll.refresh();
-    }, 1000)
-    searchController.makeSearchListDraggable();
-    setTimeout(function () {
-        $("#searchlistview li").removeClass("fadeincompletefast");
-    }, 100)
-}
 
 
-searchController.showSuggestions = function () {  //Todo find songs the user really liked, means played very often for example
-    searchController.currentSearchID = searchController.currentSearchID + 1;
-
-    var index;
-    var song;
-    if (playbackController.playingSong) {
-        song = playbackController.playingSong;
-    }
-    else {
-        if (playlistController.currentQueue.length > 0) {     //CurrentQueue
-            index = Math.round(Math.random() * (playlistController.currentQueue.length - 1));
-
-            song = playlistController.currentQueue[index];
-        }
-        else if (!playlistController.playlistMode && playlistController.loadedPlaylistSongs.length > 0) { //Loaded Songs
-            index = Math.round(Math.random() * (playlistController.loadedPlaylistSongs.length - 1));
-
-            song = playlistController.loadedPlaylistSongs[index];
-        }
-        else if (searchController.playlists.length > 0) {  //Playlist
-            index = Math.round(Math.random() * (searchController.songs.playlists.length - 1));
-            if (searchController.playlists[index].tracks.length > 0) {
-                var index2 = Math.round(Math.random() * (searchController.playlists[index].tracks.length - 1));
-                song = searchController.playlists[index].tracks[index2];
-            }
-        } else if (searchController.songs.searchResults.length > 0) {    //SearchResult
-            index = Math.round(Math.random() * (searchController.songs.searchResults.length - 1));
-            song = searchController.songs.searchResults[index];
-        }
 
 
-    }
 
-    if (!song && generatedData.charts && generatedData.charts.length > 0) {
-        song = generatedData.charts[0]
-    }
-    if (song) {
-        searchController.searchSimilarSongs(song);
-    }
-    else {
-
-        searchController.startSearch("");
-    }
-
-
-}
-
-
-searchController.showExplore = function () {
-    $("#explorearea").show();
-    $("#searchlayoutbutton").hide();
-
-
-    searchController.emptySearchList()
-
-}
-
-
-searchController.hideExplore = function () {
-    $("#explorearea").hide();
-    $("#searchlayoutbutton").show();
-
-
-}
+//TODO SEARCH ARTIST SONGS------------------------------------------------
 
 
 searchController.searchArtistSongs = function (artist) {
-
+    alert("TODO CHANGE VIEW")
+    return
+    /*
     $("#searchinput").val(artist);
     searchController.searchSongsString = artist;
+
     searchController.activateButton(0);
+
     searchController.searchCounter++;
     function search(searchID) {
         searchController.searchSongsFromArtist(artist, function (list) {
@@ -1134,21 +832,15 @@ searchController.searchArtistSongs = function (artist) {
     }
 
     search(searchController.searchCounter);
-
+    */
 }
 
 
-searchController.showLoading = function (show) {
 
-    if (show)
-        $(".ui-alt-icon.ui-icon-search, .ui-alt-icon .ui-icon-search, .ui-input-search").addClass("loading");
-    else
-        $(".ui-alt-icon.ui-icon-search, .ui-alt-icon .ui-icon-search, .ui-input-search").removeClass("loading");
-
-}
-
+  /*
 
 searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
+
     searchController.showLoading(true);
 
     var searchString = artist;
@@ -1234,54 +926,7 @@ searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
     func(1, null);
 }
 
-searchController.topTracks = function (callbackSuccess) {
-
-    searchController.showLoading(true);
-    searchController.showedPopulars = true;
-
-    //TODO TEEEMMMMMMPPPPPP for no Internet
-    /* if (callbackSuccess)
-     callbackSuccess( {track:   playlistController.NOINTERNETHACK});
-     return;
-     */
-
-    var func = function (page, topresults) {
-        $.ajax({
-            url: "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&page=" + page + "&api_key="+searchController.lastfmapikey+"&format=json",
-            success: function (data) {
-                var dataOK = false;
-                if (data.tracks) {
-                    if (data.tracks != "\n") {
-                        dataOK = true;
-                        if (page == 1) {
-
-                            func(page + 1, data.tracks.track);
-                        }
-                        else if (page < searchController.maxPopularSongPages) {
-                            topresults = topresults.concat(data.tracks.track);
-                            func(page + 1, topresults);
-                        }
-                        else if (page >= searchController.maxPopularSongPages) {
-                            topresults = topresults.concat(data.tracks.track);
-                            topresults.track = topresults;
-                            if (callbackSuccess)
-                                callbackSuccess(topresults);
-                            setTimeout(searchController.showLoading, 1000);
-                        }
-                    }
-                }
-                if (dataOK == false && page > 1 && topresults) {
-                    if (callbackSuccess)
-                        callbackSuccess(topresults);
-                }
-
-            }, error: function () {
-                setTimeout(searchController.showLoading, 1000);
-            }
-        })
-    }
-    func(1, null);
-}
+*/
 
 
 /**
@@ -1570,7 +1215,7 @@ searchController.getShowModeLimit = function (type) {
                 if (uiController.gridLayout)
                     limit = Math.ceil(10 / uiController.gridLayoutCols) * uiController.gridLayoutCols;
                 else
-                    limit = 10;
+                    limit = 30;
                 break;
 
 

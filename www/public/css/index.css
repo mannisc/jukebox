@@ -473,6 +473,7 @@ input[type=button]{
 #controlbar .ui-input-search {
     margin-right: 10px;
     margin-top: 9px;
+    border: 1px solid rgb(177, 10, 10);
 
 }
 #controlbar .ui-input-btn{
@@ -943,7 +944,7 @@ video{
 
 
 #popupFeedback textarea{
-    height:100px!important;
+    height:150px!important;
 }
 
 
@@ -1212,9 +1213,13 @@ a, button, h1, h2, h3{
 }
 
 #popupFeedback.ui-body-a{
-    background-image: url( ../img/bug.gif )!important;
-
+   /* background-image: url(../img/bug.gif )!important;
+    background-position-y: 60px;
+    background-repeat: no-repeat; */
+    background-color: #fff;
 }
+
+
 
 .ui-popup.ui-body-a{
     background-color:rgba(0,0,0,0)!important;
@@ -1631,6 +1636,18 @@ transition: all 2s ease;
 
 
 /*ADS*/
+
+
+.fullscreendisable{
+    display:none;
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    z-index:10000000;
+}
+
 
 .sideinfo {
  position:absolute;
