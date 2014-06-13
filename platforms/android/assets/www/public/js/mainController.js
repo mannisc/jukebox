@@ -58,7 +58,13 @@ function MainController($scope,$compile) {
     //Bind Controllers
     $scope.mediaController    = mediaController;
     $scope.uiController       = uiController;
+
+    $scope.viewController = viewController;
+
     $scope.searchController   = searchController;
+    $scope.exploreController = exploreController;
+    $scope.myBaseController = myBaseController;
+
     $scope.playlistController = playlistController;
     $scope.playbackController = playbackController;
 
