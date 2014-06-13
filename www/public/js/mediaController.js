@@ -255,6 +255,7 @@ mediaController.getVersions = function () {
             if (mediaController.versionListSong != currentsong) {
                 mediaController.versionList = [];
                 $scope.safeApply();
+                $('#reloadVersionButton').hide();
                 $("#searchviewVersions").listview('refresh');
                 $('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
                 $('#loadversionimg').css("opacity", "1");
@@ -299,6 +300,7 @@ mediaController.getVersions = function () {
 
                                             mediaController.versionList = data.track;
                                             mediaController.startVersionIndex = -1;
+                                            $('#reloadVersionButton').show();
                                             $scope.safeApply();
                                             $('#loadversionimg').css("opacity", "0");
                                             $("#searchviewVersions").listview('refresh');
@@ -464,6 +466,8 @@ mediaController.getReloadedVersions = function () {
 
 mediaController.reloadVersions = function(){
     $('#loadversionimg').css("opacity", "1");
+    $('#reloadVersionButton').hide();
+
     var song = playbackController.getPlayingSong();
     var reload = function (artistString, titleString,duration) {
         $.ajax({
