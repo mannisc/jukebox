@@ -336,6 +336,13 @@ mediaController.getVersions = function () {
     }
 }
 
+mediaController.reloadVersions = function(){
+    $('#loadversionimg').css("opacity", "1");
+
+
+}
+
+
 mediaController.playVersion = function (songversion, rating, resetVersion) {
     console.dir("PLAY VERSION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     var loadError = false;
