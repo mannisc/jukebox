@@ -377,7 +377,7 @@ mediaController.getReloadedVersions = function () {
                 var titleString = encodeURIComponent(song.name);
                 $.ajax({
                     url: preferences.serverURL + "?getversions=8&artist=" + artistString + "&title=" + titleString + "&auth=" + authController.ip_token,
-                    success: function (data) { 
+                    success: function (data) {
                        //console.dir("loaded " + counter);
                        // console.dir(data);
 
