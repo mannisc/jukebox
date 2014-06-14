@@ -767,7 +767,7 @@
                 <img src="public/img/loader.gif"/>
             </div>
         </div>
-    </form> 
+    </form>
 </div>
 
 

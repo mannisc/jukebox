@@ -134,8 +134,10 @@ mediaController.sendRating = function (rating) {
         var song = playbackController.getPlayingSong();
         var rate = function (song, VideoURL) {
             if (mediaController.currentvideoURL != "" && song) {
+                var artistString = encodeURIComponent(mediaController.getSongArtist(song));
+                var titleString = encodeURIComponent(song.name);
                 $.ajax({
-                    url: preferences.serverURL + "?ratingURL=" + VideoURL + "&rating=" + rating + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name + "&auth=" + authController.ip_token,
+                    url: preferences.serverURL + "?ratingURL=" + VideoURL + "&rating=" + rating + "&artist=" + artistString + "&title=" + titleString + "&auth=" + authController.ip_token,
                     success: function (data) {
                         authController.ensureAuthenticated(data, function () {
                             mediaController.sendRating(rating);
@@ -264,8 +266,10 @@ mediaController.getVersions = function () {
                         return;
                     var song = currentsong;
                     // console.dir("SEARCH OTHER VERSIONS! " + counter + "  - " + mediaController.getSongArtist(song) + " - " + song.name);
+                    var artistString = encodeURIComponent(mediaController.getSongArtist(song));
+                    var titleString = encodeURIComponent(song.name);
                     $.ajax({
-                        url: preferences.serverURL + "?getversions=8&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name + "&auth=" + authController.ip_token,
+                        url: preferences.serverURL + "?getversions=8&artist=" + artistString + "&title=" + titleString + "&auth=" + authController.ip_token,
                         success: function (data) {
                             // console.dir("loaded " + counter);
                             // console.dir(data);
@@ -369,9 +373,11 @@ mediaController.getReloadedVersions = function () {
                     return;
                 var song = currentsong;
                 // console.dir("SEARCH OTHER VERSIONS! " + counter + "  - " + mediaController.getSongArtist(song) + " - " + song.name);
+                var artistString = encodeURIComponent(mediaController.getSongArtist(song));
+                var titleString = encodeURIComponent(song.name);
                 $.ajax({
-                    url: preferences.serverURL + "?getversions=8&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name + "&auth=" + authController.ip_token,
-                    success: function (data) {
+                    url: preferences.serverURL + "?getversions=8&artist=" + artistString + "&title=" + titleString + "&auth=" + authController.ip_token,
+                    success: function (data) { 
                        //console.dir("loaded " + counter);
                        // console.dir(data);
 
