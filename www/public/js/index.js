@@ -158,6 +158,15 @@ $(document).ready(function () {
 
             console.dir(urlParams);
             setTimeout(function () {
+                if(urlParams.downloadApp && urlParams.downloadApp != ""){
+                    $("#popupDownloadApp").popup('open');
+
+                }
+                },1000)
+
+
+            setTimeout(function () {
+
                 if (urlParams.search && urlParams.search != "") {
 
                     $("#searchinput").val(urlParams.search);

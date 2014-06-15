@@ -815,7 +815,7 @@ searchController.applySongList = function (currentSearchID) {
 
 
 searchController.searchArtistSongs = function (artist) {
-    alert("TODO CHANGE VIEW")
+  //  alert("TODO CHANGE VIEW")
     return
     /*
     $("#searchinput").val(artist);
