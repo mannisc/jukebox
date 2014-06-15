@@ -44,6 +44,13 @@ mediaController.buySong = function () {
 }
 
 
+mediaController.downloadWindowsApp = function () {
+  mywindow = window.open("/download/SongBase.fm.exe", "Download Songbase.fm - App", "");
+  mywindow.focus();
+   $('#popupDownloadApp').popup('close');
+}
+
+
 mediaController.getPrice = function () {
     var song = playbackController.getPlayingSong();
     var keywords = mediaController.getSongArtist(song) + " - " + song.name;
