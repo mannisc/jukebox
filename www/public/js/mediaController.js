@@ -26,6 +26,8 @@ mediaController.currentvideoURL = "";
 mediaController.seekTime = 0;
 mediaController.seekTimeDuration = 0;
 
+mediaController.retrySongCounter = 0;
+
 
 mediaController.buySong = function () {
     var song = playbackController.getPlayingSong();
@@ -239,7 +241,7 @@ mediaController.getSiteName = function (url, prefix) {
 
 
 mediaController.playSong = function (streamURL, videoURL) {
-    console.dir("PLAYSONG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    console.dir("PLAYSONG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     //streamURL = "http://video-1-9.rutube.ru/hls-vod/QABcsA4mk0tpMcwf-Ykh0g/1398726462/n1vol2/3c0e1ef57e234d0d9b3d4a66cc787f96.mp4.m3u8"
     mediaController.currentStreamURL = streamURL;
     mediaController.currentvideoURL = videoURL;
@@ -250,8 +252,33 @@ mediaController.playSong = function (streamURL, videoURL) {
 
 }
 
+mediaController.PlayingSongError  = function (){
+    if(mediaController.currentvideoURL!=""){
+        if(mediaController.retrySongCounter<5){
+            if(videoController.isEmbedVideo(mediaController.currentvideoURL)){
+                mediaController.sendRating("-1");
+                mediaController.playNextVersion();
+            }
+            else
+            {
+                if(mediaController.retrySongCounter>0){
+                  mediaController.sendRating("-1");
+                  mediaController.playNextVersion();
+                }
+                else{
+                 mediaController.playStream(mediaController.getSongArtist(playbackController.playingSong), playbackController.playingSong.name, 0,0);
+                }
+            }
+            mediaController.retrySongCounter+1;
+        }
+    }
+}
 
-mediaController.getVersions = function () {
+
+
+
+
+mediaController.getVersions = function (artist,title) {
 
     //console.dir("current playlist:");
     //console.dir(playlistController.getLoadedPlaylist());
@@ -271,15 +298,125 @@ mediaController.getVersions = function () {
                 var getsongversions = function (counter) {
                     if ($(".mejs-button-choose-version button").css("opacity") < 1 && counter > 2)
                         return;
-                    var song = currentsong;
+                    var song = playbackController.getPlayingSong();
                     // console.dir("SEARCH OTHER VERSIONS! " + counter + "  - " + mediaController.getSongArtist(song) + " - " + song.name);
                     var artistString = encodeURIComponent(mediaController.getSongArtist(song));
                     var titleString = encodeURIComponent(song.name);
+                    if(artistString==artist&&titleString==title){
+                        $.ajax({
+                            url: preferences.serverURL + "?getversions=8&artist=" + artistString + "&title=" + titleString + "&auth=" + authController.ip_token,
+                            success: function (data) {
+                                // console.dir("loaded " + counter);
+                                // console.dir(data);
+
+                                if (authController.ensureAuthenticated(data, function () {
+                                    getsongversions(counter);
+                                })) {
+
+                                    var dataok = false;
+                                    if (data.track) {
+                                        if (data.track.length > 0) {
+                                            //  console.dir("SUCCESS VERSIONS! " + counter + "  - " + mediaController.getSongArtist(song) + " - " + song.name);
+                                            if (playbackController.getPlayingSong() == song) {
+                                                //   console.dir(data.track);
+                                                for (var i = 0; i < data.track.length; i++) {
+                                                    try {
+                                                        data.track[i].title = decodeURIComponent(data.track[i].title);
+                                                    }
+                                                    catch (e) {
+                                                        data.track[i].title = unescape(data.track[i].title);
+                                                    }
+                                                    try {
+                                                        data.track[i].url = decodeURIComponent(data.track[i].url);
+                                                    }
+                                                    catch (e) {
+                                                        data.track[i].url = unescape(data.track[i].url);
+                                                    }
+
+                                                }
+                                                mediaController.versionListSong = song;
+
+
+                                                mediaController.versionList = data.track;
+                                                mediaController.startVersionIndex = -1;
+                                                $('#reloadVersionButton').show();
+                                                $scope.safeApply();
+                                                $('#loadversionimg').css("opacity", "0");
+                                                $("#searchviewVersions").listview('refresh');
+                                                $("#popupVideoSettings-popup").css("margin-left", "");
+
+                                                $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'});
+                                                $("#popupVideoSettings-popup").css("margin-left", "1px");
+
+                                                ///$('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
+                                            }
+                                            dataok = true;
+                                        }
+                                    }
+                                    if (dataok == false) {
+                                        if (counter < 120) {
+                                            if (playbackController.getPlayingSong() == song) {
+                                                setTimeout(function () {
+                                                    getsongversions(counter + 1)
+                                                }, 2000);
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                if (counter < 120) {
+                                    if (playbackController.getPlayingSong() == song) {
+                                        setTimeout(function () {
+                                            getsongversions(counter + 2)
+                                        }, 2000);
+                                    }
+                                }
+                            }
+
+                        })
+                    }
+                }
+                getsongversions(0);
+            }
+            else {
+                $("#searchviewVersions").listview('refresh');
+                $('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
+                $scope.safeApply();
+                $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'});
+            }
+        }
+    }
+}
+
+
+mediaController.getReloadedVersions = function (artist, title) {
+
+    //console.dir("current playlist:");
+    //console.dir(playlistController.getLoadedPlaylist());
+    // importController.importPlaylist("https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
+    //importController.importPlaylist("http://vimeo.com/channels/rihanna");//
+    // importController.importPlaylist("http://www.dailymotion.com/playlist/xvguj_dailymotionuk_rihanna/1#video=x6f3n8");//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
+    if (authController.ip_token != "auth" && authController.ip_token != "") {
+        var currentsong = playbackController.getPlayingSong();
+        if (mediaController.currentStreamURL != "") {
+
+            $scope.safeApply();
+            $("#searchviewVersions").listview('refresh');
+            $('#loadversionimg').css("opacity", "1");
+            var getsongversions = function (counter) {
+                if ($(".mejs-button-choose-version button").css("opacity") < 1 && counter > 2)
+                    return;
+                var song = currentsong;
+                // console.dir("SEARCH OTHER VERSIONS! " + counter + "  - " + mediaController.getSongArtist(song) + " - " + song.name);
+                var artistString = encodeURIComponent(mediaController.getSongArtist(song));
+                var titleString = encodeURIComponent(song.name);
+                if(artistString==artist&&titleString==title){
                     $.ajax({
                         url: preferences.serverURL + "?getversions=8&artist=" + artistString + "&title=" + titleString + "&auth=" + authController.ip_token,
                         success: function (data) {
-                            // console.dir("loaded " + counter);
-                            // console.dir(data);
+                           //console.dir("loaded " + counter);
+                           // console.dir(data);
 
                             if (authController.ensureAuthenticated(data, function () {
                                 getsongversions(counter);
@@ -306,23 +443,36 @@ mediaController.getVersions = function () {
                                                 }
 
                                             }
+                                            var newlist = true;
+                                            for (var i in data.track) {
+                                                newlist = true;
+                                                for (var j in mediaController.versionList) {
+                                                    if (data.track[i].url == mediaController.versionList[j].url) {
+                                                        newlist = false;
+                                                        break;
+                                                    }
+                                                }
+                                                if( newlist == true)
+                                                {
+                                                    break;
+                                                }
+                                            }
                                             mediaController.versionListSong = song;
+                                            if(newlist==true){
+                                                mediaController.versionList = data.track;
+                                                mediaController.startVersionIndex = -1;
+                                                $scope.safeApply();
+                                                $('#loadversionimg').css("opacity", "0");
+                                                $("#searchviewVersions").listview('refresh');
+                                                $("#popupVideoSettings-popup").css("margin-left", "");
 
-
-                                            mediaController.versionList = data.track;
-                                            mediaController.startVersionIndex = -1;
-                                            $('#reloadVersionButton').show();
-                                            $scope.safeApply();
-                                            $('#loadversionimg').css("opacity", "0");
-                                            $("#searchviewVersions").listview('refresh');
-                                            $("#popupVideoSettings-popup").css("margin-left", "");
-
-                                            $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'});
-                                            $("#popupVideoSettings-popup").css("margin-left", "1px");
-
+                                                $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'});
+                                                $("#popupVideoSettings-popup").css("margin-left", "1px");
+                                                dataok = true;
+                                            }
                                             ///$('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
                                         }
-                                        dataok = true;
+
                                     }
                                 }
                                 if (dataok == false) {
@@ -330,145 +480,26 @@ mediaController.getVersions = function () {
                                         if (playbackController.getPlayingSong() == song) {
                                             setTimeout(function () {
                                                 getsongversions(counter + 1)
-                                            }, 2000);
+                                            }, 3000);
                                         }
                                     }
                                 }
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
+                            console.dir("error " + counter);
+                            console.fir(xhr.responseText);
                             if (counter < 120) {
                                 if (playbackController.getPlayingSong() == song) {
                                     setTimeout(function () {
                                         getsongversions(counter + 2)
-                                    }, 2000);
+                                    }, 3000);
                                 }
                             }
                         }
 
                     })
                 }
-                getsongversions(0);
-            }
-            else {
-                $("#searchviewVersions").listview('refresh');
-                $('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
-                $scope.safeApply();
-                $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'});
-            }
-        }
-    }
-}
-
-
-mediaController.getReloadedVersions = function () {
-
-    //console.dir("current playlist:");
-    //console.dir(playlistController.getLoadedPlaylist());
-    // importController.importPlaylist("https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
-    //importController.importPlaylist("http://vimeo.com/channels/rihanna");//
-    // importController.importPlaylist("http://www.dailymotion.com/playlist/xvguj_dailymotionuk_rihanna/1#video=x6f3n8");//"https://www.youtube.com/watch?v=3O9LzMOqrD4&list=PL0E36D9A2654B03CF");
-    if (authController.ip_token != "auth" && authController.ip_token != "") {
-        var currentsong = playbackController.getPlayingSong();
-        if (mediaController.currentStreamURL != "") {
-
-            $scope.safeApply();
-            $("#searchviewVersions").listview('refresh');
-            $('#loadversionimg').css("opacity", "1");
-            var getsongversions = function (counter) {
-                if ($(".mejs-button-choose-version button").css("opacity") < 1 && counter > 2)
-                    return;
-                var song = currentsong;
-                // console.dir("SEARCH OTHER VERSIONS! " + counter + "  - " + mediaController.getSongArtist(song) + " - " + song.name);
-                var artistString = encodeURIComponent(mediaController.getSongArtist(song));
-                var titleString = encodeURIComponent(song.name);
-                $.ajax({
-                    url: preferences.serverURL + "?getversions=8&artist=" + artistString + "&title=" + titleString + "&auth=" + authController.ip_token,
-                    success: function (data) {
-                       //console.dir("loaded " + counter);
-                       // console.dir(data);
-
-                        if (authController.ensureAuthenticated(data, function () {
-                            getsongversions(counter);
-                        })) {
-
-                            var dataok = false;
-                            if (data.track) {
-                                if (data.track.length > 0) {
-                                    //  console.dir("SUCCESS VERSIONS! " + counter + "  - " + mediaController.getSongArtist(song) + " - " + song.name);
-                                    if (playbackController.getPlayingSong() == song) {
-                                        //   console.dir(data.track);
-                                        for (var i = 0; i < data.track.length; i++) {
-                                            try {
-                                                data.track[i].title = decodeURIComponent(data.track[i].title);
-                                            }
-                                            catch (e) {
-                                                data.track[i].title = unescape(data.track[i].title);
-                                            }
-                                            try {
-                                                data.track[i].url = decodeURIComponent(data.track[i].url);
-                                            }
-                                            catch (e) {
-                                                data.track[i].url = unescape(data.track[i].url);
-                                            }
-
-                                        }
-                                        var newlist = true;
-                                        for (var i in data.track) {
-                                            newlist = true;
-                                            for (var j in mediaController.versionList) {
-                                                if (data.track[i].url == mediaController.versionList[j].url) {
-                                                    newlist = false;
-                                                    break;
-                                                }
-                                            }
-                                            if( newlist == true)
-                                            {
-                                                break;
-                                            }
-                                        }
-                                        mediaController.versionListSong = song;
-                                        if(newlist==true){
-                                            mediaController.versionList = data.track;
-                                            mediaController.startVersionIndex = -1;
-                                            $scope.safeApply();
-                                            $('#loadversionimg').css("opacity", "0");
-                                            $("#searchviewVersions").listview('refresh');
-                                            $("#popupVideoSettings-popup").css("margin-left", "");
-
-                                            $('#popupVideoSettings').popup("reposition", {positionTo: '#chooseversionbutton'});
-                                            $("#popupVideoSettings-popup").css("margin-left", "1px");
-                                            dataok = true;
-                                        }
-                                        ///$('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
-                                    }
-
-                                }
-                            }
-                            if (dataok == false) {
-                                if (counter < 120) {
-                                    if (playbackController.getPlayingSong() == song) {
-                                        setTimeout(function () {
-                                            getsongversions(counter + 1)
-                                        }, 3000);
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.dir("error " + counter);
-                        console.fir(xhr.responseText);
-                        if (counter < 120) {
-                            if (playbackController.getPlayingSong() == song) {
-                                setTimeout(function () {
-                                    getsongversions(counter + 2)
-                                }, 3000);
-                            }
-                        }
-                    }
-
-                })
             }
             getsongversions(0);
         }
@@ -487,7 +518,7 @@ mediaController.reloadVersions = function(){
             timeout: 30000,
             url: preferences.serverURL + "?reloadversions=" + artistString + "&title=" + titleString + "&duration=" + duration + "&auth=" + authController.ip_token,
             complete: function (data) {
-                setTimeout(function () {mediaController.getReloadedVersions()},2000);
+                setTimeout(function () {mediaController.getReloadedVersions(artistString, titleString)},2000);
             }
         })
     }
@@ -614,14 +645,14 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
 
 }
 
-mediaController.loadStreamURL = function (streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic) {
+mediaController.loadStreamURL = function (streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic,fromCache) {
 
     var loadError = false;
     //var stime=new Date();
     //var time=stime.getTime();
     $.ajax({
         timeout: 30000,
-        url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration + "&auth=" + authController.ip_token,
+        url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration +"&fromCache="+fromCache+"&auth=" + authController.ip_token,
         success: function (data) {
             if (streamID == mediaController.playCounter) {
                 //var etime=new Date();
@@ -629,7 +660,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                 //alert("RESPONSE TIME: "+diff+" ms");
 
                 if (authController.ensureAuthenticated(data, function () {
-                    mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic);
+                    mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic,fromCache);
                 })) {
 
                     // console.dir(preferences.serverURL + "?play=" + searchString + "&force1=" + artistString + "&force2=" + titleString + "&duration=" + duration);
@@ -711,8 +742,10 @@ mediaController.onLoadingError = function (streamID, playedAutomatic) {
 }
 
 
-mediaController.playStream = function (artist, title, playedAutomatic) {
-
+mediaController.playStream = function (artist, title, playedAutomatic,fromCache) {
+    if(fromCache==0){
+        mediaController.retrySongCounter = 0;
+    }
     //videoController.showBuffering(true);
 
     //videoController.showBuffered(false);
@@ -737,7 +770,7 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
     var streamURL = "";
 
 
-    var play = function (streamID, searchString, artistString, titleString, streamURL) {
+    var play = function (streamID, searchString, artistString, titleString, streamURL,fromCache) {
         //mediaController.currentvideoURL = "";
         $.ajax({
             url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + encodeURIComponent(artistString) + "&track=" + encodeURIComponent(titleString) + "&format=json",
@@ -754,7 +787,7 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
                     //  alert(artistString+" - "+titleString);
                     if (authController.ip_token != "auth" && authController.ip_token != "") {
                         var loadError = false;
-                        mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic);
+                        mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic,fromCache);
                     }
                 }
 
@@ -762,13 +795,13 @@ mediaController.playStream = function (artist, title, playedAutomatic) {
             error: function () {
                 // console.log("ERROR")
                 var duration = 200000;
-                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic);
+                mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic,fromCache);
             }
 
         })
     }
 
-    play(streamID, searchString, artistString, titleString, streamURL);
+    play(streamID, searchString, artistString, titleString, streamURL,fromCache);
 
 
 }
