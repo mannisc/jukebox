@@ -272,7 +272,7 @@ playlistController.getDisplayLimit = function () {
         limit = playlistController.loadedPlaylistSongs.length;
     else
         limit = playlistController.displayLimit;
-    console.log("LIMIT: " + limit)
+    //console.log("LIMIT: " + limit)
     return limit;
 }
 
