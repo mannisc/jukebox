@@ -253,7 +253,7 @@ mediaController.playSong = function (streamURL, videoURL) {
 }
 
 mediaController.PlayingSongError  = function (){
-    if(mediaController.retrySongCounter<3){
+    if(mediaController.retrySongCounter<5){
         if(videoController.isEmbedVideo(mediaController.currentvideoURL)){
             mediaController.sendRating("-1");
             mediaController.playNextVersion();
@@ -262,8 +262,11 @@ mediaController.PlayingSongError  = function (){
         {
             if(mediaController.retrySongCounter>0){
               mediaController.sendRating("-1");
+              mediaController.playNextVersion();
             }
-            mediaController.playStream(mediaController.getSongArtist(playbackController.playingSong), playbackController.playingSong.name, 0,0);
+            else{
+             mediaController.playStream(mediaController.getSongArtist(playbackController.playingSong), playbackController.playingSong.name, 0,0);
+            }
         }
         mediaController.retrySongCounter+1;
     }
