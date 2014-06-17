@@ -152,10 +152,12 @@ exploreController.showSuggestions = function () {  //Todo find songs the user re
     }
 
     if (!song && generatedData.charts && generatedData.charts.length > 0) {
-        song = generatedData.charts[0]
+        song = generatedData.charts[0];
     }
     if (song) {
+
         exploreController.searchSimilarSongs(song);
+
     }
     else {
 
@@ -199,7 +201,7 @@ exploreController.searchSimilarSongs = function (song) {
 
                         //If no suggestions show popular songs
                         if (songList.length == 0) {
-                            songList = searchController.preloadedPopularSongs.track;
+                            songList = jQuery.extend(true, [], searchController.preloadedPopularSongs.track);
                         }
 
 
