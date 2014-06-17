@@ -509,7 +509,7 @@
                 </a>
             </li>
 
-            <li ng-if ="!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length == 0" ng-click="playlistController.importPlaylistPopup();"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton othertopheight createplaylist importplaylist stayvisible">
+            <li ng-if ="!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length == 0&&!playlistController.getLoadedPlaylist().isSimilarSongs" ng-click="playlistController.importPlaylistPopup();"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton othertopheight createplaylist importplaylist stayvisible">
                 <a tabindex="-1">
 
                     <img src="public/img/empty.png"  alt="" class="noshadow ui-li-icon ui-corner-none"  >
@@ -529,6 +529,28 @@
 
                 </a></li>
 
+            <li ng-if ="playlistController.playlistMode" ng-click="playlistController.loadSimilarSongs($event)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton similarsongs stayvisible">
+                <a tabindex="-1">
+
+                    <img src="public/img/empty.png"  alt="" class="noshadow ui-li-icon ui-corner-none"  >
+
+
+                    <div class="playlistCoverSong" >
+
+
+
+                        <img src="public/img/empty.png" class="coverSong1 coverSong" style="{{mediaController.getPlaylistCoverSong(0,2,playlistController.similarSongs,true)}}">
+                        <img src="public/img/black.png" class="coverSong2 coverSong" style="{{mediaController.getPlaylistCoverSong(1,2,playlistController.similarSongs)}}">
+                        <img src="public/img/black.png" class="coverSong3 coverSong" style="{{mediaController.getPlaylistCoverSong(2,2,playlistController.similarSongs)}}">
+
+                        <img src="public/img/empty.png"  class="addPlaylist" style="background-image:url(public/img/radiolist.png)">
+
+                    </div>
+
+
+                    <h3 style="font-size: 1.1em;margin-top: 17px;">Similar Songs</h3>
+
+                </a></li>
 
             <li ng-if ="playlistController.playlistMode " ng-click="playlistController.loadCurrentQueue($event)"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton currentqueue stayvisible">
                 <a tabindex="-1">
@@ -576,7 +598,7 @@
 
             </a></li>
 
-            <li ng-repeat="song in playlistController.loadedPlaylistSongs | limitTo: playlistController.getDisplayLimit()  track by song.gid" context-menu-DISABLED ="playlistController.selectSong(song)" ng-if ="!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}"  data-song="{{song}}" data-songid="playlistsong{{song.id}}" data-elementtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
+            <li ng-repeat="song in playlistController.loadedPlaylistSongs | limitTo: playlistController.getDisplayLimit()  track by song.gid" context-menu-DISABLED ="playlistController.selectSong(song)" ng-if ="!song.isSimilarSongs&&!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}"  data-song="{{song}}" data-songid="playlistsong{{song.id}}" data-elementtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
                 ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1">
 
                 <img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""   class="ui-li-icon ui-corner-none"  >
@@ -710,7 +732,10 @@
 </div>
 
 <div id="siteLogo" style="display:none" class="fadeincomplete2s" >
+    <img id="songbaseLogoImage" width="70px"  src="public/img/songbasefmlogo.png" >
+
     <img id="siteLogoImage" width="70px"  src="" onclick="mediaController.openExternalSite()">
+
 </div>
 
 <div id="songOptionsOriginal" style="display:none">
@@ -868,7 +893,7 @@
 
 
 
-                <li style="border-bottom:1px solid #ddd;min-height:25px;margin-top:10px;padding-top: 0;padding-bottom: 2px;padding-left: 13px;">
+                <li style="border-bottom:1px solid #ddd;min-height:25px;margin-top:15px;padding-top: 0;padding-bottom: 2px;padding-left: 13px;">
                     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                         <div style="float:left;font-size: 14px!important;">
                            <img src="public/img/paypal.png" width="28px" >

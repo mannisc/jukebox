@@ -231,10 +231,10 @@ exploreController.showSuggestions = function () {  //Todo find songs the user re
 
     var index;
     var song;
-    if (playbackController.playingSong) {
+    /*if (playbackController.playingSong) {
         song = playbackController.playingSong;
     }
-    else {
+    else {   */
         if (playlistController.currentQueue.length > 0) {     //CurrentQueue
             index = Math.round(Math.random() * (playlistController.currentQueue.length - 1));
 
@@ -257,7 +257,7 @@ exploreController.showSuggestions = function () {  //Todo find songs the user re
         }
 
 
-    }
+   // }
 
     if (!song && generatedData.charts && generatedData.charts.length > 0) {
         song = generatedData.charts[0];

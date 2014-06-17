@@ -18,6 +18,7 @@ playlistController.sortPlaylist = false;
 playlistController.selectedSongs = [];
 playbackController.playingSongIndex = 0;
 
+playlistController.similarSongsMaxResults = 100;
 
 playlistController.globalId = "";//playlistController.loadedPlaylistSongs.length;
 
@@ -39,7 +40,11 @@ playlistController.loadedPlaylistSongs = [];
 
 playlistController.currentQueue = {gid: 0, id: 0, name: "Current Play Queue", isPlaylist: true, isCurrentQueue: true, tracks: []};
 
-playlistController.playlists = [playlistController.currentQueue];  //CLEAR_______________________________________________________________
+playlistController.similarSongs = {gid: 1, id: 1, name: "Similar Songs", isPlaylist: true, isSimilarSongs: true, tracks: [], song:{}};
+
+
+
+playlistController.playlists = [playlistController.currentQueue,playlistController.similarSongs];  //CLEAR_______________________________________________________________
 
 playlistController.playlistHelp = {playlist: "Drag and Drop your favorite Songs<br>to add them to this Playlist.", queue: "Drag and Drop your favorite Songs<br>to add them to the Play Queue."};
 
@@ -1850,6 +1855,86 @@ playlistController.createEmptyPlaylist = function (addAtBottom) {
 
 }
 
+/**
+ ** Get Similar Songs from last.fm
+ */
+
+playlistController.getSimilarSongs = function(song){
+    var artist = song.artist.name;
+    var title = song.name;
+
+    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&%searchTerm&api_key=" + searchController.lastfmapikey + "&format=json"
+
+    $.when(
+
+            exploreController.basicOnlineSearchDeferred(onlineSearchURL, "artist=" + artist + "&track=" + title, searchController.searchTypeSongs, false, artist)
+
+        ).then(function (onlineList) {
+            console.log("FFFOUNDDDD")
+            console.dir(JSON.stringify(songList))
+            var songList = exploreController.songs.completeSearch([], onlineList);
+            console.log("FFFOUNDDDD")
+            console.dir(JSON.stringify(songList))
+
+
+            for (var i = 0; i < songList.length; i++) {
+                songList[i].gid = playlistController.getNewID();
+            }
+
+            playlistController.similarSongs.tracks =  songList.splice(0,playlistController.similarSongsMaxResults);
+            playlistController.loadedPlaylistSongs = playlistController.similarSongs.tracks;
+
+            uiController.playListScroll.scrollTo(0, 0, 1000)
+
+            playlistController.applySongList();
+
+
+
+        });
+
+}
+
+
+
+/**
+ ** Load Similar Songs
+ */
+
+playlistController.loadSimilarSongs = function () {
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+        return;
+
+    if(playbackController.playingSong){
+
+        if(playlistController.similarSongs.song.name!=playbackController.playingSong.name||playlistController.similarSongs.song.artist.name!=playbackController.playingSong.artist.name){
+            playlistController.similarSongs.song = jQuery.extend(true, {}, playbackController.playingSong);
+
+            playlistController.getSimilarSongs( playlistController.similarSongs.song);
+
+        }
+
+
+
+    }
+
+
+
+    var playlist = playlistController.similarSongs;
+
+
+
+
+    $scope.safeApply();
+    setTimeout(function () {
+        playlistController.showPlaylist(playlist);
+        setTimeout(function () {
+            $scope.safeApply();
+        }, 50)
+    }, 0)
+
+    event.stopPropagation();
+
+}
 
 /**
  ** Load Current Queue
@@ -2128,7 +2213,8 @@ playlistController.toggleSortablePlaylist = function (manuell) {
 
 playlistController.getHelpStyleClass = function () {
 
-    if (!playlistController.playlistMode && playlistController.loadedPlaylistSongs.length == 0 && !playlistController.hideHelp) {
+
+    if ( !playlistController.getLoadedPlaylist().isSimilarSongs&&!playlistController.playlistMode && playlistController.loadedPlaylistSongs.length == 0 && !playlistController.hideHelp) {
         return "";
     } else {
         return "invisible";
