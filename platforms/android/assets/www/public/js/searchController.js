@@ -73,7 +73,7 @@ if (generatedData && generatedData.charts) {
     searchController.preloadedPopularSongs = {"track": generatedData.charts};
     setTimeout(function(){
         searchController.songs.cleanList(searchController.preloadedPopularSongs.track);
-    },0)
+},0)
 }
 else
     searchController.preloadedPopularSongs = {"track": []}
@@ -122,7 +122,7 @@ searchController.init = function () {
         uiController.searchListScroll.scrollTo(0, 0, 200);
     });
 
-    searchController.playIndicator = $('<div class="iScrollPlayIndicator fadeincomplete" style="display:none;"></div>');
+    searchController.playIndicator = $('<div class="iScrollPlayIndicator fadeincomplete5s" style="display:none;"></div>');
     searchController.playIndicator.appendTo("#searchlist .iScrollVerticalScrollbar");
     searchController.playIndicator.click(function () {
         uiController.searchListScroll.scrollToElement(".loadedsong", 700);

@@ -447,6 +447,15 @@ input[type=button]{
 
 }
 
+#controlbar .ui-btn{
+    color: #fff!important;
+    text-shadow: none!important;
+    overflow: visible!important;
+
+
+}
+
+
 .ui-input-btn, .ui-btn{
     -webkit-box-shadow: none!important;
     -moz-box-shadow: none!important;
@@ -473,7 +482,7 @@ input[type=button]{
 #controlbar .ui-input-search {
     margin-right: 10px;
     margin-top: 9px;
-    border: 1px solid rgb(177, 10, 10);
+    border: 1px solid rgba(177, 10, 10.5);
 
 }
 #controlbar .ui-input-btn{
@@ -691,7 +700,22 @@ video{
     animation-duration: 3s;
 }
 
+.fadeincomplete5s{
+    opacity: 0; /* make things invisible upon start */
+    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: fadeincomplete ease-in 1;
+    animation: fadeincomplete ease-in 1;
 
+    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode: forwards; /*FF 5+*/
+    -o-animation-fill-mode: forwards; /*Not implemented yet*/
+    -ms-animation-fill-mode: forwards; /*IE 10+*/
+    animation-fill-mode: forwards; /*when the spec is finished*/
+
+    -webkit-animation-duration: 5s;
+    -moz-animation-duration: 5s;
+    animation-duration: 5s;
+}
 .fadeincomplete2s {
     opacity: 0; /* make things invisible upon start */
     -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */

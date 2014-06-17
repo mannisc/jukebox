@@ -91,6 +91,7 @@ playlistController.init = function () {
 
 
     playlistController.makePlayListScrollable();
+    $(".iScrollIndicator").hide();
 
     playlistController.chosenElement = $("#playlistselectverticalform").chosen({disable_search_threshold: 2})
 
@@ -237,7 +238,7 @@ playlistController.createScrollIndicators = function () {
     });
 
 
-    playlistController.playIndicator = $('<div class="iScrollPlayIndicator fadeincomplete" style="display:none;"></div>');
+    playlistController.playIndicator = $('<div class="iScrollPlayIndicator fadeincomplete5s" style="display:none;"></div>');
 
     playlistController.playIndicator.appendTo("#playlistInner .iScrollVerticalScrollbar");
 
