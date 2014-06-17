@@ -311,8 +311,7 @@ dailymotionPlayer.mediaEnded = function(){
 
 dailymotionPlayer.error= function (){
     if(dailymotionPlayer.active == 1){
-        //TODO FEEDBACK AN SERVER!
-        //mediaController.playNextVersion();
+        mediaController.PlayingSongError();
     }
 
 }
