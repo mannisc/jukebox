@@ -932,6 +932,16 @@
 
 
 
+<div data-role="popup" id="popupDownloadApp" data-theme="a" class="ui-corner-all">
+    <a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
+    <div style="padding:0px 20px 10px 20px;">
+    <a href="#" id="downloadAppButton" onclick='mediaController.downloadWindowsApp()'>
+    <img width="390px" height="240px" heightstyle="position:absolute;top:16px;left:33px" src="public/img/DownloadApp.png" style="cursor:hand;">
+    </a>
+   </div>
+</div>
+
+
 
 <!--div data-role="popup" id="popupConfirm" data-arrow="true" data-dismissible="false" data-theme="a" class="ui-corner-all">
     <form>
