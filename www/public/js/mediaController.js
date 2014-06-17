@@ -243,9 +243,12 @@ mediaController.getSiteName = function (url, prefix) {
 mediaController.playSong = function (streamURL, videoURL) {
     console.dir("PLAYSONG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     //streamURL = "http://video-1-9.rutube.ru/hls-vod/QABcsA4mk0tpMcwf-Ykh0g/1398726462/n1vol2/3c0e1ef57e234d0d9b3d4a66cc787f96.mp4.m3u8"
+    mediaController.currentStreamURL = "";
+    mediaController.currentvideoURL = "";
+    videoController.loadSongInSuitablePlayer(streamURL, videoURL);
+
     mediaController.currentStreamURL = streamURL;
     mediaController.currentvideoURL = videoURL;
-    videoController.loadSongInSuitablePlayer(streamURL, videoURL);
     videoController.playSong();
     $scope.safeApply();
 
@@ -253,6 +256,7 @@ mediaController.playSong = function (streamURL, videoURL) {
 }
 
 mediaController.PlayingSongError  = function (){
+    console.dir("PLAYINGSONG ERROR: "+mediaController.currentvideoURL)
     if(mediaController.currentvideoURL!=""){
         if(mediaController.retrySongCounter<5){
             if(videoController.isEmbedVideo(mediaController.currentvideoURL)){
@@ -743,7 +747,8 @@ mediaController.onLoadingError = function (streamID, playedAutomatic) {
 
 
 mediaController.playStream = function (artist, title, playedAutomatic,fromCache) {
-    if(fromCache==0){
+    if(fromCache=="1" || fromCache==1){
+        console.dir(" mediaController.retrySongCounter = 0;")
         mediaController.retrySongCounter = 0;
     }
     //videoController.showBuffering(true);
