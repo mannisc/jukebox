@@ -1315,7 +1315,7 @@ IScroll.prototype = {
         if(!IScrollinitTimer||Date.now()- IScrollinitTimer< 10000)
             var   scrolltime = 0;
         else
-         scrolltime = 500;
+         scrolltime = 750;
 
         this.scrollTo(newX, newY, scrolltime); //CHANGED from    this.scrollTo(newX, newY, 0);
 

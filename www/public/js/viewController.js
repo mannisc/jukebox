@@ -170,6 +170,7 @@ viewController.activateView = function(view, noAnimation, showFunction){
         }
 
         viewController.activeView.showView(showFunction);
+
     }
 
 }
