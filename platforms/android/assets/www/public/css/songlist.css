@@ -1756,7 +1756,7 @@ background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop
 
 .chosen-choices.ui-input  {
     padding-right:30px;
-    border: 1px solid rgb(10, 10, 177);
+    border: 1px solid rgba(10, 10, 177,0.5);
 }
 .chosen-choices.ui-input  input{
 
