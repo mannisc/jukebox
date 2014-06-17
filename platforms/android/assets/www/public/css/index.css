@@ -136,11 +136,20 @@ body {
 }
 
 @media (max-width:1000px) {
-.songlist li.specialplaylistbutton h3{
+
+#playlistInner li.specialplaylistbutton h3{
     font-size: 1em!important;
     margin-top: 20px!important;
 
 }
+
+#feedbackButton {
+    display:none!important;
+}
+
+
+
+
 }
 
 /*Small Screen*/
@@ -448,9 +457,15 @@ input[type=button]{
 }
 
 #controlbar .ui-btn{
-    color: #fff!important;
     text-shadow: none!important;
     overflow: visible!important;
+
+
+}
+
+#controlselecthorizontal .ui-btn{
+    color: #fff!important;
+
 
 
 }
@@ -989,12 +1004,7 @@ video{
     min-height: 0em!important;
 }
 
-#popupArtistExternList li:hover a{
-    background-color: rgba(145, 145, 145, 0.7);
-    color:#fff!important;
 
-
-}
 
 #popupArtistExternList li.marked a{
     background-color: rgba(0,0,0,.7) !important;
@@ -1002,12 +1012,6 @@ video{
 
 }
 
-#popupArtistExternList li.marked:hover a{
-    background-color: rgba(145, 145, 145, 0.7)!important;
-    color:#fff!important;
-
-
-}
 
 
 
