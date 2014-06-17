@@ -39,6 +39,8 @@ exploreController.displayLimit = exploreController.maxResults;
  * Something was entered in input
  */
 exploreController.onInput = function () {
+    $("#searchlist .iScrollPlayIndicator").hide();
+    $("#searchlist .iScrollScrollUpIndicator").hide();
     exploreController.filterMusic();
 }
 
@@ -90,6 +92,55 @@ exploreController.hideView = function () {
 }
 
 
+
+
+exploreController.filterMusic = function (filterTerm) {
+    if (!filterTerm)
+        filterTerm = $("#searchinput").val();
+    viewController.showLoading(true);
+    uiController.searchListScroll.scrollTo(0, 0, 1000)
+
+    filterTerm = filterTerm.toLowerCase();
+    var title = "";
+    var artist = "";
+
+    var icounter = 0;
+    for (var i = 0; i < exploreController.songs.searchResults.length; i++) {
+        artist = mediaController.getSongArtist(exploreController.songs.searchResults[i]);
+        title = exploreController.songs.searchResults[i].name;
+        artist = artist.toLowerCase();
+        title = title.toLowerCase();
+
+        if (title.search(filterTerm) > -1 || artist.search(filterTerm) > -1) {
+            if(exploreController.songs.searchResults[i].tmpHide)
+
+                delete exploreController.songs.searchResults[i].tmpHide;
+
+            // console.dir(searchController.songs.searchResults[icounter]);
+            icounter++;
+        }
+        else {
+            exploreController.songs.searchResults[i].tmpHide = true;
+
+        }
+    }
+
+    $scope.safeApply();
+    playbackController.remarkSong();
+
+    $("#searchlistview").listview('refresh');
+
+    setTimeout(function () {
+        uiController.searchListScroll.refresh();
+        viewController.showLoading(false);
+    }, 1000)
+    searchController.makeSearchListDraggable();
+    setTimeout(function () {
+        $("#searchlistview li").removeClass("fadeincompletefast");
+    }, 100)
+
+}
+
 /**
  * Remove Filter
  */
@@ -98,7 +149,10 @@ exploreController.removeFilterSongs = function () {
     uiController.searchListScroll.scrollTo(0, 0, 1000);
 
     //TODO
-    alert("REMOVE FILTER")
+    for (var i = 0; i < exploreController.songs.searchResults.length; i++) {
+        if(exploreController.songs.searchResults[i].tmpHide)
+          delete exploreController.songs.searchResults[i].tmpHide;
+    }
 
     $scope.safeApply();
     playbackController.remarkSong();
@@ -113,6 +167,60 @@ exploreController.removeFilterSongs = function () {
         $("#searchlistview li").removeClass("fadeincompletefast");
     }, 100)
 }
+
+
+
+
+
+exploreController.searchArtistsSongs = function (artist) {
+    $("#searchlist .iScrollPlayIndicator").hide();
+    $("#searchlist .iScrollScrollUpIndicator").hide();
+    $("#searchlist .iScrollIndicator").hide();
+
+    var searchArtistsSongs = function (artist) {
+
+        viewController.showLoading(true);
+
+        exploreController.currentSearchID = exploreController.currentSearchID + 1;
+
+        var search = function (searchID) {
+            $.when(
+                    exploreController.songs.startArtistSearchDeferred(artist)
+
+                ).then(function (songList) {
+                    if (searchID == exploreController.currentSearchID) {
+
+
+
+                        exploreController.completedSearch(songList);
+
+                    }
+                });
+        };
+
+        search(exploreController.currentSearchID);
+    }
+
+
+    //If view is alrady active search, otherwise activate view first
+    if (viewController.isActiveView(exploreController))   {
+        uiController.searchListScroll.scrollTo(0, 0, 1000)
+        exploreController.currentSearchID++;
+        exploreController.displayLimit = 0;
+        $scope.safeApply();
+        $("#searchlistview").listview('refresh');
+        searchArtistsSongs(artist);
+
+    }
+    else
+        viewController.activateView(exploreController, false, function () {
+            searchArtistsSongs(artist);
+        });
+
+
+}
+
+
 
 
 exploreController.showSuggestions = function () {  //Todo find songs the user really liked, means played very often for example
@@ -167,6 +275,7 @@ exploreController.showSuggestions = function () {  //Todo find songs the user re
 
 }
 
+
 exploreController.showSimilarSongs = function (event) {
     event.stopPropagation();
 
@@ -183,8 +292,11 @@ exploreController.showSimilarSongs = function (event) {
 }
 
 
-exploreController.searchSimilarSongs = function (song) {
 
+exploreController.searchSimilarSongs = function (song) {
+    $("#searchlist .iScrollPlayIndicator").hide();
+    $("#searchlist .iScrollScrollUpIndicator").hide();
+    $("#searchlist .iScrollIndicator").hide();
 
     var searchSimilarSongs = function (song) {
 
@@ -275,6 +387,30 @@ exploreController.songs.startSuggestionsSearchDeferred = function (artist, title
     return deferred.promise();
 
 }
+
+
+exploreController.songs.startArtistSearchDeferred = function (artist) {
+    var deferred = $.Deferred();
+
+    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&%searchTerm&api_key="+searchController.lastfmapikey+"&format=json";
+    $.when(
+
+            exploreController.basicOnlineSearchDeferred(onlineSearchURL, "artist=" + artist , searchController.searchTypeSongs, false, artist)
+
+        ).then(function (onlineList) {
+            console.log("FFFOUNDDDD")
+            console.dir(JSON.stringify(songList))
+            var songList = exploreController.songs.completeSearch([], onlineList);
+            console.log("FFFOUNDDDD")
+            console.dir(JSON.stringify(songList))
+            deferred.resolve(songList);
+
+        });
+    return deferred.promise();
+
+}
+
+
 
 /**
  * Returned List is processed the same in both views

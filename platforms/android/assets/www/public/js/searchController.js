@@ -431,49 +431,6 @@ searchController.emptySearchList = function (dontInitFully) {
 }
 
 
-searchController.filterMusic = function (filterTerm) {
-    if (!filterTerm)
-        filterTerm = $("#searchinput").val();
-    viewController.showLoading(true);
-    uiController.searchListScroll.scrollTo(0, 0, 1000)
-
-    filterTerm = filterTerm.toLowerCase();
-    var title = "";
-    var artist = "";
-
-    var icounter = 0;
-    for (var i = 0; i < searchController.songs.searchResults.length; i++) {
-        artist = mediaController.getSongArtist(searchController.songs.searchResults[i]);
-        title = searchController.songs.searchResults[i].name;
-        artist = artist.toLowerCase();
-        title = title.toLowerCase();
-
-        if (title.search(filterTerm) > -1 || artist.search(filterTerm) > -1) {
-            searchController.songs.searchResults[i].tmpHide = false;
-            // console.dir(searchController.songs.searchResults[icounter]);
-            icounter++;
-        }
-        else {
-            searchController.songs.searchResults[i].tmpHide = true;
-
-        }
-    }
-
-    $scope.safeApply();
-
-    $("#searchlistview").listview('refresh');
-
-    setTimeout(function () {
-        uiController.searchListScroll.refresh();
-        viewController.showLoading(false);
-    }, 1000)
-    searchController.makeSearchListDraggable();
-    setTimeout(function () {
-        $("#searchlistview li").removeClass("fadeincompletefast");
-    }, 100)
-
-}
-
 
 /*Songs -------------------------------------------------------------------------------------------------------------------------------------*/
 

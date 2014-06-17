@@ -2463,6 +2463,9 @@ playlistController.makePlayListSortable = function () {
 
                             actSong = jQuery.extend(true, {}, actSong);
 
+                            if(actSong.tmpHide)
+                             delete actSong.tmpHide;
+
                             actSong.gid = playlistController.getNewID();//"plsgid" + playlistController.globalId;
                             //playlistController.globalId = playlistController.globalId + 1;
 
@@ -2492,7 +2495,8 @@ playlistController.makePlayListSortable = function () {
                         var actSong = searchController.getSongFromIndex(parseInt(id));
 
                         actSong = jQuery.extend(true, {}, actSong);
-
+                        if(actSong.tmpHide)
+                            delete actSong.tmpHide;
                         actSong.gid = playlistController.getNewID();//"plsgid" + playlistController.globalId;
 
 
