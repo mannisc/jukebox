@@ -411,7 +411,10 @@ videoController.init = function () {
     //Choose Version
     videoController.controls.find(".videoControlElements-button-choose-version").click(function () {
         if (videoController.versionsEnabled)
-            mediaController.getVersions();
+            var song = playbackController.getPlayingSong();
+            var artistString = encodeURIComponent(mediaController.getSongArtist(song));
+            var titleString = encodeURIComponent(song.name);
+            mediaController.getVersions(artistString,titleString);
     });
 
     //Show Lyrics
