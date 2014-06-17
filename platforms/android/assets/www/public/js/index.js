@@ -46,7 +46,7 @@ var app = {
 var preferences = {
 
  //serverURL: "http://localhost:3001/"
- serverURL: "http://songbase.fm:3001/" 
+ serverURL: "http://songbase.fm:3001/"
 
  //serverURL: "http://info.jukebox.selfhost.eu:3001/"
 
@@ -158,6 +158,15 @@ $(document).ready(function () {
 
             console.dir(urlParams);
             setTimeout(function () {
+                if(urlParams.downloadApp && urlParams.downloadApp != ""){
+                    $("#popupDownloadApp").popup('open');
+
+                }
+                },1000)
+
+
+            setTimeout(function () {
+
                 if (urlParams.search && urlParams.search != "") {
 
                     $("#searchinput").val(urlParams.search);
