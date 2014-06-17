@@ -207,7 +207,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
             if (playbackController.playingSong.streamURL)
                 mediaController.playStreamURL(playbackController.playingSong.streamURL);
             else
-                mediaController.playStream(mediaController.getSongArtist(playbackController.playingSong), playbackController.playingSong.name, playedAutomatic);
+                mediaController.playStream(mediaController.getSongArtist(playbackController.playingSong), playbackController.playingSong.name, playedAutomatic,1);
 
 
             playbackController.playedSongs.push(playbackController.playingSong);

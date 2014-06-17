@@ -40,11 +40,10 @@ playlistController.loadedPlaylistSongs = [];
 
 playlistController.currentQueue = {gid: 0, id: 0, name: "Current Play Queue", isPlaylist: true, isCurrentQueue: true, tracks: []};
 
-playlistController.similarSongs = {gid: 1, id: 1, name: "Similar Songs", isPlaylist: true, isSimilarSongs: true, tracks: [], song:{}};
+playlistController.similarSongs = {gid: 1, id: 1, name: "Similar Songs", isPlaylist: true, isSimilarSongs: true, tracks: [], song: {}};
 
 
-
-playlistController.playlists = [playlistController.currentQueue,playlistController.similarSongs];  //CLEAR_______________________________________________________________
+playlistController.playlists = [playlistController.currentQueue, playlistController.similarSongs];  //CLEAR_______________________________________________________________
 
 playlistController.playlistHelp = {playlist: "Drag and Drop your favorite Songs<br>to add them to this Playlist.", queue: "Drag and Drop your favorite Songs<br>to add them to the Play Queue."};
 
@@ -791,9 +790,8 @@ playlistController.playlistChanged = function (playlist, position) {
         position = playlistController.getPlaylistPosition(playlist.gid);
 
 
-
     if (position > -1) {
-        accountController.savePlaylist(playlist.gid,playlist.name,playlist.tracks, position);
+        accountController.savePlaylist(playlist.gid, playlist.name, playlist.tracks, position);
     }
 
 }
@@ -862,15 +860,15 @@ playlistController.insertSongsIntoQueue = function (songs) {
 
     playlistController.currentQueue.tracks = tmp.concat(playlistController.currentQueue.tracks.slice(playbackController.playingSongIndex + 1));
 
-    for (var j =  playbackController.playingSongIndex; j <  playbackController.playingSongIndex+ songs.length&&j<playlistController.currentQueue.tracks.length; j++) {
-        if(!playlistController.currentQueue.tracks[j].image){
-            setTimeout(mediaController.loadPreview(playlistController.currentQueue.tracks[j]), j*300);
+    for (var j = playbackController.playingSongIndex; j < playbackController.playingSongIndex + songs.length && j < playlistController.currentQueue.tracks.length; j++) {
+        if (!playlistController.currentQueue.tracks[j].image) {
+            setTimeout(mediaController.loadPreview(playlistController.currentQueue.tracks[j]), j * 300);
         }
     }
 
     if (playlistController.loadedPlaylists["0"]) {
         if (Object.keys(playlistController.loadedPlaylists).length == 1) {
-            playlistController.loadedPlaylistSongs =  playlistController.currentQueue.tracks;
+            playlistController.loadedPlaylistSongs = playlistController.currentQueue.tracks;
         }
         playlistController.displayLimit = playlistController.loadedPlaylistSongs.length;
 
@@ -940,20 +938,19 @@ playlistController.addSongsToPlaylist = function (playlist, songs) {
 
 
     playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlist, songs);
-    var oldLength =   playlist.tracks.length;
+    var oldLength = playlist.tracks.length;
     playlist.tracks = playlist.tracks.concat(songs);
 
 
-    for (var j =  oldLength; j<playlist.tracks.length; j++) {
-        if(!playlist.tracks[j].image){
-            setTimeout(mediaController.loadPreview(playlist.tracks[j]), j*300);
+    for (var j = oldLength; j < playlist.tracks.length; j++) {
+        if (!playlist.tracks[j].image) {
+            setTimeout(mediaController.loadPreview(playlist.tracks[j]), j * 300);
         }
     }
 
 
-
     setTimeout(function () {
-        accountController.savePlaylist(playlist.gid,playlist.name,playlist.tracks);
+        accountController.savePlaylist(playlist.gid, playlist.name, playlist.tracks);
     }, 0);
     $scope.safeApply();
     if (playlistController.playlistMode) {
@@ -965,7 +962,7 @@ playlistController.addSongsToPlaylist = function (playlist, songs) {
     } else if (playlistController.getLoadedPlaylist().gid == playlist.gid) {
         if (Object.keys(playlistController.loadedPlaylists).length == 1) {
 
-            playlistController.loadedPlaylistSongs =  playlist.tracks;
+            playlistController.loadedPlaylistSongs = playlist.tracks;
         }
         playlistController.displayLimit = playlistController.loadedPlaylistSongs.length;
 
@@ -1028,7 +1025,7 @@ playlistController.removeSelectedElementsFromPlaylist = function (event, noConfi
                 if (element.isPlaylist) {
                     for (var j = 0; j < playlistController.playlists.length; j++) {
                         if (playlistController.playlists[j].gid == playlistController.selectedSongs[i].song.gid) {
-                            accountController.deletePlaylist(playlistController.playlists[j].gid) ;
+                            accountController.deletePlaylist(playlistController.playlists[j].gid);
 
                             playlistController.playlists.splice(j, 1);
                             deletedPlaylist = true;
@@ -1043,7 +1040,7 @@ playlistController.removeSelectedElementsFromPlaylist = function (event, noConfi
                         if (playlist.tracks[j].gid == playlistController.selectedSongs[i].song.gid) {
                             playlist.tracks.splice(j, 1);
                             j--;
-                            accountController.savePlaylist(playlist.gid,playlist.name,playlist.tracks);
+                            accountController.savePlaylist(playlist.gid, playlist.name, playlist.tracks);
 
                         }
                     }
@@ -1061,8 +1058,8 @@ playlistController.removeSelectedElementsFromPlaylist = function (event, noConfi
 
 
         }
-        console.log(":::::::::::::::::::::::::::: "+deletedPlaylist)
-        if(deletedPlaylist){
+        console.log(":::::::::::::::::::::::::::: " + deletedPlaylist)
+        if (deletedPlaylist) {
             accountController.savePlaylistsPosition();
 
         }
@@ -1101,7 +1098,6 @@ playlistController.removeSelectedElementsFromPlaylist = function (event, noConfi
             }
         }
     }
-
 
 
     if (playlistsDelete) {
@@ -1538,7 +1534,7 @@ playlistController.renamePlaylist = function (playlist, name) {
                 delete playlist.isUnnamedPlaylist;
 
                 $scope.safeApply();
-                accountController.savePlaylist(playlist.gid,playlist.name);
+                accountController.savePlaylist(playlist.gid, playlist.name);
 
             }
 
@@ -1552,7 +1548,7 @@ playlistController.renamePlaylist = function (playlist, name) {
 playlistController.importPlaylistPopup = function () {
 
 
-    $("#popupImportInput").popup("open",{transition: 'pop'});
+    $("#popupImportInput").popup("open", {transition: 'pop'});
 
 }
 
@@ -1581,10 +1577,10 @@ playlistController.loadPlaylist = function (playlist) {
     playlistController.loadedPlaylistSongs = playlist.tracks;
 
 
-  /*  for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
-        playlistController.loadedPlaylistSongs[i].id = "plsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
-        //   console.log("::: "+ playlistController.loadedPlaylistSongs[i].gid)
-    }*/
+    /*  for (var i = 0; i < playlistController.loadedPlaylistSongs.length; i++) {
+     playlistController.loadedPlaylistSongs[i].id = "plsid" + helperFunctions.padZeros(i, ("" + playlistController.loadedPlaylistSongs.length).length);
+     //   console.log("::: "+ playlistController.loadedPlaylistSongs[i].gid)
+     }*/
 
     if (Object.keys(playlistController.loadedPlaylists).length > 1 || !playlistController.loadedPlaylists["0"]) {
         $("#playlisthelp").html(playlistController.playlistHelp.playlist)
@@ -1850,7 +1846,6 @@ playlistController.createEmptyPlaylist = function (addAtBottom) {
         playlistController.playlists.unshift(playlist);
 
 
-
     return playlist;
 
 }
@@ -1859,7 +1854,9 @@ playlistController.createEmptyPlaylist = function (addAtBottom) {
  ** Get Similar Songs from last.fm
  */
 
-playlistController.getSimilarSongs = function(song){
+playlistController.getSimilarSongs = function (song) {
+    playlistController.similarSongs.song = jQuery.extend(true, {}, song);
+
     var artist = song.artist.name;
     var title = song.name;
 
@@ -1870,30 +1867,30 @@ playlistController.getSimilarSongs = function(song){
             exploreController.basicOnlineSearchDeferred(onlineSearchURL, "artist=" + artist + "&track=" + title, searchController.searchTypeSongs, false, artist)
 
         ).then(function (onlineList) {
-            console.log("FFFOUNDDDD")
-            console.dir(JSON.stringify(songList))
+
+
             var songList = exploreController.songs.completeSearch([], onlineList);
-            console.log("FFFOUNDDDD")
-            console.dir(JSON.stringify(songList))
+
+            if (songList && songList.length > 0) {
 
 
-            for (var i = 0; i < songList.length; i++) {
-                songList[i].gid = playlistController.getNewID();
+                for (var i = 0; i < songList.length; i++) {
+                    songList[i].gid = playlistController.getNewID();
+                }
+
+                playlistController.similarSongs.tracks = songList.splice(0, playlistController.similarSongsMaxResults);
+                playlistController.loadedPlaylistSongs = playlistController.similarSongs.tracks;
+
+                uiController.playListScroll.scrollTo(0, 0, 1000)
+                $.mobile.loading("hide");
+
+                playlistController.applySongList();
             }
-
-            playlistController.similarSongs.tracks =  songList.splice(0,playlistController.similarSongsMaxResults);
-            playlistController.loadedPlaylistSongs = playlistController.similarSongs.tracks;
-
-            uiController.playListScroll.scrollTo(0, 0, 1000)
-
-            playlistController.applySongList();
-
 
 
         });
 
 }
-
 
 
 /**
@@ -1904,24 +1901,20 @@ playlistController.loadSimilarSongs = function () {
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
 
-    if(playbackController.playingSong){
+    if (playbackController.playingSong) {
 
-        if(playlistController.similarSongs.song.name!=playbackController.playingSong.name||playlistController.similarSongs.song.artist.name!=playbackController.playingSong.artist.name){
-            playlistController.similarSongs.song = jQuery.extend(true, {}, playbackController.playingSong);
+        if (playlistController.similarSongs.song.name != playbackController.playingSong.name || playlistController.similarSongs.song.artist.name != playbackController.playingSong.artist.name) {
+            $.mobile.loading("show");
 
-            playlistController.getSimilarSongs( playlistController.similarSongs.song);
+            playlistController.getSimilarSongs(playbackController.playingSong);
 
         }
-
 
 
     }
 
 
-
     var playlist = playlistController.similarSongs;
-
-
 
 
     $scope.safeApply();
@@ -1984,7 +1977,7 @@ playlistController.loadNewPlaylistWithSongs = function (songs) {
 
     playlist.tracks = songs;
     setTimeout(function () {
-        accountController.savePlaylist(playlist.gid,playlist.name,playlist.tracks);
+        accountController.savePlaylist(playlist.gid, playlist.name, playlist.tracks);
         accountController.savePlaylistsPosition();
     }, 0)
 
@@ -2012,10 +2005,9 @@ playlistController.loadNewEmptyPlaylist = function () {
 
     var playlist = playlistController.createEmptyPlaylist();
     setTimeout(function () {
-         accountController.savePlaylist(playlist.gid,playlist.name,[]);
+        accountController.savePlaylist(playlist.gid, playlist.name, []);
         accountController.savePlaylistsPosition();
     }, 0)
-
 
 
     playlistController.renameLoadedPlaylist = true;
@@ -2214,7 +2206,7 @@ playlistController.toggleSortablePlaylist = function (manuell) {
 playlistController.getHelpStyleClass = function () {
 
 
-    if ( !playlistController.getLoadedPlaylist().isSimilarSongs&&!playlistController.playlistMode && playlistController.loadedPlaylistSongs.length == 0 && !playlistController.hideHelp) {
+    if (!playlistController.getLoadedPlaylist().isSimilarSongs && !playlistController.playlistMode && playlistController.loadedPlaylistSongs.length == 0 && !playlistController.hideHelp) {
         return "";
     } else {
         return "invisible";
@@ -2549,8 +2541,8 @@ playlistController.makePlayListSortable = function () {
 
                             actSong = jQuery.extend(true, {}, actSong);
 
-                            if(actSong.tmpHide)
-                             delete actSong.tmpHide;
+                            if (actSong.tmpHide)
+                                delete actSong.tmpHide;
 
                             actSong.gid = playlistController.getNewID();//"plsgid" + playlistController.globalId;
                             //playlistController.globalId = playlistController.globalId + 1;
@@ -2581,7 +2573,7 @@ playlistController.makePlayListSortable = function () {
                         var actSong = searchController.getSongFromIndex(parseInt(id));
 
                         actSong = jQuery.extend(true, {}, actSong);
-                        if(actSong.tmpHide)
+                        if (actSong.tmpHide)
                             delete actSong.tmpHide;
                         actSong.gid = playlistController.getNewID();//"plsgid" + playlistController.globalId;
 
@@ -2606,11 +2598,11 @@ playlistController.makePlayListSortable = function () {
             playlistController.loadedPlaylistSongs = newLoadedPlaylistSongs;
             playlistController.displayLimit = playlistController.loadedPlaylistSongs.length;
 
-            if (playlistController.playlistMode)   {
+            if (playlistController.playlistMode) {
                 playlistController.playlists = playlistController.loadedPlaylistSongs;
                 setTimeout(function () {
-                  accountController.savePlaylistsPosition();
-                },0)
+                    accountController.savePlaylistsPosition();
+                }, 0)
             }
             else {
                 if ($('#playlistselectverticalform option:selected').size() > 1)
@@ -2642,7 +2634,7 @@ playlistController.makePlayListSortable = function () {
                                 var position = playlistController.getPlaylistPosition(playlistController.loadedPlaylists[playlist].gid);
                                 if (position > -1) {
                                     var savePlaylist = playlistController.loadedPlaylists[playlist];
-                                    accountController.savePlaylist(savePlaylist.gid,savePlaylist.name,savePlaylist.tracks);
+                                    accountController.savePlaylist(savePlaylist.gid, savePlaylist.name, savePlaylist.tracks);
                                 }
 
                             }
