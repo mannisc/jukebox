@@ -1138,12 +1138,9 @@ a, button, h1, h2, h3{
     transition: all 0.6s ease;
 }
 
-
 #siteLogo img{
-    width:110px;
     position: absolute;
     bottom: 50px;
-    right: 15px;
     opacity: 0.42;
     pointer-events: auto;
     -webkit-transition: all 0.6s ease;
@@ -1154,7 +1151,23 @@ a, button, h1, h2, h3{
 
 }
 
+#siteLogo #songbaseLogoImage{
 
+    left: 15px;
+    width:160px;
+
+
+}
+
+
+
+#siteLogo #siteLogoImage{
+    width:110px;
+
+    right: 15px;
+
+
+}
 
 
 
