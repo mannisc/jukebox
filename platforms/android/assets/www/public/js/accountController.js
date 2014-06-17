@@ -1022,8 +1022,14 @@ accountController.savePlaylistsPosition = function () {
             //Updateplaylist defines action
             var postData = { updateplaylistpositions: savetoken, auth: authController.ip_token, n: nonce};
 
+            var j = 0;
             for (var i = 0; i < playlistController.playlists.length; i++) {
-                postData["gid" + (i + 1)] = playlistController.playlists[i].gid
+
+                if(playlistController.playlists[i].gid!=playlistController.similarSongs.gid){
+                    postData["gid" + (j + 1)] = playlistController.playlists[i].gid
+                    j++;
+                }
+
             }
 
             var send = function () {
@@ -1056,7 +1062,9 @@ accountController.savePlaylistsPosition = function () {
  */
 accountController.savePlaylist = function (gid, name, tracks) {
     if (accountController.loggedIn) {
-        if (gid) {
+        if (gid&&gid!=playlistController.similarSongs.gid) {
+
+
 
             var playlistdata = JSON.stringify(tracks)
 

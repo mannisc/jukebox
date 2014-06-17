@@ -775,7 +775,7 @@ videoController.updateFullscreenMode = function () {
 
 
     if (videoController.fullscreenMode == 0) { //Background
-
+        $("#songbaseLogoImage").hide();
         if(hideControlsTimer){
             clearTimeout(hideControlsTimer);
             $("#videocontrols").removeClass("fadeoutcomplete");
@@ -801,15 +801,22 @@ videoController.updateFullscreenMode = function () {
         uiController.updateUI();
         if (videoController.isBrowserFullscreen())
             videoController.toggleBrowserFullScreen();
+        setTimeout(function () {
 
+            uiController.playListScroll.refresh();
+            setTimeout(function () {
+                uiController.playListScroll.refresh();
+            }, 1000)
+        }, 150)
     }
 
-    else if (videoController.fullscreenMode == 1) {
+    else if (videoController.fullscreenMode == 1) { //Fullscreen
         setTimeout(function(){
                 hideControls();
             $("body").on("mousemove mouseup", hideControls);
             },2000);
 
+        $("#songbaseLogoImage").show();
 
         $(".videoControlElements-custom-button").hide();
         $("#header").css("opacity", "0").css("pointer-events","none");

@@ -86,7 +86,7 @@ window.onbeforeunload = function (event) {
         event = window.event;
     }
 
-    if (event&& playlistController.playlists.length>1&&!accountController.loggedIn ){
+    if (event&& playlistController.playlists.length>2&&!accountController.loggedIn ){
         var message = 'Without your own free Songbase account your unsaved playlists will be lost!';
         event.returnValue = message;
     }

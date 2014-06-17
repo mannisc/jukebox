@@ -51,8 +51,14 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
                     playlistController.addSongListElementsToPlaylist(positionTo, playlist.tracks, "r");
 
             }, 150)
-        }},
-        {text: "Rename", callback: function () {
+        }}
+
+    ]
+
+
+    //Only one Playlist Selected
+    if (!playlistController.getLoadedPlaylist().isSimilarSongs) {
+        optionsMenu.options.push( {text: "Rename", callback: function () {
             optionsMenu.closePopup();
             $("#popupOptions").popup({
                 afterclose: function () {
@@ -66,8 +72,8 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
             playlistController.editedPlaylist = jQuery.extend(true, {}, playlistController.getLoadedPlaylist());
             $scope.safeApply();
 
-        }}
-    ]
+        }});
+    }
 
     $scope.safeApply();
     $("#popupOptionsList").listview("refresh");

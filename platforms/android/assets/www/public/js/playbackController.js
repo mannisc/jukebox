@@ -137,6 +137,8 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     //Set loading/playing Song to selected Song
     playbackController.updatePlayingSongIndex();
     playbackController.playingSong = jQuery.extend(true, {}, song);
+    if(playlistController.getLoadedPlaylist().isSimilarSongs)
+        playlistController.getSimilarSongs(playbackController.playingSong);
 
     //Clear other loading songs
     $(".songlist li.loadedsong.stillloading").removeClass("loadedsong stillloading");
@@ -163,6 +165,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     if (!resetingSong) {
         if (!isSameSongAsLoadedSong) {
             playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
+
 
 
             if (addSongToQueue) {
@@ -216,6 +219,8 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
 
     $scope.safeApply();
+
+
 
     if (!addedToQueue) {
         playbackController.remarkSong();
