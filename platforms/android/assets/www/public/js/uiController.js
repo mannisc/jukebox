@@ -621,7 +621,7 @@ uiController.updateUI = function () {
         }, 100)
 
 
-        $("#searchcontent").css("max-height", $(window).height() - 44 - 120 + 6);
+        $("#searchcontent").css("max-height", $(window).height() - 44 - 120 + 6+5);
 
         var setSelectSize = function () {
             $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 45);
@@ -677,7 +677,7 @@ uiController.updateUI = function () {
 
         }
 
-        $("#searchcontent").css("max-height", $(window).height() - 44 - 130 - 40 + 12);
+        $("#searchcontent").css("max-height", $(window).height() - 44 - 130 - 40 + 12+5);
 
         $("#content").css({"width": uiController.windowWidth - 16, "height": $(window).height() - 44 - 4 - 8});
 
