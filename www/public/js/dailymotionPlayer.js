@@ -176,7 +176,7 @@ dailymotionPlayer.load = function (url) {
 
     //$("#dailymotionPlayer").hide();
     console.dir("VideoID: "+videoid);
-    if(videoid){  
+    if(videoid){
         $("#dailymotionplayer").addClass("iframeVideo").appendTo("#backgroundVideo");
         dailymotionPlayer.dailymotionVideoID = videoid;
         var PARAMS = {background : 'ABE866', autoplay : 0, chromeless : 1,
