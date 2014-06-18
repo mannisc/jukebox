@@ -191,15 +191,15 @@ viewController.activateView = function(view, noAnimation, showFunction){
 
 viewController.applySongList = function (currentSearchID,size,delays,stepSize,stepDelay) {
 
-    console.log("-------------------------------------")
+    //console.log("-------------------------------------")
 
     $(".specialplaylistbutton").removeClass("fadeincompletefaster");
     $("#searchlist .iScrollIndicator").hide();
 
 
 
-    console.log(delays)
-    console.log(size + "  " + stepSize)
+    //console.log(delays)
+    //console.log(size + "  " + stepSize)
 
     var songInList = viewController.activeView.isSongInList(playbackController.playingSong);
     $("#searchlist .loadedsong").removeClass("loadedsong playing pausing stillloading");
@@ -212,7 +212,7 @@ viewController.applySongList = function (currentSearchID,size,delays,stepSize,st
         var show = function (index) {
             setTimeout(function () {
                 if (viewController.activeView.currentSearchID == currentSearchID) {
-                    console.log(index + " mm  " + viewController.activeView.songs.searchResults.length)
+                   // console.log(index + " mm  " + viewController.activeView.songs.searchResults.length)
 
 
                     /*  if (searchController.showMode == 0)
@@ -220,7 +220,7 @@ viewController.applySongList = function (currentSearchID,size,delays,stepSize,st
                      else*/
                     viewController.activeView.displayLimit = size * index / delays;
 
-                    console.log("safeapply")
+                    // console.log("safeapply")
                     $scope.safeApply();
 
                     //New Elements Applied
