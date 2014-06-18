@@ -50,12 +50,12 @@
     <file path="/rsa.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399584275290" ignored="false" />
     <file path="/authController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399585125708" ignored="false" />
     <file path="/httpsHandler.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1400941637611" ignored="false" />
-    <file path="$PROJECT_DIR$/../www/public/js/accountController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403086657815" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/js/accountController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403093983595" ignored="false" />
     <file path="$PROJECT_DIR$/../www/index.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403087328170" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/css/index.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403011242536" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/exploreController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403010485483" ignored="false" />
     <file path="/exploreController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403002684949" ignored="false" />
-    <file path="$PROJECT_DIR$/../www/public/js/playlistController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403043604857" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/js/playlistController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403093945103" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/searchController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403002596237" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/uiController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403003632340" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/playbackController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403036527037" ignored="false" />
@@ -64,8 +64,9 @@
     <file path="/videoController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403011308536" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/optionsMenu.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403086851599" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/index.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403086895524" ignored="false" />
-    <file path="$PROJECT_DIR$/../www/public/js/mediaController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403036527037" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/js/mediaController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403093945103" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/css/videoPlayer/videoPlayer.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403087900668" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/js/viewController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403093945103" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,7 +242,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1536" height="826" extended-state="0" />
+    <frame x="0" y="0" width="1536" height="826" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
