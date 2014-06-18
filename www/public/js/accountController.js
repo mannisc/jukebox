@@ -139,7 +139,7 @@ accountController.logout = function () {
                         uiController.showPlaylists();
                         $scope.safeApply();
 
-                        $('#popupLogin').popup('close');
+                        $('#popupAccount').popup('close');
 
                         /*setTimeout(function(){
                          btn.addClass("animated");
