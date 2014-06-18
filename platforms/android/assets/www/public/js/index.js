@@ -116,10 +116,10 @@ $(document).ready(function () {
      //FEEDBACK
     feedback.initFeedback();
 
-    //Enable smooth sscrolling after this time
+    //Enable smooth scrolling after this time
     setTimeout(function(){
       IScrollinitTimer = Date.now()//CHANGED
-    },1000)
+    },0)
 
     // setTimeout(function(){
        // $.mobile.loading("show");

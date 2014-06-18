@@ -1873,18 +1873,17 @@ playlistController.getSimilarSongs = function (song) {
 
             if (songList && songList.length > 0) {
 
-
                 for (var i = 0; i < songList.length; i++) {
                     songList[i].gid = playlistController.getNewID();
                 }
-
                 playlistController.similarSongs.tracks = songList.splice(0, playlistController.similarSongsMaxResults);
                 playlistController.loadedPlaylistSongs = playlistController.similarSongs.tracks;
-
                 uiController.playListScroll.scrollTo(0, 0, 1000)
                 $.mobile.loading("hide");
-
+                $("#playlistInner .iScrollPlayIndicator").hide();
+                $("#playlistInner .iScrollIndicator").hide();
                 playlistController.applySongList();
+
             }
 
 

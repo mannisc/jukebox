@@ -1066,7 +1066,7 @@
             <div style="font-size: 1em;font-weight: bold;margin-top: -10px; margin-bottom: 10px;"> {{playbackController.playingSong.name}}</div>
             <ul data-role="listview" id="popupArtistExternList" data-theme="b" >
                 <li data-theme="b" class="marked"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');setTimeout(function(){exploreController.searchArtistsSongs(playbackController.playingSong.artist.name)},150)"
-                                                     style="text-decoration:none;" target="_blank"><img src="public/img/user.png">Songs from Artist</a></li>
+                                                     style="text-decoration:none;" target="_blank"><img src="public/img/usericon.png">Songs from Artist</a></li>
                 <li data-theme="b" class="marked"  style="border-bottom:1px solid #000;"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');setTimeout(function(){exploreController.searchSimilarSongs(playbackController.playingSong)},150)"
                                                                                             style="text-decoration:none;" target="_blank"><img src="public/img/radioicon.png">Similar Songs</a></li>
 

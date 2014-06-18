@@ -361,7 +361,7 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd, arrowDirection
     // var song = optionsMenu.getSongFromListEvent(event);
     optionsMenu.options = [];
     for (var i = 0; i < playlistController.playlists.length; i++) {
-        if (playlistController.playlists[i].gid != playlistController.currentQueue.gid) {
+        if (!playlistController.playlists[i].isCurrentQueue&&!playlistController.playlists[i].isSimilarSongs) {
             var callback = add(i);
             optionsMenu.options.push({text: playlistController.playlists[i].name, callback: callback})
         }
@@ -486,9 +486,7 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
 
 
         },
-        {text: "Create new Playlist", callback: null},
-        {text: "Select All", callback: null}
-
+        {text: "Create new Playlist", callback: null}
     ]
 
 
