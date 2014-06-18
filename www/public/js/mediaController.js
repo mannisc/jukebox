@@ -655,15 +655,17 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
     //var stime=new Date();
     //var time=stime.getTime();
     $.ajax({
-        timeout: 30000,
+        timeout: 60000,
         url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration +"&fromCache="+fromCache+"&auth=" + authController.ip_token,
         success: function (data) {
+            console.dir(" mediaController.loadStreamURL success")
             if (streamID == mediaController.playCounter) {
                 //var etime=new Date();
                 //var diff = etime.getTime()-time;
                 //alert("RESPONSE TIME: "+diff+" ms");
 
                 if (authController.ensureAuthenticated(data, function () {
+                    console.dir("authController.ensureAuthenticated")
                     mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic,fromCache);
                 })) {
 
@@ -677,6 +679,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                         videoURL = data.videoURL;
                     }
                     videoURL = unescape(videoURL);
+                    console.dir("videoURL: "+videoURL)
                     if (videoController.isEmbedVideo(videoURL)) {
                         streamURL = videoURL;
                         mediaController.playStreamURL(streamURL, videoURL, true);
@@ -688,6 +691,8 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                     else if (data.streamURL) {
                         streamURL = data.streamURL;
                         streamURL = unescape(streamURL);
+
+                        console.dir("streamURL: "+streamURL)
                         console.dir(data);
 
                         if (streamURL) {
@@ -706,7 +711,8 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                 }
             }
         },
-        error: function () {
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.dir(" mediaController.loadStreamURL error: "+xhr.responseText)
             loadError = true;
             /* setTimeout(function () {
              videoController.showBuffered(true);
@@ -714,7 +720,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
              }, 500);*/
         },
         complete: function () {
-
+            console.dir(" mediaController.loadStreamURL complete")
             //log("COMPLETED")
             //playbackController.isLoading = false;
             //console.log("LOADED")
@@ -747,6 +753,7 @@ mediaController.onLoadingError = function (streamID, playedAutomatic) {
 
 
 mediaController.playStream = function (artist, title, playedAutomatic,fromCache) {
+    console.dir("playStream "+artist+" "+title)
     if(fromCache=="1" || fromCache==1){
         console.dir(" mediaController.retrySongCounter = 0;")
         mediaController.retrySongCounter = 0;
@@ -780,6 +787,7 @@ mediaController.playStream = function (artist, title, playedAutomatic,fromCache)
         $.ajax({
             url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + encodeURIComponent(artistString) + "&track=" + encodeURIComponent(titleString) + "&format=json",
             success: function (data) {
+                console.dir("mediaController.playStream sucess!")
                 if (streamID == mediaController.playCounter) {
 
                     var duration = 200000;
@@ -792,6 +800,7 @@ mediaController.playStream = function (artist, title, playedAutomatic,fromCache)
                     //  alert(artistString+" - "+titleString);
                     if (authController.ip_token != "auth" && authController.ip_token != "") {
                         var loadError = false;
+                        console.dir("mediaController.loadStreamURL: "+artistString+" "+titleString)
                         mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic,fromCache);
                     }
                 }
@@ -799,6 +808,7 @@ mediaController.playStream = function (artist, title, playedAutomatic,fromCache)
             },
             error: function () {
                 // console.log("ERROR")
+                console.dir("mediaController.playStream error!")
                 var duration = 200000;
                 mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic,fromCache);
             }
