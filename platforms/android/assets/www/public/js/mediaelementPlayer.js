@@ -183,8 +183,13 @@ var mediaelementPlayer = function (selector) {
                 });
 
                 mediaElement.addEventListener("error", function (e) { //TODO VideoController Handling nötig wenn versionen embedded fähig???
-                    mediaController.PlayingSongError();
-                    console.log("MEDIAELEMENT ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                    if(mediaController.currentvideoURL!=""){
+                        if(!videoController.isEmbedVideo(mediaController.currentvideoURL)){
+                            console.log("MEDIAELEMENT ERROR!")
+                            mediaController.PlayingSongError();
+                        }
+                    }
+
                     /*  if (mediaController.currentvideoURL ) {
                      mediaController.playNextVersion();
                      }  */
