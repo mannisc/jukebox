@@ -650,7 +650,6 @@ accountController.setUserData = function (userName, userEmail) {
 accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted, pwEncrypted, useridEncrypted, externalAccountIdentifier) {
 
     //alert(preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier)
-
     $.ajax({
         timeout: 30000,
         url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier,
@@ -732,7 +731,11 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                 }
             }
         },
-        error: function () {
+        error: function (a,b,c) {
+            console.dir(a)
+            console.dir(b)
+            console.dir(c)
+
             uiController.toast("Sorry, it is not possible to login at the moment.", 1500);
             if (facebookHandler.loggedIn) {
                 facebookHandler.logout();
