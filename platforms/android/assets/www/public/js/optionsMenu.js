@@ -51,6 +51,16 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
                     playlistController.addSongListElementsToPlaylist(positionTo, playlist.tracks, "r");
 
             }, 150)
+        }} ,
+        {text: "Duplicate Playlist",  callback: function () {
+            optionsMenu.closePopup();
+
+            var playlist = playlistController.loadedPlaylistSongs || [];
+            setTimeout(function () {
+                if (playlist && playlist.length > 0)
+                    playlistController.loadNewPlaylistWithSongs(playlist)
+            }, 150)
+
         }}
 
     ]
@@ -92,7 +102,7 @@ optionsMenu.openQueueOptions = function (event, positionTo) {
         event.stopPropagation();
 
     optionsMenu.options = [
-        {text: "Save as Playlist", callback: function () {
+        {text: "Create new Playlist", callback: function () {
             optionsMenu.closePopup();
 
             var playlist = playlistController.loadedPlaylistSongs || [];
@@ -164,12 +174,12 @@ optionsMenu.openSearchListSelectionOptions = function (event, positionTo) {
             setTimeout(function () {
                 playlistController.addSelectedElementsToPlaylist(positionTo);
             }, 150)
-        }},
+        }}/*,
         {text: "Share with friends", callback: function () {
             optionsMenu.closePopup();
 
 
-        }}
+        }} */
 
     ]
 
@@ -199,19 +209,23 @@ optionsMenu.openPlayListSelectionPlaylistOptions = function (event, positionTo) 
                 playlistController.playSelectionNext();
             }, 150)
         }},
-
+        {text: "Create new Playlist", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                playlistController.loadNewPlaylistWithSelectedSongs();
+            }, 150)
+        }},
         {text: "Add to Playlist", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
                 playlistController.addSelectedElementsToPlaylist(positionTo);
             }, 150)
-        }},
+        }}/*,
         {text: "Share with friends", callback: function () {
             optionsMenu.closePopup();
 
 
-        }
-        }
+        }}  */
 
     ]
 
@@ -266,18 +280,26 @@ optionsMenu.openPlayListSelectionSongOptions = function (event, positionTo) {
             setTimeout(function () {
                 playlistController.playSelectionNext();
             }, 150)
+        }} ,
+        {text: "Create new Playlist", callback: function () {
+            optionsMenu.closePopup();
+            setTimeout(function () {
+                playlistController.loadNewPlaylistWithSelectedSongs();
+            }, 150)
         }},
         {text: "Add to Playlist", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
                 playlistController.addSelectedElementsToPlaylist(positionTo);
             }, 150)
-        }},
+        }}
+
+        /*,
         {text: "Share with friends", callback: function () {
             optionsMenu.closePopup();
 
 
-        }}
+        }} */
 
     ]
 
@@ -305,11 +327,12 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd, arrowDirection
             if (listToAdd.length > 0) {
                 playlistController.addSongsToPlaylist(playlist, listToAdd);
             }
-            playlistController.deselectSongs();
+
         }
 
         uiController.disableUI(true);
 
+        //
         var addPlaylist = function (elements, index, songList) {
 
             if (index > 0 && elements[index - 1]) {
@@ -341,9 +364,8 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd, arrowDirection
 
             }
         }
-        console.log("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
 
-        console.log(listToAdd)
+
         addPlaylist(listToAdd, 0, [])
 
 
@@ -355,6 +377,7 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd, arrowDirection
             optionsMenu.closePopup();
             setTimeout(function () {
                 addToList(playlistController.playlists[index])
+                playlistController.deselectSongs();
             }, 150);
         }
     };
@@ -467,7 +490,15 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
                 }, 150)
             }
 
-        }} ,
+        }}
+        ,
+        {text: "Create new Playlist", callback:  function () {
+
+
+
+        }
+
+        },
         {text: "Add to Playlist", callback: function () {
             optionsMenu.closePopup();
             if (searchController.playlists.searchResults && searchController.playlists.searchResults.length > 0) {
@@ -478,15 +509,7 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
             }
 
 
-        }
-
-
-
-
-
-
-        },
-        {text: "Create new Playlist", callback: null}
+        }}
     ]
 
 

@@ -1293,6 +1293,20 @@ playlistController.onLoadedPlaylistsChanged = function () {
                     $('#playlistselectverticalform').trigger('chosen:updated');
                 }
 
+
+                //Get Similar Songs
+                if (playlist.isSimilarSongs&& playbackController.playingSong) {
+
+                    if (playlistController.similarSongs.song.name != playbackController.playingSong.name || playlistController.similarSongs.song.artist.name != playbackController.playingSong.artist.name) {
+                        $.mobile.loading("show");
+
+                        playlistController.getSimilarSongs(playbackController.playingSong);
+
+                    }
+
+
+                }
+
                 playlistController.loadPlaylist(playlist);
             }
         } else if (Object.keys(playlistController.loadedPlaylists).length != 0) //No new means one deleted
@@ -1900,17 +1914,6 @@ playlistController.loadSimilarSongs = function () {
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
 
-    if (playbackController.playingSong) {
-
-        if (playlistController.similarSongs.song.name != playbackController.playingSong.name || playlistController.similarSongs.song.artist.name != playbackController.playingSong.artist.name) {
-            $.mobile.loading("show");
-
-            playlistController.getSimilarSongs(playbackController.playingSong);
-
-        }
-
-
-    }
 
 
     var playlist = playlistController.similarSongs;
