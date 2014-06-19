@@ -21,7 +21,7 @@
     <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/searchController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399306620024" ignored="false" />
     <file path="/searchController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399306603289" ignored="false" />
     <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/playlistController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399302148645" ignored="false" />
-    <file path="/playlistController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403035952818" ignored="false" />
+    <file path="/playlistController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403218472332" ignored="false" />
     <file path="$USER_HOME$/aasport/aasport.de/index.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399231563952" ignored="false" />
     <file path="$USER_HOME$/aasport/aasport.de/php/administration.php" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399231624579" ignored="false" />
     <file path="$PROJECT_DIR$/../../platforms/android/assets/www/public/js/uiController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399298980725" ignored="false" />
@@ -40,7 +40,7 @@
     <file path="$PROJECT_DIR$/../../www/public/js/mediaController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399580912876" ignored="false" />
     <file path="/mediaController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399572747088" ignored="false" />
     <file path="$PROJECT_DIR$/../../www/public/js/index.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399583123584" ignored="false" />
-    <file path="/optionsMenu.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403086625687" ignored="false" />
+    <file path="/optionsMenu.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403219609390" ignored="false" />
     <file path="$PROJECT_DIR$/../../www/public/js/facebookHandler.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399581470320" ignored="false" />
     <file path="$PROJECT_DIR$/../../www/public/js/mediaelementPlayer.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399580912876" ignored="false" />
     <file path="$PROJECT_DIR$/../../www/public/js/searchController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1399580912876" ignored="false" />
@@ -55,14 +55,14 @@
     <file path="$PROJECT_DIR$/../www/public/css/index.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403011242536" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/exploreController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403010485483" ignored="false" />
     <file path="/exploreController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403002684949" ignored="false" />
-    <file path="$PROJECT_DIR$/../www/public/js/playlistController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403093945103" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/js/playlistController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403218480647" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/searchController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403002596237" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/uiController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403003632340" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/playbackController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403036527037" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/css/songlist.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403092440901" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/videoController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403036527037" ignored="false" />
     <file path="/videoController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403011308536" ignored="false" />
-    <file path="$PROJECT_DIR$/../www/public/js/optionsMenu.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403086851599" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/js/optionsMenu.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403219953628" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/index.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403086895524" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/mediaController.js" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403093945103" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/css/videoPlayer/videoPlayer.css" changelist="2f3bd19c-e652-4db4-b6c7-0f2056de6cee" time="1403087900668" ignored="false" />
@@ -203,6 +203,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../www" />
     <property name="FullScreen" value="false" />
   </component>
   <component name="PublishConfig">
