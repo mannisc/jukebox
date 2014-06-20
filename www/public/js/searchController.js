@@ -893,9 +893,7 @@ searchController.showPlaylist = function (playlist) {
     console.dir(playlist)
     playlist.tracks=[];
     searchController.showedPlaylist = playlist;
-    $("#searchlistview").hide();
-    $("#searchlist .iScrollIndicator").hide();
-    $("#searchlist .iScrollScrollUpIndicator").hide();
+
     searchController.oldShowMode = searchController.showMode;
     searchController.showMode = 5;
     $("#searchlistview").hide();
