@@ -808,7 +808,22 @@ videoController.updateFullscreenMode = function () {
 
             uiController.playListScroll.refresh();
             setTimeout(function () {
+                uiController.updateUI();
                 uiController.playListScroll.refresh();
+                setTimeout(function () {
+                    uiController.updateUI();
+                    uiController.playListScroll.refresh();
+                    setTimeout(function () {
+                        uiController.updateUI();
+                        uiController.playListScroll.refresh();
+                        setTimeout(function () {
+                            uiController.updateUI();
+                            uiController.playListScroll.refresh();
+
+                        }, 1000)
+
+                    }, 1000)
+                }, 1000)
             }, 1000)
         }, 150)
     }
