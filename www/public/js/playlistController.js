@@ -932,7 +932,7 @@ playlistController.loadSharedPlaylist= function (hash){
 
                     playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue, songlist);
                     playlistController.insertSongsIntoQueue(songlist);
-                    playlistController.loadCurrentQueue();
+                    setTimeout(function(){playlistController.loadCurrentQueue();},2000);
                 }
             }
         },
