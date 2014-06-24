@@ -28,6 +28,7 @@ mediaController.seekTimeDuration = 0;
 
 mediaController.retrySongCounter = 0;
 
+mediaController.shareLinkURL = "";
 
 mediaController.buySong = function () {
     var song = playbackController.getPlayingSong();
@@ -279,8 +280,168 @@ mediaController.PlayingSongError  = function (){
 }
 
 
+mediaController.shareMediaEnabled = function(){
+    var enabled = false;
+    var song = playbackController.getPlayingSong();
+    if(song && song.name != ""){
+        enabled = true;
+    }
+    if(!enabled){
+        for (var i = 0; i < playlistController.playlists.length; i++) {
+            if (!playlistController.playlists[i].isCurrentQueue && !playlistController.playlists[i].isSimilarSongs) {
+                enabled = true;
+                break;
+            }
+            else if (playlistController.playlists[i].isCurrentQueue){
+                if(playlistController.playlists[i].tracks.length>0){
+                    enabled = true;
+                    break;
+                }
+            }
+        }
+    }
+    if(enabled){
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+mediaController.shareMediaStyle = function(){
+    if(mediaController.shareMediaEnabled()){
+        return "opacity:1;";
+    }
+    else
+    {
+        return "opacity:0.5;";
+    }
+}
+
+mediaController.shareMedia = function(){
+    var enabled = false;
+    var song = playbackController.getPlayingSong();
+    if(song && song.name != ""){
+        $('#shareCurrentSongButton').show();
+        enabled = true;
+    }
+    else
+    {
+        $('#shareCurrentSongButton').hide();
+    }
+    var playlistsfound = false;
+    var playqueuefound = false;
+    for (var i = 0; i < playlistController.playlists.length; i++) {
+        if (!playlistController.playlists[i].isCurrentQueue && !playlistController.playlists[i].isSimilarSongs) {
+            playlistsfound = true;
+        }
+        else if (playlistController.playlists[i].isCurrentQueue){
+            if(playlistController.playlists[i].tracks.length>0){
+                playqueuefound = true;
+            }
+        }
+    }
+    if(playlistsfound){
+        $('#sharePlaylistButton').show();
+        enabled = true;
+    }
+    else
+    {
+        $('#sharePlaylistButton').hide();
+    }
+    if(playqueuefound){
+        $('#SharePlayQueueButton').show();
+        enabled = true;
+    }
+    else
+    {
+        $('#SharePlayQueueButton').hide();
+    }
+    if(enabled){
+        $scope.safeApply();
+        $('#popupShareMenu').popup('open', {positionTo: '#sharebutton'});
+    }
+}
+
+mediaController.shareCurrentSong = function(){
+    var song = playbackController.getPlayingSong();
+    if(song && song.name != ""){
+        var artistString = mediaController.getSongArtist(song);
+        var titleString = song.name;
+        mediaController.shareLinkURL = "http://www.songbase.fm/?artist="+artistString+"&title="+titleString
+        $scope.safeApply();
+        setTimeout(function(){
+        $("#popupShareLink").popup('open', {transition: 'pop'});
+        },200);
+
+    }
+    $('#popupShareMenu').popup('close');
+}
+
+mediaController.sharePlayQueue= function(){
+    var playlist = playlistController.currentQueue;
+    var playlistdata = JSON.stringify(playlist.tracks)
+    var savedata = escape(playlistdata);
+
+    $.ajax({
+        type: "POST",
+        data: {shareplaylist: escape(playlist.name), gid: playlist.gid, data: savedata ,auth: authController.ip_token},
+        timeout: 30000,
+        url: preferences.serverURL, // "?storage=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename+"&data="+savedata,
+        success: function (data) {
+            if(authController.ensureAuthenticated(data, function () {mediaController.shareSelectedPlaylist(playlist)})){
+                if(data.hash && data.hash !=""){
+                    mediaController.shareLinkURL = "http://www.songbase.fm/?playlistid="+data.hash
+                    $scope.safeApply();
+                    setTimeout(function(){
+                        $("#popupShareLink").popup('open', {transition: 'pop'});
+                    },200);
+                    $('#popupShareMenu').popup('close');
+                }
+
+            }
+        }
+    })
+}
+
+mediaController.sharePlaylist= function(){
+    mediaController.shareLinkURL = "http://www.songbase.fm/?playlistid=sdfsdf"
+    $scope.safeApply();
+    setTimeout(function(){
+        optionsMenu.openSharePlaylistOptions($('#sharebutton'));
+    },200);
+    $('#popupShareMenu').popup('close');
+}
+
+mediaController.shareSelectedPlaylist = function (playlist) {
+
+    var playlistdata = JSON.stringify(playlist.tracks)
+    var savedata = escape(playlistdata);
+
+    $.ajax({
+        type: "POST",
+        data: {shareplaylist: escape(playlist.name), gid: playlist.gid, data: savedata ,auth: authController.ip_token},
+        timeout: 30000,
+        url: preferences.serverURL, // "?storage=" +savetoken+"&n="+nonce+"&type="+savetype+"&name="+savename+"&data="+savedata,
+        success: function (data) {
+            if(authController.ensureAuthenticated(data, function () {mediaController.shareSelectedPlaylist(playlist)})){
+                if(data.hash && data.hash !=""){
+                    mediaController.shareLinkURL = "http://www.songbase.fm/?playlistid="+data.hash
+                    $scope.safeApply();
+                    setTimeout(function(){
+                        $("#popupShareLink").popup('open', {transition: 'pop'});
+                    },200);
+                    $('#popupShareMenu').popup('close');
+                }
+
+            }
+        }
+    })
 
 
+
+}
 
 mediaController.getVersions = function (artist,title) {
 

@@ -158,12 +158,14 @@ $(document).ready(function () {
 
             console.dir(urlParams);
             setTimeout(function () {
-                if(urlParams.downloadApp && urlParams.downloadApp != ""){
-                    $("#popupDownloadApp").popup('open');
-
+                if(urlParams.playlistid && urlParams.playlistid != ""){
+                   playlistController.loadSharedPlaylist(urlParams.playlistid);
                 }
-                },1000)
+                },2000)
 
+            if(urlParams.downloadApp && urlParams.downloadApp != ""){
+
+            }
 
             setTimeout(function () {
 
