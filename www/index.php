@@ -715,6 +715,9 @@
               <div class="videoControlElements-button videoControlElements-button-choose-version videoControlElements-custom-button">
                   <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
               </div>
+              <div class="videoControlElements-button videoControlElements-button-share videoControlElements-custom-button">
+                  <button type="button" id="sharebutton" data-role="none" style="{{mediaController.shareMediaStyle()}}" aria-controls="mep_0" title="Share with friends" aria-label="Share with friends"></button>
+              </div>
               <div class="videoControlElements-button videoControlElements-button-lyrics videoControlElements-custom-button">
                   <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button>
               </div>
@@ -789,6 +792,23 @@
             </div>
             <div id="loadversionimg" style="opacity:0">
                 <img src="public/img/loader.gif"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div data-role="popup" id="popupShareMenu" data-arrow="true" data-theme="a" class="ui-corner-all">
+    <form>
+        <div>
+            <h3 style="margin-right: 40px; margin-left:40px;;margin-top:10px;margin-bottom:0px;text-align: center">Share with friends</h3>
+            <div id = "shareCurrentSongButton" style="margin-left:10px;margin-top:0px;margin-bottom:0px;">
+                <a  href="#" style="width:50%;text-indent:-40px!important;" class="ShareCurrentSong  ui-btn   ui-corner-all ui-shadow ui-btn-inline ui-icon-arrow-r ui-btn-icon-left ui-btn-a"  id="ShareCurrentSong" title="Share Song" onclick="mediaController.shareCurrentSong();" >Share Song</a>
+            </div>
+            <div id = "SharePlayQueueButton" style="margin-left:10px;margin-top:0px;margin-bottom:0px;">
+                <a  href="#" style="width:50%;text-indent:0px!important;" class="SharePlayQueue  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-arrow-r ui-btn-icon-left ui-btn-a"  id="SharePlayQueue" title="Share Play Queue" onclick="mediaController.sharePlayQueue();" >Share Play Queue</a>
+            </div>
+            <div id = "sharePlaylistButton" style="margin-left:10px;margin-top:0px;margin-bottom:0px;">
+                <a  href="#"  style="width:50%;text-indent:-30px!important;" class="SharePlaylist  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-arrow-r ui-btn-icon-left ui-btn-a"  id="SharePlaylist" title="Share Playlist" onclick="mediaController.sharePlaylist();" >Share Playlist</a>
             </div>
         </div>
     </form>
@@ -1005,7 +1025,22 @@
                 <li ng-repeat = "option in optionsMenu.options"  ng-click = "option.callback()"  data-theme="b" data-icon="false" class="marked">
                     <a ng-if = "!option.currentQueue" style="text-decoration:none;padding-left: 14px!important" target="_blank">{{option.text}}</a>
                     <a ng-if = "option.currentQueue" class= "currentqueue" style="text-decoration:none;padding-left: 14px!important" target="_blank">{{option.text}}</a>
+                </li>
 
+            </ul>
+        </div>
+    </form>
+</div>
+
+
+
+<div data-role="popup" id="popupSharePlaylistOptions" data-arrow="true" data-dismissible="true" data-theme="a" class="ui-corner-all">
+<form>
+        <div>
+            <ul data-role="listview" id="popupSharePlaylistOptionsList" data-theme="b" style="background-color: #545454;">
+                <li ng-repeat = "option in optionsMenu.options"  ng-click = "option.callback()"  data-theme="b" data-icon="false" class="marked">
+                    <a ng-if = "!option.currentQueue" style="text-decoration:none;padding-left: 14px!important" target="_blank">{{option.text}}</a>
+                    <a ng-if = "option.currentQueue" class= "currentqueue" style="text-decoration:none;padding-left: 14px!important" target="_blank">{{option.text}}</a>
                 </li>
 
             </ul>
@@ -1055,7 +1090,17 @@
     </div>
 </div>
 
+<div data-role="popup" id="popupShareLink"  data-dismissible="true" data-theme="a" class="ui-corner-all">
+    <a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
 
+    <div style="padding:0px 20px 10px 20px">
+        <h3>Copy and paste the followig link:</h3>
+
+        <input type="text" name="shareLink" ng-model="mediaController.shareLinkURL" placeholder="" data-theme="a" >
+        <button  onclick='$("#popupShareLink").popup("close");' class="closeShareLinkButton ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">OK</button>
+
+    </div>
+</div>
 
 
 
