@@ -383,7 +383,7 @@ mediaController.sharePlayQueue= function(){
     var playlist = playlistController.currentQueue;
     var playlistdata = JSON.stringify(playlist.tracks)
     var savedata = escape(playlistdata);
-
+    $.mobile.loading("show");
     $.ajax({
         type: "POST",
         data: {shareplaylist: escape(playlist.name), gid: playlist.gid, data: savedata ,auth: authController.ip_token},
@@ -401,6 +401,9 @@ mediaController.sharePlayQueue= function(){
                 }
 
             }
+        },
+        complete:function(){
+            $.mobile.loading("hide");
         }
     })
 }
@@ -418,7 +421,7 @@ mediaController.shareSelectedPlaylist = function (playlist) {
 
     var playlistdata = JSON.stringify(playlist.tracks)
     var savedata = escape(playlistdata);
-
+    $.mobile.loading("show");
     $.ajax({
         type: "POST",
         data: {shareplaylist: escape(playlist.name), gid: playlist.gid, data: savedata ,auth: authController.ip_token},
@@ -436,6 +439,9 @@ mediaController.shareSelectedPlaylist = function (playlist) {
                 }
 
             }
+        },
+        complete:function(){
+            $.mobile.loading("hide");
         }
     })
 
