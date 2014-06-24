@@ -920,6 +920,7 @@ playlistController.addSongListElementsToPlaylist = function (positionTo, listToA
  * @param playlist-hash
  */
 playlistController.loadSharedPlaylist= function (hash){
+    $.mobile.loading("show");
     $.ajax({
         timeout: 30000,
         url: preferences.serverURL + "?loadplaylist=" + hash + "&auth=" + authController.ip_token,
@@ -938,6 +939,9 @@ playlistController.loadSharedPlaylist= function (hash){
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.dir(xhr.responseText);
+        },
+        complete:function(){
+            $.mobile.loading("hide");
         }
     })
 }
