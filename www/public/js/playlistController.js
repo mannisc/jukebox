@@ -915,6 +915,34 @@ playlistController.addSongListElementsToPlaylist = function (positionTo, listToA
 
 }
 
+/**
+ * Load Shared Playlist from Server
+ * @param playlist-hash
+ */
+playlistController.loadSharedPlaylist= function (hash){
+    $.ajax({
+        timeout: 30000,
+        url: preferences.serverURL + "?loadplaylist=" + hash + "&auth=" + authController.ip_token,
+        success: function (data) {
+            if (authController.ensureAuthenticated(data, function () {
+                playlistController.loadSharedPlaylist(hash);
+            })) {
+                if (data.data ) {
+                    var songlist = data.data;
+
+                    playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue, songlist);
+                    playlistController.insertSongsIntoQueue(songlist);
+                    playlistController.loadCurrentQueue();
+                }
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.dir(xhr.responseText);
+        }
+    })
+}
+
+
 
 /**
  * Add selected Songs to Playlist

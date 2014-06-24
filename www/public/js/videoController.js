@@ -417,6 +417,12 @@ videoController.init = function () {
             mediaController.getVersions(artistString,titleString);
     });
 
+    //Share
+    videoController.controls.find(".videoControlElements-button-share").click(function () {
+         mediaController.shareMedia();
+
+    });
+
     //Show Lyrics
     videoController.controls.find(".videoControlElements-button-lyrics").click(function () {
         if (videoController.lyricsEnabled)
