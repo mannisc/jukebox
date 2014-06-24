@@ -161,7 +161,7 @@ $(document).ready(function () {
                 if(urlParams.playlistid && urlParams.playlistid != ""){
                    playlistController.loadSharedPlaylist(urlParams.playlistid);
                 }
-                },2000)
+                },4000)
 
             if(urlParams.downloadApp && urlParams.downloadApp != ""){
 
