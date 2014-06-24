@@ -373,8 +373,8 @@ mediaController.shareMedia = function(){
 mediaController.shareCurrentSong = function(){
     var song = playbackController.getPlayingSong();
     if(song && song.name != ""){
-        var artistString = mediaController.getSongArtist(song);
-        var titleString = song.name;
+        var artistString = encodeURIComponent(mediaController.getSongArtist(song));
+        var titleString = encodeURIComponent(song.name);
         mediaController.shareLinkURL = "http://www.songbase.fm/?artist="+artistString+"&title="+titleString
         $scope.safeApply();
         setTimeout(function(){
