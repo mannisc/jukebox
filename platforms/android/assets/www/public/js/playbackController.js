@@ -650,7 +650,10 @@ playbackController.positionPlayIndicator = function () {
                 y = scrollHeight;
 
             $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
-            $("#searchlist .iScrollPlayIndicator").show();
+            if($("#searchlist .iScrollPlayIndicator:visible").length==0) {
+                $("#searchlist .iScrollPlayIndicator").show();
+            }
+
 
         } else
             $("#searchlist .iScrollPlayIndicator").hide();

@@ -273,7 +273,7 @@
 
         <li ng-if ="searchController.visible&&searchController.showMode==5"  ng-dblclick="playlistController.deselectSongs($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton  othertopheight stayvisible">
             <a tabindex="-1" ng-class="{loaded:searchController.isOnlyTypeDisplayed(3)}">
-                <img src="public/img/empty.png" onclick="optionsMenu.openPlaylistResultsOptions(event,'#positionPlaylistOptions')"   class="optionsSearchResults"   >
+                <img src="public/img/empty.png" onclick="optionsMenu.openPlaylistSingleResultsOptions(event,'#positionPlaylistOptions')"   class="optionsSearchResults"   >
                 <div id="positionPlaylistOptions" class="positionResultsOptions" ></div>
 
                 <h3  style="font-size: 1.1em;margin-top: 7px;">{{searchController.showedPlaylist.name}}</h3>
@@ -463,8 +463,9 @@
             <form>
                 <select id="playlistselectverticalform" data-role="none"  multiple class="chosen-select">
                     <option  value="{{playlistController.currentQueue.gid}}" class="currentQueue">{{playlistController.currentQueue.name}}</option>
+                    <option  value="{{playlistController.similarSongs.gid}}" class="similarSongs">{{playlistController.similarSongs.name}}</option>
 
-                    <option ng-repeat="playlist in playlistController.playlists track by playlist.gid" ng-if ="!playlist.isCurrentQueue" value="{{playlist.gid}}" >{{playlist.name}}</option>
+                    <option ng-repeat="playlist in playlistController.playlists track by playlist.gid" ng-if ="!playlist.isCurrentQueue&&!playlist.isSimilarSongs" value="{{playlist.gid}}" >{{playlist.name}}</option>
 
                 </select>
 

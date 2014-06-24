@@ -934,57 +934,113 @@ playlistController.addSelectedElementsToPlaylist = function (positionTo) {
  * @param songs
  */
 
-playlistController.addSongsToPlaylist = function (playlist, songs) {
+playlistController.addSongsToPlaylist = function (playlist, listToAdd) {
+
+    //Now Songs to load for playlists
+    var  addSongsToPlaylist = function(playlist, songs){
+
+        playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlist, songs);
+        var oldLength = playlist.tracks.length;
+        playlist.tracks = playlist.tracks.concat(songs);
 
 
-    playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlist, songs);
-    var oldLength = playlist.tracks.length;
-    playlist.tracks = playlist.tracks.concat(songs);
-
-
-    for (var j = oldLength; j < playlist.tracks.length; j++) {
-        if (!playlist.tracks[j].image) {
-            setTimeout(mediaController.loadPreview(playlist.tracks[j]), j * 300);
+        for (var j = oldLength; j < playlist.tracks.length; j++) {
+            if (!playlist.tracks[j].image) {
+                setTimeout(mediaController.loadPreview(playlist.tracks[j]), j * 300);
+            }
         }
-    }
 
-
-    setTimeout(function () {
-        accountController.savePlaylist(playlist.gid, playlist.name, playlist.tracks);
-    }, 0);
-    $scope.safeApply();
-    if (playlistController.playlistMode) {
-        if (playlist.gid == playlistController.currentQueue.gid)
-            playlistController.animateAddedToList($(".currentqueue"));
-        else
-            playlistController.animateAddedToList(playbackController.getListElementFromElement(playlist));
-
-    } else if (playlistController.getLoadedPlaylist().gid == playlist.gid) {
-        if (Object.keys(playlistController.loadedPlaylists).length == 1) {
-
-            playlistController.loadedPlaylistSongs = playlist.tracks;
-        }
-        playlistController.displayLimit = playlistController.loadedPlaylistSongs.length;
-
-
-        $scope.safeApply();
-
-        playbackController.remarkSong();
-        $("#playlistview").listview('refresh');
 
         setTimeout(function () {
+            accountController.savePlaylist(playlist.gid, playlist.name, playlist.tracks);
+        }, 0);
+        $scope.safeApply();
+        if (playlistController.playlistMode) {
+            if (playlist.gid == playlistController.currentQueue.gid)
+                playlistController.animateAddedToList($(".currentqueue"));
+            else
+                playlistController.animateAddedToList(playbackController.getListElementFromElement(playlist));
+
+        } else if (playlistController.getLoadedPlaylist().gid == playlist.gid) {
+            if (Object.keys(playlistController.loadedPlaylists).length == 1) {
+
+                playlistController.loadedPlaylistSongs = playlist.tracks;
+            }
+            playlistController.displayLimit = playlistController.loadedPlaylistSongs.length;
+
+
+            $scope.safeApply();
+
+            playbackController.remarkSong();
             $("#playlistview").listview('refresh');
 
-            uiController.updateUI();
             setTimeout(function () {
-                playbackController.remarkSong();
-                uiController.playListScroll.refresh();
+                $("#playlistview").listview('refresh');
+
+                uiController.updateUI();
                 setTimeout(function () {
+                    playbackController.remarkSong();
                     uiController.playListScroll.refresh();
-                }, 1000)
-            }, 150)
-        }, 0)
+                    setTimeout(function () {
+                        uiController.playListScroll.refresh();
+                    }, 1000)
+                }, 150)
+            }, 0)
+        }
+
     }
+
+    var addToList = function (playlist,listToAdd) {
+
+        var addSongsToList = function (listToAdd) {
+            if (listToAdd.length > 0) {
+                addSongsToPlaylist(playlist, listToAdd);
+            }
+
+        }
+
+        uiController.disableUI(true);
+
+        //Load Playlist songs from last.fm if neccessary
+        var addPlaylist = function (elements, index, songList) {
+
+            if (index > 0 && elements[index - 1]) {
+                //Playlist with loaded Tracks
+                if (elements[index - 1].isPlaylist) {
+                    if(elements[index - 1].tracks && elements[index - 1].tracks.length) {
+                        songList = songList.concat(elements[index - 1].tracks);
+                    }
+                }else {//Song
+                    songList = songList.concat([elements[index - 1]]);
+
+                }
+            }
+
+            if ( index < elements.length && songList.length < searchController.maxResults) {
+
+                //Playlist without loaded Tracks
+                if (elements[index].isPlaylist&&!elements[index].tracks ){
+                    searchController.loadPlaylistTracks(elements[index], function () {
+                        addPlaylist(elements, index + 1, songList);
+                    }, false)
+                }else//Song
+                    addPlaylist(elements, index + 1, songList);
+
+            } else {
+
+                addSongsToList( songList.concat());
+                uiController.disableUI(false);
+
+            }
+        }
+
+
+        addPlaylist(listToAdd, 0, [])
+
+
+    }
+
+    addToList(playlist,listToAdd)
 
 
 }
@@ -1291,6 +1347,20 @@ playlistController.onLoadedPlaylistsChanged = function () {
                     $('#playlistselectverticalform option').prop('selected', false);
                     $('#playlistselectverticalform option[value="' + playlist.gid + '"]').prop('selected', true);
                     $('#playlistselectverticalform').trigger('chosen:updated');
+                }
+
+
+                //Get Similar Songs
+                if (playlist.isSimilarSongs&& playbackController.playingSong) {
+
+                    if (playlistController.similarSongs.song.name != playbackController.playingSong.name || playlistController.similarSongs.song.artist.name != playbackController.playingSong.artist.name) {
+                        $.mobile.loading("show");
+
+                        playlistController.getSimilarSongs(playbackController.playingSong);
+
+                    }
+
+
                 }
 
                 playlistController.loadPlaylist(playlist);
@@ -1815,9 +1885,11 @@ playlistController.getPlaylistPosition = function (gid) {
  * Create empty Playlist Funktion and Load it
  */
 
-playlistController.createEmptyPlaylist = function (addAtBottom) {
+playlistController.createEmptyPlaylist = function (addAtBottom,name) {
 
-    var name = "Playlist";
+    if(!name)
+      name = "Playlist";
+
     var id = playlistController.getNewID();
 
     var countUnnamed = 0;
@@ -1879,12 +1951,13 @@ playlistController.getSimilarSongs = function (song) {
                 playlistController.similarSongs.tracks = songList.splice(0, playlistController.similarSongsMaxResults);
                 playlistController.loadedPlaylistSongs = playlistController.similarSongs.tracks;
                 uiController.playListScroll.scrollTo(0, 0, 1000)
-                $.mobile.loading("hide");
+
                 $("#playlistInner .iScrollPlayIndicator").hide();
                 $("#playlistInner .iScrollIndicator").hide();
                 playlistController.applySongList();
 
             }
+            $.mobile.loading("hide");
 
 
         });
@@ -1900,17 +1973,6 @@ playlistController.loadSimilarSongs = function () {
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
 
-    if (playbackController.playingSong) {
-
-        if (playlistController.similarSongs.song.name != playbackController.playingSong.name || playlistController.similarSongs.song.artist.name != playbackController.playingSong.artist.name) {
-            $.mobile.loading("show");
-
-            playlistController.getSimilarSongs(playbackController.playingSong);
-
-        }
-
-
-    }
 
 
     var playlist = playlistController.similarSongs;
@@ -1955,12 +2017,12 @@ playlistController.loadCurrentQueue = function () {
  * Create playlist with songs and Load it
  */
 
-playlistController.loadNewPlaylistWithSongs = function (songs) {
+playlistController.loadNewPlaylistWithSongs = function (songs,playlistName) {
     songs = jQuery.extend(true, [], songs);
 
     $.mobile.loading("show");
 
-    var playlist = playlistController.createEmptyPlaylist();
+    var playlist = playlistController.createEmptyPlaylist(false,playlistName);
 
     for (var i = 0; i < songs.length; i++) {
         var song = jQuery.extend(true, {}, songs[i]);
@@ -1973,8 +2035,15 @@ playlistController.loadNewPlaylistWithSongs = function (songs) {
 
     }
 
-
     playlist.tracks = songs;
+
+    //Load cover Images if not already loaded
+    for (var j = 0; j < playlist.tracks.length; j++) {
+        if (!playlist.tracks[j].image) {
+            setTimeout(mediaController.loadPreview(playlist.tracks[j]), j * 300);
+        }
+    }
+
     setTimeout(function () {
         accountController.savePlaylist(playlist.gid, playlist.name, playlist.tracks);
         accountController.savePlaylistsPosition();
