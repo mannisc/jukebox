@@ -1245,9 +1245,8 @@ mediaController.getElementTitle = function(element) {
 
     var name = element.name;
 
-    var artist =element.artist.name;
     if (element.artist&&element.artist.name)
-        artist = element.artist.name;
+        var artist = element.artist.name;
     else
         artist = mediaController.unknownData;
 
