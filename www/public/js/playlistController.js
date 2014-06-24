@@ -933,7 +933,12 @@ playlistController.loadSharedPlaylist= function (hash){
 
                     playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue, songlist);
                     playlistController.insertSongsIntoQueue(songlist);
-                    setTimeout(function(){playlistController.loadCurrentQueue();},2000);
+                    if(playlistController.currentQueue.tracks && playlistController.currentQueue.tracks[0]){
+                        playbackController.playSong(playlistController.currentQueue.tracks[0]);
+                    }
+                    setTimeout(function(){
+                        playlistController.loadCurrentQueue();
+                    },4500);
                 }
             }
         },
@@ -2039,8 +2044,8 @@ playlistController.loadCurrentQueue = function () {
             $scope.safeApply();
         }, 50)
     }, 0)
-
-    event.stopPropagation();
+    if(event)
+        event.stopPropagation();
 
 }
 
