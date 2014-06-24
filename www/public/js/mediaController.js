@@ -77,7 +77,13 @@ mediaController.getPrice = function () {
 }
 
 mediaController.init = function () {
+    $("#popupShareLink").popup({
+        afteropen: function (event, ui) {
 
+            $('#popupShareLink input').focus();
+            $('#popupShareLink input').select();
+        }
+    });
 }
 
 mediaController.visitSongWebPage = function () {
