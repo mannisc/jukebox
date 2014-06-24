@@ -45,8 +45,8 @@ var app = {
 
 var preferences = {
 
- //serverURL: "http://localhost:3001/"
- serverURL: "http://songbase.fm:3001/"
+// serverURL: "http://localhost:3001/"
+serverURL: "http://songbase.fm:3001/"
 
  //serverURL: "http://info.jukebox.selfhost.eu:3001/"
 
@@ -158,14 +158,17 @@ $(document).ready(function () {
 
             console.dir(urlParams);
             setTimeout(function () {
-                if(urlParams.playlistid && urlParams.playlistid != ""){
-                   playlistController.loadSharedPlaylist(urlParams.playlistid);
+                if(urlParams.downloadApp && urlParams.downloadApp != ""){
+                    $("#popupDownloadApp").popup('open');
+
                 }
-                },4000)
+                },1000)
 
-            if(urlParams.downloadApp && urlParams.downloadApp != ""){
-
-            }
+            setTimeout(function () {
+                if(urlParams.playlistid && urlParams.playlistid != ""){
+                    playlistController.loadSharedPlaylist(urlParams.playlistid);
+                }
+            },1000)
 
             setTimeout(function () {
 
@@ -200,7 +203,7 @@ $(document).ready(function () {
                          playbackController.playSong(song, false, false,true);
                     }
                 }
-            }, 3500);
+            }, 1000);
 
             //Show loaded page
             $scope.safeApply();

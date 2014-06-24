@@ -409,7 +409,6 @@ mediaController.sharePlayQueue= function(){
 }
 
 mediaController.sharePlaylist= function(){
-    mediaController.shareLinkURL = "http://www.songbase.fm/?playlistid=sdfsdf"
     $scope.safeApply();
     setTimeout(function(){
         optionsMenu.openSharePlaylistOptions($('#sharebutton'));
