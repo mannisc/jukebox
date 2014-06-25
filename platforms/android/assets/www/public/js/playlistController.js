@@ -915,6 +915,43 @@ playlistController.addSongListElementsToPlaylist = function (positionTo, listToA
 
 }
 
+/**
+ * Load Shared Playlist from Server
+ * @param playlist-hash
+ */
+playlistController.loadSharedPlaylist= function (hash){
+    $.mobile.loading("show");
+    $.ajax({
+        timeout: 30000,
+        url: preferences.serverURL + "?loadplaylist=" + hash + "&auth=" + authController.ip_token,
+        success: function (data) {
+            if (authController.ensureAuthenticated(data, function () {
+                playlistController.loadSharedPlaylist(hash);
+            })) {
+                if (data.data ) {
+                    var songlist = data.data;
+
+                    playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue, songlist);
+                    playlistController.insertSongsIntoQueue(songlist);
+                    if(playlistController.currentQueue.tracks && playlistController.currentQueue.tracks[0]){
+                        playbackController.playSong(playlistController.currentQueue.tracks[0]);
+                    }
+                    setTimeout(function(){
+                        playlistController.loadCurrentQueue();
+                    },4500);
+                }
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.dir(xhr.responseText);
+        },
+        complete:function(){
+            $.mobile.loading("hide");
+        }
+    })
+}
+
+
 
 /**
  * Add selected Songs to Playlist
@@ -2007,8 +2044,8 @@ playlistController.loadCurrentQueue = function () {
             $scope.safeApply();
         }, 50)
     }, 0)
-
-    event.stopPropagation();
+    if(event)
+        event.stopPropagation();
 
 }
 

@@ -94,7 +94,8 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
 }
 
 
-//Queue
+
+
 
 optionsMenu.openQueueOptions = function (event, positionTo) {
 
@@ -311,6 +312,40 @@ optionsMenu.openPlayListSelectionSongOptions = function (event, positionTo) {
 
 
 }
+
+
+/**
+ * Share Playlist - Dialog
+ */
+
+optionsMenu.openSharePlaylistOptions = function (positionTo) {
+    if (event)
+        event.stopPropagation();
+
+    var share = function (index) {
+        return function () {
+            jqmAllowPopUpClosing = true;
+            $("#popupSharePlaylistOptions").popup('close');
+            setTimeout(function () {
+                mediaController.shareSelectedPlaylist(playlistController.playlists[index]);
+            }, 150);
+        }
+    };
+    // var song = optionsMenu.getSongFromListEvent(event);
+    optionsMenu.options = [];
+    for (var i = 0; i < playlistController.playlists.length; i++) {
+        if (!playlistController.playlists[i].isCurrentQueue && !playlistController.playlists[i].isSimilarSongs) {
+            var callback = share(i);
+            optionsMenu.options.push({text: playlistController.playlists[i].name, callback: callback})
+        }
+    }
+
+    $scope.safeApply();
+    $("#popupSharePlaylistOptionsList").listview("refresh");
+    $('#popupSharePlaylistOptions').popup('open', {positionTo: positionTo});
+
+}
+
 
 
 /**
