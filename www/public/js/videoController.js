@@ -99,8 +99,9 @@ videoController.init = function () {
     document.addEventListener("mozfullscreenchange", changeHandler, false);
 
 
+
     $(document).keyup(function (evt) {
-        if ($('input:focus').length == 0) {
+        if ($('input:focus, textarea:focus').length == 0) {
             if (evt.keyCode == 32) {
                 videoController.playPauseSong();
             } else if (evt.keyCode == 38 || evt.keyCode == 37) {
