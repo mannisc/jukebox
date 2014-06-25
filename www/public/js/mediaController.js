@@ -148,24 +148,26 @@ mediaController.loadPreview = function(song){
 }
 
 mediaController.sendRating = function (rating) {
+
+    var rate = function (song, VideoURL) {
+        if (mediaController.currentvideoURL != "" && song) {
+            var artistString = encodeURIComponent(mediaController.getSongArtist(song));
+            var titleString = encodeURIComponent(song.name);
+            $.ajax({
+                url: preferences.serverURL + "?ratingURL=" + VideoURL + "&rating=" + rating + "&artist=" + artistString + "&title=" + titleString + "&auth=" + authController.ip_token,
+                success: function (data) {
+                    authController.ensureAuthenticated(data, function () {
+                        mediaController.sendRating(rating);
+                    })
+                }
+            })
+        }
+    }
+
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         var VideoURL = escape(mediaController.currentvideoURL);
         var song = playbackController.getPlayingSong();
-        var rate = function (song, VideoURL) {
-            if (mediaController.currentvideoURL != "" && song) {
-                var artistString = encodeURIComponent(mediaController.getSongArtist(song));
-                var titleString = encodeURIComponent(song.name);
-                $.ajax({
-                    url: preferences.serverURL + "?ratingURL=" + VideoURL + "&rating=" + rating + "&artist=" + artistString + "&title=" + titleString + "&auth=" + authController.ip_token,
-                    success: function (data) {
-                        authController.ensureAuthenticated(data, function () {
-                            mediaController.sendRating(rating);
-                        })
-                    }
-                })
-            }
-        }
-        rate(song, VideoURL);
+        setTimeout(function(){rate(song, VideoURL)},4000);
     }
 }
 
