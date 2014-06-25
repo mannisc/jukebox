@@ -628,6 +628,12 @@
      background-size: 16px;
  }
 
+.videoControlElements-controls .videoControlElements-button-share button {
+
+    background: transparent url(../../img/sharemedia.png) no-repeat;
+    background-size: 16px;
+}
+
  .videoControlElements-controls .videoControlElements-button-lyrics button {
 
      background: transparent url(../../img/lyrics.png) no-repeat;
