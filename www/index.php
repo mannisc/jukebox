@@ -804,7 +804,7 @@
 <div data-role="popup" data-transition="pop" style="opacity:0.9;"  id="popupChooseVersionHint" data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>
         <div>
-            <div style=";margin-right: 10px; margin-left:10px;margin-top: 10px;margin-bottom: 10px;text-align: center;color:black;">Hint: Click here to choose the correct version of this song!</div>
+            <div style=";margin-right: 10px; margin-left:10px;margin-top: 10px;margin-bottom: 10px;text-align: center;color:black;">Click here to choose the version of this song</div>
         </div>
     </form>
 </div>
@@ -965,9 +965,9 @@
 
 <div data-role="popup" id="popupEditAccount" data-theme="a" class="ui-corner-all"  >
     <!--a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a-->
-    <img width="40px" style="position:absolute;top:16px;left:33px" src="public/img/logoblack.png">
+    <img width="40px" style="position:absolute;top:16px;left:28px" src="public/img/logoblack.png">
     <div style="padding:0px 20px 10px 20px">
-        <h3 style="margin-left: 60px;text-align: left;" id="edittitle">Edit Account</h3>
+        <h3 style="margin-left: 50px;margin-bottom: 30px;text-align: left;" id="edittitle">Edit your Account</h3>
         <label for="registerusername" class="ui-hidden-accessible">Username:</label>
         <input type="text" name="user" id="editusername" value="" placeholder="Username" data-theme="a" >
         <div id= "editusernamealreadyexists" style="color:#f00;display:none" >Username already exists</div>
