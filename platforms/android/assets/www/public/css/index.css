@@ -29,6 +29,8 @@ body {
     background-attachment: fixed;
     font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size: 12px;
+
+
     height: 100%;
     margin: 0px;
     padding: 0px;
@@ -60,6 +62,22 @@ body {
 .noanim .fadeincomplete{
    opacity: 1!important;
 }
+
+
+
+.ui-tooltip, .arrow:after {
+    background: black;
+    border: 2px solid white;
+}
+.ui-tooltip {
+    padding: 5px 8px;
+    color: white;
+    border-radius: 5px;
+    font: 12px "Helvetica Neue", Sans-Serif;
+    box-shadow: 0 0 7px black;
+    position: absolute;
+}
+
 
 
 
@@ -1507,7 +1525,14 @@ max-width: 2em!important;
 
 
 
+.ui-icon-sharemedia {
 
+    background: url(../img/shareicon.png) no-repeat;
+    z-index: 100;
+    background-position: 10px 10px;
+
+
+}
 
 
 #popupSharePlaylistOptions-popup{
@@ -1635,6 +1660,83 @@ max-width: 2em!important;
 
 
 #popupShareMenu h3 {
+    margin-top: 10px!important;
+    margin-bottom: 10px!important;
+}
+
+
+#popupChooseVersionHint a{
+    text-shadow:none!important;
+    line-height: 1.2!important;
+    font-size:14px!important;
+    min-height: 0em!important;
+
+    padding-left: 2.6em!important;
+    padding-right: 5em!important;
+    background-color: #333;
+
+    color: #fff;
+}
+#popupChooseVersionHint ul{
+    background-color: #333!important;
+
+}
+
+#popupChooseVersionHint a:hover{
+    background-color: rgba(145, 145, 145, 0.7);
+    color:#fff;
+}
+
+#popupChooseVersionHint a img{
+    max-height: 2em!important;
+    max-width: 2em!important;
+    margin-top:0.25em!important;
+    margin-left:0.15em!important;
+
+}
+
+
+#popupChooseVersionHint #cancelButtonVideoSettings{
+    background-color: #b4182b !important ;
+
+}
+
+
+
+#popupChooseVersionHint-popup{
+    bottom:50px!important;
+    top:auto!important;
+
+
+}
+
+
+#popupChooseVersionHint{
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+#popupChooseVersionHint-popup .ui-popup-arrow-container.ui-popup-arrow-b .ui-popup-arrow {
+    margin-left:4px!important;
+}
+
+
+#popupChooseVersionHint .selectedversion {
+    background-color:#2E8B2B !important;
+}
+
+
+
+#popupChooseVersionHint  .selectedversion.ui-icon-carat-r:after {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22iso-8859-1%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20%20width%3D%2214px%22%20height%3D%2214px%22%20viewBox%3D%220%200%2014%2014%22%20style%3D%22enable-background%3Anew%200%200%2014%2014%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20style%3D%22fill%3A%23FFFFFF%3B%22%20points%3D%2214%2C4%2011%2C1%205.003%2C6.997%203%2C5%200%2C8%204.966%2C13%204.983%2C12.982%205%2C13%20%22%2F%3E%3C%2Fsvg%3E")!important
+}
+
+
+
+#popupChooseVersionHint h3 {
     margin-top: 10px!important;
     margin-bottom: 10px!important;
 }
