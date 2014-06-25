@@ -30,6 +30,9 @@ mediaController.retrySongCounter = 0;
 
 mediaController.shareLinkURL = "";
 
+
+mediaController.showChooseVersionHint = true;
+
 mediaController.buySong = function () {
     var song = playbackController.getPlayingSong();
     if (song) {
@@ -259,6 +262,17 @@ mediaController.playSong = function (streamURL, videoURL) {
     videoController.playSong();
     $scope.safeApply();
 
+    if(mediaController.showChooseVersionHint){
+        mediaController.showChooseVersionHint = false;
+        setTimeout(function(){
+            $('#popupChooseVersionHint').popup('open', {positionTo: '#chooseversionbutton'});
+            setTimeout(function(){
+                    $('#popupChooseVersionHint').popup('close');
+                },5000
+
+            )
+        },3000)
+    }
 
 }
 

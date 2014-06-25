@@ -131,8 +131,11 @@ $(document).ready(function () {
     var initPage = function () {
         if ($scope.loaded) {
 
-
-
+            /*
+            $(function() {
+                $( document ).tooltip();
+            });
+            */
 
             //setTimeout(function () {$("#dmplayer").addClass("iframeVideo").appendTo("#backgroundVideo")},2000);
             app.isCordova = (window.location.hash == "#cordova" );
