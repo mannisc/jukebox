@@ -427,6 +427,7 @@ accountController.singInAuto = function () {
                             accountController.singInAuto();
                         })) {
                             if (data == "ok") {
+                                mediaController.showChooseVersionHint = false;
                                 $.mobile.loading("show");
                                 accountController.loggedIn = true;
                                 accountController.loginToken = Base64.decode(loginTokenBase64);
