@@ -260,36 +260,47 @@ mediaController.showDuration = function (songversion) {
 
 
 mediaController.getSiteLogo = function () {
-    if (mediaController.currentvideoURL.toLowerCase().search(".dailymotion.com") > -1 || mediaController.currentvideoURL.toLowerCase().search("/dailymotion.com") > -1) {
+    return mediaController.getSiteLogoFromUrl(mediaController.currentvideoURL);
+}
+
+
+
+
+mediaController.getSiteLogoFromUrl = function (url) {
+    if(!url)
+     url = "";
+
+    if (url.toLowerCase().search(".dailymotion.com") > -1 || url.toLowerCase().search("/dailymotion.com") > -1) {
         return "dailymotion.png"
-    } else if (mediaController.currentvideoURL.toLowerCase().search(".youtube.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/youtube.") > -1) {
+    } else if (url.toLowerCase().search(".youtube.") > -1 || url.toLowerCase().search("/youtube.") > -1) {
         return "youtube.png"
-    } else if (mediaController.currentvideoURL.toLowerCase().search(".muzu.tv") > -1 || mediaController.currentvideoURL.toLowerCase().search("/muzu.tv") > -1) {
+    } else if (url.toLowerCase().search(".muzu.tv") > -1 || url.toLowerCase().search("/muzu.tv") > -1) {
         return "muzu.png"
-    } else if (mediaController.currentvideoURL.toLowerCase().search(".vimeo.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/vimeo.") > -1) {
+    } else if (url.toLowerCase().search(".vimeo.") > -1 || url.toLowerCase().search("/vimeo.") > -1) {
         return "vimeo.png"
-    } else if (mediaController.currentvideoURL.toLowerCase().search(".photobucket.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/photobucket.") > -1) {
+    } else if (url.toLowerCase().search(".photobucket.") > -1 || url.toLowerCase().search("/photobucket.") > -1) {
         return "photobucket.png"
-    } else if (mediaController.currentvideoURL.toLowerCase().search(".metacafe.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/metacafe.") > -1) {
+    } else if (url.toLowerCase().search(".metacafe.") > -1 || url.toLowerCase().search("/metacafe.") > -1) {
         return "metacafe.png"
-    } else if (mediaController.currentvideoURL.toLowerCase().search(".veoh.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/veoh.") > -1) {
+    } else if (url.toLowerCase().search(".veoh.") > -1 || url.toLowerCase().search("/veoh.") > -1) {
         return "veoh.png"
 
-    } else if (mediaController.currentvideoURL.toLowerCase().search(".blip.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/blip.") > -1) {
+    } else if (url.toLowerCase().search(".blip.") > -1 || url.toLowerCase().search("/blip.") > -1) {
         return "blip.png"
 
-    } else if (mediaController.currentvideoURL.toLowerCase().search(".myvideo.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/myvideo.") > -1) {
+    } else if (url.toLowerCase().search(".myvideo.") > -1 || url.toLowerCase().search("/myvideo.") > -1) {
         return "myvideo.png"
 
-    } else if (mediaController.currentvideoURL.toLowerCase().search(".clipfish.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/clipfish.") > -1) {
+    } else if (url.toLowerCase().search(".clipfish.") > -1 || url.toLowerCase().search("/clipfish.") > -1) {
         return "clipfish.png"
 
     }
 
-    alert(mediaController.currentvideoURL.toLowerCase())
+    alert(url.toLowerCase())
     return "empty.png"
 
 }
+
 
 
 mediaController.getSiteName = function (url, prefix) {
