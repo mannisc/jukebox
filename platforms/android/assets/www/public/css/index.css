@@ -1386,6 +1386,8 @@ text-shadow: none!important;
     background-color: #333 !important;
     max-height: 478px;
     overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 1px;/*avoid start Scolling on hover*/
 }
 
 
@@ -1775,6 +1777,12 @@ max-width: 2em!important;
 
 }
 
+
+
+#popupVideoSettings  .selectedversion .rateImage {
+    opacity:1!important;
+
+}
 
 #popupVideoSettings #cancelButtonVideoSettings{
     background-color: #b4182b !important ;
