@@ -1371,6 +1371,27 @@
 
 
 <div style="max-height:0px!important;overflow:hidden ">
+
+Top music videos for free!
+<br>
+Visit songbase.fm for any music video available on the web!
+<br>
+Music, videos, playlists, channels and more at songbase.fm!
+<br>
+<br>
+<br>
+Top Artists on songbase.fm:
+#1: Eminem 	#2: Madonna 	#3: Britney Spears 	#4: Coldplay 	#5: U2
+#6: Robbie Williams 	#7: Beyonce 	#8: The Black Eyed Peas 	#9: Bruce Springsteen 	#10: Pink
+#11: Avril Lavigne 	#12: Linkin Park 	#13: Radiohead 	#14: Alicia Keys 	#15: Norah Jones
+#16: Bon Jovi 	#17: Green Day 	#18: Red Hot Chili Peppers 	#19: Nickelback 	#20: Jennifer Lopez
+#21: Rihanna 	#22: Usher 	#23: Jay-Z 	#24: Kanye West 	#25: Mariah Carey
+#26: Nelly 	#27: 50 Cent 	#28: Shakira 	#29: Michael Jackson 	#30: Celine Dion
+#31: Christina Aguilera 	#32: Justin Timberlake 	#33: Michael Buble 	#34: Muse 	#35: Destiny's Child
+#36: Kelly Clarkson 	#37: OutKast 	#38: Kylie Minogue 	#39: Nelly Furtado 	#40: The White Stripes
+#41: Bob Dylan 	#42: The Beatles 	#43: Evanescence 	#44: The Backstreet Boys 	#45: Jack Johnson
+#46: Taylor Swift 	#47: REM 	#48: Westlife 	#49: The Killers 	#50: R Kelly
+
 Music Charts
 This article is also " hit parade " called music list . See also charts (disambiguation).
 Music Charts ( also shortened English Charts ( Pluraletantum [1 ] ) or German charts and charts ) refers to a method for the numerical compiling a ranking of songs over a certain period , which should reflect their popularity or their success on a limited scale.
