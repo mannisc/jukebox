@@ -139,7 +139,19 @@
 
     <title>Songbase.fm</title>
 
+    <!--Google Analytics-->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+        ga('create', 'UA-52300604-1', 'songbase.fm');
+        ga('require', 'displayfeatures');
+        ga('require', 'linkid', 'linkid.js');
+        ga('send', 'pageview');
+
+    </script>
 
 
 </head>
@@ -788,7 +800,7 @@
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose Version</h3>
             <ul data-role="listview" id="searchviewVersions" data-theme="b">
                  <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" ng-if="songversion.duration>0;"  class="fadeslideincompletefast playlistsong" ng-click="mediaController.playVersion(songversion,1,1)">
-                    <a href="#" ng-class="{selectedversion: songversion.url==mediaController.currentvideoURL}" style="padding-right:80px!important;padding-left: 15px!important;"  title="{{songversion.url}}"> <img style="position:absolute; top:0px;left:0px;max-width:50px!important;height:25px!important;float:left!important" src="{{mediaController.getRateImage(songversion)}}" ng-click="mediaController.setNoClickTomeout();mediaController.clickRateSong($event,songversion);"/>  <span style="margin-left:35px!important;" >   {{songversion.title}}{{mediaController.getSiteName(songversion.url ,' - ')}}</span> <span style="opacity:0"> ..{{mediaController.showDuration(songversion)}}</span> <span style="position:absolute;right: 42px;top:10px;opacity:0.8"> {{ mediaController.showDuration(songversion)}}</span> </a>
+                    <a href="#" ng-class="{selectedversion: songversion.url==mediaController.currentvideoURL}" style="padding-right:80px!important;padding-left: 15px!important;"  title="{{songversion.url}}"><img style="position:absolute;opacity: 0.8; top:2px;left:4px;max-width:25px!important;height:25px!important;float:left!important" src="public/img/sites/small/{{mediaController.getSiteLogoFromUrl(songversion.url)}}" />  <img class="rateImage" style="position:absolute;opacity:0.5; top:2px;right:39px!important;left: auto;max-width:50px!important;height:25px!important;float:left!important" src="{{mediaController.getRateImage(songversion)}}" ng-click="mediaController.setNoClickTomeout();mediaController.clickRateSong($event,songversion);"/>  <span style="margin-left: 25px;">   {{songversion.title}}</span> <span style="opacity:0"> .......{{mediaController.showDuration(songversion)}}</span> <span style="position:absolute;right: 92px;top:10px;opacity:0.5"> {{ mediaController.showDuration(songversion)}}</span> </a>
                 </li>
             </ul>
             <div id = "reloadVersionButton" style="margin-right: 10px; margin-left:10px;margin-top:2px;margin-bottom:2px;text-align: center;">
@@ -1328,6 +1340,10 @@
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <!-- FACEBOOK -->
+
+
+
+
 
 <!-- Preload Images/WebGL-->
 <div style="display:none">
