@@ -358,6 +358,12 @@ mediaController.playSong = function (streamURL, videoURL) {
             )
         },3000)
     }
+    var song = playbackController.getPlayingSong();
+    var artistString = mediaController.getSongArtist(song);
+    var titleString = song.name;
+    var pagetitle = artistString+" - "+titleString;
+   // parent.document.title = pagetitle;
+   // parent.window.history.pushState({"pageTitle":pagetitle},"", "/?artist="+artistString+"&title="+titleString);
 
 }
 

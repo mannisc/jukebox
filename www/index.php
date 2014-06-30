@@ -1409,32 +1409,11 @@ Top Artists on songbase.fm:
 #46: Taylor Swift 	#47: REM 	#48: Westlife 	#49: The Killers 	#50: R Kelly
 
 Music Charts
-This article is also " hit parade " called music list . See also charts (disambiguation).
 Music Charts ( also shortened English Charts ( Pluraletantum [1 ] ) or German charts and charts ) refers to a method for the numerical compiling a ranking of songs over a certain period , which should reflect their popularity or their success on a limited scale.
 
-Contents [hide ]
-1 General
-2 Hit Parade -specific terms
-3 History
-4 Methods of collection
-4.1 Sales Charts
-4.2 listeners and readers charts
-4.3 Airplay Charts
-4.4 Merchant Charts
-5 Frequency
-6 Independence
-7 accuracy
-8 goals
-9 number -one hit
-10 criticism
-11 examples of national Charts
-12 See also
-13 Web Links
-14 References and notes
-General [ Edit]
 Charts are intended to represent a measure of the success of a song . In the music charts , higher placed songs therefore the lower ranks of the charts are more successful than title , are taking. The Number One is therefore the most successful songs in the hit parade a certain period. The charts are interested in information about the ranking of songs along with artist and associated record label as well as the previous rankings back to the entry date into the charts . The order of the music is to provide information on the relative popularity of a title. The popularity or popularity of a song depends in turn on the question of the criteria by which it should be measured. As popularity criteria are the frequency of the broadcasting performance ( Airplay ) , sales figures or surveys into consideration. For lack of other alternatives ( sales figures are only fragmentarily available , airplay is not an objective source) make music charts , the only generally accepted classification of songs dar.
 
-Hit Parade -specific terms [ Edit]
+Hit Parade -specific terms
 Newcomer or new entry ( "entry" , " newcomer " ) are songs that are listed for the first time after its official publication in a current hit parade . In many chart lists they are conspicuously marked with the words " NEW " .
 As Chartbreaker or chart-topping song or artist is called , the new goes on one of the front seats or chart can improve its ranking from the previous week tremendously. When you start off in a hit list equal to the first place we also speak of " from zero to one ."
 As a climber or climber of the week titles are designated , which could be improved with continuous charts compared to the placement from the previous week especially . In many Favourites therefore, there is a column that identifies a Vorwochenplatzierung . This also applies for songs that fall in the placement over the previous week especially , the term losers or losers of the week.
