@@ -709,8 +709,6 @@ videoController.toggleBrowserFullScreen = function () {
     console.dir();
 
 
-    document.documentElement.webkitRequestFullScreen();
-
 
     if (element.requestFullScreen) {
 
@@ -720,8 +718,8 @@ videoController.toggleBrowserFullScreen = function () {
             document.exitFullScreen();
         }
 
-    } else if (element.mozRequestFullScreen) {
-
+    }
+    if (element.mozRequestFullScreen) {
         if (!document.mozFullScreen) {
             element.mozRequestFullScreen();
         } else {
