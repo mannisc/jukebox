@@ -231,7 +231,6 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
                 }
                 else {
                     var list = [];
-
                     if (data.track) {
 
                         //TODO neccessary  for every search
@@ -280,7 +279,11 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
             } // Similarity search
             else if (data.similartracks && !(data.similartracks == "\n")) {
                 deferred.resolve({list: data.similartracks, native: false});
-            } else {
+            }
+            else if (data.toptracks && !(data.toptracks == "\n")) {
+                deferred.resolve({list: data.toptracks, native: false});
+            }
+            else {
                 if (!dontSearchNative) {
                     searchserver();
                 } else

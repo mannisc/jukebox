@@ -21,6 +21,8 @@ exploreController.songs = function () {
 
 exploreController.songs.searchResults = [];
 
+exploreController.songs.mixedResults = [];
+
 
 exploreController.usesSearchList = true;
 
@@ -30,6 +32,7 @@ exploreController.inputText = "Filter Results";
 
 exploreController.currentSearchID = 0;
 
+exploreController.showMixedResultID=0;
 
 exploreController.maxResults = 100;
 
@@ -222,72 +225,168 @@ exploreController.searchArtistsSongs = function (artist) {
 
 
 
+exploreController.searchGenreSongs = function (genre,autoplay) {
+    $("#searchlist .iScrollPlayIndicator").hide();
+    $("#searchlist .iScrollScrollUpIndicator").hide();
+    $("#searchlist .iScrollIndicator").hide();
+
+    var searchGenreSongs = function (genre) {
+
+        viewController.showLoading(true);
+
+        exploreController.currentSearchID = exploreController.currentSearchID + 1;
+
+        var search = function (searchID) {
+            $.when(
+                    exploreController.songs.startGenreSearchDeferred(genre)
+
+                ).then(function (songList) {
+                    if (searchID == exploreController.currentSearchID) {
+
+
+
+                        exploreController.completedSearch(songList);
+                        if(autoplay){
+                            setTimeout(function () {
+                                var playlist = exploreController.songs.searchResults;
+                                if (playlist && playlist.length > 0)
+                                    playlistController.playSongList(playlist.slice(0, searchController.maxResults));
+                            }, 150)
+                        }
+
+                    }
+                });
+        };
+
+        search(exploreController.currentSearchID);
+    }
+
+
+    //If view is alrady active search, otherwise activate view first
+    if (viewController.isActiveView(exploreController))   {
+        uiController.searchListScroll.scrollTo(0, 0, 1000)
+        exploreController.currentSearchID++;
+        exploreController.displayLimit = 0;
+        $scope.safeApply();
+        $("#searchlistview").listview('refresh');
+        searchGenreSongs(genre);
+
+    }
+    else
+        viewController.activateView(exploreController, false, function () {
+            searchGenreSongs(genre);
+        });
+
+
+}
+
+
+exploreController.inArray = function(arr, obj) {
+    for(var i=0; i<arr.length; i++) {
+        if (arr[i] == obj) return true;
+    }
+    return false;
+}
+
 
 exploreController.showSuggestions = function () {  //Todo find songs the user really liked, means played very often for example
 
 
     exploreController.currentSearchID = exploreController.currentSearchID + 1;
 
-
     var index;
     var song;
+    var songs = [];
     /*if (playbackController.playingSong) {
         song = playbackController.playingSong;
     }
     else {   */
-        if (playlistController.currentQueue.length > 0) {     //CurrentQueue
-            index = Math.round(Math.random() * (playlistController.currentQueue.length - 1));
+    exploreController.songs.mixedResults = [];
+    exploreController.songs.searchResults = [];
+    exploreController.songs.mixCounter   = 0;
+    for (var i = 1; i <= 10; i++){
+            if (playlistController.currentQueue.length > 0) {     //CurrentQueue
+                index = Math.round(Math.random() * (playlistController.currentQueue.length - 1));
 
-            song = playlistController.currentQueue[index];
-        }
-        else if (!playlistController.playlistMode && playlistController.loadedPlaylistSongs.length > 0) { //Loaded Songs
-            index = Math.round(Math.random() * (playlistController.loadedPlaylistSongs.length - 1));
-
-            song = playlistController.loadedPlaylistSongs[index];
-        }
-        else if (searchController.playlists.length > 0) {  //Playlist
-            index = Math.round(Math.random() * (searchController.songs.playlists.length - 1));
-            if (searchController.playlists[index].tracks.length > 0) {
-                var index2 = Math.round(Math.random() * (searchController.playlists[index].tracks.length - 1));
-                song = searchController.playlists[index].tracks[index2];
+                song = playlistController.currentQueue[index];
             }
-        } else if (searchController.songs.searchResults.length > 0) {    //SearchResult
-            index = Math.round(Math.random() * (searchController.songs.searchResults.length - 1));
-            song = searchController.songs.searchResults[index];
+            else if (!playlistController.playlistMode && playlistController.loadedPlaylistSongs.length > 0) { //Loaded Songs
+                index = Math.round(Math.random() * (playlistController.loadedPlaylistSongs.length - 1));
+
+                song = playlistController.loadedPlaylistSongs[index];
+            }
+            else if (searchController.playlists.length > 0) {  //Playlist
+                index = Math.round(Math.random() * (searchController.songs.playlists.length - 1));
+                if (searchController.playlists[index].tracks.length > 0) {
+                    var index2 = Math.round(Math.random() * (searchController.playlists[index].tracks.length - 1));
+                    song = searchController.playlists[index].tracks[index2];
+                }
+            } else if (searchController.songs.searchResults.length > 0) {    //SearchResult
+                index = Math.round(Math.random() * (searchController.songs.searchResults.length - 1));
+                song = searchController.songs.searchResults[index];
+            }
+
+       // }
+
+        if (!song && generatedData.charts && generatedData.charts.length > 0) {
+            song = generatedData.charts[0];
+            break
         }
+        if (song) {
+            if(exploreController.inArray(songs,song)==false){
+                songs = songs.concat(song);
+                exploreController.songs.mixCounter++;
+                exploreController.searchSimilarSongs(song);
+            }
 
+        }
+        else {
 
-   // }
-
-    if (!song && generatedData.charts && generatedData.charts.length > 0) {
-        song = generatedData.charts[0];
+            searchController.startSearch("");
+            break;
+        }
     }
-    if (song) {
-
-        exploreController.searchSimilarSongs(song);
-
-    }
-    else {
-
-        searchController.startSearch("");
-    }
-
 
 }
 
 
 exploreController.showSimilarSongs = function (event) {
+    exploreController.currentSearchID = exploreController.currentSearchID + 1;
+
     event.stopPropagation();
 
     var list = playlistController.getSongListFromSelection();
-
-    var index = Math.round(Math.random() * (list.length - 1));
-    var song = list[index];
-
     playlistController.deselectSongs();
+    var oldsong = null;
+    var song;
+    var index;
+    var songs = [];
+    exploreController.songs.mixCounter   = 0;
+    exploreController.songs.mixedResults = [];
+    exploreController.songs.searchResults = [];
+    if(list.length>10){
+        for (var i = 1; i <= 10; i++){
+            index = Math.round(Math.random() * (list.length - 1));
+            song = list[index];
+            if(song){
+              if(exploreController.inArray(songs,song)==false){
+                   songs = songs.concat(song);
+                   exploreController.songs.mixCounter++;
+                   exploreController.searchSimilarSongs(song);
+              }
 
-    exploreController.searchSimilarSongs(song);
-
+            }
+        }
+    }
+    else{
+        for (var i = 1; i <= list.length; i++){
+            song = list[i-1];
+            if(song){
+                exploreController.songs.mixCounter++;
+                exploreController.searchSimilarSongs(song);
+            }
+        }
+    }
 
 }
 
@@ -302,13 +401,13 @@ exploreController.searchSimilarSongs = function (song) {
 
         viewController.showLoading(true);
 
-        exploreController.currentSearchID = exploreController.currentSearchID + 1;
 
         var search = function (searchID) {
             $.when(
                     exploreController.songs.startSuggestionsSearchDeferred(mediaController.getSongArtist(song), song.name)
 
                 ).then(function (songList) {
+
                     if (searchID == exploreController.currentSearchID) {
 
                         //If no suggestions show popular songs
@@ -338,20 +437,19 @@ exploreController.searchSimilarSongs = function (song) {
                         }
 
 
-                        exploreController.completedSearch(songList);
+                        exploreController.completedMixSearch(songList);
 
                     }
                 });
         };
 
-        search(exploreController.currentSearchID);
+        search( exploreController.currentSearchID);
     }
 
-
+    var id = exploreController.similarSongID;
     //If view is alrady active search, otherwise activate view first
     if (viewController.isActiveView(exploreController))   {
         uiController.searchListScroll.scrollTo(0, 0, 1000)
-        exploreController.currentSearchID++;
         exploreController.displayLimit = 0;
         $scope.safeApply();
         $("#searchlistview").listview('refresh');
@@ -366,6 +464,30 @@ exploreController.searchSimilarSongs = function (song) {
 
 }
 
+exploreController.songs.startGenreSearchDeferred = function (genre) {
+    var deferred = $.Deferred();
+    var page = Math.floor((Math.random()*5))
+    var randomlimit = 150+Math.floor((Math.random()*10))
+    var onlineSearchURL =    "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=%searchTerm&page="+page+"&limit="+randomlimit+"&api_key=" + searchController.lastfmapikey + "&format=json"
+    console.dir(onlineSearchURL);
+    $.when(
+
+            exploreController.basicOnlineSearchDeferred(onlineSearchURL, escape(genre), searchController.searchTypeSongs, true, "")
+
+        ).then(function (onlineList) {
+           // console.log("FFFOUNDDDD")
+            // console.dir(JSON.stringify(songList))
+            var songList = exploreController.songs.completeSearch([], onlineList);
+           // console.log("FFFOUNDDDD: "+)
+            //  console.dir(JSON.stringify(songList))
+            deferred.resolve(songList);
+
+        });
+    return deferred.promise();
+
+}
+
+
 
 exploreController.songs.startSuggestionsSearchDeferred = function (artist, title) {
     var deferred = $.Deferred();
@@ -376,11 +498,11 @@ exploreController.songs.startSuggestionsSearchDeferred = function (artist, title
             exploreController.basicOnlineSearchDeferred(onlineSearchURL, "artist=" + artist + "&track=" + title, searchController.searchTypeSongs, false, artist)
 
         ).then(function (onlineList) {
-            console.log("FFFOUNDDDD")
-            console.dir(JSON.stringify(songList))
+            // console.log("FFFOUNDDDD")
+            // console.dir(JSON.stringify(songList))
             var songList = exploreController.songs.completeSearch([], onlineList);
-            console.log("FFFOUNDDDD")
-            console.dir(JSON.stringify(songList))
+            console.log("FFFOUNDDDD similar " + artist + " - " + title);
+            //console.dir(JSON.stringify(songList))
             deferred.resolve(songList);
 
         });
@@ -398,11 +520,11 @@ exploreController.songs.startArtistSearchDeferred = function (artist) {
             exploreController.basicOnlineSearchDeferred(onlineSearchURL, "artist=" + artist , searchController.searchTypeSongs, false, artist)
 
         ).then(function (onlineList) {
-            console.log("FFFOUNDDDD")
-            console.dir(JSON.stringify(songList))
+           // console.log("FFFOUNDDDD")
+            // console.dir(JSON.stringify(songList))
             var songList = exploreController.songs.completeSearch([], onlineList);
-            console.log("FFFOUNDDDD")
-            console.dir(JSON.stringify(songList))
+            // console.log("FFFOUNDDDD")
+            // console.dir(JSON.stringify(songList))
             deferred.resolve(songList);
 
         });
@@ -448,6 +570,110 @@ exploreController.completedSearch = function (songList) {
 
     }
 
+};
+
+
+exploreController.shuffle =function(array) {
+    var currentIndex = array.length
+        , temporaryValue
+        , randomIndex
+        ;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
+exploreController.uniqueArray = function(origArr) {
+    var newArr = [],
+        origLen = origArr.length,
+        found,
+        x, y;
+
+    for ( x = 0; x < origLen; x++ ) {
+        found = undefined;
+        for ( y = 0; y < newArr.length; y++ ) {
+            if ( origArr[x] === newArr[y] ) {
+                found = true;
+                break;
+            }
+        }
+        if ( !found) newArr.push( origArr[x] );
+    }
+    return newArr;
+}
+
+
+
+exploreController.showMixedResult = function(id){
+    if(exploreController.showMixedResultID-id==0){
+        if (exploreController.songs.mixedResults != null){
+            if(exploreController.songs.mixedResults.length>400)
+               exploreController.songs.mixedResults.length = 400;
+            exploreController.displayLimit = 0;
+
+            uiController.searchListScroll.scrollTo(0, 0, 1000)
+
+           //Something Changed
+                exploreController.songs.searchResults = exploreController.songs.mixedResults;
+
+            exploreController.applySongList(exploreController.currentSearchID);
+
+            setTimeout(viewController.showLoading, 100); //show=false
+        }
+
+    }
+}
+
+
+exploreController.completedMixSearch = function (songList) {
+    exploreController.songs.mixCounter--;
+    if (songList) {
+
+        if (songList != null){
+            if( exploreController.songs.mixedResults.length&& exploreController.songs.mixedResults.length>0){
+                console.dir("mixed result:")
+
+                console.dir(songList);
+                console.dir(exploreController.songs.mixedResults);
+                exploreController.songs.mixedResults = exploreController.songs.mixedResults.concat(songList);
+                console.dir(exploreController.songs.mixedResults);
+
+                exploreController.songs.mixedResults = exploreController.uniqueArray(exploreController.songs.mixedResults);
+                exploreController.songs.mixedResults = exploreController.shuffle(exploreController.songs.mixedResults);
+                console.dir(songList);
+                console.dir(exploreController.songs.mixedResults);
+
+            }
+            else
+            {
+                exploreController.songs.mixedResults = songList;
+                console.dir(exploreController.songs.mixedResults);
+            }
+        }
+
+
+    }
+    if(exploreController.songs.mixCounter<=0){
+        exploreController.showMixedResultID++;
+        exploreController.showMixedResult(exploreController.showMixedResultID);
+    }
+    else{
+        exploreController.showMixedResultID++;
+        var id = exploreController.showMixedResultID*1.0;
+        setTimeout(function(){exploreController.showMixedResult(id)},2000);
+    }
 };
 
 
