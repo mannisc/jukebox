@@ -35,8 +35,8 @@
 
     <link rel="icon" href="public/img/logo/logo.ico" sizes="64x64 32x32 24x24 16x16" >
 
-
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <!--cssfiles-->
+    <link rel="stylesheet" href="public/js/libs/jquery-ui.css">
 
     <link rel="stylesheet" type="text/css" href="public/js/libs/chosen/chosen.min.css"/>
 
@@ -241,6 +241,8 @@
         <input id="searchbutton2" data-type="button" data-theme="b" onclick="viewController.activateView(exploreController,false, exploreController.showSuggestions);" type="button" value="Explore">
 
         <!-- TODO MYBASE input id="searchbutton3"  data-type="button" data-theme="b" onclick="viewController.activateView(myBaseController);" type="button" value="MyBase"-->
+        <input id="radiobutton" data-type="button" data-theme="b" onclick="$('#popupListen').popup('open',{transition: 'pop'});" type="button" value="Listen">
+
 
         <a id="searchlayoutbutton" title="Change list layout" data-type="button" data-theme="b" onclick="uiController.toggleGridLayout();" style="margin-left: -3px;background-color: #442727;width: 3px;height: 20px;" class="ui-input-btn ui-btn ui-btn-b ui-shadow ui-corner-all"><img src="public/img/grid.png"  style="width: 21px;margin-left: -9px;"> </a>
 
@@ -298,7 +300,7 @@
 
         <li ng-if ="searchController.visible&&searchController.showMode==5" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.showedPlaylist.tracks track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(song)}}"  class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
-            <img src="public/img/empty.png"    class="loadingSongImg"   >
+            <img src="public/img/empty.png"   class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
             <img ng-if ="playlistController.hasTrendStyle(1,song)" src="public/img/emtpy.png" class="songNochange songTrend" >
             <img ng-if ="playlistController.hasTrendStyle(2,song)" src="public/img/emtpy.png" class="songLoser songTrend" >
@@ -781,6 +783,8 @@
 
 
 <!-- Popups ---------------------------------------->
+
+
 <div data-role="popup" id="popupFeedback" data-dismissible="true" data-arrow="true" data-overlay-theme="b" data-theme="a" class="ui-corner-all">
     <form>
         <div style="text-align:center;padding-right:5px;padding-left:10px;padding-bottom:10px">
@@ -843,6 +847,7 @@
 
 
 
+
 <div data-role="popup" id="popupSocial" data-theme="a" class="ui-corner-all">
     <a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
 
@@ -871,6 +876,48 @@
 
             </div>
         </div>
+    </div>
+</div>
+
+<div data-role="popup" id="popupListen" data-theme="a" class="ui-corner-all" >
+
+<a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
+
+    <div id="GenreBox" style="font-size:small!important;width:420px!important;height:410px;margin-right: 10px; margin-left:10px;margin-top:2px;margin-bottom:2px;text-align: center;">
+
+        <a style="position:absolute;top:5px;left:10px;width:80px!important;float:left!important" href="#" class="60Button ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="60Button" title="60's" onclick='mediaController.loadGenre("60s");' >60's </a>
+        <a style="position:absolute;top:5px;left:155px;width:80px!important;float:left!important" href="#" class="70Button  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="70Button" title="70's" onclick="mediaController.loadGenre('70s');" >70's </a>
+        <a style="position:absolute;top:5px;left:300px;width:80px!important;float:left!important" href="#" class="80Button  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="80Button" title="80's" onclick="mediaController.loadGenre('80s');" >80's </a>
+
+        <a style="position:absolute;top:55px;left:10px;width:80px!important;float:left!important"  href="#" class="90Button  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="90Button" title="90's" onclick='mediaController.loadGenre("90s");' >90's </a>
+        <a style="position:absolute;top:55px;left:155px;width:80px!important;float:left!important" href="#" class="AlternativeRockButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="AlternativeRockButton" title="Alternative Rock" onclick="mediaController.loadGenre('Alternative Rock');" >Alternative Rock </a>
+        <a style="position:absolute;top:55px;left:300px;width:80px!important;float:left!important" href="#" class="AmbientButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="AmbientButton" title="Ambient" onclick="mediaController.loadGenre('Ambient');" >Ambient </a>
+
+        <a style="position:absolute;top:105px;left:10px;width:80px!important;float:left!important"  href="#" class="BachataButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="BachataButton" title="Bachata" onclick='mediaController.loadGenre("Bachata");' >Bachata </a>
+        <a style="position:absolute;top:105px;left:155px;width:80px!important;float:left!important" href="#" class="ChilloutButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="ChilloutButton" title="Chillout" onclick="mediaController.loadGenre('Chillout');" >Chillout </a>
+        <a style="position:absolute;top:105px;left:300px;width:80px!important;float:left!important" href="#" class="ClassicRockButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="ClassicRockButton" title="Classic Rock" onclick="mediaController.loadGenre('Classic Rock');" >Classic Rock </a>
+
+        <a style="position:absolute;top:155px;left:10px;width:80px!important;float:left!important"  href="#" class="ClassicalButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="ClassicalButton" title="Classical" onclick='mediaController.loadGenre("Classical");' >Classical </a>
+        <a style="position:absolute;top:155px;left:155px;width:80px!important;float:left!important" href="#" class="CountryButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="CountryButton" title="Country" onclick="mediaController.loadGenre('Country');" >Country </a>
+        <a style="position:absolute;top:155px;left:300px;width:80px!important;float:left!important" href="#" class="CumbiaButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="CumbiaButton" title="Cumbia" onclick="mediaController.loadGenre('Cumbia');" >Cumbia </a>
+
+        <a style="position:absolute;top:205px;left:10px;width:80px!important;float:left!important"  href="#" class="DanceButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="DanceButton" title="Dance" onclick='mediaController.loadGenre("Dance");' >Dance </a>
+        <a style="position:absolute;top:205px;left:155px;width:80px!important;float:left!important" href="#" class="ElectronicButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="ElectronicButton" title="Electronic" onclick="mediaController.loadGenre('Electronic');" >Electronic </a>
+        <a style="position:absolute;top:205px;left:300px;width:80px!important;float:left!important" href="#" class="HipHopButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="HipHopButton" title="Hip Hop" onclick="mediaController.loadGenre('Hip Hop');" >Hip Hop </a>
+
+        <a style="position:absolute;top:255px;left:10px;width:80px!important;float:left!important"  href="#" class="IndieFolkButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="IndieFolkButton" title="Indie Folk" onclick='mediaController.loadGenre("Indie Folk");' >Indie Folk </a>
+        <a style="position:absolute;top:255px;left:155px;width:80px!important;float:left!important" href="#" class="IndieRockButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="IndieRockButton" title="Indie Rock" onclick="mediaController.loadGenre('Indie Rock');" >Indie Rock </a>
+        <a style="position:absolute;top:255px;left:300px;width:80px!important;float:left!important" href="#" class="JazzButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="JazzButton" title="Jazz" onclick="mediaController.loadGenre('Jazz');" >Jazz </a>
+
+        <a style="position:absolute;top:305px;left:10px;width:80px!important;float:left!important"  href="#" class="WorldpButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="WorldButton" title="World" onclick='mediaController.loadGenre("World");' >K-Pop </a>
+        <a style="position:absolute;top:305px;left:155px;width:80px!important;float:left!important" href="#" class="PopButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="PopButton" title="Pop" onclick="mediaController.loadGenre('Pop');" >Pop </a>
+        <a style="position:absolute;top:305px;left:300px;width:80px!important;float:left!important" href="#" class="RockButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="RockButton" title="Rock" onclick="mediaController.loadGenre('Rock');" >Rock </a>
+
+        <a style="position:absolute;top:355px;left:10px;width:80px!important;float:left!important"  href="#" class="RBButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="RBButton" title="R&B" onclick='mediaController.loadGenre("R&B");' >R&B </a>
+        <a style="position:absolute;top:355px;left:155px;width:80px!important;float:left!important" href="#" class="ReggaeButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="ReggaeButton" title="Reggae" onclick="mediaController.loadGenre('Reggae');" >Reggae </a>
+        <a style="position:absolute;top:355px;left:300px;width:80px!important;float:left!important" href="#" class="SambaButton  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-star ui-btn-icon-left ui-btn-a"  id="SambaButton" title="Samba" onclick="mediaController.loadGenre('Samba');" >Samba </a>
+
+
     </div>
 </div>
 
@@ -1204,14 +1251,17 @@
 
 
 
+<!--jsfiles-->
 
-<!-- /dailymotion -->
-<script src="http://api.dmcdn.net/all.js"></script>
 <!-- /page -->
+
+<script type="text/javascript" src="public/js/uiController.js"></script>
 
 <script type="text/javascript" src="public/js/generatedData.js"></script>
 
 <script type="text/javascript" src="public/js/libs/jquery-1.11.0.js"></script>
+
+<!--<script type="text/javascript" src="public/js/libs/jquery.lazyload.min.js" ></script>-->
 
 <script type="text/javascript" src="public/js/preload.js"></script>
 
@@ -1220,9 +1270,12 @@
 <script type="text/javascript" src="public/cordova.js"></script>
 
 <!-- Libraries -->
-<!-- AngularJS -->
-<script type="text/javascript" src="public/js/libs/angular.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-touch.js"></script>
+<!-- AngularJS-->
+<script type="text/javascript" src="public/js/libs/angular.min.js"></script>
+<script type="text/javascript" src="public/js/libs/angular-touch.min.js"></script>
+
+
+
 <script type="text/javascript" src="public/js/libs/ng-context-menu.js"></script>
 
 <script type='text/javascript' src="http://a.vimeocdn.com/js/froogaloop2.min.js"></script>
@@ -1270,7 +1323,7 @@
 <!-- business logic -->
 <script type="text/javascript" src="public/js/playbackController.js"></script>
 
-<script type="text/javascript" src="public/js/uiController.js"></script>
+
 
 <script type="text/javascript" src="public/js/mediaelementPlayer.js"></script>
 
@@ -1304,15 +1357,14 @@
 <!-- ng Controlle -->
 <script type="text/javascript" src="public/js/mainModule.js"></script>
 
-
-
 <!-- Include Business Logic and Start App -->
 <script type="text/javascript" src="public/js/index.js"></script>
 <script type="text/javascript">
     app.initialize();
 </script>
 
-
+<!--Main NG Controller-->
+<script type="text/javascript" src="public/js/mainController.js"></script>
 <!--Google-->
 <script type="text/javascript" src="public/js/googleHandler.js"></script>
 <!--Facebook-->
@@ -1325,10 +1377,11 @@
 <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
 <script src="https://apis.google.com/js/client.js?onload=loadClient"></script>
 
+<!-- /dailymotion -->
+<script src="http://api.dmcdn.net/all.js"></script>
 
 
-<!--Main NG Controller-->
-<script type="text/javascript" src="public/js/mainController.js"></script>
+
 
 
 <!-- FACEBOOK
