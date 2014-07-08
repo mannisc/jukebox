@@ -284,6 +284,9 @@ mediaController.getSiteLogo = function () {
     } else if (mediaController.currentvideoURL.toLowerCase().search(".clipfish.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/clipfish.") > -1) {
         return "clipfish.png"
 
+    }else if (mediaController.currentvideoURL.toLowerCase().search(".facebook.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/facebook.") > -1) {
+        return "facebook.png"
+
     }
 
     return "empty.png"
@@ -316,6 +319,9 @@ mediaController.getSiteLogoFromUrl = function (url) {
     } else if (url.toLowerCase().search(".clipfish.") > -1 || url.toLowerCase().search("/clipfish.") > -1) {
         return "clipfish.png"
 
+    } else if (url.toLowerCase().search(".facebook.") > -1 || url.toLowerCase().search("/facebook.") > -1) {
+        return "facebook.png"
+
     }
 
     return "empty.png"
@@ -347,6 +353,9 @@ mediaController.getSiteName = function (url, prefix) {
 
     } else if (url.toLowerCase().search(".clipfish.") > -1 || url.toLowerCase().search("/clipfish.") > -1) {
         return prefix + "Clipfish";
+
+    }else if (url.toLowerCase().search(".facebook.") > -1 || url.toLowerCase().search("/facebook.") > -1) {
+        return prefix + "Facebook";
 
     }
 
@@ -494,6 +503,7 @@ mediaController.loadGenre = function(genre){
     exploreController.searchGenreSongs(genre,true);
     $('#popupListen').popup('close');
 }
+
 
 
 
