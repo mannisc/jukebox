@@ -733,11 +733,11 @@
               <div class="videoControlElements-button videoControlElements-button-choose-version videoControlElements-custom-button">
                   <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
               </div>
-              <div class="videoControlElements-button videoControlElements-button-share videoControlElements-custom-button">
-                  <button type="button" id="sharebutton" data-role="none" style="{{mediaController.shareMediaStyle()}}" aria-controls="mep_0" title="Share your collection with your friends" aria-label="Share with friends"></button>
-              </div>
               <div class="videoControlElements-button videoControlElements-button-lyrics videoControlElements-custom-button">
                   <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button>
+              </div>
+              <div class="videoControlElements-button videoControlElements-button-share videoControlElements-custom-button">
+                  <button type="button" id="sharebutton" data-role="none" style="{{mediaController.shareMediaStyle()}}" aria-controls="mep_0" title="Share your collection with your friends" aria-label="Share with friends"></button>
               </div>
               <div class="videoControlElements-button videoControlElements-button-facebook videoControlElements-custom-button">
                   <button type="button" id="facebookpostbutton" data-role="none"   style="opacity:0.5" aria-controls="mep_0" title="Facebook" aria-label="Facebook"></button>
