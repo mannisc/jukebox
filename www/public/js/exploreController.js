@@ -243,7 +243,7 @@ exploreController.searchGenreSongs = function (genre,autoplay) {
                 ).then(function (songList) {
                     if (searchID == exploreController.currentSearchID) {
 
-
+                        songList = exploreController.shuffle(songList);
 
                         exploreController.completedSearch(songList);
                         if(autoplay){
