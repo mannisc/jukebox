@@ -303,19 +303,19 @@ videoController.init = function () {
 
     videoController.controls.find(".videoControlElements-fullscreen-button").mouseover(function () {
         if (videoController.fullscreenMode == 0)
-       // if (videoController.fullscreenEnabled && videoController.videoPlayer)
+        // if (videoController.fullscreenEnabled && videoController.videoPlayer)
             videoController.controls.find(".videoControlElements-fullscreen-slider").show();
     });
 
 
 
     videoController.controls.find(".videoControlElements-fullscreen-button").mouseout(function () {
-       // if (videoController.fullscreenEnabled && videoController.videoPlayer)
-            videoController.controls.find(".videoControlElements-fullscreen-slider").hide();
+        // if (videoController.fullscreenEnabled && videoController.videoPlayer)
+        videoController.controls.find(".videoControlElements-fullscreen-slider").hide();
     });
 
     videoController.controls.find(".videoControlElements-fullscreen-slider").mouseover(function () {
-      $(".videoControlElements-fullscreen-button button").css("background-image","url(public/img/brightness.png)")
+        $(".videoControlElements-fullscreen-button button").css("background-image","url(public/img/brightness.png)")
 
 
     });
@@ -413,14 +413,14 @@ videoController.init = function () {
     videoController.controls.find(".videoControlElements-button-choose-version").click(function () {
         if (videoController.versionsEnabled)
             var song = playbackController.getPlayingSong();
-            var artistString = encodeURIComponent(mediaController.getSongArtist(song));
-            var titleString = encodeURIComponent(song.name);
-            mediaController.getVersions(artistString,titleString);
+        var artistString = encodeURIComponent(mediaController.getSongArtist(song));
+        var titleString = encodeURIComponent(song.name);
+        mediaController.getVersions(artistString,titleString);
     });
 
     //Share
     videoController.controls.find(".videoControlElements-button-share").click(function () {
-         mediaController.shareMedia();
+        mediaController.shareMedia();
 
     });
 
@@ -709,8 +709,6 @@ videoController.toggleBrowserFullScreen = function () {
     console.dir();
 
 
-    document.documentElement.webkitRequestFullScreen();
-
 
     if (element.requestFullScreen) {
 
@@ -720,8 +718,8 @@ videoController.toggleBrowserFullScreen = function () {
             document.exitFullScreen();
         }
 
-    } else if (element.mozRequestFullScreen) {
-
+    }
+    if (element.mozRequestFullScreen) {
         if (!document.mozFullScreen) {
             element.mozRequestFullScreen();
         } else {
@@ -837,9 +835,9 @@ videoController.updateFullscreenMode = function () {
 
     else if (videoController.fullscreenMode == 1) { //Fullscreen
         setTimeout(function(){
-                hideControls();
+            hideControls();
             $("body").on("mousemove mouseup", hideControls);
-            },2000);
+        },2000);
 
         $("#songbaseLogoImage").show();
 
@@ -1116,7 +1114,7 @@ videoController.showBuffered = function (show) {
     if (show)
         videoController.controls.find(".videoControlElements-time-loaded").fadeIn()
     else
-       videoController.controls.find(".videoControlElements-time-loaded").fadeOut()
+        videoController.controls.find(".videoControlElements-time-loaded").fadeOut()
 
 
 }
@@ -1233,7 +1231,7 @@ videoController.setVideoOpacity = function (videoOpactiy, secondTry) {
         totalPosition = videoOpactiyTotal.position(),
 
 
-       newTop = totalHeight - (totalHeight * videoOpactiy);
+        newTop = totalHeight - (totalHeight * videoOpactiy);
 
     // handle
     videoOpactiyHandle.css('top', Math.round(totalPosition.top + newTop - (videoOpactiyHandle.height() / 2)));
@@ -1292,7 +1290,7 @@ videoController.playingSong = function () {
 
     if (playbackController.playingSong) {
         playbackController.playingSongTimer = Date.now();
-       $("#backgroundVideo").addClass("animated")
+        $("#backgroundVideo").addClass("animated")
 
         $("#backgroundVideo").css("opacity", videoController.videoOpactiy);
 
