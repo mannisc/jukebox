@@ -145,7 +145,7 @@ uiController.init = function () {
 
     setTimeout(function () {
         $("#iconHeader").attr("src", "public/img/logo.gif");
-    }, 15000)
+    }, 1000);
 
 
     //Additional Control Buttons
@@ -189,7 +189,7 @@ uiController.init = function () {
 
     setTimeout(function () {
         $("iframe").get(0).contentDocument.close();
-    }, 2000)
+    }, 2000);
 
     var style = $('<style id="inputclearhide">' +
         '.ui-input-clear {' +
@@ -238,13 +238,13 @@ uiController.init = function () {
                                 uiController.searchListScroll.refresh();
                                 uiController.playListScroll.refresh();
                                 playbackController.positionPlayIndicator();
-                            }, 2000)
-                        }, 100)
-                    }, 100)
-                }, 100)
-            }, 100)
+                            }, 2000);
+                        }, 100);
+                    }, 100);
+                }, 100);
+            }, 100);
 
-        }, 1000)
+        }, 1000);
 
 
     });
@@ -265,7 +265,7 @@ uiController.init = function () {
         $("#openSidePanelBarIcon").css({"transition": "0.15s linear", "-transform": transform, "-ms-transform": transform, "-webkit-transform": transform});
         setTimeout(function () {
             uiController.updateUI();
-        }, 500)
+        }, 500);
     });
 
 
@@ -277,7 +277,7 @@ uiController.init = function () {
         $("#openSidePanelBarIcon").css({"transition": "0.15s linear", "-transform": transform, "-ms-transform": transform, "-webkit-transform": transform});
         setTimeout(function () {
             uiController.updateUI();
-        }, 500)
+        }, 500);
     });
 
 
@@ -295,7 +295,7 @@ uiController.init = function () {
         }else
             $(".sideinfo .blocked").hide();
 
-        setTimeout(checkAdblock,3000)
+        setTimeout(checkAdblock,3000);
     }
     setTimeout(checkAdblock, 10000);
 
