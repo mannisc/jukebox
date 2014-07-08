@@ -183,7 +183,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
                     setTimeout(function () {
                         playlistController.insertSongsIntoQueue(actSongList);
                         playbackController.updatePlayingSongIndex();
-                    }, 0)
+                    }, 0);
                     if (playlistController.loadedPlaylists["0"])
                         addedToQueue = true;
 

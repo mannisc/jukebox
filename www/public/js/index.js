@@ -63,6 +63,8 @@ lyricscallback = function (test) {
 lyricsvisible = false;
 
 
+
+
 var urlParams;
 var loadUrlParams = function () {
     var match,
@@ -207,6 +209,7 @@ $(document).ready(function () {
                 }
             }, 1000);
 
+
             //Show loaded page
             $scope.safeApply();
             $("#page").css("opacity", "1");
@@ -221,6 +224,10 @@ $(document).ready(function () {
 
             }
             setTimeout(updatePage, 500);
+
+           // setTimeout(function() {
+           //     $("img.lazy").lazyload()
+           // },1000)
 
 
         } else
