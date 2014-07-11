@@ -873,20 +873,34 @@ mediaController.reloadVersions = function(){
 }
 
 mediaController.loadingPopupVisible = false;
+mediaController.loadingPopupVisibleTime = null;
 
 mediaController.showLoadingPopup = function(streamID){
     mediaController.loadingPopupVisible = true;
     setTimeout(function(){
         if(streamID==mediaController.playCounter && mediaController.loadingPopupVisible){
-           
+
             $('#popupLoadingSong').popup('open', {transition: 'pop'});
+            var now = new Date();
+            mediaController.loadingPopupVisibleTime = now.getTime();
+
         }
-    },2000);
+    },3000);
 }
 
 mediaController.hideLoadingPopup = function(){
-    mediaController.loadingPopupVisible =false;
-     $('#popupLoadingSong').popup('close');
+    var now = new Date();
+    if(now.getTime()-mediaController.loadingPopupVisibleTime <1000 && mediaController.loadingPopupVisibleTime){
+        setTimeout(function(){
+            mediaController.loadingPopupVisible =false;
+            $('#popupLoadingSong').popup('close');
+        },1000);
+    }
+    else
+    {
+        mediaController.loadingPopupVisible =false;
+         $('#popupLoadingSong').popup('close');
+    }
 }
 
 

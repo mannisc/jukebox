@@ -159,6 +159,8 @@
 
 <body ng-controller="MainController">
 
+<img src="public/img/background.jpg" id="backgroundImage">
+
 <div class="fullscreendisable">   </div>
 
 <!-- FACEBOOK -->
@@ -206,7 +208,7 @@
             <span id="playingSongTitle" class="fadeincomplete" style="text-align:left;z-index:0;display:none;position:absolute;left: 35px;top: 9px;right: 0px">{{playbackController.getPlayingTitle()}} </span>
         </a>
         <a id="buySongLink" style="opacity:0" onclick="mediaController.buySong()" ng-show="playbackController.playingSong" href="#" data-rel="popup" data-position-to="#buySongLink"
-           class="playingSongBuy   ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-heart ui-btn-icon-left ui-btn-a" data-transition="pop">Buy Song</a>
+           class="playingSongBuy   ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-heart ui-btn-icon-left ui-btn-a" data-transition="pop">Download Song</a>
 
 
         <a id="signinLink" ng-if="!accountController.loggedIn" href="#popupLogin" onclick="" data-rel="popup" data-position-to="#signinLink"
@@ -1063,27 +1065,28 @@
     <div style="width:350px;height:400px;padding:10px 20px 10px 20px;">
         <div style="text-align: center">
             Loading song, please wait...
-        <br>
-        <br>
-            <span style="font-weight:bold">
-                {{mediaController.getSongArtist(playbackController.playingSong)+" - "+playbackController.playingSong.name}}
-            </span>
-        <br>
-        <img  src="public/img/loadingbar.GIF">
-        <br>
-        <br>
-        </div>
+            <br>
+            <br>
+                <span style="font-weight:bold">
+                    {{mediaController.getSongArtist(playbackController.playingSong)+" - "+playbackController.playingSong.name}}
+                </span>
+            <br>
+            <img  src="public/img/loadingbar.GIF">
+            <br>
+            <br>
 
-        <!-- Loading Center -->
-        <!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:336px;height:280px"
-             data-ad-client="ca-pub-2111240458873424"
-             data-ad-slot="6282624994">
-        </ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+
+            <!-- Loading Center -->
+            <!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:336px;height:280px"
+                 data-ad-client="ca-pub-2111240458873424"
+                 data-ad-slot="6282624994">
+            </ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 </div>
 
@@ -1455,7 +1458,7 @@
     <canvas id="webglcanvas"></canvas>
 </div>
 
-<img src="public/img/background.jpg" id="backgroundImage">
+
 
 
 <div class="sideinfo fadeincompleteslow">
