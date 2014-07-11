@@ -11,7 +11,7 @@
 
 var preloadhtml = function(){
 
-}
+};
 
 
 preloadhtml.sharefbartist = $("#fbartistbox").html();

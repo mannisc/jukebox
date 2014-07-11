@@ -284,9 +284,46 @@ mediaController.getSiteLogo = function () {
     } else if (mediaController.currentvideoURL.toLowerCase().search(".clipfish.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/clipfish.") > -1) {
         return "clipfish.png"
 
+    }else if (mediaController.currentvideoURL.toLowerCase().search(".facebook.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/facebook.") > -1) {
+        return "facebook.png"
+
     }
 
-    alert(mediaController.currentvideoURL.toLowerCase())
+    return "empty.png"
+
+}
+
+
+mediaController.getSiteLogoFromUrl = function (url) {
+    if (url.toLowerCase().search(".dailymotion.com") > -1 || url.toLowerCase().search("/dailymotion.com") > -1) {
+        return "dailymotion.png"
+    } else if (url.toLowerCase().search(".youtube.") > -1 || url.toLowerCase().search("/youtube.") > -1) {
+        return "youtube.png"
+    } else if (url.toLowerCase().search(".muzu.tv") > -1 || url.toLowerCase().search("/muzu.tv") > -1) {
+        return "muzu.png"
+    } else if (url.toLowerCase().search(".vimeo.") > -1 || url.toLowerCase().search("/vimeo.") > -1) {
+        return "vimeo.png"
+    } else if (url.toLowerCase().search(".photobucket.") > -1 || url.toLowerCase().search("/photobucket.") > -1) {
+        return "photobucket.png"
+    } else if (url.toLowerCase().search(".metacafe.") > -1 || url.toLowerCase().search("/metacafe.") > -1) {
+        return "metacafe.png"
+    } else if (url.toLowerCase().search(".veoh.") > -1 || url.toLowerCase().search("/veoh.") > -1) {
+        return "veoh.png"
+
+    } else if (url.toLowerCase().search(".blip.") > -1 || url.toLowerCase().search("/blip.") > -1) {
+        return "blip.png"
+
+    } else if (url.toLowerCase().search(".myvideo.") > -1 || url.toLowerCase().search("/myvideo.") > -1) {
+        return "myvideo.png"
+
+    } else if (url.toLowerCase().search(".clipfish.") > -1 || url.toLowerCase().search("/clipfish.") > -1) {
+        return "clipfish.png"
+
+    } else if (url.toLowerCase().search(".facebook.") > -1 || url.toLowerCase().search("/facebook.") > -1) {
+        return "facebook.png"
+
+    }
+
     return "empty.png"
 
 }
@@ -316,6 +353,9 @@ mediaController.getSiteName = function (url, prefix) {
 
     } else if (url.toLowerCase().search(".clipfish.") > -1 || url.toLowerCase().search("/clipfish.") > -1) {
         return prefix + "Clipfish";
+
+    }else if (url.toLowerCase().search(".facebook.") > -1 || url.toLowerCase().search("/facebook.") > -1) {
+        return prefix + "Facebook";
 
     }
 
@@ -457,6 +497,16 @@ mediaController.shareMedia = function(){
         $('#popupShareMenu').popup('open', {positionTo: '#sharebutton'});
     }
 }
+
+mediaController.loadGenre = function(genre){
+    viewController.activateView(exploreController,false);
+    exploreController.searchGenreSongs(genre,true);
+    $('#popupListen').popup('close');
+}
+
+
+
+
 
 mediaController.shareCurrentSong = function(){
     var song = playbackController.getPlayingSong();
@@ -872,8 +922,8 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
                                                 if (resetVersion == 1) {
                                                     mediaController.startVersionIndex = -1;
                                                 }
-                                                mediaController.seekTime = videoController.progressTime//uiController.mediaElementPlayer.getCurrentTime();
-                                                mediaController.seekTimeDuration = videoController.maxTime; //uiController.mediaElementPlayer.media.duration;
+                                                mediaController.seekTime = videoController.progressTime;
+                                                mediaController.seekTimeDuration = videoController.maxTime;
                                                 mediaController.versionListSong = song;
                                                 mediaController.playStreamURLSeek(streamURL, videoURL, true, rating);
                                             } else
