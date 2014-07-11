@@ -64,6 +64,7 @@
 
 
 
+
     <script type="text/javascript">
         //Reload Page if params
         function getURLParameters(name) {
@@ -1058,7 +1059,33 @@
    </div>
 </div>
 
+<div data-role="popup" id="popupLoadingSong" data-theme="a" class="ui-corner-all">
+    <div style="width:350px;height:400px;padding:10px 20px 10px 20px;">
+        <div style="text-align: center">
+            Loading song, please wait...
+        <br>
+        <br>
+            <span style="font-weight:bold">
+                {{mediaController.getSongArtist(playbackController.playingSong)+" - "+playbackController.playingSong.name}}
+            </span>
+        <br>
+        <img  src="public/img/loadingbar.GIF">
+        <br>
+        <br>
+        </div>
 
+        <!-- Loading Center -->
+        <!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:336px;height:280px"
+             data-ad-client="ca-pub-2111240458873424"
+             data-ad-slot="6282624994">
+        </ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</div>
 
 <!--div data-role="popup" id="popupConfirm" data-arrow="true" data-dismissible="false" data-theme="a" class="ui-corner-all">
     <form>
@@ -1210,6 +1237,10 @@
 </div>
 
 
+
+
+
+
 <!--div data-role="footer" id="footer" data-position="fixed">
     <h4>Footer content</h4>
 </div>< /footer -->
@@ -1254,6 +1285,8 @@
 <!--jsfiles-->
 
 <!-- /page -->
+
+
 
 <script type="text/javascript" src="public/js/uiController.js"></script>
 
@@ -1427,6 +1460,8 @@
 
 <div class="sideinfo fadeincompleteslow">
     <img src="public/img/blocked.gif" style="display:none" class="blocked fadeincomplete">
+
+    <!-- Main Right -->
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- Main Right -->
     <ins class="adsbygoogle"
@@ -1437,6 +1472,8 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
+
+
 
 
 <div style="max-height:0px!important;overflow:hidden ">
