@@ -365,6 +365,7 @@ mediaController.getSiteName = function (url, prefix) {
 
 
 mediaController.playSong = function (streamURL, videoURL) {
+
     console.dir("PLAYSONG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     //streamURL = "http://video-1-9.rutube.ru/hls-vod/QABcsA4mk0tpMcwf-Ykh0g/1398726462/n1vol2/3c0e1ef57e234d0d9b3d4a66cc787f96.mp4.m3u8"
     mediaController.currentStreamURL = "";
@@ -387,6 +388,7 @@ mediaController.playSong = function (streamURL, videoURL) {
             )
         },3000)
     }
+    mediaController.hideLoadingPopup();
 
 }
 
@@ -870,6 +872,24 @@ mediaController.reloadVersions = function(){
 
 }
 
+mediaController.loadingPopupVisible = false;
+
+mediaController.showLoadingPopup = function(streamID){
+    mediaController.loadingPopupVisible = true;
+    setTimeout(function(){
+        if(streamID==mediaController.playCounter && mediaController.loadingPopupVisible){
+           
+            $('#popupLoadingSong').popup('open', {transition: 'pop'});
+        }
+    },2000);
+}
+
+mediaController.hideLoadingPopup = function(){
+    mediaController.loadingPopupVisible =false;
+     $('#popupLoadingSong').popup('close');
+}
+
+
 
 mediaController.playVersion = function (songversion, rating, resetVersion) {
     if(!mediaController.noClick){
@@ -881,6 +901,8 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
         mediaController.playCounter++;
         var streamID = mediaController.playCounter;
         var videoURL = songversion.url
+
+
         var play = function (streamID, videoURL) {
             var song = playbackController.getPlayingSong();
             if (videoURL != mediaController.currentvideoURL) {
@@ -956,14 +978,13 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
                     videoController.showBuffering(false);
                 }, 500);
             }
-
         }
         play(streamID, videoURL);
     }
 }
 
 mediaController.loadStreamURL = function (streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic,fromCache) {
-
+    mediaController.showLoadingPopup(streamID);
     var loadError = false;
     //var stime=new Date();
     //var time=stime.getTime();
@@ -1023,6 +1044,9 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                         loadError = true;
                 }
             }
+            if(loadError){
+                mediaController.hideLoadingPopup();
+            }
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.dir(" mediaController.loadStreamURL error: "+xhr.responseText)
@@ -1031,6 +1055,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
              videoController.showBuffered(true);
              videoController.showBuffering(false);
              }, 500);*/
+            mediaController.hideLoadingPopup();
         },
         complete: function () {
             console.dir(" mediaController.loadStreamURL complete")
