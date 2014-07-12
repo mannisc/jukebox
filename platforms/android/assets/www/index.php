@@ -298,7 +298,7 @@
 
             </a></li>
 
-        <li ng-if ="searchController.visible&&searchController.showMode==5" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.showedPlaylist.tracks track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(song)}}"  class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li ng-if ="searchController.visible&&searchController.showMode==5" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.showedPlaylist.tracks track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(song)}}"  class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playbackController.doubleClickedElement($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"   class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -325,7 +325,7 @@
             </a>
         </li>
         
-        <li  ng-if ="searchController.visible&&searchController.isVisisbleInShowMode(3)" context-menu-DISABLED ="playlistController.selectSong(artist)" ng-repeat="artist in searchController.artists.searchResults  | limitTo:searchController.getShowModeLimit(3)  track by $index " data-artist="{{artist}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(artist)}}"   class="fadeincompletefast othertopheight"  ng-click="playbackController.clickedElement($event,artist);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li  ng-if ="searchController.visible&&searchController.isVisisbleInShowMode(3)" context-menu-DISABLED ="playlistController.selectSong(artist)" ng-repeat="artist in searchController.artists.searchResults  | limitTo:searchController.getShowModeLimit(3)  track by $index " data-artist="{{artist}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(artist)}}"   class="fadeincompletefast othertopheight"  ng-click="playbackController.clickedElement($event,artist);"  ng-dblclick="playbackController.doubleClickedElement($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getImage(artist)+')','background-size':'100%'}"  alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
 
@@ -355,7 +355,7 @@
             </a>
         </li>
         
-        <li  ng-if ="searchController.visible&&searchController.isVisisbleInShowMode(2)" context-menu-DISABLED ="playlistController.selectSong(playlist)" ng-repeat="playlist in searchController.playlists.searchResults | limitTo:searchController.getShowModeLimit(2)  track by $index " data-playlist="{{playlist}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(playlist)}}"  class="fadeincompletefast othertopheight  hoverable"  ng-click="playbackController.clickedElement($event,playlist);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li  ng-if ="searchController.visible&&searchController.isVisisbleInShowMode(2)" context-menu-DISABLED ="playlistController.selectSong(playlist)" ng-repeat="playlist in searchController.playlists.searchResults | limitTo:searchController.getShowModeLimit(2)  track by $index " data-playlist="{{playlist}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(playlist)}}"  class="fadeincompletefast othertopheight  hoverable"  ng-click="playbackController.clickedElement($event,playlist);"  ng-dblclick="playbackController.doubleClickedElement($event);"><a >
 
             <img src="public/img/empty.png"   ng-style="{'background-image':'url(public/img/empty.png)','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
 
@@ -392,7 +392,7 @@
 
          </a></li>
 
-        <li ng-if ="searchController.visible&&searchController.isVisisbleInShowMode(1)" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.songs.searchResults | limitTo:searchController.getShowModeLimit(1) track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li ng-if ="searchController.visible&&searchController.isVisisbleInShowMode(1)" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in searchController.songs.searchResults | limitTo:searchController.getShowModeLimit(1) track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(song)}}"   class="draggableSong fadeincompletefast"   ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playbackController.doubleClickedElement($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -418,7 +418,7 @@
 
         
 
-        <li ng-if ="searchController.visible&&searchController.isVisisbleInShowMode(4)" context-menu-DISABLED ="playlistController.selectSong(user)" ng-repeat="user in searchController.users.searchResults | limitTo:searchController.getShowModeLimit(4) track by $index" data-user="{{user}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"    class="fadeincompletefast otherbottomheight"  ng-click="playbackController.clickedElement($event,user);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li ng-if ="searchController.visible&&searchController.isVisisbleInShowMode(4)" context-menu-DISABLED ="playlistController.selectSong(user)" ng-repeat="user in searchController.users.searchResults | limitTo:searchController.getShowModeLimit(4) track by $index" data-user="{{user}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"    class="fadeincompletefast otherbottomheight"  ng-click="playbackController.clickedElement($event,user);"  ng-dblclick="playbackController.doubleClickedElement($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(user)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,user)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -443,7 +443,7 @@
             </a>
         </li>
 
-        <li ng-if ="exploreController.visible&&!song.tmpHide" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in exploreController.songs.searchResults  | limitTo: exploreController.displayLimit track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a >
+        <li ng-if ="exploreController.visible&&!song.tmpHide" context-menu-DISABLED ="playlistController.selectSong(song)" ng-repeat="song in exploreController.songs.searchResults  | limitTo: exploreController.displayLimit track by $index" data-song="{{song}}" ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"  data-elementtitle ="{{mediaController.getElementTitle(song)}}"   class="draggableSong fadeincompletefast"  ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playbackController.doubleClickedElement($event);"><a >
             <img src="public/img/empty.png"   ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt="" class="ui-li-icon ui-corner-none" >
             <img src="public/img/empty.png"    class="loadingSongImg"   >
             <img ng-if ="playlistController.hasTrendStyle(0,song)" src="public/img/empty.png" class="songWinner songTrend" >
@@ -618,7 +618,7 @@
             </a></li>
 
             <li ng-repeat="song in playlistController.loadedPlaylistSongs | limitTo: playlistController.getDisplayLimit()  track by song.gid" context-menu-DISABLED ="playlistController.selectSong(song)" ng-if ="!song.isSimilarSongs&&!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}"  data-song="{{song}}" data-songid="playlistsong{{song.id}}" data-elementtitle ="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
-                ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playlistController.deselectSongs($event);"><a tabindex="-1">
+                ng-click="playbackController.clickedElement($event,song);"  ng-dblclick="playbackController.doubleClickedElement($event);"><a tabindex="-1">
 
                 <img src="public/img/empty.png" ng-style="{'background-image':'url('+mediaController.getSongCover(song)+')','background-size':'100%'}" alt=""   class="ui-li-icon ui-corner-none"  >
                 <div ng-if= "playlistController.playlistMode" class="playlistCoverSong" >

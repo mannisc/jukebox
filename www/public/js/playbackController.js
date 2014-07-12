@@ -13,12 +13,105 @@ var playbackController = function () {
 };
 
 
+
+playbackController.lastClickedElement = null;
+/**
+ * Clicked on Element in list
+ * @param event
+ * @param element
+ * @param onlyStyle
+ */
+playbackController.clickedElement = function (event, element,onlyStyle) {
+    //Swiped?
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+        return;
+
+    var normalClick = function(){
+      playbackController.lastClickedElement = {element:element, time : Date.now()}
+      setTimeout(function(){
+         if(playbackController.lastClickedElement){
+
+            //NORMAL CLICK
+             console.log("############# NORMALLLLLLLLLLLLLLLLL")
+
+             var songlist = $(event.target).parents("li");
+             if (songlist.length > 0)
+                 playlistController.selectSong(element);
+
+             //Clicked on Cover -> Select Song
+             /*
+              var songlist = $(event.target).parents("li")
+              if (songlist.length > 0 && (event.clientX - songlist.offset().left) < 65) {
+              playlistController.selectSong(element)
+              return;
+              }
+              */
+
+
+         }
+      },231)
+    }
+
+    if(playbackController.lastClickedElement){
+
+      if(playbackController.lastClickedElement.element==element){
+          console.log(Date.now()-playbackController.lastClickedElement.time)
+
+          if(Date.now()-playbackController.lastClickedElement.time<230){
+             playbackController.lastClickedElement = null;
+             //DOUBLE CLICK
+             console.log("############# DOUBLEEEEEEEEEEEEEEEEEEEEEE")
+
+
+              //Playlist or song?
+              if (element.isPlaylist) {
+                  //Select Playlist
+                  if(element.gid){
+                      playlistController.showPlaylist(element);
+
+                      //Show playlist in search list
+                  }else {
+                      searchController.showPlaylist(element);
+                  }
+
+
+              } else {
+                  //Play Song
+                  playbackController.playSong(element, onlyStyle, false, true);
+              }
+
+
+          }else{
+             normalClick();
+         }
+
+      }else
+          normalClick();
+    }else
+        normalClick();
+
+    event.stopPropagation();
+
+
+
+
+
+
+
+
+
+}
+
 /**
  * Double clicked on Element in list
  * @param event
 
  */
 playbackController.doubleClickedElement = function (event) {
+    //Swiped?
+    //if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+    //    return;
+
 
     event.stopPropagation();
 
@@ -36,46 +129,6 @@ playbackController.touchedElement = function (event, onlyStyle) {
 
 }
 
-/**
- * Clicked on Element in list
- * @param event
- * @param element
- * @param onlyStyle
- */
-playbackController.clickedElement = function (event, element, onlyStyle) {
-    //Swiped?
-    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
-        return;
-
-    //Clicked on Cover -> Select Song
-    var songlist = $(event.target).parents("li")
-    if (songlist.length > 0 && (event.clientX - songlist.offset().left) < 65) {
-        playlistController.selectSong(element)
-        return;
-    }
-
-
-    //Playlist or song?
-    if (element.isPlaylist) {
-        //Select Playlist
-        if(element.gid){
-            playlistController.showPlaylist(element);
-
-        //Show playlist in search list
-        }else {
-            searchController.showPlaylist(element);
-        }
-
-
-    } else {
-        //Play Song
-        playbackController.playSong(element, onlyStyle, false, true);
-    }
-
-    event.stopPropagation();
-
-
-}
 
 
 /**
