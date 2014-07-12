@@ -276,3 +276,13 @@ viewController.applySongList = function (currentSearchID,size,delays,stepSize,st
 
 
 
+/**
+ * Get Song from From Index from active View
+ * @param index
+ */
+viewController.getSongFromIndex = function(index){
+
+    return viewController.activeView.getSongFromIndex(index)
+}
+
+
