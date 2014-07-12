@@ -44,7 +44,7 @@ function onFTPConnection() {
 
     console.log("FTP Connected")
 
-    ftpHandler.downloadFile("/fm/public/js/generatedData.template.js", "generatedData.template.js", onFTPDownloadTemplates)
+    ftpHandler.downloadFile("/test/public/js/generatedData.template.js", "generatedData.template.js", onFTPDownloadTemplates)
 }
 
 //Templates Downloaded
@@ -76,7 +76,7 @@ function onChartsUpdated(tracks) {
 
         var generatedData = templateHandler.buildTemplate(generatedDataTemplate, templateProp)
         chartsHandler.fs.writeFileSync("generatedData.js", generatedData);
-        ftpHandler.uploadFile("/fm/public/js/generatedData.js", "generatedData.js", onFTPUploadTemplates)
+        ftpHandler.uploadFile("/test/public/js/generatedData.js", "generatedData.js", onFTPUploadTemplates)
 
     }
 
