@@ -724,10 +724,12 @@ searchController.artists.completeSearch = function (localList, onlineList) {
  * @param index
  */
 searchController.getSongFromIndex = function(index){
+
     if(searchController.showMode==5)
      return searchController.showedPlaylist.tracks[index];
     else
      return searchController.songs.searchResults[index];
+
 
 
 

@@ -718,3 +718,19 @@ exploreController.applySongList = function (currentSearchID) {
     viewController.applySongList(currentSearchID, size, delays, stepSize, stepDelay);
 
 }
+
+
+
+/**
+ * Get Song from From Index
+ * @param index
+ */
+exploreController.getSongFromIndex = function(index){
+
+
+     return exploreController.songs.searchResults[index];
+
+
+
+
+}

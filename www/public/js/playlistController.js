@@ -2641,7 +2641,7 @@ playlistController.makePlayListSortable = function () {
                             var id = playlistController.draggedElements[index].dataset.index;
 
 
-                            var actSong = searchController.getSongFromIndex(parseInt(id));
+                            var actSong = viewController.getSongFromIndex(parseInt(id));
 
 
                             actSong = jQuery.extend(true, {}, actSong);
@@ -2675,7 +2675,7 @@ playlistController.makePlayListSortable = function () {
                     }
                     else {
 
-                        var actSong = searchController.getSongFromIndex(parseInt(id));
+                        var actSong = viewController.getSongFromIndex(parseInt(id));
 
                         actSong = jQuery.extend(true, {}, actSong);
                         if (actSong.tmpHide)
