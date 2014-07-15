@@ -39,6 +39,8 @@ searchController.artists.searchResults = [];
 
 searchController.users.searchResults = [];
 
+searchController.usesInput = true;
+
 
 searchController.usesSearchList = true;
 

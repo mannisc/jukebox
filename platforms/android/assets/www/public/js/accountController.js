@@ -655,6 +655,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
         timeout: 30000,
         url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier,
         success: function (data) {
+
             console.dir("LOGIN DATA:")
             console.dir(data)
 
@@ -687,7 +688,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                                 var md5pw = MD5($.trim(pw));
                             }
                             else {
-                                var md5pw = "";
+                                 md5pw = "";
                             }
 
                             if (!accountController.loggedIn) {

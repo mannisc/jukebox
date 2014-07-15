@@ -49,7 +49,7 @@ playbackController.clickedElement = function (event, element,onlyStyle) {
 
 
          }
-      },231)
+      },301)
     }
 
     if(playbackController.lastClickedElement){
@@ -57,7 +57,7 @@ playbackController.clickedElement = function (event, element,onlyStyle) {
       if(playbackController.lastClickedElement.element==element){
           console.log(Date.now()-playbackController.lastClickedElement.time)
 
-          if(Date.now()-playbackController.lastClickedElement.time<230){
+          if(Date.now()-playbackController.lastClickedElement.time<300){
              playbackController.lastClickedElement = null;
              //DOUBLE CLICK
              console.log("############# DOUBLEEEEEEEEEEEEEEEEEEEEEE")

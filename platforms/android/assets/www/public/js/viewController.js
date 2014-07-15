@@ -154,11 +154,20 @@ viewController.activateView = function(view, noAnimation, showFunction){
         }, 60)
 
         $("#searchinput").val("");
+        $("#controlbar .ui-btn").removeClass("highlight");
 
+        if(viewController.activeView.usesInput){
+            $(input).show()
+            button.hide();
+        }  else{
+            $(input).hide();
+            button.addClass("highlight");
+        }
         if(viewController.activeView.inputText)
-         $(input).insertAfter(button).find("input").attr("placeholder", viewController.activeView.inputText );
+            $(input).insertAfter(button).find("input").attr("placeholder", viewController.activeView.inputText );
 
-        button.hide();
+
+
 
         if(viewController.activeView.usesSearchList) {
             $("#searchlayoutbutton").show();
