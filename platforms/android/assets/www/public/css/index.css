@@ -482,12 +482,14 @@ input[type=button]{
 }
 
 #controlselecthorizontal .ui-btn{
-    color: #fff!important;
+      color: #fff!important;
+
+  }
 
 
-
+#controlselecthorizontal .ui-btn.highlight{
+    background: #6D3131!important;
 }
-
 
 .ui-input-btn, .ui-btn{
     -webkit-box-shadow: none!important;

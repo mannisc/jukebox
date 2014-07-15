@@ -189,7 +189,7 @@
 
     <h1 id="titleHeader" style="margin-top: 2px!important;opacity:0;display:inline-block;">{{appTitle}}</h1>
 
-    <a id="feedbackButton" class="fadeincomplete" style="display:none;position: absolute;left: 210px;top: 5px;"  href="#popupFeedback"   data-rel="popup"  data-transition="pop" href="" >Give us your Feedback</a>
+    <a id="feedbackButton" class="fadeincomplete" style="display:none;position: absolute;left: 210px;top: 5px;"  href="#popupFeedback"  data-rel="popup"  data-transition="pop" href="#" >Give us your Feedback</a>
 
     <img src="public/img/bars-white.png" id="openSidePanelBarIcon" onclick="uiController.toggleSidePanel()" style="position:absolute;right: 6px;top: 13px" width="17px" height="20px"/>
 
@@ -798,7 +798,7 @@
 
 
 
-<div data-role="popup" id="popupVideoSettings" data-arrow="true" data-theme="a" class="ui-corner-all">
+<div data-role="popup" id="popupVideoSettings" data-dismissible="true" data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose Version</h3>
@@ -817,7 +817,7 @@
     </form>
 </div>
 
-<div data-role="popup" data-transition="pop" style="opacity:0.9;"  id="popupChooseVersionHint" data-arrow="true" data-theme="a" class="ui-corner-all">
+<div data-role="popup" data-transition="pop" style="opacity:0.9;"  id="popupChooseVersionHint" data-dismissible="true" data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>
         <div>
             <div style=";margin-right: 10px; margin-left:10px;margin-top: 10px;margin-bottom: 10px;text-align: center;color:black;">Click here to choose the version of this song</div>
