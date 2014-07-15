@@ -161,6 +161,8 @@ $(document).ready(function () {
 
 
             console.dir(urlParams);
+            //setInterval(function(){googletag.pubads().refresh([slot1]);}, 30000);
+
             setTimeout(function () {
                 if(urlParams.downloadApp && urlParams.downloadApp != ""){
                     $("#popupDownloadApp").popup('open');
