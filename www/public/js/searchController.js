@@ -258,6 +258,7 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
                           setTimeout(mediaController.loadPreview(data.track[j]), j*300);
                     }
 
+
                     deferred.resolve({list: list, native: true});
 
                 }
