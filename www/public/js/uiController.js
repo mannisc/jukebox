@@ -157,6 +157,7 @@ uiController.init = function () {
         event.stopPropagation();
     })
 
+
     $("body").dblclick(function (event) {
         if (videoController.fullscreenEnabled && videoController.videoPlayer) {
             videoController.toggleFullscreenMode();
