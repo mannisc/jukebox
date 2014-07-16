@@ -379,14 +379,21 @@ mediaController.playSong = function (streamURL, videoURL) {
 
     if(mediaController.showChooseVersionHint){
         mediaController.showChooseVersionHint = false;
-        setTimeout(function(){
-            $('#popupChooseVersionHint').popup('open', {positionTo: '#chooseversionbutton'});
-            setTimeout(function(){
-                    $('#popupChooseVersionHint').popup('close');
-                },5000
 
-            )
-        },3000)
+        if(!accountController.loggedIn&&(!window.localStorage||window.localStorage.showChooseVersionHint!="false")) {
+            if( window.localStorage)
+              window.localStorage.showChooseVersionHint = "false";
+            setTimeout(function(){
+                $('#popupChooseVersionHint').popup('open', {positionTo: '#chooseversionbutton'});
+                setTimeout(function(){
+                        $('#popupChooseVersionHint').popup('close');
+                    },5000
+
+                )
+            },3000)
+        }
+
+
     }
     mediaController.hideLoadingPopup();
 
