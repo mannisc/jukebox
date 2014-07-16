@@ -1289,6 +1289,11 @@ background-color:#050!important;
 
 }
 
+
+#popupSocial-popup{
+    background: rgba(4, 40, 187, 0.6)!important;
+}
+
 #popupFeedback.ui-body-a{
    /* background-image: url(../img/bug.gif )!important;
     background-position-y: 60px;

@@ -807,7 +807,7 @@
 
 
 
-<div data-role="popup" id="popupVideoSettings" data-dismissible="true" data-arrow="true" data-theme="a" class="ui-corner-all">
+<div data-role="popup" id="popupVideoSettings"  data-arrow="true" data-theme="a" class="ui-corner-all">
     <form>
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose Version</h3>
