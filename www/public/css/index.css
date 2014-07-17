@@ -53,6 +53,14 @@ body {
 
 }
 
+
+
+.ui-loader-default {
+
+    margin-left: -80px!important;
+}
+
+
 /*Noanim TODO disable all animation in div where noanim is set for slow browsers*/
 .noanim *{
     -webkit-transition:none!important;
@@ -488,8 +496,46 @@ input[type=button]{
 
 
 #controlselecthorizontal .ui-btn.highlight{
-    background: #6D3131!important;
+    background: #692727!important;
+    color: #FFFFFF!important;
+    border-color: #570000;
+    -webkit-transition: all 280ms ease
+    -moz-transition: all 280ms cease;
+    -o-transition: all 280ms ease;
+    transition: all 280ms ease /* custom */;
 }
+
+
+/*Loading Controlbar Buttons*/
+#controlselecthorizontal .ui-btn.highlight.loading{
+    padding-left: 2em!important;
+
+}
+
+#controlselecthorizontal .ui-btn.highlight.loading:before{
+
+    background-image: url(../img/loaderwhite.gif)!important;
+    filter: Alpha(Opacity=80);
+    opacity: .8;
+    top:17px;
+    width: 16px;
+    height: 16px;
+
+    background-size: 14px 14px;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: .3425em;
+
+    margin-top: -7px;
+    content: "";
+    background-position: center center;
+    background-repeat: no-repeat;
+
+
+}
+
+
 
 .ui-input-btn, .ui-btn{
     -webkit-box-shadow: none!important;
@@ -970,7 +1016,16 @@ video{
     background-size:14px 14px;
     background-position:0px 0px;
     background-repeat:no-repeat;
+    filter: Alpha(Opacity=80);
+    opacity: .8;
+    top:18px;
 }
+
+
+
+
+
+
 
 
 
@@ -979,6 +1034,7 @@ video{
     background-size: 100% 100%;
 
 }
+
 
 
 
@@ -996,6 +1052,18 @@ video{
     text-shadow: 0px 0px 5px rgba(255,255,255,0.25);
 }
   */
+
+
+#popupVideoSettings #reloadVersionButton{
+    -webkit-transition: heigh 0.5s ease!important;
+    -moz-transition: height 0.5s ease!important;
+    -ms-transition: height 0.5s ease!important;
+    -o-transition: height 0.5s ease!important;
+    transition : height 0.5s ease!important;
+    overflow: hidden!important;
+}
+
+
 #popupFeedback-popup{
     top: 50px!important;
 
