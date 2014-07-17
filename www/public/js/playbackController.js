@@ -96,12 +96,6 @@ playbackController.clickedElement = function (event, element,onlyStyle) {
 
 
 
-
-
-
-
-
-
 }
 
 /**

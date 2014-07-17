@@ -158,12 +158,20 @@ uiController.init = function () {
     })
 
 
+
+    //GLobal dblclick and CLick Actions
+
+
+
+    $(".ui-popup-screen").dblclick(function (event) {
+        event.stopPropagation();
+    })
+
     $("body").dblclick(function (event) {
         if (videoController.fullscreenEnabled && videoController.videoPlayer) {
             videoController.toggleFullscreenMode();
         }
     })
-
 
 
     $("body").click(function (event) {
