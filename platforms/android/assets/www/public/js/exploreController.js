@@ -76,7 +76,11 @@ exploreController.showView = function (showFunction) {
                 showFunction();
 
         }
-    }, 350)
+    }, 350);
+    viewController.showLoading(true);
+
+
+
 }
 
 

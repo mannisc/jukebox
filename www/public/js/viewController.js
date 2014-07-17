@@ -74,10 +74,17 @@ viewController.init = function () {
  * @param show
  */
 viewController.showLoading = function (show) {
-    if (show)
+    if (show){
         $(".ui-alt-icon.ui-icon-search, .ui-alt-icon .ui-icon-search, .ui-input-search").addClass("loading");
-    else
-        $(".ui-alt-icon.ui-icon-search, .ui-alt-icon .ui-icon-search, .ui-input-search").removeClass("loading");
+        $("#controlselecthorizontal .ui-btn.highlight").addClass("loading");
+
+    }
+    else  {
+        $(".ui-alt-icon.ui-icon-search.loading, .ui-alt-icon .ui-icon-search.loading, .ui-input-search.loading").removeClass("loading");
+        $("#controlselecthorizontal .ui-btn.highlight.loading").removeClass("loading");
+
+    }
+
 }
 
 /**

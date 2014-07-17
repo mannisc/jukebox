@@ -1068,16 +1068,18 @@
 </div>
 
 <div data-role="popup" id="popupLoadingSong" data-theme="a" class="ui-corner-all">
-    <div style="width:350px;height:400px;padding:10px 20px 10px 20px;">
-        <div style="text-align: center">
-            Loading song, please wait...
+    <a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
+    <div style="width:350px;padding:10px 20px 10px 20px;">
+        <div style="text-align: center;padding-bottom: 10px;">
             <br>
+            <div class="titleloading"></div>
             <br>
                 <span style="font-weight:bold">
                     {{mediaController.getSongArtist(playbackController.playingSong)+" - "+playbackController.playingSong.name}}
                 </span>
             <br>
-            <img  src="public/img/loadingbar.GIF">
+
+            <img  src="public/img/loadingbar.GIF" style="width: 130px;">
             <br>
             <br>
 
