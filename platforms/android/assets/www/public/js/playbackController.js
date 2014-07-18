@@ -16,7 +16,7 @@ var playbackController = function () {
 
 playbackController.lastClickedElement = null;
 
-playbackController.dblclickedDelay = 500;
+playbackController.dblclickedDelay = 400;
 /**
  * Clicked on Element in list
  * @param event
@@ -186,8 +186,8 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     //Set loading/playing Song to selected Song
     playbackController.updatePlayingSongIndex();
     playbackController.playingSong = jQuery.extend(true, {}, song);
-    if(playlistController.getLoadedPlaylist().isSimilarSongs)
-        playlistController.getSimilarSongs(playbackController.playingSong);
+   // if(playlistController.getLoadedPlaylist().isSimilarSongs)  //Always load Similar Songs
+    playlistController.getSimilarSongs(playbackController.playingSong);
 
     //Clear other loading songs
     $(".songlist li.loadedsong.stillloading").removeClass("loadedsong stillloading");

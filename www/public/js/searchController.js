@@ -1222,6 +1222,33 @@ searchController.getShowModeLimit = function (type) {
 searchController.dragDraggableSongTimer = 0;
 searchController.makeSearchListDraggable = function () {
 
+    //Detect swipes on searchlist
+    var swipeDetectFunction = function(event){
+        var startY =  event.clientY;
+        $("body").on("mousemove.swipe ", function (event) {
+            if (uiController.swiping || (startY > 0 && Math.abs(event.clientY - startY) > 30)) {
+                console.log("!!!!!"+uiController.swiping+"   "+Math.abs(event.clientY - startY))
+                uiController.swiping = true;
+                uiController.swipeTimer = Date.now();
+            }
+
+        })
+        $("body").on("mouseup", function (event) {
+            $("body").off("mousemove.swipe").off("mouseup");
+            if (uiController.swiping || (startY > 0 && Math.abs(event.clientY - startY) > 30)) {
+                uiController.swipeTimer = Date.now();
+                uiController.swiping = false;
+
+            }
+        })
+    }
+
+
+    $("#searchlist").off("mousedown.swipe", swipeDetectFunction);
+    $("#searchlist").on("mousedown.swipe", swipeDetectFunction)
+
+
+
     var startDragFunction = function (event) {
 
         if ($(this).parents("#searchlist").length == 0)

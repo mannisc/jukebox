@@ -165,13 +165,18 @@ uiController.init = function () {
 
 
     $("body").dblclick(function (event) {
+        if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+            return;
         if (videoController.fullscreenEnabled && videoController.videoPlayer) {
             videoController.toggleFullscreenMode();
         }
     })
 
 
-    $("#searchcontent").click(function (event) {
+    $("#searchcontent, #playlistInner").click(function (event) {
+        console.log("???"+(Date.now() - uiController.swipeTimer))
+        if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+            return;
         if((!uiController.noBodyClickTimer||Date.now()-uiController.noBodyClickTimer>100)&&playlistController.selectedSongs&&playlistController.selectedSongs.length>0){
             playlistController.deselectSongs();
         }

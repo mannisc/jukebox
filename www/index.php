@@ -769,7 +769,7 @@
 
 </div>
 
-<div id="songOptionsOriginal" style="display:none">
+<div id="songOptionsTemplate" style="display:none">
 
     <img id="playSelection" title="Play" onclick="playlistController.playSelection(event)"  ondblclick="playlistController.playSelection(event)"    src="public/img/playopt.png">
 
@@ -1165,7 +1165,7 @@
         <h1>Delete</h1>
     </div>
     <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content" style="padding-bottom: 5px;">
-        <p>Really delete?</p>
+        <p style="text-shadow: none!important">Really delete?</p>
         <a href="#" onclick = "playlistController.removeSelectedElementsFromPlaylist(event,true)" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Delete</a>
         <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancel</a>
 
