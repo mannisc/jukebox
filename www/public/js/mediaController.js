@@ -379,14 +379,21 @@ mediaController.playSong = function (streamURL, videoURL) {
 
     if(mediaController.showChooseVersionHint){
         mediaController.showChooseVersionHint = false;
-        setTimeout(function(){
-            $('#popupChooseVersionHint').popup('open', {positionTo: '#chooseversionbutton'});
-            setTimeout(function(){
-                    $('#popupChooseVersionHint').popup('close');
-                },5000
 
-            )
-        },3000)
+        if(!accountController.loggedIn&&(!window.localStorage||window.localStorage.showChooseVersionHint!="false")) {
+            if( window.localStorage)
+              window.localStorage.showChooseVersionHint = "false";
+            setTimeout(function(){
+                $('#popupChooseVersionHint').popup('open', {positionTo: '#chooseversionbutton'});
+                setTimeout(function(){
+                        $('#popupChooseVersionHint').popup('close');
+                    },5000
+
+                )
+            },3000)
+        }
+
+
     }
     mediaController.hideLoadingPopup();
 
@@ -607,7 +614,7 @@ mediaController.getVersions = function (artist,title) {
             if (mediaController.versionListSong != currentsong) {
                 mediaController.versionList = [];
                 $scope.safeApply();
-                $('#reloadVersionButton').hide();
+                $('#reloadVersionButton').css("height","0");
                 $("#searchviewVersions").listview('refresh');
                 $('#popupVideoSettings').popup('open', {positionTo: '#chooseversionbutton'});
                 $('#loadversionimg').css("opacity", "1");
@@ -656,7 +663,7 @@ mediaController.getVersions = function (artist,title) {
 
                                                 mediaController.versionList = data.track;
                                                 mediaController.startVersionIndex = -1;
-                                                $('#reloadVersionButton').show();
+                                                $('#reloadVersionButton').css("height","51px").show();
                                                 $scope.safeApply();
                                                 $('#loadversionimg').css("opacity", "0");
                                                 $("#searchviewVersions").listview('refresh');
@@ -828,7 +835,7 @@ mediaController.getReloadedVersions = function (artist, title) {
 
 mediaController.reloadVersions = function(){
     $('#loadversionimg').css("opacity", "1");
-    $('#reloadVersionButton').hide();
+    $('#reloadVersionButton').css("height","0");
 
     var song = playbackController.getPlayingSong();
     var reload = function (artistString, titleString,duration) {
@@ -874,27 +881,33 @@ mediaController.reloadVersions = function(){
 
 mediaController.loadingPopupVisible = false;
 mediaController.loadingPopupVisibleTime = null;
+mediaController.loadingPopupVisibleDelay = 5000;
 
 mediaController.showLoadingPopup = function(streamID){
+    $("#popupLoadingSong .titleloading").text("Loading song, please wait...");
+
     mediaController.loadingPopupVisible = true;
     setTimeout(function(){
         if(streamID==mediaController.playCounter && mediaController.loadingPopupVisible){
 
             $('#popupLoadingSong').popup('open', {transition: 'pop'});
-            var now = new Date();
-            mediaController.loadingPopupVisibleTime = now.getTime();
+            mediaController.loadingPopupVisibleTime = Date.now();
 
         }
     },3000);
 }
 
 mediaController.hideLoadingPopup = function(){
-    var now = new Date();
-    if(now.getTime()-mediaController.loadingPopupVisibleTime <1000 && mediaController.loadingPopupVisibleTime){
+    if(!mediaController.loadingPopupVisibleTime||Date.now()-mediaController.loadingPopupVisibleTime < mediaController.loadingPopupVisibleDelay  ){
         setTimeout(function(){
-            mediaController.loadingPopupVisible =false;
-            $('#popupLoadingSong').popup('close');
-        },1000);
+            if(mediaController.loadingPopupVisibleTime&&Date.now()-mediaController.loadingPopupVisibleTime >= mediaController.loadingPopupVisibleDelay  ){
+                mediaController.loadingPopupVisible =false;
+                $('#popupLoadingSong').popup('close');
+            }
+
+        },mediaController.loadingPopupVisibleDelay+50-(Date.now()-mediaController.loadingPopupVisibleTime));
+
+        $("#popupLoadingSong .titleloading").text("Ready loading, please wait...");
     }
     else
     {

@@ -152,10 +152,17 @@ uiController.init = function () {
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
 
 
-    $("#playlist, .videoControlElements-controls, #controlbar div, .ui-popup").click(function (event) {
 
-        event.stopPropagation();
+
+    $("#playlist, .videoControlElements-controls, #controlbar div, .ui-popup").click(function (event) {
+        uiController.noBodyClickTimer = Date.now();    //To avoid body clicks wich deselect songs if clicked on the specified elements
     })
+
+
+
+    //GLobal dblclick and CLick Actions
+
+
 
     $("body").dblclick(function (event) {
         if (videoController.fullscreenEnabled && videoController.videoPlayer) {
@@ -164,12 +171,10 @@ uiController.init = function () {
     })
 
 
-
-    $("body").click(function (event) {
-        if(playlistController.selectedSongs&&playlistController.selectedSongs.length>0){
+    $("#searchcontent").click(function (event) {
+        if((!uiController.noBodyClickTimer||Date.now()-uiController.noBodyClickTimer>100)&&playlistController.selectedSongs&&playlistController.selectedSongs.length>0){
             playlistController.deselectSongs();
         }
-
     })
 
 

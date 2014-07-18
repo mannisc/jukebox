@@ -15,6 +15,8 @@ var playbackController = function () {
 
 
 playbackController.lastClickedElement = null;
+
+playbackController.dblclickedDelay = 500;
 /**
  * Clicked on Element in list
  * @param event
@@ -49,7 +51,7 @@ playbackController.clickedElement = function (event, element,onlyStyle) {
 
 
          }
-      },301)
+      },playbackController.dblclickedDelay+1)
     }
 
     if(playbackController.lastClickedElement){
@@ -57,7 +59,7 @@ playbackController.clickedElement = function (event, element,onlyStyle) {
       if(playbackController.lastClickedElement.element==element){
           console.log(Date.now()-playbackController.lastClickedElement.time)
 
-          if(Date.now()-playbackController.lastClickedElement.time<300){
+          if(Date.now()-playbackController.lastClickedElement.time<playbackController.dblclickedDelay){
              playbackController.lastClickedElement = null;
              //DOUBLE CLICK
              console.log("############# DOUBLEEEEEEEEEEEEEEEEEEEEEE")
@@ -91,12 +93,6 @@ playbackController.clickedElement = function (event, element,onlyStyle) {
         normalClick();
 
     event.stopPropagation();
-
-
-
-
-
-
 
 
 
