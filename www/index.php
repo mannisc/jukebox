@@ -159,7 +159,7 @@
 
 <body ng-controller="MainController">
 
-<img src="public/img/background.jpg" id="backgroundImage">
+
 
 <div class="fullscreendisable">   </div>
 
@@ -1437,7 +1437,7 @@
 <!-- FACEBOOK -->
 
 
-
+<img src="public/img/background.jpg" id="backgroundImage">
 
 
 <!-- Preload Images/WebGL-->
