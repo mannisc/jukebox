@@ -1068,7 +1068,7 @@
 </div>
 
 <div data-role="popup" id="popupLoadingSong" data-theme="a" class="ui-corner-all">
-    <a href="#"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
+    <a href="#" style="display: none;" id="popupLoadingSongClose"  data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
     <div style="width:350px;padding:10px 20px 10px 20px;">
         <div style="text-align: center;padding-bottom: 10px;">
             <br>
