@@ -1362,6 +1362,10 @@ background-color:#050!important;
     background: rgba(4, 40, 187, 0.6)!important;
 }
 
+#popupConfirm-popup {
+    background: rgba(187, 14, 8, 0.60) !important;
+}
+
 #popupFeedback.ui-body-a{
    /* background-image: url(../img/bug.gif )!important;
     background-position-y: 60px;

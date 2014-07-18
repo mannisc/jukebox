@@ -95,8 +95,6 @@ optionsMenu.openPlaylistOptions = function (event, positionTo) {
 
 
 
-
-
 optionsMenu.openQueueOptions = function (event, positionTo) {
 
     if (event)

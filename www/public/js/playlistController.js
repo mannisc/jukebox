@@ -563,7 +563,7 @@ playlistController.showSongOptions = function (listElement, song) {
 
             var songOptionsId = Date.now();
 
-            $("#songOptionsOriginal").clone(true, true).attr("id", "").addClass("songOptions songOptions" + songOptionsId).appendTo(listElement)
+            $("#songOptionsTemplate").clone(true, true).attr("id", "").addClass("songOptions songOptions" + songOptionsId).appendTo(listElement)
 
             var songOptions = $(".songOptions" + songOptionsId)
             songOptions.css("opacity", "0");
@@ -1981,19 +1981,24 @@ playlistController.getSimilarSongs = function (song) {
             var songList = exploreController.songs.completeSearch([], onlineList);
 
             if (songList && songList.length > 0) {
-
                 for (var i = 0; i < songList.length; i++) {
                     songList[i].gid = playlistController.getNewID();
                 }
                 playlistController.similarSongs.tracks = songList.splice(0, playlistController.similarSongsMaxResults);
-                playlistController.loadedPlaylistSongs = playlistController.similarSongs.tracks;
-                uiController.playListScroll.scrollTo(0, 0, 1000)
 
-                $("#playlistInner .iScrollPlayIndicator").hide();
-                $("#playlistInner .iScrollIndicator").hide();
-                playlistController.applySongList();
+                if (playlistController.getLoadedPlaylist().isSimilarSongs) {
+                    playlistController.loadedPlaylistSongs = playlistController.similarSongs.tracks;
+
+                    uiController.playListScroll.scrollTo(0, 0, 1000)
+
+                    $("#playlistInner .iScrollPlayIndicator").hide();
+                    $("#playlistInner .iScrollIndicator").hide();
+                    playlistController.applySongList();
+                }
 
             }
+
+
             $.mobile.loading("hide");
 
 
