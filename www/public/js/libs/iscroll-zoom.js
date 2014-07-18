@@ -1312,7 +1312,7 @@ IScroll.prototype = {
 			newY = this.maxScrollY;
 		}
 
-        if(!IScrollinitTimer||Date.now()- IScrollinitTimer< 10000)
+        if(!IScrollinitTimer||Date.now()- IScrollinitTimer< 5000)
             var   scrolltime = 0;
         else
          scrolltime = 750;

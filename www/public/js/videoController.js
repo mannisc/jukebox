@@ -788,6 +788,8 @@ videoController.updateFullscreenMode = function () {
             clearTimeout(hideControlsTimer);
             $("#videocontrols").removeClass("fadeoutcomplete");
         }
+        $("#videocontrols").css("opacity","");
+        $("#siteLogo img").css("bottom","");
         $("body").off("mousemove mouseup",hideControls);
 
         $("#header").css("opacity", "1").css("pointer-events","auto");
