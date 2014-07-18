@@ -160,6 +160,8 @@
 <body ng-controller="MainController">
 
 
+<img src="public/img/background.jpg" id="backgroundImage">
+
 
 <div class="fullscreendisable">   </div>
 
@@ -808,7 +810,11 @@
 
 
 <div data-role="popup" id="popupVideoSettings"  data-arrow="true" data-theme="a" class="ui-corner-all">
+  <!--  <a href="#" style="width:30px!important;max-width:30px!important;resize: none;" data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>-->
+
     <form>
+
+
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose Version</h3>
             <ul data-role="listview" id="searchviewVersions" data-theme="b">
@@ -1438,8 +1444,6 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 <!-- FACEBOOK -->
 
-
-<img src="public/img/background.jpg" id="backgroundImage">
 
 
 <!-- Preload Images/WebGL-->
