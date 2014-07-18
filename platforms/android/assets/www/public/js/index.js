@@ -96,7 +96,6 @@ window.onbeforeunload = function (event) {
 
 jqmAllowPopUpClosing = false;
 
-
 var readyStateCheckInterval = setInterval(function() {
     if (document.readyState === "complete"&&$scope&&$scope.loaded) {
         clearInterval(readyStateCheckInterval);
