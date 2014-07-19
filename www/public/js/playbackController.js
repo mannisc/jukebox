@@ -34,17 +34,15 @@ playbackController.clickedElement = function (event, element,onlyStyle) {
          if(playbackController.lastClickedElement){
 
             //NORMAL CLICK
-             console.log("############# NORMALLLLLLLLLLLLLLLLL")
-
              var songlist = $(event.target).parents("li");
              if (songlist.length > 0)
-                 playlistController.selectSong(element);
+                 playlistController.selection.selectElement(element);
 
              //Clicked on Cover -> Select Song
              /*
               var songlist = $(event.target).parents("li")
               if (songlist.length > 0 && (event.clientX - songlist.offset().left) < 65) {
-              playlistController.selectSong(element)
+              playlistController.selection.selectElement(element)
               return;
               }
               */
@@ -69,7 +67,7 @@ playbackController.clickedElement = function (event, element,onlyStyle) {
               if (element.isPlaylist) {
                   //Select Playlist
                   if(element.gid){
-                      playlistController.showPlaylist(element);
+                      playlistController.ui.showPlaylist(element);
 
                       //Show playlist in search list
                   }else {
@@ -241,7 +239,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
                 if (!playedAutomatic && playlistController.playlistMode) {
                     setTimeout(function () {
-                        playlistController.animateAddedToList($(".currentqueue"));
+                        playlistController.ui.animateAddedToList($(".currentqueue"));
                     }, 300)
                 }
             } else
@@ -366,7 +364,6 @@ playbackController.updatePlayingSongIndex = function () {
 
             if (playlistController.currentQueue.tracks[i].gid == playbackController.playingSong.gid) {
                 playbackController.playingSongIndex = i;
-                console.log("........ " + i)
                 break;
             }
         }
@@ -653,7 +650,7 @@ playbackController.positionPlayIndicator = function () {
 
             var position = listElementPlaylist.get(0).dataset.index;
 
-           var y = 5+parseInt(position) / ( Math.min(playlistController.getDisplayLimit(), playlistController.loadedPlaylistSongs.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
+           var y = 5+parseInt(position) / ( Math.min(playlistController.ui.getDisplayLimit(), playlistController.loadedPlaylistSongs.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
 
             if(y>scrollHeight)
                 y = scrollHeight;

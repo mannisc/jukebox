@@ -118,6 +118,7 @@ accountController.toggleSignInRegister = function () {
 
 accountController.logout = function () {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
+        $.mobile.loading("show");
 
 
         var logout = function () {
@@ -146,7 +147,6 @@ accountController.logout = function () {
                          },500)*/
                         accountController.requestid = 1;
 
-                        console.log("FB?????" + facebookHandler.loggedIn)
                         if (facebookHandler.loggedIn) {
                             facebookHandler.logout();
                         }
@@ -159,6 +159,7 @@ accountController.logout = function () {
 
                     accountController.setCookie("loginToken", Base64.encode(""), 0);
                     accountController.setCookie("userName", Base64.encode(""), 0);
+                    $.mobile.loading("hide");
 
                 }
             })
@@ -178,8 +179,8 @@ accountController.loadStoredData = function () {
     $.mobile.loading("show");
 
     var playlistsReady = function (playlistdata) {
-        console.dir("PLAYLISTS:");
-        console.dir(playlistdata);
+        //console.dir("PLAYLISTS:");
+        //console.dir(playlistdata);
         if (playlistdata) {
             var playlists = [];
             /*
@@ -192,11 +193,11 @@ accountController.loadStoredData = function () {
              }
              */
             if (playlistdata.items && playlistdata.items.length > 0) {
-                console.dir("Copy received (stored) data to playlists-Array;!!!!!!!!!!!!!!!");
+                //console.dir("Copy received (stored) data to playlists-Array;!!!!!!!!!!!!!!!");
                 //Copy received (stored) data to playlists-Array;
 
-                console.log("!!!!!!!!!!!!")
-                console.log(JSON.stringify(playlistController.playlists))
+                //console.log("!!!!!!!!!!!!")
+               // console.log(JSON.stringify(playlistController.playlists))
 
                 var changeCurrentQueue = (playlistController.currentQueue.tracks.length == 0);
                 var currentQueueSaved = false;
@@ -223,9 +224,9 @@ accountController.loadStoredData = function () {
                             isPlaylist: true,
                             id: playlistdata.items[j].gid
                         }
-                        console.dir("playlists[" + j + "]: ");
-                        console.dir(playlists[j]);
-                        console.dir("-----------------");
+                        //console.dir("playlists[" + j + "]: ");
+                        //console.dir(playlists[j]);
+                        //console.dir("-----------------");
 
                     }
 
@@ -266,7 +267,7 @@ accountController.loadStoredData = function () {
                             }
                             else {
                                 for (var j = 0; j < playlists.length; j++) {
-                                    console.log(i + " - " + j + "     " + playlistController.playlists.length + " :  " + playlists[j].gid + " == " + playlistController.playlists[i].gid)
+                                    //console.log(i + " - " + j + "     " + playlistController.playlists.length + " :  " + playlists[j].gid + " == " + playlistController.playlists[i].gid)
                                     if (playlists[j].gid == playlistController.playlists[i].gid) {
                                         playlistController.playlists.splice(i, 1);
                                         i = i - 1;
@@ -301,12 +302,12 @@ accountController.loadStoredData = function () {
 
 
                     }
-                    console.log("!!!!!!!!!!!")
-                    console.log(JSON.stringify(playlistController.playlists))
+                    //console.log("!!!!!!!!!!!")
+                    //console.log(JSON.stringify(playlistController.playlists))
                     //Find new playlistController.globalId
                     playlistController.playlists = playlistController.playlists.concat(playlists);
-                    console.log("......")
-                    console.log(JSON.stringify(playlistController.playlists))
+                   // console.log("......")
+                   // console.log(JSON.stringify(playlistController.playlists))
 
                     //Save Current merged Playlists
                     if (playlistController.playlists.length > 0) {
@@ -343,8 +344,8 @@ accountController.loadStoredData = function () {
                      playlistController.globalId         = globalId;
                      */
 
-                    console.dir("User playlists: ");
-                    console.dir(playlistController.playlists);
+                    //console.dir("User playlists: ");
+                    //console.dir(playlistController.playlists);
 
                     $scope.safeApply();
                     $("#playlistview").listview('refresh');
@@ -357,7 +358,7 @@ accountController.loadStoredData = function () {
 
                     setTimeout(function () {
 
-                        playlistController.makePlayListSortable();
+                        playlistController.dragging.makePlayListSortable();
                         setTimeout(function () {
                             uiController.playListScroll.refresh();
                         }, 150)
@@ -656,8 +657,8 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
         url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier,
         success: function (data) {
 
-            console.dir("LOGIN DATA:")
-            console.dir(data)
+            //console.dir("LOGIN DATA:")
+            //console.dir(data)
 
             if(data.match && data.match("error:")){
                 $("#signinpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
@@ -682,7 +683,7 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
 
                             }
 
-                            console.log("LOGIN!!!!! " + externalAccountIdentifier + "   " + accountController.loggedIn)
+                           // console.log("LOGIN!!!!! " + externalAccountIdentifier + "   " + accountController.loggedIn)
 
                             if (pw != "" && pw.length < 100) {
                                 var md5pw = MD5($.trim(pw));
@@ -819,7 +820,7 @@ accountController.validateSignInData = function () {
 }
 
 accountController.debugData = function (data) {
-    console.dir("DATA:");
+    console. dir("DATA:");
     console.dir(data);
 }
 
@@ -1014,6 +1015,9 @@ accountController.deletePlaylist = function (gid) {
  * Save Playlist Positions
  */
 accountController.savePlaylistsPosition = function () {
+
+
+    console.dir(new Error().stack)
 
     if (accountController.loggedIn) {
 

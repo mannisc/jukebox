@@ -1053,6 +1053,10 @@ video{
 }
   */
 
+#popupLoadingSong-screen{
+    display:none!important;
+}
+
 
 #popupVideoSettings #reloadVersionButton{
     -webkit-transition: heigh 0.5s ease!important;

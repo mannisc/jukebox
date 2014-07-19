@@ -1483,6 +1483,14 @@ animation-duration:  1.5s;
     padding-top:5px;
 }
 
+#playlistInner {
+
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
 #playlistInner ul {
     margin-left: 15px !important;
     width:100%;

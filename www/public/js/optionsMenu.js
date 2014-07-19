@@ -229,7 +229,7 @@ optionsMenu.openPlayListSelectionPlaylistOptions = function (event, positionTo) 
     ]
 
     //Only one Playlist Selected
-    if (playlistController.selectedSongs.length == 1) {
+    if (playlistController.selectedElements.length == 1) {
         optionsMenu.options.push(
             {text: "Rename", callback: function () {
 
@@ -245,8 +245,9 @@ optionsMenu.openPlayListSelectionPlaylistOptions = function (event, positionTo) 
                 optionsMenu.closePopup();
                 playlistController.editedPlaylistTitle = "Rename Playlist";
 
-                playlistController.editedPlaylist = jQuery.extend(true, {}, playlistController.selectedSongs[0].song);
+                playlistController.editedPlaylist = jQuery.extend(true, {}, playlistController.selectedElements[0].obj);
                 $scope.safeApply();
+
 
 
             }}
@@ -359,7 +360,7 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd, arrowDirection
             optionsMenu.closePopup();
             setTimeout(function () {
                 playlistController.addSongsToPlaylist(playlistController.playlists[index],listToAdd)
-                playlistController.deselectSongs();
+                playlistController.selection.deselectElements();
             }, 150);
         }
     };

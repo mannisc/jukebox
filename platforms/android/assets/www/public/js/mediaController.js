@@ -884,12 +884,12 @@ mediaController.loadingPopupVisibleTime = null;
 mediaController.loadingPopupVisibleDelay = 5000;
 
 mediaController.showLoadingPopup = function(streamID){
-    $("#popupLoadingSong .titleloading").text("Searching for your Song...");
+    $("#popupLoadingSong .titleloading").text("Searching, please wait...");
 
     mediaController.loadingPopupVisible = true;
     setTimeout(function(){
         if(streamID==mediaController.playCounter && mediaController.loadingPopupVisible){
-            $("#popupLoadingSongClose").hide();
+           // $("#popupLoadingSongClose").hide();
             $('#popupLoadingSong').popup('open', {transition: 'pop'});
             mediaController.loadingPopupVisibleTime = Date.now();
 
@@ -906,8 +906,8 @@ mediaController.hideLoadingPopup = function(){
             }
 
         },mediaController.loadingPopupVisibleDelay+50-(Date.now()-mediaController.loadingPopupVisibleTime));
-        $("#popupLoadingSongClose").show();
-        $("#popupLoadingSong .titleloading").text("Playing");
+       // $("#popupLoadingSongClose").show();
+        $("#popupLoadingSong .titleloading").text("Playing now...");
     }
     else
     {

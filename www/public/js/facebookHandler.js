@@ -15,45 +15,40 @@ var facebookHandler = function () {
 }
 
 
-
-
-
-
- facebookHandler.login = function(){
-     $.mobile.loading("show");
-     $("#popupLogin").popup("close") ;
-     $("#popupRegister").popup("close");
-     setTimeout(function(){
-         $.mobile.loading("hide");
-     },20000)
-     FB.login(function (response) {
-         if (!response.authResponse) {
-             $.mobile.loading("hide");
-         }
-     }, {scope: 'public_profile, email'});
-
+facebookHandler.login = function () {
+    $.mobile.loading("show");
+    $("#popupLogin").popup("close");
+    $("#popupRegister").popup("close");
+    setTimeout(function () {
+        $.mobile.loading("hide");
+    }, 20000)
+    facebookHandler.manuallyLoggingIn = true;
+    FB.login(function (response) {
+        if (!response.authResponse) {
+            $.mobile.loading("hide");
+        }
+    }, {scope: 'public_profile, email'});
 
 
 }
 
 
-
 facebookHandler.logout = function () {
-   // $(".fbnativeloginButton iframe").css("opacity","");
-    console.log("!!!!!! LOGOUT")
-            facebookHandler.logoutTimer = Date.now();
+    // $(".fbnativeloginButton iframe").css("opacity","");
+    //console.log("!!!!!! LOGOUT")
+    facebookHandler.logoutTimer = Date.now();
 
-          //  FB.logout(function (response) {
-                facebookHandler.logoutTimer = Date.now();
-                facebookHandler.loggedIn = false;
-                console.log("LOGOUT")
+    // FB.logout(function (response) {
+    facebookHandler.logoutTimer = Date.now();
+    facebookHandler.loggedIn = false;
+    // console.log("LOGOUT")
 
-               /* setTimeout(function () {
-                    //Reload iFrames to see login Button again //TODO Facebook Fix
-                    var fbIFrames = $(".ui-popup .fb_iframe_widget iframe");
-                    fbIFrames.attr("src", fbIFrames.attr("src"))
-                }, 0) */
-          //  });
+    /* setTimeout(function () {
+     //Reload iFrames to see login Button again //TODO Facebook Fix
+     var fbIFrames = $(".ui-popup .fb_iframe_widget iframe");
+     fbIFrames.attr("src", fbIFrames.attr("src"))
+     }, 0) */
+    //   });
 
 
 }
@@ -62,13 +57,13 @@ facebookHandler.logout = function () {
  * Logged in successfully
  * @param response
  */
-facebookHandler.authAndLoggedIn = function(response){
- //   $(".fbnativeloginButton iframe").css("opacity","0");
+facebookHandler.authAndLoggedIn = function (response) {
+    //   $(".fbnativeloginButton iframe").css("opacity","0");
 
 
-    if (accountController.loggedIn&&!facebookHandler.loggedIn ) {
+    if (accountController.loggedIn && !facebookHandler.loggedIn) {
         facebookHandler.loggedIn = true;
-    } else if (!facebookHandler.loggedIn ) {
+    } else if (!facebookHandler.loggedIn) {
 
         // The response object is returned with a status field that lets the app know the current
         // login status of the person. In this case, we're handling the situation where they
@@ -80,20 +75,20 @@ facebookHandler.authAndLoggedIn = function(response){
 
         FB.api('/me', function (response) {
 
-            console.log(JSON.stringify(response));
+            // console.log(JSON.stringify(response));
 
             if (!response.email || !response.id || !response.username || !loginResponse.authResponse.accessToken) {
 
-               /* FB.logout(function (response) {
-                    // user is now logged out
-                });
-                     */
+                /* FB.logout(function (response) {
+                 // user is now logged out
+                 });
+                 */
             } else {
-                console.log("SocialSignIn")
+                // console.log("SocialSignIn")
 
-                console.log(JSON.stringify(loginResponse))
+                //console.log(JSON.stringify(loginResponse))
 
-                console.log(loginResponse.authResponse.accessToken)
+                // console.log(loginResponse.authResponse.accessToken)
 
                 accountController.socialSignIn(response.username, response.email, response.id, 1, loginResponse.authResponse.accessToken)
 
@@ -131,10 +126,17 @@ facebookHandler.init = function () {
         // will be handled.
         FB.Event.subscribe('auth.authResponseChange', function (response) {
             // Here we specify what we do with the response anytime this event occurs.
-            console.log("FB RESPONSE!!! "+response.status+ "   "+facebookHandler.loggedIn+"    "+accountController.loggedIn)
+            // console.log("FB RESPONSE!!! "+response.status+ "   "+facebookHandler.loggedIn+"    "+accountController.loggedIn)
             if (response.status === 'connected') {
 
-                facebookHandler.authAndLoggedIn(response);
+
+                var fbLogin = accountController.getCookie("fbLogin");
+
+                var socialAutoLogin = (fbLogin && Base64.decode(fbLogin) == "true");
+
+                if (socialAutoLogin || facebookHandler.manuallyLoggingIn)
+                    facebookHandler.authAndLoggedIn(response);
+
 
             } else if (response.status === 'not_authorized') {
 
@@ -163,8 +165,8 @@ facebookHandler.init = function () {
                  // dialog right after they log in to Facebook.
                  // The same caveats as above apply to the FB.login() call here.
                  */
-                if(!facebookHandler.logoutTimer||  Date.now()-    facebookHandler.logoutTimer > 2000){
-                    console.log("AUTOLOGIN!!!!!"+(Date.now()-    facebookHandler.logoutTimer)+"  "+   facebookHandler.logoutTimer)
+                if (!facebookHandler.logoutTimer || Date.now() - facebookHandler.logoutTimer > 2000) {
+                    // console.log("AUTOLOGIN!!!!!"+(Date.now()-    facebookHandler.logoutTimer)+"  "+   facebookHandler.logoutTimer)
                     FB.login(function (response) {
                     }, {scope: 'public_profile, email'});
 
@@ -195,13 +197,10 @@ facebookHandler.init = function () {
 }
 
 
-
 /**
  * Update FB Buttons
  */
 facebookHandler.updateSongFBButtons = function () {
-
-
 
 
     if (playbackController.playingSong)
@@ -216,7 +215,7 @@ facebookHandler.updateSongFBButtons = function () {
 
     try {
         FB.XFBML.parse($("#fbtitlebox").get(0));
-        FB.XFBML.parse( $("#fbartistbox").get(0));
+        FB.XFBML.parse($("#fbartistbox").get(0));
 
     } catch (ex) {
     }
