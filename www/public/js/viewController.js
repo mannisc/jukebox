@@ -259,7 +259,7 @@ viewController.applySongList = function (currentSearchID,size,delays,stepSize,st
                         if (songInList)
                             playbackController.positionPlayIndicator();
 
-                        playlistController.updateDeselectedSong();
+                        playlistController.selection.updateDeselectedSong();
                         $(".specialplaylistbutton").addClass("fadeincompletefaster");
 
 
@@ -271,7 +271,7 @@ viewController.applySongList = function (currentSearchID,size,delays,stepSize,st
                         if (songInList)
                             playbackController.positionPlayIndicator();
 
-                        searchController.makeSearchListDraggable();
+                        searchController.dragging.makeSearchListDraggable();
                         setTimeout(function () {
                             uiController.searchListScroll.refresh();
                             $("#searchlistview li").removeClass("fadeincompletefast fadeincompletefaster");

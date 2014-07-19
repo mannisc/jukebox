@@ -168,7 +168,7 @@ uiController.init = function () {
     uiController.dblclickedDelay = 250;
 
     $("#searchcontent, #playlistInner").click(function (event) {
-        if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+        if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 500)
             return;
         var normalClick = function () {
             uiController.dblclickedTimer = Date.now();
@@ -178,13 +178,14 @@ uiController.init = function () {
                     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
                         return;
                     if (!uiController.noBodyClickTimer || Date.now() - uiController.noBodyClickTimer > 100) {
-                        if (playlistController.selectedSongs && playlistController.selectedSongs.length > 0) {
-                            playlistController.deselectSongs();
-                        } else {
+                        if (playlistController.selectedElements && playlistController.selectedElements.length > 0) {
+                            playlistController.selection.deselectElements();
+                        } else if($(event.target).closest("#searchcontent").length>0) {
                             videoController.playPauseSong();
                         }
 
                     }
+
                 }
 
             }, playbackController.dblclickedDelay + 1)
@@ -194,10 +195,12 @@ uiController.init = function () {
 
             //Double Click
 
-
-            if (videoController.fullscreenEnabled && videoController.videoPlayer) {
-                videoController.toggleFullscreenMode();
+            if($(event.target).closest("#searchcontent").length>0){
+                if (videoController.fullscreenEnabled && videoController.videoPlayer) {
+                    videoController.toggleFullscreenMode();
+                }
             }
+
 
         } else
             normalClick();
@@ -259,7 +262,7 @@ uiController.init = function () {
             $('#rightpanel').panel('close');
         }
         if (playlistController.sortPlaylist)
-            playlistController.toggleSortablePlaylist();
+            playlistController.ui.toggleSortablePlaylist();
 
         $("#playlistview").css("min-height", "");
         uiController.updateUI();
@@ -299,7 +302,7 @@ uiController.init = function () {
     //Animate Sidde Panel Open Icon
     $("#rightpanel").on("panelbeforeclose", function (event, ui) {
         if (playlistController.sortPlaylist)
-            playlistController.toggleSortablePlaylist();
+            playlistController.ui.toggleSortablePlaylist();
         uiController.sidePanelOpen = false;
         uiController.updateUI();
 
@@ -878,7 +881,7 @@ uiController.showPlaylists = function (event){
 
     $("#playlistInner .songlist").addClass("hidden");
 
-    playlistController.applySongList();
+    playlistController.ui.applySongList();
     /*
      $scope.safeApply();
      setTimeout(function () {
@@ -887,7 +890,7 @@ uiController.showPlaylists = function (event){
      $("#playlistInner .songlist").removeClass("hidden").removeClass("avoidhiding");
 
      //  $("#playlistview").show();
-     playlistController.makePlayListSortable();
+     playlistController.dragging.makePlayListSortable();
      setTimeout(function () {
      uiController.playListScroll.refresh();
      }, 150)
@@ -951,7 +954,7 @@ uiController.toggleGridLayout = function () {
 
 
                 setTimeout(function () {
-                    playlistController.positionSongOptions();
+                    playlistController.options.positionSongOptions();
                 }, 0)
             }
 

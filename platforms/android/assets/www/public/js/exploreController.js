@@ -142,7 +142,7 @@ exploreController.filterMusic = function (filterTerm) {
         uiController.searchListScroll.refresh();
         viewController.showLoading(false);
     }, 1000)
-    searchController.makeSearchListDraggable();
+    searchController.dragging.makeSearchListDraggable();
     setTimeout(function () {
         $("#searchlistview li").removeClass("fadeincompletefast");
     }, 100)
@@ -170,7 +170,7 @@ exploreController.removeFilterSongs = function () {
     setTimeout(function () {
         uiController.searchListScroll.refresh();
     }, 1000)
-    searchController.makeSearchListDraggable();
+    searchController.dragging.makeSearchListDraggable();
     setTimeout(function () {
         $("#searchlistview li").removeClass("fadeincompletefast");
     }, 100)
@@ -361,7 +361,7 @@ exploreController.showSimilarSongs = function (event) {
     event.stopPropagation();
 
     var list = playlistController.getSongListFromSelection();
-    playlistController.deselectSongs();
+    playlistController.selection.deselectElements();
     var oldsong = null;
     var song;
     var index;
