@@ -884,7 +884,7 @@ mediaController.loadingPopupVisibleTime = null;
 mediaController.loadingPopupVisibleDelay = 5000;
 
 mediaController.showLoadingPopup = function(streamID){
-    $("#popupLoadingSong .titleloading").text("Loading song, please wait...");
+    $("#popupLoadingSong .titleloading").text("Searching for your Song...");
 
     mediaController.loadingPopupVisible = true;
     setTimeout(function(){
@@ -907,7 +907,7 @@ mediaController.hideLoadingPopup = function(){
 
         },mediaController.loadingPopupVisibleDelay+50-(Date.now()-mediaController.loadingPopupVisibleTime));
         $("#popupLoadingSongClose").show();
-        $("#popupLoadingSong .titleloading").text("Ready loading, please wait...");
+        $("#popupLoadingSong .titleloading").text("Playing");
     }
     else
     {

@@ -372,51 +372,51 @@ text-shadow: 0 /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0 /*{b-bup-shadow-r
 
 
 @-moz-keyframes bounceopacityfade {
-    0%{  -moz-transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
-    30%{ -moz-transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
-    60%{ -moz-transform:translate(-8px,0)   rotateY(320deg)   translate(-15px,0); opacity:1 }
-    100%{ -moz-transform:translate(-8px,0)   rotateY(320deg) translate(-15px,0);opacity:0  }
+    0%{  -moz-transform: scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    30%{ -moz-transform: scale(1.2) rotateY(320deg)  translate(-15px,0)  }
+    60%{ -moz-transform:  rotateY(320deg)   translate(-15px,0); opacity:1 }
+    100%{ -moz-transform:  rotateY(320deg) translate(-15px,0);opacity:0  }
 }
 
 @-webkit-keyframes bounceopacityfade {
-    0%{  -webkit-transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
-    30%{ -webkit-transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
-    60%{ -webkit-transform:translate(-8px,0)   rotateY(320deg)   translate(-15px,0); opacity:1 }
-    100%{ -webkit-transform:translate(-8px,0)   rotateY(320deg) translate(-15px,0);opacity:0  }
+    0%{  -webkit-transform: scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    30%{ -webkit-transform: scale(1.2) rotateY(320deg)  translate(-15px,0)  }
+    60%{ -webkit-transform:  rotateY(320deg)   translate(-15px,0); opacity:1 }
+    100%{ -webkit-transform:  rotateY(320deg) translate(-15px,0);opacity:0  }
 
 
 }
 
 @keyframes bounceopacityfade {
-    0%{  -transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
-    30%{ -transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
-    60%{ -transform:translate(-8px,0)   rotateY(320deg)   translate(-15px,0); opacity:1 }
-    100%{ -transform:translate(-8px,0)   rotateY(320deg) translate(-15px,0);opacity:1  }
+    0%{  -transform: scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    30%{ -transform: scale(1.2) rotateY(320deg)  translate(-15px,0)  }
+    60%{ -transform:  rotateY(320deg)   translate(-15px,0); opacity:1 }
+    100%{ -transform:   rotateY(320deg) translate(-15px,0);opacity:1  }
 }
 
 
 
 @-moz-keyframes bounceopacity {
-    0%{  -moz-transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
-    30%{ -moz-transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
-    60%{ -moz-transform:translate(-8px,0)   rotateY(320deg)   translate(-15px,0); opacity:1 }
-    100%{ -moz-transform:translate(-8px,0)   rotateY(320deg) translate(-15px,0);opacity:1  }
+    0%{  -moz-transform: scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    30%{ -moz-transform: scale(1.2) rotateY(320deg)  translate(-15px,0)  }
+    60%{ -moz-transform: rotateY(320deg)   translate(-15px,0); opacity:1 }
+    100%{ -moz-transform: rotateY(320deg) translate(-15px,0);opacity:1  }
 }
 
 @-webkit-keyframes bounceopacity {
-    0%{  -webkit-transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
-    30%{ -webkit-transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
-    60%{ -webkit-transform:translate(-8px,0)   rotateY(320deg)   translate(-15px,0); opacity:1 }
-    100%{ -webkit-transform:translate(-8px,0)   rotateY(320deg) translate(-15px,0);opacity:1  }
+    0%{  -webkit-transform: scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    30%{ -webkit-transform: scale(1.2) rotateY(320deg)  translate(-15px,0)  }
+    60%{ -webkit-transform: rotateY(320deg)   translate(-15px,0); opacity:1 }
+    100%{ -webkit-transform:   rotateY(320deg) translate(-15px,0);opacity:1  }
 
 
 }
 
 @keyframes bounceopacity {
-    0%{  -transform:translate(-18px,0) scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
+    0%{  -transform: scale(0.9) rotateY(320deg)  translate(-15px,0) ; opacity:0}
     30%{ -transform: scale(1.2)rotateY(320deg)  translate(-15px,0)  }
-    60%{ -transform:translate(-8px,0)   rotateY(320deg)   translate(-15px,0); opacity:1 }
-    100%{ -transform:translate(-8px,0)   rotateY(320deg) translate(-15px,0);opacity:0  }
+    60%{ -transform:  rotateY(320deg)   translate(-15px,0); opacity:1 }
+    100%{ -transform: rotateY(320deg) translate(-15px,0);opacity:0  }
 }
 
 
@@ -956,6 +956,7 @@ max-width: 320px;
 }
 
 
+/*Bounce while Draggin*/
 .songlist.dragging li .playlistCoverSong {
 
     -webkit-transform: none   !important;
@@ -976,8 +977,24 @@ animation-fill-mode: forwards; /*when the spec is finished*/
 -moz-animation-duration:  1.5s;
 animation-duration:  1.5s;
 
+}
+
+
+/*Dont Bounce similar Songs icon*/
+.songlist.dragging li.similarsongs .playlistCoverSong {
+
+    -webkit-transform: scale(0.68)!important;
+    -moz-transform: scale(0.68)!important;
+    transform: scale(0.68)!important;
+
+    -webkit-animation: none   !important;
+    -moz-animation: none   !important;
+    animation: none   !important;
+
 
 }
+
+
 .songlist.dragging li.importplaylist .playlistCoverSong {
 
     -webkit-transform: scale(0.68)!important;
@@ -1416,8 +1433,6 @@ animation-duration:  1.5s;
 
 
 
-
-
 /*Playlist*/
 
 
@@ -1432,7 +1447,7 @@ animation-duration:  1.5s;
     padding-bottom:1px;
     max-height:0px;
     padding-left: 10px;
-    background-color:rgba(255,255,255,0.08);
+    background-color:rgba(255,255,255,0.02);
 }
 
 
