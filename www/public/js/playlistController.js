@@ -305,8 +305,6 @@ playlistController.ui.applySongList = function () {
 
                         $scope.safeApply();
 
-                        console.dirx(JSON.parse(JSON.stringify(playlistController.loadedPlaylistSongs)));
-
                         $("#playlistview").listview('refresh');
 
                         //New Elements Applied
@@ -570,7 +568,8 @@ playlistController.ui.toggleSortablePlaylist = function (manuell) {
 
     playlistController.sortPlaylist = !playlistController.sortPlaylist;
     if (playlistController.sortPlaylist) {
-        $(".sortable").sortable("enable");
+
+        uiController.playListScroll.disable();
 
         $("#sortplaylistbtn").addClass("greenbackground");
 
@@ -596,7 +595,6 @@ playlistController.ui.toggleSortablePlaylist = function (manuell) {
 
         // $("#playlistInner .iScrollVerticalScrollbar").hide();
 
-        console.log("!!!3")
 
     } else {
         playlistController.selection.deselectElements();
@@ -906,9 +904,12 @@ playlistController.dragging.makePlayListSortable = function () {
 
         }
         $(window).on("mouseup ", function (event) {
+            console.log("MOUSEUPPPPPPPPPPPPPPPPPPPP")
+            console.log(" ")
+
+
             $(window).off("mouseup");
             $(window).off("mousemove");
-            console.log("MOUSEUPPPPPPPPPP")
 
             playlistController.dragDraggableSongY = -10;
 
@@ -923,6 +924,8 @@ playlistController.dragging.makePlayListSortable = function () {
         $(window).on("mousemove ", function (event) {
 
             console.log("MOUSEMMMOOOVEEEEEEEEE")
+            console.log(" ")
+
             if (uiController.swiping || (playlistController.dragDraggableSongY > 0 && Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30)) {
                 uiController.swipeTimer = Date.now();
                 uiController.swiping = true;
@@ -932,35 +935,38 @@ playlistController.dragging.makePlayListSortable = function () {
             if (playlistController.sortPlaylist) {
 
                 if (playlistController.dragDraggableSongTimer && Date.now() - playlistController.dragDraggableSongTimer < 500 && Date.now() - playlistController.dragDraggableSongTimer > 50) {
+                    //Wait for Mouseups?
+                    setTimeout(function(){
+                        if (playlistController.dragDraggableSongTimer){
+                        uiController.stopPlaylistScrollingOnClick(event);
+                        uiController.updateUI();
+                        $(window).off("mousemove").off("mouseup");
 
-                    uiController.stopPlaylistScrollingOnClick(event);
-                    uiController.updateUI();
-                    $(window).off("mousemove").off("mouseup");
+                        playlistController.dragDraggableLastSongTimer = Date.now();
+                        playlistController.dragDraggableSongTimer = 0;
 
-                    playlistController.dragDraggableLastSongTimer = Date.now();
-                    playlistController.dragDraggableSongTimer = 0;
+                        $(".sortable").sortable("enable");
 
-                    $(".sortable").sortable("enable");
+                        //STARTDRAG ERROR
+                        /*  var coords = {
+                         clientX: playlistController.dragDraggableSongStartEvent.clientX,
+                         clientY: playlistController.dragDraggableSongStartEvent.clientY
+                         };
+                         */
+                        // $(playlistController.dragDraggableSongStartElement).simulate("mouseup", coords);
 
-                    //STARTDRAG ERROR
-                    /*  var coords = {
-                     clientX: playlistController.dragDraggableSongStartEvent.clientX,
-                     clientY: playlistController.dragDraggableSongStartEvent.clientY
-                     };
-                     */
-                    // $(playlistController.dragDraggableSongStartElement).simulate("mouseup", coords);
+                        var coords = {
+                            clientX: event.clientX,
+                            clientY: event.clientY
+                        };
 
-                    var coords = {
-                        clientX: event.clientX,
-                        clientY: event.clientY
-                    };
+                        $(playlistController.dragDraggableSongStartElement).simulate("mouseup", coords);
+                        // uiController.mouseUp = false;
 
-                    // $(playlistController.dragDraggableSongStartElement).simulate("mouseup", coords);
-                    // uiController.mouseUp = false;
-
-                    // this actually triggers the drag start event
-                    $(playlistController.dragDraggableSongStartElement).simulate("mousedown", coords);
-
+                        // this actually triggers the drag start event
+                        $(playlistController.dragDraggableSongStartElement).simulate("mousedown", coords);
+                        }
+                    },0)
 
                 }
             }
@@ -1150,12 +1156,9 @@ playlistController.dragging.stopDragging = function (event, ui) {
                 }
 
             }
-            console.dir("Playlist " + $(this).find("h3").text() + "   " + isDraggedElement + "   " + isDraggedElementButNotFirst);
+            //console.dir("Playlist " + $(this).find("h3").text() + "   " + isDraggedElement + "   " + isDraggedElementButNotFirst);
 
             if (isDraggedElement) {//Was Dragged
-
-
-
                 playlistController.draggedElements.each(function (index) {
 
                     id = playlistController.draggedElements[index].dataset.index;
@@ -2099,10 +2102,8 @@ playlistController.onLoadedPlaylistsChanged = function () {
                     playlist = playlistController.playlists[i];
             }
 
-            console.log("LOAD----???" + name + "   " + playlistController.loadedPlaylists[playlist.gid] + "   " + playlist.gid)
 
             if (playlist != null && !playlistController.loadedPlaylists[playlist.gid]) {
-                console.log("LOAD------------------------------------------------------------------------------ " + name)
 
                 //Menus
                 if (playlist.gid == playlistController.currentQueue.gid) {
