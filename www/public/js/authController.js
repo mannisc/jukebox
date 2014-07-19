@@ -56,8 +56,8 @@ authController.getToken = function (){
     $.ajax({
         url: preferences.serverURL + "init.js?nocache="+Date.now(),
         success: function (data) {
-            console.dir("TOKEN:")      ;
-            console.dir(data);
+            //console.dir("TOKEN:")      ;
+           // console.dir(data);
             if(data.auth && data.auth=="true"){
                 authController.extractToken(data.token);
             }

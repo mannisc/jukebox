@@ -376,11 +376,6 @@ searchController.completedSearch = function (songList, playlistList, artistsList
         if (userList != null)//Something Changed
             searchController.users.searchResults = userList;
 
-        console.dir("songList!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        console.dir(songList);
-
-
-
         searchController.applySongList(searchController.currentSearchID);
         setTimeout(viewController.showLoading, 100); //show=false
 

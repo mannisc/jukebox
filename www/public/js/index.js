@@ -159,7 +159,6 @@ $(document).ready(function () {
             }, 500);
 
 
-            console.dir(urlParams);
             //setInterval(function(){googletag.pubads().refresh([slot1]);}, 30000);
 
             setTimeout(function () {

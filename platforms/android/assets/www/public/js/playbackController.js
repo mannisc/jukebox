@@ -55,13 +55,9 @@ playbackController.clickedElement = function (event, element,onlyStyle) {
     if(playbackController.lastClickedElement){
 
       if(playbackController.lastClickedElement.element==element){
-          console.log(Date.now()-playbackController.lastClickedElement.time)
 
           if(Date.now()-playbackController.lastClickedElement.time<playbackController.dblclickedDelay){
              playbackController.lastClickedElement = null;
-             //DOUBLE CLICK
-             console.log("############# DOUBLEEEEEEEEEEEEEEEEEEEEEE")
-
 
               //Playlist or song?
               if (element.isPlaylist) {
