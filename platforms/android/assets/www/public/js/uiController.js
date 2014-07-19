@@ -9,6 +9,7 @@
  */
 
 
+
 var uiController = function () {
 
 };
@@ -160,26 +161,47 @@ uiController.init = function () {
 
 
 
-    //GLobal dblclick and CLick Actions
+    //GLobal dblclick and Click Actions aufs Video/mainscreen
 
 
-
-    $("body").dblclick(function (event) {
-        if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
-            return;
-        if (videoController.fullscreenEnabled && videoController.videoPlayer) {
-            videoController.toggleFullscreenMode();
-        }
-    })
-
+    uiController.dblclickedTimer = 0;
+    uiController.dblclickedDelay = 250;
 
     $("#searchcontent, #playlistInner").click(function (event) {
-        console.log("???"+(Date.now() - uiController.swipeTimer))
         if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
             return;
-        if((!uiController.noBodyClickTimer||Date.now()-uiController.noBodyClickTimer>100)&&playlistController.selectedSongs&&playlistController.selectedSongs.length>0){
-            playlistController.deselectSongs();
+        var normalClick = function () {
+            uiController.dblclickedTimer = Date.now();
+            setTimeout(function () {
+                if(uiController.dblclickedTimer>0){
+                    //Normal Click
+                    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+                        return;
+                    if (!uiController.noBodyClickTimer || Date.now() - uiController.noBodyClickTimer > 100) {
+                        if (playlistController.selectedSongs && playlistController.selectedSongs.length > 0) {
+                            playlistController.deselectSongs();
+                        } else {
+                            videoController.playPauseSong();
+                        }
+
+                    }
+                }
+
+            }, playbackController.dblclickedDelay + 1)
         }
+        if (Date.now() - uiController.dblclickedTimer < playbackController.dblclickedDelay) {
+            uiController.dblclickedTimer = 0;
+
+            //Double Click
+
+
+            if (videoController.fullscreenEnabled && videoController.videoPlayer) {
+                videoController.toggleFullscreenMode();
+            }
+
+        } else
+            normalClick();
+
     })
 
 
@@ -325,7 +347,7 @@ uiController.init = function () {
 
 
     //Init WebGL
-    if (window.WebGLRenderingContext) {
+    if (false&&window.WebGLRenderingContext) {
         try {
             // browser supports WebGL
             var canvas = document.getElementById("webglcanvas");
@@ -810,8 +832,14 @@ uiController.toggleSidePanel = function () {
 /**
  * Show Playlists
  */
-uiController.showPlaylists = function () {
-    // $("#playlistselectvertical .search-field input").attr("placeholder", playlistController.selectPlaylistsPlaceholder)
+uiController.showPlaylists = function (event){
+
+    if(event)
+        event.stopPropagation();
+
+
+
+// $("#playlistselectvertical .search-field input").attr("placeholder", playlistController.selectPlaylistsPlaceholder)
 
     $('#playlistselectverticalform option').prop('selected', false);
     $('#playlistselectverticalform').trigger('chosen:updated');

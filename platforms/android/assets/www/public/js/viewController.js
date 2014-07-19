@@ -117,8 +117,10 @@ viewController.activateView = function(view, noAnimation, showFunction){
                 $("#searchlist .iScrollIndicator").hide();
 
             }
-
+            //Old View used Input on Button
+            var oViewUsedInput =  viewController.activeView.usesInput;
         }
+
 
         viewController.activeView =  view;
 
@@ -131,7 +133,12 @@ viewController.activateView = function(view, noAnimation, showFunction){
             oButton.show();
             var width = oButton.width();
             oButton.removeClass("animated");
-            oButton.css("width", input.width());
+
+            if(oViewUsedInput) //resize to width of input
+              oButton.css("width", input.width());
+            else
+              oButton.css("width", width)
+
 
             setTimeout(function () {
                 oButton.addClass("animated");
@@ -152,9 +159,7 @@ viewController.activateView = function(view, noAnimation, showFunction){
                 input.addClass("animated");
 
             input.css("width", "");
-            setTimeout(function () {
-                input.find("input").focus();
-            }, 500)
+
 
             uiController.toggleSearchButton(index + 1);
 
@@ -170,8 +175,12 @@ viewController.activateView = function(view, noAnimation, showFunction){
             $(input).hide();
             button.addClass("highlight");
         }
-        if(viewController.activeView.inputText)
+        if(viewController.activeView.inputText){
             $(input).insertAfter(button).find("input").attr("placeholder", viewController.activeView.inputText );
+            setTimeout(function () {
+                input.find("input").focus();
+            }, 100)
+        }
 
 
 

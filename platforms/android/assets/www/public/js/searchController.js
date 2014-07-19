@@ -100,7 +100,7 @@ searchController.init = function () {
 
 
     });
-    $(".iScrollIndicator").addClass("fadeincomplete").hide();
+    $("#searchlist .iScrollIndicator").addClass("fadeincomplete").hide();
 
 
     uiController.searchListScroll.on('scrollEnd', function () {
@@ -1222,10 +1222,27 @@ searchController.getShowModeLimit = function (type) {
 searchController.dragDraggableSongTimer = 0;
 searchController.makeSearchListDraggable = function () {
 
+    //Avoid still scrolling when mouseup outside winow occurs
+    $(document).on( "mouseout", function(e) {
+        e = e ? e : window.event;
+        var from = e.relatedTarget || e.toElement;
+        if (!from || from.nodeName == "HTML") {
+            // stop your drag event here
+            // for now we can just use an alert
+            var coords = {
+                clientX: e.clientX,
+                clientY: e.clientY
+            };
+            $(window).simulate("mouseup", coords);
+        }
+    })
+
+
+
     //Detect swipes on searchlist
     var swipeDetectFunction = function(event){
         var startY =  event.clientY;
-        $("body").on("mousemove.swipe ", function (event) {
+        $(window).on("mousemove.swipe ", function (event) {
             if (uiController.swiping || (startY > 0 && Math.abs(event.clientY - startY) > 30)) {
                 console.log("!!!!!"+uiController.swiping+"   "+Math.abs(event.clientY - startY))
                 uiController.swiping = true;
@@ -1233,8 +1250,9 @@ searchController.makeSearchListDraggable = function () {
             }
 
         })
-        $("body").on("mouseup", function (event) {
-            $("body").off("mousemove.swipe").off("mouseup");
+        $(window).on("mouseup", function (event) {
+
+            $(window).off("mousemove.swipe").off("mouseup");
             if (uiController.swiping || (startY > 0 && Math.abs(event.clientY - startY) > 30)) {
                 uiController.swipeTimer = Date.now();
                 uiController.swiping = false;
@@ -1246,7 +1264,6 @@ searchController.makeSearchListDraggable = function () {
 
     $("#searchlist").off("mousedown.swipe", swipeDetectFunction);
     $("#searchlist").on("mousedown.swipe", swipeDetectFunction)
-
 
 
     var startDragFunction = function (event) {
@@ -1264,8 +1281,8 @@ searchController.makeSearchListDraggable = function () {
             uiController.swiping = false;
 
 
-            $("body").on("mouseup ", function (event) {
-                $("body").off("mousemove").off("mouseup");
+            $(window).on("mouseup ", function (event) {
+                $(window).off("mousemove").off("mouseup");
 
                 if (uiController.swiping || (searchController.dragDraggableSongY > 0 && Math.abs(event.clientY - searchController.dragDraggableSongY) > 30)) {
                     uiController.swipeTimer = Date.now();
@@ -1284,7 +1301,7 @@ searchController.makeSearchListDraggable = function () {
             })
 
 
-            $("body").on("mousemove ", function (event) {
+            $(window).on("mousemove ", function (event) {
 
                 console.log('MOUSEMOVE SEARCH  ' + Math.abs(event.clientY - searchController.dragDraggableSongY) + "    " + (Date.now() - searchController.dragDraggableSongTimer))
 
@@ -1299,7 +1316,7 @@ searchController.makeSearchListDraggable = function () {
                     if (!uiController.draggingSong && event.clientX - searchController.dragDraggableSongX > 0 && Math.abs(event.clientY - searchController.dragDraggableSongY) < Math.abs(event.clientX - searchController.dragDraggableSongX) * 0.8) {
                         console.log('DRAGGING')
 
-                        $("body").off("mousemove").off("mouseup");
+                        $(window).off("mousemove").off("mouseup");
 
 
                         searchController.dragDraggableSongY = -10;
@@ -1345,11 +1362,12 @@ searchController.makeSearchListDraggable = function () {
                             clientY: searchController.dragDraggableSongStartEvent.clientY
                         };
 
-                        $(searchController.dragDraggableSongStartElement).simulate("mouseup", coords);
+                       // $(searchController.dragDraggableSongStartElement).simulate("mouseup", coords);
+
                         uiController.mouseUp = false;
-                        $("body").on("mouseup ", function (event) {
-                            $("body").off("mouseup");
-                            uiController.mouseUp = true;
+                        $(window).on("mouseup ", function (event) {
+                            $(window).off("mouseup");
+                            uiController.mouseUp = true;//MouseUp was pressed
                             if (searchController.mainDraggedElement) {
                                 searchController.mainDraggedElement.draggable("disable").removeClass("ui-disabled ui-state-disabled");
                                 searchController.mainDraggedElement = null;
@@ -1578,6 +1596,7 @@ searchController.makeSearchListDraggable = function () {
                                 }
                                 playlistController.displayLimit = playlistController.loadedPlaylistSongs.length;
 
+                                var scrollY = uiController.playListScroll.y;
 
                                 $scope.safeApply();
                                 $("#playlistview").listview('refresh');
