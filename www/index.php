@@ -490,10 +490,7 @@
 
         <li ng-if ="listenController.visible" ng-repeat="genre in listenController.genres.genre  track by genre.name"  ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"    class="hoverable fadeincompletefast"  ng-dblclick="genre.action();stopPropagation($event);"   ng-click="genre.action();stopPropagation($event);"><a >
             <img src="public/img/empty.png"  alt="" class="ui-li-icon ui-corner-none" >
-            <div ng-if="playlistController.playlistMode" class="playlistCoverSong ng-scope">
-
-
-
+            <div class="playlistCoverSong ng-scope">
                 <img src="public/img/empty.png" class="coverSong1 coverSong" ng-style="{'background-image':'url(public/img/genres/'+genre.name.replace(' ','').replace('\'','')+'.jpg)'}">
                 <img src="public/img/black.png" class="coverSong2 coverSong" style="background-image:url(public/img/playlist.png)">
                 <img src="public/img/black.png" class="coverSong3 coverSong" style="background-image:url(public/img/playlist.png)">
