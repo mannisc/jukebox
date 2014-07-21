@@ -509,7 +509,7 @@ mediaController.shareMedia = function(){
 
 mediaController.loadGenre = function(genre){
     viewController.activateView(exploreController,false);
-    exploreController.searchGenreSongs(genre,true);
+    exploreController.searchGenreSongs(genre,false);
     $('#popupListen').popup('close');
 }
 

@@ -1051,7 +1051,15 @@ searchController.isVisisbleInShowMode = function (showMode) {
  * Set show Mode of search list ( details or all types)
  * @param showMode
  */
-searchController.setShowMode = function (showMode) {
+searchController.setShowMode = function (event,showMode) {
+
+    if(event){
+        uiController.swipeTimer  = Date.now();
+        event.stopPropagation();
+
+    }
+
+
 
     if (showMode == searchController.showMode)
         return;
@@ -1179,9 +1187,9 @@ searchController.getShowModeLimit = function (type) {
             case 1:   //songs
 
                 if (uiController.gridLayout)
-                    limit = Math.ceil(10 / uiController.gridLayoutCols) * uiController.gridLayoutCols;
+                    limit = Math.ceil(searchController.displayLimit / uiController.gridLayoutCols) * uiController.gridLayoutCols;
                 else
-                    limit = 30;
+                    limit = searchController.displayLimit;
                 break;
 
 

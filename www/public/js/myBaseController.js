@@ -16,7 +16,7 @@ var myBaseController = function () {
 
 myBaseController.usesSearchList = false;
 
-myBaseController.index = 2;
+myBaseController.index = 3;
 
 myBaseController.inputText = "Filter MyBase";
 

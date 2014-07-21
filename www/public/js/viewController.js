@@ -81,7 +81,7 @@ viewController.showLoading = function (show) {
     }
     else  {
         $(".ui-alt-icon.ui-icon-search.loading, .ui-alt-icon .ui-icon-search.loading, .ui-input-search.loading").removeClass("loading");
-        $("#controlselecthorizontal .ui-btn.highlight.loading").removeClass("loading");
+        $("#controlselecthorizontal .ui-btn.loading").removeClass("loading");
 
     }
 
@@ -132,19 +132,21 @@ viewController.activateView = function(view, noAnimation, showFunction){
             var oButton = $("#searchbutton" + oIndex).parent();
             oButton.show();
             var width = oButton.width();
-            oButton.removeClass("animated");
 
-            if(oViewUsedInput) //resize to width of input
-              oButton.css("width", input.width());
-            else
+
+
+            if(oViewUsedInput){
+                oButton.addClass("notanimated");
+                oButton.css("width", input.width());
+
+            }else
               oButton.css("width", width)
 
-
             setTimeout(function () {
-                oButton.addClass("animated");
+                oButton.removeClass("notanimated");
                 oButton.css("width", width)
-
             }, 50)
+
         }
         input.data("button", index + 1);
 
@@ -183,18 +185,18 @@ viewController.activateView = function(view, noAnimation, showFunction){
         }
 
 
-
+        $("#searchlist").hide();
+        viewController.activeView.showView(showFunction);
 
         if(viewController.activeView.usesSearchList) {
             $("#searchlayoutbutton").show();
+            $("#searchlistview").listview('refresh');
             $("#searchlist").show();
         }
         else {
             $("#searchlayoutbutton").hide();
             $("#searchlist").hide();
         }
-
-        viewController.activeView.showView(showFunction);
 
     }
 

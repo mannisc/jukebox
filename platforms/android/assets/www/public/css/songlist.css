@@ -780,6 +780,10 @@ max-width: 320px;
     padding: 3px 0px 11px 84px!important;
 }
 
+#searchlist li.songlisttitlebutton a.nooptions,#playlistInner li.songlisttitlebutton a.nooptions{
+    padding-left: 20px!important;
+}
+
 #searchlist li:hover.songlisttitlebutton a.loaded{
 
     filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=rgba(255,255,255,0.2), endColorstr=rgba(255,255,255,0))!important;
@@ -828,9 +832,11 @@ max-width: 320px;
 }
 
 #searchlist li.songlisttitlebutton a img.playSearchResults, #playlistInner li.songlisttitlebutton a img.playSearchResults{
-
-    left: 36px;
-
+    left: 38px;
+    width: 30px;
+    height: 30px;
+    top: 6px;
+    background-size: 32px;
 }
 
 

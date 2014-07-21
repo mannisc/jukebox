@@ -70,7 +70,7 @@ exploreController.showView = function (showFunction) {
 
     setTimeout(function () {
         if (exploreController.visible) {
-            searchController.displayLimit = searchController.maxResults;
+            exploreController.displayLimit = 0;
             $scope.safeApply();
             $("#searchlistview").listview('refresh');
             if (showFunction)
