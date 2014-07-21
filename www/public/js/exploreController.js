@@ -309,7 +309,7 @@ exploreController.showSuggestions = function () {  //Todo find songs the user re
     exploreController.songs.mixedResults = [];
     exploreController.songs.searchResults = [];
     exploreController.songs.mixCounter   = 0;
-    for (var i = 1; i <= 10; i++){
+    for (var i = 1; i <= exploreController.similarBaseSongs; i++){
             if (playlistController.currentQueue.length > 0) {     //CurrentQueue
                 index = Math.round(Math.random() * (playlistController.currentQueue.length - 1));
 
@@ -354,44 +354,52 @@ exploreController.showSuggestions = function () {  //Todo find songs the user re
 
 }
 
+//Amount of songs used to find similar songs
+exploreController.similarBaseSongs = 2;
+
 
 exploreController.showSimilarSongs = function (event) {
     exploreController.currentSearchID = exploreController.currentSearchID + 1;
 
     event.stopPropagation();
 
-    var list = playlistController.getSongListFromSelection();
-    playlistController.selection.deselectElements();
-    var oldsong = null;
-    var song;
-    var index;
-    var songs = [];
-    exploreController.songs.mixCounter   = 0;
-    exploreController.songs.mixedResults = [];
-    exploreController.songs.searchResults = [];
-    if(list.length>10){
-        for (var i = 1; i <= 10; i++){
-            index = Math.round(Math.random() * (list.length - 1));
-            song = list[index];
-            if(song){
-              if(exploreController.inArray(songs,song)==false){
-                   songs = songs.concat(song);
-                   exploreController.songs.mixCounter++;
-                   exploreController.searchSimilarSongs(song);
-              }
+    var songListCallback = function(list){
 
+        playlistController.selection.deselectElements();
+        var oldsong = null;
+        var song;
+        var index;
+        var songs = [];
+        exploreController.songs.mixCounter   = 0;
+        exploreController.songs.mixedResults = [];
+        exploreController.songs.searchResults = [];
+        if(list.length>exploreController.similarBaseSongs){
+            for (var i = 1; i <= exploreController.similarBaseSongs; i++){
+                index = Math.round(Math.random() * (list.length - 1));
+                song = list[index];
+                if(song){
+                    if(exploreController.inArray(songs,song)==false){
+                        songs = songs.concat(song);
+                        exploreController.songs.mixCounter++;
+                        exploreController.searchSimilarSongs(song);
+                    }
+
+                }
+            }
+        }
+        else{
+            for (var i = 1; i <= list.length; i++){
+                song = list[i-1];
+                if(song){
+                    exploreController.songs.mixCounter++;
+                    exploreController.searchSimilarSongs(song);
+                }
             }
         }
     }
-    else{
-        for (var i = 1; i <= list.length; i++){
-            song = list[i-1];
-            if(song){
-                exploreController.songs.mixCounter++;
-                exploreController.searchSimilarSongs(song);
-            }
-        }
-    }
+
+    playlistController.getSongListFromSelection(songListCallback);
+
 
 }
 

@@ -423,7 +423,7 @@ accountController.singInAuto = function () {
                     success: function (data) {
 
 
-                        $.mobile.loading("hide");
+
                         if (authController.ensureAuthenticated(data, function () {
                             accountController.singInAuto();
                         })) {
@@ -462,7 +462,7 @@ accountController.singInAuto = function () {
                             }
                         }
                     },
-                    error: function () {
+                    complete: function () {
                         $.mobile.loading("hide");
                     }
                 })
@@ -1029,19 +1029,22 @@ accountController.savePlaylistsPosition = function () {
             var savetoken = rsaController.rsa.encrypt(accountController.loginToken + nonce);
 
             //Updateplaylist defines action
-            var postData = { updateplaylistpositions: savetoken, auth: authController.ip_token, n: nonce};
+            var postData = { updateplaylistpositions: savetoken, n: nonce};//aut it set down
 
             var j = 0;
             for (var i = 0; i < playlistController.playlists.length; i++) {
 
                 if(playlistController.playlists[i].gid!=playlistController.similarSongs.gid){
-                    postData["gid" + (j + 1)] = playlistController.playlists[i].gid
+                    postData["gid" + (j + 1)] = playlistController.playlists[i].gid;
                     j++;
                 }
 
             }
 
             var send = function () {
+
+                postData.auth = authController.ip_token;
+
                 $.ajax({
                     type: "POST",
                     data: postData,
@@ -1073,8 +1076,6 @@ accountController.savePlaylist = function (gid, name, tracks) {
     if (accountController.loggedIn) {
         if (gid&&gid!=playlistController.similarSongs.gid) {
 
-
-
             var playlistdata = JSON.stringify(tracks)
 
             if (authController.ip_token != "auth" && authController.ip_token != "") {
@@ -1092,10 +1093,10 @@ accountController.savePlaylist = function (gid, name, tracks) {
                     //Updateplaylist defines action
                     var postData = { updateplaylist: savetoken, auth: authController.ip_token, gid: gid, n: nonce};
 
-                    if (savename != undefined && savename != null && savename != false)
+                    if (savename != "undefined"&&savename != undefined && savename != null && savename != false)
                         postData.name = savename;
 
-                    if (savedata != undefined && savedata != null && savedata != false)
+                    if (savedata != "undefined"&&savedata != undefined && savedata != null && savedata != false)
                         postData.tracks = savedata;
 
                     $.ajax({

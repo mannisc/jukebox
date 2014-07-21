@@ -92,7 +92,7 @@ authController.ensureAuthenticated = function(data,ajaxFunction){
             if(data.auth == "true") {
                 authController.extractToken(data.token);
                 if(ajaxFunction)
-                    ajaxFunction()
+                    ajaxFunction();
                 return false;
             }
             else

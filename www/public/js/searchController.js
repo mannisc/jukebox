@@ -942,6 +942,7 @@ searchController.loadPlaylistTracks = function (playlist,completeCallback, loadP
 
     $.ajax({
         url: url,
+        async: false,
         success: function (data) {
             if(data.album&&data.album.tracks&&data.album.tracks.track){
 
@@ -1340,7 +1341,10 @@ searchController.dragging.makeSearchListDraggable = function () {
                             $("#searchlistview .draggableSong").draggable("option", "connectToSortable", "");
                             if (playlistController.sortPlaylist)
                                 playlistController.ui.toggleSortablePlaylist();
+
+
                         } else {
+                            $(".sortable").sortable("enable");
                             $("#searchlistview .draggableSong").draggable("option", "connectToSortable", "#playlistview");
                         }
 
@@ -1364,7 +1368,7 @@ searchController.dragging.makeSearchListDraggable = function () {
                             clientY: searchController.dragDraggableSongStartEvent.clientY
                         };
 
-                       // $(searchController.dragDraggableSongStartElement).simulate("mouseup", coords);
+                        $(searchController.dragDraggableSongStartElement).simulate("mouseup", coords);
 
                         uiController.mouseUp = false;
                         $(window).on("mouseup ", function (event) {
@@ -1624,6 +1628,7 @@ searchController.dragging.stopDragging = function (event, ui,that) {
                     })
 
                     setTimeout(function () {
+
                         accountController.savePlaylist(playlist.gid, playlist.name, playlist.tracks);
                         accountController.savePlaylistsPosition();
                     }, 0);
