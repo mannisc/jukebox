@@ -851,7 +851,6 @@ playlistController.selection.selectElement = function (element) {
  */
 playlistController.selection.deselectElements = function (event) {
 //Remove Selection
-
     if (event)
         event.stopPropagation();
 

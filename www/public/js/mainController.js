@@ -63,6 +63,7 @@ function MainController($scope,$compile) {
 
     $scope.searchController   = searchController;
     $scope.exploreController = exploreController;
+    $scope.listenController = listenController;
     $scope.myBaseController = myBaseController;
 
     $scope.playlistController = playlistController;

@@ -168,6 +168,7 @@ uiController.init = function () {
     uiController.dblclickedDelay = 250;
 
     $("#searchcontent, #playlistInner").click(function (event) {
+
         if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 500)
             return;
         var normalClick = function () {
