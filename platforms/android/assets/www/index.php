@@ -243,7 +243,7 @@
         <input id="searchbutton1" data-type="button" data-theme="b" onclick="viewController.activateView(searchController);" type="button" value="Search">
         <!--input id="searchbutton2"data-type="button" data-theme="b" onclick="viewController.activateView(1);searchController.showPopulars()" type="button" value="Popular"-->
 
-        <input id="searchbutton2" data-type="button" data-theme="b" onclick="viewController.activateView(exploreController,false, exploreController.showSuggestions);" type="button" value="Explore">
+        <input id="searchbutton2" data-type="button" data-theme="b" onclick="viewController.activateView(exploreController,false, exploreController.showSuggestions,'Songs');" type="button" value="Explore">
 
 
         <input id="searchbutton3" data-type="button" data-theme="b" onclick="viewController.activateView(listenController,false, null);" type="button" value="Genres"><!---->
@@ -455,7 +455,7 @@
                 <img src="public/img/empty.png" onclick="optionsMenu.openSongExploreOptions(event,'#positionSongExploreOptions')"   class="optionsSearchResults"   >
                 <div id="positionSongExploreOptions" class="positionResultsOptions" ></div>
 
-                <h3 style="font-size: 1.1em;margin-top: 7px;">Songs</h3>
+                <h3 style="font-size: 1.1em;margin-top: 7px;">{{exploreController.listName}}</h3>
 
             </a>
         </li>
@@ -488,10 +488,13 @@
             </a>
         </li>
 
-        <li ng-if ="listenController.visible" ng-repeat="genre in listenController.genres.genre  track by genre.name"  ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"    class="hoverable fadeincompletefast"  ng-dblclick="genre.action();$event.stopPropagation();"   ng-click="$event.stopPropagation();"><a >
+        <li ng-if ="listenController.visible" ng-repeat="genre in listenController.genres.genre  track by genre.name"  ontouchend ="playbackController.touchedElement(event);" data-index="{{$index}}"    class="hoverable fadeincompletefast"  ng-dblclick="genre.action();stopPropagation($event);"   ng-click="genre.action();stopPropagation($event);"><a >
             <img src="public/img/empty.png"  alt="" class="ui-li-icon ui-corner-none" >
             <div ng-if="playlistController.playlistMode" class="playlistCoverSong ng-scope">
-                <img src="public/img/empty.png" class="coverSong1 coverSong" style="background-image:url(public/img/playlist.png)">
+
+
+
+                <img src="public/img/empty.png" class="coverSong1 coverSong" ng-style="{'background-image':'url(public/img/genres/'+genre.name.replace(' ','').replace('\'','')+'.jpg)'}">
                 <img src="public/img/black.png" class="coverSong2 coverSong" style="background-image:url(public/img/playlist.png)">
                 <img src="public/img/black.png" class="coverSong3 coverSong" style="background-image:url(public/img/playlist.png)">
             </div>
@@ -1267,7 +1270,7 @@
             <div style="font-size: 1em;font-weight: bold;margin-top: -10px; margin-bottom: 10px;"> {{playbackController.playingSong.name}}</div>
             <ul data-role="listview" id="popupArtistExternList" data-theme="b" >
                 <li data-theme="b" class="marked"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');setTimeout(function(){playlistController.addPlayingSongToPlaylist()},150)"
-                                                     style="text-decoration:none;" target="_blank"><img src="public/img/playlist.png">Add to Playlist</a></li>
+                                                     style="text-decoration:none;" target="_blank"><img src="public/img/playlisticon.png">Add to Playlist</a></li>
 
 
                 <li data-theme="b" class="marked"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');setTimeout(function(){exploreController.searchSimilarSongs(playbackController.playingSong)},150)"

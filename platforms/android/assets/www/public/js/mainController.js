@@ -73,6 +73,13 @@ function MainController($scope,$compile) {
     $scope.optionsMenu  = optionsMenu;
 
 
+    $scope.stopPropagation= function(event){
+        event.stopPropagation();
+        uiController.swipeTimer  = Date.now();
+    }
+
+
+
     /*
     $scope.searchResults = [
         {id:Math.random()*10000000,coverUrl:"",displayName:"Pharrell Williams - Happy",artist:"Pharrell Williams",title:"Happy"} ,

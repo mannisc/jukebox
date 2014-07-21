@@ -171,6 +171,15 @@ uiController.init = function () {
 
         if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 500)
             return;
+
+        //CLicked on Scrollbarareas
+        if($(event.target).closest("#searchcontent").length>0&&event.clientX<30)
+         return;
+        if($(event.target).closest("#playlistInner").length>0&&($("#playlistInner").offset().left+$("#playlistInner").width()-event.clientX)<20) {
+          return;
+        }
+
+
         var normalClick = function () {
             uiController.dblclickedTimer = Date.now();
             setTimeout(function () {

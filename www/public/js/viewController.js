@@ -98,9 +98,13 @@ viewController.isActiveView = function(view){
 
 /**
  * Activated View
- * @param viewController
+ * @param view
+ * @param noAnimation
+ * @param showFunction
+ * @param parameter generic param for view
+ *
  */
-viewController.activateView = function(view, noAnimation, showFunction){
+viewController.activateView = function(view, noAnimation, showFunction, parameter){
     if(!viewController.isActiveView(view)){
         viewController.showLoading(false);
 
@@ -186,7 +190,7 @@ viewController.activateView = function(view, noAnimation, showFunction){
 
 
         $("#searchlist").hide();
-        viewController.activeView.showView(showFunction);
+        viewController.activeView.showView(showFunction,parameter);
 
         if(viewController.activeView.usesSearchList) {
             $("#searchlayoutbutton").show();
