@@ -23,10 +23,10 @@ listenController.genres = function () {
 
 
 listenController.genres.genre = [
-    {name: "60's", action: function(){mediaController.loadGenre('60s')}},
-    {name: "70's",action: function(){mediaController.loadGenre('70s')}},
-    {name: "80's",action: function(){mediaController.loadGenre('80s')}},
-    {name: "90's", action: function(){mediaController.loadGenre('90s')}},
+    {name: "60's", action: function(){mediaController.loadGenre("60's")}},
+    {name: "70's",action: function(){mediaController.loadGenre("70's")}},
+    {name: "80's",action: function(){mediaController.loadGenre("80's")}},
+    {name: "90's", action: function(){mediaController.loadGenre("90's")}},
     {name: "Alternative Rock", action: function(){mediaController.loadGenre('Alternative Rock')}},
     {name: "Ambient",action: function(){mediaController.loadGenre('Ambient')}},
     {name: "Bachata", action: function(){mediaController.loadGenre('Bachata')}},
@@ -46,7 +46,7 @@ listenController.genres.genre = [
     {name: "Rock", action: function(){mediaController.loadGenre('Rock')}},
     {name: "R&B", action: function(){mediaController.loadGenre('R&B')}},
     {name: "Reggae", action: function(){mediaController.loadGenre('Reggae')}},
-    {name: "Samba", action: function(){mediaController.loadGenre('Samba')}},
+    {name: "Samba", action: function(){mediaController.loadGenre('Samba')}}
 ];
 
 

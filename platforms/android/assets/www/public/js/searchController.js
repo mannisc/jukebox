@@ -109,6 +109,7 @@ searchController.init = function () {
     $("#searchlist .iScrollIndicator").addClass("fadeincomplete").hide();
 
 
+
     uiController.searchListScroll.on('scrollEnd', function () {
         if (uiController.searchListScroll.y == 0) {
             $("#searchlist .iScrollScrollUpIndicator").hide();

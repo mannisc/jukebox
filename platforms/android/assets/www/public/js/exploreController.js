@@ -62,7 +62,9 @@ exploreController.onClear = function () {
 /**
  *  Show View
  */
-exploreController.showView = function (showFunction) {
+exploreController.showView = function (showFunction, listName) {
+    exploreController.listName = listName||"Songs";
+
     uiController.searchListScroll.scrollTo(0, 0, 0);
 
     exploreController.visible = true;
@@ -74,15 +76,17 @@ exploreController.showView = function (showFunction) {
             $scope.safeApply();
             $("#searchlistview").listview('refresh');
             if (showFunction)
-                showFunction();
+               showFunction(listName);
 
         }
     }, 350);
     viewController.showLoading(true);
 
-
-
 }
+
+
+
+
 
 
 /**
@@ -212,6 +216,9 @@ exploreController.searchArtistsSongs = function (artist) {
 
     //If view is alrady active search, otherwise activate view first
     if (viewController.isActiveView(exploreController))   {
+
+        exploreController.listName = artist;
+
         uiController.searchListScroll.scrollTo(0, 0, 1000)
         exploreController.currentSearchID++;
         exploreController.displayLimit = 0;
@@ -223,7 +230,7 @@ exploreController.searchArtistsSongs = function (artist) {
     else
         viewController.activateView(exploreController, false, function () {
             searchArtistsSongs(artist);
-        });
+        },artist);
 
 
 }
@@ -341,7 +348,7 @@ exploreController.showSuggestions = function () {  //Todo find songs the user re
             if(exploreController.inArray(songs,song)==false){
                 songs = songs.concat(song);
                 exploreController.songs.mixCounter++;
-                exploreController.searchSimilarSongs(song);
+                exploreController.searchSimilarSongs(song,true);
             }
 
         }
@@ -405,7 +412,7 @@ exploreController.showSimilarSongs = function (event) {
 
 
 
-exploreController.searchSimilarSongs = function (song) {
+exploreController.searchSimilarSongs = function (song,dontChangeTitle) {
     $("#searchlist .iScrollPlayIndicator").hide();
     $("#searchlist .iScrollScrollUpIndicator").hide();
     $("#searchlist .iScrollIndicator").hide();
@@ -458,10 +465,11 @@ exploreController.searchSimilarSongs = function (song) {
 
         search( exploreController.currentSearchID);
     }
-
     var id = exploreController.similarSongID;
     //If view is alrady active search, otherwise activate view first
     if (viewController.isActiveView(exploreController))   {
+        if(!dontChangeTitle)
+        exploreController.listName = "Similar Songs";
         uiController.searchListScroll.scrollTo(0, 0, 1000)
         exploreController.displayLimit = 0;
         $scope.safeApply();
@@ -472,7 +480,7 @@ exploreController.searchSimilarSongs = function (song) {
     else
         viewController.activateView(exploreController, false, function () {
             searchSimilarSongs(song);
-        });
+        },!dontChangeTitle?"Similar Songs":null);
 
 
 }

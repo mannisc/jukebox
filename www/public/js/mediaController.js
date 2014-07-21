@@ -508,8 +508,9 @@ mediaController.shareMedia = function(){
 }
 
 mediaController.loadGenre = function(genre){
-    viewController.activateView(exploreController,false);
-    exploreController.searchGenreSongs(genre,false);
+    viewController.activateView(exploreController,false,null,genre);
+
+    exploreController.searchGenreSongs(genre.replace("'",""),false);
     $('#popupListen').popup('close');
 }
 

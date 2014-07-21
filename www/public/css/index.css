@@ -1359,6 +1359,17 @@ background-color:#050!important;
 
 /*POPUPS*/
 
+#popupLoadingSongClose{
+    background-color: #242323 /*{a-bup-background-color}*/;
+    border-color: #000 /*{a-bup-border}*/;
+}
+
+#popupLoadingSong{
+    background-color: #ECECEC!important;
+}
+
+
+
 .ui-popup-container{
     background:rgba(255,255,255,0.6)!important;
 
