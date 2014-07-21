@@ -295,10 +295,11 @@
             </a></li>
 
 
-        <li ng-if ="searchController.visible&&searchController.showMode==5"  ng-dblclick="playlistController.selection.deselectElements($event);" class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton  othertopheight stayvisible">
+        <li ng-if ="searchController.visible&&searchController.showMode==5"  ng-dblclick="playlistController.selection.deselectElements($event);" class="fadeincomplete hoverable playable specialplaylistbutton songlisttitlebutton  othertopheight stayvisible">
             <a tabindex="-1" ng-class="{loaded:searchController.isOnlyTypeDisplayed(3)}">
                 <img src="public/img/empty.png" onclick="optionsMenu.openPlaylistSingleResultsOptions(event,'#positionPlaylistOptions')"   class="optionsSearchResults"   >
                 <div id="positionPlaylistOptions" class="positionResultsOptions" ></div>
+                <img src="public/img/empty.png" onclick=""   class="playSearchResults"   >
 
                 <h3  style="font-size: 1.1em;margin-top: 7px;">{{searchController.showedPlaylist.name}}</h3>
 
@@ -1229,11 +1230,15 @@
 
             <div style="font-size: 1em;font-weight: bold;margin-top: -10px; margin-bottom: 10px;"> {{playbackController.playingSong.name}}</div>
             <ul data-role="listview" id="popupArtistExternList" data-theme="b" >
-                <li data-theme="b" class="marked"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');setTimeout(function(){exploreController.searchArtistsSongs(playbackController.playingSong.artist.name)},150)"
-                                                     style="text-decoration:none;" target="_blank"><img src="public/img/usericon.png">Songs from Artist</a></li>
-                <li data-theme="b" class="marked"  style="border-bottom:1px solid #000;"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');setTimeout(function(){exploreController.searchSimilarSongs(playbackController.playingSong)},150)"
+                <li data-theme="b" class="marked"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');setTimeout(function(){playlistController.addPlayingSongToPlaylist()},150)"
+                                                     style="text-decoration:none;" target="_blank"><img src="public/img/playlist.png">Add to Playlist</a></li>
+
+
+                <li data-theme="b" class="marked"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');setTimeout(function(){exploreController.searchSimilarSongs(playbackController.playingSong)},150)"
                                                                                             style="text-decoration:none;" target="_blank"><img src="public/img/radioicon.png">Similar Songs</a></li>
 
+                <li data-theme="b" class="marked"  style="border-bottom:1px solid #000;"><a ng-show="playbackController.playingSong" onclick="$('#popupArtist').popup('close');setTimeout(function(){exploreController.searchArtistsSongs(playbackController.playingSong.artist.name)},150)"
+                                                     style="text-decoration:none;" target="_blank"><img src="public/img/usericon.png">Songs from this Artist</a></li>
 
                 <li data-theme="b" style="border-top:10px solid rgba(255,255,255,0.2);"><a ng-show="playbackController.playingSong" href="https://www.facebook.com/search/results.php?q={{mediaController.getSongArtist(playbackController.playingSong)}}" onclick="$('#popupArtist').popup('close')"
                                       style="text-decoration:none" target="_blank"><img src="public/img/facebook.png">Facebook</a></li>

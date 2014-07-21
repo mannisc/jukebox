@@ -383,9 +383,10 @@ optionsMenu.openChoosePlaylist = function (positionTo, listToAdd, arrowDirection
     $("#popupOptions").popup('open', {positionTo: positionTo, transition: 'pop'});
     if (arrowDirection == "r")
         $("#popupOptions-popup").css("margin-top", "3px").css("margin-left", "-10px");
+    else if (arrowDirection == "t")
+        $("#popupOptions-popup").css("margin-top", "18px").css("margin-left", "");
     else
         $("#popupOptions-popup").css("margin-top", "").css("margin-left", "18px");
-
 }
 
 //Search Results

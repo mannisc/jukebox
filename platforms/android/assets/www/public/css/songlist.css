@@ -776,7 +776,9 @@ max-width: 320px;
 
 }
 
-
+#searchlist li.songlisttitlebutton.playable a,#playlistInner li.songlisttitlebutton.playable a{
+    padding: 3px 0px 11px 84px!important;
+}
 
 #searchlist li:hover.songlisttitlebutton a.loaded{
 
@@ -825,6 +827,13 @@ max-width: 320px;
     transition: all 0.3s ease;
 }
 
+#searchlist li.songlisttitlebutton a img.playSearchResults, #playlistInner li.songlisttitlebutton a img.playSearchResults{
+
+    left: 36px;
+
+}
+
+
 
 #searchlist li.songlisttitlebutton a .optionsSearchResultsBack, #playlistInner li.songlisttitlebutton a .optionsPlaylistBack{
 
@@ -840,12 +849,18 @@ max-width: 320px;
     transition: all 0.3s ease;
 }
 
+#searchlist li.songlisttitlebutton a .playSearchResults, #playlistInner li.songlisttitlebutton a .playSearchResults{
+    background-image: url(../img/queue.png)!important;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
 
 
 
 
-
-#searchlist li:hover.songlisttitlebutton a img, #playlistInner li:hover.songlisttitlebutton a img{
+#searchlist li.songlisttitlebutton a img:hover, #playlistInner li:hover.songlisttitlebutton a img:hover{
 
     -webkit-transform: scale(1.2)!important;
     -moz-transform: scale(1.2)!important;

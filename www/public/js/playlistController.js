@@ -37,8 +37,6 @@ playlistController.currentShowID = 0;
 playlistController.selectPlaylistsPlaceholder = "Search your Playlists";
 
 
-
-
 playlistController.currentQueue = {gid: 0, id: 0, name: "Current Play Queue", isPlaylist: true, isCurrentQueue: true, tracks: []};
 playlistController.similarSongs = {gid: 1, id: 1, name: "Similar Songs", isPlaylist: true, isSimilarSongs: true, tracks: [], song: {}};
 
@@ -551,7 +549,6 @@ playlistController.ui.openLoadedPlaylistMenu = function (event, that) {
 }
 
 
-
 /**
  * Toggle Sortable playlist
  * @param dontShowTrash
@@ -767,7 +764,6 @@ playlistController.options.hideSongOptions = function () {
 }
 
 
-
 /**
  * Add selected Songs to Queue
  * @param event
@@ -934,39 +930,39 @@ playlistController.dragging.makePlayListSortable = function () {
 
             if (playlistController.sortPlaylist) {
 
-                if (playlistController.dragDraggableSongTimer && Date.now() - playlistController.dragDraggableSongTimer < 500 && Date.now() - playlistController.dragDraggableSongTimer > 50) {
+                if (playlistController.dragDraggableSongTimer && Date.now() - playlistController.dragDraggableSongTimer < 500 && Date.now() - playlistController.dragDraggableSongTimer > 0) {
                     //Wait for Mouseups?
-                    setTimeout(function(){
-                        if (playlistController.dragDraggableSongTimer){
-                        uiController.stopPlaylistScrollingOnClick(event);
-                        uiController.updateUI();
-                        $(window).off("mousemove").off("mouseup");
+                    setTimeout(function () {
+                        if (playlistController.dragDraggableSongTimer) {
+                            uiController.stopPlaylistScrollingOnClick(event);
+                            uiController.updateUI();
+                            $(window).off("mousemove").off("mouseup");
 
-                        playlistController.dragDraggableLastSongTimer = Date.now();
-                        playlistController.dragDraggableSongTimer = 0;
+                            playlistController.dragDraggableLastSongTimer = Date.now();
+                            playlistController.dragDraggableSongTimer = 0;
 
-                        $(".sortable").sortable("enable");
+                            $(".sortable").sortable("enable");
 
-                        //STARTDRAG ERROR
-                        /*  var coords = {
-                         clientX: playlistController.dragDraggableSongStartEvent.clientX,
-                         clientY: playlistController.dragDraggableSongStartEvent.clientY
-                         };
-                         */
-                        // $(playlistController.dragDraggableSongStartElement).simulate("mouseup", coords);
+                            //STARTDRAG ERROR
+                            var coords = {
+                                clientX: playlistController.dragDraggableSongStartEvent.clientX,
+                                clientY: playlistController.dragDraggableSongStartEvent.clientY
+                            };
 
-                        var coords = {
-                            clientX: event.clientX,
-                            clientY: event.clientY
-                        };
+                            $(playlistController.dragDraggableSongStartElement).simulate("mouseup", coords);
 
-                        $(playlistController.dragDraggableSongStartElement).simulate("mouseup", coords);
-                        // uiController.mouseUp = false;
+                            var coords = {
+                                clientX: event.clientX,
+                                clientY: event.clientY
+                            };
 
-                        // this actually triggers the drag start event
-                        $(playlistController.dragDraggableSongStartElement).simulate("mousedown", coords);
+                            $(playlistController.dragDraggableSongStartElement).simulate("mouseup", coords);
+                            // uiController.mouseUp = false;
+
+                            // this actually triggers the drag start event
+                            $(playlistController.dragDraggableSongStartElement).simulate("mousedown", coords);
                         }
-                    },0)
+                    }, 0)
 
                 }
             }
@@ -996,7 +992,7 @@ playlistController.dragging.makePlayListSortable = function () {
 
         },
         stop: function (event, ui) {
-            return playlistController.dragging.stopDragging(event, ui );
+            return playlistController.dragging.stopDragging(event, ui);
         },
         appendTo: 'body',
         zIndex: "1000000" //or greater than any other relative/absolute/fixed elements and droppables
@@ -1332,7 +1328,7 @@ playlistController.dragging.stopDragging = function (event, ui) {
      console.log("------------------------------")
      console.dir(playlistController.loadedPlaylistSongs)
      console.log("------------------------------")
-   */
+     */
     var scrollY = uiController.playListScroll.y;
 
     $("#playlistInner").hide();
@@ -1416,32 +1412,63 @@ playlistController.isSongInList = function (song) {
 }
 
 
-
 /**
  * Get Select songs (also from playlists)
  * @returns {Array}
  */
-playlistController.getSongListFromSelection = function () {
+playlistController.getSongListFromSelection = function (callback) {
     var list = [];
     //Extract all songs from selected songs and playlists
     //for (var i = playlistController.selectedElements.length - 1; i >= 0; i--) {
-    for (var i = 0; i < playlistController.selectedElements.length; i++) {
 
-        var element = playlistController.selectedElements[i].obj;
+    var loadOnline = false;
 
+    var getSongsFromElement = function (list,elements, index) {
+        if (playlistController.selectedElements.length <= index){
+            if (loadOnline)
+                uiController.disableUI(false);
+            if(callback) {
+                callback(list);
+            }
+            return;
+        }
+
+        var element = elements[index].obj;
         if (element.isPlaylist) {
-
             if (element.tracks && element.tracks.length > 0) {
                 for (var j = 0; j < element.tracks.length; j++) {
                     list.push(element.tracks[j])
-
                 }
+            } else {
+                //Get songs from online playlist
+                if (element.tracks == undefined) {
+                    loadOnline = true;
+                    uiController.disableUI(true);
+
+                    searchController.loadPlaylistTracks(element, function () {
+                        if (element.tracks && element.tracks.length > 0) {
+
+                            for (var j = 0; j < element.tracks.length; j++) {
+                                list.push(element.tracks[j])
+                            }
+                        }
+                        getSongsFromElement(list,elements, index+1) ;
+
+                    })
+                     return;
+                }
+
             }
 
         } else
-            list.push(element)
+            list.push(element);
+
+        getSongsFromElement(list,elements, index+1) ;
     }
-    return list;
+
+
+    getSongsFromElement(list, jQuery.extend(true,[],playlistController.selectedElements), 0);
+
 }
 
 
@@ -1484,10 +1511,14 @@ playlistController.playSongList = function (songlist) {
 playlistController.playSelection = function (event) {
     event.stopPropagation();
 
-    playlistController.playSongList(playlistController.getSongListFromSelection());
 
+    var songListCallback = function(list){
+        playlistController.playSongList(list);
+        playlistController.selection.deselectElements();
 
-    playlistController.selection.deselectElements();
+    }
+    playlistController.getSongListFromSelection(songListCallback);
+
 
 }
 
@@ -1559,8 +1590,17 @@ playlistController.playSongListNext = function (songlist) {
  * @param event
  */
 playlistController.playSelectionNext = function () {
-    playlistController.playSongListNext(playlistController.getSongListFromSelection());
-    playlistController.selection.deselectElements();
+
+
+    var songListCallback = function(list){
+        playlistController.playSongListNext(list);
+
+        playlistController.selection.deselectElements();
+    }
+    playlistController.getSongListFromSelection(songListCallback);
+
+
+
 
 }
 
@@ -1571,18 +1611,21 @@ playlistController.playSelectionNext = function () {
 
 playlistController.loadNewPlaylistWithSelectedSongs = function () {
 
-    var list = playlistController.getSongListFromSelection();
 
-    if (list.length > 0) {
+    var songListCallback = function(list){
+        if (list.length > 0) {
 
-        playlistController.loadNewPlaylistWithSongs(list)
-
+            playlistController.loadNewPlaylistWithSongs(list)
+        }
+        playlistController.selection.deselectElements();
 
     }
-    playlistController.selection.deselectElements();
+    playlistController.getSongListFromSelection(songListCallback);
+
+
+
 
 }
-
 
 
 /**
@@ -1723,10 +1766,27 @@ playlistController.loadSharedPlaylist = function (hash) {
  */
 playlistController.addSelectedElementsToPlaylist = function (positionTo) {
 
-    playlistController.addSongListElementsToPlaylist(positionTo, playlistController.getSongListFromSelection(), "l");
+    var songListCallback = function(list){
+
+        playlistController.addSongListElementsToPlaylist(positionTo, list, "l");
+
+    }
+    playlistController.getSongListFromSelection(songListCallback);
+}
+
+
+
+/**
+ * Add playing Songs to Playlist
+ * @param event
+ */
+playlistController.addPlayingSongToPlaylist = function () {
+
+        playlistController.addSongListElementsToPlaylist("#playingSongInfoLink", [playbackController.playingSong], "t");
 
 
 }
+
 
 
 /**
@@ -1854,14 +1914,14 @@ playlistController.addSongsToPlaylist = function (playlist, listToAdd) {
 playlistController.addSelectedElementsToQueue = function (event) {
     event.stopPropagation();
 
+    var songListCallback = function(list){
 
-    var list = playlistController.getSongListFromSelection();
+        playlistController.addSongsToPlaylist(playlistController.currentQueue, list);
+        playlistController.selection.deselectElements();
 
+    }
+    playlistController.getSongListFromSelection(songListCallback);
 
-    playlistController.addSongsToPlaylist(playlistController.currentQueue, list);
-
-
-    playlistController.selection.deselectElements();
 
 }
 
@@ -2167,8 +2227,6 @@ playlistController.onLoadedPlaylistsChanged = function () {
 
 
 }
-
-
 
 
 playlistController.validateRenamePlaylist = function (playlist, name) {
