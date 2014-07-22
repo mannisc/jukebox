@@ -885,7 +885,7 @@ mediaController.loadingPopupVisibleTime = null;
 mediaController.loadingPopupVisibleDelay = 5000;
 
 mediaController.showLoadingPopup = function(streamID){
-    $("#popupLoadingSong .titleloading").text("Searching, please wait...");
+    $("#popupLoadingSong .titleloading").text("Please wait...");
 
     mediaController.loadingPopupVisible = true;
     setTimeout(function(){
