@@ -248,7 +248,7 @@
 
         <input id="searchbutton3" data-type="button" data-theme="b" onclick="viewController.activateView(listenController,false, null);" type="button" value="Genres"><!---->
 
-        <input id="searchbutton4"  data-type="button" data-theme="b" onclick="viewController.activateView(myBaseController);" type="button" value="MyBase" >
+        <input id="searchbutton4"  data-type="button" data-theme="b" onclick="viewController.activateView(myBaseController);" type="button" value="Feed" >
 
         <a id="searchlayoutbutton" title="Change list layout" data-type="button" data-theme="b" onclick="uiController.toggleGridLayout();" style="margin-left: -3px;background-color: #442727;width: 3px;height: 20px;" class="ui-input-btn ui-btn ui-btn-b ui-shadow ui-corner-all"><img src="public/img/grid.png"  style="width: 21px;margin-left: -9px;"> </a>
 
