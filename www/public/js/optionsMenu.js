@@ -425,32 +425,7 @@ optionsMenu.openPlaylistResultsOptions = function (event, positionTo) {
     optionsMenu.options = [
         {text: "Play", callback: function () {
             optionsMenu.closePopup();
-            if (searchController.playlists.searchResults && searchController.playlists.searchResults.length > 0) {
-                setTimeout(function () {
-                    uiController.disableUI(true);
-                    var playlists = searchController.playlists.searchResults.concat();
-                    var addPlaylist = function (playlists, index, playlistLength) {
-                        if (index > 0 && playlists[index - 1] && playlists[index - 1].tracks && playlists[index - 1].tracks.length) {
-                            playlistLength = playlistLength + playlists[index - 1].tracks.length;
-                            if (playlistLength > 0) {
-                                if (index == 1)
-                                    playlistController.playSongList(playlists[index - 1].tracks.concat());
-                                else
-                                    playlistController.addSongsToPlaylist(playlistController.currentQueue, playlists[index - 1].tracks.concat());
-                            }
-                        }
-                        if (index < playlists.length && playlistLength < searchController.maxResults) {
-                            searchController.loadPlaylistTracks(playlists[index], function () {
-                                addPlaylist(playlists, index + 1, playlistLength);
-                            }, false)
-                        } else {
-                            uiController.disableUI(false);
-
-                        }
-                    }
-                    addPlaylist(playlists, 0, 0)
-                }, 150)
-            }
+            searchController.playAllPlaylists();
 
         }} ,
         {text: "Play next", callback: function () {

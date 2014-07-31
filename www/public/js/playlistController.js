@@ -20,6 +20,10 @@ playbackController.playingSongIndex = 0;
 
 playlistController.similarSongsMaxResults = 100;
 
+//Max song in Current Play Queue, Rest gets sliced
+playlistController.maxPlayQueueSongs = 500;
+
+
 playlistController.globalId = "";//playlistController.loadedPlaylistSongs.length;
 
 playlistController.editedPlaylist = {name: ""};
@@ -61,7 +65,13 @@ playlistController.init = function () {
 
 
     playlistController.ui.makePlayListScrollable();
+
+
+
     $("#playlistInner .iScrollIndicator").hide();
+
+
+
 
     playlistController.chosenElement = $("#playlistselectverticalform").chosen({disable_search_threshold: 2})
 
@@ -533,21 +543,6 @@ playlistController.ui.scrollByDragCallback = function (event) {
 }
 
 
-/**
- * Open Loaded playlist Menu
- * @param playlist
- */
-playlistController.ui.openLoadedPlaylistMenu = function (event, that) {
-    if (playlistController.getLoadedPlaylist().gid == playlistController.currentQueue.gid) {
-
-        optionsMenu.openQueueOptions(event, $(that).find(".optionsPlaylist"))
-
-    } else {
-        optionsMenu.openPlaylistOptions(event, $(that).find(".optionsPlaylist"))
-
-    }
-}
-
 
 /**
  * Toggle Sortable playlist
@@ -679,6 +674,10 @@ playlistController.ui.makePlayListScrollable = function () {
         noHorizontalZoom: true
     });
     $("#playlistInner .iScrollIndicator").addClass("fadeincomplete").hide();
+
+    $(".draggedsearchlistelement").on('wheel', playlistController.ui.scrollByWheel);
+
+
 
 }
 
@@ -1663,9 +1662,22 @@ playlistController.clearQueue = function () {
 playlistController.insertSongsIntoQueue = function (songs) {
 
 
+    //Maximum size of current Played Queue
+    if(playlistController.currentQueue.tracks.length+songs.length>playlistController.maxPlayQueueSongs){
+        var countToManySongs = (playlistController.currentQueue.tracks.length+songs.length)-playlistController.maxPlayQueueSongs;
+        if(playlistController.currentQueue.tracks.length>countToManySongs){
+            playlistController.currentQueue.tracks = playlistController.currentQueue.tracks.slice(countToManySongs);
+            if(playbackController.playingSongIndex < countToManySongs ){
+                playbackController.playingSongIndex = playlistController.currentQueue.tracks.length-1;
+            }
+        }
+
+    }
+
     var tmp = playlistController.currentQueue.tracks.slice(0, playbackController.playingSongIndex + 1).concat(songs);
 
     playlistController.currentQueue.tracks = tmp.concat(playlistController.currentQueue.tracks.slice(playbackController.playingSongIndex + 1));
+
 
     for (var j = playbackController.playingSongIndex; j < playbackController.playingSongIndex + songs.length && j < playlistController.currentQueue.tracks.length; j++) {
         if (!playlistController.currentQueue.tracks[j].image) {
@@ -1702,6 +1714,10 @@ playlistController.insertSongsIntoQueue = function (songs) {
     }
 
 }
+
+
+
+
 
 
 /**
@@ -2282,7 +2298,8 @@ playlistController.renamePlaylist = function (playlist, name) {
 
 
 playlistController.importPlaylistPopup = function (event) {
-
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 450)
+        return;
     if (event)
         event.stopPropagation();
 
@@ -2554,9 +2571,9 @@ playlistController.getSimilarSongs = function (song) {
  */
 
 playlistController.loadSimilarSongs = function () {
-    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 450)
         return;
-
+    uiController.swipeTimer = Date.now();
 
     var playlist = playlistController.similarSongs;
 
@@ -2578,8 +2595,11 @@ playlistController.loadSimilarSongs = function () {
  */
 
 playlistController.loadCurrentQueue = function () {
-    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 450)
         return;
+    uiController.swipeTimer = Date.now();
+
 
     var playlist = playlistController.currentQueue;
     $scope.safeApply();
@@ -2651,8 +2671,9 @@ playlistController.loadNewPlaylistWithSongs = function (songs, playlistName) {
  */
 
 playlistController.loadNewEmptyPlaylist = function () {
-    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 450)
         return;
+    uiController.swipeTimer = Date.now();
 
     var playlist = playlistController.createEmptyPlaylist();
     setTimeout(function () {

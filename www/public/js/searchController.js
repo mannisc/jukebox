@@ -107,6 +107,16 @@ searchController.init = function () {
 
     });
     $("#searchlist .iScrollIndicator").addClass("fadeincomplete").hide();
+    /**
+     * Scroll by wheel
+     * @param event
+     */
+    $("body").on('wheel', function (event) {
+            var isOnPlaylist = $(event.target).parents("#playlist");
+            if (isOnPlaylist.length == 0)
+             uiController.searchListScroll.handleEvent(event);
+        }
+    )
 
 
 
@@ -931,6 +941,42 @@ searchController.showPlaylist = function (playlist) {
     }, 0);
 
 }
+
+/**
+ * Plays all displayed Playlists
+ */
+searchController.playAllPlaylists = function(){
+    if (searchController.playlists.searchResults && searchController.playlists.searchResults.length > 0) {
+        uiController.disableUI(true);
+
+        setTimeout(function () {
+            var playlists = searchController.playlists.searchResults.concat();
+            var addPlaylist = function (playlists, index, playlistLength) {
+                if (index > 0 && playlists[index - 1] && playlists[index - 1].tracks && playlists[index - 1].tracks.length) {
+                    playlistLength = playlistLength + playlists[index - 1].tracks.length;
+                    if (playlistLength > 0) {
+                        if (index == 1)
+                            playlistController.playSongList(playlists[index - 1].tracks.concat());
+                        else
+                            playlistController.addSongsToPlaylist(playlistController.currentQueue, playlists[index - 1].tracks.concat());
+                    }
+                }
+                if (index < playlists.length && playlistLength < searchController.maxResults) {
+                    searchController.loadPlaylistTracks(playlists[index], function () {
+                        addPlaylist(playlists, index + 1, playlistLength);
+                    }, false)
+                } else {
+                    uiController.disableUI(false);
+
+                }
+            }
+            addPlaylist(playlists, 0, 0)
+        }, 150)
+    }
+
+}
+
+
 
 
 /**
