@@ -287,6 +287,9 @@ mediaController.getSiteLogo = function () {
     }else if (mediaController.currentvideoURL.toLowerCase().search(".facebook.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/facebook.") > -1) {
         return "facebook.png"
 
+    } else if (mediaController.currentvideoURL.toLowerCase().search(".youku.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/youku.") > -1) {
+        return "youku.png"
+
     }
 
     return "empty.png"
@@ -322,6 +325,9 @@ mediaController.getSiteLogoFromUrl = function (url) {
     } else if (url.toLowerCase().search(".facebook.") > -1 || url.toLowerCase().search("/facebook.") > -1) {
         return "facebook.png"
 
+    }   else if (url.toLowerCase().search(".youku.") > -1 || url.toLowerCase().search("/youku.") > -1) {
+        return "youku.png"
+
     }
 
     return "empty.png"
@@ -356,6 +362,10 @@ mediaController.getSiteName = function (url, prefix) {
 
     }else if (url.toLowerCase().search(".facebook.") > -1 || url.toLowerCase().search("/facebook.") > -1) {
         return prefix + "Facebook";
+
+    }
+    else if (url.toLowerCase().search(".youku.") > -1 || url.toLowerCase().search("/youku.") > -1) {
+        return prefix + "Youku";
 
     }
 
