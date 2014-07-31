@@ -406,19 +406,19 @@ playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
             searchinput = $("#searchinput").val()
         }
         //TODO COMMEnt REMOVE
-        /*
-         var song = playlistController.getPlayingSong();
+
+         var song = playbackController.getPlayingSong();
 
          if(song.name!=""&&searchinput!=""){
-         window.history.pushState("",document.title, "/?search="+searchinput+"&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+           window.history.replaceState("",document.title, "/?search="+searchinput+"&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
          }
          else if(song.name!=""){
-         window.history.pushState("",document.title, "/?artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+           window.history.replaceState("",document.title, "/?artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
          }
          else if(searchinput!=""){
-         window.history.pushState("",document.title, "?search="+searchinput);
+           window.history.replaceState("",document.title, "/?search="+searchinput);
          }
-         */
+
 
         //  $("#playingSongCover").attr("src", coverUrl);
 

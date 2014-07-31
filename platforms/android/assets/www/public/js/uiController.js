@@ -360,7 +360,7 @@ uiController.init = function () {
 
 
     //Init WebGL
-    if (false&&window.WebGLRenderingContext) {
+    if (window.WebGLRenderingContext) {
         try {
             // browser supports WebGL
             var canvas = document.getElementById("webglcanvas");
@@ -846,6 +846,10 @@ uiController.toggleSidePanel = function () {
  * Show Playlists
  */
 uiController.showPlaylists = function (event){
+
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 450)
+        return;
+    uiController.swipeTimer = Date.now();
 
     if(event)
         event.stopPropagation();

@@ -106,9 +106,8 @@ body {
         background: none!important;
     }
 
-
-
 }
+
 
 
 /*Big Screen*/
@@ -127,6 +126,8 @@ body {
     #controlselectvertical {
         display: none;
     }
+
+
 
     #controlbar {
         margin-top: -10px;
@@ -169,9 +170,19 @@ body {
 
 }
 
+
+#playlistInner li.specialplaylistbutton.songlisttitlebutton h3{
+        font-size: 1em!important;
+        margin-top: 10px!important;
+}
+
+
+
 #feedbackButton {
     display:none!important;
 }
+
+
 
 
 
@@ -192,13 +203,6 @@ body {
 
 }
 
-    #controlbar .ui-input-search {
-        display: inline-block;
-    }
-
-    #controlbar .ui-input-btn {
-        display: none!important;
-    }
 
     #controlbar .ui-select {
         width: 340px !important;
@@ -244,7 +248,9 @@ body {
         display: none;
     }
 
-
+    .sideinfo {
+        display: block!important;
+    }
 
 
 
@@ -253,6 +259,7 @@ body {
     } */
 
 }
+
 
 
 
@@ -266,7 +273,25 @@ body {
     }
     .sideinfo {
         display: none!important;
+
     }
+
+    #header{
+        width:100%!important;
+    }
+
+    #titleHeader{
+        display:none!important;
+    }
+
+    #searchlist ul {
+        width: 100%!important;
+    }
+
+    #backgroundVideo.background {
+        display: none!important;
+    }
+
 
     #playingSongInfoLink{
      display:none!important;
@@ -303,7 +328,13 @@ body {
 
 /*Small Screen*/
 @media (max-height:350px) {
-
+    #backgroundImage{
+        display: block!important;
+        opacity: 1!important;
+        -webkit-animation: none!important ;
+        -moz-animation:  none!important;
+        animation:  none!important
+    }
 
 }
 
@@ -720,7 +751,6 @@ video{
 
 
 .fadeincompletefaster {
-    opacity: 0; /* make things invisible upon start */
     -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
     -moz-animation: fadeincomplete ease-in 1;
     animation: fadeincomplete ease-in 1;
@@ -738,7 +768,6 @@ video{
 
 
 .fadeincomplete {
-    opacity: 0; /* make things invisible upon start */
     -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
     -moz-animation: fadeincomplete ease-in 1;
     animation: fadeincomplete ease-in 1;
@@ -755,7 +784,6 @@ video{
 }
 
 .fadeincompleteslow {
-    opacity: 0; /* make things invisible upon start */
     -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
     -moz-animation: fadeincomplete ease-in 1;
     animation: fadeincomplete ease-in 1;
@@ -772,7 +800,6 @@ video{
 }
 
 .fadeincompleteextremeslow {
-    opacity: 0; /* make things invisible upon start */
     -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
     -moz-animation: fadeincomplete ease-in 1;
     animation: fadeincomplete ease-in 1;
@@ -789,7 +816,6 @@ video{
 }
 
 .fadeincomplete5s{
-    opacity: 0; /* make things invisible upon start */
     -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
     -moz-animation: fadeincomplete ease-in 1;
     animation: fadeincomplete ease-in 1;
@@ -805,7 +831,7 @@ video{
     animation-duration: 5s;
 }
 .fadeincomplete2s {
-    opacity: 0; /* make things invisible upon start */
+
     -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
     -moz-animation: fadeincomplete ease-in 1;
     animation: fadeincomplete ease-in 1;
@@ -2053,7 +2079,7 @@ transition: all 2s ease;
     background-color: rgba(255, 255, 255,0.03);
     margin-top:44px;
 
-    display: block!important;
+
 
 }
 
