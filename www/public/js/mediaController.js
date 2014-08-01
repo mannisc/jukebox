@@ -890,6 +890,53 @@ mediaController.reloadVersions = function(){
 
 }
 
+
+
+mediaController.cacheSong = function(artist,title){
+
+    var reload = function (artistString, titleString,duration) {
+        $.ajax({
+            timeout: 30000,
+            url: preferences.serverURL + "?reloadversions=" + artistString + "&title=" + titleString + "&duration=" + duration + "&auth=" + authController.ip_token,
+            complete: function (data) {
+
+            }
+        })
+    }
+    var getinfo = function (artistString, titleString) {
+        $.ajax({
+            url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + artistString + "&track=" + titleString + "&format=json",
+            success: function (data) {
+
+                var duration = 200000;
+
+                if (data.track) {
+                    if (data.track.duration) {
+                        duration = data.track.duration;
+                    }
+                }
+                //  alert(artistString+" - "+titleString);
+                if (authController.ip_token != "auth" && authController.ip_token != "") {
+                    var loadError = false;
+                    reload(artistString, titleString,duration);
+                }
+
+            }
+
+        })
+    }
+
+
+    var artistString = encodeURIComponent(artist);
+    var titleString = encodeURIComponent(title);
+    getinfo(artistString,titleString);
+
+
+}
+
+
+
+
 mediaController.loadingPopupVisible = false;
 mediaController.loadingPopupVisibleTime = null;
 mediaController.loadingPopupVisibleDelay = 5000;
@@ -959,10 +1006,11 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
                     //  console.dir(videoURL);
                     if (authController.ip_token != "auth" && authController.ip_token != "") {
                         $.ajax({
-                            timeout: 30000,
+                            timeout: 60000,
                             url: preferences.serverURL + "?playurl=" + encodeURIComponent(videoURL) + "&artist=" + encodeURIComponent(mediaController.getSongArtist(song)) + "&title=" + encodeURIComponent(song.name) + "&auth=" + authController.ip_token,
                             success: function (data) {
-
+                                console.dir("PLAY VERSION!");
+                                console.dir(data);
                                 if (authController.ensureAuthenticated(data, function () {
                                     play(streamID, videoURL);
                                 })) {
@@ -995,7 +1043,12 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
                                         loadError = true;
                                 }
                             },
-                            error: function () {
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                console.dir("PLAY VERSION ERROR!");
+                                console.dir(xhr.responseText);
+                                console.dir(xhr.status);
+                                console.dir(thrownError);
+
                                 loadError = true;
                             },
                             complete: function () {
