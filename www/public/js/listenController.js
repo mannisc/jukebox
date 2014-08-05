@@ -67,6 +67,7 @@ listenController.showView = function (showFunction) {
     listenController.oldGridLayout = uiController.gridLayout;
     if(!uiController.gridLayout )
     uiController.toggleGridLayout();
+    viewController.showLoading(true);
 
 
 
@@ -79,6 +80,12 @@ listenController.showView = function (showFunction) {
             uiController.searchListScroll.refresh();
             if (showFunction)
                 showFunction();
+            setTimeout(function () {
+                if(listenController.visible)
+                    viewController.showLoading(false);
+
+            } ,500);
+
         }
     }, 350);
 
