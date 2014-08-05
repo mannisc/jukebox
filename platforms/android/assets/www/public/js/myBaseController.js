@@ -43,7 +43,18 @@ myBaseController.onClear = function(){
  */
 myBaseController.showView = function(){
     myBaseController.visible = true;
+    viewController.showLoading(true);
+
     $("#explorearea").show();
+
+    setTimeout(function () {
+        if(myBaseController.visible)
+            viewController.showLoading(false);
+
+    } ,350);
+
+
+
 
 }
 

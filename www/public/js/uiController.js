@@ -347,16 +347,7 @@ uiController.init = function () {
     document.title = $scope.appTitle;
 
 
-    //Detect Adblock
-    var checkAdblock =  function () {
-        if ($(".sideinfo .adsbygoogle").children().length == 0) {
-            $(".sideinfo .blocked").show();
-        }else
-            $(".sideinfo .blocked").hide();
 
-        setTimeout(checkAdblock,3000);
-    }
-    setTimeout(checkAdblock, 10000);
 
 
     //Init WebGL
