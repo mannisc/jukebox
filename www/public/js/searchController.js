@@ -113,7 +113,9 @@ searchController.init = function () {
      */
     $("body").on('wheel', function (event) {
             var isOnPlaylist = $(event.target).parents("#playlist");
-            if (isOnPlaylist.length == 0)
+            var isOnSearchlist = $(event.target).parents("#searchlistview");
+
+            if (isOnPlaylist.length == 0&&isOnSearchlist.length == 0)
              uiController.searchListScroll.handleEvent(event);
         }
     )

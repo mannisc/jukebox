@@ -67,6 +67,9 @@ viewController.init = function () {
 
     }
 
+
+    exploreController.showSuggestions();
+
 }
 
 /**

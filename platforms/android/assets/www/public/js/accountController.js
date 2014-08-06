@@ -721,6 +721,9 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                                 }, 500)
                             }, 500)
 
+
+                            if(!exploreController.visible)
+                               exploreController.showSuggestions(true);
                         }
                         else {
                             $("#signinpw").css("background-color", "rgb(111, 0, 0)").css("color", "#fff");
