@@ -151,7 +151,7 @@ $(document).ready(function () {
             playlistController.init();
             accountController.init();
             videoController.init();
-
+            adController.init();
 
             setTimeout(function () {
                if($(":focus").length==0)
