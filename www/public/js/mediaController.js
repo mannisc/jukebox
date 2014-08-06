@@ -100,6 +100,7 @@ mediaController.visitSongWebPage = function () {
 
 mediaController.mediaEnded = function () {
     mediaController.sendRating("2");
+    parent.postMessage('title:$scope.appTitle', 'http://www.songbase.fm');
     document.title = $scope.appTitle;
 
     videoController.isPlaying = false;
@@ -1202,6 +1203,8 @@ mediaController.playStream = function (artist, title, playedAutomatic,fromCache)
     artistString = artistString.replace("?", "");
     titleString = titleString.replace("?", "");
 
+    parent.postMessage('title:'+$scope.appTitle+": "+artistString+" - "+titleString, 'http://www.songbase.fm');
+    parent.postMessage("url:\?artist="+encodeURIComponent(artistString)+"&title="+encodeURIComponent(titleString), 'http://www.songbase.fm');
     var searchString = ""
     if (artist != "")
         searchString = artist + " - " + title;
