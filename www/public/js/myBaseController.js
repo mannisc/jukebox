@@ -42,6 +42,12 @@ myBaseController.onClear = function(){
  *  Show View
  */
 myBaseController.showView = function(){
+
+    exploreController.oldVideoOpactiy =     videoController.videoOpactiy;
+
+    videoController.setVideoOpacity(exploreController.oldVideoOpactiy/2)  ;
+
+
     myBaseController.visible = true;
     viewController.showLoading(true);
 
@@ -54,8 +60,6 @@ myBaseController.showView = function(){
     } ,350);
 
 
-
-
 }
 
 
@@ -65,5 +69,9 @@ myBaseController.showView = function(){
 myBaseController.hideView = function(){
     myBaseController.visible = false;
     $("#explorearea").hide();
+
+    if( exploreController.oldVideoOpactiy ==  videoController.videoOpactiy*2)
+       videoController.setVideoOpacity(exploreController.oldVideoOpactiy)
+
 
 }

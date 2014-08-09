@@ -65,6 +65,7 @@ exploreController.onClear = function () {
 exploreController.showView = function (showFunction, listName) {
     exploreController.listName = listName || "Songs";
 
+
     uiController.searchListScroll.scrollTo(0, 0, 0);
 
     exploreController.visible = true;
@@ -309,6 +310,7 @@ exploreController.inArray = function (arr, obj) {
 exploreController.showSuggestions = function (dontForceForeground) {  //Todo find songs the user really liked, means played very often for example
 
 
+
     exploreController.currentSearchID = exploreController.currentSearchID + 1;
 
     var index;
@@ -341,18 +343,24 @@ exploreController.showSuggestions = function (dontForceForeground) {  //Todo fin
         } else if (searchController.songs.searchResults.length > 0) {    //SearchResult
             index = Math.round(Math.random() * (searchController.songs.searchResults.length - 1));
             song = searchController.songs.searchResults[index];
+        }else if (searchController.preloadedPopularSongs.track.length > 0) {                    //Popular songs
+                index = Math.round(Math.random() * (searchController.preloadedPopularSongs.track.length - 1));
+                song = searchController.preloadedPopularSongs.track[index];
         }
 
-        // }
+
 
         if (!song && generatedData.charts && generatedData.charts.length > 0) {
             song = generatedData.charts[0];
             break
         }
+
+
         if (song) {
             if (exploreController.inArray(songs, song) == false) {
                 songs = songs.concat(song);
                 exploreController.songs.mixCounter++;
+
                 exploreController.searchSimilarSongs(song, true, dontForceForeground);
             }
 
@@ -418,6 +426,7 @@ exploreController.searchSimilarSongs = function (song, dontChangeTitle, dontForc
         $("#searchlist .iScrollScrollUpIndicator").hide();
         $("#searchlist .iScrollIndicator").hide();
     }
+
 
     var searchSimilarSongs = function (song) {
 
