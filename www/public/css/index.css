@@ -1524,6 +1524,7 @@ text-shadow: none!important;
 
 
 
+
 #popupOptions li{
     background-color: #333 !important;
 }
@@ -1703,6 +1704,8 @@ max-width: 2em!important;
     background-color: #333 !important;
     max-height: 478px;
     overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 1px;
 }
 
 
@@ -1716,21 +1719,6 @@ max-width: 2em!important;
     border-top: 1px solid rgb(34,34,34)!important;
     border-bottom: none!important;
 
-    background: -moz-linear-gradient(top, #3a3a3a 0%, #333 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3a3a3a), color-stop(100%,#333)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #3a3a3a 0%,#333 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #3a3a3a 0%,#333 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #3a3a3a 0%,#333 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #3a3a3a 0%,#333 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3a3a', endColorstr='#333',GradientType=0 ); /* IE6-9 */
-
-    text-shadow: none!important;
-}
-
-#popupSharePlaylistOptions li:hover a{
-    background-color: #494949!important;
-
-
     background:#333;
     /*
     background: -moz-linear-gradient(top, #3a3a3a 0%, #333 100%);
@@ -1741,6 +1729,23 @@ max-width: 2em!important;
     background: linear-gradient(to bottom, #3a3a3a 0%,#333 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3a3a', endColorstr='#333',GradientType=0 );
      */
+
+    text-shadow: none!important;
+}
+
+#popupSharePlaylistOptions li:hover a{
+    background-color: #494949!important;
+
+
+
+    background: -moz-linear-gradient(top, #3a3a3a 0%, #333 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3a3a3a), color-stop(100%,#333));
+    background: -webkit-linear-gradient(top, #3a3a3a 0%,#333 100%);
+    background: -o-linear-gradient(top, #3a3a3a 0%,#333 100%);
+    background: -ms-linear-gradient(top, #3a3a3a 0%,#333 100%);
+    background: linear-gradient(to bottom, #3a3a3a 0%,#333 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3a3a', endColorstr='#333',GradientType=0 );
+
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4a4a4a', endColorstr='#444',GradientType=0 ); /* IE6-9 */
 }
 

@@ -289,10 +289,10 @@ exploreController.searchGenreSongs = function (genre, autoplay) {
 
     }
     else
-        viewController.activateView(exploreController, false, function () {
-
+        viewController.activateView(exploreController,false,function () {
             searchGenreSongs(genre);
-        });
+        },genre);
+
 
 
 }
@@ -307,6 +307,7 @@ exploreController.inArray = function (arr, obj) {
 
 
 exploreController.showSuggestions = function (dontForceForeground) {  //Todo find songs the user really liked, means played very often for example
+
 
     exploreController.currentSearchID = exploreController.currentSearchID + 1;
 
