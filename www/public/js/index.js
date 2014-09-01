@@ -131,6 +131,8 @@ $(document).ready(function () {
     var initPage = function () {
         if ($scope.loaded) {
 
+            $.mobile.popup.prototype.options.history = false;
+
             /*
             $(function() {
                 $( document ).tooltip();
