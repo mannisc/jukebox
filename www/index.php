@@ -52,6 +52,11 @@
     <link rel="stylesheet" href="public/js/libs/mediaelement/playlist/mep-feature-playlist.css"/>
 
     <link rel="stylesheet" type="text/css" media="screen" href="public/browser-detection/browser-detection.css"/>
+
+
+    <script type="text/javascript" src="http://syndication.exoclick.com/splash.php?idzone=1057992&type=3"></script>
+
+
     <script type="text/javascript" src="public/browser-detection/browser-detection.js"></script>
     <script type="text/javascript">
         <!--
@@ -224,7 +229,7 @@
 
 
         <a id="signinLink" ng-if="!accountController.loggedIn" href="#popupLogin" onclick="" data-rel="popup" data-position-to="#signinLink"
-           class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Log in</a>
+           class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Log In</a>
 
         <a id="registerLink" ng-if="!accountController.loggedIn" href="#popupRegister" onclick="" data-rel="popup" data-position-to="#registerLink"
            class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-plus ui-btn-icon-left ui-btn-a" data-transition="pop">Sign up</a>
@@ -568,7 +573,13 @@
 
     <div style="padding-left:30px">
         <br>
-        You have no upcoming Events yet.
+        <spin ng-if="!accountController.loggedIn" > <a style="margin-top: 0px;margin-bottom: 0px;" ng-if="!accountController.loggedIn" href="#popupRegister" onclick="" data-rel="popup" data-position-to="#registerLink"
+                                                       class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-plus ui-btn-icon-left ui-btn-a" data-transition="pop">Sign up</a> to see upcoming Events.</spin>
+
+        <spin ng-if="accountController.loggedIn" >You have no upcoming Events yet.</spin>
+
+
+
     </div>
 </div>
 
@@ -1085,7 +1096,7 @@
                 </span>
         <button onclick="accountController.register();" id="registerButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Create Account</button>
         <hr>
-        <button onclick="facebookHandler.login()" class="fbloginbutton ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in with Facebook</button>
+        <button onclick="facebookHandler.login()" class="fbloginbutton ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Log In with Facebook</button>
 
         <!--fb:login-button class="fbnativeloginButton"  show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large"></fb:login-button-->
 
@@ -1096,7 +1107,7 @@
 
 <div data-role="popup" id="popupLogin" data-arrow="true" data-theme="a" class="ui-corner-all">
     <div style="padding:0px 20px 10px 20px">
-        <h3 id="signintitle">Sign in</h3>
+        <h3 id="signintitle">Log In</h3>
         <label for="signinusername" class="ui-hidden-accessible">Username:</label>
         <input type="text" name="user" id="signinusername" value="" placeholder="Username" data-theme="a">
             <span id="useremail" style="display:none">
@@ -1105,9 +1116,9 @@
             </span>
         <label for="signinpw" class="ui-hidden-accessible">Password:</label>
         <input type="password" name="pass" id="signinpw" value="" placeholder="Password" data-theme="a">
-        <button onclick="accountController.signIn();" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+        <button onclick="accountController.signIn();" id="signinButton" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Log In</button>
         <hr>
-        <button onclick="facebookHandler.login()" class="fbloginbutton ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in with Facebook</button>
+        <button onclick="facebookHandler.login()" class="fbloginbutton ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Log In with Facebook</button>
 
         <!--fb:login-button class="fbnativeloginButton"  show-faces="true" width="200" scope="public_profile, email"  max-rows="1" size="large"></fb:login-button-->
     </div>
@@ -2161,6 +2172,8 @@ List of top 10 singles in Germany
 </div>
 
 
-<script type="text/javascript" src="http://syndication.exoclick.com/splash.php?idzone=1056712&type=4"></script>
+
+
+
 </body>
 </html>
