@@ -26,6 +26,7 @@ viewController.activeView = null;
  */
 viewController.init = function () {
 
+
     //Init Views
     for (var i = 0; i < viewController.views.length; i++) {
         if( viewController.views[i].init)
@@ -68,7 +69,7 @@ viewController.init = function () {
     }
 
 
-    exploreController.showSuggestions();
+    exploreController.showSuggestions(true);
 
 }
 
