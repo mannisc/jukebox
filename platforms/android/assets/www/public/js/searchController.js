@@ -523,7 +523,7 @@ searchController.songs.cleanList = function(songList){
 
 
 searchController.songs.completeSearch =  function (localList, onlineList) {
-
+     console.dir(onlineList)
     //Is from last fm or native server -> so convert and extract songlist accordingly
     if (onlineList.native) {
         onlineList = onlineList.list;
