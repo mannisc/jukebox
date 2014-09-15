@@ -100,6 +100,7 @@ mediaController.visitSongWebPage = function () {
 
 mediaController.mediaEnded = function () {
     mediaController.sendRating("2");
+    parent.postMessage('title:$scope.appTitle', 'http://www.songbase.fm');
     document.title = $scope.appTitle;
 
     videoController.isPlaying = false;
@@ -290,6 +291,9 @@ mediaController.getSiteLogo = function () {
     } else if (mediaController.currentvideoURL.toLowerCase().search(".youku.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/youku.") > -1) {
         return "youku.png"
 
+    } else if (mediaController.currentvideoURL.toLowerCase().search(".rutube.") > -1 || mediaController.currentvideoURL.toLowerCase().search("/rutube.") > -1) {
+        return "rutube.png"
+
     }
 
     return "empty.png"
@@ -328,6 +332,8 @@ mediaController.getSiteLogoFromUrl = function (url) {
     }   else if (url.toLowerCase().search(".youku.") > -1 || url.toLowerCase().search("/youku.") > -1) {
         return "youku.png"
 
+    } else if (url.toLowerCase().search(".rutube.") > -1 || url.toLowerCase().search("/rutube.") > -1) {
+     return "rutube.png"
     }
 
     return "empty.png"
@@ -368,7 +374,9 @@ mediaController.getSiteName = function (url, prefix) {
         return prefix + "Youku";
 
     }
-
+     else if (url.toLowerCase().search(".rutube.") > -1 || url.toLowerCase().search("/rutube.") > -1) {
+        return prefix + "Rutube";
+    }
     return ""
 
 }
@@ -1201,6 +1209,8 @@ mediaController.playStream = function (artist, title, playedAutomatic,fromCache)
     artistString = artistString.replace("?", "");
     titleString = titleString.replace("?", "");
 
+    parent.postMessage('title:'+$scope.appTitle+": "+artistString+" - "+titleString, 'http://www.songbase.fm');
+    parent.postMessage("url:\?artist="+encodeURIComponent(artistString)+"&title="+encodeURIComponent(titleString), 'http://www.songbase.fm');
     var searchString = ""
     if (artist != "")
         searchString = artist + " - " + title;
