@@ -252,6 +252,8 @@ dailymotionPlayer.setVolume = function (volume) {
 
 
 dailymotionPlayer.play = function () {
+    console.dir("PLAYIT"+dailymotionPlayer.apiready);
+
     if(dailymotionPlayer.player ){
         if(dailymotionPlayer.apiready){
             dailymotionPlayer.player.play();

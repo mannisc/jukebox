@@ -17,16 +17,17 @@ var uiController = function () {
 
 uiController.responsiveWidthSmallest = 780;
 
-uiController.responsiveWidthSmall = 850;
+uiController.responsiveWidthSmall = 1170;
 
 
-uiController.responsiveWidthSmaller = 1165;
+uiController.responsiveWidthSmaller = 1230;
 
-uiController.adsWidth = 160;
+uiController.adsWidth = 0;//160;
 
 uiController.totalTimeWidth = 0;
 
-uiController.gridLayout = false;
+uiController.gridLayout = true;
+uiController.gridLayoutOld = false;
 
 
 /**
@@ -117,10 +118,16 @@ uiController.gridLayout = false;
 
 uiController.init = function () {
 
+    uiController.gridLayout = false;
+
+    uiController.toggleGridLayout();
+
     uiController.disableAutoFocus();
 
 
-    $(".ui-icon-loading").click(function(){
+    $("#searchbutton1").parent(".ui-btn").addClass("searchbutton1parent");
+
+    $(".ui-icon-loading").click(function () {
         $(".ui-icon-loading").hide();
     })
 
@@ -145,7 +152,7 @@ uiController.init = function () {
     //Fade in fb like
 
     setTimeout(function () {
-        $("#iconHeader").attr("src", "public/img/logo.gif");
+        $("#iconHeader").attr("src", "public/img/logostat.png");//logo.gif");
     }, 1000);
 
 
@@ -153,12 +160,9 @@ uiController.init = function () {
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
 
 
-
-
     $("#playlist, .videoControlElements-controls, #controlbar div, .ui-popup").click(function (event) {
         uiController.noBodyClickTimer = Date.now();    //To avoid body clicks wich deselect songs if clicked on the specified elements
     })
-
 
 
     //GLobal dblclick and Click Actions aufs Video/mainscreen
@@ -167,31 +171,69 @@ uiController.init = function () {
     uiController.dblclickedTimer = 0;
     uiController.dblclickedDelay = 250;
 
-    $("#searchcontent, #playlistInner").click(function (event) {
+
+    $("#header div, #header a").click(function (event) {
+        uiController.swipeTimer = Date.now();
+    });
+
+    $("#header").click(function () {
+        if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 500)
+            return;
+        playlistController.selection.deselectElements();
+    });
+
+
+    $("#content").click(function (event) {
 
         if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 500)
             return;
 
+
         //CLicked on Scrollbarareas
-        if($(event.target).closest("#searchcontent").length>0&&event.clientX<30)
-         return;
-        if($(event.target).closest("#playlistInner").length>0&&($("#playlistInner").offset().left+$("#playlistInner").width()-event.clientX)<20) {
-          return;
+        if ($(event.target).closest("#searchcontent").length > 0 && event.clientX < 30)
+            return;
+
+
+        if ($(event.target).closest("#playlistInner").length > 0 && ($("#playlistInner").offset().left + $("#playlistInner").width() - event.clientX) < 20)
+            return;
+
+
+        //CLicked on Scrollbarareas
+        if ($(event.target).closest("#searchcontent").length == 0 && $(event.target).closest("#playlistInner").length == 0) {
+            if ($(event.target).closest("a, .ui-btn, input").length > 0)
+                return;
         }
 
-
         var normalClick = function () {
+
             uiController.dblclickedTimer = Date.now();
             setTimeout(function () {
-                if(uiController.dblclickedTimer>0){
+
+                if (uiController.dblclickedTimer > 0) {
                     //Normal Click
                     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
                         return;
+
                     if (!uiController.noBodyClickTimer || Date.now() - uiController.noBodyClickTimer > 100) {
                         if (playlistController.selectedElements && playlistController.selectedElements.length > 0) {
                             playlistController.selection.deselectElements();
-                        } else if($(event.target).closest("#searchcontent").length>0) {
-                            videoController.playPauseSong();
+
+                        } else if ($(event.target).closest("#searchcontent").length > 0) {
+                            if (!uiController.gridLayout) {
+
+                                if ($("#searchinput:focus").length > 0) {
+                                    $("#searchinput").blur();
+                                }
+                                else {
+                                    if ($("#playlistselectvertical input:focus").length > 0)
+                                        $("#playlistselectvertical input").blur();
+                                    else
+                                        videoController.playPauseSong();
+                                }
+
+
+                            }
+
                         }
 
                     }
@@ -205,7 +247,7 @@ uiController.init = function () {
 
             //Double Click
 
-            if($(event.target).closest("#searchcontent").length>0){
+            if ($(event.target).closest("#searchcontent").length > 0) {
                 if (videoController.fullscreenEnabled && videoController.videoPlayer) {
                     videoController.toggleFullscreenMode();
                 }
@@ -257,16 +299,38 @@ uiController.init = function () {
         '</style>');
     $('html > head').append(style);
 
-    $('video').bind('contextmenu', function (e) {
-        //return false;
+    $('body').bind('contextmenu', function (e) {
+        return true;
+        if (playlistController.selectedElements.length > 0)
+            playlistController.selection.deselectElements(e)
+
+
+        return false;
     });
+
+    //Startup and on Resize
+    var onSizeChange = function(){
+        //Change Video height
+        $("#videoSizeStyle").remove();
+        var style =  $('<style id="videoSizeStyle">' +
+            '.backgroundVideo *{' +
+            'height:'+($(window).height()-46) +"px!important"+
+
+            '}'+
+            '</style>');
+        console.log(style)
+        $('head').append(style);
+
+
+
+    }
+    onSizeChange();
 
 
     //On Window Resize
     $(window).resize(function () {
-
+        onSizeChange();
         //$(".ui-popup:visible").popup("close")
-
 
         if ($('.ui-panel-open').length != 0) {
             $('#rightpanel').panel('close');
@@ -281,14 +345,20 @@ uiController.init = function () {
         setTimeout(function () {
             uiController.searchListScroll.refresh();
             uiController.playListScroll.refresh();
+            uiController.toggleGridLayoutWidth();
+
             setTimeout(function () {
                 uiController.searchListScroll.refresh();
                 uiController.playListScroll.refresh();
+                uiController.toggleGridLayoutWidth();
+
                 playbackController.positionPlayIndicator();
                 setTimeout(function () {
                     uiController.searchListScroll.refresh();
                     uiController.playListScroll.refresh();
                     playbackController.positionPlayIndicator();
+                    uiController.toggleGridLayoutWidth();
+
                     setTimeout(function () {
                         playbackController.positionPlayIndicator();
                         setTimeout(function () {
@@ -297,10 +367,13 @@ uiController.init = function () {
                                 uiController.searchListScroll.refresh();
                                 uiController.playListScroll.refresh();
                                 playbackController.positionPlayIndicator();
+                                uiController.toggleGridLayoutWidth();
+
                             }, 2000);
                         }, 100);
                     }, 100);
                 }, 100);
+
             }, 100);
 
         }, 1000);
@@ -342,16 +415,14 @@ uiController.init = function () {
 
     setTimeout(function () {
         $("#inputclearhide").remove();
+
     }, 1000);
 
     document.title = $scope.appTitle;
 
 
-
-
-
     //Init WebGL
-    if (window.WebGLRenderingContext) {
+    if (false && window.WebGLRenderingContext) {
         try {
             // browser supports WebGL
             var canvas = document.getElementById("webglcanvas");
@@ -365,6 +436,62 @@ uiController.init = function () {
         } catch (e) {
         }
     }
+};
+
+/**
+ * Called when everything is ready
+ */
+
+uiController.ready = function () {
+    $("#controlselecthorizontal .ui-input-search").append($(".searchinput-drop"));
+
+    //Enable Fade in/fade out
+
+    $("#searchlistview, #searchlist .iScrollVerticalScrollbar, #explorearea, #listhintleft, #openlistleft").mouseenter(function () {
+
+        $("#searchcontent").addClass("isvisible");
+
+        uiController.checkIfListHintsNecessary();
+
+
+    }).mouseleave(function () {
+            setTimeout(function () {
+                if ($("#searchlistview:hover, #searchlist .iScrollVerticalScrollbar:hover ,#explorearea:hover , #listhintleft:hover, #openlistleft:hover").length == 0) {
+                    $("#searchcontent").removeClass("isvisible");
+                    uiController.checkIfListHintsNecessary();
+                }
+            }, 0)
+
+        });
+
+    $(" #playlistInner,#listhintright").mouseenter(function () {
+        $("#playlistInner").addClass("isvisible");
+        uiController.checkIfListHintsNecessary();
+
+    }).mouseleave(function () {
+
+            $(" #playlistInner").removeClass("isvisible");
+            uiController.checkIfListHintsNecessary();
+
+
+        });
+
+
+    $("#searchinput").focus(function () {
+        $("#searchcontent").addClass("isvisibleinput");
+        uiController.checkIfListHintsNecessary();
+    }).blur(function () {
+            $("#searchcontent").removeClass("isvisibleinput");
+            uiController.checkIfListHintsNecessary();
+        });
+
+    $("#playlistselectvertical input").focus(function () {
+        $("#playlistInner").addClass("isvisibleinput");
+        uiController.checkIfListHintsNecessary();
+    }).blur(function () {
+            $("#playlistInner").removeClass("isvisibleinput");
+            uiController.checkIfListHintsNecessary();
+        });
 
 
 };
@@ -525,10 +652,10 @@ uiController.updateDisplay = function () {
 
     $("#page").width(uiController.windowWidth);
 
-    if($(window).height()>710)
-      $("#header").width($(window).width());
-    else
-      $("#header").width($(window).width()-160);
+  //  if ($(window).height() > 710)  //TODO ad
+        $("#header").width($(window).width());
+  //  else
+  //      $("#header").width($(window).width() - 160);
 
     $("#videocontrols").width(uiController.windowWidth);
 
@@ -541,10 +668,13 @@ uiController.updateDisplay = function () {
 uiController.updateUI = function () {
     uiController.updateDisplay();
 
+    //Addjust Controllbar width
+   $("#controlbar").css("width", $("#searchcontent").width()) ;
+
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
 
-    $(".sideinfo").css("line-height", ($(window).height() - 5 - 44-10) + "px");
+    $(".sideinfo").css("line-height", ($(window).height() - 5 - 44 - 10) + "px");
 
 
     $("#lyricsifrm").css("height", $(window).height() - 8 - 44 - 44 - 44)
@@ -556,7 +686,7 @@ uiController.updateUI = function () {
 
 
     setTimeout(function () {
-    $("#playlistview").css("min-height", $("#playlistInner").height() - 20);
+        $("#playlistview").css("min-height", $("#playlistScroll").height() - 18);
     }, 500)
     /*
      if (!dontChangeVideOpacity) {
@@ -589,35 +719,59 @@ uiController.updateUI = function () {
         $("#playlisthelp").css("top", 75 - 30 + 65)
 
 
+    if ($(window).width() < uiController.responsiveWidthSmall)
+
+        $("#controlbar").append($("#searchlayoutbutton"));
+
+    else
+
+        $("#controlbar").prepend($("#searchlayoutbutton"));
+
+
     //Smallest Size
     if ($(window).width() < uiController.responsiveWidthSmallest) {
 
-        $("#rightpanel").css("height", $(window).height() - 88);
+
+        $("#searchcontent, #playlistInner").addClass("isvisiblesmallscreen");
+        uiController.checkIfListHintsNecessary();
+        $("#rightpanel").css("height", $(window).height() - 91);
 
         $("#searchlist a").css("text-overflow", "clip");
 
         if ($("#playlist").parents("#rightpanel").length == 0)
             $("#playlist").appendTo("#rightpanel");
 
-        $("#playlist").css("max-height", $(window).height() - 44 - 44 - 3);
+        $("#playlist").css("max-height", $(window).height() - 44 - 34 - 3+2);
 
         setTimeout(function () {
-            if ($("#playlistselectvertical .chosen-container").height() > 0)
-                $("#playlistInner").css("max-height", $(window).height() - 3 - 45 - (100 + $("#playlistselectvertical .chosen-container").height() - 30));
-            else
-                $("#playlistInner").css("max-height", $(window).height() - 3 - 45 - 5);
+            console.log("----------123123---")
+
+            if ($("#playlistselectvertical .chosen-container").height() > 0) {
+                $("#playlistInner").css("max-height", $(window).height() - 3 - 35 - (100 + $("#playlistselectvertical .chosen-container").height() - 30)+2);
+                $("#playlistScroll").css("max-height", $(window).height() - 3 - 35  - (100 + $("#playlistselectvertical .chosen-container").height() - 30 - $("#playlistButtons").height() * 102 / 93) - 2 - $("#marginplaylistsearchresults").height());
+            }
+            else {
+                $("#playlistInner").css("max-height", $(window).height() - 3 - 40 - 5+2);
+                $("#playlistScroll").css("max-height", $(window).height() - 3 - 40 - 5 - $("#playlistButtons").height() * 102 / 93 - 2 - $("#marginplaylistsearchresults").height() );
+
+            }
         }, 100)
 
         if (uiController.sidePanelOpen) {
 
             if (uiController.windowWidth - $("#rightpanel").width() - 10 < 100) {
                 //$("#searchlist li a").wrap('<marquee behavior="alternate"></marquee>');
-                $("#searchlist li").css("max-height", "65px");
+                $("#searchlist li").css("max-height", "113px");
+                $("#searchlist li.songlisttitlebutton").css("max-height", "44px");
+
 
             }
 
         }
         $("#searchcontent").css("width", uiController.windowWidth - 20);
+
+        $("#controlselecthorizontal").css("width", uiController.windowWidth - 20);
+
 
 
         $("#playlist").css("width", $("#rightpanel").width() - 20 - 10);
@@ -640,6 +794,8 @@ uiController.updateUI = function () {
 
     }
     else { //Bigger then Smallest size
+        $("#searchcontent, #playlistInner").removeClass("isvisiblesmallscreen");
+        uiController.checkIfListHintsNecessary();
 
         $("#searchlist a").css("text-overflow", "ellipsis");
 
@@ -660,41 +816,43 @@ uiController.updateUI = function () {
 
             //Smaller Size
             if ($(window).width() < uiController.responsiveWidthSmaller && $(window).width() > uiController.responsiveWidthSmall) {
-                $("#playlist").css("max-height", $(window).height() - 110 - 44);
-                $("#playlistInner").css("max-height", $(window).height() - 110 - 100 - topDifference);
+                $("#playlist").css("max-height", $(window).height() - 110 - 44+2);
+                $("#playlistInner").css("max-height", $(window).height() - 110 - 100 - topDifference+2);
+                $("#playlistScroll").css("max-height", $(window).height() - 110 - 100 - topDifference - 2 - $("#marginplaylistsearchresults").height() - $("#playlistButtons").height() * 102 / 93);
+
 
             } else {
-                $("#playlist").css("max-height", $(window).height() - 50 - 44);
-                $("#playlistInner").css("max-height", $(window).height() - 50 - 100 - topDifference);
+                $("#playlist").css("max-height", $(window).height() - 50 - 44+2);
+                $("#playlistInner").css("max-height", $(window).height() - 50 - 100 - topDifference+2);
+                $("#playlistScroll").css("max-height", $(window).height() - 50 - 100 - topDifference - 2 - $("#marginplaylistsearchresults").height() - $("#playlistButtons").height() * 102 / 93);
+
 
             }
         }, 100)
 
 
-        $("#searchcontent").css("max-height", $(window).height() - 44 - 120 + 6+5);
+        $("#searchcontent").css("max-height", $(window).height() - 44 - 120 + 6 + 5);
 
-        var setSelectSize = function () {
-            $("#playlistselectvertical .chosen-container").css("width", $("#playlist").width() - 45);
-            $("#playlistselectvertical .chosen-container").css("max-width", $("#playlist").width() - 45);
-            $("#saveplaylistinput").css("width", $("#playlist").width() - 45);
-            $("#saveplaylistinput").css("max-width", $("#playlist").width() - 45);
 
-            $("#playlistselectvertical input").css("width", 110);
-            // $("#playlistselectvertical input").css("max-width", 50);
-        }
-        setSelectSize();
-        $("#playlist").css("width", uiController.windowWidth / 3);
+        var playlistWidth = Math.min(uiController.windowWidth / 3, parseInt(($("#playlist").css("max-width"))));
 
-        $("#playlistInner li").css("width", uiController.windowWidth / 3);
+
+        $("#playlist").css("width", playlistWidth);
+
+        $("#playlistInner li").css("width", playlistWidth);
+
 
         if ($(window).width() < uiController.responsiveWidthSmall)
-            $("#searchcontent").css("width", uiController.windowWidth - uiController.windowWidth / 3 - 30 - 33);
+            $("#searchcontent").css("width", uiController.windowWidth - playlistWidth - 30 - 33);
         else
-            $("#searchcontent").css("width", uiController.windowWidth - uiController.windowWidth / 3 - 30);
+            $("#searchcontent").css("width", uiController.windowWidth - playlistWidth - 30);
 
 
-        setSelectSize();
+        $("#playlistselectvertical .chosen-container").css("width", playlistWidth - 7);
+        $("#playlistselectvertical .chosen-container").css("max-width", playlistWidth - 7);
 
+
+        $("#playlistselectvertical input").css("width", 110);
 
     }
 
@@ -702,9 +860,27 @@ uiController.updateUI = function () {
 
     videoController.resizeVideo();
 
+    $("#playingSongInfoLink").css("right", "").css("max-width", "");
+
 
     //Small Size
     if ($(window).width() < uiController.responsiveWidthSmall) {
+
+
+
+
+
+
+        if(playbackController.playingSong)
+         $("#titleHeader").hide();
+        else
+         $("#titleHeader").show();
+
+
+        var otherButtonsWidth=    ($("#buySongLink:visible").outerWidth()+ $("#signinLink:visible").outerWidth()+ $("#registerLink:visible").outerWidth()+ $("#linkAccount:visible").outerWidth()+7);
+
+        $("#playingSongInfoLink").css("right", otherButtonsWidth).css("max-width", $(window).width()-otherButtonsWidth-125);
+
 
         uiController.totalTimeWidth = (uiController.windowWidth / 1.5 - 160);
 
@@ -727,7 +903,10 @@ uiController.updateUI = function () {
 
         }
 
-        $("#searchcontent").css("max-height", $(window).height() - 44 - 130 - 40 + 12+5);
+        if (searchController.visible)
+            $("#searchcontent").css("max-height", $(window).height() - 44 - 130 - 40 + 12 + 5);
+        else
+            $("#searchcontent").css("max-height", $(window).height() - 44 - 130 - 40 + 12 + 5 + 50);
 
         $("#content").css({"width": uiController.windowWidth - 16, "height": $(window).height() - 44 - 4 - 8});
 
@@ -736,6 +915,7 @@ uiController.updateUI = function () {
     //Big Size
     else {
 
+        $("#titleHeader").show();
         /*do {
          var marquee = $("#searchlist li marquee").get(0);
          $(marquee).replaceWith($(marquee).contents());
@@ -798,15 +978,20 @@ uiController.updateUI = function () {
         }, 0)
 
         $("#videocontrolsInner").css("opacity", 0);
-        var positionControls = function () {
 
-            if (Math.abs($("#videocontrolsInner .videoControlElements-controls").css("padding-left").replace("px", "") - ( (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5)) > 1)
-                $("#videocontrolsInner .videoControlElements-controls").css("padding-left", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5);
+        /*
+         var positionControls = function () {
+
+         // $("#videocontrolsInner").css("width", parseInt( $("#videocontrolsInner .videoControlElements-controls").css("width"))*1.5+"px");
+
+         /* if (Math.abs($("#videocontrolsInner .videoControlElements-controls").css("padding-left").replace("px", "") - ( (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5)) > 1)
+         $("#videocontrolsInner .videoControlElements-controls").css("padding-left", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5).css("padding-right", (uiController.windowWidth - $(".videoControlElements-controls").width() * 1.5) / 2 / 1.5);
 
 
-        }
-        positionControls();
-        setTimeout(positionControls, 50)
+         }
+         positionControls();
+         setTimeout(positionControls, 50)
+         */
     }, 0)
 
 
@@ -836,15 +1021,21 @@ uiController.toggleSidePanel = function () {
 /**
  * Show Playlists
  */
-uiController.showPlaylists = function (event){
+uiController.showPlaylists = function (event) {
+
+    playlistController.showMode = 0;
+    $("#marginplaylistsearchresults").css('cssText', 'height: 0px !important');
+
+
+    if (playlistController.sortPlaylist)
+        playlistController.ui.toggleSortablePlaylist(true);
 
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 450)
         return;
     uiController.swipeTimer = Date.now();
 
-    if(event)
+    if (event)
         event.stopPropagation();
-
 
 
 // $("#playlistselectvertical .search-field input").attr("placeholder", playlistController.selectPlaylistsPlaceholder)
@@ -880,13 +1071,19 @@ uiController.showPlaylists = function (event){
     playlistController.loadedPlaylistSongs = playlistController.playlists;
 
     $("#playlistInner .iScrollPlayIndicator").hide();
-  //  $("#searchlist .iScrollPlayIndicator").hide();
+    $("#playlistInner .iScrollIndicator").hide();
+
+    //  $("#searchlist .iScrollPlayIndicator").hide();
 
     // $("#playlistview").hide();
 
     $("#playlistInner .songlist").addClass("hidden");
 
     playlistController.ui.applySongList();
+
+    if (playlistController.playlistsScrollY)
+        uiController.playListScroll.scrollTo(0, playlistController.playlistsScrollY, 0);
+
     /*
      $scope.safeApply();
      setTimeout(function () {
@@ -906,112 +1103,222 @@ uiController.showPlaylists = function (event){
 }
 
 
+/* Toggel List Hint if necessary*/
+uiController.checkIfListHintsNecessary = function () {
+
+    var searchContent = $("#searchcontent");
+
+
+    if (searchContent.hasClass("gridlayout") || searchContent.hasClass("isvisible") || searchContent.hasClass("isvisibleviewchanged") || searchContent.hasClass("isvisiblestart") || searchContent.hasClass("isvisibledragging") || searchContent.hasClass("isvisibleinput") || searchContent.hasClass("isvisiblesmallscreen") || searchContent.hasClass("isvisiblepopup")) {
+        $("#listhintleft").css("opacity", "0");
+    } else {
+        $("#listhintleft").css("opacity", "0.75");
+
+    }
+    var playlistInner = $("#playlistInner");
+
+    if (playlistInner.hasClass("gridlayout") || playlistInner.hasClass("isvisible") || playlistInner.hasClass("isvisibleviewchanged") || playlistInner.hasClass("isvisiblestart") || playlistInner.hasClass("isvisibledragging") || playlistInner.hasClass("isvisibleinput") || playlistInner.hasClass("isvisiblesmallscreen") || playlistInner.hasClass("isvisiblepopup")) {
+        $("#listhintright").css("opacity", "0");
+    } else {
+        $("#listhintright").css("opacity", "0.75");
+    }
+
+
+}
+
+uiController.gridWidth = 300;
+uiController.toggleGridLayoutWidth = function () {
+    uiController.gridLayoutCols = Math.floor(($("#searchlist ul").width() - 35) / uiController.gridWidth);
+
+    $("#gridlayoutwidth").remove();
+
+    if (($("#searchlist ul").width() / uiController.gridLayoutCols - 35) > uiController.gridWidth) {
+        var style = $('<style id="gridlayoutwidth">' +
+            '#searchlist ul.gridlayout li { width:' + (($("#searchlist ul").width() / uiController.gridLayoutCols - 35)) + 'px!important;} ' +
+            '</style>');
+        $('html > head').append(style);
+
+    }
+}
+
+
 /* Toggel Grid Layout*/
 uiController.toggleGridLayout = function () {
+    //   viewController.fadeContentVisible(dontFadeContentTime);
+
     uiController.gridLayout = !uiController.gridLayout;
     if (uiController.gridLayout)
-        $("#searchlayoutbutton img").attr("src", "public/img/list.png");
-    else
         $("#searchlayoutbutton img").attr("src", "public/img/grid.png");
+    else
+        $("#searchlayoutbutton img").attr("src", "public/img/list.png");
+
     setTimeout(function () {
-        $("#searchlist  .iScrollIndicator").hide();
+
         var scrollY = uiController.searchListScroll.y;
 
-        $("#searchlist").hide();
+        // $("#searchlist").hide();
+
+
+        if (uiController.gridLayout) {
+            if (videoController.videoOpactiy == videoController.startVideoOpactiyVisisble)
+                videoController.videoOpactiy = videoController.startVideoOpactiyBackground;
+            else {
+                videoController.videoOpactiy = videoController.videoOpactiy / 1.1;
+                if (videoController.videoOpactiy < 0)
+                    videoController.videoOpactiy = 0;
+            }
+            videoController.setVideoOpacity(videoController.videoOpactiy);
+
+            $("#searchlist ul").addClass("gridlayout")
+
+        }
 
 
         setTimeout(function () {
-            $("#searchlist ul").toggleClass("gridlayout")
-            $("#searchlist").css("opacity", "0");
-            $("#searchlist").show();
+
+            if (uiController.gridLayout) {
+                $("#searchcontent").removeClass("forceenotvisible");
+                if (!uiController.gridLayoutOld) {
+
+
+                    uiController.toggleGridLayoutWidth();
+
+
+                    scrollY = scrollY / uiController.gridLayoutCols;
+                    if (uiController.searchListScroll.toggelLayoutOldY != uiController.searchListScroll.y)
+                        scrollY = scrollY + 64;
+
+                    $scope.safeApply();
+                    $("#searchlistview").listview('refresh');
+
+
+                    uiController.searchListScroll.refresh();
+
+                    if ($("#searchlist ul").height() > $("#searchlist").height())
+                        $("#searchlist .iScrollIndicator").show();
+                    if (!$("#searchlist ul").height() > $("#searchlist").height())
+                        scrollY = 0;
+                    else if (scrollY > 0)
+                        scrollY = 0;
+                    else if (scrollY < uiController.searchListScroll.maxScrollY)
+                        scrollY = uiController.searchListScroll.maxScrollY;
+
+
+                    uiController.searchListScroll.scrollTo(0, scrollY);
+
+
+                } else
+                    uiController.searchListScroll.refresh();
+            }
+
             $("#searchlistview").listview('refresh');
+
+            $("#searchcontent, #playlistInner, #playlist").toggleClass("gridlayout")
+            uiController.checkIfListHintsNecessary();
+
+            //$("#searchlist").css("opacity", "0");
+            //$("#searchlist").show();
+            //
 
         }, 0);
 
-        setTimeout(function () {
 
+        if (uiController.toggleGridLayoutTimer)
+            clearTimeout(uiController.toggleGridLayoutTimer);
+
+
+        if (playbackController.playingSong)
+            var fadeOutTime = 1500;
+        else
+            fadeOutTime = 0;
+
+
+        if (!uiController.gridLayout) {
+            $("#searchcontent").addClass("forceenotvisible");
+        }
+
+
+        uiController.toggleGridLayoutTimer = setTimeout(function () {
+            uiController.toggleGridLayoutTimer = null;
 
             // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB "+cols)
 
-            if (uiController.gridLayout) {
+            if (!uiController.gridLayout)
+                $("#searchlist ul").removeClass("gridlayout");
 
-                uiController.gridLayoutCols = Math.floor(($("#searchlist ul").width() - 15) / 250);
+            $("#searchcontent").removeClass("forceenotvisible");
 
-                if (($("#searchlist ul").width() / uiController.gridLayoutCols - 35) > 250) {
-                    $("#gridlayoutwidth").remove();
-                    var style = $('<style id="gridlayoutwidth">' +
-                        '#searchlist ul.gridlayout li { width:' + (($("#searchlist ul").width() / uiController.gridLayoutCols - 35)) + 'px!important;} ' +
-                        '</style>');
-                    $('html > head').append(style);
-
-                }
-
-
-                scrollY = scrollY / uiController.gridLayoutCols;
-                if (uiController.searchListScroll.toggelLayoutOldY != uiController.searchListScroll.y)
-                    scrollY = scrollY + 64;
-
-
-            }
-            else {
-
-                scrollY = (scrollY) * uiController.gridLayoutCols;
-
-
-                setTimeout(function () {
-                    playlistController.options.positionSongOptions();
-                }, 0)
-            }
 
             $scope.safeApply();
             $("#searchlistview").listview('refresh');
 
-            uiController.searchListScroll.refresh();
-
-            if ($("#searchlist ul").height() > $("#searchlist").height())
-                $("#searchlist .iScrollIndicator").show();
-            if (!$("#searchlist ul").height() > $("#searchlist").height())
-                scrollY = 0;
-            else if (scrollY > 0)
-                scrollY = 0;
-            else if (scrollY < uiController.searchListScroll.maxScrollY)
-                scrollY = uiController.searchListScroll.maxScrollY;
-
-            uiController.searchListScroll.scrollTo(0, scrollY);
-
-            $("#searchlist").hide();
-            $("#searchlist").css("opacity", "1");
-            $("#searchlist").addClass("fadeincomplete");
-            $("#searchlist").show();
             setTimeout(function () {
-                $("#searchlist").removeClass("fadeincomplete");
-            }, 500)
+                if (!uiController.gridLayout) {
 
-            uiController.searchListScroll.toggelLayoutOldY = scrollY;
+                    if (videoController.videoOpactiy = videoController.startVideoOpactiyBackground)
+                        videoController.videoOpactiy = videoController.startVideoOpactiyVisisble;
+                    else {
+                        videoController.videoOpactiy = videoController.videoOpactiy * 1.1;
+                        if (videoController.videoOpactiy > 1)
+                            videoController.videoOpactiy = 1;
+                    }
 
 
-        }, 800)
+                    scrollY = (scrollY) * uiController.gridLayoutCols;
+
+
+                    uiController.searchListScroll.refresh();
+
+                    if ($("#searchlist ul").height() > $("#searchlist").height())
+                        $("#searchlist .iScrollIndicator").show();
+                    if (!$("#searchlist ul").height() > $("#searchlist").height())
+                        scrollY = 0;
+                    else if (scrollY > 0)
+                        scrollY = 0;
+                    else if (scrollY < uiController.searchListScroll.maxScrollY)
+                        scrollY = uiController.searchListScroll.maxScrollY;
+
+
+                    uiController.searchListScroll.scrollTo(0, scrollY);
+                }
+                videoController.setVideoOpacity(videoController.videoOpactiy);
+                setTimeout(function () {
+                    playlistController.options.positionSongOptions();
+                }, 0)
+
+                /*  $("#searchlist").hide();
+                 $("#searchlist").css("opacity", "1");
+                 $("#searchlist").addClass("fadeincomplete");
+                 $("#searchlist").show();
+                 setTimeout(function () {
+                 $("#searchlist").removeClass("fadeincomplete");
+                 }, 500)
+                 */
+                $("#searchlistview").listview('refresh');
+                uiController.searchListScroll.refresh();
+
+                uiController.searchListScroll.toggelLayoutOldY = scrollY;
+                uiController.gridLayoutOld = uiController.gridLayout;
+
+            }, 0);
+        }, fadeOutTime)
     }, 0);
 }
 
 
+uiController.disableUI = function (disable) {
+    if (disable) {
+        $(".fullscreendisable").show()
+        $.mobile.loading("show");
 
+    } else {
+        $(".fullscreendisable").hide()
+        $.mobile.loading("hide");
 
-
-uiController.disableUI = function(disable){
-   if(disable){
-       $(".fullscreendisable").show()
-       $.mobile.loading("show");
-
-   } else{
-       $(".fullscreendisable").hide()
-       $.mobile.loading("hide");
-
-   }
+    }
 
 
 }
-
 
 
 //TODO no usage yet, remove uU
@@ -1080,4 +1387,27 @@ uiController.disableAutoFocus = function () {
             isManualFocus = true;
         });
     }
+}
+
+
+uiController.isTouchSupported = function () {
+
+    var test = function () {
+        uiController.isTouchNotSupportedOnDevice = true;
+    }
+    $(window).off("mouseover", test);
+
+    $(window).on("mouseover", test);
+
+    return uiController.isTouchNotSupportedOnDevice;
+//OLD
+    /*
+     var msTouchEnabled = window.navigator.msMaxTouchPoints;
+     var generalTouchEnabled = "ontouchstart" in document.createElement("div");
+
+     if (msTouchEnabled || generalTouchEnabled) {
+     return true;
+     }
+     return false;
+     */
 }

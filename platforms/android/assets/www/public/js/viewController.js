@@ -14,12 +14,12 @@ var viewController = function () {
 };
 
 
-
-viewController.views = [searchController,exploreController,myBaseController];
+viewController.views = [searchController, exploreController, listenController, myBaseController];
 
 viewController.activeView = null;
 
 
+viewController.listWasCompletelyLoadedFirstTime = false;
 
 /**
  * Init View Controller
@@ -29,13 +29,13 @@ viewController.init = function () {
 
     //Init Views
     for (var i = 0; i < viewController.views.length; i++) {
-        if( viewController.views[i].init)
-         viewController.views[i].init();
+        if (viewController.views[i].init)
+            viewController.views[i].init();
     }
 
 
     //Select Full Text if focused, available after 10 seconds  after startup
-    setTimeout(function(){
+    setTimeout(function () {
         $("#searchinput").focus(function () {
             var that = $(this);
             window.setTimeout(function () {
@@ -43,14 +43,57 @@ viewController.init = function () {
                     that.select();
             }, 100);
         });
-    },10000);
+    }, 10000);
 
+
+    viewController.suggestionsCounter = 0;
     //  Text entered into input
     $("#searchinput").on("input", function () {
         viewController.activeView.onInput();
+
+
+        var getSuggestions = function () {
+            viewController.suggestionsCounter++;
+
+            if (suggestionsTimeout)
+                clearTimeout(suggestionsTimeout)
+            suggestionsTimeout = null;
+
+            var getSuggestions = function (suggestionsCounter) {
+                $.ajax({
+                    url: preferences.serviceServerURL + "?dum=" + $("#searchinput").val(),
+                    success: function (data) {
+                        if (suggestionsCounter == viewController.suggestionsCounter) {
+                            viewController.didYouMean = data;
+
+                            if (viewController.didYouMean && $.trim(viewController.didYouMean) != "") {
+                                $(".searchinput-drop").addClass("visible");
+
+                            } else
+                                $(".searchinput-drop").removeClass("visible");
+                            $scope.safeApply();
+                        }
+                    }
+                })
+            }
+
+            getSuggestions(viewController.suggestionsCounter);
+
+
+        }
+
+        var suggestionsTimeout = setTimeout(getSuggestions, 1000);
     })
 
+    $(".searchinput-drop").click(function () {
+        $("#searchinput").val(viewController.didYouMean);
+        $(".searchinput-drop").removeClass("visible");
+        viewController.activeView.onInput();
+    })
+
+
     $("#controlbar .ui-input-clear").click(function () {
+        $(".searchinput-drop").removeClass("visible");
 
         viewController.activeView.onClear();
 
@@ -58,7 +101,7 @@ viewController.init = function () {
 
 
     //Show search at startup
-    viewController.activateView(searchController,true);
+    viewController.activateView(searchController, true);
 
     //Show Start Results
     if (!urlParams.search || urlParams.search == "") {
@@ -78,12 +121,12 @@ viewController.init = function () {
  * @param show
  */
 viewController.showLoading = function (show) {
-    if (show){
+    if (show) {
         $(".ui-alt-icon.ui-icon-search, .ui-alt-icon .ui-icon-search, .ui-input-search").addClass("loading");
         $("#controlselecthorizontal .ui-btn.highlight").addClass("loading");
 
     }
-    else  {
+    else {
         $(".ui-alt-icon.ui-icon-search.loading, .ui-alt-icon .ui-icon-search.loading, .ui-input-search.loading").removeClass("loading");
         $("#controlselecthorizontal .ui-btn.loading").removeClass("loading");
 
@@ -96,9 +139,39 @@ viewController.showLoading = function (show) {
  * @param view
  * @returns {boolean}
  */
-viewController.isActiveView = function(view){
-  return  viewController.activeView==view;
+viewController.isActiveView = function (view) {
+    return  viewController.activeView == view;
 }
+
+
+viewController.fadeContentVisible = function (time) {
+    if (!time)
+        time = 6000;
+    $("#searchcontent").addClass("isvisibleviewchanged");
+    uiController.checkIfListHintsNecessary();
+    if (viewController.contentVisibleTimer)
+        clearTimeout(viewController.contentVisibleTimer);
+    viewController.contentVisibleTimer = setTimeout(function () {
+        viewController.contentVisibleTimer = null;
+        $("#searchcontent").removeClass("isvisibleviewchanged");
+        uiController.checkIfListHintsNecessary();
+    }, time);
+}
+
+viewController.fadePlaylistContentVisible = function (time) {
+    if (!time)
+        time = 6000;
+    $("#playlistInner").addClass("isvisibleviewchanged");
+    uiController.checkIfListHintsNecessary();
+    if (viewController.contentPlaylistVisibleTimer)
+        clearTimeout(viewController.contentPlaylistVisibleTimer);
+    viewController.contentPlaylistVisibleTimer = setTimeout(function () {
+        viewController.contentPlaylistVisibleTimer = null;
+        $("#playlistInner").removeClass("isvisibleviewchanged");
+        uiController.checkIfListHintsNecessary();
+    }, time);
+}
+
 
 /**
  * Activated View
@@ -108,29 +181,31 @@ viewController.isActiveView = function(view){
  * @param parameter generic param for view
  *
  */
-viewController.activateView = function(view, noAnimation, showFunction, parameter){
-    if(!viewController.isActiveView(view)){
+viewController.activateView = function (view, noAnimation, showFunction, parameter) {
+    if (!viewController.isActiveView(view)) {
+
         viewController.showLoading(false);
 
         $("#controlbar .ui-input-clear").addClass("ui-input-clear-hidden");
 
 
+
         //Old View exists
-        if(viewController.activeView){
+        if (viewController.activeView) {
             viewController.activeView.hideView();
 
-            if(viewController.activeView.usesSearchList){
+            if (viewController.activeView.usesSearchList) {
                 $("#searchlist .iScrollPlayIndicator").hide();
                 $("#searchlist .iScrollScrollUpIndicator").hide();
                 $("#searchlist .iScrollIndicator").hide();
 
             }
             //Old View used Input on Button
-            var oViewUsedInput =  viewController.activeView.usesInput;
+            var oViewUsedInput = viewController.activeView.usesInput;
         }
 
 
-        viewController.activeView =  view;
+        viewController.activeView = view;
 
         var index = viewController.activeView.index;
 
@@ -142,13 +217,12 @@ viewController.activateView = function(view, noAnimation, showFunction, paramete
             var width = oButton.width();
 
 
-
-            if(oViewUsedInput){
+            if (oViewUsedInput) {
                 oButton.addClass("notanimated");
                 oButton.css("width", input.width());
 
-            }else
-              oButton.css("width", width)
+            } else
+                oButton.css("width", width)
 
             setTimeout(function () {
                 oButton.removeClass("notanimated");
@@ -178,15 +252,15 @@ viewController.activateView = function(view, noAnimation, showFunction, paramete
         $("#searchinput").val("");
         $("#controlbar .ui-btn").removeClass("highlight");
 
-        if(viewController.activeView.usesInput){
+        if (viewController.activeView.usesInput) {
             $(input).show()
             button.hide();
-        }  else{
+        } else {
             $(input).hide();
             button.addClass("highlight");
         }
-        if(viewController.activeView.inputText){
-            $(input).insertAfter(button).find("input").attr("placeholder", viewController.activeView.inputText );
+        if (viewController.activeView.inputText) {
+            $(input).insertAfter(button).find("input").attr("placeholder", viewController.activeView.inputText);
             setTimeout(function () {
                 input.find("input").focus();
             }, 100)
@@ -194,17 +268,19 @@ viewController.activateView = function(view, noAnimation, showFunction, paramete
 
 
         $("#searchlist").hide();
-        viewController.activeView.showView(showFunction,parameter);
 
-        if(viewController.activeView.usesSearchList) {
-            $("#searchlayoutbutton").show();
+        viewController.activeView.showView(showFunction, parameter);
+        if (viewController.activeView.usesSearchList) {
+            //$("#searchlayoutbutton").show();
             $("#searchlistview").listview('refresh');
             $("#searchlist").show();
+
         }
         else {
-            $("#searchlayoutbutton").hide();
+            //$("#searchlayoutbutton").hide();
             $("#searchlist").hide();
         }
+        viewController.fadeContentVisible();
 
     }
 
@@ -224,13 +300,12 @@ viewController.activateView = function(view, noAnimation, showFunction, paramete
  * @param delays
  */
 
-viewController.applySongList = function (currentSearchID,size,delays,stepSize,stepDelay) {
+viewController.applySongList = function (currentSearchID, size, delays, stepSize, stepDelay) {
 
     //console.log("-------------------------------------")
 
     $(".specialplaylistbutton").removeClass("fadeincompletefaster");
     $("#searchlist .iScrollIndicator").hide();
-
 
 
     //console.log(delays)
@@ -241,19 +316,27 @@ viewController.applySongList = function (currentSearchID,size,delays,stepSize,st
     $("#searchlist .oldloadedsong").removeClass("loadedsong");
 
 
+    viewController.applyingList = true;
 
     for (var i = 1; i <= delays; i++) {
 
         var show = function (index) {
             setTimeout(function () {
                 if (viewController.activeView.currentSearchID == currentSearchID) {
-                   // console.log(index + " mm  " + viewController.activeView.songs.searchResults.length)
-
+                    // console.log(index + " mm  " + viewController.activeView.songs.searchResults.length)
 
                     /*  if (searchController.showMode == 0)
                      searchController.displayLimit = searchController.maxResults;
                      else*/
                     viewController.activeView.displayLimit = size * index / delays;
+
+
+                    if (index == 1)
+
+                        playlistController.selection.deselectElements();
+
+                    if (index == delays)
+                        viewController.applyingList = false;
 
                     // console.log("safeapply")
                     $scope.safeApply();
@@ -266,20 +349,29 @@ viewController.applySongList = function (currentSearchID,size,delays,stepSize,st
                     //First new elements applied
                     if (index == 1) {
 
-                        if (songInList)
-                            playbackController.positionPlayIndicator();
+
+                        //if (songInList)
+                        //    playbackController.positionPlayIndicator();
 
                         playlistController.selection.updateDeselectedSong();
                         $(".specialplaylistbutton").addClass("fadeincompletefaster");
 
 
+                        viewController.fadeContentVisible();
 
 
                     }
                     //All elements applied
                     if (index == delays) {
-                        if (songInList)
+
+                        viewController.listWasCompletelyLoadedFirstTime = true;
+
+                        if (songInList) {
                             playbackController.positionPlayIndicator();
+
+                            $("#searchlist .iScrollPlayIndicator").show();
+
+                        }
 
                         searchController.dragging.makeSearchListDraggable();
                         setTimeout(function () {
@@ -294,10 +386,12 @@ viewController.applySongList = function (currentSearchID,size,delays,stepSize,st
                         }, 2000)
                     } else if (index % 3 == 0) {
                         uiController.searchListScroll.refresh();
-                        if (songInList)
-                            playbackController.positionPlayIndicator();
+                        //if (songInList)
+                        //    playbackController.positionPlayIndicator();
                     }
                     $("#searchlistview").listview('refresh');
+                    if (index == 1)
+                        $("#searchlistview").show();
 
 
                 }
@@ -310,12 +404,11 @@ viewController.applySongList = function (currentSearchID,size,delays,stepSize,st
 }
 
 
-
 /**
  * Get Song from From Index from active View
  * @param index
  */
-viewController.getSongFromIndex = function(index){
+viewController.getSongFromIndex = function (index) {
 
     return viewController.activeView.getSongFromIndex(index)
 }

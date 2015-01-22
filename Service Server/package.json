@@ -1,0 +1,12 @@
+{
+  "name": "serviceserver",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node serviceserver.js"
+  },
+  "dependencies": {
+    "http": "*",
+    "express": "*"
+  }
+}

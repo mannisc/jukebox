@@ -15,13 +15,11 @@ var searchController = function () {
 };
 
 
-searchController.lastfmapikey="019c7bcfc5d37775d1e7f651d4c08e6f";
+searchController.lastfmapikey = "019c7bcfc5d37775d1e7f651d4c08e6f";
 
 
 searchController.dragging = function () {
-
 };
-
 
 
 searchController.songs = function () {
@@ -52,7 +50,10 @@ searchController.usesSearchList = true;
 
 searchController.index = 0;
 
-searchController.inputText = "Search Songs and Playlists";
+searchController.inputText = "Search Songs, Playlists and Artists";
+
+searchController.inputTextArtist = "Search ";
+
 
 searchController.currentSearchID = 0;
 
@@ -63,7 +64,42 @@ searchController.displayLimit = searchController.maxResults;
 searchController.searchSongsString = "";
 
 //What content is displayed in the list
-searchController.showMode = -1; //-1: nichts, 0: Alle Ergebnisse 1: songs,2:  playlists, 3: artists,4: user , 5: one playlist
+searchController.showMode = -1; //-1: nichts, 0: Alle Ergebnisse 1: songs,2:  playlists, 3: artists,4: user , 5: one playlist  , 6:one Artist
+
+
+searchController.modeHistory = new function () {
+    var history = [];
+
+
+    this.push = function (mode, data) {
+        history.push({mode: mode, searchTerm: searchController.searchTerm, showedArtist: $.extend(true, {}, searchController.showedArtist), showedPlaylist: $.extend(true, {}, searchController.showedPlaylist), songsStart: +searchController.songs.songsStart, nextSongsExists: searchController.songs.nextSongsExists})
+
+    };
+    this.pop = function () {
+        return history.pop();
+    };
+
+    this.exists = function () {
+        return history.length > 0;
+    }
+
+    this.modeInHistory = function (mode) {
+
+        if (searchController.showMode == 6)
+            return true;
+
+        for (var i = 0; i < history.length; i++) {
+            if (history[i].mode == mode)
+                return true;
+        }
+        return false;
+    }
+
+    this.history = history;
+
+
+}
+
 
 searchController.maxPopularSongPages = 2;
 searchController.maxArtistSongPages = 2;
@@ -75,13 +111,18 @@ searchController.searchTypeArtists = 2;
 searchController.searchTypeUsers = 3;
 
 
+/*Show Range for songs*/
+
+searchController.songs.popularStart = 0;
+searchController.songs.songsStart = 0;
+
 //Generated data
 
 if (generatedData && generatedData.charts) {
     searchController.preloadedPopularSongs = {"track": generatedData.charts};
-    setTimeout(function(){
+    setTimeout(function () {
         searchController.songs.cleanList(searchController.preloadedPopularSongs.track);
-},0)
+    }, 0)
 }
 else
     searchController.preloadedPopularSongs = {"track": []}
@@ -98,7 +139,7 @@ searchController.init = function () {
         zoomMax: 1,
 
         startZoom: 1,
-        useTransition:true,
+        useTransition: true,
         // wheelAction: 'zoom',
         scrollbars: true,
         noHorizontalZoom: true,
@@ -106,7 +147,10 @@ searchController.init = function () {
 
 
     });
+
     $("#searchlist .iScrollIndicator").addClass("fadeincomplete").hide();
+
+
     /**
      * Scroll by wheel
      * @param event
@@ -115,12 +159,18 @@ searchController.init = function () {
             var isOnPlaylist = $(event.target).parents("#playlist");
             var isOnSearchlist = $(event.target).parents("#searchlistview");
 
-            if (isOnPlaylist.length == 0&&isOnSearchlist.length == 0)
-             uiController.searchListScroll.handleEvent(event);
+            if (isOnPlaylist.length == 0 && isOnSearchlist.length == 0) {
+                uiController.searchListScroll.handleEvent(event);
+            }
         }
     )
 
 
+    $("#searchlist").on('wheel', function (event) {
+            viewController.fadeContentVisible(2500);
+
+        }
+    )
 
     uiController.searchListScroll.on('scrollEnd', function () {
         if (uiController.searchListScroll.y == 0) {
@@ -139,7 +189,7 @@ searchController.init = function () {
     searchController.scrollUpIndicator = $('<div class="iScrollScrollUpIndicator fadeincomplete" style="display:none;"></div>');
     $("#searchlist .iScrollVerticalScrollbar").prepend(searchController.scrollUpIndicator);
 
-    searchController.scrollUpIndicator.click(function () {
+    searchController.scrollUpIndicator.on("click touchend",function () {
         uiController.searchListScroll.scrollTo(0, 0, 200);
     });
 
@@ -149,74 +199,155 @@ searchController.init = function () {
         uiController.searchListScroll.scrollToElement(".loadedsong", 700);
     });
 
+    //Avoid still scrolling when mouseup outside winow occurs
+    $(document).on("mouseout", function (e) {
+        e = e ? e : window.event;
+        var from = e.relatedTarget || e.toElement;
+        if (!from || from.nodeName == "HTML") {
+            // stop your drag event here
+            // for now we can just use an alert
+            var coords = {
+                clientX: e.clientX,
+                clientY: e.clientY
+            };
+            $(window).simulate("mouseup", coords);
+        }
+    })
+
+
+    //Detect swipes on searchlist
+    var swipeDetectFunction = function (event) {
+        var startY = event.clientY||event.originalEvent.touches[0].clientY;
+        $(window).on("mousemove.swipe touchmove.swipe", function (event) {
+
+
+            var actY =  event.clientY;
+            var diffY = 30;
+            if(!actY&&event.originalEvent.touches[0]) {
+                actY =  event.originalEvent.touches[0].clientY;
+                diffY = 1;
+            }
+
+            if (!actY||uiController.swiping || (startY > 0 && Math.abs(actY- startY) > diffY)) {
+                uiController.swiping = true;
+                uiController.swipeTimer = Date.now();
+            }
+        })
+        $(window).on("mouseup touchend", function (event) {
+            var actY =  event.clientY;
+            var diffY = 30;
+            if(!actY&&event.originalEvent.touches[0]) {
+                actY =  event.originalEvent.touches[0].clientY;
+                diffY = 1;
+            }
+
+            if (!actY||uiController.swiping || (startY > 0 && Math.abs(actY- startY) > diffY)) {
+
+                uiController.swipeTimer = Date.now();
+                uiController.swiping = false;
+            }
+            $(window).off("mousemove.swipe touchmove.swipe").off("mouseup touchend");
+
+        })
+
+    }
+    $(window).off("mousedown.swipe touchstart.swipe", swipeDetectFunction);
+    $(window).on("mousedown.swipe touchstart.swipe" , swipeDetectFunction)
+
+    $("#searchlist, #playlist").on("touchstart" , function(){
+        $("#searchinput").blur();
+    })
+
+
+
+
 
 }
-
-
 
 
 /**
  * Something was entered in input
  */
-searchController.onInput = function(){
+searchController.onInput = function () {
 
-    if( searchController.showMode == 5)
+    if (searchController.showMode == 5)
         searchController.backShowMode();
 
     $("#searchlist .iScrollPlayIndicator").hide();
     $("#searchlist .iScrollScrollUpIndicator").hide();
 
+
     searchController.startSearch();
+
+
+
 
 }
 
 /**
  * Input was cleared
  */
-searchController.onClear = function(){
+searchController.onClear = function () {
+    if (searchController.showMode == 6) {
+        $("#searchinput").val("");
+        $("#controlselecthorizontal .ui-input-clear").addClass("ui-input-clear-hidden");
+
+    } else {
+        if (searchController.showMode > 4)
+            searchController.backShowMode();
+    }
     searchController.startSearch();//Show Populars
+
+
 }
 
 
 /**
  *  Show View
  */
-searchController.showView = function(){
-    uiController.searchListScroll.scrollTo(0, 0,0);
+searchController.showView = function () {
+    uiController.searchListScroll.scrollTo(0, 0, 0);
 
     searchController.visible = true;
 
     $("#searchinput").val(searchController.searchSongsString);
+    $("#searchcontent").addClass("searchlayout");
 
-    setTimeout(function(){
-        if(  searchController.visible){
+    setTimeout(function () {
+        if (searchController.visible) {
+
+
             searchController.displayLimit = 0;
 
             searchController.applySongList(searchController.currentSearchID);
 
 
-
         }
 
-    },350)
+    }, 350)
+
+   uiController.updateUI();
 }
 
 
 /**
  * Hide View
  */
-searchController.hideView = function(){
+searchController.hideView = function () {
 
     searchController.visible = false;
 
     searchController.currentSearchID++;
 
-    searchController.displayLimit = 0;
+    searchController.displayLimit = 0
+
+    $("#searchcontent").removeClass("searchlayout");
 
     searchController.searchSongsString = $("#searchinput").val();
     $scope.safeApply();
     $("#searchlistview").listview('refresh');
 
+    uiController.updateUI();
 
 }
 
@@ -236,6 +367,7 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
     var deferred = $.Deferred();
 
     searchURL = searchURL.replace("%searchTerm", searchTerm);
+
 
     var searchserver = function () {
         if (!nativeSearchTerm)
@@ -270,13 +402,13 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
                             }
                         }
                         list = data.track;
-                    }
 
-                    //Load Covers
-                    for (var j = 0; j <  data.track.length; j++) {
-                          setTimeout(mediaController.loadPreview(data.track[j]), j*300);
-                    }
 
+                        //Load Covers
+                        for (var j = 0; j < data.track.length; j++) {
+                            setTimeout(mediaController.loadPreview(data.track[j]), j * 300);
+                        }
+                    }
 
                     deferred.resolve({list: list, native: true});
 
@@ -296,7 +428,7 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
             if (!data)
                 data = {};
             //Search Results
-            if (data.results && !(data.results.trackmatches == "\n" || data.results.albummatches == "\n" || data.results.artistmatches == "\n")) {
+            if (data.results && !data.results.albummatches && !(data.results.trackmatches == "\n" || data.results.artistmatches == "\n")) {
                 deferred.resolve({list: data, native: false});
             } // Similarity search
             else if (data.similartracks && !(data.similartracks == "\n")) {
@@ -305,6 +437,15 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
             else if (data.toptracks && !(data.toptracks == "\n")) {
                 deferred.resolve({list: data.toptracks, native: false});
             }
+            else if (data.topalbums && data.topalbums.album && !(data.topalbums == "\n")) {
+                deferred.resolve({list: data.topalbums.album, native: false});
+
+            } else if (data.results && data.results.albummatches && data.results.albummatches.album && !(data.results.albummatches == "\n" )) {
+                deferred.resolve({list: data.results.albummatches.album, native: false});
+
+            }
+
+
             else {
                 if (!dontSearchNative) {
                     searchserver();
@@ -332,40 +473,74 @@ searchController.basicOnlineSearchDeferred = function (searchURL, searchTerm, se
  * Search was started
  */
 
-searchController.startSearch = function (searchTerm) {
+searchController.startSearch = function (searchTerm, dontResetStartPage) {
     if (!searchTerm)
         searchTerm = $("#searchinput").val();
 
     viewController.showLoading(true);
 
-    if (searchTerm && $.trim(searchTerm) != "") {
+    searchController.searchTerm = searchTerm;
 
 
+    if (!dontResetStartPage) {
+        searchController.songs.songsStart = 0;
+        searchController.songs.nextSongsExists = true;
+        var startPage = 1;
+    } else {
+        startPage = 1 + searchController.songs.songsStart / searchController.songs.pageLimit;
+    }
+
+
+    if (searchController.modeHistory.modeInHistory(6)) {
         searchController.currentSearchID = searchController.currentSearchID + 1;
+
         var search = function (searchID) {
             $.when(
-                    searchController.songs.startSearchDeferred(searchTerm),
-                    searchController.playlists.startSearchDeferred(searchTerm),
-                    searchController.artists.startSearchDeferred(searchTerm)
-
-                ).then(function (songList, playlistList, artistsList, userList) {
+                    searchController.songs.startSearchDeferred(searchController.searchTerm, searchID, startPage, searchController.showedArtist.name),
+                    searchController.playlists.startSearchDeferred(searchController.searchTerm, searchController.showedArtist.name)
+                ).then(function (songList, playlistList) {
                     if (searchID == searchController.currentSearchID) {
                         searchController.showedPopulars = false;
-                        searchController.completedSearch(songList, playlistList, artistsList, userList);
+                        searchController.completedSearch(songList, playlistList);
 
                     }
                 });
         };
-
         search(searchController.currentSearchID);
 
-    } else {
-
-        searchController.showPopulars();
     }
+    else {
 
+        if (searchTerm && $.trim(searchTerm) != "") {
+
+            searchController.currentSearchID = searchController.currentSearchID + 1;
+
+            //Artist Displayed
+
+            var search = function (searchID) {
+                $.when(
+                        searchController.songs.startSearchDeferred(searchController.searchTerm, searchID, startPage),
+                        searchController.playlists.startSearchDeferred(searchController.searchTerm),
+                        searchController.artists.startSearchDeferred(searchController.searchTerm)
+
+                    ).then(function (songList, playlistList, artistsList, userList) {
+                        if (searchID == searchController.currentSearchID) {
+                            searchController.showedPopulars = false;
+                            searchController.completedSearch(songList, playlistList, artistsList, userList);
+
+                        }
+                    });
+            };
+
+
+            search(searchController.currentSearchID);
+
+        } else {
+
+            searchController.showPopulars();
+        }
+    }
 };
-
 
 
 /**
@@ -374,11 +549,12 @@ searchController.startSearch = function (searchTerm) {
 searchController.completedSearch = function (songList, playlistList, artistsList, userList) {
     if (songList || playlistList || artistsList || userList) {
 
+
         searchController.displayLimit = 0;
 
         if (searchController.showMode == -1)
             searchController.showMode = 0;
-        uiController.searchListScroll.scrollTo(0, 0, 1000)
+        uiController.searchListScroll.scrollTo(0, 0, 700);
 
         if (songList != null)//Something Changed
             searchController.songs.searchResults = songList;
@@ -389,17 +565,43 @@ searchController.completedSearch = function (songList, playlistList, artistsList
         if (userList != null)//Something Changed
             searchController.users.searchResults = userList;
 
+
         searchController.applySongList(searchController.currentSearchID);
-        setTimeout(viewController.showLoading, 100); //show=false
+        setTimeout(function () {
+                viewController.showLoading(false);
+                $.mobile.loading("hide");
+
+            }
+            , 100); //show=false
 
     }
 
 };
 
 
+searchController.isSongInList = function (song, list, maxPosition) {
+
+    if (song && list) {
+
+        if (!maxPosition)
+            maxPosition = list.length;
+
+        var displayName = mediaController.getSongDisplayName(song);
+        for (var i = 0; i < maxPosition; i++) {
+            if (displayName == mediaController.getSongDisplayName(list[i])) {
+                return true;
+            }
+        }
+    }
+    return false;
+
+}
+
+
 searchController.showPopulars = function () {
 
     if (searchController.preloadedPopularSongs) {
+
 
         searchController.playlists.searchResults = [];
         searchController.artists.searchResults = [];
@@ -408,7 +610,7 @@ searchController.showPopulars = function () {
         searchController.showedPopulars = true;
         searchController.currentSearchID = searchController.currentSearchID + 1;
 
-        searchController.completedSearch(searchController.preloadedPopularSongs.track);
+        searchController.completedSearch(searchController.preloadedPopularSongs.track.slice(searchController.songs.popularStart, searchController.songs.popularStart + 1 + searchController.maxResults));
 
     }
 }
@@ -424,8 +626,8 @@ searchController.emptySearchList = function (dontInitFully) {
     searchController.users.searchResults = [];
     searchController.displayLimit = 0;
 
+
     $scope.safeApply();
-    console.log("EMPTYÄÄÄÄÄAYYYYIIIIIII")
 
     $("#searchlistview").listview('refresh');
     $("#searchlist .iScrollIndicator").hide();
@@ -452,42 +654,86 @@ searchController.emptySearchList = function (dontInitFully) {
 }
 
 
-
 /*Songs -------------------------------------------------------------------------------------------------------------------------------------*/
 
 /**
  * Encapsules all song operations
  */
 
+searchController.songs.pageLimit = 30;
+searchController.songs.maxPagesAtOnce = 2;
 
 
-searchController.songs.startSearchDeferred = function (searchTerm) {
+/**
+ *
+ * @param searchTerm
+ * @param searchID
+ * @param startPage
+ * @param artist Optional
+ * @returns {*}
+ */
+searchController.songs.startSearchDeferred = function (searchTerm, searchID, startPage, artist) {
     var deferred = $.Deferred();
 
-    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=track.search&track=%searchTerm&limit=100&api_key="+searchController.lastfmapikey+"&format=json";
 
-    $.when(
-            searchController.basicLocalSearchDeferred(searchTerm, searchController.searchTypeSongs),
-            searchController.basicOnlineSearchDeferred(onlineSearchURL, searchTerm, searchController.searchTypeSongs)
-        ).then(function (localList, onlineList) {
-            var songList = searchController.songs.completeSearch(localList, onlineList)
-            deferred.resolve(songList);
+    var loadPage = function (page, loadedSongList) {
 
-        });
+
+        if (searchTerm && $.trim(searchTerm) != "") {
+            var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=track.search&track=%searchTerm&limit=" + searchController.songs.pageLimit + "&page=" + page + "&api_key=" + searchController.lastfmapikey + "&format=json";
+            if (artist) {
+                searchTerm = artist + " " + searchTerm;
+            }
+        }
+
+        else {
+            onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&limit=" + searchController.songs.pageLimit + "&api_key=" + searchController.lastfmapikey + "&page=" + page + "&format=json"
+
+
+            if (artist)
+                onlineSearchURL = onlineSearchURL + "&artist=" + artist;
+        }
+
+
+        $.when(
+                searchController.basicLocalSearchDeferred(searchTerm, searchController.searchTypeSongs, (artist != null)),
+                searchController.basicOnlineSearchDeferred(onlineSearchURL, searchTerm, searchController.searchTypeSongs)
+            ).then(function (localList, onlineList) {
+                if (!searchID || searchID == searchController.currentSearchID) {
+
+                    var songList = searchController.songs.completeSearch(localList, onlineList);
+
+                    songList = loadedSongList.concat(songList);
+
+
+                    if (page - startPage + 1 < searchController.songs.maxPagesAtOnce) {
+                        page++;
+                        loadPage(page, songList);
+                    }
+                    else
+                        deferred.resolve(songList);
+
+
+                } else
+                    deferred.resolve(songList);
+
+            });
+    }
+    loadPage(startPage, []);
+
     return deferred.promise();
 
 }
 
 
-
-searchController.formatNumber = function(x) {
-    if(x.indexOf(".")==-1)
-     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+searchController.formatNumber = function (x) {
+    if (x.indexOf(".") == -1)
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     else
-     return x
+        return x
 }
 
-searchController.songs.cleanList = function(songList){
+searchController.songs.cleanList = function (songList) {
     for (var i = 0; i < songList.length; i++) {
         var song = songList[i];
         if (!song.name || song.name == "") {
@@ -495,8 +741,8 @@ searchController.songs.cleanList = function(songList){
             i--;
         } else {
 
-            if(song.playcount)
-             song.playcount = searchController.formatNumber(song.playcount);
+            if (song.playcount)
+                song.playcount = searchController.formatNumber(song.playcount);
 
             if (song.artist) {
                 if (!song.artist.name) {
@@ -522,8 +768,7 @@ searchController.songs.cleanList = function(songList){
 }
 
 
-searchController.songs.completeSearch =  function (localList, onlineList) {
-     console.dir(onlineList)
+searchController.songs.completeSearch = function (localList, onlineList) {
     //Is from last fm or native server -> so convert and extract songlist accordingly
     if (onlineList.native) {
         onlineList = onlineList.list;
@@ -543,7 +788,6 @@ searchController.songs.completeSearch =  function (localList, onlineList) {
     // console.dir(songList);
     //Set Artist of song and remove songs without name
     searchController.songs.cleanList(songList)
-
 
 
     //Check if something changed
@@ -572,6 +816,91 @@ searchController.songs.completeSearch =  function (localList, onlineList) {
 }
 
 
+searchController.songs.previousSongsExists = function () {
+    return searchController.songs.songsStart > 0
+}
+
+searchController.songs.previousSongs = function () {
+    searchController.songs.songsStart = searchController.songs.songsStart - searchController.songs.pageLimit * searchController.songs.maxPagesAtOnce;
+    searchController.songs.loadCurrentPage();
+}
+
+
+searchController.songs.nextSongs = function () {
+    var oldStart = searchController.songs.songsStart;
+
+    searchController.songs.songsStart = searchController.songs.songsStart + searchController.songs.pageLimit * searchController.songs.maxPagesAtOnce;
+    searchController.songs.loadCurrentPage(oldStart);
+
+}
+
+searchController.songs.loadCurrentPage = function (oldStart) {
+    $("#searchlist .iScrollPlayIndicator").hide();
+    $("#searchlist .iScrollScrollUpIndicator").hide();
+    viewController.showLoading(true);
+    $.mobile.loading("show");
+    searchController.currentSearchID = searchController.currentSearchID + 1;
+    var search = function (searchID) {
+
+        if (searchController.modeHistory.modeInHistory(6))
+            var artist = searchController.showedArtist.name;
+        else
+            artist = null;
+
+        $.when(
+                searchController.songs.startSearchDeferred(searchController.searchTerm, searchID, 1 + searchController.songs.songsStart / searchController.songs.pageLimit, artist)
+            ).then(function (songList) {
+
+                if (searchID == searchController.currentSearchID) {
+                    searchController.showedPopulars = false;
+
+                    var arraysIdentical = function (a, b) {
+                        var i = a.length;
+                        if (i != b.length) return false;
+                        while (i--) {
+                            if (mediaController.getSongDisplayName(a[i]) !== mediaController.getSongDisplayName(b[i])) return false;
+                        }
+                        return true;
+                    };
+
+                    if (arraysIdentical(searchController.songs.searchResults, songList)) {
+                        searchController.songs.nextSongsExists = false;
+                        searchController.songs.songsStart = oldStart;
+
+                    }
+                    searchController.completedSearch(songList);
+
+
+                }
+                $.mobile.loading("hide");
+
+            });
+    };
+    search(searchController.currentSearchID);
+}
+
+
+searchController.songs.previousPopularSongsExists = function () {
+    return searchController.songs.popularStart > 0
+}
+
+searchController.songs.previousPopularSongs = function () {
+    searchController.songs.popularStart = searchController.songs.popularStart - searchController.maxResults;
+    $("#searchlist .iScrollPlayIndicator").hide();
+    $("#searchlist .iScrollScrollUpIndicator").hide();
+    searchController.showPopulars();
+}
+
+searchController.songs.nextPopularSongsExists = function () {
+    return searchController.preloadedPopularSongs.track.length - (searchController.songs.popularStart + searchController.maxResults) > 0
+}
+
+searchController.songs.nextPopularSongs = function () {
+    searchController.songs.popularStart = searchController.songs.popularStart + searchController.maxResults;
+    $("#searchlist .iScrollPlayIndicator").hide();
+    $("#searchlist .iScrollScrollUpIndicator").hide();
+    searchController.showPopulars();
+}
 
 
 /*Playlists -------------------------------------------------------------------------------------------------------------------------------------*/
@@ -579,20 +908,25 @@ searchController.songs.completeSearch =  function (localList, onlineList) {
 /**
  * Encapsules all playlist operations
  */
+searchController.playlists.pageLimit = 30;
 
-
-searchController.playlists.startSearchDeferred = function (searchTerm) {
+searchController.playlists.startSearchDeferred = function (searchTerm, artist) {
     var deferred = $.Deferred();
 
-
-    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=album.search&album=%searchTerm&limit=100&api_key="+searchController.lastfmapikey+"&format=json";
+    if (searchTerm && $.trim(searchTerm) != "") {
+        var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=album.search&album=%searchTerm&limit=" + searchController.playlists.pageLimit + "&api_key=" + searchController.lastfmapikey + "&format=json";
+        if (artist) {
+            searchTerm = artist + " " + searchTerm;
+        }
+    }
+    else
+        onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&limit=" + searchController.playlists.pageLimit + "&artist=" + artist + "&api_key=" + searchController.lastfmapikey + "&format=json";
 
     $.when(
             searchController.basicLocalSearchDeferred(searchTerm, searchController.searchTypePlaylists),
             searchController.basicOnlineSearchDeferred(onlineSearchURL, searchTerm, searchController.searchTypePlaylists, true)
         ).then(function (localList, onlineList) {
-
-            var playlistList = searchController.playlists.completeSearch(localList, onlineList)
+            var playlistList = searchController.playlists.completeSearch(localList, onlineList);
             deferred.resolve(playlistList);
 
         });
@@ -604,10 +938,9 @@ searchController.playlists.completeSearch = function (localList, onlineList) {
 
 
     //Is from last fm or native server -> so convert and extract songlist accordingly
-    if (onlineList.native) {
-        onlineList = onlineList.list;
-    } else
-        onlineList = onlineList.list.results.albummatches.album;
+
+    onlineList = onlineList.list;
+
 
     var playlistList = localList.concat(onlineList)
 
@@ -657,6 +990,199 @@ searchController.playlists.completeSearch = function (localList, onlineList) {
 }
 
 
+/**
+ * Show one Playlist in search list
+ */
+searchController.playlists.showPlaylist = function (playlist, dontPushNewMode) {
+
+    if (searchController.showMode == 5 && searchController.showedPlaylist.mbid == playlist.mbid)
+        return;
+
+    viewController.activateView(searchController);
+
+    $.mobile.loading("show");
+
+    playlist.tracks = [];
+
+    if (!dontPushNewMode)
+        searchController.modeHistory.push(searchController.showMode);
+
+    searchController.showMode = 5;
+    searchController.showedPlaylist = playlist;
+
+    $("#searchlistview").hide();
+    $("#searchlist .iScrollIndicator").hide();
+    $("#searchlist .iScrollScrollUpIndicator").hide();
+    $("#searchlist .iScrollPlayIndicator").hide();
+
+    playlistController.selection.deselectElements();
+
+    var callbackComplete = function () {
+
+
+        $scope.safeApply();
+        viewController.fadeContentVisible();
+        setTimeout(function () {
+            $("#searchlistview").listview('refresh');
+            searchController.dragging.makeSearchListDraggable();
+            $("#searchlistview").show();
+            uiController.searchListScroll.scrollTo(0, 0, 0);
+            $.mobile.loading("hide");
+
+
+        }, 150);
+        setTimeout(function () {
+            uiController.searchListScroll.refresh();
+
+
+        }, 150)
+        setTimeout(function () {
+            uiController.searchListScroll.refresh();
+
+        }, 1000)
+
+
+    }
+
+    setTimeout(function () {
+        searchController.playlists.loadPlaylistTracks(playlist, callbackComplete, true);
+    }, 0);
+
+}
+
+
+/**
+ * Plays all displayed Playlists
+ */
+searchController.playlists.playAllPlaylists = function () {
+    if (searchController.playlists.searchResults && searchController.playlists.searchResults.length > 0) {
+        uiController.disableUI(true);
+
+        setTimeout(function () {
+            var playlists = searchController.playlists.searchResults.concat();
+            var addPlaylist = function (playlists, index, playlistLength) {
+                if (index > 0 && playlists[index - 1] && playlists[index - 1].tracks && playlists[index - 1].tracks.length) {
+                    playlistLength = playlistLength + playlists[index - 1].tracks.length;
+                    if (playlistLength > 0) {
+                        if (index == 1)
+                            playlistController.playSongList(playlists[index - 1].tracks.concat());
+                        else
+                            playlistController.addSongsToPlaylist(playlistController.currentQueue, playlists[index - 1].tracks.concat());
+                    }
+                }
+                if (index < playlists.length && playlistLength < searchController.maxResults) {
+                    searchController.playlists.loadPlaylistTracks(playlists[index], function () {
+                        addPlaylist(playlists, index + 1, playlistLength);
+                    }, false)
+                } else {
+                    uiController.disableUI(false);
+
+                }
+            }
+            addPlaylist(playlists, 0, 0)
+        }, 150)
+    }
+
+}
+
+
+/**
+ * Load Tracks of Playlist from last.fm
+ */
+searchController.playlists.loadPlaylistTracks = function (playlist, completeCallback, loadPreviews) {
+
+
+    var url = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" + searchController.lastfmapikey + "&artist=" + playlist.artist.name + "&album=" + playlist.name + "&format=json";
+
+    $.ajax({
+        url: url,
+        async: false,
+        success: function (data) {
+            if (data.album && data.album.tracks && data.album.tracks.track) {
+                console.log("...----")
+                console.dir(data)
+                console.log(data.album.tracks.track)
+                searchController.songs.cleanList(data.album.tracks.track);
+
+                playlist.tracks = data.album.tracks.track;
+                //If only one track in playlist, stored as  object not list >:(
+                if (playlist.tracks.name) {
+                    var track = playlist.tracks;
+                    playlist.tracks = null;
+                    playlist.tracks = [track];
+                }
+                //Load covers
+                if (playlist.tracks.length && loadPreviews) {
+                    for (var j = 0; j < playlist.tracks.length; j++) {
+
+                        if (!playlist.tracks[j].image) {
+                            setTimeout(mediaController.loadPreview(playlist.tracks[j]), j * 300);
+                        }
+
+                    }
+                }
+
+
+                console.dir(playlist);
+            }
+
+
+        },
+        error: function () {
+
+
+        },
+        complete: function () {
+            if (completeCallback)
+                completeCallback();
+
+
+        }
+
+    })
+
+}
+
+
+/**
+ * Search for Playlists and open it
+ * @param song
+ */
+searchController.playlists.searchForPlaylist = function (song) {
+
+    var url = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=" + searchController.lastfmapikey + "&artist=" + song.artist.name + "&track=" + song.name + "&format=json";
+    $.mobile.loading("show");
+
+    $.ajax({
+        url: url,
+        success: function (data) {
+            console.dir(data);
+            if (data && data.track && data.track.album) {
+
+                var album = data.track.album;
+
+                var playlist = {artist: album.artist, name: album.title};
+
+                if (playlist.artist) {
+                    if (!playlist.artist.name) {
+                        if (playlist.artist)
+                            playlist.artist = {name: playlist.artist};
+                    }
+                }
+                searchController.playlists.showPlaylist(playlist);
+
+            } else {
+                uiController.toast("No Playlist was found...", 1500);
+            }
+        },
+        complete: function () {
+            $.mobile.loading("hide");
+
+        }
+    });
+
+}
+
 /*Artists -------------------------------------------------------------------------------------------------------------------------------------*/
 
 /**
@@ -668,15 +1194,15 @@ searchController.artists.startSearchDeferred = function (searchTerm) {
     var deferred = $.Deferred();
 
 
-    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=%searchTerm&limit=100&api_key="+searchController.lastfmapikey+"&format=json";
+    var onlineSearchURL = "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=%searchTerm&api_key=" + searchController.lastfmapikey + "&format=json";
 
     $.when(
-            searchController.basicLocalSearchDeferred(searchTerm, searchController.searchTypeArtists)
-                        //searchController.basicOnlineSearchDeferred(onlineSearchURL, searchTerm, searchController.searchTypeArtists, true)
+            searchController.basicLocalSearchDeferred(searchTerm, searchController.searchTypeArtists),
+            searchController.basicOnlineSearchDeferred(onlineSearchURL, searchTerm, searchController.searchTypeArtists, true)
         ).then(function (localList, onlineList) {
 
 
-            var artistList = searchController.artists.completeSearch(localList, onlineList)
+            var artistList = searchController.artists.completeSearch(localList, onlineList);
             deferred.resolve(artistList);
 
         });
@@ -685,16 +1211,16 @@ searchController.artists.startSearchDeferred = function (searchTerm) {
 
 
 searchController.artists.completeSearch = function (localList, onlineList) {
-    if(!onlineList)
+    if (!onlineList)
         onlineList = [];
 
     //Is from last fm or native server -> so convert and extract songlist accordingly
     if (onlineList.native) {
         onlineList = onlineList.list;
-    } else if(onlineList.list)
+    } else if (onlineList.list)
         onlineList = onlineList.list.results.artistmatches.artist;
     else
-        onlineList  = [];
+        onlineList = [];
 
     var artistList = localList.concat(onlineList)
 
@@ -733,6 +1259,125 @@ searchController.artists.completeSearch = function (localList, onlineList) {
     return artistList;
 }
 
+
+/**
+ * Show one Playlist in search list
+ */
+searchController.artists.showArtist = function (artist, dontPushNewMode) {
+
+    //Already Loaded
+    if (searchController.showMode == 6 && searchController.showedArtist.mbid == artist.mbid)
+        return;
+
+
+    viewController.activateView(searchController);
+
+
+    $.mobile.loading("show");
+
+
+    if (!dontPushNewMode)
+        searchController.modeHistory.push(searchController.showMode);
+
+    if (artist.bio && artist.bio.summary && artist.bio.summary != "")
+        var bioLoaded = true;
+    else {
+        artist.bio = {content: "", summary: ""};
+        bioLoaded = false;
+    }
+
+    searchController.showedArtist = artist;
+
+    searchController.showMode = 6;
+
+    $("#controlselecthorizontal .ui-input-clear").addClass("ui-input-clear-hidden");
+    $("#searchinput").val("");
+    $("#searchinput").attr("placeholder", searchController.inputTextArtist + artist.name);
+
+
+    $("#searchlistview").hide();
+    $("#searchlist .iScrollIndicator").hide();
+    $("#searchlist .iScrollScrollUpIndicator").hide();
+
+    playlistController.selection.deselectElements();
+
+    var callbackComplete = function (artist) {
+        searchController.showedArtist = artist;
+        $scope.safeApply();
+        //$("#searchlist li.artistinfo .artistbio").html()
+        viewController.fadeContentVisible();
+        setTimeout(function () {
+            $("#searchlistview").listview('refresh');
+            searchController.dragging.makeSearchListDraggable();
+
+            uiController.searchListScroll.scrollTo(0, 0, 0);
+            searchController.startSearch("", true);
+
+
+        }, 150);
+        setTimeout(function () {
+            uiController.searchListScroll.refresh();
+
+
+        }, 150)
+        setTimeout(function () {
+            uiController.searchListScroll.refresh();
+
+        }, 1000)
+    }
+
+    if (!bioLoaded) {
+        searchController.artists.loadArtist(artist, callbackComplete)
+    }
+    else
+
+        callbackComplete(searchController.showedArtist);
+}
+
+
+/**
+ * Search for Artist and open it
+ * @param song
+ */
+searchController.artists.searchForArtist = function (artist) {
+
+    searchController.artists.loadArtist(artist, function (artist) {
+        searchController.artists.showArtist(artist)
+    })
+
+}
+
+
+/**
+ * Search for Artist and open it
+ * @param artist
+ * @param callbackComplete callback retrieves loaded artist data
+ */
+searchController.artists.loadArtist = function (artist, callbackComplete) {
+
+    $.mobile.loading("show");
+
+    //Load biographie
+    var url = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + artist.name + "&api_key=" + searchController.lastfmapikey + "&format=json";
+
+    $.ajax({
+            url: url,
+            success: function (data) {
+                if (data.artist && data.artist.bio && data.artist.bio.summary) {
+                    data.artist.bio.summary = data.artist.bio.summary.replace(/<a href/g, "<a target='_blank' href");
+                    artist = data.artist;
+                }
+            },
+            complete: function () {
+
+                callbackComplete(artist);
+            }
+        }
+    )
+
+
+}
+
 /*Others -------------------------------------------------------------------------------------------------------------------------------------*/
 
 
@@ -740,14 +1385,12 @@ searchController.artists.completeSearch = function (localList, onlineList) {
  * Get Song from From Index
  * @param index
  */
-searchController.getSongFromIndex = function(index){
+searchController.getSongFromIndex = function (index) {
 
-    if(searchController.showMode==5)
-     return searchController.showedPlaylist.tracks[index];
+    if (searchController.showMode == 5)
+        return searchController.showedPlaylist.tracks[index];
     else
-     return searchController.songs.searchResults[index];
-
-
+        return searchController.songs.searchResults[index];
 
 
 }
@@ -760,271 +1403,37 @@ searchController.getSongFromIndex = function(index){
 
 searchController.applySongList = function (currentSearchID) {
 
-   // console.log("-------------------------------------")
+    // console.log("-------------------------------------")
     $(".specialplaylistbutton").removeClass("fadeincompletefaster");
     $("#searchlist .iScrollIndicator").hide();
 
-    var stepSize = 10;
+
+    if (!playbackController.playingSong)
+        var stepSize = searchController.maxResults / 2;
+    else
+
+        stepSize = 10;
+
     var stepDelay = 50;
+
 
     if (searchController.showMode == 0) {
         var size = searchController.maxResults;
     }
     else {
         if (searchController.showed)
-            size = Math.min(searchController.showed.searchResults.length, searchController.maxResults)
+            size = Math.min(searchController.showed.searchResults.length, searchController.maxResults);
         else
             size = searchController.maxResults;
     }
 
     var delays = (Math.ceil(size / stepSize));
+
+
     //console.log(delays)
     //console.log(size + "  " + stepSize)
 
-    viewController.applySongList(currentSearchID,size,delays,stepSize,stepDelay);
-
-}
-
-
-
-
-
-
-
-//TODO SEARCH ARTIST SONGS------------------------------------------------
-
-
-searchController.searchArtistSongs = function (artist) {
-  //  alert("TODO CHANGE VIEW")
-    return
-    /*
-    $("#searchinput").val(artist);
-    searchController.searchSongsString = artist;
-
-    searchController.activateButton(0);
-
-    searchController.searchCounter++;
-    function search(searchID) {
-        searchController.searchSongsFromArtist(artist, function (list) {
-
-
-        });
-    }
-
-    search(searchController.searchCounter);
-    */
-}
-
-
-
-  /*
-
-searchController.searchSongsFromArtist = function (artist, callbackSuccess) {
-
-    searchController.showLoading(true);
-
-    var searchString = artist;
-
-    var searchserver = function () {
-        $.ajax({
-            url: preferences.serverURL + "?searchjson=" + searchString + "&auth=" + authController.ip_token,
-            success: function (data) {
-                if (data.auth && data.auth == "true") {
-                    authController.extractToken(data.token);
-                    searchserver();
-                }
-                else {
-                    for (var i = 0; i < data.track.length; i++) {
-                        try {
-                            data.track[i].artist = decodeURIComponent(data.track[i].artist);
-                        }
-                        catch (e) {
-                            data.track[i].artist = unescape(data.track[i].artist);
-                        }
-                        try {
-                            data.track[i].name = decodeURIComponent(data.track[i].name);
-                        }
-                        catch (e) {
-                            data.track[i].name = unescape(data.track[i].name);
-                        }
-                    }
-                    setTimeout(searchController.showLoading, 1000); //show=false
-                    if (callbackSuccess)
-                        callbackSuccess(data);
-
-                }
-            },
-            error: function () {
-                setTimeout(searchController.showLoading, 1000); //show=false
-
-            }
-
-        })
-    }
-    var func = function (page, topresults) {
-        $.ajax({
-
-            url: "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + searchString + "&page=" + page + "&api_key="+searchController.lastfmapikey+"&format=json",
-            success: function (data) {
-                var dataOK = false;
-                if (data.toptracks) {
-                    if (data.toptracks == "\n" && page == 1) {
-                        searchserver();
-                    }
-                    else {
-                        dataOK = true;
-                        if (page == 1) {
-                            func(page + 1, data.toptracks.track);
-                        }
-                        else if (page < searchController.maxArtistSongPages) {
-                            topresults = topresults.concat(data.toptracks.track);
-                            func(page + 1, topresults);
-
-                        }
-                        else if (page >= searchController.maxArtistSongPages) {
-                            topresults = topresults.concat(data.toptracks.track);
-                            topresults.track = topresults;
-                            if (callbackSuccess)
-                                callbackSuccess(topresults);
-                            setTimeout(searchController.showLoading, 1000);
-                        }
-                    }
-                }
-                if (dataOK == false && page > 1 && topresults) {
-                    topresults.track = topresults;
-                    if (callbackSuccess)
-                        callbackSuccess(topresults);
-                }
-
-            },
-            error: function () {
-                searchserver(searchID);
-
-            }
-        })
-    }
-    func(1, null);
-}
-
-*/
-
-
-/**
- * Show one Playlist in search list
- */
-searchController.showPlaylist = function (playlist) {
-    console.dir(playlist)
-    playlist.tracks=[];
-    searchController.showedPlaylist = playlist;
-
-    searchController.oldShowMode = searchController.showMode;
-    searchController.showMode = 5;
-    $("#searchlistview").hide();
-    $("#searchlist .iScrollIndicator").hide();
-    $("#searchlist .iScrollScrollUpIndicator").hide();
-
-    var callbackComplete = function(){
-        $scope.safeApply();
-        setTimeout(function () {
-            $("#searchlistview").listview('refresh');
-            searchController.dragging.makeSearchListDraggable();
-            $("#searchlistview").show();
-        }, 150);
-        setTimeout(function () {
-            uiController.searchListScroll.refresh();
-        }, 150)
-        setTimeout(function () {
-            uiController.searchListScroll.refresh();
-        }, 1000)
-    }
-
-    setTimeout(function () {
-     searchController.loadPlaylistTracks(playlist,callbackComplete,true);
-    }, 0);
-
-}
-
-/**
- * Plays all displayed Playlists
- */
-searchController.playAllPlaylists = function(){
-    if (searchController.playlists.searchResults && searchController.playlists.searchResults.length > 0) {
-        uiController.disableUI(true);
-
-        setTimeout(function () {
-            var playlists = searchController.playlists.searchResults.concat();
-            var addPlaylist = function (playlists, index, playlistLength) {
-                if (index > 0 && playlists[index - 1] && playlists[index - 1].tracks && playlists[index - 1].tracks.length) {
-                    playlistLength = playlistLength + playlists[index - 1].tracks.length;
-                    if (playlistLength > 0) {
-                        if (index == 1)
-                            playlistController.playSongList(playlists[index - 1].tracks.concat());
-                        else
-                            playlistController.addSongsToPlaylist(playlistController.currentQueue, playlists[index - 1].tracks.concat());
-                    }
-                }
-                if (index < playlists.length && playlistLength < searchController.maxResults) {
-                    searchController.loadPlaylistTracks(playlists[index], function () {
-                        addPlaylist(playlists, index + 1, playlistLength);
-                    }, false)
-                } else {
-                    uiController.disableUI(false);
-
-                }
-            }
-            addPlaylist(playlists, 0, 0)
-        }, 150)
-    }
-
-}
-
-
-
-
-/**
- * Load Tracks of Playlist from last.fm
- */
-searchController.loadPlaylistTracks = function (playlist,completeCallback, loadPreviews) {
-
-
-    var url = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key="+searchController.lastfmapikey+"&artist="+playlist.artist.name+"&album="+playlist.name+"&format=json";
-
-    $.ajax({
-        url: url,
-        async: false,
-        success: function (data) {
-            if(data.album&&data.album.tracks&&data.album.tracks.track){
-
-                searchController.songs.cleanList(data.album.tracks.track);
-
-                playlist.tracks=data.album.tracks.track;
-                if(playlist.tracks.length&&loadPreviews){
-                    for (var j = 0; j <  playlist.tracks.length; j++) {
-
-                        if(!playlist.tracks[j].image){
-                            setTimeout(mediaController.loadPreview(playlist.tracks[j]), j*300);
-                        }
-
-                    }
-                }
-
-                console.dir(playlist);
-            }
-
-
-        },
-        error: function () {
-
-
-        },
-        complete: function(){
-            if(completeCallback)
-                completeCallback();
-
-
-        }
-
-    })
+    viewController.applySongList(currentSearchID, size, delays, stepSize, stepDelay);
 
 }
 
@@ -1033,25 +1442,44 @@ searchController.loadPlaylistTracks = function (playlist,completeCallback, loadP
  *  Back to last show Mode
  */
 searchController.backShowMode = function () {
-    if (searchController.oldShowMode !== undefined)
-        searchController.setShowMode(searchController.oldShowMode);
-}
+
+    if (searchController.modeHistory.exists()) {
+
+        var oldModeInfo = searchController.modeHistory.pop();
+        //Restore olf Mode states
+        var actOldMode = searchController.showMode;
+
+        searchController.searchTerm = oldModeInfo.searchTerm;
+        $("#searchinput").val(searchController.searchTerm);
+        if (searchController.searchTerm != "")
+            $("#controlselecthorizontal .ui-input-clear").removeClass("ui-input-clear-hidden");
+        else
+            $("#controlselecthorizontal .ui-input-clear").addClass("ui-input-clear-hidden");
+        searchController.songs.songsStart = oldModeInfo.songsStart;
+        searchController.songs.nextSongsExists = oldModeInfo.nextSongsExists;
+
+        if (actOldMode == 6)
+            $("#searchinput").attr("placeholder", searchController.inputText);
 
 
-searchController.getArtistInfo = function () {
+        if (oldModeInfo.mode == 5)
+            searchController.playlists.showPlaylist(oldModeInfo.showedPlaylist, true);
+        else if (oldModeInfo.mode == 6)
+            searchController.artists.showArtist(oldModeInfo.showedArtist, true);
+        else
+            searchController.setShowMode(null, oldModeInfo.mode, true, true);
 
-    $.ajax({
-
-        url: "&search=",
-        success: function (data) {
-
-            if (data) {
+        if (actOldMode == 6) {
+            searchController.startSearch(searchController.searchTerm, true);
 
 
-            }
-        }
-    })
+        } else
+            setTimeout(function () {
+                $("#searchlistview").show();
+            }, 150);
 
+
+    }
 
 }
 
@@ -1093,21 +1521,35 @@ searchController.isSongInList = function (song) {
 
 
 searchController.isVisisbleInShowMode = function (showMode) {
+
+    //Artist Page
+
+    if (searchController.showMode == 6) {
+
+        if (showMode == 1 || showMode == 2) {
+            return true;
+
+        }
+    }
+
     return searchController.showMode != -1 && (showMode == searchController.showMode || searchController.showMode == 0);
+
 }
 
 /**
  * Set show Mode of search list ( details or all types)
  * @param showMode
  */
-searchController.setShowMode = function (event,showMode) {
+searchController.setShowMode = function (event, showMode, dontShowList, dontPushNewMode) {
 
-    if(event){
-        uiController.swipeTimer  = Date.now();
+    if (event) {
+
+        if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 250)
+            return;
+        uiController.swipeTimer = Date.now();
         event.stopPropagation();
 
     }
-
 
 
     if (showMode == searchController.showMode)
@@ -1117,15 +1559,22 @@ searchController.setShowMode = function (event,showMode) {
 
     if (searchController.isOnlyTypeDisplayed(showMode))
         return;
+
+
     $("#searchlistview").hide();
     $("#searchlist .iScrollIndicator").hide();
     $("#searchlist .iScrollScrollUpIndicator").hide();
+    $("#searchlist .iScrollPlayIndicator").hide();
 
     if (searchController.showMode == 0)
         playlistController.searchListScrollY = uiController.searchListScroll.y;
 
 
+    if (!dontPushNewMode)
+        searchController.modeHistory.push(searchController.showMode);
+
     searchController.showMode = showMode;
+
 
     switch (showMode) {
         case 0:  //all
@@ -1153,7 +1602,7 @@ searchController.setShowMode = function (event,showMode) {
             break;
 
         case 4: //user
-            searchController.showed = searchController.user;
+            searchController.showed = searchController.users;
             break;
 
     }
@@ -1170,9 +1619,11 @@ searchController.setShowMode = function (event,showMode) {
     //$(".songlisttitlebutton").css("opacity", "0").removeClass("fadeincompletefast")
 
     searchController.applySongList(searchController.currentSearchID);
-    setTimeout(function () {
-        $("#searchlistview").show();
-    }, 150);
+
+    if (!dontShowList)
+        setTimeout(function () {
+            $("#searchlistview").show();
+        }, 150);
 
 
 }
@@ -1236,9 +1687,9 @@ searchController.getShowModeLimit = function (type) {
             case 1:   //songs
 
                 if (uiController.gridLayout)
-                    limit = Math.ceil(searchController.displayLimit / uiController.gridLayoutCols) * uiController.gridLayoutCols;
+                    limit = Math.ceil(searchController.displayLimit / 3 / uiController.gridLayoutCols) * uiController.gridLayoutCols;
                 else
-                    limit = searchController.displayLimit;
+                    limit = searchController.displayLimit / 3;
                 break;
 
 
@@ -1249,7 +1700,7 @@ searchController.getShowModeLimit = function (type) {
                 if (uiController.gridLayout)
                     limit = uiController.gridLayoutCols;
                 else
-                    limit = 3;//TODO Change when other results available
+                    limit = 1;//TODO Change when other results available
                 break;
             case 3: //artists
 
@@ -1268,6 +1719,7 @@ searchController.getShowModeLimit = function (type) {
                     limit = 3;
                 break;
 
+            case 6:
         }
 
     }
@@ -1277,56 +1729,11 @@ searchController.getShowModeLimit = function (type) {
 }
 
 
-
-
-
 /**
  * Make  Searchlist Drag and Droppable
  */
 searchController.dragDraggableSongTimer = 0;
 searchController.dragging.makeSearchListDraggable = function () {
-
-    //Avoid still scrolling when mouseup outside winow occurs
-    $(document).on( "mouseout", function(e) {
-        e = e ? e : window.event;
-        var from = e.relatedTarget || e.toElement;
-        if (!from || from.nodeName == "HTML") {
-            // stop your drag event here
-            // for now we can just use an alert
-            var coords = {
-                clientX: e.clientX,
-                clientY: e.clientY
-            };
-            $(window).simulate("mouseup", coords);
-        }
-    })
-
-
-
-    //Detect swipes on searchlist
-    var swipeDetectFunction = function(event){
-        var startY =  event.clientY;
-        $(window).on("mousemove.swipe ", function (event) {
-            if (uiController.swiping || (startY > 0 && Math.abs(event.clientY - startY) > 30)) {
-                uiController.swiping = true;
-                uiController.swipeTimer = Date.now();
-            }
-
-        })
-        $(window).on("mouseup", function (event) {
-
-            $(window).off("mousemove.swipe").off("mouseup");
-            if (uiController.swiping || (startY > 0 && Math.abs(event.clientY - startY) > 30)) {
-                uiController.swipeTimer = Date.now();
-                uiController.swiping = false;
-
-            }
-        })
-    }
-
-
-    $("#searchlist").off("mousedown.swipe", swipeDetectFunction);
-    $("#searchlist").on("mousedown.swipe", swipeDetectFunction)
 
 
     var startDragFunction = function (event) {
@@ -1352,7 +1759,7 @@ searchController.dragging.makeSearchListDraggable = function () {
                 }
 
                 setTimeout(function () {
-                    $("#playlistview").removeClass("dragging");
+                    $("#playlistview, #playlistButtons").removeClass("dragging");
                     $(".songlist").removeClass("nohover");
 
                     uiController.swiping = false;
@@ -1365,7 +1772,6 @@ searchController.dragging.makeSearchListDraggable = function () {
 
 
             $(window).on("mousemove ", function (event) {
-
 
 
                 if (uiController.swiping || (searchController.dragDraggableSongY > 0 && Math.abs(event.clientY - searchController.dragDraggableSongY) > 30)) {
@@ -1480,7 +1886,7 @@ searchController.dragging.makeSearchListDraggable = function () {
         connectToSortable: '#playlistview',
 
         helper: function (event, ui) {
-            return searchController.dragging.prepareDragging(event, ui,this);
+            return searchController.dragging.prepareDragging(event, ui, this);
 
         },
 
@@ -1490,7 +1896,7 @@ searchController.dragging.makeSearchListDraggable = function () {
         },
         stop: function (event, ui) {
 
-           return searchController.dragging.stopDragging(event, ui,this);
+            return searchController.dragging.stopDragging(event, ui, this);
 
         },
         appendTo: 'body',
@@ -1508,7 +1914,7 @@ searchController.dragging.makeSearchListDraggable = function () {
  * @param ui
  * @param that
  */
-searchController.dragging.prepareDragging = function (event, ui,that) {
+searchController.dragging.prepareDragging = function (event, ui, that) {
 
     $("#songOptions").appendTo("body").hide();
 
@@ -1538,13 +1944,13 @@ searchController.dragging.prepareDragging = function (event, ui,that) {
 
     $("#playlistplaceholder").remove();
 
-    var eleHeight = (65 * elements.length);
-    if (eleHeight > 65 * 4) {
-        eleHeight = 65 * 4;
+    var eleHeight = (113 * elements.length);
+    if (eleHeight > 113 * 4) {
+        eleHeight = 113 * 4;
 
     }
-    if (eleHeight < 65)
-        eleHeight = 65;
+    if (eleHeight < 113)
+        eleHeight = 113;
 
     $("<style type='text/css' id='playlistplaceholder'> #playlistInner ul .ui-sortable-placeholder{ height:" + eleHeight + "px !important} </style>").appendTo("head");
 
@@ -1573,6 +1979,8 @@ searchController.dragging.startDragging = function (event) {
     $(".importplaylist").hide();
 
 
+    // setTimeout(function(){ debugger; },1000)
+
     var eleParent = $(playlistController.draggedElements.get(0)).parent();
     eleParent.attr('style', eleParent.attr('style') + '; ' + "margin-top:" + (-(playlistController.draggedElement.offset().top - playlistController.draggedElements.offset().top)) + "px" + ' !important');
     eleParent.css("opacity", "1");
@@ -1596,10 +2004,11 @@ searchController.dragging.startDragging = function (event) {
     $(".draggedsearchlistelement").on('mousewheel', playlistController.ui.scrollByWheel);
     $(".draggedsearchlistelement").on('DOMMouseScroll', playlistController.ui.scrollByWheel);
 
-
+    $("#playlistInner").addClass("isvisibledragging")
+    uiController.checkIfListHintsNecessary();
     //Playlists are displayed
     if (playlistController.playlistMode) {
-        $("#playlistview").addClass("dragging")
+        $("#playlistview, #playlistButtons").addClass("dragging")
     }
 
 }
@@ -1612,7 +2021,7 @@ searchController.dragging.startDragging = function (event) {
  *  * @param that
 
  */
-searchController.dragging.stopDragging = function (event, ui,that) {
+searchController.dragging.stopDragging = function (event, ui, that) {
 
 
     if (playlistController.playlistMode && playlistController.playlists.length > 0) {
@@ -1737,7 +2146,9 @@ searchController.dragging.stopDragging = function (event, ui,that) {
         }, 1000)
     }
 
-    $("#playlistview").removeClass("dragging")
+    $("#playlistInner").removeClass("isvisibledragging")
+    uiController.checkIfListHintsNecessary();
+    $("#playlistview, #playlistButtons").removeClass("dragging")
     $(".songlist").removeClass("nohover");
 
     var ele = $(playlistController.draggedElements.get(0)).parent();

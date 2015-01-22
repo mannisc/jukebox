@@ -76,15 +76,13 @@
 
 
 #videocontrols {
+    overflow: visible;
     z-index:  1000001;
-    overflow: hidden;
     position: absolute;
-    bottom: 0px;
+    bottom: -1px;
 
-    height: 230px;
+    height: 45px;
     left: 0px;
-
-    pointer-events: none;
 
     background-color: #1d1d1d /*{b-bar-background-color}*/;
     border-color: #1b1b1b /*{b-bar-border}*/;
@@ -96,12 +94,25 @@
 }
 
 #videocontrolsInner{
-    display: inline-block;
+    overflow: visible;
+    display: block!important;
     position: relative;
+    margin-left: auto;
+    margin-right: auto;
     height: 100%;
-    opacity:0;
-    width:100%;
+    opacity: 0;
+    width: auto;
+    text-align: center;
+}
 
+#videocontrolsInner .videoControlElements-smallProgress{
+    pointer-events:none;
+    position: absolute;
+    top:0;
+    left:0;
+    height:2px;
+    background-color: rgba(78,183,212,0.8);
+    display:none;
 }
 
 
@@ -130,8 +141,8 @@
      -webkit-transform: scale(1.5);
      transform: scale(1.5);
 
-     -webkit-transform-origin: 0% 100%;
-     transform-origin: 0% 100%;
+     -webkit-transform-origin: 50% 100%;
+     transform-origin: 50% 100%;
  }
 
 
@@ -147,12 +158,12 @@
  }
 
  .videoControlElements-container .videoControlElements-controls {
-     position: absolute;
-     list-style-type: none;
-     margin: 0;
+     overflow: visible;
+     white-space: nowrap;
+     display: inline-block;
+     margin-top: 15px;
+     margin-bottom: 0;
      padding: 0;
-     bottom: 0;
-     left: 0;
      background: none;
      background: rgba(0, 0, 0, 0.7);
      background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(50,50,50,0.7)), to(rgba(0,0,0,0.7)));
@@ -162,9 +173,13 @@
      background: -ms-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
      background: linear-gradient(rgba(50,50,50,0.7), rgba(0,0,0,0.7));
      height: 30px;
-     width: 100%;
- }
 
+ }
+  /*
+   position: absolute;
+     bottom: 0;
+     left: 0;
+  */
 
  .videoControlElements-controls .mejs-play button.looped {
      background-position: -64px 0px !important;
@@ -196,7 +211,7 @@
  }
 
  #videocontrolsInner .videoControlElements-controls {
-     background: rgba(29,29,29,0.3)!important;
+     background: none!important;
      /*
      background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(20,20,20,0.9)), to(rgba(0,0,0,0.9)))!important;
      background: -webkit-linear-gradient(top, rgba(20,20,20,0.9), rgba(0,0,0,0.9))!important;
@@ -206,6 +221,12 @@
      background: linear-gradient(rgba(44,40,40,0.9), rgba(0,0,0,0.9))!important;
      */
  }
+
+
+#videocontrolsInner {
+    background: rgba(29,29,29,0.6)!important;
+}
+
 
 /*Volume slider*/
  .videoControlElements-controls .videoControlElements-volume-button .videoControlElements-volume-slider {
@@ -282,6 +303,14 @@
     background-size: 16px ;
 
 }
+
+#videocontrols .videoControlElements-gridlayout-button button{
+    background-image: url(gridlayout.png);
+    background-position:0 0;
+    background-size: 16px ;
+
+}
+
 
 
 /*OPACITY slider*/
@@ -493,6 +522,7 @@
 
  /* Button */
 .videoControlElements-container .videoControlElements-controls div {
+    overflow: visible;
     list-style-type: none;
     background-image: none;
     display: block;
@@ -624,38 +654,37 @@
 
  .videoControlElements-controls .videoControlElements-button-choose-version button {
 
-     background: transparent url(../../img/editdarker.png) no-repeat;
+     background: transparent url(editdarker.png) no-repeat;
      background-size: 16px;
  }
 
 .videoControlElements-controls .videoControlElements-button-share button {
 
-    background: transparent url(../../img/sharemedia.png) no-repeat;
+    background: transparent url(sharemedia.png) no-repeat;
     background-size: 16px;
 }
 
  .videoControlElements-controls .videoControlElements-button-lyrics button {
 
-     background: transparent url(../../img/lyrics.png) no-repeat;
+     background: transparent url(lyrics.png) no-repeat;
      background-size: 16px;
  }
 
  .videoControlElements-controls .videoControlElements-button-facebook button {
 
-     background: transparent url(../../img/facebook.png) no-repeat;
+     background: transparent url(facebook.png) no-repeat;
      background-size: 16px;
  }
 
 
  .videoControlElements-controls .videoControlElements-button-copyright button {
 
-     background: transparent url(../../img/copyright.png) no-repeat;
+     background: transparent url(copyright.png) no-repeat;
      background-size: 16px;
  }
 
 .videoControlElements-controls .videoControlElements-button-external button {
-
-    background: transparent url(../../img/externalsite.png) no-repeat;
+    background: transparent url(externalsite.png) no-repeat;
     background-size: 16px;
 }
 

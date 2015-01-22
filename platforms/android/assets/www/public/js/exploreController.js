@@ -64,25 +64,33 @@ exploreController.onClear = function () {
  */
 exploreController.showView = function (showFunction, listName) {
     exploreController.listName = listName || "Songs";
-
+    console.log("!!!!!")
+    viewController.fadeContentVisible();
 
     uiController.searchListScroll.scrollTo(0, 0, 0);
 
     exploreController.visible = true;
     $("#searchinput").val("");
+    $("#searchlistview").hide();
 
     setTimeout(function () {
         if (exploreController.visible) {
 
             if (showFunction) {
+
                 exploreController.displayLimit = 0;
+
                 $scope.safeApply();
                 $("#searchlistview").listview('refresh');
+                $("#searchlistview").show();
+
                 showFunction(listName);
             }
             else {
+                $("#searchlistview").show();
 
                 exploreController.applySongList(exploreController.currentSearchID);
+
 
                 setTimeout(function () {
                     if (exploreController.visible)
@@ -197,6 +205,7 @@ exploreController.searchArtistsSongs = function (artist) {
     $("#searchlist .iScrollIndicator").hide();
 
     var searchArtistsSongs = function (artist) {
+        viewController.fadeContentVisible();
 
         viewController.showLoading(true);
 
@@ -248,6 +257,7 @@ exploreController.searchGenreSongs = function (genre, autoplay) {
     $("#searchlist .iScrollIndicator").hide();
 
     var searchGenreSongs = function (genre) {
+        viewController.fadeContentVisible();
 
         viewController.showLoading(true);
 
@@ -535,7 +545,6 @@ exploreController.songs.startSuggestionsSearchDeferred = function (artist, title
             // console.log("FFFOUNDDDD")
             // console.dir(JSON.stringify(songList))
             var songList = exploreController.songs.completeSearch([], onlineList);
-            console.log("FFFOUNDDDD similar " + artist + " - " + title);
             //console.dir(JSON.stringify(songList))
             deferred.resolve(songList);
 
@@ -588,14 +597,12 @@ exploreController.completedSearch = function (songList) {
         if (songList != null)//Something Changed
             exploreController.songs.searchResults = songList;
 
-        console.dir("songList!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        console.dir(songList);
 
         if (exploreController.visible) {
             exploreController.displayLimit = 0;
 
             uiController.searchListScroll.scrollTo(0, 0, 1000)
-
+            viewController.fadeContentVisible();
             exploreController.applySongList(exploreController.currentSearchID);
 
             /*$scope.safeApply();
@@ -683,22 +690,15 @@ exploreController.completedMixSearch = function (songList) {
 
         if (songList != null) {
             if (exploreController.songs.mixedResults.length && exploreController.songs.mixedResults.length > 0) {
-                console.dir("mixed result:")
 
-                console.dir(songList);
-                console.dir(exploreController.songs.mixedResults);
                 exploreController.songs.mixedResults = exploreController.songs.mixedResults.concat(songList);
-                console.dir(exploreController.songs.mixedResults);
 
                 exploreController.songs.mixedResults = exploreController.uniqueArray(exploreController.songs.mixedResults);
                 exploreController.songs.mixedResults = exploreController.shuffle(exploreController.songs.mixedResults);
-                console.dir(songList);
-                console.dir(exploreController.songs.mixedResults);
 
             }
             else {
                 exploreController.songs.mixedResults = songList;
-                console.dir(exploreController.songs.mixedResults);
             }
         }
 
@@ -748,7 +748,15 @@ exploreController.applySongList = function (currentSearchID) {
     $(".specialplaylistbutton").removeClass("fadeincompletefaster");
     $("#searchlist .iScrollIndicator").hide();
 
-    var stepSize = 10;
+    if (!playbackController.playingSong)
+        var stepSize = exploreController.maxResults / 2;
+    else
+
+        stepSize = 10;
+
+
+
+
     var stepDelay = 50;
 
     var size = exploreController.maxResults;

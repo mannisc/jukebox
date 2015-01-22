@@ -4,6 +4,11 @@
  *  http://www.webtoolkit.info/
  *
  **/
+
+
+
+
+
 var Base64 = {
 
 // private property
@@ -465,7 +470,6 @@ var SHA1 = function(msg) {
     var temp = cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) + cvt_hex(H4);
     return temp.toLowerCase();
 }
-
 
 
 

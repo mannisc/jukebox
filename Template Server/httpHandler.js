@@ -16,13 +16,16 @@ var httpHandler = function () {
 httpHandler.http = require('http');
 
 
-httpHandler.downloadFile = function (host, path, callback) {
+httpHandler.downloadFile = function (host, path, callback,port) {
 
     var options = {
         host: host,
+
         path: path
     };
 
+    if(port)
+     options.port = port;
 
     var req = httpHandler.http.request(options, function (response) {
         var str = '';

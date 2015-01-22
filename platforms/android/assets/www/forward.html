@@ -1,8 +1,9 @@
 <html>
 <head>
 <meta name="keywords" content="+keywords+">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=360, height=device-height, target-densitydpi=device-dpi">
 
-  +metadescription+
+    +metadescription+
 
 <style type="text/css">
 html { overflow: hidden; }
@@ -12,6 +13,9 @@ body { border: 0; margin: 0; padding: 0; }
   
 <title>+htmltitle+</title>
 <script type='text/javascript'>
+
+
+
 function hideLoading(){var l = document.getElementById('songbaseLoading');l.style.visibility = 'hidden';l.style.display = 'none';l.style.position='absolute';l.style.top ='-500px';};
 setTimeout(function(){hideLoading();},9000);
 
@@ -20,28 +24,63 @@ if(navigator.appName == "Microsoft Internet Explorer")
 else
   window.addEventListener("message", receiveMessage, false);
 
+
+var ignoreNextPlayBecauseHistoryBack = false;
+var historyID = 0;
+
 function receiveMessage(e) {
     if(e.data.indexOf('title:') == 0){
       document.title  = e.data.substr(6);
 	}
 	else if(e.data.indexOf('url:') == 0){
-      window.history.pushState('',document.title, e.data.substr(4));
+      if(!ignoreNextPlayBecauseHistoryBack) {
+          historyID = historyID+1;
+          window.history.pushState({id:historyID},document.title, e.data.substr(4));
+      }
+
+
 	}
 }
 
+window.onpopstate = function(event) {
+
+
+    var iframe = document.getElementById('Songbase');
+
+
+    if(event.state.id<historyID){
+        iframe.contentWindow.postMessage('back', 'http://www.songbase.net');
+
+    } else{
+        iframe.contentWindow.postMessage('forward', 'http://www.songbase.net');
+
+    }
+
+
+    historyID = event.state.id;
+
+
+    ignoreNextPlayBecauseHistoryBack = true;
+
+};
+
+
 </script>
 </head>
-<body style="background-image:url(http://songbase.net/test/public/img/background.jpg);background-size: 100%; background-repeat: no-repeat; background-position:center -100px;background-color:#000000">
-  <iframe onload = "hideLoading();" name='Songbase' id='Songbase' src='#url#' style='position:absolute;top: 0px; left: 0px' width='100%' 
+<body style="background-color:#000;background-size: 100%; background-repeat: no-repeat; background-position:center -100px;background-color:#000000">
+  <iframe onload = "hideLoading();" name='Songbase' id='Songbase' src='#url#' style='position:absolute;top: 0px; left: 0px' width='100%'
 height='100%' scrolling='no' frameBorder='0'  allowfullscreen webkitallowfullscreen mozbrowser >
 Top music videos for free!<br>Visit songbase.fm for any music video available on the web!<br>Music, videos, playlists, channels and more at songbase.fm!<br>
 Sign Up for Free! Unlimited access to all music videos!<br><br><br>
 </iframe>
  
- <div id = 'songbaseLoading' style='border-radius: 10px;text-align: center;background-color:#FFFFFF;z-index:1002;width:350px;height:400px;position:absolute;left:50%;top:50%;margin:-210px 0 0 -230px;' ><br><div style='font-family:sans-serif;font-size:1.3em;font-weight:bold;'>Songbase.fm</div><span style='font-family:sans-serif;font-size:0.6em; color:#999999'><br>loading...</span><br><img  src='public/img/loadingbar.GIF'><br><br>
-  
+ <div id = 'songbaseLoading' style='border-radius: 10px;text-align: center;background-color:#FFFFFF;z-index:1002;width:350px;height:130px;position:absolute;left:50%;top:50%;margin:-95px 0 0 -175px;' ><br><div style='font-family:sans-serif;font-size:1.3em;font-weight:bold;margin-top:15px'>Songbase.fm</div><span style='font-family:sans-serif;font-size:0.6em; color:#999999'></span><br><img width="160px" src='http://www.songbase.net/test/public/img/loadingbar.GIF'><br><br>
+
+  <!--spam
   <script type="text/javascript"> ad_idzone = "1056716"; ad_width = "300"; ad_height = "250"; </script> <script type="text/javascript" src="https://ads.exoclick.com/ads.js"></script> <noscript><a href="http://main.exoclick.com/img-click.php?idzone=1056716" target="_blank"><img src="https://syndication.exoclick.com/ads-iframe-display.php?idzone=1056716&output=img&type=300x250" width="300" height="250"></a></noscript>
-</div> 
+  -->
+
+ </div>
  +infolinks+
 </body>
 </html>

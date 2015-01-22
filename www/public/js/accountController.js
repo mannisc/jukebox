@@ -135,7 +135,7 @@ accountController.logout = function () {
                         accountController.loggedIn = false;
 
 
-                        playlistController.playlists = [playlistController.currentQueue];
+                        playlistController.playlists = [playlistController.currentQueue,playlistController.similarSongs];
 
                         uiController.showPlaylists();
                         $scope.safeApply();
@@ -176,12 +176,19 @@ accountController.logout = function () {
  * Load Stored Data of user
  */
 accountController.loadStoredData = function () {
-    $.mobile.loading("show");
 
     var playlistsReady = function (playlistdata) {
-        //console.dir("PLAYLISTS:");
-        //console.dir(playlistdata);
-        if (playlistdata) {
+
+        if(playlistdata=="error") {
+            setTimeout(function(){
+                accountController.logout();
+                uiController.toast("Please try login in again...", 2000);
+
+
+
+            },0);
+
+        }  else if (playlistdata) {
             var playlists = [];
             /*
              playlists[0] = {
@@ -197,7 +204,6 @@ accountController.loadStoredData = function () {
                 //Copy received (stored) data to playlists-Array;
 
                 //console.log("!!!!!!!!!!!!")
-               // console.log(JSON.stringify(playlistController.playlists))
 
                 var changeCurrentQueue = (playlistController.currentQueue.tracks.length == 0);
                 var currentQueueSaved = false;
@@ -208,7 +214,7 @@ accountController.loadStoredData = function () {
                         currentQueueSaved = true;
                     }
                     //Delete Queue if already new queue exists
-
+                    console.log("ÖÖÖÖ"+(playlistdata.items[j].name))
                     if (playlistdata.items[j].gid == 0 && !changeCurrentQueue) {
                         playlistdata.items.splice(j, 1);
 
@@ -247,7 +253,6 @@ accountController.loadStoredData = function () {
                             tmpCounter++;
                             if (tmpCounter > 1) {
                                 playlists.splice(j, 1);
-
                                 j--;
                             }
 
@@ -312,6 +317,7 @@ accountController.loadStoredData = function () {
                     //Save Current merged Playlists
                     if (playlistController.playlists.length > 0) {
 
+
                         for (var i = 0; i < playlistController.playlists.length; i++) {
 
                             if (changeCurrentQueue && playlistController.playlists[i].gid == 0) {
@@ -325,6 +331,9 @@ accountController.loadStoredData = function () {
                             }
 
                         }
+
+
+
                         accountController.savePlaylistsPosition();
 
 
@@ -410,6 +419,13 @@ accountController.singInAuto = function () {
         var socialAutoLogin = (fbLogin && Base64.decode(fbLogin) == "true");
 
         if (!socialAutoLogin) {
+            $.mobile.loading( "hide")
+            $.mobile.loading( "show", {
+                text: "Login",
+                textVisible: true,
+                textonly: false,
+                html: ""
+            });
 
             var loginTokenBase64 = accountController.getCookie("loginToken");
             var userNameBase64 = accountController.getCookie("userName");
@@ -429,7 +445,6 @@ accountController.singInAuto = function () {
                         })) {
                             if (data == "ok") {
                                 mediaController.showChooseVersionHint = false;
-                                $.mobile.loading("show");
                                 accountController.loggedIn = true;
                                 accountController.loginToken = Base64.decode(loginTokenBase64);
 
@@ -466,12 +481,15 @@ accountController.singInAuto = function () {
                         $.mobile.loading("hide");
                     }
                 })
-            }
-        }
+            }else
+                $.mobile.loading("hide");
+        }  else
+            $.mobile.loading("hide");
     }
     else {
         setTimeout(accountController.singInAuto, 1000);
     }
+
 
 }
 
@@ -719,6 +737,8 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
                                 setTimeout(function () {
                                     btn.addClass("animated");
                                 }, 500)
+
+                                viewController.fadePlaylistContentVisible();
                             }, 500)
 
 
@@ -759,7 +779,9 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
 accountController.signIn = function () {
     accountController.resetSignInData();
     if (authController.ip_token != "auth" && authController.ip_token != "") {
-        $.mobile.loading("show");
+
+
+
         var username = $("#signinusername").val();
         if (accountController.validateEmail(username)) {
             var email = username;
@@ -768,8 +790,25 @@ accountController.signIn = function () {
             email = "";
         var pw = $("#signinpw").val();
 
-        if (accountController.validateSignInData())
+
+        console.log("LOGIN............................")
+        console.log(username)
+        console.log(rsaController.rsa.encrypt(username))
+
+
+
+        if (accountController.validateSignInData()){
+            $.mobile.loading( "hide")
+            $.mobile.loading( "show", {
+                text: "Login",
+                textVisible: true,
+                textonly: false,
+                html: ""
+            });
             accountController.singInBase(username, pw, rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(pw), null, 0);
+
+        }
+
     }
 }
 
@@ -783,7 +822,13 @@ accountController.signIn = function () {
  */
 accountController.socialSignIn = function (username, email, userid, externalAccountIdentifier, access_token) {
     if (authController.ip_token != "auth" && authController.ip_token != "") {
-        $.mobile.loading("show");
+        $.mobile.loading( "hide");
+        $.mobile.loading( "show", {
+            text: "Login",
+            textVisible: true,
+            textonly: false,
+            html: ""
+        });
         accountController.singInBase(username, access_token, rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encryptUnlimited(access_token), rsaController.rsa.encrypt(userid), externalAccountIdentifier);
     } else {
         $.mobile.loading("hide");
@@ -916,8 +961,13 @@ accountController.register = function () {
         var pw = $("#registerpw").val();
 
         if (accountController.validateRegisterData()) {
-            $.mobile.loading("show");
-
+            $.mobile.loading("hide");
+            $.mobile.loading( "show", {
+                text: "Register",
+                textVisible: true,
+                textonly: false,
+                html: ""
+            });
             send(username, pw, rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encrypt(pw));
         }
 
@@ -1019,8 +1069,6 @@ accountController.deletePlaylist = function (gid) {
  */
 accountController.savePlaylistsPosition = function () {
 
-
-    console.dir(new Error().stack)
 
     if (accountController.loggedIn) {
 
@@ -1171,6 +1219,7 @@ accountController.loadPlaylists = function (callbackSuccess) {
                     timeout: 30000,
                     url: preferences.serverURL + "?getdatalist=" + savetoken + "&n=" + nonce + "&type=playlist&auth=" + authController.ip_token,
                     success: function (data) {
+
                         if (authController.ensureAuthenticated(data, function () {
                             send(savetoken)
                         })) {
@@ -1192,7 +1241,7 @@ accountController.loadPlaylists = function (callbackSuccess) {
 
 
                         if (callbackSuccess)
-                            callbackSuccess(xhr.responseText);
+                            callbackSuccess("error");
                     }
                 })
             }

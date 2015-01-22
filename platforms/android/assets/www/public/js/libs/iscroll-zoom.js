@@ -755,7 +755,6 @@ IScroll.prototype = {
 		this.isInTransition = this.options.useTransition && time > 0;
 
 		if ( !time || (this.options.useTransition && easing.style) ) {
-
             this._transitionTimingFunction(easing.style);
             this._transitionTime(time);
 
@@ -763,7 +762,8 @@ IScroll.prototype = {
 
 			this._translate(x, y);
 		} else {
-			this._animate(x, y, time, easing.fn);
+
+            this._animate(x, y, time, easing.fn);
 		}
 	},
 
@@ -839,7 +839,6 @@ IScroll.prototype = {
 
         if(this.options.noHorizontalZoom)
             x=0;
-
 		if ( this.options.useTransform ) {
 
 /* REPLACE START: _translate */			this.scrollerStyle[utils.style.transform] = 'translate3d( ' + x + 'px,' + y + 'px , 0px) scale(' + this.scale + ')  ' + this.translateZ;/* REPLACE END: _translate */
@@ -853,7 +852,6 @@ IScroll.prototype = {
 
 		this.x = x;
 		this.y = y;
-
 
 	if ( this.indicators ) {
 		for ( var i = this.indicators.length; i--; ) {
@@ -1297,6 +1295,15 @@ IScroll.prototype = {
 			return;
 		}
 
+        if(!IScrollinitTimer||Date.now()- IScrollinitTimer< 5000)
+            var   scrolltime = 0;
+        else
+            scrolltime = 750;
+        //Performace adjustment, Remove in future----
+        scrolltime = 0;
+        wheelDeltaY = wheelDeltaY*0.65;
+        //------
+
 		newX = this.x + Math.round(this.hasHorizontalScroll ? wheelDeltaX : 0);
 		newY = this.y + Math.round(this.hasVerticalScroll ? wheelDeltaY : 0);
 
@@ -1312,12 +1319,12 @@ IScroll.prototype = {
 			newY = this.maxScrollY;
 		}
 
-        if(!IScrollinitTimer||Date.now()- IScrollinitTimer< 5000)
-            var   scrolltime = 0;
-        else
-         scrolltime = 750;
 
-        this.scrollTo(newX, newY, scrolltime); //CHANGED from    this.scrollTo(newX, newY, 0);
+
+
+
+
+        this.scrollTo(newX, newY,0);// scrolltime); //CHANGED from    this.scrollTo(newX, newY, 0);
 
 // INSERT POINT: _wheel
 	},
@@ -1727,10 +1734,13 @@ IScroll.prototype = {
 		}
 
 		this.isAnimating = true;
-		step();
+        step();
+
+
 	},
 	handleEvent: function (e) {
-		switch ( e.type ) {
+
+        switch ( e.type ) {
 			case 'touchstart':
 			case 'MSPointerDown':
 			case 'mousedown':
