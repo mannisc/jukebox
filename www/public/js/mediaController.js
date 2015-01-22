@@ -100,7 +100,7 @@ mediaController.visitSongWebPage = function () {
 
 mediaController.mediaEnded = function () {
     mediaController.sendRating("2");
-    parent.postMessage('title:$scope.appTitle', 'http://www.songbase.fm');
+    parent.postMessage('title:'+$scope.appTitle, 'http://www.songbase.fm');
     document.title = $scope.appTitle;
 
     videoController.isPlaying = false;
@@ -392,8 +392,29 @@ mediaController.playSong = function (streamURL, videoURL) {
 
     mediaController.currentStreamURL = streamURL;
     mediaController.currentvideoURL = videoURL;
+
+    videoController.videoWasStarted=false;
     videoController.playSong();
+
     $scope.safeApply();
+
+
+    if($scope.isMobile){
+        setTimeout(function(){
+            if(videoController.videoWasStarted==false){
+                $.mobile.loading("hide");
+                $("#popupPlayMobile").popup("open"
+                    , {transition: 'pop',
+                       popupafteropen:function(){
+                           $.mobile.loading("hide");
+                       }}
+
+                )
+            }
+
+        },500)
+    }
+
 
     if(mediaController.showChooseVersionHint){
         mediaController.showChooseVersionHint = false;
@@ -401,14 +422,17 @@ mediaController.playSong = function (streamURL, videoURL) {
         if(!accountController.loggedIn&&(!window.localStorage||window.localStorage.showChooseVersionHint!="false")) {
             if( window.localStorage)
               window.localStorage.showChooseVersionHint = "false";
-            setTimeout(function(){
-                $('#popupChooseVersionHint').popup('open', {positionTo: '#chooseversionbutton'});
+            if($(window).width()>800)  {
                 setTimeout(function(){
-                        $('#popupChooseVersionHint').popup('close');
-                    },5000
+                    $('#popupChooseVersionHint').popup('open', {positionTo: '#chooseversionbutton'});
+                    setTimeout(function(){
+                            $('#popupChooseVersionHint').popup('close');
+                        },5000
 
-                )
-            },3000)
+                    )
+                },3000)
+            }
+
         }
 
 
@@ -949,13 +973,17 @@ mediaController.loadingPopupVisibleTime = null;
 mediaController.loadingPopupVisibleDelay = 5000;
 
 mediaController.showLoadingPopup = function(streamID){
+
+   return;//TODO Remove for Information
+
     $("#popupLoadingSong .titleloading").text("Please wait...");
 
     mediaController.loadingPopupVisible = true;
     setTimeout(function(){
         if(streamID==mediaController.playCounter && mediaController.loadingPopupVisible){
            // $("#popupLoadingSongClose").hide();
-            $('#popupLoadingSong').popup('open', {transition: 'pop'});
+            $( "#popupLoadingSong" ).popup({ history: false });
+            $('#popupLoadingSong').popup('open', {transition: 'pop',history: false});
             mediaController.loadingPopupVisibleTime = Date.now();
 
         }
@@ -984,6 +1012,8 @@ mediaController.hideLoadingPopup = function(){
 
 
 mediaController.playVersion = function (songversion, rating, resetVersion) {
+
+
     if(!mediaController.noClick){
 
         var loadError = false;
@@ -1086,10 +1116,16 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
     var loadError = false;
     //var stime=new Date();
     //var time=stime.getTime();
+    console.log("LOADSONG")
     $.ajax({
         timeout: 60000,
         url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration +"&fromCache="+fromCache+"&auth=" + authController.ip_token,
         success: function (data) {
+
+
+
+
+
             //console.dir(" mediaController.loadStreamURL success")
             if (streamID == mediaController.playCounter) {
                 //var etime=new Date();
@@ -1112,34 +1148,31 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
                     }
                     videoURL = unescape(videoURL);
                     //console.dir("videoURL: "+videoURL)
-                    if (videoController.isEmbedVideo(videoURL)) {
-                        streamURL = videoURL;
-                        mediaController.playStreamURL(streamURL, videoURL, true);
-                        if (playbackController.playedSongs.length > 100) {
-                            playbackController.playedSongs.splice(playbackController.playedSongs.length - 100, 100)
-                        }
 
+
+
+                  if (videoController.isEmbedVideo(videoURL)) {
+                        streamURL = videoURL;
                     }
                     else if (data.streamURL) {
                         streamURL = data.streamURL;
                         streamURL = unescape(streamURL);
 
-                        //console.dir("streamURL: "+streamURL)
-                        //console.dir(data);
-
-                        if (streamURL) {
-
-                            mediaController.playStreamURL(streamURL, videoURL, true);
-
-                            if (playbackController.playedSongs.length > 100) {
-                                playbackController.playedSongs.splice(playbackController.playedSongs.length - 100, 100)
-                            }
-
-                        }
-                        //loadError = true;
-
                     } else
                         loadError = true;
+
+                     if(!loadError&&streamURL)  {
+
+
+                         mediaController.playStreamURL(streamURL, videoURL, true);
+
+                             if (playbackController.playedSongs.length > 100) {
+                                 playbackController.playedSongs.splice(playbackController.playedSongs.length - 100, 100)
+                             }
+
+                     }
+
+
                 }
             }
             if(loadError){
@@ -1156,6 +1189,7 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
             mediaController.hideLoadingPopup();
         },
         complete: function () {
+
             //console.dir(" mediaController.loadStreamURL complete")
             //log("COMPLETED")
             //playbackController.isLoading = false;
@@ -1209,8 +1243,14 @@ mediaController.playStream = function (artist, title, playedAutomatic,fromCache)
     artistString = artistString.replace("?", "");
     titleString = titleString.replace("?", "");
 
-    parent.postMessage('title:'+$scope.appTitle+": "+artistString+" - "+titleString, 'http://www.songbase.fm');
-    parent.postMessage("url:\?artist="+encodeURIComponent(artistString)+"&title="+encodeURIComponent(titleString), 'http://www.songbase.fm');
+    var url = (window.location != window.parent.location) ? document.referrer: document.location;
+
+
+    parent.postMessage('title:'+$scope.appTitle+": "+artistString+" - "+titleString, url);
+    parent.postMessage("url:\?artist="+encodeURIComponent(artistString)+"&title="+encodeURIComponent(titleString), url);
+
+
+
     var searchString = ""
     if (artist != "")
         searchString = artist + " - " + title;
@@ -1226,6 +1266,8 @@ mediaController.playStream = function (artist, title, playedAutomatic,fromCache)
             url: "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=019c7bcfc5d37775d1e7f651d4c08e6f&artist=" + encodeURIComponent(artistString) + "&track=" + encodeURIComponent(titleString) + "&format=json",
             success: function (data) {
                 //console.dir("mediaController.playStream sucess!")
+
+
                 if (streamID == mediaController.playCounter) {
 
                     var duration = 200000;
@@ -1235,8 +1277,12 @@ mediaController.playStream = function (artist, title, playedAutomatic,fromCache)
                             duration = data.track.duration;
                         }
                     }
+
+
                     //  alert(artistString+" - "+titleString);
                     if (authController.ip_token != "auth" && authController.ip_token != "") {
+                        console.log("Loading Video...")
+
                         var loadError = false;
                         //console.dir("mediaController.loadStreamURL: "+artistString+" "+titleString)
                         mediaController.loadStreamURL(streamID, searchString, artistString, titleString, streamURL, duration, playedAutomatic,fromCache);
@@ -1427,7 +1473,6 @@ mediaController.playStreamURL = function (streamURL, videoURL, differentVersions
     setTimeout(function () {
 
         var listElement = playbackController.getListElementFromElement(playbackController.playingSong);
-
         if (listElement.length==0||(listElement.length>0&&listElement.hasClass("loadedsong"))) {
             uiController.dontRemark = true;
 

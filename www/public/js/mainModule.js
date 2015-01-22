@@ -23,7 +23,7 @@
  * Defines NG Module mainApp
  * @type {*|ng.$compileProvider}
  */
-var mainApp = angular.module('mainApp', ['ng-context-menu' ]);     //'ngTouch'
+var mainApp = angular.module('mainApp', ['ngSanitize','ng-context-menu']);     //'ngTouch'
 
 /*
 mainApp.directive("ngTap", function() {

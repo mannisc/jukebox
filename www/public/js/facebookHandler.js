@@ -16,7 +16,14 @@ var facebookHandler = function () {
 
 
 facebookHandler.login = function () {
-    $.mobile.loading("show");
+    $.mobile.loading( "hide")
+    $.mobile.loading( "show", {
+        text: "Login",
+        textVisible: true,
+        textonly: false,
+        html: ""
+    });
+
     $("#popupLogin").popup("close");
     $("#popupRegister").popup("close");
     setTimeout(function () {
@@ -69,7 +76,16 @@ facebookHandler.authAndLoggedIn = function (response) {
         // login status of the person. In this case, we're handling the situation where they
         // have logged in to the app.
         var loginResponse = response;
-        $.mobile.loading("show");
+
+        $.mobile.loading( "hide")
+        $.mobile.loading( "show", {
+            text: "Login",
+            textVisible: true,
+            textonly: false,
+            html: ""
+        });
+
+
         $("#popupLogin").popup("close");
         $("#popupRegister").popup("close");
 

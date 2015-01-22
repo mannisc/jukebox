@@ -11,7 +11,7 @@
 var chartsHandler = function () {
 }
 
-chartsHandler.unknownData = "unknown"
+chartsHandler.unknownData = "unknown";
 
 chartsHandler.update = function (http, apiKey, maxPages, callback) {
     chartsHandler.fs = require('fs');
@@ -25,7 +25,7 @@ chartsHandler.update = function (http, apiKey, maxPages, callback) {
     chartsHandler.chartindex = {};
     chartsHandler.charttrends = {};
 
-    chartsHandler.downloadFiles("", callback);
+    chartsHandler.downloadFiles("", callback,true);
 
 }
 
@@ -36,7 +36,7 @@ chartsHandler.update = function (http, apiKey, maxPages, callback) {
 chartsHandler.getSongArtist = function (song) {
     var artist = chartsHandler.unknownData + "-id:" + Date.now();
     if (!song)
-        return  artist
+        return  artist;
     if (song.artist) {
         if (song.artist.name)
             artist = song.artist.name;
@@ -46,11 +46,27 @@ chartsHandler.getSongArtist = function (song) {
     return artist;
 }
 
-chartsHandler.downloadFiles = function (content, callback) {
-    if (content && content != "") {
-        var tracks = JSON.parse(content)
-        if (tracks && tracks.tracks && tracks.tracks.track)
-            chartsHandler.tracks = chartsHandler.tracks.concat(tracks.tracks.track);
+chartsHandler.downloadFiles = function (content, callback,start) {
+
+
+    if(!start) {
+        if (content && content.trim() != "") {
+            var tracks = JSON.parse(content)
+            if (tracks && tracks.tracks && tracks.tracks.track)
+                chartsHandler.tracks = chartsHandler.tracks.concat(tracks.tracks.track);
+            else {
+                console.log("LAST.FM DOWN -----------------------------------------------------")
+                console.log(JSON.stringify(tracks))
+
+                return;
+
+            }
+        }else{
+            console.log("LAST.FM DOWN -----------------------------------------------------")
+            console.log(content)
+
+            return;
+        }
     }
 
     if (chartsHandler.actPage <= chartsHandler.maxPages) {
@@ -73,7 +89,10 @@ chartsHandler.downloadFiles = function (content, callback) {
 
                 oldChartindex = JSON.parse(oldChartindex);
                 if (oldChartindex) {
+
+                    //New songs in Charts
                     var countChanges=0;
+
                     for (var i = 0; i < chartsHandler.tracks.length; i++) {
                         var song = chartsHandler.tracks[i];
 
@@ -97,8 +116,9 @@ chartsHandler.downloadFiles = function (content, callback) {
                                trend =  oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration]
                            else
                             trend = 3;
-                       }else
-					    countChanges++;
+                       }else{
+                           countChanges++;
+                       }
 
 					   
 					   
@@ -107,20 +127,32 @@ chartsHandler.downloadFiles = function (content, callback) {
 
                        song.trend = trend;
 
+                        //Save the date it was found
+                        if(!song.date&&song.trend==3) {
+                           song.date = +new Date();
+                       }
+
+
+
+
                        chartsHandler.chartindex[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] = i + 1;
 
 
 
                     }
-                    console.log(countChanges+" Updates");
                     chartsHandler.fs.writeFileSync("charttrends.txt", JSON.stringify(chartsHandler.charttrends));
                     chartsHandler.fs.writeFileSync("chartindex.txt", JSON.stringify(chartsHandler.chartindex));
+
+                    if(new Date().getDay()==0)
+                     chartsHandler.fs.writeFileSync("chartindex_Sicherung.txt", JSON.stringify(chartsHandler.chartindex));
+
+
 
                 }
             }
          }
         if (callback)
-            callback(chartsHandler.tracks)
+            callback(chartsHandler.tracks,countChanges)
 
     }
 

@@ -13,7 +13,6 @@ var playbackController = function () {
 };
 
 
-
 playbackController.lastClickedElement = null;
 
 playbackController.dblclickedDelay = 400;
@@ -23,71 +22,94 @@ playbackController.dblclickedDelay = 400;
  * @param element
  * @param onlyStyle
  */
-playbackController.clickedElement = function (event, element,onlyStyle) {
+playbackController.clickedElement = function (event, element, onlyStyle) {
     //Swiped?
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
+    var doubleClick = function () {
 
-    var normalClick = function(){
-      playbackController.lastClickedElement = {element:element, time : Date.now()}
-      setTimeout(function(){
-         if(playbackController.lastClickedElement){
+        //Playlist?
+        if (element.isPlaylist) {
+            //Select Playlist
+            if (element.gid) {
+                playlistController.ui.showPlaylist(element);
 
-            //NORMAL CLICK
-             var songlist = $(event.target).parents("li");
-             if (songlist.length > 0)
-                 playlistController.selection.selectElement(element);
+                //Show playlist in search list
+            } else {
+                searchController.playlists.showPlaylist(element);
+            }
 
-             //Clicked on Cover -> Select Song
-             /*
-              var songlist = $(event.target).parents("li")
-              if (songlist.length > 0 && (event.clientX - songlist.offset().left) < 65) {
-              playlistController.selection.selectElement(element)
-              return;
-              }
-              */
+            //Artist
+        } else if (element.isArtist) {
+            searchController.artists.showArtist(element);
+        }
+        else {
+            //Play Song
+            playbackController.playSong(element, onlyStyle, false, true);
+        }
 
-
-         }
-      },playbackController.dblclickedDelay+1)
     }
 
-    if(playbackController.lastClickedElement){
-
-      if(playbackController.lastClickedElement.element==element){
-
-          if(Date.now()-playbackController.lastClickedElement.time<playbackController.dblclickedDelay){
-             playbackController.lastClickedElement = null;
-
-              //Playlist or song?
-              if (element.isPlaylist) {
-                  //Select Playlist
-                  if(element.gid){
-                      playlistController.ui.showPlaylist(element);
-
-                      //Show playlist in search list
-                  }else {
-                      searchController.showPlaylist(element);
-                  }
+    var normalClick = function () {
 
 
-              } else {
-                  //Play Song
-                  playbackController.playSong(element, onlyStyle, false, true);
-              }
+        if ($scope.isMobile) {
+            doubleClick();
+        } else {
 
 
-          }else{
-             normalClick();
-         }
+            playbackController.lastClickedElement = {element: element, time: Date.now()}
+            setTimeout(function () {
+                if (playbackController.lastClickedElement) {
 
-      }else
-          normalClick();
-    }else
+                    //NORMAL CLICK
+                    var songlist = $(event.target).parents("li");
+                    if (songlist.length > 0) {
+
+                        if (element.isArtist) {
+                            searchController.artists.showArtist(element);
+                        } else
+                            playlistController.selection.selectElement(element);
+
+                    }
+
+                    //Clicked on Cover -> Select Song
+                    /*
+                     var songlist = $(event.target).parents("li")
+                     if (songlist.length > 0 && (event.clientX - songlist.offset().left) < 65) {
+                     playlistController.selection.selectElement(element)
+                     return;
+                     }
+                     */
+
+
+                }
+            }, playbackController.dblclickedDelay + 1)
+
+        }
+
+    }
+
+    if (playbackController.lastClickedElement) {
+
+        if (playbackController.lastClickedElement.element == element) {
+
+            if (Date.now() - playbackController.lastClickedElement.time < playbackController.dblclickedDelay) {
+                playbackController.lastClickedElement = null;
+                if (!$scope.isMobile)
+                    doubleClick();
+
+
+            } else {
+                normalClick();
+            }
+
+        } else
+            normalClick();
+    } else
         normalClick();
 
     event.stopPropagation();
-
 
 
 }
@@ -109,16 +131,32 @@ playbackController.doubleClickedElement = function (event) {
 
 playbackController.touchedElement = function (event, onlyStyle) {
 
+    console.log("SWIPE?? " + uiController.swipeTimer + "  " + (Date.now() - uiController.swipeTimer))
+
+    if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 250)
+        return;
+
+
     if ($(event.target).is("li"))
         var listElement = $(event.target);
     else
         listElement = $(event.target).parents("li");
-    var element = listElement.data("song");
 
-    playbackController.clickedElement(event, element, onlyStyle);
+
+    var element = listElement.data("genre");
+
+    if (element) {
+        console.dir(element);
+        mediaController.loadGenre(element);
+    } else {
+
+        element = listElement.data("song") || listElement.data("artist") || listElement.data("playlist");
+        if (element)
+            playbackController.clickedElement(event, element, onlyStyle);
+    }
+
 
 }
-
 
 
 /**
@@ -134,6 +172,9 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
         return;
     } else
         playbackController.playSongTimer = Date.now();
+
+    console.log("PLAYSONG")
+
 
     //Song for which version list is currently loaded set to null
     mediaController.versionListSong = null;
@@ -171,16 +212,21 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
         }
     }
 
-
     //If not already loading, save the old song to be able to reset if there is a loading error
     if (!playbackController.isLoading && playbackController.playingSong) {
         playbackController.playingOldSong = playbackController.playingSong;
     }
 
+    if (!playbackController.playingSong) {//&&!uiController.isTouchSupported()) {
+        $("#searchcontent, #playlistInner").removeClass("isvisiblestart");
+        uiController.checkIfListHintsNecessary();
+    }
+
+
     //Set loading/playing Song to selected Song
     playbackController.updatePlayingSongIndex();
     playbackController.playingSong = jQuery.extend(true, {}, song);
-   // if(playlistController.getLoadedPlaylist().isSimilarSongs)  //Always load Similar Songs
+    // if(playlistController.getLoadedPlaylist().isSimilarSongs)  //Always load Similar Songs
     playlistController.getSimilarSongs(playbackController.playingSong);
 
     //Clear other loading songs
@@ -191,7 +237,6 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     listElement.removeClass("playing pausing oldloadedsong");
 
     listElement.addClass("loadedsong");
-
 
     // setTimeout(function () {
     // playbackController.positionPlayIndicator();
@@ -210,7 +255,6 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
             playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong));
 
 
-
             if (addSongToQueue) {
                 if (playbackController.playingSong.playlistgid != playlistController.currentQueue.gid) {
 
@@ -220,7 +264,7 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
                     var actSongList = [actSong];
                     playlistController.prepareGIDsToInsertSongsIntoPlaylist(playlistController.currentQueue, actSongList)
                     //alert(actSong.gid)
-                    playbackController.playingSong.gid= actSong.gid;  //neccessary if gid was changed because same music title was played
+                    playbackController.playingSong.gid = actSong.gid;  //neccessary if gid was changed because same music title was played
                     playbackController.playingSong = actSongList[0];
 
                     setTimeout(function () {
@@ -247,10 +291,11 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
             playbackController.startedLoadingTime = Date.now();
 
+
             if (playbackController.playingSong.streamURL)
                 mediaController.playStreamURL(playbackController.playingSong.streamURL);
             else
-                mediaController.playStream(mediaController.getSongArtist(playbackController.playingSong), playbackController.playingSong.name, playedAutomatic,1);
+                mediaController.playStream(mediaController.getSongArtist(playbackController.playingSong), playbackController.playingSong.name, playedAutomatic, 1);
 
 
             playbackController.playedSongs.push(playbackController.playingSong);
@@ -262,7 +307,6 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
 
     $scope.safeApply();
-
 
 
     if (!addedToQueue) {
@@ -364,7 +408,7 @@ playbackController.updatePlayingSongIndex = function () {
             }
         }
 
-    }else if(playlistController.currentQueue.tracks &&playlistController.currentQueue.tracks.length>0){
+    } else if (playlistController.currentQueue.tracks && playlistController.currentQueue.tracks.length > 0) {
         playbackController.playingSongIndex = playlistController.currentQueue.tracks.length - 1;
     }
 
@@ -407,17 +451,17 @@ playbackController.setNewTitle = function (title, coverUrl, isLoaded) {
         }
         //TODO COMMEnt REMOVE
 
-         var song = playbackController.getPlayingSong();
+        var song = playbackController.getPlayingSong();
 
-         if(song.name!=""&&searchinput!=""){
-           window.history.replaceState("",document.title, "/?search="+searchinput+"&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
-         }
-         else if(song.name!=""){
-           window.history.replaceState("",document.title, "/?artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
-         }
-         else if(searchinput!=""){
-           window.history.replaceState("",document.title, "/?search="+searchinput);
-         }
+        if (song.name != "" && searchinput != "") {
+            window.history.replaceState("", document.title, "/?search=" + searchinput + "&artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+        }
+        else if (song.name != "") {
+            window.history.replaceState("", document.title, "/?artist=" + mediaController.getSongArtist(song) + "&title=" + song.name);
+        }
+        else if (searchinput != "") {
+            window.history.replaceState("", document.title, "/?search=" + searchinput);
+        }
 
 
         //  $("#playingSongCover").attr("src", coverUrl);
@@ -608,7 +652,6 @@ playbackController.playNextSong = function () {
  */
 playbackController.positionPlayIndicator = function () {
 
-
     var listElement = playbackController.getListElementFromElement(playbackController.playingSong);
 
     if (!listElement || listElement.length == 0) {
@@ -621,51 +664,62 @@ playbackController.positionPlayIndicator = function () {
 
         if (listElement.parents("#playlistInner").length > 0) {
 
-            var scrollHeight = $("#playlistInner .iScrollVerticalScrollbar").height();
+            var scrollHeight = $("#playlistScroll .iScrollVerticalScrollbar").height()-2;
 
             var listElementPlaylist = listElement.filter(':noparents(#playlistInner)');
 
-            var otherTopHeight = $("#playlistInner .othertopheight.songlisttitlebutton:visible").length * 10;
-            var otherTopElements = $("#playlistInner .othertopheight:visible");
+
+            var otherTopHeight = $("#playlistScroll .othertopheight.songlisttitlebutton:visible").length * 10;
+            var otherTopElements = $("#playlistScroll .othertopheight:visible");
 
             for (var i = 0; i < otherTopElements.length; i++) {
                 otherTopHeight = otherTopHeight + $(otherTopElements.get(i)).height();
             }
 
 
-            otherTopHeight = otherTopHeight / ($("#playlistInner ul").outerHeight() - 65) * scrollHeight;
+            otherTopHeight = otherTopHeight / ($("#playlistScroll ul").outerHeight() - 65) * scrollHeight;
 
-            var otherBottomHeight = $("#playlistInner .otherbottomheight.songlisttitlebutton:visible").length * 10;
-            var otherBottomElements = $("#playlistInner .otherbottomheight:visible");
+            var otherBottomHeight = $("#playlistScroll .otherbottomheight.songlisttitlebutton:visible").length * 10;
+            var otherBottomElements = $("#playlistScroll .otherbottomheight:visible");
             for (i = 0; i < otherBottomElements.length; i++) {
                 otherBottomHeight = otherBottomHeight + $(otherBottomElements.get(i)).height();
             }
 
-            otherBottomHeight = otherBottomHeight / ($("#playlistInner ul").outerHeight() - 65) * scrollHeight;
+            otherBottomHeight = otherBottomHeight / ($("#playlistScroll ul").outerHeight() - 65) * scrollHeight;
 
 
             var position = listElementPlaylist.get(0).dataset.index;
 
-           var y = 5+parseInt(position) / ( Math.min(playlistController.ui.getDisplayLimit(), playlistController.loadedPlaylistSongs.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
 
-            if(y>scrollHeight)
+            if( playlistController.loadedPlaylistSongs.length==1)
+             var y = 0;
+            else
+              y = 5 + parseInt(position) / ( Math.min(playlistController.ui.getDisplayLimit(), playlistController.loadedPlaylistSongs.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
+
+            if (y > scrollHeight)
                 y = scrollHeight;
 
-            $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
-            $("#playlistInner .iScrollPlayIndicator").show();
+
+            if(y||y==0) {
+                $("#playlistScroll .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)  scale(1.4)').css('-moz-transform', 'translate(0px, ' + y + 'px)  scale(1.4)').css('-ms-transform', 'translate(0px, ' + y + 'px)  scale(1.4)').css('transform', 'translate(0px, ' + y + 'px)  scale(1.4)')
+                $("#playlistScroll .iScrollPlayIndicator").show();
+            } else
+                $("#playlistScroll .iScrollPlayIndicator").hide();
 
         } else
-            $("#playlistInner .iScrollPlayIndicator").hide();
+            $("#playlistScroll .iScrollPlayIndicator").hide();
 
         if (listElement.parents("#searchlist").length > 0) {
 
-             scrollHeight = $("#searchlist .iScrollVerticalScrollbar").height();
+            scrollHeight = $("#searchlist .iScrollVerticalScrollbar").height();
 
 
-            var  listElementSearchlist = listElement.filter(':noparents(#searchlist)');
+            var listElementSearchlist = listElement.filter(':noparents(#searchlist)');
 
-             otherTopHeight = $("#searchlist .othertopheight.songlisttitlebutton:visible").length * 10;
-             otherTopElements = $("#searchlist .othertopheight:visible");
+            otherTopHeight = $("#searchlist .othertopheight.songlisttitlebutton:visible").length * 10 + $("#searchlist .othertopheightbig:visible").length * 113;
+
+
+            otherTopElements = $("#searchlist .othertopheight:visible");
 
             for (var i = 0; i < otherTopElements.length; i++) {
                 otherTopHeight = otherTopHeight + $(otherTopElements.get(i)).height();
@@ -674,8 +728,9 @@ playbackController.positionPlayIndicator = function () {
 
             otherTopHeight = otherTopHeight / ($("#searchlist ul").outerHeight() - 65) * scrollHeight;
 
-             otherBottomHeight = $("#searchlist .otherbottomheight.songlisttitlebutton:visible").length * 10;
-             otherBottomElements = $("#searchlist .otherbottomheight:visible");
+            otherBottomHeight = $("#searchlist .otherbottomheight.songlisttitlebutton:visible").length * 10 + $("#searchlist .otherbottomheight:visible").length * 113;
+
+            otherBottomElements = $("#searchlist .otherbottomheight:visible");
             for (i = 0; i < otherBottomElements.length; i++) {
                 otherBottomHeight = otherBottomHeight + $(otherBottomElements.get(i)).height();
             }
@@ -685,14 +740,18 @@ playbackController.positionPlayIndicator = function () {
 
             position = listElementSearchlist.get(0).dataset.index;
 
+            if( searchController.songs.searchResults.length==1)
+                y = 0;
+            else
+                y = 5 + parseInt(position) / ( Math.min(searchController.getShowModeLimit(1), searchController.songs.searchResults.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
 
-            y = 5+parseInt(position) / ( Math.min(searchController.getShowModeLimit(1), searchController.songs.searchResults.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
-
-            if(y>scrollHeight)
+            if (y > scrollHeight)
                 y = scrollHeight;
 
-            $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
-            if($("#searchlist .iScrollPlayIndicator:visible").length==0) {
+            if(!y)
+                y=0;
+            $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px) scale(1.4)').css('-moz-transform', 'translate(0px, ' + y + 'px) scale(1.4)').css('-ms-transform', 'translate(0px, ' + y + 'px) scale(1.4)').css('transform', 'translate(0px, ' + y + 'px) scale(1.4)')
+            if ($("#searchlist .iScrollPlayIndicator:visible").length == 0) {
                 $("#searchlist .iScrollPlayIndicator").show();
             }
 
@@ -710,13 +769,13 @@ playbackController.positionPlayIndicator = function () {
  */
 playbackController.positionPlayIndicatorAtTop = function (searchlist) {
     var y = 0;
-//Set playing Indicator position
+    //Set playing Indicator position
     if (playbackController.playingSong) {
         if (playbackController.playingSong.gid && !searchlist) {
-            $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
+            $("#playlistInner .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px) scale(1.4)').css('-moz-transform', 'translate(0px, ' + y + 'px) scale(1.4)').css('-ms-transform', 'translate(0px, ' + y + 'px) scale(1.4)').css('transform', 'translate(0px, ' + y + 'px) scale(1.4)')
         }
         else {
-            $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)').css('-moz-transform', 'translate(0px, ' + y + 'px)').css('-ms-transform', 'translate(0px, ' + y + 'px)').css('transform', 'translate(0px, ' + y + 'px)')
+            $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px) scale(1.4)').css('-moz-transform', 'translate(0px, ' + y + 'px) scale(1.4)').css('-ms-transform', 'translate(0px, ' + y + 'px) scale(1.4)').css('transform', 'translate(0px, ' + y + 'px) scale(1.4)')
         }
     }
 
@@ -730,7 +789,7 @@ playbackController.positionPlayIndicatorAtTop = function (searchlist) {
  * @param onlyList 1:searchlist, 2:playlist
 
  */
-playbackController.getListElementFromElement = function (element, onlyList) {
+playbackController.getListElementFromElement = function (element, onlyList, alsoPlaylist) {
     if (!element)
         return $([]);
 
@@ -739,7 +798,7 @@ playbackController.getListElementFromElement = function (element, onlyList) {
     if (!onlyList || onlyList == 1)
         searchListElements = $("#searchlist li[data-elementtitle='" + mediaController.getElementTitle(element) + "'] ");
 
-    if (!onlyList || onlyList == 2)
+    if ((!playlistController.playlistMode||alsoPlaylist)&&(!onlyList || onlyList == 2))
         playlistElements = $("#playlistInner li[data-songgid='playlistsong" + element.gid + "']");
 
 
@@ -780,6 +839,7 @@ playbackController.isLoadingSong = function (song) {
  * Remark song if list after list reload
  */
 playbackController.remarkSong = function () {
+
     if (uiController.dontRemark) {
         setTimeout(function () {
             playbackController.remarkSong();
@@ -805,8 +865,6 @@ playbackController.remarkSong = function () {
             if (listElement.length > 0) {
 
 
-                playbackController.positionPlayIndicator();
-
                 listElement.addClass("loadedsong");
 
                 if (playbackController.isLoading) {
@@ -822,6 +880,8 @@ playbackController.remarkSong = function () {
                     listElement.addClass("pausing");
                     listElement.removeClass("playing");
                 }
+                playbackController.positionPlayIndicator();
+
             }
         }
     }

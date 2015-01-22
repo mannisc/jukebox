@@ -25,7 +25,7 @@ $("#fbtitlebox").html("");
 preloadhtml.recommendfb = $(".fb-recommendations-bar-container").html();
 $(".fb-recommendations-bar-container").html("");
 
-preloadhtml.playlisthtml = $("#playlistInner").html();
+preloadhtml.playlisthtml = $("#playlistScroll").html();
 
 
 

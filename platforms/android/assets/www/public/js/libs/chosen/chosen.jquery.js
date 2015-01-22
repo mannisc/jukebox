@@ -464,6 +464,7 @@
         };
 
         AbstractChosen.browser_is_supported = function () {
+            return true;
             if (window.navigator.appName === "Microsoft Internet Explorer") {
                 return document.documentMode >= 8;
             }
@@ -670,6 +671,7 @@
                     if (!this.active_field) {
                         if (this.is_multiple) {
                             this.search_field.val("");
+
                         }
                         $(document).bind('click.chosen', this.click_test_action);
                         this.results_show();
@@ -822,6 +824,11 @@
                     chosen: this
                 });
             }
+
+           setTimeout(function(){
+                playlistController.updateSearch(true)},0);//CHANGED!!
+
+
             return this.results_showing = false;
         };
 
@@ -861,6 +868,8 @@
                 this.search_field.val("");
                 return this.search_field.removeClass("default");
             }
+
+
         };
 
         Chosen.prototype.search_results_mouseup = function (evt) {
@@ -898,7 +907,7 @@
             //CHANGED
             /*
             var html = window.$compile(
-                "<img src = 'public/img/emtpy.png' style= 'background-image:url( {{mediaController.getSongCoverForLoadedPlaylist()}} );background-size:  23px;position:absolute;top: 4px;left: 5px;' width='23px' height='23px'   ><span>" + item.html + "</span>"
+                "<img src = 'public/img/empy.png' style= 'background-image:url( {{mediaController.getSongCoverForLoadedPlaylist()}} );background-size:  23px;position:absolute;top: 4px;left: 5px;' width='23px' height='23px'   ><span>" + item.html + "</span>"
             )($scope);
 
 
@@ -1006,6 +1015,10 @@
                 this.current_selectedIndex = this.form_field.selectedIndex;
                 return this.search_field_scale();
             }
+
+
+
+
         };
 
         Chosen.prototype.single_set_selected_text = function (text) {

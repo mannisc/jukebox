@@ -9,6 +9,9 @@ var httpsHandler = require('./httpsHandler');
 var chartsHandler = require('./chartsHandler');
 var templateHandler = require('./templateHandler');
 
+var countUpdates = 0;
+var maxChartsResults = 100;
+var ip_token = "iamadmin";
 
 //Songbase FTP Properties
 var ftpProperties = {
@@ -20,18 +23,18 @@ var ftpProperties = {
 
 //This Callbacks should be called one after another
 
-httpsHandler.downloadFile("imgflip.com", "/ajax_get_video_from_url?url=http%3A%2F%2Fpdl.vimeocdn.com%2F59403%2F899%2F244700956.mp4%3Ftoken2%3D1400940393_37731d9fa33fe73f8f3ae7c89814f0b0%26aksessionid%3D13fef841d0cedf61&ran=yMo52KSHA3Agkurei5dBpvLQNGEuvY3k&getImg=1", onExploreReady)
+
+//httpsHandler.downloadFile("imgflip.com", "/ajax_get_video_from_url?url=http%3A%2F%2Fpdl.vimeocdn.com%2F59403%2F899%2F244700956.mp4%3Ftoken2%3D1400940393_37731d9fa33fe73f8f3ae7c89814f0b0%26aksessionid%3D13fef841d0cedf61&ran=yMo52KSHA3Agkurei5dBpvLQNGEuvY3k&getImg=1", onExploreReady)
 //httpsHandler.downloadFile("imgflip.com", "/terms", onExploreReady)
 
-https://imgflip.com/terms
-function onExploreReady(response) {
-    console.log("EXPLORE")
-    console.log(response)
 
-    onStartChartsUpdate();
-}
+startChartsUpdate();
 
-function onStartChartsUpdate() {
+
+//---------------------------------------------------------------------------------------------
+
+
+function startChartsUpdate() {
 
 //Connect FTP
     ftpHandler.connect(ftpProperties, onFTPConnection);
@@ -51,34 +54,43 @@ function onFTPConnection() {
 function onFTPDownloadTemplates() {
     console.log("Templates Downloaded")
 
-    chartsHandler.update(httpHandler, "019c7bcfc5d37775d1e7f651d4c08e6f", 6, onChartsUpdated);
+    chartsHandler.update(httpHandler, "019c7bcfc5d37775d1e7f651d4c08e6f", 10, onChartsUpdated);
 
 }
 
 
 //Charts Updated
-function onChartsUpdated(tracks) {
+function onChartsUpdated(tracks, countNewUpdates) {
 
+    countUpdates = countNewUpdates;
+    console.log("Charts: " + tracks.length + " Tracks")
+    console.log(countUpdates + " Updates");
 
-    console.log("Charts Updated: " + tracks.length + " Tracks")
+    if (countNewUpdates > 0) {
 
+        var generatedDataTemplate = chartsHandler.fs.readFileSync("generatedData.template.js", "utf-8");
 
-    var generatedDataTemplate = chartsHandler.fs.readFileSync("generatedData.template.js", "utf-8");
+        if (generatedDataTemplate && generatedDataTemplate != "") {
 
-    if (generatedDataTemplate && generatedDataTemplate != "") {
+            var templateProp = [
+                {
+                    search: "insert_songcharts",
+                    replace: JSON.stringify(tracks)
+                }
+            ]
 
-        var templateProp = [
-            {
-                search: "insert_songcharts",
-                replace: JSON.stringify(tracks)
-            }
-        ]
+            var generatedData = templateHandler.buildTemplate(generatedDataTemplate, templateProp)
+            chartsHandler.fs.writeFileSync("generatedData.js", generatedData);
+            ftpHandler.uploadFile("/test/public/js/generatedData.js", "generatedData.js", onFTPUploadTemplates)
 
-        var generatedData = templateHandler.buildTemplate(generatedDataTemplate, templateProp)
-        chartsHandler.fs.writeFileSync("generatedData.js", generatedData);
-        ftpHandler.uploadFile("/test/public/js/generatedData.js", "generatedData.js", onFTPUploadTemplates)
+        }
 
     }
+
+
+    setTimeout(function () {
+        bufferCharts(tracks)
+    }, 1000);
 
 
 }
@@ -87,10 +99,55 @@ function onChartsUpdated(tracks) {
 function onFTPUploadTemplates() {
 
     console.log("Templates Uploaded")
+
+
+    //Write Server Stats
+    console.log("Write Server Stats")
+    chartsHandler.fs.appendFileSync("Server Status.txt", "Last Update: " + new Date().toUTCString() + " - Updates: " + countUpdates + "\r\n");
+
+
     console.log("Finished--------------------------")
+
+
 }
 
 
+function bufferCharts(tracks) {
+
+    console.log(tracks);
+
+    for (var i = 0; i < tracks.length; i++) {
+
+        var bufferSongIndex = function (index) {
+            setTimeout(function () {
+                bufferSong(tracks[index], index == maxChartsResults - 1)
+            }, 5000 * index);
+        }
+        bufferSongIndex(i);
+    }
+
+
+}
+
+
+function bufferSong(track, endProcess) {
+
+    console.log(track);
+
+
+    console.log("songbase.fm:3001?reloadversions=" + track.artist.name + "&duration=&title=" + track.name + "&auth=" + ip_token)
+
+    httpHandler.downloadFile("songbase.fm", "?reloadversions=" + encodeURIComponent(track.artist.name) + "&duration=&title=" + encodeURIComponent(track.name) + "&auth=" + ip_token, function (content) {
+        console.log("response: " + content)
+    }, 3001)
+
+
+    if (endProcess)
+        setTimeout(function () {
+            process.exit(0);
+        }, 10000);
+
+}
 
 
 /*

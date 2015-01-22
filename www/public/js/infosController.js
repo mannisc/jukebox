@@ -1,0 +1,59 @@
+/**
+ * adController.
+ *
+ * >>Description<<
+ *
+ * @author Manfred
+ * @date 04.08.14 - 22:17
+ * @copyright munichDev UG
+ */
+
+
+
+var infosController = function () {
+};
+
+
+infosController.init = function () {
+
+    infosController.mode =  1;//(Math.random() > 0.5);   always  exoClickAd,  chitikaAd booooring adss til now
+
+    if (infosController.mode) {
+        $(".chitikaAd").hide();
+    } else {
+        $(".exoClickAd").hide();
+    }
+
+
+    //Detect Adblock
+    var checkAdblock = function () {
+        if ($(".sideinfo iframe").length == 0) {  //$(".sideinfo .adsbygoogle").children().length == 0 //google adsense
+            $(".sideinfo .blocked").remove();
+
+            $(".sideinfo").prepend('<img src="public/img/blocked.gif" class="blocked fadeincomplete">');
+
+
+        } else
+            $(".sideinfo .blocked").remove();
+    }
+
+
+    var reloadAdblock = function () {
+        if (infosController.mode) {
+            $('.infoRightReload iframe').removeClass("fadeincomplete2s")
+            $('.infoRightReload iframe').hide();
+
+            $('.infoPopupReload iframe').attr('src', $('.infoPopupReload iframe').attr('src'));
+
+            $('.infoRightReload iframe').attr('src', $('.infoRightReload iframe').attr('src'));
+
+            $('.infoRightReload iframe').addClass("fadeincomplete2s")
+            $('.infoRightReload iframe').show();
+        }
+
+        setTimeout(checkAdblock, 3000);
+        setTimeout(reloadAdblock, 150000);
+    }
+    setTimeout(reloadAdblock, 40000);
+
+}

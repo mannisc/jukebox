@@ -55,9 +55,10 @@ body {
 
 
 
+
 .ui-loader-default {
 
-    margin-left: -80px!important;
+    margin-left: -22px!important;
 }
 
 
@@ -111,7 +112,7 @@ body {
 
 
 /*Big Screen*/
-@media (min-width:850px) {
+@media (min-width:1170px) {
 
     #controlbar .ui-input-search {
         float: left;
@@ -140,7 +141,7 @@ body {
 }
 
 /*Big Screen*/
-@media (min-width:1165px) {
+@media (min-width:1230px) {
 
     #playlist {
         top: 0;
@@ -151,16 +152,7 @@ body {
     }
 }
 
-/*Small Screen*/
-@media (min-width:850px) and  (max-width:1164px) {
-    #playlist {
-        top: 60px !important;
 
-    }
-
-
-
-}
 
 @media (max-width:1000px) {
 
@@ -189,16 +181,32 @@ body {
 
 }
 
+
+
 /*Small Screen*/
-@media (max-width:849px) {
+@media (max-width:1169px) {
 
     #controlbar {
         text-align: left;
     }
+    #controlbar .ui-btn {
+        font-size: 0.9em;
+    }
+
+    #searchlayoutbutton, .videoControlElements-gridlayout-button, .videoControlElements-fullscreen-button ,#buySongLink{
+        display: none!important;
+    }
+
+    #playingSongInfoLink{
+        position: absolute;
+    }
+
+    #controlbar .ui-input-btn {
+        margin-right: 3px!important;
+    }
 
 
-
-.fb-recommendations-bar{
+    .fb-recommendations-bar{
      display:none!important;
 
 }
@@ -226,9 +234,12 @@ body {
 
     }
 
-    #searchcontent {
+
+    #searchcontent.searchlayout{
         margin-top: 50px;
     }
+
+
 
     #controlbar .ui-input-search {
         margin-bottom: 0px !important;
@@ -238,6 +249,12 @@ body {
 
 /*Bigger as Smallest Screen*/
 @media (min-width:780px) {
+
+
+    #popupLoadingSongInner{
+        width: 350px;
+        padding: 10px 20px 10px 20px!important;
+    }
 
     #playlist {
         top: 0px;
@@ -249,7 +266,7 @@ body {
     }
 
     .sideinfo {
-        display: block!important;
+        display: none!important;
     }
 
 
@@ -263,9 +280,19 @@ body {
 
 
 
-
 /*Smallest Screen*/
 @media (max-width:779px) {
+    #popupLoadingSongInner{
+        padding: 5px 15px 5px 15px!important;
+    }
+
+
+
+
+
+    #searchlist ul {
+        max-width: 100%!important;
+    }
 
 
     .videoControlElements-stop-button{
@@ -280,7 +307,7 @@ body {
         width:100%!important;
     }
 
-    #titleHeader{
+    #titleHeader sup{
         display:none!important;
     }
 
@@ -291,11 +318,18 @@ body {
     #backgroundVideo.background {
         display: none!important;
     }
+    #backgroundImage {
+        display: block!important;
+        -webkit-animation: none!important;
+        -moz-animation: none!important;
+        animation: none!important;
 
-
-    #playingSongInfoLink{
-     display:none!important;
     }
+
+
+
+
+
 
      #header a{
          font-size:12px!important;
@@ -307,14 +341,13 @@ body {
     }
 
     #playlist {
-        margin-top: -5px;
         left: 10px;
 
     }
 
     #playlistselectvertical .chosen-container {
-        min-width: 222px !important;
-        max-width: 222px !important;
+        min-width: 270px !important;
+        max-width: 270px !important;
     }
 
     #sortplaylisttext {
@@ -346,6 +379,9 @@ body {
         display:none!important;
     }
 
+    #videocontrolsInner .videoControlElements-smallProgress{
+        display:block!important;
+    }
 
 }
 
@@ -503,6 +539,87 @@ input[type=button]{
     transition: none!important;
 }
 
+/*Small Screen, no animation*/
+@media (min-width:360px) and  (max-width:360px) {
+
+    #controlselecthorizontal .ui-input-search, #controlselecthorizontal .ui-input-btn{
+        -webkit-transition: none!important;
+        -moz-transition: none!important;
+        -o-transition: none!important;
+        transition: none!important;
+    }
+}
+
+.searchinput-drop {
+    color: #000 !important;
+}
+.searchinput-drop {
+    left: 0;
+}
+.searchinput-drop {
+    border: none !important;
+}
+.searchinput-drop.visible {
+    opacity: 1 !important;
+    pointer-events: auto!important;
+    left: 0!important;
+}
+.searchinput-drop {
+    margin-top: 2px;
+    position: absolute;
+    top: 100%;
+    left: -9999px;
+    z-index: 1010;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #aaa;
+    border-top: 0;
+    background: #fff;
+    box-shadow: 0 4px 5px rgba(0,0,0,.15);
+    opacity: 0 !important;
+    -webkit-transition: opacity 0.3s ease;
+    -moz-transition: opacity 0.3s ease;
+    -ms-transition: opacity 0.3s ease;
+    -o-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.searchinput-drop ul{
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    max-height: 240px;
+}
+
+
+.searchinput-drop li.active-result {
+    display: list-item;
+    cursor: pointer;
+}
+.searchinput-drop li {
+    line-height: 30px !important;
+    margin: 0;
+    padding: 5px 6px;
+    list-style: none;
+    font-size: 16px !important;
+    color: #A82727;
+}
+
+
+
+#controlbar{
+    height: 0px;
+}
+
+
 #controlbar input{
     overflow: visible!important;
     text-shadow: none!important;
@@ -522,26 +639,36 @@ input[type=button]{
   }
 
 
+#controlselecthorizontal .ui-btn.ui-btn-b.ui-icon-delete{
+    background-color: #C70707;
+}
+
 #controlselecthorizontal .ui-btn.highlight{
     background: #751212!important;
     color: #FFFFFF!important;
     border-color: #570000;
 }
 
+#controlselecthorizontal{
+    min-width: 330px;
+}
 
 #controlselecthorizontal .ui-btn.ui-btn-b{
     background-color: #333
 }
+
 #controlselecthorizontal .ui-btn.ui-btn-a{
     background: #751212!important;
 }
 
+/*
 #controlselecthorizontal .ui-btn.ui-btn-b:nth-child(1){
     background-color: #333
 }
 #controlselecthorizontal .ui-btn.ui-btn-a:nth-child(1){
     background: #fff!important;
 }
+*/
 
 
 /*Loading Controlbar Buttons*/
@@ -612,7 +739,6 @@ input[type=button]{
     float: left;
     margin-right: 10px;;
     padding: .5em 1em;
-
 }
 
 #controlbar input.ui-btn {
@@ -1107,6 +1233,10 @@ video{
 
 }
 
+#popupFeedback a{
+    color: #000000!important;
+}
+
 
 #popupFeedback textarea{
     height:150px!important;
@@ -1338,9 +1468,8 @@ opacity:1!important;
 
 .backgroundVideo *{
 width:100%!important;
-height:100%!important;
 position: absolute;
-top: 0;
+top: 46px;
 left: 0;
 bottom: 0;
 right: 0;
@@ -1386,7 +1515,7 @@ background-color:#050!important;
 /*POPUPS*/
 
 #popupLoadingSongClose{
-    background-color: #242323 /*{a-bup-background-color}*/;
+    background-color: #C70707  /*{a-bup-background-color}*/;
     border-color: #000 /*{a-bup-border}*/;
 }
 
@@ -1431,10 +1560,13 @@ background-color:#050!important;
 .ui-popup.ui-body-a{
     background-color:rgba(0,0,0,0)!important;
 }
+.ui-popup.ui-body-a {
+    border-width: 0px;  !important;
 
+}
 
 .ui-popup{
-    padding: 5px;
+    padding: 1px;
 
     background: -moz-linear-gradient(top, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.75) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.85)), color-stop(100%,rgba(255,255,255,0.75))); /* Chrome,Safari4+ */
@@ -1449,9 +1581,18 @@ background-color:#050!important;
 }
 
 
+#popupLoadingSong{
+    border-width: 2px!important;
+    border-color: #000!important
+}
+
+
+
+
 #popupArtist-popup,#popupAccount-popup{
   width:300px;
 }
+
 
 
 
@@ -1467,6 +1608,13 @@ background-color:#050!important;
 
 
 }
+
+#popupAccount li a, #popupRegister  li a, #popupLogin li a {
+    color:#000!important;
+}
+
+
+
 /*
 #popupLogin{
     min-height: 320px;
@@ -1513,6 +1661,10 @@ text-shadow: none!important;
     z-index:10000;
 }
 
+
+#popupOptions{
+    padding: 2px;
+}
 
 #popupOptions ul{
     background-color: #333 !important;
@@ -1759,7 +1911,7 @@ max-width: 2em!important;
     padding-right: 5em!important;
     background-color: #333;
 
-    color: #fff;
+    color: #fff!important;
 }
 #popupShareMenu ul{
     background-color: #333!important;
@@ -1905,7 +2057,7 @@ max-width: 2em!important;
     padding-right: 5em!important;
     background-color: #333;
 
-    color: #fff;
+    color: #fff!important;
 }
 #popupVideoSettings ul{
     background-color: #333!important;
