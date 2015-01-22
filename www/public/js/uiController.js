@@ -1072,6 +1072,8 @@ uiController.showPlaylists = function (event) {
 
     $("#playlistInner .iScrollPlayIndicator").hide();
     $("#playlistInner .iScrollIndicator").hide();
+    $("#playlistInner .iScrollScrollUpIndicator").hide();
+
 
     //  $("#searchlist .iScrollPlayIndicator").hide();
 
