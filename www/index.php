@@ -245,6 +245,16 @@
 
 <!-- /header -->
 
+
+<div id="deselectionOptionContainer" style="display:none">
+    <div id="deselectionOption"  class="fadeslideincompletefast ui-input-btn ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="playlistController.selection.deselectElements(event)">
+
+    </div>
+
+</div>
+
+
+
 <!--Open Side Panel-->
 <div onclick="uiController.toggleSidePanel();" id="openSidePanelBarIconBar" style="z-index:9000;position: fixed;top: 0;right: 0;width: 30px;height:44px;"></div>
 
@@ -829,7 +839,7 @@
     <ul ui-sortable ng-model="playlistController.loadedPlaylistSongs" data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
 
 
-        <li ng-show="playlistController.showMode==0" ng-if="!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length == 0&&!playlistController.getLoadedPlaylist().isSimilarSongs"
+        <li ng-show="playlistController.showMode==0" ng-if="false&&!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length == 0&&!playlistController.getLoadedPlaylist().isSimilarSongs"
             ontouchend="playlistController.importPlaylistPopup(event);" ng-click="playlistController.importPlaylistPopup($event);"
             ng-dblclick="playlistController.selection.deselectElements($event);" class="fadeincomplete hoverable specialplaylistbutton othertopheight createplaylist importplaylist stayvisible">
             <a tabindex="-1">
@@ -849,7 +859,8 @@
 
                 <h3 style="font-size: 1.1em;margin-top: 20px;">Import Playlist</h3>
 
-            </a></li>
+            </a>
+        </li>
 
 
         <li ng-show="playlistController.showMode==0" ng-if="playlistController.playlistMode " ontouchend="playlistController.loadCurrentQueue(event)" ng-click="playlistController.loadCurrentQueue($event)"
@@ -1626,7 +1637,7 @@
         <img src="public/img/play.png" width="90px" style="margin-top: -20px;">
         <br>
 
-        <div>
+        <!--div>
             <script type="text/javascript">
                 ad_idzone = "1206520";
                 ad_width = "300";
@@ -1635,7 +1646,7 @@
             <script type="text/javascript" src="https://ads.exoclick.com/ads.js"></script>
             <noscript><a href="http://main.exoclick.com/img-click.php?idzone=1206520" target="_blank"><img src="https://syndication.exoclick.com/ads-iframe-display.php?idzone=1206520&output=img&type=300x250" width="300" height="250"></a>
             </noscript>
-        </div>
+        </div-->
 
 
     </div>

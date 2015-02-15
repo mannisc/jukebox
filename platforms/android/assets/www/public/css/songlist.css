@@ -31,7 +31,7 @@
     position: absolute;
     height: 39px;
     width: 182px;
-    top: 35px;
+    top: 60px;
     left: 63px;
     z-index: 10000;
     -webkit-transition: all 0.2s ease;
@@ -62,7 +62,7 @@
 }
 
 ul.gridlayout .songOptions {
-    left: 60px !important;
+    left: 110px !important;
     -webkit-transform: scale(0.92);
     -moz-transform: scale(0.92);
     transform: scale(0.92) !important;
@@ -2057,7 +2057,7 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 
 .chosen-choices.ui-input {
     padding-right: 30px;
-    border: 1px solid rgba(10, 10, 177, 0.5);
+    border: 1px solid #ddd;
 }
 
 .chosen-choices.ui-input  input {
