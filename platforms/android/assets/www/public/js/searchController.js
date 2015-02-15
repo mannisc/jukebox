@@ -2027,6 +2027,8 @@ searchController.dragging.stopDragging = function (event, ui, that) {
     if (playlistController.playlistMode && playlistController.playlists.length > 0) {
         $(".draggedlistelement").remove();
 
+
+
         var x = event.clientX, y = event.clientY,
             elementMouseIsOver = document.elementFromPoint(x, y);
 
@@ -2176,7 +2178,6 @@ searchController.dragging.stopDragging = function (event, ui, that) {
         uiController.startedSortPlaylist = false;
     }
     uiController.draggingSong = false;
-
     playlistController.selection.updateDeselectedSong();
 
     uiController.swipeTimer = Date.now();

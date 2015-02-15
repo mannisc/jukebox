@@ -29,17 +29,17 @@ var ignoreNextPlayBecauseHistoryBack = false;
 var historyID = 0;
 
 function receiveMessage(e) {
-    if(e.data.indexOf('title:') == 0){
-      document.title  = e.data.substr(6);
-	}
-	else if(e.data.indexOf('url:') == 0){
-      if(!ignoreNextPlayBecauseHistoryBack) {
-          historyID = historyID+1;
-          window.history.pushState({id:historyID},document.title, e.data.substr(4));
-      }
-
-
-	}
+    if(e&& e.data && typeof e.data ==  "string" ){
+        if(e.data.indexOf('title:') == 0){
+            document.title  = e.data.substr(6);
+        }
+        else if(e.data.indexOf('url:') == 0){
+            if(!ignoreNextPlayBecauseHistoryBack) {
+                historyID = historyID+1;
+                window.history.pushState({id:historyID},document.title, e.data.substr(4));
+            }
+        }
+    }
 }
 
 window.onpopstate = function(event) {

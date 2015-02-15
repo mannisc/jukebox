@@ -318,7 +318,6 @@ uiController.init = function () {
 
             '}'+
             '</style>');
-        console.log(style)
         $('head').append(style);
 
 
@@ -669,7 +668,7 @@ uiController.updateUI = function () {
     uiController.updateDisplay();
 
     //Addjust Controllbar width
-   $("#controlbar").css("width", $("#searchcontent").width()) ;
+   // $("#controlbar").css("width", $("#searchcontent").width()) ;
 
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
@@ -774,6 +773,7 @@ uiController.updateUI = function () {
 
 
 
+
         $("#playlist").css("width", $("#rightpanel").width() - 20 - 10);
 
 
@@ -794,6 +794,9 @@ uiController.updateUI = function () {
 
     }
     else { //Bigger then Smallest size
+
+        $("#controlselecthorizontal").css("width", "");
+
         $("#searchcontent, #playlistInner").removeClass("isvisiblesmallscreen");
         uiController.checkIfListHintsNecessary();
 
@@ -1128,8 +1131,13 @@ uiController.checkIfListHintsNecessary = function () {
 
 }
 
-uiController.gridWidth = 300;
 uiController.toggleGridLayoutWidth = function () {
+
+    if(uiController.windowWidth<=1300)
+        uiController.gridWidth = 220;
+    else
+        uiController.gridWidth = 300;
+
     uiController.gridLayoutCols = Math.floor(($("#searchlist ul").width() - 35) / uiController.gridWidth);
 
     $("#gridlayoutwidth").remove();
