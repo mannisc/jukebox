@@ -75,6 +75,7 @@ dailymotionPlayer.eventListener.apiready =  function(e)
 
             if(dailymotionPlayer.startplay){
                 dailymotionPlayer.play()
+
             }
 
             else if(dailymotionPlayer.startpause){
@@ -98,12 +99,13 @@ dailymotionPlayer.eventListener.error = function(e)
     }
 }
 
-dailymotionPlayer.eventListener.play = function(e)
-{
+dailymotionPlayer.eventListener.play = function(e){
+    dailymotionPlayer.setVolume(videoController.volume);
     if(dailymotionPlayer.player&&dailymotionPlayer.firstplay){
         videoController.playingSong();
         dailymotionPlayer.firstplay = false;
     }
+
 }
 
 dailymotionPlayer.eventListener.canplaythrough = function(e)

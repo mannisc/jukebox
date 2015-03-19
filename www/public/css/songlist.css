@@ -107,19 +107,20 @@ ul.gridlayout .songOptions {
     display: none !important;
 }
 
+#playlistInner.similarsongs .songOptions #addToPlaylist {
+    display: block !important;
+}
+
+#playlistInner.similarsongs .songOptions #removeFromPlaylist {
+    display: none !important;
+}
+
 .songOptions #removeFromPlaylist {
     left: 47px;
     background-image: url(../img/trashopt.png);
     background-size: 100%;
     background-repeat: no-repeat;
 }
-
-/*
-.songOptions #removeFromPlaylist:hover{
-    background-image:url(../img/trashoptopen.png)!important ;
-    background-size:100%;
-    background-repeat:no-repeat;
-} */
 
 #searchlist .songOptions #removeFromPlaylist {
     display: none !important;
@@ -200,10 +201,10 @@ ul.gridlayout .songOptions {
 }
 
 #searchcontent {
-    -webkit-transition: all 1.5s ease;
-    -moz-transition: all 1.5s ease;
-    -o-transition: all 1.5s ease;
-    transition: all 1.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
 #listhintleft {
@@ -215,7 +216,7 @@ ul.gridlayout .songOptions {
 
 
 #searchcontent.gridlayout {
-    opacity: 0.8;
+    opacity: 1;
     left:10px!important;
 
 }
@@ -1383,21 +1384,21 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 
 .songlist li .newSongImg {
      background-image:url(../img/newSongCover.png)!important;
-    width: 101px !important;
-    height: 101px !important;
-    max-width: 101px !important;
-    max-height: 101px !important;
+    width: 110px !important;
+    height: 110px !important;
+    max-width: 110px !important;
+    max-height: 110px !important;
     margin-left: 0px !important;
     margin-top: -0.5em !important;
-    left: 5px !important;
-    top: .9em;
+    left: 0px !important;
+    top: 8px;
     z-index: 10;
     overflow: visible;
     position: absolute;
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    background-size: 101px 101px !important;
+    background-size: 110px 110px !important;
     opacity: 0.91;
 
 }
@@ -1663,6 +1664,14 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 
     border: none !important;
 }
+.songlist li.selected img.ui-li-icon {
+    border: 5px solid #fff!important;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+
+
 
 #searchlist a:after {
     display: none;
@@ -2199,7 +2208,7 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 #searchlist .iScrollScrollUpIndicator {
     background-position: 4px;
     position: absolute;
-    top: 0;
+    top: 2px;
     left: 0;
 
 }

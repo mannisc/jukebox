@@ -442,7 +442,8 @@ mediaController.playSong = function (streamURL, videoURL) {
 }
 
 mediaController.PlayingSongError  = function (){
-   console.dir("PLAYINGSONG ERROR: "+mediaController.currentvideoURL)
+    console.log("#### ERROR mediaController.PlayingSongError "+mediaController.currentvideoURL)
+
     if(mediaController.currentvideoURL!=""){
         if(mediaController.retrySongCounter<5){
             if(videoController.isEmbedVideo(mediaController.currentvideoURL)){
@@ -1013,6 +1014,7 @@ mediaController.hideLoadingPopup = function(){
 
 mediaController.playVersion = function (songversion, rating, resetVersion) {
 
+    console.log("#### mediaController.playVersion "+songversion+" "+rating+" "+resetVersion)
 
     if(!mediaController.noClick){
 
@@ -1122,10 +1124,6 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
         url: preferences.serverURL + "?play=" + encodeURIComponent(searchString) + "&force1=" + encodeURIComponent(artistString) + "&force2=" + encodeURIComponent(titleString) + "&duration=" + duration +"&fromCache="+fromCache+"&auth=" + authController.ip_token,
         success: function (data) {
 
-
-
-
-
             //console.dir(" mediaController.loadStreamURL success")
             if (streamID == mediaController.playCounter) {
                 //var etime=new Date();
@@ -1181,6 +1179,11 @@ mediaController.loadStreamURL = function (streamID, searchString, artistString, 
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.dir(" mediaController.loadStreamURL error: "+xhr.responseText)
+
+            console.dir(ajaxOptions);
+            console.dir(thrownError);
+
+
             loadError = true;
             /* setTimeout(function () {
              videoController.showBuffered(true);
@@ -1223,7 +1226,10 @@ mediaController.onLoadingError = function (streamID, playedAutomatic) {
 
 
 mediaController.playStream = function (artist, title, playedAutomatic,fromCache) {
-   // console.dir("playStream "+artist+" "+title)
+
+    console.log("ERROR mediaController.playStream "+artist+" "+title)
+
+    // console.dir("playStream "+artist+" "+title)
     if(fromCache=="1" || fromCache==1){
         //console.dir(" mediaController.retrySongCounter = 0;")
         mediaController.retrySongCounter = 0;
@@ -1316,13 +1322,14 @@ mediaController.playStreamURLSeek = function (streamURL, videoURL, differentVers
         // playlistController.playingTitle = playlistController.playlingTitleLoading ;
         // playlistController.playlingTitleCover = playlistController.playlingTitleCoverLoading ;
 
+        console.log("#### mediaController.playStreamURLSeek "+streamURL+" "+videoURL+" "+differentVersions)
 
         playbackController.playingOldSong = playbackController.playingSong;
 
         playbackController.setNewTitle(playbackController.playingSong.name, mediaController.getSongCover(playbackController.playingSong), true);
 
 
-        mediaController.playSong(streamURL, videoURL)
+        mediaController.playSong(streamURL, videoURL);
 
         if (rating == 1) {
             mediaController.sendRating("1");
@@ -1357,6 +1364,8 @@ mediaController.songError = function () {
 }
 
 mediaController.playNextVersion = function () {
+    console.log("#### mediaController.playNextVersion")
+
     //console.dir("playNextVersion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     if (!videoController.versionsEnabled)
         return;
@@ -1378,7 +1387,7 @@ mediaController.playNextVersion = function () {
                                     if (data.track) {
                                         if (playbackController.getPlayingSong() == song) {
                                             mediaController.startVersionIndex = -1;
-                                            var nextIndex = -1
+                                            var nextIndex = -1;
                                             for (var i = 0; i < data.track.length; i++) {
                                                 try {
                                                     data.track[i].title = decodeURIComponent(data.track[i].title);
@@ -1428,10 +1437,11 @@ mediaController.playNextVersion = function () {
             getsongversions(0);
         }
         else {
-            var nextIndex = -1
+            var nextIndex = -1;
             for (var i = 0; i < mediaController.versionList.length; i++) {
                 if (mediaController.versionList[i].url == mediaController.currentvideoURL) {
                     nextIndex = i;
+                    break;
                 }
             }
 

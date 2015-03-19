@@ -288,9 +288,11 @@ uiController.init = function () {
 
     uiController.updateDisplay();
 
-    setTimeout(function () {
-        $("iframe").get(0).contentDocument.close();
-    }, 2000);
+    /*
+     setTimeout(function () {
+     $("iframe").get(0).contentDocument.close();
+     }, 2000);
+     */
 
     var style = $('<style id="inputclearhide">' +
         '.ui-input-clear {' +
@@ -309,17 +311,16 @@ uiController.init = function () {
     });
 
     //Startup and on Resize
-    var onSizeChange = function(){
+    var onSizeChange = function () {
         //Change Video height
         $("#videoSizeStyle").remove();
-        var style =  $('<style id="videoSizeStyle">' +
+        var style = $('<style id="videoSizeStyle">' +
             '.backgroundVideo *{' +
-            'height:'+($(window).height()-46) +"px!important"+
+            'height:' + ($(window).height() - 46) + "px!important" +
 
-            '}'+
+            '}' +
             '</style>');
         $('head').append(style);
-
 
 
     }
@@ -651,10 +652,10 @@ uiController.updateDisplay = function () {
 
     $("#page").width(uiController.windowWidth);
 
-  //  if ($(window).height() > 710)  //TODO ad
-        $("#header").width($(window).width());
-  //  else
-  //      $("#header").width($(window).width() - 160);
+    //  if ($(window).height() > 710)  //TODO ad
+    $("#header").width($(window).width());
+    //  else
+    //      $("#header").width($(window).width() - 160);
 
     $("#videocontrols").width(uiController.windowWidth);
 
@@ -668,7 +669,7 @@ uiController.updateUI = function () {
     uiController.updateDisplay();
 
     //Addjust Controllbar width
-   // $("#controlbar").css("width", $("#searchcontent").width()) ;
+    // $("#controlbar").css("width", $("#searchcontent").width()) ;
 
     //Additional Control Buttons
     uiController.countCustomButtons = $(".videoControlElements-custom-button:visible").length;
@@ -740,18 +741,18 @@ uiController.updateUI = function () {
         if ($("#playlist").parents("#rightpanel").length == 0)
             $("#playlist").appendTo("#rightpanel");
 
-        $("#playlist").css("max-height", $(window).height() - 44 - 34 - 3+2);
+        $("#playlist").css("max-height", $(window).height() - 44 - 34 - 3 + 2);
 
         setTimeout(function () {
             console.log("----------123123---")
 
             if ($("#playlistselectvertical .chosen-container").height() > 0) {
-                $("#playlistInner").css("max-height", $(window).height() - 3 - 35 - (100 + $("#playlistselectvertical .chosen-container").height() - 30)+2);
-                $("#playlistScroll").css("max-height", $(window).height() - 3 - 35  - (100 + $("#playlistselectvertical .chosen-container").height() - 30 - $("#playlistButtons").height() * 102 / 93) - 2 - $("#marginplaylistsearchresults").height());
+                $("#playlistInner").css("max-height", $(window).height() - 3 - 35 - (100 + $("#playlistselectvertical .chosen-container").height() - 30) + 2);
+                $("#playlistScroll").css("max-height", $(window).height() - 3 - 35 - (100 + $("#playlistselectvertical .chosen-container").height() - 30 - $("#playlistButtons").height() * 102 / 93) - 2 - $("#marginplaylistsearchresults").height());
             }
             else {
-                $("#playlistInner").css("max-height", $(window).height() - 3 - 40 - 5+2);
-                $("#playlistScroll").css("max-height", $(window).height() - 3 - 40 - 5 - $("#playlistButtons").height() * 102 / 93 - 2 - $("#marginplaylistsearchresults").height() );
+                $("#playlistInner").css("max-height", $(window).height() - 3 - 40 - 5 + 2);
+                $("#playlistScroll").css("max-height", $(window).height() - 3 - 40 - 5 - $("#playlistButtons").height() * 102 / 93 - 2 - $("#marginplaylistsearchresults").height());
 
             }
         }, 100)
@@ -770,8 +771,6 @@ uiController.updateUI = function () {
         $("#searchcontent").css("width", uiController.windowWidth - 20);
 
         $("#controlselecthorizontal").css("width", uiController.windowWidth - 20);
-
-
 
 
         $("#playlist").css("width", $("#rightpanel").width() - 20 - 10);
@@ -819,14 +818,14 @@ uiController.updateUI = function () {
 
             //Smaller Size
             if ($(window).width() < uiController.responsiveWidthSmaller && $(window).width() > uiController.responsiveWidthSmall) {
-                $("#playlist").css("max-height", $(window).height() - 110 - 44+2);
-                $("#playlistInner").css("max-height", $(window).height() - 110 - 100 - topDifference+2);
+                $("#playlist").css("max-height", $(window).height() - 110 - 44 + 2);
+                $("#playlistInner").css("max-height", $(window).height() - 110 - 100 - topDifference + 2);
                 $("#playlistScroll").css("max-height", $(window).height() - 110 - 100 - topDifference - 2 - $("#marginplaylistsearchresults").height() - $("#playlistButtons").height() * 102 / 93);
 
 
             } else {
-                $("#playlist").css("max-height", $(window).height() - 50 - 44+2);
-                $("#playlistInner").css("max-height", $(window).height() - 50 - 100 - topDifference+2);
+                $("#playlist").css("max-height", $(window).height() - 50 - 44 + 2);
+                $("#playlistInner").css("max-height", $(window).height() - 50 - 100 - topDifference + 2);
                 $("#playlistScroll").css("max-height", $(window).height() - 50 - 100 - topDifference - 2 - $("#marginplaylistsearchresults").height() - $("#playlistButtons").height() * 102 / 93);
 
 
@@ -870,19 +869,15 @@ uiController.updateUI = function () {
     if ($(window).width() < uiController.responsiveWidthSmall) {
 
 
-
-
-
-
-        if(playbackController.playingSong)
-         $("#titleHeader").hide();
+        if (playbackController.playingSong)
+            $("#titleHeader").hide();
         else
-         $("#titleHeader").show();
+            $("#titleHeader").show();
 
 
-        var otherButtonsWidth=    ($("#buySongLink:visible").outerWidth()+ $("#signinLink:visible").outerWidth()+ $("#registerLink:visible").outerWidth()+ $("#linkAccount:visible").outerWidth()+7);
+        var otherButtonsWidth = ($("#buySongLink:visible").outerWidth() + $("#signinLink:visible").outerWidth() + $("#registerLink:visible").outerWidth() + $("#linkAccount:visible").outerWidth() + 7);
 
-        $("#playingSongInfoLink").css("right", otherButtonsWidth).css("max-width", $(window).width()-otherButtonsWidth-125);
+        $("#playingSongInfoLink").css("right", otherButtonsWidth).css("max-width", $(window).width() - otherButtonsWidth - 125);
 
 
         uiController.totalTimeWidth = (uiController.windowWidth / 1.5 - 160);
@@ -1029,6 +1024,7 @@ uiController.showPlaylists = function (event) {
     playlistController.showMode = 0;
     $("#marginplaylistsearchresults").css('cssText', 'height: 0px !important');
 
+    $("#playlistInner").removeClass("similarsongs");
 
     if (playlistController.sortPlaylist)
         playlistController.ui.toggleSortablePlaylist(true);
@@ -1133,7 +1129,7 @@ uiController.checkIfListHintsNecessary = function () {
 
 uiController.toggleGridLayoutWidth = function () {
 
-    if(uiController.windowWidth<=1300)
+    if (uiController.windowWidth <= 1300)
         uiController.gridWidth = 220;
     else
         uiController.gridWidth = 300;
@@ -1157,6 +1153,27 @@ uiController.toggleGridLayout = function () {
     //   viewController.fadeContentVisible(dontFadeContentTime);
 
     uiController.gridLayout = !uiController.gridLayout;
+
+
+    var videoOpactiy
+
+
+    if (uiController.gridLayout) {
+        if (videoController.videoOpactiy == videoController.startVideoOpactiyVisisble) {
+            $("#backgroundImage").removeClass("fadeoutcomplete").addClass("fadeincomplete");
+            $("#backgroundImage").show();
+        }
+
+
+    } else {
+
+        $("#backgroundImage").removeClass("fadeincomplete").addClass("fadeoutcomplete");
+        setTimeout(function () {
+            $("#backgroundImage").hide();
+        }, 1000)
+    }
+
+
     if (uiController.gridLayout)
         $("#searchlayoutbutton img").attr("src", "public/img/grid.png");
     else
@@ -1178,6 +1195,7 @@ uiController.toggleGridLayout = function () {
                     videoController.videoOpactiy = 0;
             }
             videoController.setVideoOpacity(videoController.videoOpactiy);
+            videoController.fullscreenModeOldVideoOpacity =   videoController.videoOpactiy;
 
             $("#searchlist ul").addClass("gridlayout")
 
@@ -1262,10 +1280,11 @@ uiController.toggleGridLayout = function () {
             $scope.safeApply();
             $("#searchlistview").listview('refresh');
 
+
             setTimeout(function () {
                 if (!uiController.gridLayout) {
 
-                    if (videoController.videoOpactiy = videoController.startVideoOpactiyBackground)
+                    if (videoController.videoOpactiy <= 0.1)
                         videoController.videoOpactiy = videoController.startVideoOpactiyVisisble;
                     else {
                         videoController.videoOpactiy = videoController.videoOpactiy * 1.1;
@@ -1291,7 +1310,11 @@ uiController.toggleGridLayout = function () {
 
                     uiController.searchListScroll.scrollTo(0, scrollY);
                 }
+
+
                 videoController.setVideoOpacity(videoController.videoOpactiy);
+                videoController.fullscreenModeOldVideoOpacity =   videoController.videoOpactiy;
+
                 setTimeout(function () {
                     playlistController.options.positionSongOptions();
                 }, 0)

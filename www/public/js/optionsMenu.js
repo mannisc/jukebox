@@ -189,10 +189,10 @@ optionsMenu.openSearchListSelectionOptions = function (event, positionTo) {
 
 
     optionsMenu.options = [
-        {text: "Play next", callback: function () {
+        {text: "Add to Current Play Queue", callback: function () {
             optionsMenu.closePopup();
             setTimeout(function () {
-                playlistController.playSelectionNext();
+                playlistController.addSelectedElementsToQueue(event)
             }, 150)
         }},
         {text: "Add to Playlist", callback: function () {
