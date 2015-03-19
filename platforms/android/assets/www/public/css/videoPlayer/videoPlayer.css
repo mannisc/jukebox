@@ -551,6 +551,13 @@
  }
 
 
+.videoControlElements-prevtrack-button{
+    margin-left:6px!important;
+}
+
+.videoControlElements-nexttrack-button{
+    margin-right:6px!important;
+}
 
  /* Inner Button */
 
@@ -657,6 +664,14 @@
      background: transparent url(editdarker.png) no-repeat;
      background-size: 16px;
  }
+
+
+.videoControlElements-controls .videoControlElements-button-choose-version {
+    background-size: 13px!important;
+    background-position: 100% 100%!important;
+    background-repeat: no-repeat;
+}
+
 
 .videoControlElements-controls .videoControlElements-button-share button {
 

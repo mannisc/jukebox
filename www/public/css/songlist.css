@@ -1665,7 +1665,7 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     border: none !important;
 }
 .songlist li.selected img.ui-li-icon {
-    border: 5px solid #fff!important;
+    border: 2px solid #fff!important;
     box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
