@@ -2565,6 +2565,12 @@ playlistController.loadPlaylist = function (playlist) {
         playlistController.playlistsScrollY = uiController.playListScroll.y;
     }
 
+    if (playlist.gid == playlistController.similarSongs.gid)
+        $("#playlistInner").addClass("similarsongs");
+    else
+        $("#playlistInner").removeClass("similarsongs");
+
+
     if (playlist.gid == playlistController.currentQueue.gid && playlistController.playlistsQueueScrollY)
         uiController.playListScroll.scrollTo(0, playlistController.playlistsQueueScrollY, 0);
     else

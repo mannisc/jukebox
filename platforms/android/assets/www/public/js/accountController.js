@@ -671,8 +671,10 @@ accountController.singInBase = function (name, pw, nameEncrypted, emailEncrypted
 
     //alert(preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier)
     $.ajax({
+
         timeout: 30000,
         url: preferences.serverURL + "?login=" + nameEncrypted + "&email=" + emailEncrypted + "&pw=" + pwEncrypted + "&userid=" + useridEncrypted + "&auth=" + authController.ip_token + "&extacc=" + externalAccountIdentifier,
+
         success: function (data) {
 
             //console.dir("LOGIN DATA:")
@@ -821,6 +823,10 @@ accountController.signIn = function () {
  * @param access_token
  */
 accountController.socialSignIn = function (username, email, userid, externalAccountIdentifier, access_token) {
+
+     console.log("LOGIN: "+username+"  "+email+"  "+userid+"  "+externalAccountIdentifier+"  "+access_token);
+          console.log(authController.ip_token)
+
     if (authController.ip_token != "auth" && authController.ip_token != "") {
         $.mobile.loading( "hide");
         $.mobile.loading( "show", {
@@ -829,6 +835,8 @@ accountController.socialSignIn = function (username, email, userid, externalAcco
             textonly: false,
             html: ""
         });
+        console.log("LOGIN!!: "+username+"  "+email+"  "+userid+"  "+externalAccountIdentifier+"  "+access_token);
+
         accountController.singInBase(username, access_token, rsaController.rsa.encrypt(username), rsaController.rsa.encrypt(email), rsaController.rsa.encryptUnlimited(access_token), rsaController.rsa.encrypt(userid), externalAccountIdentifier);
     } else {
         $.mobile.loading("hide");

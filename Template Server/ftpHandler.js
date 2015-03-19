@@ -21,6 +21,7 @@ ftpHandler.connect = function(connectionProps,callback){
     ftpHandler.client.connect(connectionProps);
     ftpHandler.client.on('ready', function() {
         ftpHandler.connected  = true;
+
         if(callback)
             callback();
     });

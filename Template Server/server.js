@@ -14,10 +14,15 @@ var maxChartsResults = 100;
 var ip_token = "iamadmin";
 
 //Songbase FTP Properties
+
+var serverURL =   "h2406563.stratoserver.net";
+
+
 var ftpProperties = {
-    host: "songbase.net",
-    user: "u76604889",
-    password: "songbasetwinners"
+    host: serverURL,//"songbase.net",
+    user: "Administrator",// "u76604889",
+    password: "hUFEvt9m",//"songbasetwinners"
+    port: 21
 }
 
 
@@ -47,7 +52,7 @@ function onFTPConnection() {
 
     console.log("FTP Connected")
 
-    ftpHandler.downloadFile("/test/public/js/generatedData.template.js", "generatedData.template.js", onFTPDownloadTemplates)
+    ftpHandler.downloadFile("/public/js/generatedData.template.js", "generatedData.template.js", onFTPDownloadTemplates)
 }
 
 //Templates Downloaded
@@ -81,7 +86,7 @@ function onChartsUpdated(tracks, countNewUpdates) {
 
             var generatedData = templateHandler.buildTemplate(generatedDataTemplate, templateProp)
             chartsHandler.fs.writeFileSync("generatedData.js", generatedData);
-            ftpHandler.uploadFile("/test/public/js/generatedData.js", "generatedData.js", onFTPUploadTemplates)
+            ftpHandler.uploadFile("/public/js/generatedData.js", "generatedData.js", onFTPUploadTemplates)
 
         }
 
@@ -113,8 +118,9 @@ function onFTPUploadTemplates() {
 
 
 function bufferCharts(tracks) {
-
-    console.log(tracks);
+    console.log("");
+    console.log("");
+    console.log("Buffering Tracks: "+tracks.length);
 
     for (var i = 0; i < tracks.length; i++) {
 
@@ -132,14 +138,14 @@ function bufferCharts(tracks) {
 
 function bufferSong(track, endProcess) {
 
-    console.log(track);
 
+    console.log("Track: "+track.name);
 
-    console.log("songbase.fm:3001?reloadversions=" + track.artist.name + "&duration=&title=" + track.name + "&auth=" + ip_token)
+   // console.log("h2406563.stratoserver.net:3001?reloadversions=" + track.artist.name + "&duration=&title=" + track.name + "&auth=" + ip_token);
 
-    httpHandler.downloadFile("songbase.fm", "?reloadversions=" + encodeURIComponent(track.artist.name) + "&duration=&title=" + encodeURIComponent(track.name) + "&auth=" + ip_token, function (content) {
-        console.log("response: " + content)
-    }, 3001)
+    httpHandler.downloadFile(serverURL, "?reloadversions=" + encodeURIComponent(track.artist.name) + "&duration=&title=" + encodeURIComponent(track.name) + "&auth=" + ip_token, function (content) {
+        console.log("Response Length: " + content.length+"   (" + content.substring(0,45)+" ...)");
+    }, 3001);
 
 
     if (endProcess)

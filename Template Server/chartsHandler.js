@@ -80,6 +80,7 @@ chartsHandler.downloadFiles = function (content, callback,start) {
 
         chartsHandler.fs.createReadStream("charttrends.txt").pipe(chartsHandler.fs.createWriteStream("charttrends_backup.txt"));
         var oldCharttrend = chartsHandler.fs.readFileSync("charttrends.txt");
+
         if (oldCharttrend && oldCharttrend != "") {
 
             oldCharttrend = JSON.parse(oldCharttrend);

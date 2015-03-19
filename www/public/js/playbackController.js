@@ -26,6 +26,7 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
     //Swiped?
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
+
     var doubleClick = function () {
 
         //Playlist?
@@ -68,18 +69,20 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
 
                         if (element.isArtist) {
                             searchController.artists.showArtist(element);
-                        } else
-                            playlistController.selection.selectElement(element);
+                        } else {
+                            var songlist = $(event.target).parents("li")
+                            console.log("(event.clientX - songlist.offset().left): " + (event.clientX - songlist.offset().left))
+                            if (songlist.length > 0 && (event.clientX - songlist.offset().left) < 115) {
+                                playlistController.selection.selectElement(element)
+                            } else
+                                doubleClick();
+                        }
 
                     }
 
                     //Clicked on Cover -> Select Song
                     /*
-                     var songlist = $(event.target).parents("li")
-                     if (songlist.length > 0 && (event.clientX - songlist.offset().left) < 65) {
-                     playlistController.selection.selectElement(element)
-                     return;
-                     }
+
                      */
 
 
@@ -175,6 +178,8 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
 
     console.log("PLAYSONG")
 
+    console.log("TESTESTEST")
+
 
     //Song for which version list is currently loaded set to null
     mediaController.versionListSong = null;
@@ -228,6 +233,10 @@ playbackController.playSong = function (song, resetingSong, playedAutomatic, add
     playbackController.playingSong = jQuery.extend(true, {}, song);
     // if(playlistController.getLoadedPlaylist().isSimilarSongs)  //Always load Similar Songs
     playlistController.getSimilarSongs(playbackController.playingSong);
+
+    //Google analytics
+    ga('send', 'song', 'media', 'play', mediaController.getSongDisplayName(playbackController.playingSong));
+
 
     //Clear other loading songs
     $(".songlist li.loadedsong.stillloading").removeClass("loadedsong stillloading");
@@ -664,7 +673,7 @@ playbackController.positionPlayIndicator = function () {
 
         if (listElement.parents("#playlistInner").length > 0) {
 
-            var scrollHeight = $("#playlistScroll .iScrollVerticalScrollbar").height()-2;
+            var scrollHeight = $("#playlistScroll .iScrollVerticalScrollbar").height() - 2;
 
             var listElementPlaylist = listElement.filter(':noparents(#playlistInner)');
 
@@ -691,16 +700,16 @@ playbackController.positionPlayIndicator = function () {
             var position = listElementPlaylist.get(0).dataset.index;
 
 
-            if( playlistController.loadedPlaylistSongs.length==1)
-             var y = 0;
+            if (playlistController.loadedPlaylistSongs.length == 1)
+                var y = 0;
             else
-              y = 5 + parseInt(position) / ( Math.min(playlistController.ui.getDisplayLimit(), playlistController.loadedPlaylistSongs.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
+                y = 5 + parseInt(position) / ( Math.min(playlistController.ui.getDisplayLimit(), playlistController.loadedPlaylistSongs.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
 
             if (y > scrollHeight)
                 y = scrollHeight;
 
 
-            if(y||y==0) {
+            if (y || y == 0) {
                 $("#playlistScroll .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px)  scale(1.4)').css('-moz-transform', 'translate(0px, ' + y + 'px)  scale(1.4)').css('-ms-transform', 'translate(0px, ' + y + 'px)  scale(1.4)').css('transform', 'translate(0px, ' + y + 'px)  scale(1.4)')
                 $("#playlistScroll .iScrollPlayIndicator").show();
             } else
@@ -740,7 +749,7 @@ playbackController.positionPlayIndicator = function () {
 
             position = listElementSearchlist.get(0).dataset.index;
 
-            if( searchController.songs.searchResults.length==1)
+            if (searchController.songs.searchResults.length == 1)
                 y = 0;
             else
                 y = 5 + parseInt(position) / ( Math.min(searchController.getShowModeLimit(1), searchController.songs.searchResults.length) - 1) * (scrollHeight - otherTopHeight - otherBottomHeight) + otherTopHeight;
@@ -748,8 +757,8 @@ playbackController.positionPlayIndicator = function () {
             if (y > scrollHeight)
                 y = scrollHeight;
 
-            if(!y)
-                y=0;
+            if (!y)
+                y = 0;
             $("#searchlist .iScrollPlayIndicator").css('-webkit-transform', 'translate(0px,' + y + 'px) scale(1.4)').css('-moz-transform', 'translate(0px, ' + y + 'px) scale(1.4)').css('-ms-transform', 'translate(0px, ' + y + 'px) scale(1.4)').css('transform', 'translate(0px, ' + y + 'px) scale(1.4)')
             if ($("#searchlist .iScrollPlayIndicator:visible").length == 0) {
                 $("#searchlist .iScrollPlayIndicator").show();
@@ -798,7 +807,7 @@ playbackController.getListElementFromElement = function (element, onlyList, also
     if (!onlyList || onlyList == 1)
         searchListElements = $("#searchlist li[data-elementtitle='" + mediaController.getElementTitle(element) + "'] ");
 
-    if ((!playlistController.playlistMode||alsoPlaylist)&&(!onlyList || onlyList == 2))
+    if ((!playlistController.playlistMode || alsoPlaylist) && (!onlyList || onlyList == 2))
         playlistElements = $("#playlistInner li[data-songgid='playlistsong" + element.gid + "']");
 
 

@@ -26,11 +26,11 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320, height=device-height, target-densitydpi=device-dpi">
 
     <meta charset="utf-8"/>
+    <meta property="og:image" content="public/img/logostat.png"/>
 
-
-    <?php
+    <!--?php
        echo '<meta property="og:image" content="public/img/logostat.png"/>';
-    ?>
+    ?-->
 
 
     <link rel="icon" href="public/img/logo/logo.ico" sizes="64x64 32x32 24x24 16x16">

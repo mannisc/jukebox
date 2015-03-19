@@ -32,10 +32,11 @@ videoController.videoPlayerList[2][0] = vimeoPlayer;
 videoController.videoPlayer = videoController.videoPlayerList[0][0];////embeddedPlayer;//
 
 
-videoController.startVideoOpactiyBackground = 0.15010101010101;  //...1 to detect if user changeed it
+videoController.startVideoOpactiyBackground = 0;  //...1 to detect if user changeed it
 videoController.startVideoOpactiyVisisble = 0.999010101010101;
 
 videoController.videoOpactiy = videoController.startVideoOpactiyBackground;
+videoController.fullscreenModeOldVideoOpacity = videoController.videoOpactiy;
 
 videoController.isEmbedded = false;
 
@@ -104,7 +105,6 @@ videoController.init = function () {
     document.addEventListener("mozfullscreenchange", changeHandler, false);
 
 
-
     $(document).keyup(function (evt) {
         if ($('input:focus, textarea:focus').length == 0) {
             if (evt.keyCode == 32) {
@@ -138,8 +138,6 @@ videoController.init = function () {
         if (videoController.playpauseEnabled && videoController.videoPlayer) {
 
             videoController.playPauseSong();
-
-
 
 
         }
@@ -215,10 +213,10 @@ videoController.init = function () {
             videoController.controls.find(".videoControlElements-volume-slider").hide();
     });
 
-    videoController.controls.find(".videoControlElements-volume-slider").bind('touchend',function(){
-        setTimeout(function(){
+    videoController.controls.find(".videoControlElements-volume-slider").bind('touchend', function () {
+        setTimeout(function () {
             videoController.controls.find(".videoControlElements-volume-slider").hide();
-        },1500)
+        }, 1500)
     })
 
 
@@ -245,7 +243,6 @@ videoController.init = function () {
             videoController.setVolume(videoController.volume);
         }
     });
-
 
 
     videoController.controls.find(".videoControlElements-volume-handle").bind('mousedown', function (e) {
@@ -300,50 +297,35 @@ videoController.init = function () {
         })
 
 
-
-
     });
-
-
-
-
-
 
     //Fullscreen
     videoController.controls.find(".videoControlElements-fullscreen-button button").click(function () {
-
         if (videoController.fullscreenEnabled && videoController.videoPlayer) {
             videoController.toggleFullscreenMode();
         }
     });
 
-    videoController.controls.find(".videoControlElements-fullscreen-button").mouseover(function () {
+    videoController.controls.find(".videoControlElements-gridlayout-button").mouseover(function () {
         if (videoController.fullscreenMode == 0)
         // if (videoController.fullscreenEnabled && videoController.videoPlayer)
             videoController.controls.find(".videoControlElements-fullscreen-slider").show();
     });
 
 
-
-    videoController.controls.find(".videoControlElements-fullscreen-button").mouseout(function () {
+    videoController.controls.find(".videoControlElements-gridlayout-button").mouseout(function () {
         // if (videoController.fullscreenEnabled && videoController.videoPlayer)
         videoController.controls.find(".videoControlElements-fullscreen-slider").hide();
     });
 
     videoController.controls.find(".videoControlElements-fullscreen-slider").mouseover(function () {
-        $(".videoControlElements-fullscreen-button button").css("background-image","url(public/img/brightness.png)")
-
-
+        $(".videoControlElements-gridlayout-button button").css("background-image", "url(public/img/brightness.png)")
     });
-
 
 
     videoController.controls.find(".videoControlElements-fullscreen-slider").mouseout(function () {
-        $(".videoControlElements-fullscreen-button button").css("background","")
-
+        $(".videoControlElements-gridlayout-button button").css("background", "")
     });
-
-
 
 
     videoController.controls.find(".videoControlElements-fullscreen-slider").click(function (event) {
@@ -404,7 +386,6 @@ videoController.init = function () {
             videoController.setVideoOpacity(videoController.videoOpactiy);
 
 
-
         }
 
         $(document).bind('mousemove.videoOpacity', changevideoOpactiyHandler)
@@ -419,14 +400,12 @@ videoController.init = function () {
             $(document).unbind(".videoOpacity");
         })
 
-
-
-
     });
 
 
     //Change layout
     videoController.controls.find(".videoControlElements-gridlayout-button button").click(function () {
+        videoController.controls.find(".videoControlElements-fullscreen-slider").hide();
 
         if (videoController.gridlayoutEnabled) {
             uiController.toggleGridLayout(4000);
@@ -441,7 +420,7 @@ videoController.init = function () {
             var song = playbackController.getPlayingSong();
         var artistString = encodeURIComponent(mediaController.getSongArtist(song));
         var titleString = encodeURIComponent(song.name);
-        mediaController.getVersions(artistString,titleString);
+        mediaController.getVersions(artistString, titleString);
     });
 
     //Share
@@ -454,7 +433,7 @@ videoController.init = function () {
 
     //Show Lyrics
     videoController.controls.find(".videoControlElements-button-lyrics").click(function () {
-        if (videoController.lyricsEnabled)    {
+        if (videoController.lyricsEnabled) {
             $('#popupLoadingSong').popup('close');
             mediaController.toggleLyrics();
 
@@ -464,14 +443,12 @@ videoController.init = function () {
 
     //Share Social
     videoController.controls.find(".videoControlElements-button-facebook").click(function () {
-        if (videoController.sharesocialEnabled){
+        if (videoController.sharesocialEnabled) {
             $('#popupLoadingSong').popup('close');
 
             $("#popupSocial").popup('open', {positionTo: "window", transition: 'slideup'});
 
         }
-
-
 
 
         //  facebookHandler.postOnFacebook();
@@ -583,7 +560,7 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
     videoController.isLoading = false;
     playbackController.isLoading = false;
 
-    $("#backgroundVideo").css("opacity","0");
+    $("#backgroundVideo").css("opacity", "0");
     $("#backgroundVideo").removeClass("animated")
     $("#backgroundVideo").hide();
     $("#siteLogo").hide();
@@ -611,7 +588,7 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
     else {
         videoController.isEmbedded = false;
         videoController.videoPlayer = videoController.videoPlayerList[0][0];
-        console.dir("PLAY STREAM!!!: "+streamURL);
+        console.dir("PLAY STREAM!!!: " + streamURL);
         videoController.videoPlayer.load(streamURL);
     }
 
@@ -621,10 +598,7 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
 
     if (!playbackController.firstPlayedSongAlready) {
         playbackController.firstPlayedSongAlready = true;
-        $("#backgroundImage").addClass("fadeoutcomplete");
-        setTimeout(function () {
-            $("#backgroundImage").hide();
-        }, 1000)
+
     }
 
 }
@@ -691,7 +665,7 @@ videoController.stopSong = function () {
 
         $(".songlist li.loadedsong").removeClass("pausing");
 
-        if(!$(".songlist li.loadedsong").hasClass("stillloading"))
+        if (!$(".songlist li.loadedsong").hasClass("stillloading"))
             $(".songlist li.loadedsong").addClass("playing");
 
         if (videoController.stopEnabled == true) {
@@ -717,7 +691,7 @@ videoController.stopSong = function () {
  */
 videoController.isBrowserFullscreen = function () {
 
-    return (document.fullscreen||document.mozFullScreen||document.webkitIsFullScreen||document.msFullscreenElement||window.fullScreen) ||
+    return (document.fullscreen || document.mozFullScreen || document.webkitIsFullScreen || document.msFullscreenElement || window.fullScreen) ||
         (window.innerWidth == screen.width && window.innerHeight == screen.height);
 }
 
@@ -730,6 +704,7 @@ videoController.toggleFullscreenMode = function () {
     if (videoController.fullscreenMode > 1)
         videoController.fullscreenMode = 0;
 
+
     videoController.updateFullscreenMode();
 }
 
@@ -739,12 +714,10 @@ videoController.toggleBrowserFullScreen = function () {
     var element = document.getElementById("page");
 
 
-
     console.dir("FULLSCREEEN!!!!");
     console.dir(document.webkitIsFullScreen);
-    console.dir( element.webkitRequestFullScreen);
+    console.dir(element.webkitRequestFullScreen);
     console.dir();
-
 
 
     if (element.requestFullScreen) {
@@ -764,7 +737,6 @@ videoController.toggleBrowserFullScreen = function () {
         }
 
     } else if (element.webkitRequestFullScreen) {
-
 
 
         if (!document.webkitIsFullScreen) {
@@ -790,29 +762,28 @@ videoController.updateFullscreenMode = function () {
     var hideControlsPointerX = null;
     var hideControlsPointerY = null;
 
-    var hideControls= function(event){
+    var hideControls = function (event) {
 
-        if(!hideControlsPointerX||!event|| (Math.abs(hideControlsPointerX-event.clientX)>20&&Math.abs(hideControlsPointerY-event.clientY )>20)){
-            if(event){
+        if (!hideControlsPointerX || !event || (Math.abs(hideControlsPointerX - event.clientX) > 20 && Math.abs(hideControlsPointerY - event.clientY) > 20)) {
+            if (event) {
                 hideControlsPointerX = event.clientX;
                 hideControlsPointerY = event.clientY;
             }
 
-            if(hideControlsTimer){
+            if (hideControlsTimer) {
                 clearTimeout(hideControlsTimer)
-                $("#videocontrols").css("opacity","");
-                $("#siteLogo img").css("bottom","");
+                $("#videocontrols").css("opacity", "");
+                $("#siteLogo img").css("bottom", "");
             }
 
 
-
-            hideControlsTimer = setTimeout(function(){
-                if (videoController.fullscreenMode == 1){
-                    $("#videocontrols").css("opacity","0");
-                    $("#siteLogo img").css("bottom","15px");
+            hideControlsTimer = setTimeout(function () {
+                if (videoController.fullscreenMode == 1) {
+                    $("#videocontrols").css("opacity", "0");
+                    $("#siteLogo img").css("bottom", "15px");
 
                 }
-            },3500)
+            }, 3500)
 
         }
 
@@ -820,25 +791,27 @@ videoController.updateFullscreenMode = function () {
 
 
     if (videoController.fullscreenMode == 0) { //Background
+
+        videoController.setVideoOpacity(videoController.fullscreenModeOldVideoOpacity);
+
         $("#songbaseLogoImage").hide();
         $("#listhintleft, #listhintright").show();
 
 
-
-        if(hideControlsTimer){
+        if (hideControlsTimer) {
             clearTimeout(hideControlsTimer);
             $("#videocontrols").removeClass("fadeoutcomplete");
         }
-        $("#videocontrols").css("opacity","");
-        $("#siteLogo img").css("bottom","");
-        $("body").off("mousemove mouseup",hideControls);
+        $("#videocontrols").css("opacity", "");
+        $("#siteLogo img").css("bottom", "");
+        $("body").off("mousemove mouseup", hideControls);
 
-        $("#header").css("opacity", "1").css("pointer-events","auto");
+        $("#header").css("opacity", "1").css("pointer-events", "auto");
 
-        $("#controlbar").css("opacity", "1").css("pointer-events","auto");
-        $("#searchlist").css("opacity", "1").css("pointer-events","auto");
-        $("#playlist").css("opacity", "1").addClass("fadeincomplete").css("pointer-events","auto");
-        $("#controlbarplaylist").css("opacity", "1").css("pointer-events","auto");
+        $("#controlbar").css("opacity", "1").css("pointer-events", "auto");
+        $("#searchlist").css("opacity", "1").css("pointer-events", "auto");
+        $("#playlist").css("opacity", "1").addClass("fadeincomplete").css("pointer-events", "auto");
+        $("#controlbarplaylist").css("opacity", "1").css("pointer-events", "auto");
         $(".videoControlElements-custom-button").show();
 
         $(".backgroundVideo,  #backgroundVideo").addClass("background");
@@ -877,20 +850,23 @@ videoController.updateFullscreenMode = function () {
     }
 
     else if (videoController.fullscreenMode == 1) { //Fullscreen
-        setTimeout(function(){
+
+        videoController.fullscreenModeOldVideoOpacity = videoController.videoOpactiy;
+        videoController.setVideoOpacity(1);
+        setTimeout(function () {
             hideControls();
             $("body").on("mousemove mouseup", hideControls);
-        },2000);
+        }, 2000);
 
         $("#songbaseLogoImage").show();
         $("#listhintleft, #listhintright").hide();
 
         $(".videoControlElements-custom-button").hide();
-        $("#header").css("opacity", "0").css("pointer-events","none");
-        $("#controlbar").css("opacity", "0").css("pointer-events","none");
-        $("#searchlist").css("opacity", "0").css("pointer-events","none");
-        $("#playlist").css("opacity", "0").removeClass("fadeincomplete").css("pointer-events","none");
-        $("#controlbarplaylist").css("opacity", "0").css("pointer-events","none");
+        $("#header").css("opacity", "0").css("pointer-events", "none");
+        $("#controlbar").css("opacity", "0").css("pointer-events", "none");
+        $("#searchlist").css("opacity", "0").css("pointer-events", "none");
+        $("#playlist").css("opacity", "0").removeClass("fadeincomplete").css("pointer-events", "none");
+        $("#controlbarplaylist").css("opacity", "0").css("pointer-events", "none");
 
         $(".backgroundVideo,  #backgroundVideo").removeClass("background");
 
@@ -1032,14 +1008,13 @@ videoController.disableLyricsControl = function (disable) {
 }
 
 
-
 /**
  * Disable/Enable Fullscreen Control
  * @param disable
  */
 videoController.disableFullscreenControl = function (disable) {
     videoController.fullscreenEnabled = !disable;
-    videoController.gridlayoutEnabled =  videoController.fullscreenEnabled;
+    videoController.gridlayoutEnabled = videoController.fullscreenEnabled;
     if (disable) {
         $(".videoControlElements-fullscreen-button button").css("opacity", "0.5");
         $(".videoControlElements-gridlayout-button button").css("opacity", "0.5");
@@ -1171,8 +1146,6 @@ videoController.showBuffered = function (show) {
 }
 
 
-
-
 /**
  * Set Song length in seconds
  */
@@ -1292,19 +1265,29 @@ videoController.setVideoOpacity = function (videoOpactiy, secondTry) {
     videoOpactiyCurrent.css('top', totalPosition.top + newTop);
 
     videoController.videoOpactiy = videoOpactiy;
+
+
+
     $("#backgroundVideo").css("opacity", videoController.videoOpactiy);
-    if(videoController.videoOpactiy==0){
-        $("#backgroundVideo").hide();
-    }else
-        $("#backgroundVideo").show();
 
+    if (videoController.videoOpactiy < 0.1) {
+        if ($("#backgroundVideo:visible").length!=0) {
+            $("#backgroundVideo").hide();
+            $("#backgroundImage").removeClass("fadeoutcomplete").addClass("fadeincomplete");
+            $("#backgroundImage").show();
+        }
+    } else {
+        if ($("#backgroundVideo:visible").length==0) {
 
+            $("#backgroundVideo").show();
+            $("#backgroundImage").removeClass("fadeincomplete").addClass("fadeoutcomplete");
+            setTimeout(function () {
+                $("#backgroundImage").hide();
+            }, 1000)
 
+        }
+    }
 }
-
-
-
-
 
 
 /**
@@ -1358,7 +1341,6 @@ videoController.playingSong = function () {
 
         // console.log("PLAYINGGGGGGG")
         //playbackController.isLoading = false;
-
 
 
         $(".videoControlElements-time-loaded").show();
