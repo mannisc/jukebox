@@ -56,6 +56,11 @@ body {
     margin-left: -22px !important;
 }
 
+.ui-popup-screen.in {
+    opacity: 0 !important;
+    filter: Alpha(Opacity=0) !important;
+}
+
 /*Noanim TODO disable all animation in div where noanim is set for slow browsers*/
 .noanim * {
     -webkit-transition: none !important;
@@ -328,14 +333,13 @@ body {
         display: none !important;
     }
 
-
-
 }
 
 @media (max-width:700px) {
     #videocontrols .videoControlElements-time-rail {
         display: none !important;
     }
+
     #videocontrolsInner .videoControlElements-smallProgress {
         display: block !important;
     }
@@ -415,7 +419,7 @@ input[type=button]{
 
 #lyricsifrm {
     position: absolute;
-    top: 44px;
+    top: 0px;
     width: 420px;
     border: none !important;
     z-index: 10002 !important;
@@ -426,14 +430,14 @@ input[type=button]{
     position: absolute;
     width: 408px;
     height: 32px;
-    top: 0;
+    bottom: 3px;
     left: 0;
-    color: #000 !important;
+    color: #000!important;
     background-color: #fadb4e;
-    z-index: 10002 !important;
+    z-index: 10002!important;
     padding: 6px;
-    font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size: 13px !important;
+    font-family: 'HelveticaNeue-Light','HelveticaNeue',Helvetica,Arial,sans-serif;
+    font-size: 13px!important;
     line-height: 16px;
     text-shadow: none;
 
@@ -1205,14 +1209,17 @@ video {
     text-shadow: none !important;
     color: #000 !important;
     text-shadow: none !important;
-    line-height: 1.2 !important;
-    font-size: 14px !important;
+    line-height: 1.5 !important;
+    font-size: 15px !important;
     min-height: 0em !important;
     border-color: #ddd !important;
-
 }
 
-.ui-popup li:hover a {
+#popupArtistExternList li:hover a {
+    background-color: rgba(223, 223, 223, 0.8);
+}
+
+.ui-popup li:hover aDISABLED {
     -webkit-transform: scale(1.03);
     -moz-transform: scale(1.03);
     transform: scale(1.03) !important;
@@ -1230,6 +1237,10 @@ video {
     color: #fff !important;
     border-color: #2E2E2E !important;
 
+}
+
+#popupArtistExternList li.marked:hover a {
+    background-color: #686868!important;
 }
 
 .playingSongInfo {
@@ -1607,6 +1618,7 @@ a, button, h1, h2, h3 {
 }
 
 #popupOptions li a {
+    line-height: 1.5;
     border: none !important;
     border-top: 1px solid rgb(34, 34, 34) !important;
     border-bottom: none !important;
@@ -1925,15 +1937,21 @@ a, button, h1, h2, h3 {
 
 #popupVideoSettings a {
     text-shadow: none !important;
-    line-height: 1.2 !important;
-    font-size: 14px !important;
+    line-height: 1.5 !important;
+    font-size: 15px !important;
     min-height: 0em !important;
 
-    padding-left: 2.6em !important;
-    padding-right: 5em !important;
     background-color: #333;
 
     color: #fff !important;
+}
+
+#popupVideoSettings .ReloadVersions   {
+border-radius: 7px!important;
+}
+
+#popupVideoSettings li:hover a {
+    background-color: #494949!important;
 }
 
 #popupVideoSettings ul {
@@ -2011,13 +2029,13 @@ a, button, h1, h2, h3 {
 
 #loadversionimg {
     position: absolute;
-    top: 18px;
-    left: 15px;
+    top: 15px;
+    left: 13px;
 
 }
 
 #loadversionimg img {
-    opacity: 0.4;
+    opacity: 1;
 
 }
 

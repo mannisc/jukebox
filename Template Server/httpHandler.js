@@ -16,7 +16,11 @@ var httpHandler = function () {
 httpHandler.http = require('http');
 
 
-httpHandler.downloadFile = function (host, path, callback,port) {
+httpHandler.downloadFile = function (host, path, callback,port,encoding) {
+
+
+     if(!encoding)
+         encoding   = "utf8";
 
     var options = {
         host: host,
@@ -28,8 +32,11 @@ httpHandler.downloadFile = function (host, path, callback,port) {
      options.port = port;
 
     var req = httpHandler.http.request(options, function (response) {
-        var str = '';
 
+
+        response.setEncoding(encoding);
+
+        var str = '';
         //another chunk of data has been recieved, so append it to `str`
         response.on('data', function (chunk) {
             str += chunk;
@@ -40,6 +47,7 @@ httpHandler.downloadFile = function (host, path, callback,port) {
             if (callback)
                 callback(str)
         });
+
     });
 
     req.on('error', function (error) {

@@ -4,7 +4,7 @@
     <list default="true" id="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" name="Default" comment="" />
     <ignored path="Service Server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/serviceserver.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1417479061445" ignored="false" />
+    <file path="/serviceserver.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429139416741" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/searchController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416268144915" ignored="false" />
     <file path="/searchController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416267703105" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/index.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416265971571" ignored="false" />
@@ -15,7 +15,7 @@
     <file path="/index.css" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416523385162" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/uiController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416267488074" ignored="false" />
     <file path="/uiController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416267420598" ignored="false" />
-    <file path="$PROJECT_DIR$/../www/public/js/viewController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416268488907" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/js/viewController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429450073128" ignored="false" />
     <file path="/viewController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416268172184" ignored="false" />
     <file path="$PROJECT_DIR$/../../../Edeka/Repository/git/LogistikServer/LogistikAdmin/js/lieferantenController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416524908870" ignored="false" />
     <file path="/lieferantenController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416524890638" ignored="false" />
@@ -29,6 +29,22 @@
     <file path="$PROJECT_DIR$/../../../Edeka/Repository/git/LogistikServer/LogistikAdmin/js/uiController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416523388125" ignored="false" />
     <file path="$PROJECT_DIR$/../../../Edeka/Repository/git/LogistikServer/LogistikAdmin/js/termineTab.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416524006622" ignored="false" />
     <file path="/termineTab.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1416524007132" ignored="false" />
+    <file path="$PROJECT_DIR$/../Songbase Backend/js/chartsController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429139945989" ignored="false" />
+    <file path="/chartsController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429139928176" ignored="false" />
+    <file path="/a.dummy" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429551268769" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/js/mediaController.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429134544651" ignored="false" />
+    <file path="/package.json" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429138351655" ignored="false" />
+    <file path="$PROJECT_DIR$/../Songbase Backend/charts.html" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429139916185" ignored="false" />
+    <file path="/charts.html" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429139916185" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/css/songlist.css" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429450014736" ignored="false" />
+    <file path="/httpsHandler.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429453259572" ignored="false" />
+    <file path="$PROJECT_DIR$/../Template Server/server.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429553067499" ignored="false" />
+    <file path="/server.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429553050309" ignored="false" />
+    <file path="$PROJECT_DIR$/../Template Server/ftpHandler.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429551698178" ignored="false" />
+    <file path="/ftpHandler.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429551675385" ignored="false" />
+    <file path="$PROJECT_DIR$/../Template Server/httpHandler.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429552989519" ignored="false" />
+    <file path="/httpHandler.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429552880423" ignored="false" />
+    <file path="$PROJECT_DIR$/../Template Server/chartsHandler.js" changelist="f2bac6db-ea91-4432-8e98-9fa4954f1b7e" time="1429553270069" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +67,25 @@
       <file leaf-file-name="serviceserver.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/serviceserver.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="26" selection-start="1407" selection-end="1407" vertical-scroll-proportion="0.031595577">
+            <state line="87" column="31" selection-start="2498" selection-end="2505" vertical-scroll-proportion="0.031897925">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="httpsHandler.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/httpsHandler.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="39" selection-start="727" selection-end="727" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package.json" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="28" selection-start="264" selection-end="264" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -67,14 +101,15 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/serviceserver.js" />
+        <option value="$PROJECT_DIR$/httpsHandler.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1" />
-    <option name="width" value="1537" />
-    <option name="height" value="832" />
+    <option name="width" value="1536" />
+    <option name="height" value="826" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -102,7 +137,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -137,13 +171,54 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Dropbox/munichDev/Projekte/QR/Repository/nodejs/qringservice" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../www" />
+  </component>
+  <component name="PublishConfig" serverName="ServiceServerSongbase.fm" serverId="736b7384-3c5d-4e1b-82a9-a4b0ff98fc4d" autoUpload="true">
+    <servers>
+      <server id="378f8f6a-0d34-4e53-891e-6e70a262321f">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </server>
+      <server id="607d13cc-13e2-4c0e-bf88-e5388082acf2">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </server>
+      <server id="736b7384-3c5d-4e1b-82a9-a4b0ff98fc4d">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/Server/Service Server/" local="$PROJECT_DIR$" web="/Server/Service Server/" />
+          </mappings>
+        </serverdata>
+      </server>
+      <server id="a4859dce-5e54-4ab6-b01a-85423926d144">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </server>
+    </servers>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -156,19 +231,20 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="0" width="1537" height="832" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="0" width="1536" height="826" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26711863" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29036635" sideWeight="0.7387387" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32844576" sideWeight="0.50067115" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26126125" sideWeight="0.4986577" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -239,9 +315,44 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/httpsHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="0" selection-start="465" selection-end="465" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="28" selection-start="264" selection-end="264" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/serviceserver.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="28" selection-start="232" selection-end="232" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serviceserver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="28" selection-start="232" selection-end="232" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -276,7 +387,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/serviceserver.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="26" selection-start="1407" selection-end="1407" vertical-scroll-proportion="0.031595577">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serviceserver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serviceserver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="28" selection-start="264" selection-end="264" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/httpsHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="39" selection-start="727" selection-end="727" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serviceserver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="31" selection-start="2498" selection-end="2505" vertical-scroll-proportion="0.031897925">
           <folding />
         </state>
       </provider>

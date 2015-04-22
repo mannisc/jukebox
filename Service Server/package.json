@@ -7,6 +7,9 @@
   },
   "dependencies": {
     "http": "*",
-    "express": "*"
+    "cheerio": "*",
+    "express": "*",
+    "body-parser": "~1.12.2",
+    "iconv-lite": "~0.4.8"
   }
 }

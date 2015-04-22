@@ -61,7 +61,7 @@ viewController.init = function () {
 
             var getSuggestions = function (suggestionsCounter) {
                 $.ajax({
-                    url: preferences.serviceServerURL + "?dum=" + $("#searchinput").val(),
+                    url: preferences.serviceServerURL + "correction/?dum=" + $("#searchinput").val(),
                     success: function (data) {
                         if (suggestionsCounter == viewController.suggestionsCounter) {
                             viewController.didYouMean = data;
@@ -301,6 +301,7 @@ viewController.activateView = function (view, noAnimation, showFunction, paramet
  */
 
 viewController.applySongList = function (currentSearchID, size, delays, stepSize, stepDelay) {
+
 
     //console.log("-------------------------------------")
 

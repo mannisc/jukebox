@@ -28,6 +28,9 @@
     <meta charset="utf-8"/>
     <meta property="og:image" content="public/img/logostat.png"/>
 
+    <meta name="description" content="Top music videos for free! Visit Songbase.fm for any music video available on the web! music, videos, playlists, channels and more at Songbase.fm!">
+    <meta name="keywords" content="music video, music, song, stream, for free, playlist, charts, songs">
+
     <!--?php
        echo '<meta property="og:image" content="public/img/logostat.png"/>';
     ?-->
@@ -636,6 +639,16 @@
 </li-->
 
 <!--Explore Results----------------------------------------------------------------------------->
+
+<li ng-if="exploreController.visible&&exploreController.genreBack" ontouchend="viewController.activateView(listenController,false, null);" onclick="viewController.activateView(listenController,false, null);" ng-dblclick="$event.stopPropagation()"
+    class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton othertopheight stayvisible">
+    <a tabindex="-1">
+        <img src="public/img/empty.png" class="optionsSearchResultsBack">
+
+        <h3 style="font-size: 1.1em;margin-top: 7px;">Back</h3>
+    </a></li>
+
+
 <li ng-if="exploreController.visible" ng-dblclick="playlistController.selection.deselectElements($event);" class="fadeincomplete hoverable playable specialplaylistbutton songlisttitlebutton othertopheight stayvisible">
     <a tabindex="-1" class="loaded" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
 
@@ -766,16 +779,16 @@
     </li>
 
     <li ng-show="playlistController.showMode==0" ng-if="!playlistController.playlistMode&&playlistController.getLoadedPlaylist().gid != playlistController.currentQueue.gid"
-        ontouchend="optionsMenu.openPlaylistOptions(event, $(this).find('.optionsPlaylist'))" onclick=" optionsMenu.openPlaylistOptions(event, $(this).find('.optionsPlaylist'))"
         ng-dblclick="playlistController.selection.deselectElements($event);" class="fadeincomplete hoverable playable specialplaylistbutton songlisttitlebutton currentplaylist othertopheight stayvisible">
         <a tabindex="-1" ng-class="{loaded:!searchController.playlistMode, currentqueue: playlistController.getLoadedPlaylist().gid==playlistController.currentQueue.gid}" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
-            <img src="public/img/empty.png" class="optionsPlaylist">
+
+            <img src="public/img/empty.png" class="optionsPlaylist" ontouchend="optionsMenu.openPlaylistOptions(event, $(this))" onclick=" optionsMenu.openPlaylistOptions(event, $(this))">
 
 
             <img src="public/img/empty.png" onclick="playlistController.playSongList(playlistController.getLoadedPlaylist().tracks.slice(0, searchController.maxResults));event.stopPropagation();" class="playSearchResults">
 
 
-            <img src="public/img/sort.png" onclick="playlistController.ui.toggleSortablePlaylist(true);event.stopPropagation();" width="21px" height="21px" alt="Sort"
+            <img src="public/img/sort.png" onclick="playlistController.ui.toggleSortablePlaylist(true);event.stopPropagation();" width="21px" height="21px" alt="Sort"  title="Sort Songs"
                  style="position: absolute;width: 24px;height: 24px;top: 10px;left: 83px;">
 
             <h3 style="font-size: 1.1em;margin-top: 7px;">{{playlistController.getLoadedPlaylist().name}}</h3>
@@ -783,10 +796,11 @@
     </li>
 
     <li ng-show="playlistController.showMode==0" ng-if="!playlistController.playlistMode&&playlistController.getLoadedPlaylist().gid == playlistController.currentQueue.gid"
-        ontouchend="optionsMenu.openQueueOptions(event, $(this).find('.optionsPlaylist'))optionsMenu.openQueueOptions(event, $(this).find('.optionsPlaylist'))" onclick=" optionsMenu.openQueueOptions(event, $(this).find('.optionsPlaylist'))"
+
         ng-dblclick="playlistController.selection.deselectElements($event);" class="fadeincomplete hoverable currentqueuetitle specialplaylistbutton songlisttitlebutton currentplaylist othertopheight stayvisible">
         <a tabindex="-1" ng-class="{loaded:!searchController.playlistMode, currentqueue: playlistController.getLoadedPlaylist().gid==playlistController.currentQueue.gid}" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
-            <img src="public/img/empty.png" class="optionsPlaylist">
+
+            <img src="public/img/empty.png" class="optionsPlaylist"  ontouchend="optionsMenu.openQueueOptions(event, $(this))" onclick=" optionsMenu.openQueueOptions(event, $(this))">
 
             <img src="public/img/sort.png" ontouchend="playlistController.ui.toggleSortablePlaylist(true);event.stopPropagation();" onclick="playlistController.ui.toggleSortablePlaylist(true);event.stopPropagation();" width="21px"
                  height="21px" alt="Sort"
@@ -1024,7 +1038,9 @@
             <div class="videoControlElements-time videoControlElements-duration-container">
                 <span class="videoControlElements-duration">00:00</span>
             </div>
-
+            <div class="videoControlElements-button videoControlElements-button-choose-version videoControlElements-custom-button">
+                <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
+            </div>
             <div class="videoControlElements-button videoControlElements-prevtrack-button videoControlElements-prevtrack">
                 <button type="button" aria-controls="mep_0" title="Previous Track"></button>
             </div>
@@ -1053,9 +1069,13 @@
             <div class="videoControlElements-button videoControlElements-gridlayout-button videoControlElements-custom-button">
                 <button type="button" aria-controls="mep_0" title="Show Video" style="opacity:1" aria-label="Gridlayout"></button>
                 <div class="videoControlElements-fullscreen-slider" style="display: none;">
+                    <div class="videoControlElements-fullscreen-slider-top"></div>
+                    <div class="videoControlElements-fullscreen-slider-bottom"></div>
+
                     <div class="videoControlElements-fullscreen-total"></div>
                     <div class="videoControlElements-fullscreen-current" style="height: 80px; top: 32px;"></div>
                     <div class="videoControlElements-fullscreen-handle" style="top: 29px;"></div>
+
                 </div>
             </div>
             <div class="videoControlElements-button videoControlElements-fullscreen-button">
@@ -1063,9 +1083,7 @@
 
             </div>
 
-            <div class="videoControlElements-button videoControlElements-button-choose-version videoControlElements-custom-button">
-                <button type="button" id="chooseversionbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Choose Version" aria-label="Choose Version"></button>
-            </div>
+
             <div class="videoControlElements-button videoControlElements-button-lyrics videoControlElements-custom-button">
                 <button type="button" id="lyricsbutton" data-role="none" style="opacity:0.5" aria-controls="mep_0" title="Lyrics" aria-label="Lyrics"></button>
             </div>
@@ -1093,7 +1111,7 @@
 
 </div>
 
-<div id="songOptionsTemplate" style="display:none">
+<div id="songOptionsTemplate" style="display:none" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();">
 
     <img id="playSelection" title="Play" ontouchend="playlistController.playSelection(event)" onclick="playlistController.playSelection(event)" ondblclick="playlistController.playSelection(event)" src="public/img/playopt.png">
 
@@ -1134,7 +1152,7 @@
 </div>
 
 
-<div data-role="popup" id="popupVideoSettings" data-arrow="true" data-theme="a" class="ui-corner-all">
+<div data-role="popup" id="popupVideoSettings" data-arrow="true" data-theme="a" >
     <!--  <a href="#" style="width:30px!important;max-width:30px!important;resize: none;" data-role="button" data-rel ="back" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>-->
 
     <form>
@@ -1143,9 +1161,9 @@
         <div>
             <h3 style="margin-right: 40px; margin-left:40px;text-align: center">Choose Version</h3>
             <ul data-role="listview" id="searchviewVersions" data-theme="b">
-                <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" ng-if="songversion.duration>0;" class="fadeslideincompletefast playlistsong"
+                <li ng-repeat="songversion in mediaController.versionList track by songversion.id" data-theme="b" ng-if="songversion.duration>0||songversion.duration==undefined" class="fadeslideincompletefast playlistsong"
                     ng-click="mediaController.playVersion(songversion,1,1)">
-                    <a href="#" ng-class="{selectedversion: songversion.url==mediaController.currentvideoURL}" style="padding-right:80px!important;padding-left: 15px!important;" title="{{songversion.url}}"><img
+                    <a href="#" ng-class="{selectedversion: songversion.url==mediaController.currentvideoURL}" style="padding-right:80px!important;padding-left: 15px!important;" title="{{mediaController.getSiteName(songversion.url,'')}} - {{songversion.title}}"><img
                             style="position:absolute;opacity: 0.8; top:2px;left:4px;max-width:25px!important;height:25px!important;float:left!important"
                             ng-src="public/img/sites/small/{{mediaController.getSiteLogoFromUrl(songversion.url)}}"/> <img class="rateImage"
                                                                                                                            style="position:absolute;opacity:0.5; top:2px;right:39px!important;left: auto;max-width:50px!important;height:25px!important;float:left!important"
@@ -1155,7 +1173,7 @@
                     </a>
                 </li>
             </ul>
-            <div id="reloadVersionButton" style="margin-right: 10px; margin-left:10px;margin-top:2px;margin-bottom:2px;text-align: center;">
+            <div id="reloadVersionButton" style="margin: 2px 10px 10px 10px;text-align: center;">
                 <a href="#" class="ReloadVersions  ui-btn  ui-corner-all ui-shadow ui-btn-inline ui-icon-search ui-btn-icon-left ui-btn-a" id="ReloadVersions" title="ReloadVersions" onclick="mediaController.reloadVersions();">Search for new
                     Versions</a>
             </div>
@@ -1602,14 +1620,14 @@
                                                      style="text-decoration:none;" target="_blank"><img src="public/img/usericon.png">Show Artist</a></li>
                 <li data-theme="b" class="marked"><a ng-show="playbackController.playingSong"
                                                      onclick="$('#popupArtist').popup('close');setTimeout(function(){searchController.playlists.searchForPlaylist(playbackController.playingSong)},150)"
-                                                     style="text-decoration:none;" target="_blank"><img src="public/img/playlisticon.png">Show Playlist</a></li>
+                                                     style="text-decoration:none;" target="_blank"><img src="public/img/playlisticon.png">Show Album</a></li>
 
                 <li data-theme="b" class="marked" style="border-bottom:1px solid #000;"><a ng-show="playbackController.playingSong"
                                                                                            onclick="$('#popupArtist').popup('close');setTimeout(function(){exploreController.searchSimilarSongs(playbackController.playingSong)},150)"
                                                                                            style="text-decoration:none;" target="_blank"><img src="public/img/radioicon.png">Explore similar Songs</a></li>
 
 
-                <li data-theme="b" style="border-top:10px solid rgba(255,255,255,0.2);"><a ng-show="playbackController.playingSong"
+                <li data-theme="b" style="border-top:1px solid rgba(255,255,255,0.2);"><a ng-show="playbackController.playingSong"
                                                                                            href="https://www.facebook.com/search/results.php?q={{mediaController.getSongArtist(playbackController.playingSong)}}&type=pages"
                                                                                            onclick="$('#popupArtist').popup('close')"
                                                                                            style="text-decoration:none" target="_blank"><img src="public/img/fb.png">Facebook</a></li>
@@ -1970,6 +1988,106 @@ Top Artists on songbase.fm:
 #36: Kelly Clarkson #37: OutKast #38: Kylie Minogue #39: Nelly Furtado #40: The White Stripes
 #41: Bob Dylan #42: The Beatles #43: Evanescence #44: The Backstreet Boys #45: Jack Johnson
 #46: Taylor Swift #47: REM #48: Westlife #49: The Killers #50: R Kelly
+1.Cheerleader
+Omi
+2.Lean On
+Major Lazer
+3.King
+Years & Years
+4.Headlights
+Robin Schulz
+5.Want to Want Me
+Jason Derulo
+6.Love Me Like You Do
+Ellie Goulding
+7.Hold Back the River
+James Bay
+8.Wolke 4
+Philipp Dittberner & Marv
+9.Firestone
+Kygo
+10.Herz über Kopf
+Joris
+11.I Really Like You
+Carly Rae Jepsen
+12.In the End
+Stefanie Heinzmann
+13.Wish You Were Mine
+Philip George
+14.Uptown Funk
+Mark Ronson
+15.Take Me To Church
+Hozier
+16.Ghosttown
+Madonna
+17.Dunkle Seite
+Herzdame
+18.Heartbeat Song
+Kelly Clarkson
+19.Schwung in die Kiste
+Die Orsons
+20.Style
+Taylor Swift
+21.Dans Le Silence
+Martha Wainwright
+22.When a man loves a woman
+Percy Sledge
+23.Flash mich
+Mark Forster
+24.Earned It
+The Weeknd
+25.Wünsch dir was
+Genetikk
+26.Like I Can
+Sam Smith
+27.Alles brennt
+Johannes Oerding
+28.Reverse
+SomeKindaWonderful
+29.Stole the Show
+Kygo
+30.Du liebst mich nicht
+Ado Kojo
+31.Lips Are Movin
+Meghan Trainor
+32.Blank Space
+Taylor Swift
+33.Auf anderen Wegen
+Andreas Bourani
+34.Thinking Out Loud
+Ed Sheeran
+35.Elastic Heart
+Sia
+36.Shake It Off
+Taylor Swift
+37.Dans Le Silence
+Martha Wainwright
+38.My House
+Flo Rida
+39.Samsara
+Tungevaag & Raaban
+40.Sun Goes Down
+Robin Schulz
+41.Home
+Dotan
+42.Fade Out Lines
+The Avener
+43.Fliegen
+Matthias Schweighöfer
+44.Wolke 4
+Philipp Dittberner & Marv
+45.Denken Sie groß
+Deichkind
+46.All About That Bass
+Meghan Trainor
+47.Like mich am Arsch
+Deichkind
+48.The Wolf
+Mumford & Sons
+49.Walk
+Kwabs
+50.Habits (Stay High)
+Tove Lo
 
 Music Charts
 Music Charts ( also shortened English Charts ( Pluraletantum [1 ] ) or German charts and charts ) refers to a method for the numerical compiling a ranking of songs over a certain period , which should reflect their popularity or their
@@ -2346,7 +2464,7 @@ Jennifer Hudson ( # 21 ) , Turn Me On feat. Nicki Minaj ( No. 35 ) , Crank It Up
 album charts. [7 ]
 The American artist Madonna carries the record for the most singles on the charts , Madonna had in the course of her career total of 60 singles on the charts. Followed it is of the singer Peter Alexander with 59 hits.
 Singles that were represented at least 1 year in the Top 100 of the German Singles Chart [ Edit]
-Currently (as of November 22, 2013 ) made ​​it since 1959 73 items at least 52 weeks to be recorded long [8 ] The following titles were able to at least 70 weeks to place in the charts (the year refers to the first entry in the charts ) . .
+Currently (as of November 22, 2013 ) made ??it since 1959 73 items at least 52 weeks to be recorded long [8 ] The following titles were able to at least 70 weeks to place in the charts (the year refers to the first entry in the charts ) . .
 Of these, at least one week were only six listed at # 1 . With 129 chart weeks of the title Sky and Sand by Paul & Fritz Kalkbrenner has been quoted most often to date.
 
 Previously, such an " evergreen" very rare in the age of downloads, where singles are no longer dependent on a physical equivalent to charters to , they are more common . The frequent occurrence of " evergreens " is also favored by
@@ -2421,6 +2539,7 @@ List of number-one albums in Germany
 List of number-one albums in the German pop charts
 List of top 10 albums in Germany
 List of top 10 singles in Germany
+
 </div>
 
 

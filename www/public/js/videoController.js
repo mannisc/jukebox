@@ -35,8 +35,8 @@ videoController.videoPlayer = videoController.videoPlayerList[0][0];////embedded
 videoController.startVideoOpactiyBackground = 0;  //...1 to detect if user changeed it
 videoController.startVideoOpactiyVisisble = 0.999010101010101;
 
-videoController.videoOpactiy = videoController.startVideoOpactiyBackground;
-videoController.fullscreenModeOldVideoOpacity = videoController.videoOpactiy;
+videoController.videoOpacity = videoController.startVideoOpactiyBackground;
+videoController.fullscreenModeOldVideoOpacity = videoController.videoOpacity;
 
 videoController.isEmbedded = false;
 
@@ -346,9 +346,9 @@ videoController.init = function () {
 
             pos = y - offset.top;
             percentage = (pos / height);
-            videoController.videoOpactiy = (1 - percentage);
+            videoController.videoOpacity = (1 - percentage);
             // position the slider and handle
-            videoController.setVideoOpacity(videoController.videoOpactiy);
+            videoController.setVideoOpacity(videoController.videoOpacity);
         }
     });
 
@@ -365,9 +365,9 @@ videoController.init = function () {
             var videoOpactiy,
                 totalOffset = videoOpactiyTotal.offset();
 
-            // calculate the new videoOpactiy based on the moust position
+            // calculate the new videoOpacity based on the moust position
             var
-                railHeight = videoOpactiyTotal.height() * videoController.scaleFactor / 1.023,//CHANGED!!!!!
+                railHeight = 100 * videoController.scaleFactor / 1.023,//CHANGED!!!!!
                 totalTop = parseInt(videoOpactiyTotal.css('top').replace(/px/, ''), 10),
                 newY = e.pageY - totalOffset.top;
 
@@ -377,13 +377,13 @@ videoController.init = function () {
             if (totalOffset.top == 0 || totalOffset.left == 0)
                 return;
 
-            // ensure the videoOpactiy isn't outside 0-1
+            // ensure the videoOpacity isn't outside 0-1
             videoOpactiy = Math.max(0, videoOpactiy);
             videoOpactiy = Math.min(videoOpactiy, 1);
-            videoController.videoOpactiy = videoOpactiy;
+            videoController.videoOpacity = videoOpactiy;
 
             // position the slider and handle
-            videoController.setVideoOpacity(videoController.videoOpactiy);
+            videoController.setVideoOpacity(videoController.videoOpacity);
 
 
         }
@@ -408,8 +408,9 @@ videoController.init = function () {
         videoController.controls.find(".videoControlElements-fullscreen-slider").hide();
 
         if (videoController.gridlayoutEnabled) {
-            uiController.toggleGridLayout(4000);
+            uiController.toggleGridLayout();
         }
+
     });
 
     //Choose Version
@@ -482,7 +483,7 @@ videoController.init = function () {
 
     uiController.noVideoClickTimer = 0;
 
-    videoController.setVideoOpacity(videoController.videoOpactiy);
+    videoController.setVideoOpacity(videoController.videoOpacity);
 
     //TODO Remove
     /*videoController.setMaxTime(341);
@@ -591,9 +592,8 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
         console.dir("PLAY STREAM!!!: " + streamURL);
         videoController.videoPlayer.load(streamURL);
     }
-
-    $("#backgroundVideo").show();
-
+    //$("#backgroundVideo").show();
+    videoController.fullscreenModeOldVideoOpacity = videoController.videoOpacity;
     videoController.updateFullscreenMode();
 
     if (!playbackController.firstPlayedSongAlready) {
@@ -609,17 +609,19 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
  * @type {*}
  */
 videoController.playSong = function () {
-
+    console.log("PLAY SONNGGGGGGGGGG!!!")
     if (!videoController.isPlaying && playbackController.playingSong) {
         videoController.controls.find(".videoControlElements-play").removeClass("videoControlElements-play").addClass("videoControlElements-pause");
         videoController.videoPlayer.play();
         videoController.isPlaying = true;
         videoController.disablePlayStopControls(false);
+        var loadedSong = $(".songlist li.loadedsong");
 
-        if (!playbackController.isLoading && !$(".songlist li.loadedsong").hasClass("firstplay")) {
+        if (!playbackController.isLoading && !loadedSong.hasClass("firstplay")) {
+            $(".songlist li.playing").not(loadedSong).removeClass("playing");
             $(".songlist li.loadedsong.stillloading .loadingSongImg").hide();
-            $(".songlist li.loadedsong").addClass("playing");
-            $(".songlist li.loadedsong").removeClass("pausing");
+            $(loadedSong).addClass("playing").removeClass("stillloading");
+            $(loadedSong).removeClass("pausing");
         }
 
 
@@ -663,10 +665,16 @@ videoController.stopSong = function () {
 
         videoController.setProgressPercentage(0);
 
-        $(".songlist li.loadedsong").removeClass("pausing");
+        var loadedSong = $(".songlist li.loadedsong");
 
-        if (!$(".songlist li.loadedsong").hasClass("stillloading"))
-            $(".songlist li.loadedsong").addClass("playing");
+        loadedSong.removeClass("pausing");
+
+        if (!loadedSong.hasClass("stillloading")) {
+            $(".songlist li.playing").not(loadedSong).removeClass("playing");
+            loadedSong.addClass("playing");
+
+        }
+
 
         if (videoController.stopEnabled == true) {
 
@@ -794,6 +802,8 @@ videoController.updateFullscreenMode = function () {
 
         videoController.setVideoOpacity(videoController.fullscreenModeOldVideoOpacity);
 
+        console.log("!!!!! videoController.fullscreenMode == 0   "+videoController.videoOpacity)
+
         $("#songbaseLogoImage").hide();
         $("#listhintleft, #listhintright").show();
 
@@ -851,8 +861,11 @@ videoController.updateFullscreenMode = function () {
 
     else if (videoController.fullscreenMode == 1) { //Fullscreen
 
-        videoController.fullscreenModeOldVideoOpacity = videoController.videoOpactiy;
+        videoController.fullscreenModeOldVideoOpacity = videoController.videoOpacity;
         videoController.setVideoOpacity(1);
+
+        console.log("!!!!! videoController.fullscreenMode == 1   "+videoController.videoOpacity)
+
         setTimeout(function () {
             hideControls();
             $("body").on("mousemove mouseup", hideControls);
@@ -1213,11 +1226,11 @@ videoController.setVolume = function (volume, secondTry) {
         newTop = totalHeight - (totalHeight * volume);
 
     // handle
-    volumeHandle.css('top', Math.round(totalPosition.top + newTop - (volumeHandle.height() / 2)));
+    volumeHandle.css('top', Math.round(12 + newTop - (volumeHandle.height() / 2)));
 
     // show the current visibility
     volumeCurrent.height(totalHeight - newTop);
-    volumeCurrent.css('top', totalPosition.top + newTop);
+    volumeCurrent.css('top', 12 + newTop);
 
     videoController.volume = volume;
     videoController.videoPlayer.setVolume(videoController.volume);
@@ -1230,8 +1243,35 @@ videoController.setVolume = function (volume, secondTry) {
  * @param volume
  * @param secondTry
  */
-videoController.setVideoOpacity = function (videoOpactiy, secondTry) {
+videoController.setVideoOpacity = function (videoOpactiy, secondTry, dontToggleFullscreen) {
 
+    //If Opacity is high, toggle grid layout
+    if (!dontToggleFullscreen && videoController.fullscreenMode == 0) {
+        console.log(videoOpactiy + "   " + uiController.gridLayout)
+        if ((videoOpactiy >= 0.7 && uiController.gridLayout) || (videoOpactiy < 0.7 && !uiController.gridLayout)) {
+            uiController.toggleGridLayout(true);
+        }
+
+    }
+    //If Opacity is to low, hide video and show background image
+    if (videoOpactiy < 0.14) {
+        if ($("#backgroundVideo:visible").length != 0) {
+            $("#backgroundVideo").hide();
+            $("#backgroundImage").removeClass("fadeoutcomplete").addClass("fadeincomplete");
+            $("#backgroundImage").show();
+        }
+    } else {
+        if ($("#backgroundVideo:visible").length == 0) {
+
+            $("#backgroundVideo").show();
+            $("#backgroundImage").removeClass("fadeincomplete").addClass("fadeoutcomplete");
+            setTimeout(function () {
+                $("#backgroundImage").hide();
+            }, 1000)
+
+        }
+
+    }
 
     var videoOpactiySlider = videoController.controls.find('.videoControlElements-fullscreen-slider'),
         videoOpactiyTotal = videoController.controls.find('.videoControlElements-fullscreen-total'),
@@ -1241,7 +1281,7 @@ videoController.setVideoOpacity = function (videoOpactiy, secondTry) {
     if (!videoOpactiySlider.is(':visible') && typeof secondTry == 'undefined') {
         videoOpactiySlider.show();
         videoController.setVideoOpacity(videoOpactiy, true);
-        videoOpactiySlider.hide()
+        videoOpactiySlider.hide();
         return;
     }
 
@@ -1250,7 +1290,7 @@ videoController.setVideoOpacity = function (videoOpactiy, secondTry) {
     videoOpactiy = Math.min(videoOpactiy, 1);
 
 
-    var totalHeight = videoOpactiyTotal.height(),
+    var totalHeight = 100,
 
         totalPosition = videoOpactiyTotal.position(),
 
@@ -1258,35 +1298,22 @@ videoController.setVideoOpacity = function (videoOpactiy, secondTry) {
         newTop = totalHeight - (totalHeight * videoOpactiy);
 
     // handle
-    videoOpactiyHandle.css('top', Math.round(totalPosition.top + newTop - (videoOpactiyHandle.height() / 2)));
+
+
+    videoOpactiyHandle.css('top', Math.round(12 + newTop - (6 / 2)));
 
     // show the current visibility
     videoOpactiyCurrent.height(totalHeight - newTop);
-    videoOpactiyCurrent.css('top', totalPosition.top + newTop);
+    videoOpactiyCurrent.css('top', 12 + newTop);
 
-    videoController.videoOpactiy = videoOpactiy;
+    videoController.videoOpacity = videoOpactiy;
+
+    console.log("!!!!! videoController.videoOpacity   "+videoController.videoOpacity)
 
 
+    $("#backgroundVideo").css("opacity", videoController.videoOpacity);
 
-    $("#backgroundVideo").css("opacity", videoController.videoOpactiy);
 
-    if (videoController.videoOpactiy < 0.1) {
-        if ($("#backgroundVideo:visible").length!=0) {
-            $("#backgroundVideo").hide();
-            $("#backgroundImage").removeClass("fadeoutcomplete").addClass("fadeincomplete");
-            $("#backgroundImage").show();
-        }
-    } else {
-        if ($("#backgroundVideo:visible").length==0) {
-
-            $("#backgroundVideo").show();
-            $("#backgroundImage").removeClass("fadeincomplete").addClass("fadeoutcomplete");
-            setTimeout(function () {
-                $("#backgroundImage").hide();
-            }, 1000)
-
-        }
-    }
 }
 
 
@@ -1330,7 +1357,7 @@ videoController.playingSong = function () {
         $.mobile.loading("hide");
         $("#backgroundVideo").addClass("animated")
 
-        $("#backgroundVideo").css("opacity", videoController.videoOpactiy);
+        $("#backgroundVideo").css("opacity", videoController.videoOpacity);
 
 
         $("#siteLogoImage").attr("src", "public/img/sites/" + mediaController.getSiteLogo());
