@@ -1802,6 +1802,8 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     -ms-transform: translateZ(0);
     -o-transform: translateZ(0);
     transform: translateZ(0);
+
+
     /*
     -webkit-touch-callout: none;
     -webkit-user-select: none;
