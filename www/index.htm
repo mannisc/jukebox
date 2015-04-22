@@ -386,7 +386,7 @@
 
         <div id="positionPlaylistOptions" class="positionResultsOptions"></div>
         <img src="public/img/empty.png" ontouchend="playlistController.playSongList(searchController.showedPlaylist.tracks.slice(0, searchController.maxResults));event.stopPropagation();"
-             onclick="playlistController.playSongList(searchController.showedPlaylist.tracks.slice(0, searchController.maxResults));event.stopPropagation();" class="playSearchResults">
+             onclick="playlistController.playSongList(searchController.showedPlaylist.tracks.slice(0, searchController.maxResults));event.stopPropagation();" class="playSearchResults"  title="Play All">
 
         <h3 style="font-size: 1.1em;margin-top: 7px;">{{searchController.showedPlaylist.name}}</h3>
 
@@ -465,7 +465,7 @@
              class="optionsSearchResults">
 
         <div id="positionPlaylistResultsOptions" class="positionResultsOptions"></div>
-        <img src="public/img/empty.png" ontouchend="searchController.playlists.playAllPlaylists();event.stopPropagation();" onclick="searchController.playlists.playAllPlaylists();event.stopPropagation();" class="playSearchResults">
+        <img src="public/img/empty.png" ontouchend="searchController.playlists.playAllPlaylists();event.stopPropagation();" onclick="searchController.playlists.playAllPlaylists();event.stopPropagation();" class="playSearchResults"  title="Play All">
 
 
         <h3 ng-if="searchController.showedPopulars&&searchController.getShowModeLimit(2)>1" style="font-size: 1.1em;margin-top: 7px;">Featured Playlists</h3>
@@ -526,9 +526,9 @@
 
         <div id="positionSongResultsOptions" class="positionResultsOptions"></div>
         <img src="public/img/empty.png" ontouchend="playlistController.playSongList(searchController.songs.searchResults.slice(0, searchController.maxResults));event.stopPropagation();"
-             onclick="playlistController.playSongList(searchController.songs.searchResults.slice(0, searchController.maxResults));event.stopPropagation();" class="playSearchResults">
+             onclick="playlistController.playSongList(searchController.songs.searchResults.slice(0, searchController.maxResults));event.stopPropagation();" class="playSearchResults"  title="Play All">
         <img src="public/img/empty.png" ontouchend="playlistController.playSongList(searchController.songs.searchResults.slice(0, searchController.maxResults));event.stopPropagation();"
-             onclick="playlistController.playSongList(searchController.songs.searchResults.slice(0, searchController.maxResults));event.stopPropagation();" class="playSearchResults">
+             onclick="playlistController.playSongList(searchController.songs.searchResults.slice(0, searchController.maxResults));event.stopPropagation();" class="playSearchResults"  title="Play All">
 
 
         <h3 ng-if="searchController.showedPopulars" style="font-size: 1.1em;margin-top: 7px;">Popular Songs</h3>
@@ -656,7 +656,7 @@
 
         <div id="positionSongExploreOptions" class="positionResultsOptions"></div>
         <img src="public/img/empty.png" ontouchend="playlistController.playSongList(exploreController.songs.searchResults.slice(0, searchController.maxResults));event.stopPropagation();"
-             onclick="playlistController.playSongList(exploreController.songs.searchResults.slice(0, searchController.maxResults));event.stopPropagation();" class="playSearchResults">
+             onclick="playlistController.playSongList(exploreController.songs.searchResults.slice(0, searchController.maxResults));event.stopPropagation();" class="playSearchResults"  title="Play All">
 
 
         <h3 style="font-size: 1.1em;margin-top: 7px;">{{exploreController.listName}}</h3>
@@ -785,7 +785,7 @@
             <img src="public/img/empty.png" class="optionsPlaylist" ontouchend="optionsMenu.openPlaylistOptions(event, $(this))" onclick=" optionsMenu.openPlaylistOptions(event, $(this))">
 
 
-            <img src="public/img/empty.png" onclick="playlistController.playSongList(playlistController.getLoadedPlaylist().tracks.slice(0, searchController.maxResults));event.stopPropagation();" class="playSearchResults">
+            <img src="public/img/empty.png" onclick="playlistController.playSongList(playlistController.getLoadedPlaylist().tracks.slice(0, searchController.maxResults));event.stopPropagation();" class="playSearchResults" title="Play All">
 
 
             <img src="public/img/sort.png" onclick="playlistController.ui.toggleSortablePlaylist(true);event.stopPropagation();" width="21px" height="21px" alt="Sort"  title="Sort Songs"
