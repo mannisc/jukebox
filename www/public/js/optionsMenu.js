@@ -134,6 +134,10 @@ optionsMenu.openQueueOptions = function (event, positionTo) {
         event.stopPropagation();
 
     optionsMenu.options = [
+        {text: "Clear Queue", callback: function () {
+            optionsMenu.closePopup();
+            playlistController.clearQueue();
+        }},
         {text: "Save as Playlist", callback: function () {
             optionsMenu.closePopup();
 
@@ -143,11 +147,8 @@ optionsMenu.openQueueOptions = function (event, positionTo) {
                     playlistController.loadNewPlaylistWithSongs(playlist)
             }, 150)
 
-        }},
-        {text: "Clear Queue", callback: function () {
-            optionsMenu.closePopup();
-            playlistController.clearQueue();
         }}
+
     ]
 
     $scope.safeApply();
@@ -238,7 +239,7 @@ optionsMenu.openSearchListSelectionOptions = function (event, positionTo) {
             }})
         }
 
-        optionsMenu.options.push({text: "Show Playlist", callback: function () {
+        optionsMenu.options.push({text: "Show Album", callback: function () {
             optionsMenu.closePopup();
             searchController.playlists.searchForPlaylist(playlistController.selectedElements[playlistController.selectedElements.length - 1].obj)
 
@@ -383,7 +384,7 @@ optionsMenu.openPlayListSelectionSongOptions = function (event, positionTo) {
         searchController.artists.searchForArtist(playlistController.selectedElements[playlistController.selectedElements.length - 1].obj.artist);
 
     }})
-    optionsMenu.options.push({text: "Show Playlist", callback: function () {
+    optionsMenu.options.push({text: "Show Album", callback: function () {
         optionsMenu.closePopup();
         searchController.playlists.searchForPlaylist(playlistController.selectedElements[playlistController.selectedElements.length - 1].obj)
 

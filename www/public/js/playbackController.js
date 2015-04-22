@@ -23,9 +23,69 @@ playbackController.dblclickedDelay = 400;
  * @param onlyStyle
  */
 playbackController.clickedElement = function (event, element, onlyStyle) {
+
+
+    console.log("");
+    console.log("");
+    console.log("");
+    console.log("");
+
+    console.log("clickedElement??? "+(Date.now() - uiController.swipeTimer));
+
     //Swiped?
     if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
         return;
+
+
+    //NORMAL CLICK
+    var songlist = $(event.target).parents("li");
+
+
+
+    console.log("clickedElement!!!!");
+
+    console.log("songlist "+songlist.length);
+
+    if (songlist.length > 0) {
+
+        if (element.isArtist) {
+            searchController.artists.showArtist(element);
+        } else {
+
+            console.log("(event.clientX - songlist.offset().left): " + (event.clientX - songlist.offset().left))
+            if (songlist.length > 0 && (event.clientX - songlist.offset().left) < 115) {
+                playlistController.selection.selectElement(element)
+            } else
+            //Playlist?
+            if (element.isPlaylist) {
+                //Select Playlist
+                if (element.gid) {
+                    playlistController.ui.showPlaylist(element);
+
+                    //Show playlist in search list
+                } else {
+                    searchController.playlists.showPlaylist(element);
+                }
+
+                //Artist
+            } else if (element.isArtist) {
+                searchController.artists.showArtist(element);
+            }
+            else {
+                //Play Song
+                playbackController.playSong(element, onlyStyle, false, true);
+            }
+
+        }
+
+    }
+
+
+    event.stopPropagation();
+
+
+
+     /** DOUBLE CLICK HANDLING
 
     var doubleClick = function () {
 
@@ -81,10 +141,6 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
                     }
 
                     //Clicked on Cover -> Select Song
-                    /*
-
-                     */
-
 
                 }
             }, playbackController.dblclickedDelay + 1)
@@ -112,7 +168,9 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
     } else
         normalClick();
 
-    event.stopPropagation();
+      event.stopPropagation();
+    **/
+
 
 
 }
@@ -123,10 +181,10 @@ playbackController.clickedElement = function (event, element, onlyStyle) {
 
  */
 playbackController.doubleClickedElement = function (event) {
+
     //Swiped?
     //if (uiController.swipeTimer && Date.now() - uiController.swipeTimer < 100)
     //    return;
-
 
     event.stopPropagation();
 
@@ -862,6 +920,7 @@ playbackController.remarkSong = function () {
         $(".songlist .loadedsong").not(listElement).removeClass("loadedsong");
         var safe = $(".songlist .oldloadedsong.playing")
         $(".songlist .playing").not(listElement).removeClass("playing");
+
         safe.addClass("playing")
 
         safe = $(".songlist .oldloadedsong.pausing")
@@ -882,11 +941,11 @@ playbackController.remarkSong = function () {
 
                 } else if (videoController.isPlaying) {
 
-                    listElement.addClass("playing");
+                    listElement.addClass("playing").removeClass("stillloading");
                     listElement.removeClass("pausing");
                 }
                 else {
-                    listElement.addClass("pausing");
+                    listElement.addClass("pausing").removeClass("stillloading");
                     listElement.removeClass("playing");
                 }
                 playbackController.positionPlayIndicator();

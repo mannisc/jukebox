@@ -421,6 +421,46 @@ uiController.init = function () {
     document.title = $scope.appTitle;
 
 
+    //Check for Focus Changes
+
+    (function () {
+        var hidden = "hidden";
+
+        // Standards:
+        if (hidden in document)
+            document.addEventListener("visibilitychange", onchange);
+        else if ((hidden = "mozHidden") in document)
+            document.addEventListener("mozvisibilitychange", onchange);
+        else if ((hidden = "webkitHidden") in document)
+            document.addEventListener("webkitvisibilitychange", onchange);
+        else if ((hidden = "msHidden") in document)
+            document.addEventListener("msvisibilitychange", onchange);
+        // IE 9 and lower:
+        else if ("onfocusin" in document)
+            document.onfocusin = document.onfocusout = onchange;
+        // All others:
+        else
+            window.onpageshow = window.onpagehide
+                = window.onfocus = window.onblur = onchange;
+
+        function onchange(evt) {
+            var v = "visible", h = "hidden",
+                evtMap = {
+                    focus: v, focusin: v, pageshow: v, blur: h, focusout: h, pagehide: h
+                };
+
+            evt = evt || window.event;
+            if (evt.type in evtMap)
+                document.body.className = evtMap[evt.type];
+            else
+                document.body.className = this[hidden] ? "hidden" : "visible";
+        }
+
+        // set the initial state (but only if browser supports the Page Visibility API)
+        if (document[hidden] !== undefined)
+            onchange({type: document[hidden] ? "blur" : "focus"});
+    })();
+
     //Init WebGL
     if (false && window.WebGLRenderingContext) {
         try {
@@ -1129,10 +1169,8 @@ uiController.checkIfListHintsNecessary = function () {
 
 uiController.toggleGridLayoutWidth = function () {
 
-    if (uiController.windowWidth <= 1300)
-        uiController.gridWidth = 220;
-    else
-        uiController.gridWidth = 300;
+
+    uiController.gridWidth = 300;
 
     uiController.gridLayoutCols = Math.floor(($("#searchlist ul").width() - 35) / uiController.gridWidth);
 
@@ -1149,17 +1187,14 @@ uiController.toggleGridLayoutWidth = function () {
 
 
 /* Toggel Grid Layout*/
-uiController.toggleGridLayout = function () {
+uiController.toggleGridLayout = function (dontChangeOpacity) {
     //   viewController.fadeContentVisible(dontFadeContentTime);
 
     uiController.gridLayout = !uiController.gridLayout;
 
 
-    var videoOpactiy
-
-
     if (uiController.gridLayout) {
-        if (videoController.videoOpactiy == videoController.startVideoOpactiyVisisble) {
+        if (videoController.videoOpacity == videoController.startVideoOpactiyVisisble) {
             $("#backgroundImage").removeClass("fadeoutcomplete").addClass("fadeincomplete");
             $("#backgroundImage").show();
         }
@@ -1187,15 +1222,16 @@ uiController.toggleGridLayout = function () {
 
 
         if (uiController.gridLayout) {
-            if (videoController.videoOpactiy == videoController.startVideoOpactiyVisisble)
-                videoController.videoOpactiy = videoController.startVideoOpactiyBackground;
-            else {
-                videoController.videoOpactiy = videoController.videoOpactiy / 1.1;
-                if (videoController.videoOpactiy < 0)
-                    videoController.videoOpactiy = 0;
-            }
-            videoController.setVideoOpacity(videoController.videoOpactiy);
-            videoController.fullscreenModeOldVideoOpacity =   videoController.videoOpactiy;
+            // if (videoController.videoOpacity == videoController.startVideoOpactiyVisisble)
+            if (!dontChangeOpacity)
+                videoController.videoOpacity = videoController.startVideoOpactiyBackground;
+
+            console.log("GRID LAYOUT " + videoController.videoOpacity)
+
+            videoController.setVideoOpacity(videoController.videoOpacity, false, true);
+
+
+            videoController.fullscreenModeOldVideoOpacity = videoController.videoOpacity;
 
             $("#searchlist ul").addClass("gridlayout")
 
@@ -1284,12 +1320,12 @@ uiController.toggleGridLayout = function () {
             setTimeout(function () {
                 if (!uiController.gridLayout) {
 
-                    if (videoController.videoOpactiy <= 0.1)
-                        videoController.videoOpactiy = videoController.startVideoOpactiyVisisble;
-                    else {
-                        videoController.videoOpactiy = videoController.videoOpactiy * 1.1;
-                        if (videoController.videoOpactiy > 1)
-                            videoController.videoOpactiy = 1;
+                    //if (videoController.videoOpacity <= 0.1)
+                    if (!dontChangeOpacity) {
+                        videoController.videoOpacity = videoController.startVideoOpactiyVisisble;
+
+                        console.log(" videoController.videoOpacity NO GRID LAYOUT " + videoController.videoOpacity)
+
                     }
 
 
@@ -1311,9 +1347,10 @@ uiController.toggleGridLayout = function () {
                     uiController.searchListScroll.scrollTo(0, scrollY);
                 }
 
+                console.log("NO GRID LAYOUT " + videoController.videoOpacity)
 
-                videoController.setVideoOpacity(videoController.videoOpactiy);
-                videoController.fullscreenModeOldVideoOpacity =   videoController.videoOpactiy;
+                videoController.setVideoOpacity(videoController.videoOpacity, false, true);
+                videoController.fullscreenModeOldVideoOpacity = videoController.videoOpacity;
 
                 setTimeout(function () {
                     playlistController.options.positionSongOptions();

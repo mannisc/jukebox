@@ -142,8 +142,8 @@ html head + body .ui-btn.ui-btn-a{
 .ui-popup-container {
     z-index: 1000000;
 
-    -webkit-border-radius: .3125em /*{global-radii-blocks}*/ !important;
-    border-radius: .3125em /*{global-radii-blocks}*/ !important;
+    -webkit-border-radius: 0em /*{global-radii-blocks}*/ !important;
+    border-radius: 0em /*{global-radii-blocks}*/ !important;
 
 }
 

@@ -149,21 +149,19 @@ var mediaelementPlayer = function (selector) {
                 })
                 //TODO END -----------------------------------------------------------------------------------
 
-                mediaElement.addEventListener("canplay", function (e) {
+
+                mediaElement.addEventListener("oncanplay canplay canplaythrough", function (e) {
                     that.mediaElementPlayer.media.setVolume(videoController.volume);
                     that.canplay = true;
-                        if (that.startplay){
+                    if (that.startplay) {
 
-                            that.play();
-                        }
-                        else if (that.startplause)
-                            that.pause();
+                        that.play();
+                    }
+                    else if (that.startpause)
+                        that.pause();
 
-                        that.startplause = false;
-                        that.startplay = false;
-                        that.startplay = false;
-
-
+                    that.startpause = false;
+                    that.startplay = false;
 
 
                 })
@@ -173,6 +171,8 @@ var mediaelementPlayer = function (selector) {
                     videoController.playingSong();
 
                     that.updateTime.call(that);
+                    that.startpause = false;
+                    that.startplay = false;
 
                 });
 
@@ -180,11 +180,12 @@ var mediaelementPlayer = function (selector) {
                     videoController.endedSong();
                     that.stopUpdateTime();
 
+
                 });
 
                 mediaElement.addEventListener("error", function (e) { //TODO VideoController Handling nötig wenn versionen embedded fähig???
-                    if(mediaController.currentvideoURL!=""){
-                        if(!videoController.isEmbedVideo(mediaController.currentvideoURL)){
+                    if (mediaController.currentvideoURL != "") {
+                        if (!videoController.isEmbedVideo(mediaController.currentvideoURL)) {
                             console.log("MEDIAELEMENT ERROR!")
                             mediaController.PlayingSongError();
                         }
@@ -208,7 +209,6 @@ var mediaelementPlayer = function (selector) {
 
     };
 
-
     /**
      * Load Player with Url before using
      */
@@ -220,9 +220,7 @@ var mediaelementPlayer = function (selector) {
         this.containerVideo.addClass("backgroundVideo").appendTo("#backgroundVideo");
         this.canplay = false;
         this.startplay = false;
-        this.startplause = false;
-        console.log("LOAD"+Date.now())
-
+        this.startpause = false;
 
     }
 
@@ -264,26 +262,30 @@ var mediaelementPlayer = function (selector) {
 
 
     this.play = function () {
-        if (this.canplay) {
+        if(this.videoElement[0].readyState>3 )
+            this.canplay = true;
 
-            this.mediaElementPlayer.play();
+        this.mediaElementPlayer.play();
 
-        }
-        else {
+        if (!this.canplay) {
             this.startplay = true;
-            this.startplause = false;
+            this.startpause = false;
 
         }
     };
 
 
     this.pause = function () {
+
+        if(this.videoElement[0].readyState>3 )
+            this.canplay = true;
+
         if (this.canplay) {
             this.mediaElementPlayer.pause();
             this.stopUpdateTime();
         } else {
             this.startplay = false;
-            this.startplause = true;
+            this.startpause = true;
 
         }
 
@@ -305,7 +307,7 @@ var mediaelementPlayer = function (selector) {
         var newTime = percentage * this.mediaElementPlayer.media.duration;
 
         // seek to where the mouse is
-        if (newTime&&newTime !== this.mediaElementPlayer.media.currentTime) {
+        if (newTime && newTime !== this.mediaElementPlayer.media.currentTime) {
             this.mediaElementPlayer.media.setCurrentTime(newTime);
         }
 

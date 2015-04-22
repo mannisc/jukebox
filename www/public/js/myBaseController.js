@@ -43,7 +43,7 @@ myBaseController.onClear = function(){
  */
 myBaseController.showView = function(){
 
-    exploreController.oldVideoOpactiy =     videoController.videoOpactiy;
+    exploreController.oldVideoOpactiy =     videoController.videoOpacity;
 
     videoController.setVideoOpacity(exploreController.oldVideoOpactiy/2)  ;
 
@@ -70,7 +70,7 @@ myBaseController.hideView = function(){
     myBaseController.visible = false;
     $("#explorearea").hide();
 
-    if( exploreController.oldVideoOpactiy ==  videoController.videoOpactiy*2)
+    if( exploreController.oldVideoOpactiy ==  videoController.videoOpacity*2)
        videoController.setVideoOpacity(exploreController.oldVideoOpactiy)
 
 

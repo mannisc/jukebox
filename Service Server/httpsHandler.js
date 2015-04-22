@@ -15,28 +15,28 @@ var httpsHandler = function () {
 
 httpsHandler.https = require('https');
 
+httpsHandler.Iconv =  require('iconv-lite');
 
 httpsHandler.downloadFile = function (host, path, callback) {
 
+    var headers = {
+        "accept-charset" : "utf-8"
+    };
+
     var options = {
         host: host,
-        path: path
+        path: path,
+        headers: headers
     };
 
 
     var req = httpsHandler.https.request(options, function (response) {
-        var str = '';
 
-        //another chunk of data has been recieved, so append it to `str`
-        response.on('data', function (chunk) {
-            str += chunk;
+        response.pipe(httpsHandler.Iconv.decodeStream('ISO-8859-1')).collect(function(err, decodedBody) {
+            callback( httpsHandler.Iconv.encode(decodedBody, "utf8").toString());
+
         });
 
-        //the whole response has been recieved, so we just print it out here
-        response.on('end', function () {
-            if (callback)
-                callback( str)
-        });
     });
 
     req.on('error', function (error) {

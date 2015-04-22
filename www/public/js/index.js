@@ -84,10 +84,17 @@ IScrollinitTimer = 0;
 
 $(document).ready(function () {
 
+    $(window).keydown(function(e) { if (e.keyCode == 119) debugger; });
+
+    $.mobile.loading( "show", {
+        text: "Songbase.fm",
+        textVisible: true,
+        textonly: false,
+        html: ""
+    });
 
 
-
-    //FEEDBACK
+        //FEEDBACK
     feedback.initFeedback();
 
     //Enable smooth scrolling after this time
@@ -321,6 +328,9 @@ feedback.sendFeedback = function () {
 
 
 }
+
+
+
 
 
 

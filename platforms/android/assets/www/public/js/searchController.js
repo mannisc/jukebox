@@ -216,7 +216,9 @@ searchController.init = function () {
 
 
     //Detect swipes on searchlist
-    var swipeDetectFunction = function (event) {
+    searchController.swipeDetectFunction = function (event) {
+
+
         var startY = event.clientY||event.originalEvent.touches[0].clientY;
         $(window).on("mousemove.swipe touchmove.swipe", function (event) {
 
@@ -230,6 +232,7 @@ searchController.init = function () {
 
             if (!actY||uiController.swiping || (startY > 0 && Math.abs(actY- startY) > diffY)) {
                 uiController.swiping = true;
+                console.log("!!!!!!!!!")
                 uiController.swipeTimer = Date.now();
             }
         })
@@ -251,8 +254,8 @@ searchController.init = function () {
         })
 
     }
-    $(window).off("mousedown.swipe touchstart.swipe", swipeDetectFunction);
-    $(window).on("mousedown.swipe touchstart.swipe" , swipeDetectFunction)
+    $(window).off("mousedown.swipe touchstart.swipe", searchController.swipeDetectFunction);
+    $(window).on("mousedown.swipe touchstart.swipe" , searchController.swipeDetectFunction);
 
     $("#searchlist, #playlist").on("touchstart" , function(){
         $("#searchinput").blur();
@@ -706,7 +709,7 @@ searchController.songs.startSearchDeferred = function (searchTerm, searchID, sta
                     songList = loadedSongList.concat(songList);
 
 
-                    if (page - startPage + 1 < searchController.songs.maxPagesAtOnce) {
+                    if (page - startPage + 1 < searchController.songs.maxPagesAtOnce&&songList.length>=30) {
                         page++;
                         loadPage(page, songList);
                     }
@@ -782,12 +785,29 @@ searchController.songs.completeSearch = function (localList, onlineList) {
     if (!onlineList)
         onlineList = [];
 
-    var songList = localList.concat(onlineList)
+   /* var newOnlineList = [];
+    for (var i = 0; i < onlineList.length; i++) {
+        var found = false;
+        console.log(mediaController.getSongDisplayName(onlineList[i]))
+        console.dir(onlineList[i])
+        for (var j = i+1; j < onlineList.length; j++) {
+
+           if(mediaController.getSongDisplayName(onlineList[i])==mediaController.getSongDisplayName(onlineList[j]))
+            found = true;
+        }
+        if(!found)
+            newOnlineList.push(onlineList[i])
+
+    }
+    onlineList =  newOnlineList;
+     */
+
+    var songList = localList.concat(onlineList);
 
     // console.dir("completeSearch##############################################################################");
     // console.dir(songList);
     //Set Artist of song and remove songs without name
-    searchController.songs.cleanList(songList)
+    searchController.songs.cleanList(songList);
 
 
     //Check if something changed
@@ -811,6 +831,7 @@ searchController.songs.completeSearch = function (localList, onlineList) {
     if (!changedResults) {
         songList = null;
     }
+
 
     return songList;
 }
@@ -1772,7 +1793,6 @@ searchController.dragging.makeSearchListDraggable = function () {
 
 
             $(window).on("mousemove ", function (event) {
-
 
                 if (uiController.swiping || (searchController.dragDraggableSongY > 0 && Math.abs(event.clientY - searchController.dragDraggableSongY) > 30)) {
                     searchController.dragDraggableSongY = -10;

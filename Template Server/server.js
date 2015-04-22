@@ -9,6 +9,8 @@ var httpsHandler = require('./httpsHandler');
 var chartsHandler = require('./chartsHandler');
 var templateHandler = require('./templateHandler');
 
+var lasfFMApiKey = "019c7bcfc5d37775d1e7f651d4c08e6f";
+
 var countUpdates = 0;
 var maxChartsResults = 100;
 var ip_token = "iamadmin";
@@ -32,7 +34,6 @@ var ftpProperties = {
 //httpsHandler.downloadFile("imgflip.com", "/ajax_get_video_from_url?url=http%3A%2F%2Fpdl.vimeocdn.com%2F59403%2F899%2F244700956.mp4%3Ftoken2%3D1400940393_37731d9fa33fe73f8f3ae7c89814f0b0%26aksessionid%3D13fef841d0cedf61&ran=yMo52KSHA3Agkurei5dBpvLQNGEuvY3k&getImg=1", onExploreReady)
 //httpsHandler.downloadFile("imgflip.com", "/terms", onExploreReady)
 
-
 startChartsUpdate();
 
 
@@ -40,38 +41,33 @@ startChartsUpdate();
 
 
 function startChartsUpdate() {
-
 //Connect FTP
     ftpHandler.connect(ftpProperties, onFTPConnection);
 }
 
-
 //Connected
 function onFTPConnection() {
     console.log("Started--------------------------")
-
     console.log("FTP Connected")
-
     ftpHandler.downloadFile("/public/js/generatedData.template.js", "generatedData.template.js", onFTPDownloadTemplates)
 }
 
 //Templates Downloaded
 function onFTPDownloadTemplates() {
     console.log("Templates Downloaded")
-
-    chartsHandler.update(httpHandler, "019c7bcfc5d37775d1e7f651d4c08e6f", 10, onChartsUpdated);
+    chartsHandler.update(httpHandler, lasfFMApiKey, 10, onChartsUpdated);
 
 }
 
 
 //Charts Updated
-function onChartsUpdated(tracks, countNewUpdates) {
+function onChartsUpdated(tracks, countNewUpdates, chartTrends) {
 
     countUpdates = countNewUpdates;
     console.log("Charts: " + tracks.length + " Tracks")
     console.log(countUpdates + " Updates");
 
-    if (countNewUpdates > 0) {
+   // if (countNewUpdates > 0) {
 
         var generatedDataTemplate = chartsHandler.fs.readFileSync("generatedData.template.js", "utf-8");
 
@@ -86,10 +82,14 @@ function onChartsUpdated(tracks, countNewUpdates) {
 
             var generatedData = templateHandler.buildTemplate(generatedDataTemplate, templateProp)
             chartsHandler.fs.writeFileSync("generatedData.js", generatedData);
-            ftpHandler.uploadFile("/public/js/generatedData.js", "generatedData.js", onFTPUploadTemplates)
 
-        }
 
+            ftpHandler.uploadFile("/admin/data/charttrends.txt", "charttrends.txt",function(){
+                ftpHandler.uploadFile("/public/js/generatedData.js", "generatedData.js", onFTPUploadTemplates);
+            });
+
+
+     //   }
     }
 
 
@@ -105,11 +105,9 @@ function onFTPUploadTemplates() {
 
     console.log("Templates Uploaded")
 
-
     //Write Server Stats
     console.log("Write Server Stats")
     chartsHandler.fs.appendFileSync("Server Status.txt", "Last Update: " + new Date().toUTCString() + " - Updates: " + countUpdates + "\r\n");
-
 
     console.log("Finished--------------------------")
 
@@ -138,14 +136,16 @@ function bufferCharts(tracks) {
 
 function bufferSong(track, endProcess) {
 
+    console.log("reloadversions "+track.name)
 
-    console.log("Track: "+track.name);
-
-   // console.log("h2406563.stratoserver.net:3001?reloadversions=" + track.artist.name + "&duration=&title=" + track.name + "&auth=" + ip_token);
+    // console.log("h2406563.stratoserver.net:3001?reloadversions=" + track.artist.name + "&duration=&title=" + track.name + "&auth=" + ip_token);
 
     httpHandler.downloadFile(serverURL, "?reloadversions=" + encodeURIComponent(track.artist.name) + "&duration=&title=" + encodeURIComponent(track.name) + "&auth=" + ip_token, function (content) {
+        console.log(JSON.stringify(track));
         console.log("Response Length: " + content.length+"   (" + content.substring(0,45)+" ...)");
-    }, 3001);
+        console.log(content)
+
+    }, 3001, 'utf16le');
 
 
     if (endProcess)

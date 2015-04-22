@@ -10,7 +10,7 @@ var preferences = {
 
 }
 
-alert("!")
+
 
 $.support.cors = true;
 

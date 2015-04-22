@@ -724,11 +724,17 @@ playlistController.ui.toggleSortablePlaylist = function (manuell) {
         return;
     }
 
+    console.log("toggleSortablePlaylist 2");
+
     if (manuell) {
         uiController.startedSortPlaylist = false;
     }
 
     playlistController.sortPlaylist = !playlistController.sortPlaylist;
+
+    console.log("toggleSortablePlaylist " + playlistController.sortPlaylist);
+
+
     if (playlistController.sortPlaylist) {
 
         uiController.playListScroll.disable();
@@ -968,8 +974,8 @@ playlistController.options.showMoreSelectionOptions = function (event) {
  * @param element
  */
 playlistController.selection.selectElement = function (element) {
-
-    if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 500) {
+           console.log("selectElement")
+    if (!uiController.swipeTimer || Date.now() - uiController.swipeTimer > 100) {
 
         /*if (playbackController.playSongTimer && Date.now() - playbackController.playSongTimer < 800)
          return;
@@ -1056,6 +1062,14 @@ playlistController.selection.updateDeselectionOption = function () {
  * Deselect Songs etc
  */
 playlistController.selection.deselectElements = function (event) {
+    console.log("deselectElements ")
+    var e = new Error('dummy');
+    var stack = e.stack.replace(/^[^\(]+?[\n$]/gm, '')
+        .replace(/^\s+at\s+/gm, '')
+        .replace(/^Object.<anonymous>\s*\(/gm, '{anonymous}()@')
+        .split('\n');
+    console.log(stack);
+
 //Remove Selection
     if (event)
         event.stopPropagation();
@@ -1090,9 +1104,14 @@ playlistController.selection.updateDeselectedSong = function () {
  */
 
 playlistController.dragging.makePlayListSortable = function () {
+    console.log("!!!!!!!!!!! makePlayListSortable ------------------")
 
 
     var startDragFunction = function (event) {
+
+        console.log("!!!!!!!!!!! startDragFunction")
+
+
         playlistController.dragDraggableSongY = event.clientY;
         playlistController.dragDraggableSongX = event.clientX;
 
@@ -1111,43 +1130,55 @@ playlistController.dragging.makePlayListSortable = function () {
 
         }
         $(window).on("mouseup ", function (event) {
-            console.log("MOUSEUPPPPPPPPPPPPPPPPPPPP")
-            console.log(" ")
 
+            console.log('$(window).on("mouseup") '+uiController.swiping);
 
             $(window).off("mouseup");
             $(window).off("mousemove");
 
             playlistController.dragDraggableSongY = -10;
 
+
             if (uiController.swiping || (playlistController.dragDraggableSongY > 0 && Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30)) {
                 uiController.swipeTimer = Date.now();
+                console.log('$(window).on("mouseup")  uiController.swipeTimer ');
+
             }
             playlistController.dragDraggableSongTimer = 0;
             uiController.swiping = false;
+
 
         })
 
         $(window).on("mousemove ", function (event) {
 
-            console.log("MOUSEMMMOOOVEEEEEEEEE")
-            console.log(" ")
+
+            console.log('$(window).on("mousemove") '+uiController.swiping+"   "+(Math.abs(event.clientY - playlistController.dragDraggableSongY)))
+
 
             if (uiController.swiping || (playlistController.dragDraggableSongY > 0 && Math.abs(event.clientY - playlistController.dragDraggableSongY) > 30)) {
+
+                console.log('$(window).on("mousemove") '+uiController.swipeTimer)
+
                 uiController.swipeTimer = Date.now();
                 uiController.swiping = true;
 
             }
 
+
+
             if (playlistController.sortPlaylist) {
 
-                if (playlistController.dragDraggableSongTimer && Date.now() - playlistController.dragDraggableSongTimer < 500 && Date.now() - playlistController.dragDraggableSongTimer > 0) {
+                if (playlistController.dragDraggableSongTimer && Date.now() - playlistController.dragDraggableSongTimer < 500 && Date.now() - playlistController.dragDraggableSongTimer > 0 ) {
                     //Wait for Mouseups?
                     setTimeout(function () {
                         if (playlistController.dragDraggableSongTimer) {
                             uiController.stopPlaylistScrollingOnClick(event);
                             uiController.updateUI();
                             $(window).off("mousemove").off("mouseup");
+
+                            console.log('$(window).off("mouseup") !!!!!!!');
+
 
                             playlistController.dragDraggableLastSongTimer = Date.now();
                             playlistController.dragDraggableSongTimer = 0;
@@ -1171,7 +1202,15 @@ playlistController.dragging.makePlayListSortable = function () {
                             // uiController.mouseUp = false;
 
                             // this actually triggers the drag start event
+                            $("#playlistInner li").off("mousedown", startDragFunction);
+
+                            $(window).off("mousedown.swipe touchstart.swipe", searchController.swipeDetectFunction);
                             $(playlistController.dragDraggableSongStartElement).simulate("mousedown", coords);
+                            $("#playlistInner li").on("mousedown", startDragFunction);
+                            $(window).on("mousedown.swipe touchstart.swipe" , searchController.swipeDetectFunction)
+
+                            uiController.swiping = false;
+
                         }
                     }, 0)
 
@@ -1186,7 +1225,7 @@ playlistController.dragging.makePlayListSortable = function () {
 
     $("#playlistInner li").off("mousedown", startDragFunction);
 
-    $("#playlistInner li").on("mousedown", startDragFunction)
+    $("#playlistInner li").on("mousedown", startDragFunction);
 
 
     $("#playlistview").sortable({
@@ -1314,6 +1353,7 @@ playlistController.dragging.startDragging = function (event, ui) {
         $(".draggedsortablelistelement").on('DOMMouseScroll', playlistController.ui.scrollByWheel);
 
         uiController.playListScroll.enable();
+
     }
 
 
@@ -1325,9 +1365,14 @@ playlistController.dragging.startDragging = function (event, ui) {
  * @param ui
  */
 playlistController.dragging.stopDragging = function (event, ui) {
+    playlistController.selection.updateDeselectionOption();
 
-    playlistController.dragDraggableSongY = 0;
+    console.log("Stop Dragging")
+
+    playlistController.dragDraggableSongTimer = 0;
     uiController.swiping = false;
+    playlistController.dragDraggableSongY = -10;
+
     var newLoadedPlaylistSongs = [];
     if (playlistController.draggedElements) {
         playlistController.draggedElements.css("opacity", "");
@@ -1588,7 +1633,7 @@ playlistController.dragging.stopDragging = function (event, ui) {
         uiController.checkIfListHintsNecessary();
     }, 150)
 
-    if (uiController.startedSortPlaylist) {
+    if (playlistController.sortPlaylist){//uiController.startedSortPlaylist) {
         playlistController.ui.toggleSortablePlaylist();
         uiController.startedSortPlaylist = false;
     }
@@ -1735,7 +1780,12 @@ playlistController.playSelection = function (event) {
 
     var songListCallback = function (list) {
         if (list.length == 1 && list[0].playlistgid == playlistController.currentQueue.gid) {
-            playbackController.playSong(list[0], false, true, false);
+
+            if (!playbackController.isLoading && playbackController.isPlayingSong(list[0].gid))
+                videoController.playPauseSong();
+            else
+                playbackController.playSong(list[0], false, true, false);
+
         } else {
             playlistController.playSongList(list);
         }
@@ -1927,6 +1977,8 @@ playlistController.insertSongsIntoQueue = function (songs) {
 
             $("#playlistview").listview('refresh');
 
+            playlistController.dragging.makePlayListSortable();
+
             uiController.updateUI();
 
 
@@ -2073,6 +2125,8 @@ playlistController.addSongsToPlaylist = function (playlist, listToAdd) {
 
             setTimeout(function () {
                 $("#playlistview").listview('refresh');
+
+                playlistController.dragging.makePlayListSortable();
 
                 uiController.updateUI();
                 setTimeout(function () {

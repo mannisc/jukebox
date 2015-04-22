@@ -675,14 +675,14 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 }
 
 .songlist li.loadedsong.playing img.ui-li-icon {
-    background-image: url(../img/play.png) !important;
+    content: url(../img/play.png) !important;
     background-size: 100%;
     background-position: 0px 0px !important;
 
 }
 
 .songlist li.oldloadedsong.playing img.ui-li-icon {
-    background-image: url(../img/play.png) !important;
+    content: url(../img/play.png) !important;
     background-size: 100%;
     background-position: 0px 0px !important;
 
@@ -961,10 +961,10 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 
 
  #searchlist li.artistinfo .artistimage{
-     height:200px!important;
+     height: auto!important;
      width: 200px!important;
-     max-height:200px!important;
-     max-width: 200px!important;
+     max-height: none!important;
+     max-width: none!important;
      border-width: 1px 0 0 0;
      margin: 15px;
      top: 20px;
@@ -1562,7 +1562,7 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 
 }
 
-.songlist li .loadingSongImg {
+.songlist li .loadingSongImgDISABLED {
     background-image: none;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
@@ -1570,8 +1570,9 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     transition: all 0.3s ease-out;
 }
 
+
 .songlist li.loadedsong.pausing img.ui-li-icon {
-    background-image: url(../img/play.png) !important;
+    content: url(../img/play.png) !important;
     opacity: 0.5 !important;
     background-size: 100%;
     background-position: 0px 0px !important;
@@ -1654,18 +1655,19 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 
 #searchlist li.selected a, #playlistInner li.selected a {
 
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr=rgba(0, 212, 59, 0.60), endColorstr=rgba(0, 212, 59, 0.6)) !important;
-    background-image: -moz-linear-gradient(left, rgba(0, 212, 59, 0.6) 0%, rgba(0, 212, 59, 0.6) 44%, rgba(0, 212, 59, 0) 100%) !important;
-    background-image: linear-gradient(left, rgba(0, 212, 59, 0.6) 0%, rgba(0, 212, 59, 0.6) 44%, rgba(0, 212, 59, 0) 100%) !important;
-    background-image: -webkit-linear-gradient(left, rgba(0, 212, 59, 0.6) 0%, rgba(0, 212, 59, 0.6) 44%, rgba(0, 212, 59, 0) 100%) !important;
-    background-image: -o-linear-gradient(left, rgba(0, 212, 59, 0.6) 0%, rgba(0, 212, 59, 0.6) 44%, rgba(0, 212, 59, 0) 100%) !important;
-    background-image: -ms-linear-gradient(left, rgba(0, 212, 59, 0.6) 0%, rgba(0, 212, 59, 0.6) 44%, rgba(0, 212, 59, 0) 100%) !important;
-    background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0%, rgba(0, 212, 59, 0.6)), color-stop(44%, rgba(0, 212, 59, 0.6)), color-stop(100%, rgba(0, 212, 59, 0))) !important;
-
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr=rgba(29, 207, 255, 1), endColorstr=rgba(29, 207, 255, 1)) !important;
+    background-image: -moz-linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgba(32, 137, 165, 1) 100%) !important;
+    background-image: linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgba(32, 137, 165, 1) 100%) !important;
+    background-image: -webkit-linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgba(32, 137, 165, 1) 100%) !important;
+    background-image: -o-linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgba(32, 137, 165, 1) 100%) !important;
+    background-image: -ms-linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgba(32, 137, 165, 1) 100%) !important;
+    background-image: -webkit-gradient(linear,left bottom,right bottom,color-stop(0%,rgba(29, 207, 255, 1)),color-stop(44%,rgba(32, 137, 165, 1)),color-stop(100%,rgba(0,212,59,0)))!important;
+    
+    
     border: none !important;
 }
 .songlist li.selected img.ui-li-icon {
-    border: 2px solid #fff!important;
+    border: 3px solid #fff!important;
     box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
@@ -1784,7 +1786,9 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     /* background:      rgba(255,255,255,0.1);*/
     visibility: visible !important;
     height: 113px !important;
-
+    padding: 0!important;
+    background: none!important;
+    border: none!important;
 }
 
 #playlistview {
@@ -1901,10 +1905,9 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 #playlisthelp {
     z-index: 2;
     position: absolute;
-    left: 0px;
+    left: 0;
     width: 100%;
     text-align: center;
-    opacity: 0.6;
     font-size: 22px;
     font-weight: bold;
     pointer-events: none;
@@ -2265,13 +2268,13 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
      background-image:-ms-linear-gradient(left, rgba(70,23,180,1) 0%, rgba(70,23,180,1) 44%,rgba(70,23,180,0) 100%)!important;
      background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0%,rgba(70,23,180,1)), color-stop(44%,rgba(70,23,180,1)),color-stop(100%,rgba(70,23,180,0)))!important;
    */
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr=rgba(0, 212, 59, 0.6), endColorstr=rgba(0, 212, 59, 0.6)) !important;
-    background-image: -moz-linear-gradient(left, rgba(0, 212, 59, 0.6) 0%, rgba(0, 212, 59, 0.6) 44%, rgba(0, 212, 59, 0) 100%) !important;
-    background-image: linear-gradient(left, rgba(0, 212, 59, 0.6) 0%, rgba(0, 212, 59, 0.6) 44%, rgba(0, 212, 59, 0) 100%) !important;
-    background-image: -webkit-linear-gradient(left, rgba(0, 212, 59, 0.6) 0%, rgba(0, 212, 59, 0.6) 44%, rgba(0, 212, 59, 0) 100%) !important;
-    background-image: -o-linear-gradient(left, rgba(0, 212, 59, 0.6) 0%, rgba(0, 212, 59, 0.6) 44%, rgba(0, 212, 59, 0) 100%) !important;
-    background-image: -ms-linear-gradient(left, rgba(0, 212, 59, 0.6) 0%, rgba(0, 212, 59, 0.6) 44%, rgba(0, 212, 59, 0) 100%) !important;
-    background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0%, rgba(0, 212, 59, 0.6)), color-stop(44%, rgba(0, 212, 59, 0.6)), color-stop(100%, rgba(0, 212, 59, 0))) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr=rgba(29, 207, 255, 1), endColorstr=rgba(29, 207, 255, 1)) !important;
+    background-image: -moz-linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgb(29, 207, 255) 100%) !important;
+    background-image: linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgb(29, 207, 255) 100%) !important;
+    background-image: -webkit-linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgb(29, 207, 255) 100%) !important;
+    background-image: -o-linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgb(29, 207, 255) 100%) !important;
+    background-image: -ms-linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgb(29, 207, 255) 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0%, rgba(29, 207, 255, 1)), color-stop(44%, rgba(29, 207, 255, 1)), color-stop(100%, rgb(29, 207, 255))) !important;
 
     opacity: 0.8;
 

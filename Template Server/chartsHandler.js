@@ -22,16 +22,11 @@ chartsHandler.update = function (http, apiKey, maxPages, callback) {
     chartsHandler.maxPages = maxPages;
 
     chartsHandler.tracks = [];
-    chartsHandler.chartindex = {};
+
     chartsHandler.charttrends = {};
 
-    chartsHandler.downloadFiles("", callback,true);
-
+    chartsHandler.downloadFiles("", callback, true);
 }
-
-
-
-
 
 chartsHandler.getSongArtist = function (song) {
     var artist = chartsHandler.unknownData + "-id:" + Date.now();
@@ -46,10 +41,10 @@ chartsHandler.getSongArtist = function (song) {
     return artist;
 }
 
-chartsHandler.downloadFiles = function (content, callback,start) {
+chartsHandler.downloadFiles = function (content, callback, start) {
 
 
-    if(!start) {
+    if (!start) {
         if (content && content.trim() != "") {
             var tracks = JSON.parse(content)
             if (tracks && tracks.tracks && tracks.tracks.track)
@@ -61,7 +56,7 @@ chartsHandler.downloadFiles = function (content, callback,start) {
                 return;
 
             }
-        }else{
+        } else {
             console.log("LAST.FM DOWN -----------------------------------------------------")
             console.log(content)
 
@@ -85,75 +80,89 @@ chartsHandler.downloadFiles = function (content, callback,start) {
 
             oldCharttrend = JSON.parse(oldCharttrend);
 
-            var oldChartindex = chartsHandler.fs.readFileSync("chartindex.txt");
-            if (oldChartindex && oldChartindex != "") {
+            /*  Conver old chart trend file
+             for (var i = 0; i < chartsHandler.tracks.length; i++) {
+             var song = chartsHandler.tracks[i];
+             var songKey = chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration;
+             oldCharttrend[songKey] ={trend:oldCharttrend[songKey]}
+             }
+             */
 
-                oldChartindex = JSON.parse(oldChartindex);
-                if (oldChartindex) {
+            //New songs in Charts
+            var countChanges = 0;
 
-                    //New songs in Charts
-                    var countChanges=0;
-
-                    for (var i = 0; i < chartsHandler.tracks.length; i++) {
-                        var song = chartsHandler.tracks[i];
-
-                        var trend = 3;  //New
-                        
-                        if (oldChartindex[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] < i + 1) {//Loser
-                            trend = 2;
-                           
-                        } else if (oldChartindex[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] == i + 1) { //Same
-                            trend = 1;
-                            
-                        } else if (oldChartindex[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] > i + 1) {//Winner
-                            trend = 0;
-                          
-                        }
-
-                       // console.log(song.name + "    "+oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration]+"   "+trend)
-
-                       if(trend == 1) {
-                           if( oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration]!=undefined&&oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration]>=0)
-                               trend =  oldCharttrend[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration]
-                           else
-                            trend = 3;
-                       }else{
-                           countChanges++;
-                       }
-
-					   
-					   
-
-                       chartsHandler.charttrends[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] = trend;
-
-                       song.trend = trend;
-
-                        //Save the date it was found
-                        if(!song.date&&song.trend==3) {
-                           song.date = +new Date();
-                       }
+            for (var i = 0; i < chartsHandler.tracks.length; i++) {
 
 
+                var song = chartsHandler.tracks[i];
 
+                var songKey = chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration;
+                var trend = 3;  //New
 
-                       chartsHandler.chartindex[chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration] = i + 1;
+                if (oldCharttrend[songKey].index < i + 1) {//Loser
+                    trend = 2;
 
+                } else if (oldCharttrend[songKey].index == i + 1) { //Same
+                    trend = 1;
 
-
-                    }
-                    chartsHandler.fs.writeFileSync("charttrends.txt", JSON.stringify(chartsHandler.charttrends));
-                    chartsHandler.fs.writeFileSync("chartindex.txt", JSON.stringify(chartsHandler.chartindex));
-
-                    if(new Date().getDay()==0)
-                     chartsHandler.fs.writeFileSync("chartindex_Sicherung.txt", JSON.stringify(chartsHandler.chartindex));
-
-
+                } else if (oldCharttrend[songKey].index > i + 1) {//Winner
+                    trend = 0;
 
                 }
+
+
+                if (trend == 1) {
+                    if (oldCharttrend[songKey] != undefined && oldCharttrend[songKey].trend >= 0)
+                        trend = oldCharttrend[songKey].trend
+                    else
+                        trend = 3;
+                } else {
+                    countChanges++;
+                }
+
+                chartsHandler.charttrends[songKey] = {};
+                chartsHandler.charttrends[songKey].trend = trend;
+                chartsHandler.charttrends[songKey].index = i + 1;
+                chartsHandler.charttrends[songKey].duration = song.duration;
+
+                chartsHandler.charttrends[songKey].cached = true;
+
+                if (oldCharttrend[songKey] == undefined) {
+                    chartsHandler.charttrends[songKey].artist = chartsHandler.getSongArtist(song);
+                    chartsHandler.charttrends[songKey].name = song.name;
+                } else {
+                    chartsHandler.charttrends[songKey].artist = oldCharttrend[songKey].artist;
+                    chartsHandler.charttrends[songKey].name = oldCharttrend[songKey].name
+                }
+
+                chartsHandler.charttrends[songKey].origArtist = chartsHandler.getSongArtist(song);
+                chartsHandler.charttrends[songKey].origName = song.name;
+
+                //Copy changed names
+                song.trend = trend;
+
+                delete song.artist;
+                song.artist = chartsHandler.charttrends[songKey].artist;
+                song.name = chartsHandler.charttrends[songKey].name;
+
+                //Save the date it was found
+                if (!song.date && song.trend == 3) {
+                    song.date = +new Date();
+                }
+
+
             }
-         }
+
+            chartsHandler.fs.writeFileSync("charttrends.txt", JSON.stringify(chartsHandler.charttrends));
+
+            if (true || new Date().getDay() == 0) {
+                chartsHandler.fs.writeFileSync("Sicherung/charttrends_Sicherung_" + new Date().getTime() + ".txt", JSON.stringify(chartsHandler.charttrends));
+            }
+
+
+        }
         if (callback)
-            callback(chartsHandler.tracks,countChanges)
+            callback(chartsHandler.tracks, countChanges, chartsHandler.charttrends);
 
     }
 

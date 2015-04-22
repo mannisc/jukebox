@@ -39,6 +39,10 @@ exploreController.maxResults = 100;
 
 exploreController.displayLimit = exploreController.maxResults;
 
+//Show Back to genre button
+exploreController.genreBack = false;
+
+
 /**
  * Something was entered in input
  */
@@ -57,6 +61,16 @@ exploreController.onClear = function () {
     exploreController.removeFilterSongs();
 
 }
+
+/**
+ * Content gets Updated
+ */
+exploreController.onContentUpdate = function () {
+
+    exploreController.genreBack = false;
+
+}
+
 
 
 /**
@@ -228,7 +242,7 @@ exploreController.searchArtistsSongs = function (artist) {
         search(exploreController.currentSearchID);
     }
 
-
+    exploreController.onContentUpdate();
     //If view is alrady active search, otherwise activate view first
     if (viewController.isActiveView(exploreController)) {
 
@@ -257,6 +271,7 @@ exploreController.searchGenreSongs = function (genre, autoplay) {
     $("#searchlist .iScrollIndicator").hide();
 
     var searchGenreSongs = function (genre) {
+
         viewController.fadeContentVisible();
 
         viewController.showLoading(true);
@@ -288,6 +303,9 @@ exploreController.searchGenreSongs = function (genre, autoplay) {
         search(exploreController.currentSearchID);
     }
 
+    exploreController.onContentUpdate();
+
+    exploreController.genreBack = true;
 
     //If view is alrady active search, otherwise activate view first
     if (viewController.isActiveView(exploreController)) {
@@ -303,6 +321,7 @@ exploreController.searchGenreSongs = function (genre, autoplay) {
         viewController.activateView(exploreController,false,function () {
             searchGenreSongs(genre);
         },genre);
+
 
 
 
@@ -488,6 +507,8 @@ exploreController.searchSimilarSongs = function (song, dontChangeTitle, dontForc
         search(exploreController.currentSearchID);
     }
     var id = exploreController.similarSongID;
+
+    exploreController.onContentUpdate();
     //If view is alrady active search, otherwise activate view first
     if (viewController.isActiveView(exploreController)) {
         if (!dontChangeTitle)
