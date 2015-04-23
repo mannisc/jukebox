@@ -97,29 +97,34 @@ chartsHandler.downloadFiles = function (content, callback, start) {
                 var song = chartsHandler.tracks[i];
 
                 var songKey = chartsHandler.getSongArtist(song) + "-" + song.name + "-" + song.duration;
-                var trend = 3;  //New
 
-                if (oldCharttrend[songKey].index < i + 1) {//Loser
-                    trend = 2;
+                var trend;
 
-                } else if (oldCharttrend[songKey].index == i + 1) { //Same
-                    trend = 1;
+                //Already existed
+                if(oldCharttrend[songKey]) {
+                    if (oldCharttrend[songKey].index < i + 1) {//Loser
+                        trend = 2;
 
-                } else if (oldCharttrend[songKey].index > i + 1) {//Winner
-                    trend = 0;
+                    } else if (oldCharttrend[songKey].index > i + 1) { //Winner
+                        trend = 0;
 
-                }
+                    } else {//Same
+                        trend = 1;
+                    }
+                }else  //New
+                 trend = 3;
 
 
                 if (trend == 1) {
                     if (oldCharttrend[songKey] != undefined && oldCharttrend[songKey].trend >= 0)
-                        trend = oldCharttrend[songKey].trend
+                        trend = oldCharttrend[songKey].trend;
                     else
                         trend = 3;
                 } else {
                     countChanges++;
                 }
 
+                //Create new Chart Entry
                 chartsHandler.charttrends[songKey] = {};
                 chartsHandler.charttrends[songKey].trend = trend;
                 chartsHandler.charttrends[songKey].index = i + 1;

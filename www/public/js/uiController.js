@@ -119,8 +119,7 @@ uiController.gridLayoutOld = false;
 uiController.init = function () {
 
     uiController.gridLayout = false;
-
-    uiController.toggleGridLayout();
+    uiController.toggleGridLayout(true);
 
     uiController.disableAutoFocus();
 

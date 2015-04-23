@@ -220,7 +220,7 @@ $(document).ready(function () {
                         var song = {
                             artist: {name: urlParams.artist},
                             name: urlParams.title,
-                            id: "slsid" + helperFunctions.padZeros(1, 2)
+                            id: playlistController.getNewID() //"slsid" + helperFunctions.padZeros(1, 2)
                         }
 
 
