@@ -115,7 +115,7 @@ mediaController.mediaEnded = function () {
     $(".mejs-playpause-button button").addClass("looped");
     uiController.updateUI();
 
-    console.log("mediaController.mediaEnded isLoading?:"+playbackController.isLoading)
+    console.log("mediaController.mediaEnded isLoading?:" + playbackController.isLoading)
     if (!playbackController.isLoading)
         playbackController.playNextSong();
 
@@ -263,7 +263,6 @@ mediaController.showDuration = function (songversion) {
     if (songversion.duration == undefined)
         return"";
 
-    console.log(songversion.duration)
     var duration = parseInt(songversion.duration);
     myDate = new Date();
     myDate.setMinutes(0, duration, 0);
@@ -408,16 +407,20 @@ mediaController.playSong = function (streamURL, videoURL, duration) {
     //streamURL = "http://video-1-9.rutube.ru/hls-vod/QABcsA4mk0tpMcwf-Ykh0g/1398726462/n1vol2/3c0e1ef57e234d0d9b3d4a66cc787f96.mp4.m3u8"
 
     //Add to versions list
-    mediaController.versionListSong = null;
-    var song = playbackController.getPlayingSong();
 
-    if (duration == 0)
-        duration = undefined;
-    else
-        duration = duration/1000;
-    mediaController.versionList = [
-        {title: mediaController.getSongDisplayName(song), duration: duration, url: videoURL}
-    ];
+
+    var song = playbackController.getPlayingSong();
+    if (mediaController.getElementTitle(mediaController.versionListSong) != mediaController.getElementTitle(song)) {
+
+        if (duration == 0 || duration == undefined)
+            duration = undefined;
+        else
+            duration = duration / 1000;
+
+        mediaController.versionList = [
+            {id: playlistController.getNewID(), title: mediaController.getSongDisplayName(song), duration: duration, url: videoURL}
+        ];
+    }
 
     mediaController.currentStreamURL = "";
     mediaController.currentvideoURL = "";
@@ -433,7 +436,7 @@ mediaController.playSong = function (streamURL, videoURL, duration) {
     $("#searchviewVersions").listview('refresh');
     $("#popupVideoSettings").popup("reposition", {positionTo: '#chooseversionbutton'})
 
-    //Set Site logo on Settings icon
+//Set Site logo on Settings icon
     var siteImage = "public/img/sites/small/" + mediaController.getSiteLogo();
     $(".videoControlElements-button-choose-version").css('background-image', 'url(' + siteImage + ')');
     $(".videoControlElements-button-choose-version button").css('background-position', '-1px -1px');
@@ -735,12 +738,16 @@ mediaController.getVersions = function (artist, title) {
 
 
                                                 //Check if actual version is still in the list, if not add it
+
                                                 var currentVersion = null;
-                                                for (var i = 0; i < oldVersionList.length; i++) {
-                                                    if (oldVersionList[i].url == mediaController.currentvideoURL) {
-                                                        currentVersion = jQuery.extend(true, {}, oldVersionList[i]);
+                                                if(!playbackController.isLoading){
+                                                    for (var i = 0; i < oldVersionList.length; i++) {
+                                                        if (oldVersionList[i].url == mediaController.currentvideoURL) {
+                                                            currentVersion = jQuery.extend(true, {}, oldVersionList[i]);
+                                                        }
                                                     }
                                                 }
+
                                                 mediaController.versionList = data.track;
 
 
@@ -1088,6 +1095,9 @@ mediaController.playVersion = function (songversion, rating, resetVersion) {
                     if (rating == 1) {
                         mediaController.sendRating("-1");
                     }
+
+                    mediaController.versionListSong = song;
+
                     mediaController.playStreamURLSeek(videoURL, videoURL, true, rating);
                     $('#loadversionimg').css("opacity", "0");
                     setTimeout(function () {
@@ -1808,6 +1818,8 @@ mediaController.getSongDisplayName = function (song) {
  * @returns {string}
  */
 mediaController.getElementTitle = function (element) {
+    if(!element)
+     return "";
 
     var name = element.name;
 

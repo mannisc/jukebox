@@ -166,8 +166,7 @@ ul.gridlayout .songOptions {
     transition: all 1.5s ease;
 }
 
-
-#listhintright  {
+#listhintright {
 
     -webkit-transition: all 2.5s ease;
     -moz-transition: all 2.5s ease;
@@ -175,28 +174,24 @@ ul.gridlayout .songOptions {
     transition: all 2.5s ease;
 }
 
-
-
 #playlistInner {
     opacity: 0;
-    left:20px!important;
-    right:-20px!important;
-
+    left: 20px !important;
+    right: -20px !important;
 
 }
 
 #playlistInner.gridlayout {
     opacity: 0.8;
-    left:0px!important;
-    right:0px!important;
+    left: 0px !important;
+    right: 0px !important;
 
 }
 
-#playlistInner.isvisible, #playlistInner.isvisiblestart, #playlistInner.isvisibleviewchanged ,#playlistInner.isvisibledragging, #playlistInner.isvisibleinput,   #playlistInner.isvisiblesmallscreen, #playlistInner.isvisiblepopup {
+#playlistInner.isvisible, #playlistInner.isvisiblestart, #playlistInner.isvisibleviewchanged, #playlistInner.isvisibledragging, #playlistInner.isvisibleinput, #playlistInner.isvisiblesmallscreen, #playlistInner.isvisiblepopup {
     opacity: 1;
-    left:0px!important;
-    right:0px!important;
-
+    left: 0px !important;
+    right: 0px !important;
 
 }
 
@@ -214,38 +209,33 @@ ul.gridlayout .songOptions {
     transition: all 2.5s ease;
 }
 
-
 #searchcontent.gridlayout {
     opacity: 1;
-    left:10px!important;
+    left: 10px !important;
 
 }
 
 #searchcontent {
     opacity: 0;
-    left:-10px!important;
+    left: -10px !important;
 
 }
 
-#searchcontent.isvisible, #searchcontent.isvisiblestart, #searchcontent.isvisibleviewchanged, #searchcontent.isvisibleinput, #searchcontent.isvisiblesmallscreen,#searchcontent.isvisiblepopup {
+#searchcontent.isvisible, #searchcontent.isvisiblestart, #searchcontent.isvisibleviewchanged, #searchcontent.isvisibleinput, #searchcontent.isvisiblesmallscreen, #searchcontent.isvisiblepopup {
     opacity: 1;
-    left:10px!important;
+    left: 10px !important;
 }
 
-
-#searchcontent.isvisibleviewchanged  {
-    opacity: 1!important;
-    left:10px!important;
+#searchcontent.isvisibleviewchanged {
+    opacity: 1 !important;
+    left: 10px !important;
 }
 
 #searchcontent.forceenotvisible, #searchcontent.forceenotvisible.isvisibleviewchanged {
-    opacity: 0!important;
-    left:-10px!important;
+    opacity: 0 !important;
+    left: -10px !important;
 
 }
-
-
-
 
 #playlistInner li.songlisttitlebutton.specialplaylistbutton.currentplaylist a, #playlistInnerDISABLED li:hover.songlisttitlebutton.specialplaylistbutton.songlisttitlebutton a.loaded {
 
@@ -528,7 +518,6 @@ ul.gridlayout .songOptions {
 
 }
 
-
 .songlist li a {
     height: 51px !important;
 
@@ -802,7 +791,6 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     display: none !important;
 }
 
-
 #searchlist ul li.songlisttitlebutton {
     max-width: 320px;
 }
@@ -927,64 +915,51 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     -moz-transform: scale(1.2) !important;
     transform: scale(1.2) !important;
     -webkit-transform-origin: 50% 50%;
-    transform-origin: 50% 50%;!important;
+    transform-origin: 50% 50%;
+!important;
 
 }
 
-#searchlist li.artistinfo{
-    padding: 0!important;
+#searchlist li.artistinfo {
+    padding: 0 !important;
     background: none;
     margin: 15px;
-    border:none!important;
+    border: none !important;
 
 }
 
-
-
-
-
-#searchlist ul  li.artistinfo{
-    height: 240px!important;
+#searchlist ul  li.artistinfo {
+    height: 240px !important;
 }
 
-#searchlist ul.gridlayout li.artistinfo{
-    height: 290px!important;
+#searchlist ul.gridlayout li.artistinfo {
+    height: 290px !important;
 }
 
-
-
-
-#searchlist ul.gridlayout  li.artistinfo{
-    width:100%!important
+#searchlist ul.gridlayout  li.artistinfo {
+    width: 100% !important
 }
 
+#searchlist li.artistinfo .artistimage {
+    height: auto !important;
+    width: 200px !important;
+    max-height: none !important;
+    max-width: none !important;
+    border-width: 1px 0 0 0;
+    margin: 15px;
+    top: 20px;
+}
 
-
- #searchlist li.artistinfo .artistimage{
-     height: auto!important;
-     width: 200px!important;
-     max-height: none!important;
-     max-width: none!important;
-     border-width: 1px 0 0 0;
-     margin: 15px;
-     top: 20px;
- }
-
-
-
-
-#searchlist ul.gridlayout  li.artistinfo .artistimage{
+#searchlist ul.gridlayout  li.artistinfo .artistimage {
     top: 0px;
 }
 
-
-
-#searchlist li.artistinfo .artisttext{
+#searchlist li.artistinfo .artisttext {
 
     padding-right: 15px;
-    padding-left: 230px!important;
-    padding-top: 15px!important;
-    padding-bottom: 70px!important;
+    padding-left: 230px !important;
+    padding-top: 15px !important;
+    padding-bottom: 70px !important;
     font-size: 1.2em;
     text-overflow: ellipsis;
     background-color: rgba(255, 255, 255, 0.15) !important;
@@ -993,12 +968,7 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     max-width: 60%;
 }
 
-
-
-
-
-
-#searchlist li.artistinfo .artistbio{
+#searchlist li.artistinfo .artistbio {
 
     margin: 15px;
     font-size: 0.8em;
@@ -1011,120 +981,105 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 
 }
 
-
-
-
-#searchlist ul  li.artistinfo .artisttext{
-    display:none!important;
-}
-#searchlist ul.gridlayout  li.artistinfo .artisttext{
-    display:block!important;
+#searchlist ul  li.artistinfo .artisttext {
+    display: none !important;
 }
 
+#searchlist ul.gridlayout  li.artistinfo .artisttext {
+    display: block !important;
+}
 
-
-#searchlist ul.gridlayout  li.artistinfo ul{
+#searchlist ul.gridlayout  li.artistinfo ul {
     margin-left: 10px !important;
-    width: 100%!important;
-    max-width: 85%!important;
-    min-height: 0%!important;
+    width: 100% !important;
+    max-width: 85% !important;
+    min-height: 0% !important;
     margin-right: 10px !important;
-    margin-top: -50px!important;
+    margin-top: -50px !important;
 }
 
 @media (max-width:1380px) {
-    #searchlist ul.gridlayout  li.artistinfo ul{
-        max-width: 100%!important;
+    #searchlist ul.gridlayout  li.artistinfo ul {
+        max-width: 100% !important;
     }
 }
 
 @media (min-width:1381px) and (max-width:1570px) {
-    #searchlist ul.gridlayout  li.artistinfo ul{
-        max-width: 95%!important;
+    #searchlist ul.gridlayout  li.artistinfo ul {
+        max-width: 95% !important;
     }
 }
 
-
-#searchlist ul.gridlayout  li.artistinfo li{
-    height: auto!important;
-    width: 17%!important;
+#searchlist ul.gridlayout  li.artistinfo li {
+    height: auto !important;
+    width: 17% !important;
     margin: 0;
     padding: 0;
     list-style: none;
-    display: inline-block!important;
+    display: inline-block !important;
 
 }
-
 
 #searchlist ul.gridlayout  li.artistinfo li a {
-    background-color: rgba(255,255,255,1);
-    color: #000!important;
-    text-shadow: none!important;
-    line-height: 1.2!important;
-    font-size: 14px!important;
-    min-height: 0em!important;
+    background-color: rgba(255, 255, 255, 1);
+    color: #000 !important;
+    text-shadow: none !important;
+    line-height: 1.2 !important;
+    font-size: 14px !important;
+    min-height: 0em !important;
     border-color: #ddd !important;
-    padding-left: 48px!important;
-    padding-right: 9.8px!important;
-    padding-top: 9.8px!important;
-    padding-bottom: 1.8px!important;
-    height: 25px!important;
-    text-overflow: ellipsis!important;
-    overflow: hidden!important;
+    padding-left: 48px !important;
+    padding-right: 9.8px !important;
+    padding-top: 9.8px !important;
+    padding-bottom: 1.8px !important;
+    height: 25px !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
 }
 
-#searchlist ul  li.artistinfo  .artistlinks{
-    display:none;
+#searchlist ul  li.artistinfo  .artistlinks {
+    display: none;
 }
 
-#searchlist ul.gridlayout  li.artistinfo  .artistlinks{
-    display:block;
+#searchlist ul.gridlayout  li.artistinfo  .artistlinks {
+    display: block;
 }
 
 @media (max-width:1000px) {
     #searchlist ul.gridlayout  li.artistinfo li a {
-        font-size: 0px!important;
+        font-size: 0px !important;
     }
-
 
 }
 
 @media (min-width:1001px) and (max-width:1320px) {
     #searchlist ul.gridlayout  li.artistinfo li a {
-        font-size: 13px!important;
-        padding-top: 10.8px!important;
-        padding-bottom: 0.8px!important;
+        font-size: 13px !important;
+        padding-top: 10.8px !important;
+        padding-bottom: 0.8px !important;
     }
 }
 
 #searchlist ul.gridlayout  li.artistinfo li a img {
-    height: 28px!important;
-    width: 28px!important;
-    max-height: 28px!important;
-    max-width: 28px!important;
-    margin-top: 3.5px!important;
-    margin-left: 9.8px!important;
+    height: 28px !important;
+    width: 28px !important;
+    max-height: 28px !important;
+    max-width: 28px !important;
+    margin-top: 3.5px !important;
+    margin-left: 9.8px !important;
 }
 
-#searchlist ul.gridlayout  li.artistinfo .artisttitlenogrid{
-    display:none;
+#searchlist ul.gridlayout  li.artistinfo .artisttitlenogrid {
+    display: none;
 }
 
-#searchlist ul  li.artistinfo .artisttitlenogrid{
-    width: 230px!important;
+#searchlist ul  li.artistinfo .artisttitlenogrid {
+    width: 230px !important;
     text-align: center;
-    display:block;
+    display: block;
     font-size: 1.2em;
     text-overflow: ellipsis;
 }
-
-
-
-
-
-
-
-
 
 #popupOptions li:hover a {
     background-color: #494949 !important;
@@ -1381,9 +1336,8 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 
 }
 
-
 .songlist li .newSongImg {
-     background-image:url(../img/newSongCover.png)!important;
+    background-image: url(../img/newSongCover.png) !important;
     width: 110px !important;
     height: 110px !important;
     max-width: 110px !important;
@@ -1402,7 +1356,6 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     opacity: 0.91;
 
 }
-
 
 .songlist li .loadingSongImg {
     /* background-image:url(../img/songload.gif)!important;
@@ -1430,9 +1383,6 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     opacity: 0;
 
 }
-
-
-
 
 .songlist li:hover .loadingSongImg:hover {
     opacity: 1 !important;
@@ -1523,8 +1473,11 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 .songlist li.selected .loadingSongImg {
     background-image: url(../img/checked.png) !important;
     display: block !important;
-    opacity: 1;
+    opacity: 1 !important;
+}
 
+.songlist li.stillloading.selected .loadingSongImg, .songlist li.stillloading.selected:hover .loadingSongImg, .songlist li.stillloading.selected:hover .loadingSongImg:hover {
+    opacity: 1 !important;
 }
 
 .songlistDISABLED li.loadedsong.stillloading .loadingSongImg {
@@ -1538,8 +1491,7 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 */
 
     -webkit-transition: opacity 0.2s ease !important;
-    -moz-transition: opacity 0.2s ease;
-!important;
+    -moz-transition: opacity 0.2s ease!important;
     -o-transition: opacity 0.2s ease !important;
     transition: opacity 0.2s ease;
 
@@ -1569,7 +1521,6 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
 }
-
 
 .songlist li.loadedsong.pausing img.ui-li-icon {
     content: url(../img/play.png) !important;
@@ -1661,19 +1612,17 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     background-image: -webkit-linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgba(32, 137, 165, 1) 100%) !important;
     background-image: -o-linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgba(32, 137, 165, 1) 100%) !important;
     background-image: -ms-linear-gradient(left, rgba(29, 207, 255, 1) 0%, rgba(29, 207, 255, 1) 44%, rgba(32, 137, 165, 1) 100%) !important;
-    background-image: -webkit-gradient(linear,left bottom,right bottom,color-stop(0%,rgba(29, 207, 255, 1)),color-stop(44%,rgba(32, 137, 165, 1)),color-stop(100%,rgba(0,212,59,0)))!important;
-    
-    
+    background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0%, rgba(29, 207, 255, 1)), color-stop(44%, rgba(32, 137, 165, 1)), color-stop(100%, rgba(0, 212, 59, 0))) !important;
+
     border: none !important;
 }
+
 .songlist li.selected img.ui-li-icon {
-    border: 3px solid #fff!important;
-    box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
+    border: 3px solid #fff !important;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
-
-
 
 #searchlist a:after {
     display: none;
@@ -1741,23 +1690,19 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 
 }
 
-
-
 #playlist.gridlayout {
     background-color: rgba(255, 255, 255, 0.03);
 
 }
 
-
-#marginplaylistsearchresults{
-    padding:0!important;
-    background: none!important;
+#marginplaylistsearchresults {
+    padding: 0 !important;
+    background: none !important;
     -webkit-transition: height 0.3s ease;
     -moz-transition: height 0.3s ease;
     -o-transition: height 0.3s ease;
     transition: height 0.3s ease;
 }
-
 
 #playlistInner {
     position: absolute;
@@ -1786,11 +1731,10 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     /* background:      rgba(255,255,255,0.1);*/
     visibility: visible !important;
     height: 113px !important;
-    padding: 0!important;
-    background: none!important;
-    border: none!important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
 }
-
 
 #playlistview {
     position: absolute;
@@ -1802,7 +1746,6 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     -ms-transform: translateZ(0);
     -o-transform: translateZ(0);
     transform: translateZ(0);
-
 
     /*
     -webkit-touch-callout: none;
@@ -2121,19 +2064,19 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
 #searchlist .iScrollVerticalScrollbar {
     left: 0px !important;
     right: auto !important;
-    width:20px!important;
+    width: 20px !important;
 
 }
 
 #searchlist .iScrollIndicator {
 
-    width:17px!important;
+    width: 17px !important;
 
 }
 
 #playlistInner .iScrollIndicator {
 
-    width:17px!important;
+    width: 17px !important;
 
 }
 
@@ -2142,7 +2085,6 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     left: -10px !important;
 
 }
-
 
 #playlistInner .iScrollVerticalScrollbar {
     right: 0px !important;

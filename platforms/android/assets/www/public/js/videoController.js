@@ -35,7 +35,9 @@ videoController.videoPlayer = videoController.videoPlayerList[0][0];////embedded
 videoController.startVideoOpactiyBackground = 0;  //...1 to detect if user changeed it
 videoController.startVideoOpactiyVisisble = 0.999010101010101;
 
-videoController.videoOpacity = videoController.startVideoOpactiyBackground;
+videoController.videoOpacityStart = videoController.startVideoOpactiyBackground;
+videoController.videoOpacity = videoController.videoOpacityStart;
+
 videoController.fullscreenModeOldVideoOpacity = videoController.videoOpacity;
 
 videoController.isEmbedded = false;
@@ -598,6 +600,8 @@ videoController.loadSongInSuitablePlayer = function (streamURL, videoURL) {
 
     if (!playbackController.firstPlayedSongAlready) {
         playbackController.firstPlayedSongAlready = true;
+        if(videoController.videoOpacity==videoController.videoOpacityStart)
+        videoController.setVideoOpacity(videoController.videoOpacity);
 
     }
 

@@ -1647,7 +1647,7 @@ playlistController.dragging.stopDragging = function (event, ui) {
 
 
 /**
- * Get new ID for Playlist
+ * Get new ID for Item
  * @returns {string}
  */
 playlistController.getNewID = function () {
