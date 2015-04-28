@@ -17,13 +17,16 @@ var ip_token = "iamadmin";
 
 //Songbase FTP Properties
 
+
+
+
 var serverURL =   "h2406563.stratoserver.net";
 
 
 var ftpProperties = {
     host: serverURL,//"songbase.net",
     user: "Administrator",// "u76604889",
-    password: "hUFEvt9m",//"songbasetwinners"
+    password: "g2V8V7hz",//"songbasetwinners"
     port: 21
 }
 
@@ -116,6 +119,9 @@ function onFTPUploadTemplates() {
 
 
 function bufferCharts(tracks) {
+    console.log("Buffering Tracks DISABLED");
+    process.exit(0); //TODO remove after Server Agent fix
+
     console.log("");
     console.log("");
     console.log("Buffering Tracks: "+tracks.length);
@@ -140,7 +146,7 @@ function bufferSong(track, endProcess) {
 
     // console.log("h2406563.stratoserver.net:3001?reloadversions=" + track.artist.name + "&duration=&title=" + track.name + "&auth=" + ip_token);
 
-    httpHandler.downloadFile(serverURL, "?reloadversions=" + encodeURIComponent(track.artist.name) + "&duration=&title=" + encodeURIComponent(track.name) + "&auth=" + ip_token, function (content) {
+    httpHandler.downloadFile(serverURL, "?reloadversions=" + encodeURIComponent(chartsHandler.getSongArtist(track)) + "&duration=&title=" + encodeURIComponent(track.name) + "&auth=" + ip_token, function (content) {
         console.log(JSON.stringify(track));
         console.log("Response Length: " + content.length+"   (" + content.substring(0,45)+" ...)");
         console.log(content)
