@@ -30,7 +30,7 @@
     <file path="/charts.css" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1429123443697" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/css/songlist.css" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1429125089516" ignored="false" />
     <file path="$PROJECT_DIR$/../Service Server/serviceserver.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1429139581972" ignored="false" />
-    <file path="$PROJECT_DIR$/../www/public/js/mediaController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430263077446" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/js/mediaController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430304528887" ignored="false" />
     <file path="/serviceserver.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1429139416741" ignored="false" />
     <file path="$PROJECT_DIR$/../Service Server/package.json" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1429139279311" ignored="false" />
     <file path="/package.json" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1429138351655" ignored="false" />
@@ -40,9 +40,9 @@
     <file path="/httpHandler.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1429552880423" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/dailymotionPlayer.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430240159154" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/vimeoPlayer.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430237410587" ignored="false" />
-    <file path="$PROJECT_DIR$/../www/public/js/videoController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430240822857" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/js/videoController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430267856300" ignored="false" />
     <file path="/videoController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430240753346" ignored="false" />
-    <file path="/mediaController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430262113878" ignored="false" />
+    <file path="/mediaController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430268408717" ignored="false" />
     <file path="/index.htm" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430237987006" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/playbackController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430239537502" ignored="false" />
     <file path="/playbackController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1430239277375" ignored="false" />
@@ -297,7 +297,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1536" height="826" extended-state="0" />
+    <frame x="0" y="0" width="1536" height="826" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
