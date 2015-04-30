@@ -160,10 +160,10 @@ ul.gridlayout .songOptions {
 
 #playlistInner {
 
-    -webkit-transition: all 1.5s ease;
-    -moz-transition: all 1.5s ease;
-    -o-transition: all 1.5s ease;
-    transition: all 1.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
 #listhintright {
@@ -1283,10 +1283,10 @@ box-shadow: 3px 0px 5px rgba(0,0,0,0.4); //CALMER DESIGN !!! */
     transform: rotateY(320deg) translate(-15px, 0) !important;
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50% !important;
-    -webkit-transition: all 1.5s ease;
-    -moz-transition: all 1.5s ease;
-    -o-transition: all 1.5s ease;
-    transition: all 1.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
     z-index: 40;
 }
 
