@@ -752,11 +752,11 @@
 </div>
 
 <div id="playlistInner" class="animate isvisiblestart">
-<div id="marginplaylistsearchresults" ng-show="playlistController.showMode==1" style="height:0px"></div>
+<div id="marginplaylistsearchresults" ng-show="playlistController.search.showSearchMode==1" style="height:0px"></div>
 
 <ul data-role="listview" id="playlistButtons" class="songlist" style="padding: 0!important;margin-bottom: 7px !important;">
 
-    <li ng-show="playlistController.showMode==0" ng-if="!playlistController.playlistMode" ontouchend="$scope.uiController.showPlaylists(event);" onclick="$scope.uiController.showPlaylists(event);"
+    <li ng-show="playlistController.search.showSearchMode==0" ng-if="!playlistController.playlistMode" ontouchend="$scope.uiController.showPlaylists(event);" onclick="$scope.uiController.showPlaylists(event);"
         ng-dblclick="playlistController.selection.deselectElements($event);"
         class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton showplaylists othertopheight stayvisible">
         <a tabindex="-1">
@@ -766,7 +766,7 @@
         </a>
     </li>
 
-    <li ng-show="playlistController.showMode==0" ng-if="!playlistController.playlistMode&&playlistController.getLoadedPlaylist().gid != playlistController.currentQueue.gid"
+    <li ng-show="playlistController.search.showSearchMode==0" ng-if="!playlistController.playlistMode&&playlistController.getLoadedPlaylist().gid != playlistController.currentQueue.gid"
         ontouchend="optionsMenu.openPlaylistOptions(event, $(this).find('.optionsPlaylist'))" onclick=" optionsMenu.openPlaylistOptions(event, $(this).find('.optionsPlaylist'))"
         ng-dblclick="playlistController.selection.deselectElements($event);" class="fadeincomplete hoverable playable specialplaylistbutton songlisttitlebutton currentplaylist othertopheight stayvisible">
         <a tabindex="-1" ng-class="{loaded:!searchController.playlistMode, currentqueue: playlistController.getLoadedPlaylist().gid==playlistController.currentQueue.gid}" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
@@ -783,7 +783,7 @@
         </a>
     </li>
 
-    <li ng-show="playlistController.showMode==0" ng-if="!playlistController.playlistMode&&playlistController.getLoadedPlaylist().gid == playlistController.currentQueue.gid"
+    <li ng-show="playlistController.search.showSearchMode==0" ng-if="!playlistController.playlistMode&&playlistController.getLoadedPlaylist().gid == playlistController.currentQueue.gid"
         ontouchend="optionsMenu.openQueueOptions(event, $(this).find('.optionsPlaylist'))optionsMenu.openQueueOptions(event, $(this).find('.optionsPlaylist'))" onclick=" optionsMenu.openQueueOptions(event, $(this).find('.optionsPlaylist'))"
         ng-dblclick="playlistController.selection.deselectElements($event);" class="fadeincomplete hoverable currentqueuetitle specialplaylistbutton songlisttitlebutton currentplaylist othertopheight stayvisible">
         <a tabindex="-1" ng-class="{loaded:!searchController.playlistMode, currentqueue: playlistController.getLoadedPlaylist().gid==playlistController.currentQueue.gid}" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
@@ -799,7 +799,7 @@
     </li>
 
 
-    <li ng-show="playlistController.showMode==0" ng-if="playlistController.playlistMode" ontouchend="playlistController.loadNewEmptyPlaylist(event);" ng-click="playlistController.loadNewEmptyPlaylist($event);"
+    <li ng-show="playlistController.search.showSearchMode==0" ng-if="playlistController.playlistMode" ontouchend="playlistController.loadNewEmptyPlaylist(event);" ng-click="playlistController.loadNewEmptyPlaylist($event);"
         ng-dblclick="playlistController.selection.deselectElements($event);"
         class="fadeincomplete hoverable specialplaylistbutton createplaylist stayvisible">
         <a tabindex="-1">
@@ -821,7 +821,7 @@
 
         </a></li>
 
-    <li ng-show="playlistController.showMode==1" ontouchend="$scope.uiController.showPlaylists(event);" onclick="$scope.uiController.showPlaylists(event);" ng-dblclick="playlistController.selection.deselectElements($event);"
+    <li ng-show="playlistController.search.showSearchMode==1" ontouchend="$scope.uiController.showPlaylists(event);" onclick="$scope.uiController.showPlaylists(event);" ng-dblclick="playlistController.selection.deselectElements($event);"
         class="fadeincomplete hoverable specialplaylistbutton songlisttitlebutton showplaylists othertopheight stayvisible">
         <a tabindex="-1">
             <img src="public/img/empty.png" onclick="" class="optionsPlaylistBack">
@@ -839,7 +839,7 @@
     <ul ui-sortable ng-model="playlistController.loadedPlaylistSongs" data-role="listview" id="playlistview" class="sortable songlist connectedSortable">
 
 
-        <li ng-show="playlistController.showMode==0" ng-if="false&&!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length == 0&&!playlistController.getLoadedPlaylist().isSimilarSongs"
+        <li ng-show="playlistController.search.showSearchMode==0" ng-if="false&&!playlistController.playlistMode&&playlistController.loadedPlaylistSongs.length == 0&&!playlistController.getLoadedPlaylist().isSimilarSongs"
             ontouchend="playlistController.importPlaylistPopup(event);" ng-click="playlistController.importPlaylistPopup($event);"
             ng-dblclick="playlistController.selection.deselectElements($event);" class="fadeincomplete hoverable specialplaylistbutton othertopheight createplaylist importplaylist stayvisible">
             <a tabindex="-1">
@@ -863,7 +863,7 @@
         </li>
 
 
-        <li ng-show="playlistController.showMode==0" ng-if="playlistController.playlistMode " ontouchend="playlistController.loadCurrentQueue(event)" ng-click="playlistController.loadCurrentQueue($event)"
+        <li ng-show="playlistController.search.showSearchMode==0" ng-if="playlistController.playlistMode " ontouchend="playlistController.loadCurrentQueue(event)" ng-click="playlistController.loadCurrentQueue($event)"
             ng-dblclick="playlistController.selection.deselectElements($event);"
             class="fadeincomplete hoverable specialplaylistbutton currentqueue stayvisible">
             <a tabindex="-1">
@@ -887,7 +887,7 @@
 
             </a></li>
 
-        <li ng-show="playlistController.showMode==0" ng-if="playlistController.playlistMode" ontouchend="playlistController.loadSimilarSongs()" ng-click="playlistController.loadSimilarSongs($event)"
+        <li ng-show="playlistController.search.showSearchMode==0" ng-if="playlistController.playlistMode" ontouchend="playlistController.loadSimilarSongs()" ng-click="playlistController.loadSimilarSongs($event)"
             ng-dblclick="playlistController.selection.deselectElements($event);"
             class="fadeincomplete hoverable specialplaylistbutton similarsongs stayvisible">
             <a tabindex="-1">
@@ -913,7 +913,7 @@
 
 
         <li ng-repeat="song in playlistController.loadedPlaylistSongs | limitTo: playlistController.ui.getDisplayLimit()  track by song.gid" context-menu-DISABLED="playlistController.selection.selectElement(song)"
-            ng-show="playlistController.showMode==0" ng-if="!song.isSimilarSongs&&!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}" data-song="{{song}}"
+            ng-show="playlistController.search.showSearchMode==0" ng-if="!song.isSimilarSongs&&!song.isCurrentQueue&&(!song.isPlaylist||!song.isUnnamedPlaylist||song.tracks.length>0)" data-index="{{$index}}" data-song="{{song}}"
             data-songid="playlistsong{{song.id}}"
             data-elementtitle="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
             ontouchend="playbackController.touchedElement(event);" ng-click="playbackController.clickedElement($event,song);" ng-dblclick="playbackController.doubleClickedElement($event);"><a tabindex="-1">
@@ -946,7 +946,7 @@
         <!--SEARCH ------------------------------------->
 
         <li ng-repeat="song in  playlistController.getSearchResults() | limitTo: playlistController.displayLimit track by song.gid" context-menu-DISABLED="playlistController.selection.selectElement(song)"
-            ng-show="playlistController.showMode==1" data-index="{{$index}}" data-song="{{song}}" data-songid="playlistsong{{song.id}}"
+            ng-show="playlistController.search.showSearchMode==1" data-index="{{$index}}" data-song="{{song}}" data-songid="playlistsong{{song.id}}"
             data-elementtitle="{{song.name}}-{{mediaController.getSongArtist(song)}}" data-songgid="playlistsong{{song.gid}}" class="fadeslideincompletefast hoverable  playlistsong"
             ontouchend="playbackController.touchedElement(event);" ng-click="playbackController.clickedElement($event,song);" ng-dblclick="playbackController.doubleClickedElement($event);"><a tabindex="-1">
 
