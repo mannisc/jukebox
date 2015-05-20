@@ -28,7 +28,7 @@
     <file path="/server.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1429553050307" ignored="false" />
     <file path="/chartsController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432127463063" ignored="false" />
     <file path="/charts.css" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1429123443697" ignored="false" />
-    <file path="$PROJECT_DIR$/../www/public/css/songlist.css" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432135945626" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/css/songlist.css" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432136785923" ignored="false" />
     <file path="$PROJECT_DIR$/../Service Server/serviceserver.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1429139581972" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/mediaController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432131870792" ignored="false" />
     <file path="/serviceserver.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1429139416741" ignored="false" />
@@ -51,9 +51,10 @@
     <file path="$PROJECT_DIR$/../www/public/css/index.css" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432131602709" ignored="false" />
     <file path="/index.css" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432131238856" ignored="false" />
     <file path="$PROJECT_DIR$/../Template Server/templateHandler.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432126051370" ignored="false" />
-    <file path="/songlist.css" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432135469837" ignored="false" />
+    <file path="/songlist.css" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432136458630" ignored="false" />
     <file path="$PROJECT_DIR$/../www/public/js/playlistController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432135923643" ignored="false" />
     <file path="/playlistController.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432135030182" ignored="false" />
+    <file path="$PROJECT_DIR$/../www/public/js/optionsMenu.js" changelist="5523220e-2d29-4dcb-9126-3ee0b694e711" time="1432136873065" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,10 +104,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chartsController.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="chartsController.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/chartsController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="172" column="9" selection-start="5688" selection-end="5688" vertical-scroll-proportion="-15.28">
+            <state line="169" column="35" selection-start="5621" selection-end="5629" vertical-scroll-proportion="0.5357737">
               <folding>
                 <marker date="1432127476449" expanded="true" signature="2635:2647" placeholder="..." />
               </folding>
@@ -114,10 +115,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="charts.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="charts.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/charts.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="1" selection-start="410" selection-end="410" vertical-scroll-proportion="0.5946792">
+            <state line="19" column="1" selection-start="410" selection-end="410" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -486,19 +487,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/chartsController.js">
+    <entry file="file://$PROJECT_DIR$/css/charts.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="172" column="9" selection-start="5688" selection-end="5688" vertical-scroll-proportion="-15.28">
-          <folding>
-            <marker date="1432127476449" expanded="true" signature="2635:2647" placeholder="..." />
-          </folding>
+        <state line="19" column="1" selection-start="410" selection-end="410" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/charts.css">
+    <entry file="file://$PROJECT_DIR$/js/chartsController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="1" selection-start="410" selection-end="410" vertical-scroll-proportion="0.5946792">
-          <folding />
+        <state line="169" column="35" selection-start="5621" selection-end="5629" vertical-scroll-proportion="0.5357737">
+          <folding>
+            <marker date="1432127476449" expanded="true" signature="2635:2647" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
