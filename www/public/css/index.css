@@ -1,2170 +1,1 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-* {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
-}
-
-body {
-    -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
-    -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
-    -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color: #fff;
-    background-attachment: fixed;
-    font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size: 12px;
-
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-    width: 100% !important;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    background-color: #000 !important;
-
-    /*-webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-
-    user-select: none;
-    */
-
-    /* -webkit-perspective: 150px;
-     -moz-perspective: 150px;
-     perspective: 150px; */
-
-}
-
-.ui-loader-default {
-
-    margin-left: -22px !important;
-}
-
-.ui-popup-screen.in {
-    opacity: 0 !important;
-    filter: Alpha(Opacity=0) !important;
-}
-
-/*Noanim TODO disable all animation in div where noanim is set for slow browsers*/
-.noanim * {
-    -webkit-transition: none !important;
-    -webkit-animation: none !important;
-}
-
-.noanim .fadeincomplete {
-    opacity: 1 !important;
-}
-
-.ui-tooltip, .arrow:after {
-    background: black;
-    border: 2px solid white;
-}
-
-.ui-tooltip {
-    padding: 5px 8px;
-    color: white;
-    border-radius: 5px;
-    font: 12px "Helvetica Neue", Sans-Serif;
-    box-shadow: 0 0 7px black;
-    position: absolute;
-}
-
-/*Content*/
-
-@media (max-height:710px) {
-
-    .fb-recommendations-bar-container {
-        display: none !important;
-    }
-
-    .sideinfo {
-        margin-top: 0 !important;
-        background-color: rgba(7, 7, 7, 1) !important;
-    }
-
-    .adsbygoogle {
-        background: none !important;
-    }
-
-}
-
-/*Big Screen*/
-@media (min-width:1170px) {
-
-    #controlbar .ui-input-search {
-        float: left;
-    }
-
-    #searchcontent {
-        margin-top: 5px !important;
-    }
-
-    #controlselectvertical {
-        display: none;
-    }
-
-    #controlbar {
-        margin-top: -10px;
-    }
-
-    #controlbar .ui-input-search {
-        width: 320px;
-    }
-
-}
-
-/*Big Screen*/
-@media (min-width:1230px) {
-
-    #playlist {
-        top: 0;
-    }
-
-    #openSidePanelBarIcon, #openSidePanelBarIconBar {
-        display: none;
-    }
-}
-
-@media (max-width:1000px) {
-
-    #playlistInner li.specialplaylistbutton h3 {
-        font-size: 1em !important;
-        margin-top: 20px !important;
-
-    }
-
-    #playlistInner li.specialplaylistbutton.songlisttitlebutton h3 {
-        font-size: 1em !important;
-        margin-top: 10px !important;
-    }
-
-    #feedbackButton {
-        display: none !important;
-    }
-
-}
-
-/*Small Screen*/
-@media (max-width:1169px) {
-
-    #controlbar {
-        text-align: left;
-    }
-
-    #controlbar .ui-btn {
-        font-size: 0.9em;
-    }
-
-    #searchlayoutbutton, .videoControlElements-gridlayout-button, #buySongLink {
-        display: none !important;
-    }
-
-    #playingSongInfoLink {
-        position: absolute;
-    }
-
-    #controlbar .ui-input-btn {
-        margin-right: 3px !important;
-    }
-
-    .fb-recommendations-bar {
-        display: none !important;
-
-    }
-
-    #controlbar .ui-select {
-        width: 340px !important;
-    }
-
-    #controlbar .ui-input-search {
-        width: 300px;
-    }
-
-    #controlbar .ui-input-btn {
-        margin-bottom: 0px !important;
-    }
-
-    #content {
-        padding-top: 4px !important;
-        padding-bottom: 4px !important;
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-
-    }
-
-    #searchcontent.searchlayout {
-        margin-top: 50px;
-    }
-
-    #controlbar .ui-input-search {
-        margin-bottom: 0px !important;
-    }
-
-}
-
-/*Bigger as Smallest Screen*/
-@media (min-width:780px) {
-
-    #popupLoadingSongInner {
-        width: 350px;
-        padding: 10px 20px 10px 20px !important;
-    }
-
-    #playlist {
-        top: 0px;
-        right: 10px;
-    }
-
-    #openSidePanelBarIcon, #openSidePanelBarIconBar {
-        display: none;
-    }
-
-    .sideinfo {
-        display: none !important;
-    }
-
-    /* #searchlist {
-         width: 66%;
-     } */
-
-}
-
-/*Smallest Screen*/
-@media (max-width:779px) {
-    #popupLoadingSongInner {
-        padding: 5px 15px 5px 15px !important;
-    }
-
-    #searchlist ul {
-        max-width: 100% !important;
-    }
-
-    .videoControlElements-stop-button {
-        display: none !important;
-    }
-
-    .sideinfo {
-        display: none !important;
-
-    }
-
-    #header {
-        width: 100% !important;
-    }
-
-    #titleHeader sup {
-        display: none !important;
-    }
-
-    #searchlist ul {
-        width: 100% !important;
-    }
-
-    #backgroundVideo.background {
-        display: none !important;
-    }
-
-    #backgroundImage {
-        display: block !important;
-        -webkit-animation: none !important;
-        -moz-animation: none !important;
-        animation: none !important;
-
-    }
-
-    #header a {
-        font-size: 12px !important;
-    }
-
-    .ui-btn-right {
-        right: 2.4em !important;
-    }
-
-    #playlist {
-        left: 10px;
-
-    }
-
-    #playlistselectvertical .chosen-container {
-        min-width: 270px !important;
-        max-width: 270px !important;
-    }
-
-    #sortplaylisttext {
-        width: 189px !important;
-        max-width: 189px !important;
-
-    }
-
-}
-
-/*Small Screen*/
-@media (max-height:350px) {
-    #backgroundImage {
-        display: block !important;
-        opacity: 1 !important;
-        -webkit-animation: none !important;
-        -moz-animation: none !important;
-        animation: none !important
-    }
-
-}
-
-/*Small TimeRail Screen*/
-@media (max-width:420px) {
-
-    .videoControlElements-duration-container, .videoControlElements-button-choose-version, .videoControlElements-button-share, .videoControlElements-button-lyrics, #lyricsiframe {
-        display: none !important;
-    }
-
-}
-
-@media (max-width:700px) {
-    #videocontrols .videoControlElements-time-rail {
-        display: none !important;
-    }
-
-    #videocontrolsInner .videoControlElements-smallProgress {
-        display: block !important;
-    }
-}
-
-/*
-input[type=button]{
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aebcbf), color-stop(50%,#6e7774), color-stop(51%,#0a0e0a), color-stop(100%,#0a0809))!important;
-    color: white!important;
-    border: none;
-}
-*/
-
-/* button hover style if required */
-.ui-input-btn:hover {
-
-}
-
-/* generated element for shine effect.
- * normal state is semi-transparent
- * white but with zero width. Set no
- * transition here for no mouse-leave
- * animations. Otherwise the effect
- * will play in reverse when your mouse
- * leaves the element
- */
-.ui-input-btn:after {
-    content: "";
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 0%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.05);
-    -webkit-transition: none;
-    -moz-transition: none;
-    -ms-transition: none;
-    -o-transition: none;
-    transition: none;
-
-}
-
-/* on hover we animate the width to
- * 100% and opacity to 0 so the element
- * grows and fades out
- */
-.ui-input-btn:hover:after {
-    width: 120%;
-    background-color: rgba(255, 255, 255, 0);
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-}
-
-#lyricsiframe {
-    position: absolute;
-    top: 44px;
-    left: 0px;
-    bottom: 45px !important;
-    width: 450px;
-    opacity: 1;
-    z-index: 1000;
-    opacity: 0.945;
-    z-index: 10000 !important;
-    background: rgba(29, 29, 29, 0.96);
-    -moz-box-shadow: 6px 0 p 10px rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: 6px 0px 10px rgba(0, 0, 0, 0.4);
-    box-shadow: 6px 0px 10px rgba(0, 0, 0, 0.4);
-    -webkit-transition: all 1.5s ease-out;
-    -moz-transition: all 1.5s ease-out;
-    -ms-transition: all 1.5s ease-out;
-    -o-transition: all 1.5s ease-out;
-    transition: all 1.5s ease-out;
-}
-
-#lyricsifrm {
-    position: absolute;
-    top: 0px;
-    width: 420px;
-    border: none !important;
-    z-index: 10002 !important;
-
-}
-
-#lyricstopinfo {
-    position: absolute;
-    width: 408px;
-    height: 32px;
-    bottom: 3px;
-    left: 0;
-    color: #000!important;
-    background-color: #fadb4e;
-    z-index: 10002!important;
-    padding: 6px;
-    font-family: 'HelveticaNeue-Light','HelveticaNeue',Helvetica,Arial,sans-serif;
-    font-size: 13px!important;
-    line-height: 16px;
-    text-shadow: none;
-
-}
-
-#lyricstopinfo a {
-    cursor: auto !important;
-}
-
-#lyricsifrmback {
-    position: absolute;
-    top: 0;
-    height: 0;
-    width: 420px;
-    height: 100%;
-    background: rgba(255, 255, 255, 1);
-    z-index: 10001 !important;
-
-}
-
-#page.fullscreen {
-    padding: 0 !important;
-    height: 100% !important;
-}
-
-#content.fullscreen {
-    padding: 0 !important;
-    height: 100% !important;
-    width: 100% !important;
-
-}
-
-#content {
-    position: absolute;
-    z-index: 1;
-
-}
-
-#controlselecthorizontal .ui-input-search, #controlselecthorizontal .ui-btn {
-    -webkit-transition: all 280ms ease -moz-transition : all 280 ms cease;
-    -o-transition: all 280ms ease;
-    transition: all 280ms ease /* custom */;
-}
-
-#controlselecthorizontal .ui-input-search.notanimated, #controlselecthorizontal .ui-input-btn.notanimated {
-
-    -webkit-transition: none !important;
-    -moz-transition: none !important;
-    -o-transition: none !important;
-    transition: none !important;
-}
-
-/*Small Screen, no animation*/
-@media (min-width:360px) and  (max-width:360px) {
-
-    #controlselecthorizontal .ui-input-search, #controlselecthorizontal .ui-input-btn {
-        -webkit-transition: none !important;
-        -moz-transition: none !important;
-        -o-transition: none !important;
-        transition: none !important;
-    }
-}
-
-.searchinput-drop {
-    color: #000 !important;
-}
-
-.searchinput-drop {
-    left: 0;
-}
-
-.searchinput-drop {
-    border: none !important;
-}
-
-.searchinput-drop.visible {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    left: 0 !important;
-}
-
-.searchinput-drop {
-    margin-top: 2px;
-    position: absolute;
-    top: 100%;
-    left: -9999px;
-    z-index: 1010;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    border: 1px solid #aaa;
-    border-top: 0;
-    background: #fff;
-    box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
-    opacity: 0 !important;
-    -webkit-transition: opacity 0.3s ease;
-    -moz-transition: opacity 0.3s ease;
-    -ms-transition: opacity 0.3s ease;
-    -o-transition: opacity 0.3s ease;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.searchinput-drop ul {
-
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    max-height: 240px;
-}
-
-.searchinput-drop li.active-result {
-    display: list-item;
-    cursor: pointer;
-}
-
-.searchinput-drop li {
-    line-height: 30px !important;
-    margin: 0;
-    padding: 5px 6px;
-    list-style: none;
-    font-size: 16px !important;
-    color: #A82727;
-}
-
-#controlbar {
-    height: 0px;
-}
-
-#controlbar input {
-    overflow: visible !important;
-    text-shadow: none !important;
-
-}
-
-#controlbar .ui-btn {
-    text-shadow: none !important;
-    overflow: visible !important;
-
-}
-
-#controlselecthorizontal .ui-btn {
-    color: #fff !important;
-
-}
-
-#controlselecthorizontal .ui-btn.ui-btn-b.ui-icon-delete {
-    background-color: #C70707;
-}
-
-#controlselecthorizontal .ui-btn.highlight {
-    background: #751212 !important;
-    color: #FFFFFF !important;
-    border-color: #570000;
-}
-
-#controlselecthorizontal {
-    min-width: 330px;
-}
-
-#controlselecthorizontal .ui-btn.ui-btn-b {
-    background-color: #333
-}
-
-#controlselecthorizontal .ui-btn.ui-btn-a {
-    background: #751212 !important;
-}
-
-/*
-#controlselecthorizontal .ui-btn.ui-btn-b:nth-child(1){
-    background-color: #333
-}
-#controlselecthorizontal .ui-btn.ui-btn-a:nth-child(1){
-    background: #fff!important;
-}
-*/
-
-/*Loading Controlbar Buttons*/
-#controlselecthorizontal .ui-btn.highlight.loading {
-    padding-left: 2em !important;
-
-}
-
-#controlselecthorizontal .ui-btn.highlight.loading:before {
-
-    background-image: url(../img/loaderwhite.gif) !important;
-    filter: Alpha(Opacity=80);
-    opacity: .8;
-    top: 17px;
-    width: 16px;
-    height: 16px;
-
-    background-size: 14px 14px;
-    background-position: 0px 0px;
-    background-repeat: no-repeat;
-    position: absolute;
-    left: .3425em;
-
-    margin-top: -7px;
-    content: "";
-    background-position: center center;
-    background-repeat: no-repeat;
-
-}
-
-.ui-input-btn, .ui-btn {
-    -webkit-box-shadow: none !important;
-    -moz-box-shadow: none !important;
-    box-shadow: none !important;
-}
-
-#controlbar div.ui-input-btn {
-    /*
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3a3a3a), color-stop(100%,#333));
-    background: -webkit-linear-gradient(top, #3a3a3a 0%,#333 100%);
-    background: -o-linear-gradient(top, #3a3a3a 0%,#333 100%);
-    background: -ms-linear-gradient(top, #3a3a3a 0%,#333 100%);
-    background: linear-gradient(to bottom, #3a3a3a 0%,#333 100%);   */
-    border-color: #3a3a3a;
-
-}
-
-#controlbar .ui-input-btn input {
-    background: none !important;
-}
-
-#controlbar .ui-input-search {
-    margin-right: 10px;
-    margin-top: 9px;
-    border: 1px solid rgba(177, 10, 10.5);
-
-}
-
-#controlbar .ui-input-btn {
-    cursor: hand !important;
-}
-
-#controlbar .ui-input-btn {
-    float: left;
-    margin-right: 10px;;
-    padding: .5em 1em;
-}
-
-#controlbar input.ui-btn {
-
-}
-
-video {
-    -moz-box-shadow: 5px 5 p 15px rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: 5px 15px 5px rgba(0, 0, 0, 0.4);
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
-    -webkit-transition: all 0.6s ease;
-    -moz-transition: all 0.6s ease;
-    -ms-transition: all 0.6s ease;
-    -o-transition: all 0.6s ease;
-    transition: all 0.6s ease;
-}
-
-.iframeVideo {
-    width: 100% !important;
-    height: 100% !important;
-    background-color: #000 !important;
-    opacity: 1;
-    z-index: 2;
-    -webkit-transition: all 0.6s ease;
-    -moz-transition: all 0.6s ease;
-    -ms-transition: all 0.6s ease;
-    -o-transition: all 0.6s ease;
-    transition: all 0.6s ease;
-}
-
-.bounce {
-    -webkit-animation: bounce .6s linear;
-    -webkit-animation-fill-mode: forwards;
-    -moz-animation: bounce .6s linear;
-    -moz-animation-fill-mode: forwards;
-    animation: bounce .6s linear;
-    animation-fill-mode: forwards;
-}
-
-@-moz-keyframes bounce {
-    0% {
-        -moz-transform: scale(0);
-        opacity: 0;
-    }
-    50% {
-        -moz-transform: scale(1.2);
-        opacity: 0.4;
-    }
-    75% {
-        -moz-transform: scale(0.9);
-        opacity: 0.7;
-    }
-    100% {
-        -moz-transform: scale(1);
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes bounce {
-    0% {
-        -webkit-transform: scale(0);
-        opacity: 0;
-    }
-    50% {
-        -webkit-transform: scale(1.2);
-        opacity: 0.4;
-    }
-    75% {
-        -webkit-transform: scale(0.9);
-        opacity: 0.7;
-    }
-    100% {
-        -webkit-transform: scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes bounce {
-    0% {
-        -moz-transform: scale(0);
-        opacity: 0;
-    }
-    50% {
-        -moz-transform: scale(1.2);
-        opacity: 0.4;
-    }
-    75% {
-        -moz-transform: scale(0.9);
-        opacity: 0.7;
-    }
-    100% {
-        -moz-transform: scale(1);
-        opacity: 1;
-    }
-}
-
-#rightpanel {
-    width: 300px !important;
-    max-width: 100% !important;
-    overflow: hidden;
-}
-
-/*Fades*/
-
-.fadeoutcomplete {
-    opacity: 1; /* make things invisible upon start */
-    -webkit-animation: fadeoutcomplete ease-in 1 !important; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeoutcomplete ease-in 1 !important;
-    animation: fadeoutcomplete ease-in 1 !important;
-
-    -webkit-animation-fill-mode: forwards !important; /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
-    -moz-animation-fill-mode: forwards !important;
-    animation-fill-mode: forwards !important;
-
-    -webkit-animation-duration: 400ms !important;
-    -moz-animation-duration: 400ms !important;
-    animation-duration: 400ms !important;
-}
-
-.fadeoutcompletefast {
-    opacity: 1; /* make things invisible upon start */
-    -webkit-animation: fadeoutcomplete ease-in 1 !important; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeoutcomplete ease-in 1 !important;
-    animation: fadeoutcomplete ease-in 1 !important;
-
-    -webkit-animation-fill-mode: forwards !important; /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
-    -moz-animation-fill-mode: forwards !important;
-    animation-fill-mode: forwards !important;
-
-    -webkit-animation-duration: 150ms !important;;
-    -moz-animation-duration: 150ms !important;
-    animation-duration: 150ms !important;
-}
-
-.fadeoutcomplete2s {
-    opacity: 1; /* make things invisible upon start */
-    -webkit-animation: fadeoutcomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeoutcomplete ease-in 1;
-    animation: fadeoutcomplete ease-in 1;
-
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
-    animation-fill-mode: forwards; /*when the spec is finished*/
-
-    -webkit-animation-duration: 2s;
-    -moz-animation-duration: 2s;
-    animation-duration: 2s;
-}
-
-/* make keyframes that tell the start state and the end state of our object */
-@-webkit-keyframes fadeoutcomplete {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
-@-moz-keyframes fadeoutcomplete {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
-@keyframes fadeoutcomplete {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
-.fadeincompletefaster {
-    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeincomplete ease-in 1;
-    animation: fadeincomplete ease-in 1;
-
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
-    animation-fill-mode: forwards; /*when the spec is finished*/
-
-    -webkit-animation-duration: 0.3s;
-    -moz-animation-duration: 0.3s;
-    animation-duration: 0.3s;
-}
-
-.fadeincomplete {
-    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeincomplete ease-in 1;
-    animation: fadeincomplete ease-in 1;
-
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
-    animation-fill-mode: forwards; /*when the spec is finished*/
-
-    -webkit-animation-duration: 0.5s;
-    -moz-animation-duration: 0.5s;
-    animation-duration: 0.5s;
-}
-
-.fadeincompleteslow {
-    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeincomplete ease-in 1;
-    animation: fadeincomplete ease-in 1;
-
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
-    animation-fill-mode: forwards; /*when the spec is finished*/
-
-    -webkit-animation-duration: 1s;
-    -moz-animation-duration: 1s;
-    animation-duration: 1s;
-}
-
-.fadeincompleteextremeslow {
-    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeincomplete ease-in 1;
-    animation: fadeincomplete ease-in 1;
-
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
-    animation-fill-mode: forwards; /*when the spec is finished*/
-
-    -webkit-animation-duration: 3s;
-    -moz-animation-duration: 3s;
-    animation-duration: 3s;
-}
-
-.fadeincomplete5s {
-    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeincomplete ease-in 1;
-    animation: fadeincomplete ease-in 1;
-
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
-    animation-fill-mode: forwards; /*when the spec is finished*/
-
-    -webkit-animation-duration: 5s;
-    -moz-animation-duration: 5s;
-    animation-duration: 5s;
-}
-
-.fadeincomplete2s {
-
-    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeincomplete ease-in 1;
-    animation: fadeincomplete ease-in 1;
-
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
-    animation-fill-mode: forwards; /*when the spec is finished*/
-
-    -webkit-animation-duration: 2s;
-    -moz-animation-duration: 2s;
-    animation-duration: 2s;
-}
-
-.fadeincomplete1p5s {
-    opacity: 0; /* make things invisible upon start */
-    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeincomplete ease-in 1;
-    animation: fadeincomplete ease-in 1;
-
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
-    animation-fill-mode: forwards; /*when the spec is finished*/
-
-    -webkit-animation-duration: 1.5s;
-    -moz-animation-duration: 1.5s;
-    animation-duration: 1.5s;
-}
-
-.fadeincompletefast {
-    opacity: 0; /* make things invisible upon start */
-    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeincomplete ease-in 1;
-    animation: fadeincomplete ease-in 1;
-
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
-    animation-fill-mode: forwards; /*when the spec is finished*/
-
-    -webkit-animation-duration: 100ms;
-    -moz-animation-duration: 100ms;
-    animation-duration: 100ms;
-}
-
-.fadeslideincompletefast {
-    opacity: 0; /* make things invisible upon start */
-    -webkit-animation: fadeslideincomplete ease 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeslideincomplete ease 1;
-    animation: fadeslideincompleteie ease 1;
-
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
-    animation-fill-mode: forwards; /*when the spec is finished*/
-
-    -webkit-animation-duration: 300ms;
-    -moz-animation-duration: 1000ms;
-    animation-duration: 300ms;
-}
-
-.fadeslideincompletefastconst {
-    opacity: 0; /* make things invisible upon start */
-    -webkit-animation: fadeslideincompleteconst ease 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation: fadeslideincompleteconst ease 1;
-    animation: fadeslideincompleteie ease 1;
-
-    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/
-    -moz-animation-fill-mode: forwards; /*FF 5+*/
-    -o-animation-fill-mode: forwards; /*Not implemented yet*/
-    -ms-animation-fill-mode: forwards; /*IE 10+*/
-    animation-fill-mode: forwards; /*when the spec is finished*/
-
-    -webkit-animation-duration: 300ms;
-    -moz-animation-duration: 1000ms;
-    animation-duration: 300ms;
-}
-
-/* make keyframes that tell the start state and the end state of our object */
-@-webkit-keyframes fadeslideincompleteconst {
-    from {
-        opacity: 0;
-        margin-top: -5px;
-        padding-bottom: 5px;
-
-    }
-    to {
-        opacity: 1;
-        margin-top: 0px;
-        padding-bottom: 0px;
-
-    }
-}
-
-/* make keyframes that tell the start state and the end state of our object */
-@-moz-keyframes fadeslideincompleteconst {
-    from {
-        opacity: 0;
-        margin-top: -5px;
-        padding-bottom: 5px;
-
-    }
-    to {
-        opacity: 1;
-        margin-top: 0px;
-        padding-bottom: 0px;
-
-    }
-}
-
-/* make keyframes that tell the start state and the end state of our object */
-@-webkit-keyframes fadeslideincomplete {
-    from {
-        opacity: 0;
-        margin-top: -5px;
-
-    }
-    to {
-        opacity: 1;
-        margin-top: 0px;
-    }
-}
-
-/* make keyframes that tell the start state and the end state of our object */
-@-moz-keyframes fadeslideincomplete {
-    from {
-        opacity: 0;
-        margin-top: -5px;
-
-    }
-    to {
-        opacity: 1;
-        margin-top: 0px;
-    }
-}
-
-/* make keyframes that tell the start state and the end state of our object */
-@keyframes fadeslideincompleteie {
-    from {
-        opacity: 0;
-
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-/* make keyframes that tell the start state and the end state of our object */
-@-webkit-keyframes fadeincomplete {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-/* make keyframes that tell the start state and the end state of our object */
-@-webkit-keyframes fadeinhalf {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 0.5;
-    }
-}
-
-@-moz-keyframes fadeincomplete {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeincomplete {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-.fast3d {
-    transform: translate3d(0px, 0px, 0px);
-    -ms-transform: translate3d(0px, 0px, 0px);
-    -webkit-transform: translate3d(0px, 0px, 0px);
-
-}
-
-.ui-alt-icon.ui-icon-search.loading:after, .ui-alt-icon .ui-icon-search.loading:after, .ui-input-search.loading:after {
-    background-image: url(../img/loader.gif) !important;
-    background: rgb(255, 255, 255);
-    background-size: 14px 14px;
-    background-position: 0px 0px;
-    background-repeat: no-repeat;
-    filter: Alpha(Opacity=80);
-    opacity: .8;
-    top: 18px;
-}
-
-.mejs-overlay-play {
-    background-image: url(../img/swipeoverlay.png);
-    background-size: 100% 100%;
-
-}
-
-/*
-#playingSongCover{
-    box-shadow: 0px 0px 10px 3px rgba(255,255,255,0.1);
-}
-
-#playingSongTitle{
-    text-shadow: 0px 0px 5px rgba(255,255,255,0.25);
-}
-
-#playingSongTitleLoading{
-    text-shadow: 0px 0px 5px rgba(255,255,255,0.25);
-}
-  */
-
-#popupLoadingSong-screen {
-    display: none !important;
-}
-
-#popupVideoSettings #reloadVersionButton {
-    -webkit-transition: heigh 0.5s ease !important;
-    -moz-transition: height 0.5s ease !important;
-    -ms-transition: height 0.5s ease !important;
-    -o-transition: height 0.5s ease !important;
-    transition: height 0.5s ease !important;
-    overflow: hidden !important;
-}
-
-#popupFeedback-popup {
-    top: 50px !important;
-    background-color: #414141 !important;
-
-}
-
-#popupFeedback a {
-    color: #000000 !important;
-}
-
-#popupFeedback textarea {
-    height: 150px !important;
-}
-
-#popupTextInput .saveButton {
-    margin-top: 20px;
-}
-
-#popupArtistExternList li a {
-    background-color: rgba(255, 255, 255, 0.8);
-    text-shadow: none !important;
-    color: #000 !important;
-    text-shadow: none !important;
-    line-height: 1.5 !important;
-    font-size: 15px !important;
-    min-height: 0em !important;
-    border-color: #ddd !important;
-}
-
-#popupArtistExternList li:hover a {
-    background-color: rgba(223, 223, 223, 0.8);
-}
-
-
-
-
-.ui-popup li:hover aDISABLED {
-    -webkit-transform: scale(1.03);
-    -moz-transform: scale(1.03);
-    transform: scale(1.03) !important;
-}
-
-.ui-popup li a {
-    -webkit-transition: -webkit-transform 0.15s ease;
-    -moz-transition: -moz-transform 0.15s ease;
-
-    transition: transform 0.15s ease !important;
-}
-
-#popupArtistExternList li.marked a {
-    background-color: rgba(0, 0, 0, .7) !important;
-    color: #fff !important;
-    border-color: #2E2E2E !important;
-
-}
-
-#popupArtistExternList li.marked:hover a {
-    background-color: #686868!important;
-}
-
-.playingSongInfo {
-    left: auto !important;
-    transition: opacity .5s linear;
-
-}
-
-.playingSongInfo.ui-icon-custom:after {
-    opacity: 1;
-    background-image: url(../img/loader.gif);
-    background-color: rgba(0, 0, 0, 0) !important;
-    background-size: 100% !important;
-    -webkit-border-radius: 1px !important;
-    border-radius: 1px !important;
-    -webkit-transition: all .5s linear;
-
-    transition: all .5s linear;
-    background: transparent;
-}
-
-.playingSongBuy {
-    z-index: 1000;
-    transition: opacity .5s linear;
-
-    left: auto !important;
-    color: #000 !important;
-
-    background: #f6d073;
-    background: -moz-linear-gradient(top, #fee6b0, #eeba37);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fee6b0), color-stop(100%, #eeba37));
-    background: -webkit-linear-gradient(top, #fee6b0, #eeba37);
-    background: -o-linear-gradient(top, #fee6b0, #eeba37);
-    background: -ms-linear-gradient(top, #fee6b0, #eeba37);
-    background: linear-gradient(top, #fee6b0, #eeba37);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fee6b0', endColorstr='#eeba37', GradientType=0);
-
-    border-radius: 3px 3px 3px 3px !important;
-    border-style: solid !important;
-    border-width: 1px !important;
-
-    border-color: #be952c #a68226 #9b7924 !important;
-
-    color: #111 !important;
-    font-family: Arial, sans-serif !important;
-    font-size: 13px !important;
-    text-align: center !important;
-    white-space: nowrap !important;
-    text-shadow: none !important;
-}
-
-#header .ui-btn.animated {
-    -webkit-transition: all 0.5s linear;
-    -moz-transition: all 0.5s linear;
-    -ms-transition: all 0.5s linear;
-    -o-transition: all 0.5s linear;
-    transition: all 0.5s linear !important;
-
-}
-
-#header .ui-btn-right {
-    margin-top: 1px !important;
-}
-
-#signinLink, #linkAccount, #registerLink {
-    top: 0px;
-}
-
-#signinButton, #registerButton {
-
-    padding-left: 2.3em !important;
-    padding-right: 0 !important;
-
-}
-
-#signoutButton {
-    margin-top: 18px;
-    margin-bottom: 15px;
-    margin-left: 20px;
-    margin-right: 20px;
-    width: 250px;
-}
-
-#signinButton:before, #registerButton:before {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    content: '';
-    border-right: 1px solid #000;
-    box-shadow: 1px 0 #4B4545;
-
-}
-
-a, button, h1, h2, h3 {
-    cursor: default !important;
-
-}
-
-#siteLogo {
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-
-    -webkit-transform-origin: 100% 100%;
-    transform-origin: 100% 100% !important;
-    -webkit-transition: all 0.6s ease;
-    -moz-transition: all 0.6s ease;
-    -ms-transition: all 0.6s ease;
-    -o-transition: all 0.6s ease;
-    transition: all 0.6s ease;
-}
-
-#siteLogo img {
-    position: absolute;
-    bottom: 50px;
-    opacity: 0.42;
-    pointer-events: auto;
-    -webkit-transition: all 0.6s ease;
-    -moz-transition: all 0.6s ease;
-    -ms-transition: all 0.6s ease;
-    -o-transition: all 0.6s ease;
-    transition: all 0.6s ease;
-
-}
-
-#siteLogo #songbaseLogoImage {
-
-    left: 15px;
-    width: 160px;
-
-}
-
-#siteLogo #siteLogoImage {
-    width: 110px;
-
-    right: 15px;
-
-}
-
-#deselectionOptionContainer {
-    position: absolute;
-    z-index: 1000;
-    top: 46px;
-    width: 100%;
-    height: 40px;
-    pointer-events: none !important;
-
-}
-
-#deselectionOption {
-    position: relative;
-    width: 180px;
-    margin-left: auto;
-    margin-right: auto;
-    border-color: rgba(54, 54, 54, 0.96);
-    border-top: 0;
-    background-color: rgba(90, 51, 10, 0.9)!important;
-    pointer-events: auto !important;
-    margin-top: 0;
-    padding-top: 25px;
-    font-size: 16px;
-    vertical-align: middle;
-    text-shadow: none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    -webkit-border-top-left-radius: 0;
-    -webkit-border-top-right-radius: 0;
-    -moz-border-top-left-radius: 0;
-    -moz-border-top-right-radius: 0;
-}
-
-.backgroundVideo {
-    width: 100% !important;
-    height: 100% !important;
-    background-color: #000 !important;
-    opacity: 0;
-}
-
-.backgroundVideo.fullscreen {
-    opacity: 1 !important;
-}
-
-.backgroundVideo.background {
-    opacity: 0.8 !important;
-}
-
-#backgroundVideo.fullscreen {
-    opacity: 1 !important;
-}
-
-.backgroundVideo * {
-    width: 100% !important;
-    position: absolute;
-    top: 46px;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 0;
-}
-
-#backgroundVideo {
-    width: 100% !important;
-    height: 100% !important;
-
-}
-
-#backgroundVideo.animatedDISABLED {
-    -moz-transform: translateZ(0.1);
-    -webkit-transition: all 250ms ease;
-    -moz-transition: all 250ms ease;
-    -ms-transition: all 250ms ease;
-    -o-transition: all 250ms ease;
-    transition: all 250ms ease;
-}
-
-#backgroundImage {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 0;
-    opacity: 0.8;
-}
-
-.greenbackground {
-
-    background-color: #050 !important;
-}
-
-/*POPUPS*/
-
-#popupLoadingSongClose {
-    background-color: #C70707 /*{a-bup-background-color}*/;
-    border-color: #000 /*{a-bup-border}*/;
-}
-
-#popupLoadingSong {
-    background-color: #ECECEC !important;
-}
-
-.ui-popup-container {
-    background: rgba(255, 255, 255, 0.6) !important;
-
-}
-
-.ui-popup-container p {
-    color: #000 !important;
-
-}
-
-#popupLoadingSong-popup {
-    background: rgba(0, 0, 0, 0.6) !important;
-}
-
-#popupSocial-popup {
-    background: rgba(4, 40, 187, 0.6) !important;
-}
-
-#popupConfirm-popup {
-    background: rgba(187, 14, 8, 0.60) !important;
-}
-
-#popupFeedback.ui-body-a {
-    /* background-image: url(../img/bug.gif )!important;
-     background-position-y: 60px;
-     background-repeat: no-repeat; */
-    background-color: #fff;
-}
-
-.ui-popup.ui-body-a {
-    background-color: rgba(0, 0, 0, 0) !important;
-}
-
-.ui-popup.ui-body-a {
-    border-width: 0px;
-!important;
-
-}
-
-.ui-popup {
-    padding: 1px;
-
-    background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 0.85)), color-stop(100%, rgba(255, 255, 255, 0.75))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#66ffffff', GradientType=0); /* IE6-9 */
-
-    background-clip: content-box !important;
-
-}
-
-#popupLoadingSong {
-    border-width: 2px !important;
-    border-color: #000 !important
-}
-
-#popupArtist-popup, #popupAccount-popup {
-    width: 300px;
-}
-
-#popupAccount-popup, #popupArtist-popup, #popupLogin-popup, #popupRegister-popup {
-    top: 51px !important;
-}
-
-#popupRegister, #popupLogin {
-    max-width: 230px;
-    min-width: 230px;
-
-}
-
-#popupAccount li a, #popupRegister  li a, #popupLogin li a {
-    color: #000 !important;
-}
-
-/*
-#popupLogin{
-    min-height: 320px;
-    max-height: 320px;
-}
-#popupRegister{
-    min-height: 410px;
-    max-height:410px;
-}
- */
-
-#popupRegister input, #popupLogin input, #popupEditAccount input {
-    -webkit-text-shadow: none !important;
-    text-shadow: none !important;
-}
-
-#popupArtist-popup::before {
-    content: "";
-
-    background-position: center center !important;
-    opacity: 0.99;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: 0;
-}
-
-#popupArtist .ng-pristine {
-    text-shadow: none !important;
-}
-
-#popupArtist .ui-popup-arrow-guide {
-    background: #fff !important;
-    z-index: 10000;
-}
-
-#popupOptions {
-    padding: 2px;
-}
-
-#popupOptions ul {
-    background-color: #333 !important;
-    max-height: 478px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-bottom: 1px; /*avoid start Scolling on hover*/
-}
-
-#popupOptions li {
-    background-color: #333 !important;
-}
-
-#popupOptions li a {
-    line-height: 1.5;
-    border: none !important;
-    border-top: 1px solid rgb(34, 34, 34) !important;
-    border-bottom: none !important;
-    background: #333;
-    /*
-    background: -moz-linear-gradient(top, #3a3a3a 0%, #333 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3a3a3a), color-stop(100%,#333));
-    background: -webkit-linear-gradient(top, #3a3a3a 0%,#333 100%);
-    background: -o-linear-gradient(top, #3a3a3a 0%,#333 100%);
-    background: -ms-linear-gradient(top, #3a3a3a 0%,#333 100%);
-    background: linear-gradient(to bottom, #3a3a3a 0%,#333 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3a3a', endColorstr='#333',GradientType=0 );
-     */
-
-    text-shadow: none !important;
-}
-
-#popupOptions li:hover a {
-
-    background: -moz-linear-gradient(top, #4a4a4a 0%, #444 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4a4a4a), color-stop(100%, #444)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #4a4a4a 0%, #444 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #4a4a4a 0%, #444 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #4a4a4a 0%, #444 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #4a4a4a 0%, #444 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4a4a4a', endColorstr='#444', GradientType=0); /* IE6-9 */
-}
-
-/*
-#popupOptions li a.currentqueue{
-  color:          #000 !important;
-  background: #f6d073!important;
-  background: #f6d073!important;
-  background: -moz-linear-gradient(top, #fee6b0,#eeba37)!important;
-  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fee6b0),color-stop(100%,#eeba37))!important;
-  background: -webkit-linear-gradient(top,#fee6b0,#eeba37)!important;
-  background: -o-linear-gradient(top,#fee6b0,#eeba37)!important;
-  background: -ms-linear-gradient(top,#fee6b0,#eeba37)!important;
-  background: linear-gradient(top,#fee6b0,#eeba37)!important;
-}
-
-#popupOptions li:hover a.currentqueue {
-
-
-  background: -moz-linear-gradient(top,#fef6c0,feca47)!important;
-  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fef6c0),color-stop(100%,#feca47))!important;
-  background: -webkit-linear-gradient(top,#fef6c0,#feca47)!important;
-  background: -o-linear-gradient(top,#fef6c0,#feca47)!important;
-  background: -ms-linear-gradient(top,#fef6c0,#feca47)!important;
-  background: linear-gradient(top,#fef6c0,#feca47)!important;
-}
-*/
-
-#popupImportInput button {
-    margin-top: 20px;
-}
-
-#popupEditAccount-popup {
-    width: 300px;
-}
-
-#popupEditAccount {
-    background-color: rgba(255, 255, 255, 0.9) !important;
-
-}
-
-#popupEditAccount #editButton {
-    margin-top: 20px;
-}
-
-#popupEditAccount #cancelButton {
-    argin-bottom: 0px;
-}
-
-#popupAccount.ui-popup {
-
-    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(100%, rgba(255, 255, 255, 0.2))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#66ffffff', GradientType=0); /* IE6-9 */
-
-}
-
-#popupAccount a {
-    text-shadow: none !important;
-    padding-left: 3.4em!important;
-    padding-right: 5em!important;
-    background-color: rgba(255,255,255,0.8);
-    text-shadow: none!important;
-    line-height: 1.5!important;
-    font-size: 15px!important;
-    min-height: 0em!important;
-    border-color: #ddd!important;
-}
-
-#popupAccount a img {
-    max-height: 2em !important;
-    max-width: 2em !important;
-    margin-top: 0.5em !important;
-    margin-left: 0.7em !important;
-
-}
-
-#popupAccount li:hover a {
-    background-color: rgba(223, 223, 223, 0.8);
-}
-
-#popupArtist a img {
-    max-height: 2em !important;
-    max-width: 2em !important;
-    margin-top: 0.5em !important;
-    margin-left: 0.7em !important;
-}
-
-#popupArtist a {
-    text-shadow: none !important;
-    line-height: 1.2 !important;
-    font-size: 14px !important;
-    min-height: 0em !important;
-    padding-left: 3.4em !important;
-    padding-right: 5em !important;
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #000;
-}
-
-.ui-icon-sharemedia {
-
-    background: url(../img/shareicon.png) no-repeat;
-    z-index: 100;
-    background-position: 10px 10px;
-
-}
-
-#popupSharePlaylistOptions-popup {
-    bottom: 50px !important;
-    top: auto !important;
-
-}
-
-#popupSharePlaylistOptions-popup .ui-popup-arrow-container.ui-popup-arrow-b .ui-popup-arrow {
-    margin-left: 4px !important;
-}
-
-#popupSharePlaylistOptions h3 {
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
-}
-
-#popupSharePlaylistOptions ul {
-    background-color: #333 !important;
-    max-height: 478px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-bottom: 1px;
-}
-
-#popupSharePlaylistOptions li {
-    background-color: #333 !important;
-}
-
-#popupSharePlaylistOptions li a {
-    border: none !important;
-    border-top: 1px solid rgb(34, 34, 34) !important;
-    border-bottom: none !important;
-
-    background: #333;
-    /*
-    background: -moz-linear-gradient(top, #3a3a3a 0%, #333 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3a3a3a), color-stop(100%,#333));
-    background: -webkit-linear-gradient(top, #3a3a3a 0%,#333 100%);
-    background: -o-linear-gradient(top, #3a3a3a 0%,#333 100%);
-    background: -ms-linear-gradient(top, #3a3a3a 0%,#333 100%);
-    background: linear-gradient(to bottom, #3a3a3a 0%,#333 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3a3a', endColorstr='#333',GradientType=0 );
-     */
-
-    text-shadow: none !important;
-}
-
-#popupSharePlaylistOptions li:hover a {
-    background-color: #494949 !important;
-
-    background: -moz-linear-gradient(top, #3a3a3a 0%, #333 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3a3a3a), color-stop(100%, #333));
-    background: -webkit-linear-gradient(top, #3a3a3a 0%, #333 100%);
-    background: -o-linear-gradient(top, #3a3a3a 0%, #333 100%);
-    background: -ms-linear-gradient(top, #3a3a3a 0%, #333 100%);
-    background: linear-gradient(to bottom, #3a3a3a 0%, #333 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3a3a3a', endColorstr='#333', GradientType=0);
-
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4a4a4a', endColorstr='#444', GradientType=0); /* IE6-9 */
-}
-
-#popupShareMenu a {
-    text-shadow: none !important;
-    line-height: 1.2 !important;
-    font-size: 14px !important;
-    min-height: 0em !important;
-
-    padding-left: 2.6em !important;
-    padding-right: 5em !important;
-    background-color: #333;
-
-    color: #fff !important;
-}
-
-#popupShareMenu ul {
-    background-color: #333 !important;
-
-}
-
-#popupShareMenu a img {
-    max-height: 2em !important;
-    max-width: 2em !important;
-    margin-top: 0.25em !important;
-    margin-left: 0.15em !important;
-
-}
-
-#popupShareMenu #cancelButtonVideoSettings {
-    background-color: #b4182b !important;
-
-}
-
-#popupShareMenu-popup {
-    bottom: 50px !important;
-    top: auto !important;
-
-}
-
-#popupShareMenu {
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-}
-
-#popupShareMenu-popup .ui-popup-arrow-container.ui-popup-arrow-b .ui-popup-arrow {
-    margin-left: 4px !important;
-}
-
-#popupShareMenu .selectedversion {
-    background-color: #2E8B2B !important;
-}
-
-#popupShareMenu  .selectedversion.ui-icon-carat-r:after {
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22iso-8859-1%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20%20width%3D%2214px%22%20height%3D%2214px%22%20viewBox%3D%220%200%2014%2014%22%20style%3D%22enable-background%3Anew%200%200%2014%2014%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20style%3D%22fill%3A%23FFFFFF%3B%22%20points%3D%2214%2C4%2011%2C1%205.003%2C6.997%203%2C5%200%2C8%204.966%2C13%204.983%2C12.982%205%2C13%20%22%2F%3E%3C%2Fsvg%3E") !important
-}
-
-#popupShareMenu h3 {
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
-}
-
-#popupChooseVersionHint a {
-    text-shadow: none !important;
-    line-height: 1.2 !important;
-    font-size: 14px !important;
-    min-height: 0em !important;
-
-    padding-left: 2.6em !important;
-    padding-right: 5em !important;
-    background-color: #333;
-
-    color: #fff;
-}
-
-#popupChooseVersionHint ul {
-    background-color: #333 !important;
-
-}
-
-#popupChooseVersionHint a img {
-    max-height: 2em !important;
-    max-width: 2em !important;
-    margin-top: 0.25em !important;
-    margin-left: 0.15em !important;
-
-}
-
-#popupChooseVersionHint #cancelButtonVideoSettings {
-    background-color: #b4182b !important;
-
-}
-
-#popupChooseVersionHint-popup {
-    bottom: 50px !important;
-    top: auto !important;
-
-}
-
-#popupChooseVersionHint {
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-}
-
-#popupChooseVersionHint-popup .ui-popup-arrow-container.ui-popup-arrow-b .ui-popup-arrow {
-    margin-left: 4px !important;
-}
-
-#popupChooseVersionHint .selectedversion {
-    background-color: #2E8B2B !important;
-}
-
-#popupChooseVersionHint  .selectedversion.ui-icon-carat-r:after {
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22iso-8859-1%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20%20width%3D%2214px%22%20height%3D%2214px%22%20viewBox%3D%220%200%2014%2014%22%20style%3D%22enable-background%3Anew%200%200%2014%2014%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20style%3D%22fill%3A%23FFFFFF%3B%22%20points%3D%2214%2C4%2011%2C1%205.003%2C6.997%203%2C5%200%2C8%204.966%2C13%204.983%2C12.982%205%2C13%20%22%2F%3E%3C%2Fsvg%3E") !important
-}
-
-#popupChooseVersionHint h3 {
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
-}
-#popupVideoSettings li a {
-    border-bottom: 1px solid #2B2A2A!important;
-    border-top:none!important;
-}
-
-#popupVideoSettings a {
-    text-shadow: none !important;
-    line-height: 1.5 !important;
-    font-size: 15px !important;
-    min-height: 0em !important;
-
-    background-color: #333;
-
-    color: #fff !important;
-}
-
-#popupVideoSettings .ReloadVersions   {
-border-radius: 7px!important;
-}
-
-
-#popupVideoSettings li:hover a {
-    background-color: #494949!important;
-}
-
-#popupVideoSettings li:hover a.selectedversion {
-    background-color: rgb(46, 195, 233) !important;
-}
-
-#popupVideoSettings ul {
-    background-color: #333 !important;
-
-}
-
-#popupVideoSettings a img {
-    max-height: 2em !important;
-
-    margin-top: 0.25em !important;
-    margin-left: 0.15em !important;
-
-}
-
-#popupVideoSettings  .selectedversion .rateImage {
-    opacity: 1 !important;
-
-}
-
-#popupVideoSettings #cancelButtonVideoSettings {
-    background-color: #b4182b !important;
-
-}
-
-#popupVideoSettings-popup {
-    bottom: 50px !important;
-    top: auto !important;
-
-}
-
-#popupVideoSettings {
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-}
-
-#popupVideoSettings-popup .ui-popup-arrow-container.ui-popup-arrow-b .ui-popup-arrow {
-    margin-left: 4px !important;
-}
-
-#popupVideoSettings .selectedversion {
-    background-color: rgb(26, 175, 213) !important;
-}
-
-#popupVideoSettings  .selectedversion.ui-icon-carat-r:after {
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22iso-8859-1%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20%20width%3D%2214px%22%20height%3D%2214px%22%20viewBox%3D%220%200%2014%2014%22%20style%3D%22enable-background%3Anew%200%200%2014%2014%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20style%3D%22fill%3A%23FFFFFF%3B%22%20points%3D%2214%2C4%2011%2C1%205.003%2C6.997%203%2C5%200%2C8%204.966%2C13%204.983%2C12.982%205%2C13%20%22%2F%3E%3C%2Fsvg%3E") !important
-}
-
-#popupVideoSettings h3 {
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
-}
-
-#popupSocial .popupSocialContainer {
-    position: relative;
-    margin-left: 5px;
-    margin-right: 5px;
-    height: 75px;
-    text-align: center;
-
-}
-
-#popupSocial table {
-
-    display: inline-block;
-
-}
-
-#popupSocial td {
-    height: 30px;
-}
-
-#loadversionimg {
-    position: absolute;
-    top: 15px;
-    left: 13px;
-
-}
-
-#loadversionimg img {
-    opacity: 1;
-
-}
-
-
-/* E
------------------------------------------------------------------------------------------------------------*/
-.ui-bar-e {
-    border: 1px solid #f7c942 /*{e-bar-border}*/;
-    background: #fadb4e /*{e-bar-background-color}*/;
-    color: #333 /*{e-bar-color}*/;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#fceda7 /*{e-bar-background-start}*/), to(#fbef7e /*{e-bar-background-end}*/)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
-    background-image: -moz-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* FF3.6 */
-    background-image: -ms-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* IE10 */
-    background-image: -o-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* Opera 11.10+ */
-    background-image: linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/);
-}
-
-/*Explore Area*/
-
-#explorearea {
-    position: absolute;
-    z-index: 2;
-    top: -5px;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: none;
-    overflow: hidden;
-    padding-top: 5px;
-}
-
-#explorearea h1 {
-    margin: 0.3em !important;
-    margin-left: 0.6em !important;
-    margin-top: 0.5em !important;
-}
-
-/*ADS*/
-
-.fullscreendisable {
-    display: none;
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: 10000000;
-}
-
-.sideinfo {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 160px;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.03);
-    margin-top: 44px;
-
-}
-
-.adsbygoogle {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.sideinfo > ins, .sideinfo > img {
-    display: inline-block;
-    vertical-align: middle !important;
-}
-
-.sideinfo iframe, .sideinfo .infoRightReload {
-    display: inline-block;
-    vertical-align: middle !important;
-}
-
-.songlist li.listad {
-    max-width: 728px !important;
-    max-height: 105px !important;
-    width: 728px !important;
-    height: 105px !important;
-    padding: 0 !important;
-    padding-top: 15px !important;
-    margin-top: 5px !important;
-    margin-bottom: 5px !important;
-    background: none !important;
-    border: none !important;
-    padding-left: 5px !important;
-    display: block !important;
-}
-
-#searchlist ul li.songlisttitlebutton.listad {
-    /*TODO REMOVE*/
-    display: none !important;
-
-}
-
-#searchlist ul.gridlayout li.songlisttitlebutton.listad {
-    max-width: 728px !important;
-    max-height: 105px !important;
-    width: 728px !important;
-    height: 105px !important;
-}
-
-.songlist li.listad * {
-    position: relative !important;
-}
-
-
-
-.infotoast.ui-loader{
-    opacity: 1!important;
-    color: #fff;
-    border: 2px solid #ffc828 !important;
-    background: #333;
-
-}
+/* * Licensed to the Apache Software Foundation (ASF) under one * or more contributor license agreements.  See the NOTICE file * distributed with this work for additional information * regarding copyright ownership.  The ASF licenses this file * to you under the Apache License, Version 2.0 (the * "License"); you may not use this file except in compliance * with the License.  You may obtain a copy of the License at * * http://www.apache.org/licenses/LICENSE-2.0 * * Unless required by applicable law or agreed to in writing, * software distributed under the License is distributed on an * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY * KIND, either express or implied.  See the License for the * specific language governing permissions and limitations * under the License. */* {    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */}body {    -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */    -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */    -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */    background-color: #fff;    background-attachment: fixed;    font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;    font-size: 12px;    height: 100%;    margin: 0px;    padding: 0px;    width: 100% !important;    position: fixed;    top: 0px;    left: 0px;    background-color: #000 !important;    /*-webkit-user-select: none;    -moz-user-select: none;    -ms-user-select: none;    user-select: none;    */    /* -webkit-perspective: 150px;     -moz-perspective: 150px;     perspective: 150px; */}.ui-loader-default {    margin-left: -22px !important;}.ui-popup-screen.in {    opacity: 0 !important;    filter: Alpha(Opacity=0) !important;}/*Noanim TODO disable all animation in div where noanim is set for slow browsers*/.noanim * {    -webkit-transition: none !important;    -webkit-animation: none !important;}.noanim .fadeincomplete {    opacity: 1 !important;}.ui-tooltip, .arrow:after {    background: black;    border: 2px solid white;}.ui-tooltip {    padding: 5px 8px;    color: white;    border-radius: 5px;    font: 12px "Helvetica Neue", Sans-Serif;    box-shadow: 0 0 7px black;    position: absolute;}/*Content*/@media (max-height:710px) {    .fb-recommendations-bar-container {        display: none !important;    }    .sideinfo {        margin-top: 0 !important;        background-color: rgba(7, 7, 7, 1) !important;    }    .adsbygoogle {        background: none !important;    }}/*Big Screen*/@media (min-width:1170px) {    #controlbar .ui-input-search {        float: left;    }    #searchcontent {        margin-top: 5px !important;    }    #controlselectvertical {        display: none;    }    #controlbar {        margin-top: -10px;    }    #controlbar .ui-input-search {        width: 320px;    }}/*Big Screen*/@media (min-width:1230px) {    #playlist {        top: 0;    }    #openSidePanelBarIcon, #openSidePanelBarIconBar {        display: none;    }}@media (max-width:1000px) {    #playlistInner li.specialplaylistbutton h3 {        font-size: 1em !important;        margin-top: 20px !important;    }    #playlistInner li.specialplaylistbutton.songlisttitlebutton h3 {        font-size: 1em !important;        margin-top: 10px !important;    }    #feedbackButton {        display: none !important;    }}/*Small Screen*/@media (max-width:1169px) {    #controlbar {        text-align: left;    }    #controlbar .ui-btn {        font-size: 0.9em;    }    #searchlayoutbutton, .videoControlElements-gridlayout-button, #buySongLink {        display: none !important;    }    #playingSongInfoLink {        position: absolute;    }    #controlbar .ui-input-btn {        margin-right: 3px !important;    }    .fb-recommendations-bar {        display: none !important;    }    #controlbar .ui-select {        width: 340px !important;    }    #controlbar .ui-input-search {        width: 300px;    }    #controlbar .ui-input-btn {        margin-bottom: 0px !important;    }    #content {        padding-top: 4px !important;        padding-bottom: 4px !important;        padding-left: 8px !important;        padding-right: 8px !important;    }    #searchcontent.searchlayout {        margin-top: 50px;    }    #controlbar .ui-input-search {        margin-bottom: 0px !important;    }}/*Bigger as Smallest Screen*/@media (min-width:780px) {    #popupLoadingSongInner {        width: 350px;        padding: 10px 20px 10px 20px !important;    }    #playlist {        top: 0px;        right: 10px;    }    #openSidePanelBarIcon, #openSidePanelBarIconBar {        display: none;    }    .sideinfo {        display: none !important;    }    /* #searchlist {         width: 66%;     } */}/*Smallest Screen*/@media (max-width:779px) {    #popupLoadingSongInner {        padding: 5px 15px 5px 15px !important;    }    #searchlist ul {        max-width: 100% !important;    }    .videoControlElements-stop-button {        display: none !important;    }    .sideinfo {        display: none !important;    }    #header {        width: 100% !important;    }    #titleHeader sup {        display: none !important;    }    #searchlist ul {        width: 100% !important;    }    #backgroundVideo.background {        display: none !important;    }    #backgroundImage {        display: block !important;        -webkit-animation: none !important;        -moz-animation: none !important;        animation: none !important;    }    #header a {        font-size: 12px !important;    }    .ui-btn-right {        right: 2.4em !important;    }    #playlist {        left: 10px;    }    #playlistselectvertical .chosen-container {        min-width: 270px !important;        max-width: 270px !important;    }    #sortplaylisttext {        width: 189px !important;        max-width: 189px !important;    }}/*Small Screen*/@media (max-height:350px) {    #backgroundImage {        display: block !important;        opacity: 1 !important;        -webkit-animation: none !important;        -moz-animation: none !important;        animation: none !important    }}/*Small TimeRail Screen*/@media (max-width:420px) {    .videoControlElements-duration-container, .videoControlElements-button-choose-version, .videoControlElements-button-share, .videoControlElements-button-lyrics, #lyricsiframe {        display: none !important;    }}@media (max-width:700px) {    #videocontrols .videoControlElements-time-rail {        display: none !important;    }    #videocontrolsInner .videoControlElements-smallProgress {        display: block !important;    }}/*input[type=button]{    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aebcbf), color-stop(50%,#6e7774), color-stop(51%,#0a0e0a), color-stop(100%,#0a0809))!important;    color: white!important;    border: none;}*//* button hover style if required */.ui-input-btn:hover {}/* generated element for shine effect. * normal state is semi-transparent * white but with zero width. Set no * transition here for no mouse-leave * animations. Otherwise the effect * will play in reverse when your mouse * leaves the element */.ui-input-btn:after {    content: "";    position: absolute;    top: 0px;    left: 0px;    width: 0%;    height: 100%;    background-color: rgba(255, 255, 255, 0.05);    -webkit-transition: none;    -moz-transition: none;    -ms-transition: none;    -o-transition: none;    transition: none;}/* on hover we animate the width to * 100% and opacity to 0 so the element * grows and fades out */.ui-input-btn:hover:after {    width: 120%;    background-color: rgba(255, 255, 255, 0);    -webkit-transition: all 0.3s ease-out;    -moz-transition: all 0.3s ease-out;    -ms-transition: all 0.3s ease-out;    -o-transition: all 0.3s ease-out;    transition: all 0.3s ease-out;}#lyricsiframe {    position: absolute;    top: 44px;    left: 0px;    bottom: 45px !important;    width: 450px;    opacity: 1;    z-index: 1000;    opacity: 0.945;    z-index: 10000 !important;    background: rgba(29, 29, 29, 0.96);    -moz-box-shadow: 6px 0 p 10px rgba(0, 0, 0, 0.4);    -webkit-box-shadow: 6px 0px 10px rgba(0, 0, 0, 0.4);    box-shadow: 6px 0px 10px rgba(0, 0, 0, 0.4);    -webkit-transition: all 1.5s ease-out;    -moz-transition: all 1.5s ease-out;    -ms-transition: all 1.5s ease-out;    -o-transition: all 1.5s ease-out;    transition: all 1.5s ease-out;}#lyricsifrm {    position: absolute;    top: 0px;    width: 420px;    border: none !important;    z-index: 10002 !important;}#lyricstopinfo {    position: absolute;    width: 408px;    height: 32px;    bottom: 3px;    left: 0;    color: #000!important;    background-color: #fadb4e;    z-index: 10002!important;    padding: 6px;    font-family: 'HelveticaNeue-Light','HelveticaNeue',Helvetica,Arial,sans-serif;    font-size: 13px!important;    line-height: 16px;    text-shadow: none;}#lyricstopinfo a {    cursor: auto !important;}#lyricsifrmback {    position: absolute;    top: 0;    height: 0;    width: 420px;    height: 100%;    background: rgba(255, 255, 255, 1);    z-index: 10001 !important;}#page.fullscreen {    padding: 0 !important;    height: 100% !important;}#content.fullscreen {    padding: 0 !important;    height: 100% !important;    width: 100% !important;}#content {    position: absolute;    z-index: 1;}#controlselecthorizontal .ui-input-search, #controlselecthorizontal .ui-btn {    -webkit-transition: all 280ms ease -moz-transition : all 280 ms cease;    -o-transition: all 280ms ease;    transition: all 280ms ease /* custom */;}#controlselecthorizontal .ui-input-search.notanimated, #controlselecthorizontal .ui-input-btn.notanimated {    -webkit-transition: none !important;    -moz-transition: none !important;    -o-transition: none !important;    transition: none !important;}/*Small Screen, no animation*/@media (min-width:360px) and  (max-width:360px) {    #controlselecthorizontal .ui-input-search, #controlselecthorizontal .ui-input-btn {        -webkit-transition: none !important;        -moz-transition: none !important;        -o-transition: none !important;        transition: none !important;    }}.searchinput-drop {    color: #000 !important;}.searchinput-drop {    left: 0;}.searchinput-drop {    border: none !important;}.searchinput-drop.visible {    opacity: 1 !important;    pointer-events: auto !important;    left: 0 !important;}.searchinput-drop {    margin-top: 2px;    position: absolute;    top: 100%;    left: -9999px;    z-index: 1010;    -webkit-box-sizing: border-box;    -moz-box-sizing: border-box;    box-sizing: border-box;    width: 100%;    border: 1px solid #aaa;    border-top: 0;    background: #fff;    box-shadow: 0 4px 5px rgba(0, 0, 0, .15);    opacity: 0 !important;    -webkit-transition: opacity 0.3s ease;    -moz-transition: opacity 0.3s ease;    -ms-transition: opacity 0.3s ease;    -o-transition: opacity 0.3s ease;    transition: opacity 0.3s ease;    pointer-events: none;}.searchinput-drop ul {    margin: 0;    padding: 0;    list-style: none;    position: relative;    overflow-x: hidden;    overflow-y: auto;    max-height: 240px;}.searchinput-drop li.active-result {    display: list-item;    cursor: pointer;}.searchinput-drop li {    line-height: 30px !important;    margin: 0;    padding: 5px 6px;    list-style: none;    font-size: 16px !important;    color: #A82727;}#controlbar {    height: 0px;}#controlbar input {    overflow: visible !important;    text-shadow: none !important;}#controlbar .ui-btn {    text-shadow: none !important;    overflow: visible !important;}#controlselecthorizontal .ui-btn {    color: #fff !important;}#controlselecthorizontal .ui-btn.ui-btn-b.ui-icon-delete {    background-color: #C70707;}#controlselecthorizontal .ui-btn.highlight {    background: #751212 !important;    color: #FFFFFF !important;    border-color: #570000;}#controlselecthorizontal {    min-width: 330px;}#controlselecthorizontal .ui-btn.ui-btn-b {    background-color: #333}#controlselecthorizontal .ui-btn.ui-btn-a {    background: #751212 !important;}/*#controlselecthorizontal .ui-btn.ui-btn-b:nth-child(1){    background-color: #333}#controlselecthorizontal .ui-btn.ui-btn-a:nth-child(1){    background: #fff!important;}*//*Loading Controlbar Buttons*/#controlselecthorizontal .ui-btn.highlight.loading {    padding-left: 2em !important;}#controlselecthorizontal .ui-btn.highlight.loading:before {    background-image: url(../img/loaderwhite.gif) !important;    filter: Alpha(Opacity=80);    opacity: .8;    top: 17px;    width: 16px;    height: 16px;    background-size: 14px 14px;    background-position: 0px 0px;    background-repeat: no-repeat;    position: absolute;    left: .3425em;    margin-top: -7px;    content: "";    background-position: center center;    background-repeat: no-repeat;}.ui-input-btn, .ui-btn {    -webkit-box-shadow: none !important;    -moz-box-shadow: none !important;    box-shadow: none !important;}#controlbar div.ui-input-btn {    /*    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3a3a3a), color-stop(100%,#333));    background: -webkit-linear-gradient(top, #3a3a3a 0%,#333 100%);    background: -o-linear-gradient(top, #3a3a3a 0%,#333 100%);    background: -ms-linear-gradient(top, #3a3a3a 0%,#333 100%);    background: linear-gradient(to bottom, #3a3a3a 0%,#333 100%);   */    border-color: #3a3a3a;}#controlbar .ui-input-btn input {    background: none !important;}#controlbar .ui-input-search {    margin-right: 10px;    margin-top: 9px;    border: 1px solid rgba(177, 10, 10.5);}#controlbar .ui-input-btn {    cursor: hand !important;}#controlbar .ui-input-btn {    float: left;    margin-right: 10px;;    padding: .5em 1em;}#controlbar input.ui-btn {}video {    -moz-box-shadow: 5px 5 p 15px rgba(0, 0, 0, 0.4);    -webkit-box-shadow: 5px 15px 5px rgba(0, 0, 0, 0.4);    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);    -webkit-transition: all 0.6s ease;    -moz-transition: all 0.6s ease;    -ms-transition: all 0.6s ease;    -o-transition: all 0.6s ease;    transition: all 0.6s ease;}.iframeVideo {    width: 100% !important;    height: 100% !important;    background-color: #000 !important;    opacity: 1;    z-index: 2;    -webkit-transition: all 0.6s ease;    -moz-transition: all 0.6s ease;    -ms-transition: all 0.6s ease;    -o-transition: all 0.6s ease;    transition: all 0.6s ease;}.bounce {    -webkit-animation: bounce .6s linear;    -webkit-animation-fill-mode: forwards;    -moz-animation: bounce .6s linear;    -moz-animation-fill-mode: forwards;    animation: bounce .6s linear;    animation-fill-mode: forwards;}@-moz-keyframes bounce {    0% {        -moz-transform: scale(0);        opacity: 0;    }    50% {        -moz-transform: scale(1.2);        opacity: 0.4;    }    75% {        -moz-transform: scale(0.9);        opacity: 0.7;    }    100% {        -moz-transform: scale(1);        opacity: 1;    }}@-webkit-keyframes bounce {    0% {        -webkit-transform: scale(0);        opacity: 0;    }    50% {        -webkit-transform: scale(1.2);        opacity: 0.4;    }    75% {        -webkit-transform: scale(0.9);        opacity: 0.7;    }    100% {        -webkit-transform: scale(1);        opacity: 1;    }}@keyframes bounce {    0% {        -moz-transform: scale(0);        opacity: 0;    }    50% {        -moz-transform: scale(1.2);        opacity: 0.4;    }    75% {        -moz-transform: scale(0.9);        opacity: 0.7;    }    100% {        -moz-transform: scale(1);        opacity: 1;    }}#rightpanel {    width: 300px !important;    max-width: 100% !important;    overflow: hidden;}/*Fades*/.fadeoutcomplete {    opacity: 1; /* make things invisible upon start */    -webkit-animation: fadeoutcomplete ease-in 1 !important; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeoutcomplete ease-in 1 !important;    animation: fadeoutcomplete ease-in 1 !important;    -webkit-animation-fill-mode: forwards !important; /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/    -moz-animation-fill-mode: forwards !important;    animation-fill-mode: forwards !important;    -webkit-animation-duration: 400ms !important;    -moz-animation-duration: 400ms !important;    animation-duration: 400ms !important;}.fadeoutcompletefast {    opacity: 1; /* make things invisible upon start */    -webkit-animation: fadeoutcomplete ease-in 1 !important; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeoutcomplete ease-in 1 !important;    animation: fadeoutcomplete ease-in 1 !important;    -webkit-animation-fill-mode: forwards !important; /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/    -moz-animation-fill-mode: forwards !important;    animation-fill-mode: forwards !important;    -webkit-animation-duration: 150ms !important;;    -moz-animation-duration: 150ms !important;    animation-duration: 150ms !important;}.fadeoutcomplete2s {    opacity: 1; /* make things invisible upon start */    -webkit-animation: fadeoutcomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeoutcomplete ease-in 1;    animation: fadeoutcomplete ease-in 1;    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/    -moz-animation-fill-mode: forwards; /*FF 5+*/    -o-animation-fill-mode: forwards; /*Not implemented yet*/    -ms-animation-fill-mode: forwards; /*IE 10+*/    animation-fill-mode: forwards; /*when the spec is finished*/    -webkit-animation-duration: 2s;    -moz-animation-duration: 2s;    animation-duration: 2s;}/* make keyframes that tell the start state and the end state of our object */@-webkit-keyframes fadeoutcomplete {    from {        opacity: 1;    }    to {        opacity: 0;    }}@-moz-keyframes fadeoutcomplete {    from {        opacity: 1;    }    to {        opacity: 0;    }}@keyframes fadeoutcomplete {    from {        opacity: 1;    }    to {        opacity: 0;    }}.fadeincompletefaster {    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeincomplete ease-in 1;    animation: fadeincomplete ease-in 1;    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/    -moz-animation-fill-mode: forwards; /*FF 5+*/    -o-animation-fill-mode: forwards; /*Not implemented yet*/    -ms-animation-fill-mode: forwards; /*IE 10+*/    animation-fill-mode: forwards; /*when the spec is finished*/    -webkit-animation-duration: 0.3s;    -moz-animation-duration: 0.3s;    animation-duration: 0.3s;}.fadeincomplete {    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeincomplete ease-in 1;    animation: fadeincomplete ease-in 1;    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/    -moz-animation-fill-mode: forwards; /*FF 5+*/    -o-animation-fill-mode: forwards; /*Not implemented yet*/    -ms-animation-fill-mode: forwards; /*IE 10+*/    animation-fill-mode: forwards; /*when the spec is finished*/    -webkit-animation-duration: 0.5s;    -moz-animation-duration: 0.5s;    animation-duration: 0.5s;}.fadeincompleteslow {    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeincomplete ease-in 1;    animation: fadeincomplete ease-in 1;    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/    -moz-animation-fill-mode: forwards; /*FF 5+*/    -o-animation-fill-mode: forwards; /*Not implemented yet*/    -ms-animation-fill-mode: forwards; /*IE 10+*/    animation-fill-mode: forwards; /*when the spec is finished*/    -webkit-animation-duration: 1s;    -moz-animation-duration: 1s;    animation-duration: 1s;}.fadeincompleteextremeslow {    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeincomplete ease-in 1;    animation: fadeincomplete ease-in 1;    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/    -moz-animation-fill-mode: forwards; /*FF 5+*/    -o-animation-fill-mode: forwards; /*Not implemented yet*/    -ms-animation-fill-mode: forwards; /*IE 10+*/    animation-fill-mode: forwards; /*when the spec is finished*/    -webkit-animation-duration: 3s;    -moz-animation-duration: 3s;    animation-duration: 3s;}.fadeincomplete5s {    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeincomplete ease-in 1;    animation: fadeincomplete ease-in 1;    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/    -moz-animation-fill-mode: forwards; /*FF 5+*/    -o-animation-fill-mode: forwards; /*Not implemented yet*/    -ms-animation-fill-mode: forwards; /*IE 10+*/    animation-fill-mode: forwards; /*when the spec is finished*/    -webkit-animation-duration: 5s;    -moz-animation-duration: 5s;    animation-duration: 5s;}.fadeincomplete2s {    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeincomplete ease-in 1;    animation: fadeincomplete ease-in 1;    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/    -moz-animation-fill-mode: forwards; /*FF 5+*/    -o-animation-fill-mode: forwards; /*Not implemented yet*/    -ms-animation-fill-mode: forwards; /*IE 10+*/    animation-fill-mode: forwards; /*when the spec is finished*/    -webkit-animation-duration: 2s;    -moz-animation-duration: 2s;    animation-duration: 2s;}.fadeincomplete1p5s {    opacity: 0; /* make things invisible upon start */    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeincomplete ease-in 1;    animation: fadeincomplete ease-in 1;    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/    -moz-animation-fill-mode: forwards; /*FF 5+*/    -o-animation-fill-mode: forwards; /*Not implemented yet*/    -ms-animation-fill-mode: forwards; /*IE 10+*/    animation-fill-mode: forwards; /*when the spec is finished*/    -webkit-animation-duration: 1.5s;    -moz-animation-duration: 1.5s;    animation-duration: 1.5s;}.fadeincompletefast {    opacity: 0; /* make things invisible upon start */    -webkit-animation: fadeincomplete ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeincomplete ease-in 1;    animation: fadeincomplete ease-in 1;    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/    -moz-animation-fill-mode: forwards; /*FF 5+*/    -o-animation-fill-mode: forwards; /*Not implemented yet*/    -ms-animation-fill-mode: forwards; /*IE 10+*/    animation-fill-mode: forwards; /*when the spec is finished*/    -webkit-animation-duration: 100ms;    -moz-animation-duration: 100ms;    animation-duration: 100ms;}.fadeslideincompletefast {    opacity: 0; /* make things invisible upon start */    -webkit-animation: fadeslideincomplete ease 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeslideincomplete ease 1;    animation: fadeslideincompleteie ease 1;    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/    -moz-animation-fill-mode: forwards; /*FF 5+*/    -o-animation-fill-mode: forwards; /*Not implemented yet*/    -ms-animation-fill-mode: forwards; /*IE 10+*/    animation-fill-mode: forwards; /*when the spec is finished*/    -webkit-animation-duration: 300ms;    -moz-animation-duration: 1000ms;    animation-duration: 300ms;}.fadeslideincompletefastconst {    opacity: 0; /* make things invisible upon start */    -webkit-animation: fadeslideincompleteconst ease 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */    -moz-animation: fadeslideincompleteconst ease 1;    animation: fadeslideincompleteie ease 1;    -webkit-animation-fill-mode: forwards; /*Chrome 16+, Safari 4+*/    -moz-animation-fill-mode: forwards; /*FF 5+*/    -o-animation-fill-mode: forwards; /*Not implemented yet*/    -ms-animation-fill-mode: forwards; /*IE 10+*/    animation-fill-mode: forwards; /*when the spec is finished*/    -webkit-animation-duration: 300ms;    -moz-animation-duration: 1000ms;    animation-duration: 300ms;}/* make keyframes that tell the start state and the end state of our object */@-webkit-keyframes fadeslideincompleteconst {    from {        opacity: 0;        margin-top: -5px;        padding-bottom: 5px;    }    to {        opacity: 1;        margin-top: 0px;        padding-bottom: 0px;    }}/* make keyframes that tell the start state and the end state of our object */@-moz-keyframes fadeslideincompleteconst {    from {        opacity: 0;        margin-top: -5px;        padding-bottom: 5px;    }    to {        opacity: 1;        margin-top: 0px;        padding-bottom: 0px;    }}/* make keyframes that tell the start state and the end state of our object */@-webkit-keyframes fadeslideincomplete {    from {        opacity: 0;        margin-top: -5px;    }    to {        opacity: 1;        margin-top: 0px;    }}/* make keyframes that tell the start state and the end state of our object */@-moz-keyframes fadeslideincomplete {    from {        opacity: 0;        margin-top: -5px;    }    to {        opacity: 1;        margin-top: 0px;    }}/* make keyframes that tell the start state and the end state of our object */@keyframes fadeslideincompleteie {    from {        opacity: 0;    }    to {        opacity: 1;    }}/* make keyframes that tell the start state and the end state of our object */@-webkit-keyframes fadeincomplete {    from {        opacity: 0;    }    to {        opacity: 1;    }}/* make keyframes that tell the start state and the end state of our object */@-webkit-keyframes fadeinhalf {    from {        opacity: 0;    }    to {        opacity: 0.5;    }}@-moz-keyframes fadeincomplete {    from {        opacity: 0;    }    to {        opacity: 1;    }}@keyframes fadeincomplete {    from {        opacity: 0;    }    to {        opacity: 1;    }}.fast3d {    transform: translate3d(0px, 0px, 0px);    -ms-transform: translate3d(0px, 0px, 0px);    -webkit-transform: translate3d(0px, 0px, 0px);}.ui-alt-icon.ui-icon-search.loading:after, .ui-alt-icon .ui-icon-search.loading:after, .ui-input-search.loading:after {    background-image: url(../img/loader.gif) !important;    background: rgb(255, 255, 255);    background-size: 14px 14px;    background-position: 0px 0px;    background-repeat: no-repeat;    filter: Alpha(Opacity=80);    opacity: .8;    top: 18px;}.mejs-overlay-play {    background-image: url(../img/swipeoverlay.png);    background-size: 100% 100%;}/*#playingSongCover{    box-shadow: 0px 0px 10px 3px rgba(255,255,255,0.1);}#playingSongTitle{    text-shadow: 0px 0px 5px rgba(255,255,255,0.25);}#playingSongTitleLoading{    text-shadow: 0px 0px 5px rgba(255,255,255,0.25);}  */#popupLoadingSong-screen {    display: none !important;}#popupVideoSettings #reloadVersionButton {    -webkit-transition: heigh 0.5s ease !important;    -moz-transition: height 0.5s ease !important;    -ms-transition: height 0.5s ease !important;    -o-transition: height 0.5s ease !important;    transition: height 0.5s ease !important;    overflow: hidden !important;}#popupFeedback-popup {    top: 50px !important;    background-color: #414141 !important;}#popupFeedback a {    color: #000000 !important;}#popupFeedback textarea {    height: 150px !important;}#popupTextInput .saveButton {    margin-top: 20px;}#popupArtistExternList li a {    background-color: rgba(255, 255, 255, 0.8);    text-shadow: none !important;    color: #000 !important;    text-shadow: none !important;    line-height: 1.5 !important;    font-size: 15px !important;    min-height: 0em !important;    border-color: #ddd !important;}#popupArtistExternList li:hover a {    background-color: rgba(223, 223, 223, 0.8);}.ui-popup li:hover aDISABLED {    -webkit-transform: scale(1.03);    -moz-transform: scale(1.03);    transform: scale(1.03) !important;}.ui-popup li a {    -webkit-transition: -webkit-transform 0.15s ease;    -moz-transition: -moz-transform 0.15s ease;    transition: transform 0.15s ease !important;}#popupArtistExternList li.marked a {    background-color: rgba(0, 0, 0, .7) !important;    color: #fff !important;    border-color: #2E2E2E !important;}#popupArtistExternList li.marked:hover a {    background-color: #686868!important;}.playingSongInfo {    left: auto !important;    transition: opacity .5s linear;}.playingSongInfo.ui-icon-custom:after {    opacity: 1;    background-image: url(../img/loader.gif);    background-color: rgba(0, 0, 0, 0) !important;    background-size: 100% !important;    -webkit-border-radius: 1px !important;    border-radius: 1px !important;    -webkit-transition: all .5s linear;    transition: all .5s linear;    background: transparent;}.playingSongBuy {    z-index: 1000;    transition: opacity .5s linear;    left: auto !important;    color: #000 !important;    background: #f6d073;    background: -moz-linear-gradient(top, #fee6b0, #eeba37);    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fee6b0), color-stop(100%, #eeba37));    background: -webkit-linear-gradient(top, #fee6b0, #eeba37);    background: -o-linear-gradient(top, #fee6b0, #eeba37);    background: -ms-linear-gradient(top, #fee6b0, #eeba37);    background: linear-gradient(top, #fee6b0, #eeba37);    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fee6b0', endColorstr='#eeba37', GradientType=0);    border-radius: 3px 3px 3px 3px !important;    border-style: solid !important;    border-width: 1px !important;    border-color: #be952c #a68226 #9b7924 !important;    color: #111 !important;    font-family: Arial, sans-serif !important;    font-size: 13px !important;    text-align: center !important;    white-space: nowrap !important;    text-shadow: none !important;}#header .ui-btn.animated {    -webkit-transition: all 0.5s linear;    -moz-transition: all 0.5s linear;    -ms-transition: all 0.5s linear;    -o-transition: all 0.5s linear;    transition: all 0.5s linear !important;}#header .ui-btn-right {    margin-top: 1px !important;}#signinLink, #linkAccount, #registerLink {    top: 0px;}#signinButton, #registerButton {    padding-left: 2.3em !important;    padding-right: 0 !important;}#signoutButton {    margin-top: 18px;    margin-bottom: 15px;    margin-left: 20px;    margin-right: 20px;    width: 250px;}#signinButton:before, #registerButton:before {    position: absolute;    top: 0;    bottom: 0;    left: 0;    width: 40px;    content: '';    border-right: 1px solid #000;    box-shadow: 1px 0 #4B4545;}a, button, h1, h2, h3 {    cursor: default !important;}#siteLogo {    width: 100%;    height: 100%;    pointer-events: none;    -webkit-transform-origin: 100% 100%;    transform-origin: 100% 100% !important;    -webkit-transition: all 0.6s ease;    -moz-transition: all 0.6s ease;    -ms-transition: all 0.6s ease;    -o-transition: all 0.6s ease;    transition: all 0.6s ease;}#siteLogo img {    position: absolute;    bottom: 50px;    opacity: 0.42;    pointer-events: auto;    -webkit-transition: all 0.6s ease;    -moz-transition: all 0.6s ease;    -ms-transition: all 0.6s ease;    -o-transition: all 0.6s ease;    transition: all 0.6s ease;}#siteLogo #songbaseLogoImage {    left: 15px;    width: 160px;}#siteLogo #siteLogoImage {    width: 110px;    right: 15px;}#deselectionOptionContainer {    position: absolute;    z-index: 1000;    top: 46px;    width: 100%;    height: 40px;    pointer-events: none !important;}#deselectionOption {    position: relative;    width: 180px;    margin-left: auto;    margin-right: auto;    border-color: rgba(54, 54, 54, 0.96);    border-top: 0;    background-color: rgba(33, 17, 1, 0.9)!important;    pointer-events: auto !important;    margin-top: 0;    padding-top: 25px;    font-size: 16px;    vertical-align: middle;    text-shadow: none;    border-top-left-radius: 0;    border-top-right-radius: 0;    -webkit-border-top-left-radius: 0;    -webkit-border-top-right-radius: 0;    -moz-border-top-left-radius: 0;    -moz-border-top-right-radius: 0;}.backgroundVideo {    width: 100% !important;    height: 100% !important;    background-color: #000 !important;    opacity: 0;}.backgroundVideo.fullscreen {    opacity: 1 !important;}.backgroundVideo.background {    opacity: 0.8 !important;}#backgroundVideo.fullscreen {    opacity: 1 !important;}.backgroundVideo * {    width: 100% !important;    position: absolute;    top: 46px;    left: 0;    bottom: 0;    right: 0;    z-index: 0;}#backgroundVideo {    width: 100% !important;    height: 100% !important;}#backgroundVideo.animatedDISABLED {    -moz-transform: translateZ(0.1);    -webkit-transition: all 250ms ease;    -moz-transition: all 250ms ease;    -ms-transition: all 250ms ease;    -o-transition: all 250ms ease;    transition: all 250ms ease;}#backgroundImage {    width: 100%;    height: 100%;    position: absolute;    top: 0;    left: 0;    bottom: 0;    right: 0;    z-index: 0;    opacity: 0.8;}.greenbackground {    background-color: #050 !important;}/*POPUPS*/#popupLoadingSongClose {    background-color: #C70707 /*{a-bup-background-color}*/;    border-color: #000 /*{a-bup-border}*/;}#popupLoadingSong {    background-color: #ECECEC !important;}.ui-popup-container {    background: rgba(255, 255, 255, 0.6) !important;}.ui-popup-container p {    color: #000 !important;}#popupLoadingSong-popup {    background: rgba(0, 0, 0, 0.6) !important;}#popupSocial-popup {    background: rgba(4, 40, 187, 0.6) !important;}#popupConfirm-popup {    background: rgba(187, 14, 8, 0.60) !important;}#popupFeedback.ui-body-a {    /* background-image: url(../img/bug.gif )!important;     background-position-y: 60px;     background-repeat: no-repeat; */    background-color: #fff;}.ui-popup.ui-body-a {    background-color: rgba(0, 0, 0, 0) !important;}.ui-popup.ui-body-a {    border-width: 0px;!important;}.ui-popup {    padding: 1px;    background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%); /* FF3.6+ */    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 0.85)), color-stop(100%, rgba(255, 255, 255, 0.75))); /* Chrome,Safari4+ */    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%); /* Chrome10+,Safari5.1+ */    background: -o-linear-gradient(top, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%); /* Opera 11.10+ */    background: -ms-linear-gradient(top, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%); /* IE10+ */    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%); /* W3C */    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#66ffffff', GradientType=0); /* IE6-9 */    background-clip: content-box !important;}#popupLoadingSong {    border-width: 2px !important;    border-color: #000 !important}#popupArtist-popup, #popupAccount-popup {    width: 300px;}#popupAccount-popup, #popupArtist-popup, #popupLogin-popup, #popupRegister-popup {    top: 51px !important;}#popupRegister, #popupLogin {    max-width: 230px;    min-width: 230px;}#popupAccount li a, #popupRegister  li a, #popupLogin li a {    color: #000 !important;}/*#popupLogin{    min-height: 320px;    max-height: 320px;}#popupRegister{    min-height: 410px;    max-height:410px;} */#popupRegister input, #popupLogin input, #popupEditAccount input {    -webkit-text-shadow: none !important;    text-shadow: none !important;}#popupArtist-popup::before {    content: "";    background-position: center center !important;    opacity: 0.99;    top: 0;    left: 0;    bottom: 0;    right: 0;    position: absolute;    z-index: 0;}#popupArtist .ng-pristine {    text-shadow: none !important;}#popupArtist .ui-popup-arrow-guide {    background: #fff !important;    z-index: 10000;}#popupOptions {    padding: 2px;}#popupOptions ul {    background-color: #333 !important;    max-height: 478px;    overflow-y: auto;    overflow-x: hidden;    padding-bottom: 1px; /*avoid start Scolling on hover*/}#popupOptions li {    background-color: #333 !important;}#popupOptions li a {    line-height: 1.5;    border: none !important;    border-top: 1px solid rgb(34, 34, 34) !important;    border-bottom: none !important;    background: #333;    /*    background: -moz-linear-gradient(top, #3a3a3a 0%, #333 100%);    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3a3a3a), color-stop(100%,#333));    background: -webkit-linear-gradient(top, #3a3a3a 0%,#333 100%);    background: -o-linear-gradient(top, #3a3a3a 0%,#333 100%);    background: -ms-linear-gradient(top, #3a3a3a 0%,#333 100%);    background: linear-gradient(to bottom, #3a3a3a 0%,#333 100%);    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3a3a', endColorstr='#333',GradientType=0 );     */    text-shadow: none !important;}#popupOptions li:hover a {    background: -moz-linear-gradient(top, #4a4a4a 0%, #444 100%); /* FF3.6+ */    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4a4a4a), color-stop(100%, #444)); /* Chrome,Safari4+ */    background: -webkit-linear-gradient(top, #4a4a4a 0%, #444 100%); /* Chrome10+,Safari5.1+ */    background: -o-linear-gradient(top, #4a4a4a 0%, #444 100%); /* Opera 11.10+ */    background: -ms-linear-gradient(top, #4a4a4a 0%, #444 100%); /* IE10+ */    background: linear-gradient(to bottom, #4a4a4a 0%, #444 100%); /* W3C */    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4a4a4a', endColorstr='#444', GradientType=0); /* IE6-9 */}/*#popupOptions li a.currentqueue{  color:          #000 !important;  background: #f6d073!important;  background: #f6d073!important;  background: -moz-linear-gradient(top, #fee6b0,#eeba37)!important;  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fee6b0),color-stop(100%,#eeba37))!important;  background: -webkit-linear-gradient(top,#fee6b0,#eeba37)!important;  background: -o-linear-gradient(top,#fee6b0,#eeba37)!important;  background: -ms-linear-gradient(top,#fee6b0,#eeba37)!important;  background: linear-gradient(top,#fee6b0,#eeba37)!important;}#popupOptions li:hover a.currentqueue {  background: -moz-linear-gradient(top,#fef6c0,feca47)!important;  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fef6c0),color-stop(100%,#feca47))!important;  background: -webkit-linear-gradient(top,#fef6c0,#feca47)!important;  background: -o-linear-gradient(top,#fef6c0,#feca47)!important;  background: -ms-linear-gradient(top,#fef6c0,#feca47)!important;  background: linear-gradient(top,#fef6c0,#feca47)!important;}*/#popupImportInput button {    margin-top: 20px;}#popupEditAccount-popup {    width: 300px;}#popupEditAccount {    background-color: rgba(255, 255, 255, 0.9) !important;}#popupEditAccount #editButton {    margin-top: 20px;}#popupEditAccount #cancelButton {    argin-bottom: 0px;}#popupAccount.ui-popup {    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 100%); /* FF3.6+ */    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(100%, rgba(255, 255, 255, 0.2))); /* Chrome,Safari4+ */    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 100%); /* Chrome10+,Safari5.1+ */    background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 100%); /* Opera 11.10+ */    background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 100%); /* IE10+ */    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 100%); /* W3C */    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#66ffffff', GradientType=0); /* IE6-9 */}#popupAccount a {    text-shadow: none !important;    padding-left: 3.4em!important;    padding-right: 5em!important;    background-color: rgba(255,255,255,0.8);    text-shadow: none!important;    line-height: 1.5!important;    font-size: 15px!important;    min-height: 0em!important;    border-color: #ddd!important;}#popupAccount a img {    max-height: 2em !important;    max-width: 2em !important;    margin-top: 0.5em !important;    margin-left: 0.7em !important;}#popupAccount li:hover a {    background-color: rgba(223, 223, 223, 0.8);}#popupArtist a img {    max-height: 2em !important;    max-width: 2em !important;    margin-top: 0.5em !important;    margin-left: 0.7em !important;}#popupArtist a {    text-shadow: none !important;    line-height: 1.2 !important;    font-size: 14px !important;    min-height: 0em !important;    padding-left: 3.4em !important;    padding-right: 5em !important;    background-color: rgba(255, 255, 255, 0.8);    color: #000;}.ui-icon-sharemedia {    background: url(../img/shareicon.png) no-repeat;    z-index: 100;    background-position: 10px 10px;}#popupSharePlaylistOptions-popup {    bottom: 50px !important;    top: auto !important;}#popupSharePlaylistOptions-popup .ui-popup-arrow-container.ui-popup-arrow-b .ui-popup-arrow {    margin-left: 4px !important;}#popupSharePlaylistOptions h3 {    margin-top: 10px !important;    margin-bottom: 10px !important;}#popupSharePlaylistOptions ul {    background-color: #333 !important;    max-height: 478px;    overflow-y: auto;    overflow-x: hidden;    padding-bottom: 1px;}#popupSharePlaylistOptions li {    background-color: #333 !important;}#popupSharePlaylistOptions li a {    border: none !important;    border-top: 1px solid rgb(34, 34, 34) !important;    border-bottom: none !important;    background: #333;    /*    background: -moz-linear-gradient(top, #3a3a3a 0%, #333 100%);    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3a3a3a), color-stop(100%,#333));    background: -webkit-linear-gradient(top, #3a3a3a 0%,#333 100%);    background: -o-linear-gradient(top, #3a3a3a 0%,#333 100%);    background: -ms-linear-gradient(top, #3a3a3a 0%,#333 100%);    background: linear-gradient(to bottom, #3a3a3a 0%,#333 100%);    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3a3a', endColorstr='#333',GradientType=0 );     */    text-shadow: none !important;}#popupSharePlaylistOptions li:hover a {    background-color: #494949 !important;    background: -moz-linear-gradient(top, #3a3a3a 0%, #333 100%);    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3a3a3a), color-stop(100%, #333));    background: -webkit-linear-gradient(top, #3a3a3a 0%, #333 100%);    background: -o-linear-gradient(top, #3a3a3a 0%, #333 100%);    background: -ms-linear-gradient(top, #3a3a3a 0%, #333 100%);    background: linear-gradient(to bottom, #3a3a3a 0%, #333 100%);    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3a3a3a', endColorstr='#333', GradientType=0);    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4a4a4a', endColorstr='#444', GradientType=0); /* IE6-9 */}#popupShareMenu a {    text-shadow: none !important;    line-height: 1.2 !important;    font-size: 14px !important;    min-height: 0em !important;    padding-left: 2.6em !important;    padding-right: 5em !important;    background-color: #333;    color: #fff !important;}#popupShareMenu ul {    background-color: #333 !important;}#popupShareMenu a img {    max-height: 2em !important;    max-width: 2em !important;    margin-top: 0.25em !important;    margin-left: 0.15em !important;}#popupShareMenu #cancelButtonVideoSettings {    background-color: #b4182b !important;}#popupShareMenu-popup {    bottom: 50px !important;    top: auto !important;}#popupShareMenu {    -webkit-transition: all 0.3s ease-out;    -moz-transition: all 0.3s ease-out;    -ms-transition: all 0.3s ease-out;    -o-transition: all 0.3s ease-out;    transition: all 0.3s ease-out;}#popupShareMenu-popup .ui-popup-arrow-container.ui-popup-arrow-b .ui-popup-arrow {    margin-left: 4px !important;}#popupShareMenu .selectedversion {    background-color: #2E8B2B !important;}#popupShareMenu  .selectedversion.ui-icon-carat-r:after {    background-image: url("data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22iso-8859-1%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20%20width%3D%2214px%22%20height%3D%2214px%22%20viewBox%3D%220%200%2014%2014%22%20style%3D%22enable-background%3Anew%200%200%2014%2014%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20style%3D%22fill%3A%23FFFFFF%3B%22%20points%3D%2214%2C4%2011%2C1%205.003%2C6.997%203%2C5%200%2C8%204.966%2C13%204.983%2C12.982%205%2C13%20%22%2F%3E%3C%2Fsvg%3E") !important}#popupShareMenu h3 {    margin-top: 10px !important;    margin-bottom: 10px !important;}#popupChooseVersionHint a {    text-shadow: none !important;    line-height: 1.2 !important;    font-size: 14px !important;    min-height: 0em !important;    padding-left: 2.6em !important;    padding-right: 5em !important;    background-color: #333;    color: #fff;}#popupChooseVersionHint ul {    background-color: #333 !important;}#popupChooseVersionHint a img {    max-height: 2em !important;    max-width: 2em !important;    margin-top: 0.25em !important;    margin-left: 0.15em !important;}#popupChooseVersionHint #cancelButtonVideoSettings {    background-color: #b4182b !important;}#popupChooseVersionHint-popup {    bottom: 50px !important;    top: auto !important;}#popupChooseVersionHint {    -webkit-transition: all 0.3s ease-out;    -moz-transition: all 0.3s ease-out;    -ms-transition: all 0.3s ease-out;    -o-transition: all 0.3s ease-out;    transition: all 0.3s ease-out;}#popupChooseVersionHint-popup .ui-popup-arrow-container.ui-popup-arrow-b .ui-popup-arrow {    margin-left: 4px !important;}#popupChooseVersionHint .selectedversion {    background-color: #2E8B2B !important;}#popupChooseVersionHint  .selectedversion.ui-icon-carat-r:after {    background-image: url("data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22iso-8859-1%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20%20width%3D%2214px%22%20height%3D%2214px%22%20viewBox%3D%220%200%2014%2014%22%20style%3D%22enable-background%3Anew%200%200%2014%2014%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20style%3D%22fill%3A%23FFFFFF%3B%22%20points%3D%2214%2C4%2011%2C1%205.003%2C6.997%203%2C5%200%2C8%204.966%2C13%204.983%2C12.982%205%2C13%20%22%2F%3E%3C%2Fsvg%3E") !important}#popupChooseVersionHint h3 {    margin-top: 10px !important;    margin-bottom: 10px !important;}#popupVideoSettings li a {    border-bottom: 1px solid #2B2A2A!important;    border-top:none!important;}#popupVideoSettings a {    text-shadow: none !important;    line-height: 1.5 !important;    font-size: 15px !important;    min-height: 0em !important;    background-color: #333;    color: #fff !important;}#popupVideoSettings .ReloadVersions   {border-radius: 7px!important;}#popupVideoSettings li:hover a {    background-color: #494949!important;}#popupVideoSettings li:hover a.selectedversion {    background-color: rgb(46, 195, 233) !important;}#popupVideoSettings li:hover a.selectedversion.playedversionalready {    background-color: rgb(46, 195, 233) !important;}#popupVideoSettings li a.playedversionalready {    background-color: rgba(117, 33, 30, 0.63) !important;}#popupVideoSettings ul {    background-color: #333 !important;}#popupVideoSettings a img {    max-height: 2em !important;    margin-top: 0.25em !important;    margin-left: 0.15em !important;}#popupVideoSettings  .selectedversion .rateImage {    opacity: 1 !important;}#popupVideoSettings #cancelButtonVideoSettings {    background-color: #b4182b !important;}#popupVideoSettings-popup {    bottom: 50px !important;    top: auto !important;}#popupVideoSettings {    -webkit-transition: all 0.3s ease-out;    -moz-transition: all 0.3s ease-out;    -ms-transition: all 0.3s ease-out;    -o-transition: all 0.3s ease-out;    transition: all 0.3s ease-out;}#popupVideoSettings-popup .ui-popup-arrow-container.ui-popup-arrow-b .ui-popup-arrow {    margin-left: 4px !important;}#popupVideoSettings .selectedversion {    background-color: rgb(26, 175, 213) !important;}#popupVideoSettings li a.selectedversion.playedversionalready {    background-color:  rgb(26, 175, 213) !important;}#popupVideoSettings  .selectedversion.ui-icon-carat-r:after {    background-image: url("data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22iso-8859-1%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20%20width%3D%2214px%22%20height%3D%2214px%22%20viewBox%3D%220%200%2014%2014%22%20style%3D%22enable-background%3Anew%200%200%2014%2014%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20style%3D%22fill%3A%23FFFFFF%3B%22%20points%3D%2214%2C4%2011%2C1%205.003%2C6.997%203%2C5%200%2C8%204.966%2C13%204.983%2C12.982%205%2C13%20%22%2F%3E%3C%2Fsvg%3E") !important}#popupVideoSettings h3 {    margin-top: 10px !important;    margin-bottom: 10px !important;}#popupSocial .popupSocialContainer {    position: relative;    margin-left: 5px;    margin-right: 5px;    height: 75px;    text-align: center;}#popupSocial table {    display: inline-block;}#popupSocial td {    height: 30px;}#loadversionimg {    position: absolute;    top: 15px;    left: 13px;}#loadversionimg img {    opacity: 1;}/* E-----------------------------------------------------------------------------------------------------------*/.ui-bar-e {    border: 1px solid #f7c942 /*{e-bar-border}*/;    background: #fadb4e /*{e-bar-background-color}*/;    color: #333 /*{e-bar-color}*/;    background-image: -webkit-gradient(linear, left top, left bottom, from(#fceda7 /*{e-bar-background-start}*/), to(#fbef7e /*{e-bar-background-end}*/)); /* Saf4+, Chrome */    background-image: -webkit-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */    background-image: -moz-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* FF3.6 */    background-image: -ms-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* IE10 */    background-image: -o-linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/); /* Opera 11.10+ */    background-image: linear-gradient(#fceda7 /*{e-bar-background-start}*/, #fbef7e /*{e-bar-background-end}*/);}/*Explore Area*/#explorearea {    position: absolute;    z-index: 2;    top: -5px;    left: 0;    height: 100%;    width: 100%;    background: none;    overflow: hidden;    padding-top: 5px;}#explorearea h1 {    margin: 0.3em !important;    margin-left: 0.6em !important;    margin-top: 0.5em !important;}/*ADS*/.fullscreendisable {    display: none;    position: absolute;    top: 0px;    bottom: 0px;    left: 0px;    right: 0px;    z-index: 10000000;}.sideinfo {    position: absolute;    top: 0;    right: 0;    width: 160px;    height: 100%;    background-color: rgba(255, 255, 255, 0.03);    margin-top: 44px;}.adsbygoogle {    background-color: rgba(255, 255, 255, 0.1);}.sideinfo > ins, .sideinfo > img {    display: inline-block;    vertical-align: middle !important;}.sideinfo iframe, .sideinfo .infoRightReload {    display: inline-block;    vertical-align: middle !important;}.songlist li.listad {    max-width: 728px !important;    max-height: 105px !important;    width: 728px !important;    height: 105px !important;    padding: 0 !important;    padding-top: 15px !important;    margin-top: 5px !important;    margin-bottom: 5px !important;    background: none !important;    border: none !important;    padding-left: 5px !important;    display: block !important;}#searchlist ul li.songlisttitlebutton.listad {    /*TODO REMOVE*/    display: none !important;}#searchlist ul.gridlayout li.songlisttitlebutton.listad {    max-width: 728px !important;    max-height: 105px !important;    width: 728px !important;    height: 105px !important;}.songlist li.listad * {    position: relative !important;}.infotoast.ui-loader{    opacity: 1!important;    color: #fff;    border: 2px solid #ffc828 !important;    background: #333;}

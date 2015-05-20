@@ -19,7 +19,7 @@ templateHandler.buildTemplate = function(templateText,templateProps) {
 
     if(templateProps&&templateProps.length>0){
         for (var i = 0; i < templateProps.length; i++) {
-            var templateProp = templateProps[i]
+            var templateProp = templateProps[i];
             templateText = templateText.replace(templateProp.search,templateProp.replace)
         }
     }

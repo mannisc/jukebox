@@ -73,7 +73,7 @@ chartsHandler.downloadFiles = function (content, callback, start) {
 
     } else {
 
-        chartsHandler.fs.createReadStream("charttrends.txt").pipe(chartsHandler.fs.createWriteStream("charttrends_backup.txt"));
+
         var oldCharttrend = chartsHandler.fs.readFileSync("charttrends.txt");
 
         if (oldCharttrend && oldCharttrend != "") {
@@ -91,6 +91,7 @@ chartsHandler.downloadFiles = function (content, callback, start) {
             //New songs in Charts
             var countChanges = 0;
 
+            var index = 0;
             for (var i = 0; i < chartsHandler.tracks.length; i++) {
 
 
@@ -127,7 +128,7 @@ chartsHandler.downloadFiles = function (content, callback, start) {
                 //Create new Chart Entry
                 chartsHandler.charttrends[songKey] = {};
                 chartsHandler.charttrends[songKey].trend = trend;
-                chartsHandler.charttrends[songKey].index = i + 1;
+                chartsHandler.charttrends[songKey].index = index + 1;
                 chartsHandler.charttrends[songKey].duration = song.duration;
 
                 chartsHandler.charttrends[songKey].cached = true;
@@ -138,6 +139,8 @@ chartsHandler.downloadFiles = function (content, callback, start) {
                 } else {
                     chartsHandler.charttrends[songKey].artist = oldCharttrend[songKey].artist;
                     chartsHandler.charttrends[songKey].name = oldCharttrend[songKey].name
+                    chartsHandler.charttrends[songKey].hidden = oldCharttrend[songKey].hidden
+
                 }
 
                 chartsHandler.charttrends[songKey].origArtist = chartsHandler.getSongArtist(song);
@@ -155,7 +158,14 @@ chartsHandler.downloadFiles = function (content, callback, start) {
                     song.date = +new Date();
                 }
 
+                //Already existed and song was hidden
+                if(oldCharttrend[songKey]&&oldCharttrend[songKey].hidden) {
+                    chartsHandler.tracks.splice(i, 1);
+                    i--;
+                    console.log("hide song: "+song.name)
+                }
 
+                index++;
             }
 
             chartsHandler.fs.writeFileSync("charttrends.txt", JSON.stringify(chartsHandler.charttrends));
@@ -163,6 +173,7 @@ chartsHandler.downloadFiles = function (content, callback, start) {
             if (true || new Date().getDay() == 0) {
                 chartsHandler.fs.writeFileSync("Sicherung/charttrends_Sicherung_" + new Date().getTime() + ".txt", JSON.stringify(chartsHandler.charttrends));
             }
+            // chartsHandler.fs.createReadStream("charttrends.txt").pipe(chartsHandler.fs.createWriteStream("charttrends_backup.txt"));
 
 
         }
