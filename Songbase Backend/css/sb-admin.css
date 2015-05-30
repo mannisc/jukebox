@@ -6,12 +6,17 @@
 
 /* Global Styles */
 
-body {
-    margin-top: 100px;
-    background-color: #222;
+html, body {
+    height: 100%;
 }
 
-@media(min-width:768px) {
+body {
+    margin-top: 100px;
+    background-color: #fff;
+    overflow-x: hidden;
+}
+
+@media (min-width:768px) {
     body {
         margin-top: 50px;
     }
@@ -23,6 +28,7 @@ body {
 
 #page-wrapper {
     width: 100%;
+
     padding: 0;
     background-color: #fff;
 }
@@ -32,7 +38,7 @@ body {
     line-height: normal;
 }
 
-@media(min-width:768px) {
+@media (min-width:768px) {
     #wrapper {
         padding-left: 225px;
     }
@@ -73,12 +79,12 @@ body {
     float: left;
     position: absolute;
     margin-top: 0;
-    border: 1px solid rgba(0,0,0,.15);
+    border: 1px solid rgba(0, 0, 0, .15);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     background-color: #fff;
-    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 }
 
 .top-nav>.open>.dropdown-menu>li>a {
@@ -94,7 +100,7 @@ ul.message-dropdown {
 
 li.message-preview {
     width: 275px;
-    border-bottom: 1px solid rgba(0,0,0,.15);
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
 }
 
 li.message-preview>a {
@@ -112,7 +118,7 @@ ul.alert-dropdown {
 
 /* Side Navigation */
 
-@media(min-width:768px) {
+@media (min-width:768px) {
     .side-nav {
         position: fixed;
         top: 51px;

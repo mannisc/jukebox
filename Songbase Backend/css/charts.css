@@ -18,3 +18,20 @@
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}
 }
+
+#updatePopularSongsContainer{
+    position: fixed;
+    bottom: 0px;
+    z-index: 1;
+    background-color: #fff;
+    left: 225px;
+    right: 0;
+    height: 55px;
+    border-top: 1px solid #000;
+}
+
+#updatePopularSongs{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
